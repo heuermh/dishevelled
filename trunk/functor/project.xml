@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project>
+  <pomVersion>3</pomVersion>
+
+  <id>dsh-functor</id>
+  <groupId>org.dishevelled</groupId>
+  <artifactId>dsh-functor</artifactId>
+  <name>dishevelled.org functor</name>
+  <currentVersion>SNAPSHOT</currentVersion>
+
+  <organization>
+    <name>dishevelled.org</name>
+    <url>http://www.dishevelled.org/</url>
+  </organization>
+
+  <inceptionYear>2004</inceptionYear>
+  <package>org.dishevelled.functor</package>
+
+  <url>http://www.dishevelled.org</url>
+  <siteAddress>www.dishevelled.org</siteAddress>
+  <siteDirectory>/home/groups/d/di/dishevelled/htdocs/functor</siteDirectory>
+  <distributionDirectory>/home/groups/d/di/dishevelled/htdocs/functor/dist</distributionDirectory>
+
+  <repository>
+    <connection>scm:cvs:pserver:anonymous@cvs.sourceforge.net:/cvsroot/dishevelled:dishevelled/functor</connection>
+    <developerConnection>scm:cvs:ext:heuermh@cvs.sourceforge.net:/cvsroot/dishevelled:dishevelled/functor</developerConnection>
+    <url>http://cvs.sourceforge.net/viewcvs.py/dishevelled/dishevelled/functor</url>
+  </repository>
+
+  <mailingLists>
+    <mailingList>
+      <name>dishevelled.org announce mailing list</name>
+      <subscribe>dishevelled-announce-subscribe@lists.sourceforge.net</subscribe>
+      <unsubscribe>dishevelled-announce-unsubscribe@lists.sourceforge.net</unsubscribe>
+    </mailingList>
+
+    <mailingList>
+      <name>dishevelled.org cvs commit mailing list</name>
+      <subscribe>dishevelled-cvs-subscribe@lists.sourceforge.net</subscribe>
+      <unsubscribe>dishevelled-cvs-unsubscribe@lists.sourceforge.net</unsubscribe>
+    </mailingList>
+
+    <mailingList>
+      <name>dishevelled.org developer mailing list</name>
+      <subscribe>dishevelled-devel-subscribe@lists.sourceforge.net</subscribe>
+      <unsubscribe>dishevelled-devel-unsubscribe@lists.sourceforge.net</unsubscribe>
+    </mailingList>
+  </mailingLists>
+
+  <developers>
+   <developer>
+      <name>Michael Heuer</name>
+      <id>heuermh</id>
+      <email>heuermh@users.sourceforge.net</email>
+      <organization>dishevelled.org</organization>
+      <roles>
+        <role>Java Developer</role>
+      </roles>
+    </developer>
+  </developers>
+
+  <dependencies>
+    <!-- TODO:  this must currently be downloaded manually, what repository is it in? -->
+    <dependency><groupId>maven</groupId><artifactId>maven-checkstyle-plugin</artifactId><version>3.0-SNAPSHOT</version><type>plugin</type></dependency>
+  </dependencies>
+
+  <build>
+    <nagEmailAddress>dishevelled-devel@lists.sourceforge.net</nagEmailAddress>
+    <sourceDirectory>src/main/java</sourceDirectory>
+
+    <resources/>
+  </build>
+
+  <reports>
+    <report>maven-jxr-plugin</report>
+    <report>maven-javadoc-plugin</report>
+    <report>maven-checkstyle-plugin</report>
+  </reports>
+</project>
