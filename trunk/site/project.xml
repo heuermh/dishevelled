@@ -23,7 +23,7 @@
   <repository>
     <connection>scm:cvs:pserver:anonymous@cvs.sourceforge.net:/cvsroot/dishevelled:dishevelled/site</connection>
     <developerConnection>scm:cvs:ext:heuermh@cvs.sourceforge.net:/cvsroot/dishevelled:dishevelled/site</developerConnection>
-    <url>http://cvs.sourceforge.net/viewcvs.py/dishevelled/site</url>
+    <url>http://cvs.sourceforge.net/viewcvs.py/dishevelled/dishevelled/site</url>
   </repository>
 
   <mailingLists>
