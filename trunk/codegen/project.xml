@@ -24,7 +24,7 @@
   <repository>
     <connection>scm:cvs:pserver:anonymous@cvs.sourceforge.net:/cvsroot/dishevelled:dishevelled/codegen</connection>
     <developerConnection>scm:cvs:ext:heuermh@cvs.sourceforge.net:/cvsroot/dishevelled:dishevelled/codegen</developerConnection>
-    <url>http://cvs.sourceforge.net/viewcvs.py/dishevelled/codegen</url>
+    <url>http://cvs.sourceforge.net/viewcvs.py/dishevelled/dishevelled/codegen</url>
   </repository>
 
   <mailingLists>
