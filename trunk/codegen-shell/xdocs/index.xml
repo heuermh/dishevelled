@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<!--
+
+    dsh-codegen-shell  Runnable shell for the codegen library.
+    Copyright (c) 2004-2005 held jointly by the individual authors.
+
+    This library is free software; you can redistribute it and/or modify it
+    under the terms of the GNU Lesser General Public License as published
+    by the Free Software Foundation; either version 2.1 of the License, or (at
+    your option) any later version.
+
+    This library is distributed in the hope that it will be useful, but WITHOUT
+    ANY WARRANTY; with out even the implied warranty of MERCHANTABILITY or
+    FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
+    License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with this library;  if not, write to the Free Software Foundation,
+    Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307  USA.
+
+    > http://www.gnu.org/copyleft/lesser.html
+    > http://www.opensource.org/licenses/lgpl-license.php
+
+-->
+<document>
+  <properties>
+    <title>codegen-shell</title>
+  </properties>
+<body>
+
+<section name="Summary">
+
+<p>
+dishevelled.org <b>codegen-shell</b> is a runnable shell for the codegen library.
+The shell is an instance of the BeanShell [<a href="#1">1</a>] Interpreter [<a href="#2">2</a>]
+with the codegen library included in the classpath and the packages from the codegen library imported.
+Both the codegen-shell project and the shell itself require java version 1.5 or later.
+</p>
+
+</section>
+
+<section name="References">
+
+<p id="1">
+[1] BeanShell - Lightweight Scripting for Java<br/>
+&gt; <a href="http://www.beanshell.org">http://www.beanshell.org</a>
+</p>
+
+<p id="2">
+[2] class bsh.Interpreter<br/>
+&gt; <a href="http://www.beanshell.org/javadoc/bsh/Interpreter.html">http://www.beanshell.org/javadoc/bsh/Interpreter.html</a>
+</p>
+
+</section>
+
+<section name="Acknowledgements">  
+  <ul> 
+    <li>Powered by Apache <a href="http://maven.apache.org">Maven</a>.</li> 
+    <li>Project hosting by <a href="http://sourceforge.net">SourceForge.net</a>.</li> 
+  </ul> 
+  <p><img src="http://sourceforge.net/sflogo.php?group_id=113165&amp;type=1" width="88" height="31" border="0" alt="SourceForge.net Logo"/></p>
+</section> 
+</body>
+</document>
