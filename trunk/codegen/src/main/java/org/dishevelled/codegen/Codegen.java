@@ -68,7 +68,7 @@ public final class Codegen
             VelocityContext context = new VelocityContext();
             context.put("id", id);
 
-            Template template = Velocity.getTemplate("org/biojava/codegen/Interface.wm");
+            Template template = Velocity.getTemplate("org/dishevelled/codegen/Interface.wm");
             template.merge(context, fw);
         }
         catch (Exception e)
@@ -122,7 +122,7 @@ public final class Codegen
             VelocityContext context = new VelocityContext();
             context.put("cd", cd);
 
-            Template template = Velocity.getTemplate("org/biojava/codegen/" + style + ".wm");
+            Template template = Velocity.getTemplate("org/dishevelled/codegen/" + style + ".wm");
             template.merge(context, fw);
         }
         catch (Exception e)
