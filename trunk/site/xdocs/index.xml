@@ -50,6 +50,16 @@ Runnable shell for the codegen library.<br/>
 &gt; <a href="codegen-shell">http://www.dishevelled.org/codegen-shell</a>
 </p>
 
+<p>
+Typed functor object interfaces.<br/>
+&gt; <a href="functor">http://www.dishevelled.org/functor</a>
+</p>
+
+<p>
+Layout manager(s) for lightweight components.<br/>
+&gt; <a href="layout">http://www.dishevelled.org/layout</a>
+</p>
+
 </section>
 
 <section name="Acknowledgements">
