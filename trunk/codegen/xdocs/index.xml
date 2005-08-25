@@ -47,12 +47,12 @@ The codegen project requires java version 1.5 or later.
 
 </section>
 
-<section name="Acknowledgements">  
-  <ul> 
-    <li>Powered by Apache <a href="http://maven.apache.org">Maven</a>.</li> 
-    <li>Project hosting by <a href="http://sourceforge.net">SourceForge.net</a>.</li> 
-  </ul> 
+<section name="Acknowledgements">
+  <ul>
+    <li>Powered by Apache <a href="http://maven.apache.org">Maven</a>.</li>
+    <li>Project hosting by <a href="http://sourceforge.net">SourceForge.net</a>.</li>
+  </ul>
   <p><img src="http://sourceforge.net/sflogo.php?group_id=113165&amp;type=1" width="88" height="31" border="0" alt="SourceForge.net Logo"/></p>
-</section> 
+</section>
 </body>
 </document>
