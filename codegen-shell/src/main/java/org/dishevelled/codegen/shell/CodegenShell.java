@@ -76,11 +76,11 @@ public final class CodegenShell
                 System.out.println("Shell interface to org.biojava.codegen.Codegen");
                 System.out.println("  example:");
                 System.out.println("");
-                System.out.println("bsh % ClassDescription foo = new ClassDescription(\"example\", \"Foo\")");
-                System.out.println("bsh % ClassDescription bar = new ClassDescription(\"example\", \"Bar\")");
+                System.out.println("bsh % ClassDescription foo = new ClassDescription(\"example\", \"Foo\");");
+                System.out.println("bsh % ClassDescription bar = new ClassDescription(\"example\", \"Bar\");");
                 System.out.println("");
                 System.out.println("bsh % foo.attribute(\"String\", \"Name\", Cardinality.ZeroToOne);");
-                System.out.println("bsh % bar.attribute(\"Integer\", \"Value\", Cardinality.ZeroToOne);");
+                System.out.println("bsh % bar.attribute(\"Integer\", \"Value\", Cardinality.StrictlyOne);");
                 System.out.println("");
                 System.out.println("bsh % foo.associate(bar, Cardinality.ZeroToOne);");
                 System.out.println("bsh % bar.associate(foo, Cardinality.ZeroToMany, false, true, false, false);");
