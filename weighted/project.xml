@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project>
+  <pomVersion>3</pomVersion>
+
+  <id>dsh-weighted</id>
+  <groupId>org.dishevelled</groupId>
+  <artifactId>dsh-weighted</artifactId>
+  <name>dishevelled.org weighted</name>
+  <currentVersion>SNAPSHOT</currentVersion>
+
+  <organization>
+    <name>dishevelled.org</name>
+    <url>http://www.dishevelled.org/</url>
+  </organization>
+
+  <inceptionYear>2005</inceptionYear>
+  <package>org.dishevelled.weighted</package>
+
+  <url>http://www.dishevelled.org</url>
+  <siteAddress>www.dishevelled.org</siteAddress>
+  <siteDirectory>/home/groups/d/di/dishevelled/htdocs/weighted</siteDirectory>
+  <distributionDirectory>/home/groups/d/di/dishevelled/htdocs/weighted/dist</distributionDirectory>
+
+  <repository>
+    <connection>scm:cvs:pserver:anonymous@cvs.sourceforge.net:/cvsroot/dishevelled:dishevelled/weighted</connection>
+    <developerConnection>scm:cvs:ext:heuermh@cvs.sourceforge.net:/cvsroot/dishevelled:dishevelled/weighted</developerConnection>
+    <url>http://cvs.sourceforge.net/viewcvs.py/dishevelled/dishevelled/weighted</url>
+  </repository>
+
+  <mailingLists>
+    <mailingList>
+      <name>dishevelled.org announce mailing list</name>
+      <subscribe>dishevelled-announce-subscribe@lists.sourceforge.net</subscribe>
+      <unsubscribe>dishevelled-announce-unsubscribe@lists.sourceforge.net</unsubscribe>
+    </mailingList>
+
+    <mailingList>
+      <name>dishevelled.org cvs commit mailing list</name>
+      <subscribe>dishevelled-cvs-subscribe@lists.sourceforge.net</subscribe>
+      <unsubscribe>dishevelled-cvs-unsubscribe@lists.sourceforge.net</unsubscribe>
+    </mailingList>
+
+    <mailingList>
+      <name>dishevelled.org developer mailing list</name>
+      <subscribe>dishevelled-devel-subscribe@lists.sourceforge.net</subscribe>
+      <unsubscribe>dishevelled-devel-unsubscribe@lists.sourceforge.net</unsubscribe>
+    </mailingList>
+  </mailingLists>
+
+  <developers>
+   <developer>
+      <name>Michael Heuer</name>
+      <id>heuermh</id>
+      <email>heuermh@users.sourceforge.net</email>
+      <organization>dishevelled.org</organization>
+      <roles>
+        <role>Java Developer</role>
+      </roles>
+    </developer>
+    <developer>
+      <name>Mark Schreiber</name>
+      <roles>
+        <role>Java Developer</role>
+      </roles>
+    </developer>
+  </developers>
+
+  <dependencies/>
+
+  <build>
+    <nagEmailAddress>dishevelled-devel@lists.sourceforge.net</nagEmailAddress>
+    <sourceDirectory>src/main/java</sourceDirectory>
+    <unitTestSourceDirectory>src/test/java</unitTestSourceDirectory>
+    <unitTest>
+      <includes>
+        <include>**/*Test.java</include>
+      </includes>
+      <excludes>
+	<exclude>**/Abstract*</exclude>
+      </excludes>
+    </unitTest>
+    <resources/>
+  </build>
+
+  <reports>
+    <report>maven-jxr-plugin</report>
+    <report>maven-junit-report-plugin</report>
+    <report>maven-javadoc-plugin</report>
+    <report>maven-cobertura-plugin</report>
+  </reports>
+</project>

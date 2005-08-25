@@ -1,0 +1,86 @@
+
+body
+{
+  color:  rgb(20%,20%,20%);
+}
+
+#masthead
+{
+  border-color:  rgb(5%,5%,50%);
+}
+
+#masthead a
+{
+  color: rgb(20%,20%,20%);
+}
+
+#masthead h1
+{
+  background:  rgb(90%,90%,100%) url(../images/dvl1.png);
+}
+
+#masthead h1 span
+{
+  background:  rgb(85%,85%,100%);
+}
+
+#main
+{
+  border-color:  rgb(90%,90%,90%);
+}
+
+#content a
+{
+  color: rgb(0%,0%,0%);
+}
+
+#content table
+{
+  border-color:  rgb(50%,50%,50%);
+}
+
+#content th
+{
+  background:  rgb(90%,90%,90%);
+  border-color:  rgb(20%,20%,20%);
+}
+
+#content .a td
+{
+  background:  rgb(98%,98%,98%);
+}
+
+#content .b td
+{
+  background:  rgb(95%,95%,95%);
+}
+
+#source
+{
+  border-color:  rgb(50%,50%,50%);
+}
+
+#inline-nav a
+{
+  color: rgb(0%,0%,0%);
+}
+
+#sidebar
+{
+  border-color:  rgb(90%,90%,90%);
+}
+
+#sidebar a
+{
+  color: rgb(0%,0%,0%);
+}
+
+a:hover
+{
+  background-color:  rgb(90%,90%,100%);
+}
+
+#footer a
+{
+  color: rgb(0%,0%,0%);
+}
