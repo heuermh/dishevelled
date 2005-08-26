@@ -59,10 +59,7 @@
     </developer>
   </developers>
 
-  <dependencies>
-    <!-- TODO:  this must currently be downloaded manually, what repository is it in? -->
-    <dependency><groupId>maven</groupId><artifactId>maven-checkstyle-plugin</artifactId><version>3.0-SNAPSHOT</version><type>plugin</type></dependency>
-  </dependencies>
+  <dependencies/>
 
   <build>
     <nagEmailAddress>dishevelled-devel@lists.sourceforge.net</nagEmailAddress>
@@ -74,6 +71,5 @@
   <reports>
     <report>maven-jxr-plugin</report>
     <report>maven-javadoc-plugin</report>
-    <report>maven-checkstyle-plugin</report>
   </reports>
 </project>
