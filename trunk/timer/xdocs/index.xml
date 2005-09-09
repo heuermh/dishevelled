@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+
+    dsh-timer  A simple timer with nanosecond resolution and summary
+    statistics on recorded elapsed times.
+    Copyright (c) 2004-2005 held jointly by the individual authors.
+
+    This library is free software; you can redistribute it and/or modify it
+    under the terms of the GNU Lesser General Public License as published
+    by the Free Software Foundation; either version 2.1 of the License, or (at
+    your option) any later version.
+
+    This library is distributed in the hope that it will be useful, but WITHOUT
+    ANY WARRANTY; with out even the implied warranty of MERCHANTABILITY or
+    FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
+    License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with this library;  if not, write to the Free Software Foundation,
+    Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307  USA.
+
+    > http://www.gnu.org/copyleft/lesser.html
+    > http://www.opensource.org/licenses/lgpl-license.php
+
+-->
+<document>
+  <properties>
+    <title>dishevelled.org timer</title>
+  </properties>
+
+<body>
+<section name="Summary">
+
+<p>
+Provides a simple timer class with nanosecond resolution and summary
+statistics on recorded elapsed times.</p>
+
+<p>
+For example:
+<source>
+Timer t = new Timer();
+for (int i = 0; i &lt; 100; i++) {
+  t.start();
+  // ... the code being measured ...
+  t.stop();
+}
+
+System.out.println("timer results, n=" + t.size());
+System.out.println("  mean=" + t.mean() + " stdev=" + t.standardDeviation());
+System.out.println("  min=" + t.min() + " max=" + t.max());
+</source>
+</p>
+
+<p>
+The recorded times themselves are not preserved, however, only
+the summary statistics.  As a consequence <code>start()</code> and
+<code>stop()</code> can be called many number of times without
+requiring large amounts of memory.
+</p>
+
+</section>
+
+<section name="Acknowledgements">
+
+  <ul>
+    <li>Powered by <a href="http://maven.apache.org">Maven</a>.</li>
+    <li>Project hosting by <a href="http://www.dev.java.net">java.net</a>.</li>
+  </ul>
+</section>
+
+</body>
+</document>
