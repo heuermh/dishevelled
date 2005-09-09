@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project>
+  <pomVersion>3</pomVersion>
+
+  <id>dsh-timer</id>
+  <groupId>org.dishevelled</groupId>
+  <artifactId>dsh-timer</artifactId>
+  <name>dishevelled.org timer</name>
+  <currentVersion>SNAPSHOT</currentVersion>
+
+  <organization>
+    <name>dishevelled.org</name>
+    <url>http://www.dishevelled.org/</url>
+  </organization>
+
+  <inceptionYear>2004</inceptionYear>
+  <package>org.dishevelled.timer</package>
+
+  <url>http://www.dishevelled.org</url>
+  <siteAddress>www.dishevelled.org</siteAddress>
+  <siteDirectory>/home/groups/d/di/dishevelled/htdocs/timer</siteDirectory>
+  <distributionDirectory>/home/groups/d/di/dishevelled/htdocs/timer/dist</distributionDirectory>
+
+  <repository>
+    <connection>scm:cvs:pserver:anonymous@cvs.sourceforge.net:/cvsroot/dishevelled:dishevelled/timer</connection>
+    <developerConnection>scm:cvs:ext:heuermh@cvs.sourceforge.net:/cvsroot/dishevelled:dishevelled/timer</developerConnection>
+    <url>http://cvs.sourceforge.net/viewcvs.py/dishevelled/dishevelled/timer</url>
+  </repository>
+
+  <mailingLists>
+    <mailingList>
+      <name>dishevelled.org announce mailing list</name>
+      <subscribe>dishevelled-announce-subscribe@lists.sourceforge.net</subscribe>
+      <unsubscribe>dishevelled-announce-unsubscribe@lists.sourceforge.net</unsubscribe>
+    </mailingList>
+
+    <mailingList>
+      <name>dishevelled.org cvs commit mailing list</name>
+      <subscribe>dishevelled-cvs-subscribe@lists.sourceforge.net</subscribe>
+      <unsubscribe>dishevelled-cvs-unsubscribe@lists.sourceforge.net</unsubscribe>
+    </mailingList>
+
+    <mailingList>
+      <name>dishevelled.org developer mailing list</name>
+      <subscribe>dishevelled-devel-subscribe@lists.sourceforge.net</subscribe>
+      <unsubscribe>dishevelled-devel-unsubscribe@lists.sourceforge.net</unsubscribe>
+    </mailingList>
+  </mailingLists>
+
+  <developers>
+   <developer>
+      <name>Michael Heuer</name>
+      <id>heuermh</id>
+      <email>heuermh@users.sourceforge.net</email>
+      <organization>dishevelled.org</organization>
+      <roles>
+        <role>Java Developer</role>
+      </roles>
+    </developer>
+  </developers>
+
+  <dependencies>
+    <dependency>
+      <groupId>colt</groupId><artifactId>colt</artifactId><version>1.0.3</version>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <nagEmailAddress>dishevelled-devel@lists.sourceforge.net</nagEmailAddress>
+    <sourceDirectory>src/main/java</sourceDirectory>
+    <unitTestSourceDirectory>src/test/java</unitTestSourceDirectory>
+    <unitTest>
+      <includes>
+        <include>**/*Test.java</include>
+      </includes>
+      <excludes>
+	<exclude>**/Abstract*</exclude>
+      </excludes>
+    </unitTest>
+    <resources/>
+  </build>
+
+  <reports>
+    <report>maven-jxr-plugin</report>
+    <report>maven-junit-report-plugin</report>
+    <report>maven-javadoc-plugin</report>
+    <report>maven-cobertura-plugin</report>
+  </reports>
+</project>
