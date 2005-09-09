@@ -61,6 +61,11 @@ Layout manager(s) for lightweight components.<br/>
 </p>
 
 <p>
+Simple timer class with nanosecond resolution and summary statistics on recorded elapsed times.<br/>
+&gt; <a href="timer">http://www.dishevelled.org/timer</a>
+</p>
+
+<p>
 Weighted map interface and implementation.<br/>
 &gt; <a href="weighted">http://www.dishevelled.org/weighted</a>
 </p>
