@@ -24,6 +24,7 @@
 package org.dishevelled.commandline.argument;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 import java.util.Date;
 
@@ -59,7 +60,7 @@ public final class DateArgument
         throws Exception
     {
         DateFormat df = DateFormat.getDateInstance();
-        df.setLenient(true);
+        ((SimpleDateFormat) df).applyPattern("yyyy-MM-dd");
         return df.parse(s);
     }
 }

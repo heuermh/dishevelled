@@ -23,7 +23,16 @@
 */
 package org.dishevelled.commandline.argument;
 
+import java.util.Date;
+import java.util.List;
+import java.util.Arrays;
+
 import junit.framework.TestCase;
+
+import org.dishevelled.commandline.Argument;
+import org.dishevelled.commandline.CommandLine;
+import org.dishevelled.commandline.CommandLineParser;
+import org.dishevelled.commandline.CommandLineParseException;
 
 /**
  * Unit test for DateArgument.
@@ -45,5 +54,119 @@ public class DateArgumentTest
         assertTrue("da isRequired", da.isRequired());
         assertFalse("da wasFound == false", da.wasFound());
         assertEquals("da value == null", null, da.getValue());
+    }
+
+    public void testValidArgumentShort()
+        throws CommandLineParseException
+    {
+        Argument<Date> dateArgument = new DateArgument("d", "date-argument", "Date argument", true);
+        List<Argument<?>> arguments = Arrays.asList(new Argument<?>[] { dateArgument });
+        List<String> values = Arrays.asList(new String[] { "2001-07-04" });
+
+        for (String value : values)
+        {
+            String[] args = new String[] { "-d", value };
+            CommandLine commandLine = new CommandLine(args);
+            CommandLineParser.parse(commandLine, arguments);
+
+            assertNotNull("-d not null", dateArgument.getValue());
+        }
+    }
+
+    public void testValidArgumentLong()
+        throws CommandLineParseException
+    {
+        Argument<Date> dateArgument = new DateArgument("d", "date-argument", "Date argument", true);
+        List<Argument<?>> arguments = Arrays.asList(new Argument<?>[] { dateArgument });
+        List<String> values = Arrays.asList(new String[] { "2001-07-04" });
+
+        for (String value : values)
+        {
+            String[] args = new String[] { "--date-argument", value };
+            CommandLine commandLine = new CommandLine(args);
+            CommandLineParser.parse(commandLine, arguments);
+
+            assertNotNull("-d not null", dateArgument.getValue());
+        }
+    }
+
+    public void testInvalidArgumentShort()
+    {
+        Argument<Date> dateArgument = new DateArgument("d", "date-argument", "Date argument", true);
+        List<Argument<?>> arguments = Arrays.asList(new Argument<?>[] { dateArgument });
+        List<String> values = Arrays.asList(new String[] { "foo", "bar" });
+
+        for (String value : values)
+        {
+            try
+            {
+                String[] args = new String[] { "-d", value };
+                CommandLine commandLine = new CommandLine(args);
+                CommandLineParser.parse(commandLine, arguments);
+
+                fail("-d expected CommandLineParseException");
+            }
+            catch (CommandLineParseException e)
+            {
+                // expected
+            }
+        }
+    }
+
+    public void testInvalidArgumentLong()
+    {
+        Argument<Date> dateArgument = new DateArgument("d", "date-argument", "Date argument", true);
+        List<Argument<?>> arguments = Arrays.asList(new Argument<?>[] { dateArgument });
+        List<String> values = Arrays.asList(new String[] { "foo", "bar" });
+
+        for (String value : values)
+        {
+            try
+            {
+                String[] args = new String[] { "--date-argument", value };
+                CommandLine commandLine = new CommandLine(args);
+                CommandLineParser.parse(commandLine, arguments);
+
+                fail("--date-argument expected CommandLineParseException");
+            }
+            catch (CommandLineParseException e)
+            {
+                // expected
+            }
+        }
+    }
+
+    public void testRequiredArgument()
+    {
+        try
+        {
+            Argument<Date> dateArgument = new DateArgument("d", "date-argument", "Date argument", true);
+            List<Argument<?>> arguments = Arrays.asList(new Argument<?>[] { dateArgument });
+
+            String[] args = new String[] { "not-an-argument", "not-a-date" };
+            CommandLine commandLine = new CommandLine(args);
+            CommandLineParser.parse(commandLine, arguments);
+
+            fail("not-an-argument expected CommandLineParseException");
+        }
+        catch (CommandLineParseException e)
+        {
+            // expected
+        }
+    }
+
+    public void testNotRequiredArgument()
+        throws CommandLineParseException
+    {
+        Argument<Date> dateArgument = new DateArgument("d", "date-argument", "Date argument", false);
+        List<Argument<?>> arguments = Arrays.asList(new Argument<?>[] { dateArgument });
+
+        String[] args = new String[] { "not-an-argument", "not-a-date" };
+        CommandLine commandLine = new CommandLine(args);
+        CommandLineParser.parse(commandLine, arguments);
+
+        assertFalse("dateArgument isRequired == false", dateArgument.isRequired());
+        assertFalse("dateArgument wasFound == false", dateArgument.wasFound());
+        assertEquals("dateArgument value == null", null, dateArgument.getValue());
     }
 }

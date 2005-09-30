@@ -87,7 +87,6 @@ public class CharacterArgumentTest
 
             assertNotNull("-c not null", characterArgument.getValue());
         }
-
     }
 
     public void testInvalidArgumentShort()

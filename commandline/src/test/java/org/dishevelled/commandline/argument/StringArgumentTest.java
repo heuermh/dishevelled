@@ -23,13 +23,21 @@
 */
 package org.dishevelled.commandline.argument;
 
+import java.util.List;
+import java.util.Arrays;
+
 import junit.framework.TestCase;
+
+import org.dishevelled.commandline.Argument;
+import org.dishevelled.commandline.CommandLine;
+import org.dishevelled.commandline.CommandLineParser;
+import org.dishevelled.commandline.CommandLineParseException;
 
 /**
  * Unit test for StringArgument.
  *
  * @author  Michael Heuer
- * @version $Revision$ $String$
+ * @version $Revision$ $Date$
  */
 public class StringArgumentTest
     extends TestCase
@@ -45,5 +53,121 @@ public class StringArgumentTest
         assertTrue("sa isRequired", sa.isRequired());
         assertFalse("sa wasFound == false", sa.wasFound());
         assertEquals("sa value == null", null, sa.getValue());
+    }
+
+    public void testValidArgumentShort()
+        throws CommandLineParseException
+    {
+        Argument<String> stringArgument = new StringArgument("s", "string-argument", "String argument", true);
+        List<Argument<?>> arguments = Arrays.asList(new Argument<?>[] { stringArgument });
+        List<String> values = Arrays.asList(new String[] { "foo" });
+
+        for (String value : values)
+        {
+            String[] args = new String[] { "-s", value };
+            CommandLine commandLine = new CommandLine(args);
+            CommandLineParser.parse(commandLine, arguments);
+
+            assertNotNull("-s " + value + " not null", stringArgument.getValue());
+        }
+    }
+
+    public void testValidArgumentLong()
+        throws CommandLineParseException
+    {
+        Argument<String> stringArgument = new StringArgument("s", "string-argument", "String argument", true);
+        List<Argument<?>> arguments = Arrays.asList(new Argument<?>[] { stringArgument });
+        List<String> values = Arrays.asList(new String[] { "foo" });
+
+        for (String value : values)
+        {
+            String[] args = new String[] { "--string-argument", value };
+            CommandLine commandLine = new CommandLine(args);
+            CommandLineParser.parse(commandLine, arguments);
+
+            assertNotNull("--string-argument " + value + " not null", stringArgument.getValue());
+        }
+    }
+
+    /*
+    public void testInvalidArgumentShort()
+    {
+        Argument<String> stringArgument = new StringArgument("d", "string-argument", "String argument", true);
+        List<Argument<?>> arguments = Arrays.asList(new Argument<?>[] { stringArgument });
+        List<String> values = Arrays.asList(new String[] { "not-a-string" });
+
+        for (String value : values)
+        {
+            try
+            {
+                String[] args = new String[] { "-d", value };
+                CommandLine commandLine = new CommandLine(args);
+                CommandLineParser.parse(commandLine, arguments);
+
+                fail("-d " + value + " expected CommandLineParseException");
+            }
+            catch (CommandLineParseException e)
+            {
+                // expected
+            }
+        }
+    }
+
+    public void testInvalidArgumentLong()
+    {
+        Argument<String> stringArgument = new StringArgument("d", "string-argument", "String argument", true);
+        List<Argument<?>> arguments = Arrays.asList(new Argument<?>[] { stringArgument });
+        List<String> values = Arrays.asList(new String[] { "not-a-string" });
+
+        for (String value : values)
+        {
+            try
+            {
+                String[] args = new String[] { "--string-argument", value };
+                CommandLine commandLine = new CommandLine(args);
+                CommandLineParser.parse(commandLine, arguments);
+
+                fail("--string-argument " + value + " expected CommandLineParseException");
+            }
+            catch (CommandLineParseException e)
+            {
+                // expected
+            }
+        }
+    }
+    */
+
+    public void testRequiredArgument()
+    {
+        try
+        {
+            Argument<String> stringArgument = new StringArgument("s", "string-argument", "String argument", true);
+            List<Argument<?>> arguments = Arrays.asList(new Argument<?>[] { stringArgument });
+
+            String[] args = new String[] { "not-an-argument" };
+            CommandLine commandLine = new CommandLine(args);
+            CommandLineParser.parse(commandLine, arguments);
+
+            fail("not-an-argument expected CommandLineParseException");
+        }
+        catch (CommandLineParseException e)
+        {
+            // expected
+        }
+    }
+
+    public void testNotRequiredArgument()
+        throws CommandLineParseException
+    {
+        Argument<String> stringArgument = new StringArgument("s", "string-argument", "String argument", false);
+        List<Argument<?>> arguments = Arrays.asList(new Argument<?>[] { stringArgument });
+
+        String[] args = new String[] { "not-an-argument" };
+        CommandLine commandLine = new CommandLine(args);
+        CommandLineParser.parse(commandLine, arguments);
+
+        assertFalse("stringArgument isRequired == false", stringArgument.isRequired());
+        assertFalse("stringArgument wasFound == false", stringArgument.wasFound());
+        assertEquals("stringArgument value == null", null, stringArgument.getValue());
     }
 }

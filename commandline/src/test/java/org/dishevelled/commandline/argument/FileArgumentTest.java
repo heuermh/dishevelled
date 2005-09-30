@@ -23,13 +23,23 @@
 */
 package org.dishevelled.commandline.argument;
 
+import java.io.File;
+
+import java.util.List;
+import java.util.Arrays;
+
 import junit.framework.TestCase;
+
+import org.dishevelled.commandline.Argument;
+import org.dishevelled.commandline.CommandLine;
+import org.dishevelled.commandline.CommandLineParser;
+import org.dishevelled.commandline.CommandLineParseException;
 
 /**
  * Unit test for FileArgument.
  *
  * @author  Michael Heuer
- * @version $Revision$ $File$
+ * @version $Revision$ $Date$
  */
 public class FileArgumentTest
     extends TestCase
@@ -45,5 +55,123 @@ public class FileArgumentTest
         assertTrue("fa isRequired", fa.isRequired());
         assertFalse("fa wasFound == false", fa.wasFound());
         assertEquals("fa value == null", null, fa.getValue());
+    }
+
+    public void testValidArgumentShort()
+        throws CommandLineParseException
+    {
+        Argument<File> fileArgument = new FileArgument("f", "file-argument", "File argument", true);
+        List<Argument<?>> arguments = Arrays.asList(new Argument<?>[] { fileArgument });
+        List<String> values = Arrays.asList(new String[] { "foo" });
+
+        for (String value : values)
+        {
+            String[] args = new String[] { "-f", value };
+            CommandLine commandLine = new CommandLine(args);
+            CommandLineParser.parse(commandLine, arguments);
+
+            assertTrue("fileArgument wasFound == true", fileArgument.wasFound());
+            assertNotNull("-d not null", fileArgument.getValue());
+        }
+    }
+
+    public void testValidArgumentLong()
+        throws CommandLineParseException
+    {
+        Argument<File> fileArgument = new FileArgument("f", "file-argument", "File argument", true);
+        List<Argument<?>> arguments = Arrays.asList(new Argument<?>[] { fileArgument });
+        List<String> values = Arrays.asList(new String[] { "foo" });
+
+        for (String value : values)
+        {
+            String[] args = new String[] { "--file-argument", value };
+            CommandLine commandLine = new CommandLine(args);
+            CommandLineParser.parse(commandLine, arguments);
+
+            assertTrue("fileArgument wasFound == true", fileArgument.wasFound());
+            assertNotNull("--file-argument " + value + " not null", fileArgument.getValue());
+        }
+    }
+
+    /*
+    public void testInvalidArgumentShort()
+    {
+        Argument<File> fileArgument = new FileArgument("f", "file-argument", "File argument", true);
+        List<Argument<?>> arguments = Arrays.asList(new Argument<?>[] { fileArgument });
+        List<String> values = Arrays.asList(new String[] { ":" });
+
+        for (String value : values)
+        {
+            try
+            {
+                String[] args = new String[] { "-f", value };
+                CommandLine commandLine = new CommandLine(args);
+                CommandLineParser.parse(commandLine, arguments);
+
+                fail("-f " + value + " expected CommandLineParseException");
+            }
+            catch (CommandLineParseException e)
+            {
+                // expected
+            }
+        }
+    }
+
+    public void testInvalidArgumentLong()
+    {
+        Argument<File> fileArgument = new FileArgument("f", "file-argument", "File argument", true);
+        List<Argument<?>> arguments = Arrays.asList(new Argument<?>[] { fileArgument });
+        List<String> values = Arrays.asList(new String[] { ":" });
+
+        for (String value : values)
+        {
+            try
+            {
+                String[] args = new String[] { "--file-argument", value };
+                CommandLine commandLine = new CommandLine(args);
+                CommandLineParser.parse(commandLine, arguments);
+
+                fail("--file-argument " + value + " expected CommandLineParseException");
+            }
+            catch (CommandLineParseException e)
+            {
+                // expected
+            }
+        }
+    }
+    */
+
+    public void testRequiredArgument()
+    {
+        try
+        {
+            Argument<File> fileArgument = new FileArgument("f", "file-argument", "File argument", true);
+            List<Argument<?>> arguments = Arrays.asList(new Argument<?>[] { fileArgument });
+
+            String[] args = new String[] { "not-an-argument" };
+            CommandLine commandLine = new CommandLine(args);
+            CommandLineParser.parse(commandLine, arguments);
+
+            fail("not-an-argument expected CommandLineParseException");
+        }
+        catch (CommandLineParseException e)
+        {
+            // expected
+        }
+    }
+
+    public void testNotRequiredArgument()
+        throws CommandLineParseException
+    {
+        Argument<File> fileArgument = new FileArgument("f", "file-argument", "File argument", false);
+        List<Argument<?>> arguments = Arrays.asList(new Argument<?>[] { fileArgument });
+
+        String[] args = new String[] { "not-an-argument" };
+        CommandLine commandLine = new CommandLine(args);
+        CommandLineParser.parse(commandLine, arguments);
+
+        assertFalse("fileArgument isRequired == false", fileArgument.isRequired());
+        assertFalse("fileArgument wasFound == false", fileArgument.wasFound());
+        assertEquals("fileArgument value == null", null, fileArgument.getValue());
     }
 }
