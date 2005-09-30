@@ -23,13 +23,23 @@
 */
 package org.dishevelled.commandline.argument;
 
+import java.net.URL;
+
+import java.util.List;
+import java.util.Arrays;
+
 import junit.framework.TestCase;
+
+import org.dishevelled.commandline.Argument;
+import org.dishevelled.commandline.CommandLine;
+import org.dishevelled.commandline.CommandLineParser;
+import org.dishevelled.commandline.CommandLineParseException;
 
 /**
  * Unit test for URLArgument.
  *
  * @author  Michael Heuer
- * @version $Revision$ $URL$
+ * @version $Revision$ $Date$
  */
 public class URLArgumentTest
     extends TestCase
@@ -45,5 +55,119 @@ public class URLArgumentTest
         assertTrue("ua isRequired", ua.isRequired());
         assertFalse("ua wasFound == false", ua.wasFound());
         assertEquals("ua value == null", null, ua.getValue());
+    }
+
+    public void testValidArgumentShort()
+        throws CommandLineParseException
+    {
+        Argument<URL> URLArgument = new URLArgument("u", "URL-argument", "URL argument", true);
+        List<Argument<?>> arguments = Arrays.asList(new Argument<?>[] { URLArgument });
+        List<String> values = Arrays.asList(new String[] { "http://localhost" });
+
+        for (String value : values)
+        {
+            String[] args = new String[] { "-u", value };
+            CommandLine commandLine = new CommandLine(args);
+            CommandLineParser.parse(commandLine, arguments);
+
+            assertNotNull("-u " + value + " not null", URLArgument.getValue());
+        }
+    }
+
+    public void testValidArgumentLong()
+        throws CommandLineParseException
+    {
+        Argument<URL> URLArgument = new URLArgument("u", "URL-argument", "URL argument", true);
+        List<Argument<?>> arguments = Arrays.asList(new Argument<?>[] { URLArgument });
+        List<String> values = Arrays.asList(new String[] { "http://localhost" });
+
+        for (String value : values)
+        {
+            String[] args = new String[] { "--URL-argument", value };
+            CommandLine commandLine = new CommandLine(args);
+            CommandLineParser.parse(commandLine, arguments);
+
+            assertNotNull("--URL-argument " + value + " not null", URLArgument.getValue());
+        }
+    }
+
+    public void testInvalidArgumentShort()
+    {
+        Argument<URL> URLArgument = new URLArgument("u", "URL-argument", "URL argument", true);
+        List<Argument<?>> arguments = Arrays.asList(new Argument<?>[] { URLArgument });
+        List<String> values = Arrays.asList(new String[] { "not-a-URL" });
+
+        for (String value : values)
+        {
+            try
+            {
+                String[] args = new String[] { "-u", value };
+                CommandLine commandLine = new CommandLine(args);
+                CommandLineParser.parse(commandLine, arguments);
+
+                fail("-u " + value + " expected CommandLineParseException");
+            }
+            catch (CommandLineParseException e)
+            {
+                // expected
+            }
+        }
+    }
+
+    public void testInvalidArgumentLong()
+    {
+        Argument<URL> URLArgument = new URLArgument("u", "URL-argument", "URL argument", true);
+        List<Argument<?>> arguments = Arrays.asList(new Argument<?>[] { URLArgument });
+        List<String> values = Arrays.asList(new String[] { "not-a-URL" });
+
+        for (String value : values)
+        {
+            try
+            {
+                String[] args = new String[] { "--URL-argument", value };
+                CommandLine commandLine = new CommandLine(args);
+                CommandLineParser.parse(commandLine, arguments);
+
+                fail("--URL-argument " + value + " expected CommandLineParseException");
+            }
+            catch (CommandLineParseException e)
+            {
+                // expected
+            }
+        }
+    }
+
+    public void testRequiredArgument()
+    {
+        try
+        {
+            Argument<URL> URLArgument = new URLArgument("u", "URL-argument", "URL argument", true);
+            List<Argument<?>> arguments = Arrays.asList(new Argument<?>[] { URLArgument });
+
+            String[] args = new String[] { "not-an-argument" };
+            CommandLine commandLine = new CommandLine(args);
+            CommandLineParser.parse(commandLine, arguments);
+
+            fail("not-an-argument expected CommandLineParseException");
+        }
+        catch (CommandLineParseException e)
+        {
+            // expected
+        }
+    }
+
+    public void testNotRequiredArgument()
+        throws CommandLineParseException
+    {
+        Argument<URL> URLArgument = new URLArgument("u", "URL-argument", "URL argument", false);
+        List<Argument<?>> arguments = Arrays.asList(new Argument<?>[] { URLArgument });
+
+        String[] args = new String[] { "not-an-argument" };
+        CommandLine commandLine = new CommandLine(args);
+        CommandLineParser.parse(commandLine, arguments);
+
+        assertFalse("URLArgument isRequired == false", URLArgument.isRequired());
+        assertFalse("URLArgument wasFound == false", URLArgument.wasFound());
+        assertEquals("URLArgument value == null", null, URLArgument.getValue());
     }
 }

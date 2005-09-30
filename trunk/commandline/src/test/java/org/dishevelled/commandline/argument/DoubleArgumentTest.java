@@ -23,13 +23,21 @@
 */
 package org.dishevelled.commandline.argument;
 
+import java.util.List;
+import java.util.Arrays;
+
 import junit.framework.TestCase;
+
+import org.dishevelled.commandline.Argument;
+import org.dishevelled.commandline.CommandLine;
+import org.dishevelled.commandline.CommandLineParser;
+import org.dishevelled.commandline.CommandLineParseException;
 
 /**
  * Unit test for DoubleArgument.
  *
  * @author  Michael Heuer
- * @version $Revision$ $Double$
+ * @version $Revision$ $Date$
  */
 public class DoubleArgumentTest
     extends TestCase
@@ -45,5 +53,119 @@ public class DoubleArgumentTest
         assertTrue("da isRequired", da.isRequired());
         assertFalse("da wasFound == false", da.wasFound());
         assertEquals("da value == null", null, da.getValue());
+    }
+
+    public void testValidArgumentShort()
+        throws CommandLineParseException
+    {
+        Argument<Double> doubleArgument = new DoubleArgument("d", "double-argument", "Double argument", true);
+        List<Argument<?>> arguments = Arrays.asList(new Argument<?>[] { doubleArgument });
+        List<String> values = Arrays.asList(new String[] { "1.0d" });
+
+        for (String value : values)
+        {
+            String[] args = new String[] { "-d", value };
+            CommandLine commandLine = new CommandLine(args);
+            CommandLineParser.parse(commandLine, arguments);
+
+            assertNotNull("-d not null", doubleArgument.getValue());
+        }
+    }
+
+    public void testValidArgumentLong()
+        throws CommandLineParseException
+    {
+        Argument<Double> doubleArgument = new DoubleArgument("d", "double-argument", "Double argument", true);
+        List<Argument<?>> arguments = Arrays.asList(new Argument<?>[] { doubleArgument });
+        List<String> values = Arrays.asList(new String[] { "1.0d" });
+
+        for (String value : values)
+        {
+            String[] args = new String[] { "--double-argument", value };
+            CommandLine commandLine = new CommandLine(args);
+            CommandLineParser.parse(commandLine, arguments);
+
+            assertNotNull("--double-argument " + value + " not null", doubleArgument.getValue());
+        }
+    }
+
+    public void testInvalidArgumentShort()
+    {
+        Argument<Double> doubleArgument = new DoubleArgument("d", "double-argument", "Double argument", true);
+        List<Argument<?>> arguments = Arrays.asList(new Argument<?>[] { doubleArgument });
+        List<String> values = Arrays.asList(new String[] { "not-a-double" });
+
+        for (String value : values)
+        {
+            try
+            {
+                String[] args = new String[] { "-d", value };
+                CommandLine commandLine = new CommandLine(args);
+                CommandLineParser.parse(commandLine, arguments);
+
+                fail("-d " + value + " expected CommandLineParseException");
+            }
+            catch (CommandLineParseException e)
+            {
+                // expected
+            }
+        }
+    }
+
+    public void testInvalidArgumentLong()
+    {
+        Argument<Double> doubleArgument = new DoubleArgument("d", "double-argument", "Double argument", true);
+        List<Argument<?>> arguments = Arrays.asList(new Argument<?>[] { doubleArgument });
+        List<String> values = Arrays.asList(new String[] { "not-a-double" });
+
+        for (String value : values)
+        {
+            try
+            {
+                String[] args = new String[] { "--double-argument", value };
+                CommandLine commandLine = new CommandLine(args);
+                CommandLineParser.parse(commandLine, arguments);
+
+                fail("--double-argument " + value + " expected CommandLineParseException");
+            }
+            catch (CommandLineParseException e)
+            {
+                // expected
+            }
+        }
+    }
+
+    public void testRequiredArgument()
+    {
+        try
+        {
+            Argument<Double> doubleArgument = new DoubleArgument("d", "double-argument", "Double argument", true);
+            List<Argument<?>> arguments = Arrays.asList(new Argument<?>[] { doubleArgument });
+
+            String[] args = new String[] { "not-an-argument", "not-a-double" };
+            CommandLine commandLine = new CommandLine(args);
+            CommandLineParser.parse(commandLine, arguments);
+
+            fail("not-an-argument expected CommandLineParseException");
+        }
+        catch (CommandLineParseException e)
+        {
+            // expected
+        }
+    }
+
+    public void testNotRequiredArgument()
+        throws CommandLineParseException
+    {
+        Argument<Double> doubleArgument = new DoubleArgument("d", "double-argument", "Double argument", false);
+        List<Argument<?>> arguments = Arrays.asList(new Argument<?>[] { doubleArgument });
+
+        String[] args = new String[] { "not-an-argument", "not-a-double" };
+        CommandLine commandLine = new CommandLine(args);
+        CommandLineParser.parse(commandLine, arguments);
+
+        assertFalse("doubleArgument isRequired == false", doubleArgument.isRequired());
+        assertFalse("doubleArgument wasFound == false", doubleArgument.wasFound());
+        assertEquals("doubleArgument value == null", null, doubleArgument.getValue());
     }
 }
