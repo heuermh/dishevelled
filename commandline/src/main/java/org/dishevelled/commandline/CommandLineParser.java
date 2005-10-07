@@ -84,7 +84,14 @@ public final class CommandLineParser
         {
             if (a.isRequired() && !(a.wasFound()))
             {
-                throw new CommandLineParseException("required argument " + a + " not found");
+                StringBuffer sb = new StringBuffer();
+                sb.append("required argument -");
+                sb.append(a.getShortName());
+                sb.append(", --");
+                sb.append(a.getLongName());
+                sb.append(" not found");
+
+                throw new CommandLineParseException(sb.toString());
             }
         }
     }
