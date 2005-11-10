@@ -1,0 +1,102 @@
+<?xml version="1.0"?>
+<!--
+
+    dsh-identify  Lightweight components for identifiable beans.
+    Copyright (c) 2003-2005 held jointly by the individual authors.
+
+    This library is free software; you can redistribute it and/or modify it
+    under the terms of the GNU Lesser General Public License as published
+    by the Free Software Foundation; either version 2.1 of the License, or (at
+    your option) any later version.
+
+    This library is distributed in the hope that it will be useful, but WITHOUT
+    ANY WARRANTY; with out even the implied warranty of MERCHANTABILITY or
+    FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
+    License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with this library;  if not, write to the Free Software Foundation,
+    Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307  USA.
+
+    > http://www.gnu.org/copyleft/lesser.html
+    > http://www.opensource.org/licenses/lgpl-license.php
+
+-->
+<document>
+
+  <properties>
+    <title>dishevelled.org identify</title>
+  </properties>
+
+<body>
+<section name="Summary">
+<p>
+dishevelled.org <b>identify</b> provides lightweight components for identifiable
+beans, those marked as having a name and an icon bundle.  The identify project has
+a dependency on the dishevelled.org <a href="http://www.dishevelled.org/iconbundle">iconbundle</a>
+project.
+</p>
+
+<p>
+A bean becomes identifiable by implementing the
+<a href="apidocs/org/dishevelled/identify/Identifiable.html">Identifiable</a> interface:
+<source>
+class MyBean
+    implements Identifiable
+{
+    /** Icon bundle. */
+    private static final IconBundle BNDL = new PNGIconBundle("mybean.png");
+
+
+    /** @see Identifiable */
+    public String getName()
+    {
+        return "MyBean";
+    }
+
+    /** @see Identifiable */
+    public IconBundle getIconBundle()
+    {
+        return BNDL;
+    }
+}
+</source>
+by having its BeanInfo class implement the
+<a href="apidocs/org/dishevelled/identify/IdentifiableBeanInfo.html">IdentifiableBeanInfo</a> interface:
+<source>
+class MyBeanInfo
+    extends SimpleBeanInfo
+    implements IdentifiableBeanInfo
+{
+    /** Icon bundle. */
+    private static final IconBundle BNDL = new PNGIconBundle("mybean.png");
+
+
+    /** @see IdentifiableBeanInfo */
+    public IconBundle getIconBundle()
+    {
+        return BNDL;
+    }
+
+    /** @see IdentifiableBeanInfo */
+    public int getNamePropertyIndex()
+    {
+        // return the index of a property descriptor to use as the "name" property
+        return 1;
+    }
+}
+</source>
+or by doing nothing and accepting the defaults as
+implemented in <a href="apidocs/org/dishevelled/identify/IdentifyUtils.html">IdentifyUtils</a>.
+</p>
+</section>
+
+<section name="Acknowledgements">
+  <ul>
+    <li>Powered by Apache <a href="http://maven.apache.org">Maven</a>.</li>
+    <li>Project hosting by <a href="http://sourceforge.net">SourceForge.net</a>.</li>
+  </ul>
+  <p><img src="http://sourceforge.net/sflogo.php?group_id=113165&amp;type=1" width="88" height="31" border="0" alt="SourceForge.net Logo"/></p>
+</section>
+</body>
+</document>
