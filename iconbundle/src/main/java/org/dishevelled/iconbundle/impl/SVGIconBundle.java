@@ -35,12 +35,6 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.UIManager;
 
-import org.apache.batik.transcoder.TranscoderInput;
-import org.apache.batik.transcoder.TranscoderOutput;
-import org.apache.batik.transcoder.TranscoderException;
-
-import org.apache.batik.transcoder.image.ImageTranscoder;
-
 import org.dishevelled.iconbundle.IconSize;
 import org.dishevelled.iconbundle.IconState;
 import org.dishevelled.iconbundle.IconBundle;
@@ -57,9 +51,6 @@ public final class SVGIconBundle
 {
     /** SVG document or somesuch? */
     private URL url;
-
-    /** Image transcoder. */
-    private BufferedImageTranscoder transcoder = new BufferedImageTranscoder();
 
 
     /**
@@ -121,22 +112,10 @@ public final class SVGIconBundle
             throw new IllegalArgumentException("size must not be null");
         }
 
-        int h = size.getHeight();
-        int w = size.getWidth();
+        int height = size.getHeight();
+        int width = size.getWidth();
 
-        transcoder.addTranscodingHint(ImageTranscoder.KEY_WIDTH, new Float(w));
-        transcoder.addTranscodingHint(ImageTranscoder.KEY_HEIGHT, new Float(h));
-
-        try
-        {
-            transcoder.transcode(new TranscoderInput(url.toString()), new TranscoderOutput());
-        }
-        catch (TranscoderException e)
-        {
-            // ignore
-        }
-
-        BufferedImage image = transcoder.getImage();
+        BufferedImage image = IconBundleUtils.readSVG(url, width, height);
 
         if (IconState.ACTIVE == state)
         {
