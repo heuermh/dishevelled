@@ -32,13 +32,21 @@ import java.awt.image.RescaleOp;
 import java.awt.image.BufferedImage;
 import java.awt.image.WritableRaster;
 
+import java.net.URL;
+
+import org.apache.batik.transcoder.TranscoderInput;
+import org.apache.batik.transcoder.TranscoderOutput;
+import org.apache.batik.transcoder.TranscoderException;
+
+import org.apache.batik.transcoder.image.ImageTranscoder;
+
 /**
  * IconBundle static utility class.
  *
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-final class IconBundleUtils
+public final class IconBundleUtils
 {
 
     /**
@@ -49,6 +57,37 @@ final class IconBundleUtils
         // empty
     }
 
+
+    /**
+     * Read the specified SVG URL and render it to a BufferedImage
+     * of the specified width and height.
+     *
+     * @param url url
+     * @param width width
+     * @param height height
+     * @return the specified SVG URL rendered to a BufferedImage of the
+     *    specified width and height
+     */
+    public static BufferedImage readSVG(final URL url, final int width, final int height)
+    {
+        BufferedImageTranscoder transcoder = new BufferedImageTranscoder();
+        transcoder.addTranscodingHint(ImageTranscoder.KEY_WIDTH, new Float(width));
+        transcoder.addTranscodingHint(ImageTranscoder.KEY_HEIGHT, new Float(height));
+
+        try
+        {
+            transcoder.transcode(new TranscoderInput(url.toString()), new TranscoderOutput());
+        }
+        catch (TranscoderException e)
+        {
+            // ignore
+        }
+
+        BufferedImage image = transcoder.getImage();
+        transcoder = null;
+
+        return image;
+    }
 
     /**
      * Make the specified source image active.
