@@ -48,6 +48,19 @@ IconBundle iconBundle = new SVGIconBundle(new File("text-x-generic.svg"));
 </source>
 </p>
 
+<blockquote>
+<b>New:</b><br/>
+A library has been created that allows static access to Tango Project icon bundles
+and icon sizes, taking full advantage of both the static .png icons for small sizes
+and the scalable .svg icons for larger sizes.
+<br/>
+<br/>
+See:<br/>
+&gt; <a href="http://www.dishevelled.org/iconbundle-tango">http://www.dishevelled.org/iconbundle-tango</a>
+<br/>
+<br/>
+</blockquote>
+
 <p>
 All variants of this base image, for different text directions, sizes, and states, are
 available from this icon bundle.  An AWT or Swing component may be passed to the icon
@@ -96,7 +109,7 @@ to cache images.
 </p>
 
 <p>
-The Tango Project icons are licensed under the <a href="http://creativecommons.org/licenses/by-sa/2.0/">Creative Commons Attribution Share-Alike license</a>.
+The Tango Project icons are licensed under the <a href="http://creativecommons.org/licenses/by-sa/2.5/">Creative Commons Attribution Share-Alike license</a>.
 </p>
 </section>
 
