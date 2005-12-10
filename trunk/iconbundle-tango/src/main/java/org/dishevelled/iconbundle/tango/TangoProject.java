@@ -68,7 +68,7 @@ public final class TangoProject
     public static final IconBundle ADDRESS_BOOK_NEW = new CachingIconBundle(new TangoProjectIconBundle("actions", "address-book-new"));
 
     /** Icon bundle for <code>actions/application-exit</code>. */
-    public static final IconBundle APPLICATION_EXIT = new CachingIconBundle(new TangoProjectIconBundle("actions", "application-exit"));
+    //public static final IconBundle APPLICATION_EXIT = new CachingIconBundle(new TangoProjectIconBundle("actions", "application-exit"));
 
     /** Icon bundle for <code>actions/appointment-new</code>. */
     public static final IconBundle APPOINTMENT_NEW = new CachingIconBundle(new TangoProjectIconBundle("actions", "appointment-new"));
@@ -80,7 +80,7 @@ public final class TangoProject
     public static final IconBundle CONTACT_NEW = new CachingIconBundle(new TangoProjectIconBundle("actions", "contact-new"));
 
     /** Icon bundle for <code>actions/dialog-cancel</code>. */
-    public static final IconBundle DIALOG_CANCEL = new CachingIconBundle(new TangoProjectIconBundle("actions", "dialog-cancel"));
+    //public static final IconBundle DIALOG_CANCEL = new CachingIconBundle(new TangoProjectIconBundle("actions", "dialog-cancel"));
 
     /** Icon bundle for <code>actions/document-new</code>. */
     public static final IconBundle DOCUMENT_NEW = new CachingIconBundle(new TangoProjectIconBundle("actions", "document-new"));
@@ -167,7 +167,7 @@ public final class TangoProject
     public static final IconBundle GO_FIRST = new CachingIconBundle(new TangoProjectIconBundle("actions", "go-first"));
 
     /** Icon bundle for <code>actions/go-home</code>. */
-    public static final IconBundle GO_HOME = new CachingIconBundle(new TangoProjectIconBundle("actions", "go-home"));
+    //public static final IconBundle GO_HOME = new CachingIconBundle(new TangoProjectIconBundle("actions", "go-home"));
 
     /** Icon bundle for <code>actions/go-jump</code>. */
     public static final IconBundle GO_JUMP = new CachingIconBundle(new TangoProjectIconBundle("actions", "go-jump"));
@@ -233,10 +233,10 @@ public final class TangoProject
     public static final IconBundle VIEW_REFRESH = new CachingIconBundle(new TangoProjectIconBundle("actions", "view-refresh"));
 
     /** Icon bundle for <code>actions/view-sort-ascending</code>. */
-    public static final IconBundle VIEW_SORT_ASCENDING = new CachingIconBundle(new TangoProjectIconBundle("actions", "view-sort-ascending"));
+    //public static final IconBundle VIEW_SORT_ASCENDING = new CachingIconBundle(new TangoProjectIconBundle("actions", "view-sort-ascending"));
 
     /** Icon bundle for <code>actions/view-sort-descending</code>. */
-    public static final IconBundle VIEW_SORT_DESCENDING = new CachingIconBundle(new TangoProjectIconBundle("actions", "view-sort-descending"));
+    //public static final IconBundle VIEW_SORT_DESCENDING = new CachingIconBundle(new TangoProjectIconBundle("actions", "view-sort-descending"));
 
     /** Icon bundle for <code>actions/window-new</code>. */
     public static final IconBundle WINDOW_NEW = new CachingIconBundle(new TangoProjectIconBundle("actions", "window-new"));
@@ -317,7 +317,7 @@ public final class TangoProject
     public static final IconBundle APPLICATIONS_ACCESSORIES = new CachingIconBundle(new TangoProjectIconBundle("categories", "applications-accessories"));
 
     /** Icon bundle for <code>categories/applications-development</code>. */
-    public static final IconBundle APPLICATIONS_DEVELOPMENT = new CachingIconBundle(new TangoProjectIconBundle("categories", "applications-development"));
+    //public static final IconBundle APPLICATIONS_DEVELOPMENT = new CachingIconBundle(new TangoProjectIconBundle("categories", "applications-development"));
 
     /** Icon bundle for <code>categories/applications-games</code>. */
     public static final IconBundle APPLICATIONS_GAMES = new CachingIconBundle(new TangoProjectIconBundle("categories", "applications-games"));
@@ -326,13 +326,13 @@ public final class TangoProject
     public static final IconBundle APPLICATIONS_GRAPHICS = new CachingIconBundle(new TangoProjectIconBundle("categories", "applications-graphics"));
 
     /** Icon bundle for <code>categories/applications-multimedia</code>. */
-    public static final IconBundle APPLICATIONS_MULTIMEDIA = new CachingIconBundle(new TangoProjectIconBundle("categories", "applications-multimedia"));
+    //public static final IconBundle APPLICATIONS_MULTIMEDIA = new CachingIconBundle(new TangoProjectIconBundle("categories", "applications-multimedia"));
 
     /** Icon bundle for <code>categories/applications-office</code>. */
-    public static final IconBundle APPLICATIONS_OFFICE = new CachingIconBundle(new TangoProjectIconBundle("categories", "applications-office"));
+    //public static final IconBundle APPLICATIONS_OFFICE = new CachingIconBundle(new TangoProjectIconBundle("categories", "applications-office"));
 
     /** Icon bundle for <code>categories/applications-system</code>. */
-    public static final IconBundle APPLICATIONS_SYSTEM = new CachingIconBundle(new TangoProjectIconBundle("categories", "applications-system"));
+    //public static final IconBundle APPLICATIONS_SYSTEM = new CachingIconBundle(new TangoProjectIconBundle("categories", "applications-system"));
 
     /** Icon bundle for <code>categories/preferences-desktop</code>. */
     public static final IconBundle PREFERENCES_DESKTOP = new CachingIconBundle(new TangoProjectIconBundle("categories", "preferences-desktop"));
@@ -437,7 +437,7 @@ public final class TangoProject
     public static final IconBundle NETWORK_WORKGROUP = new CachingIconBundle(new TangoProjectIconBundle("places", "network-workgroup"));
 
     /** Icon bundle for <code>places/start-here</code>. */
-    public static final IconBundle START_HERE = new CachingIconBundle(new TangoProjectIconBundle("places", "start-here"));
+    //public static final IconBundle START_HERE = new CachingIconBundle(new TangoProjectIconBundle("places", "start-here"));
 
     /** Icon bundle for <code>places/user-desktop</code>. */
     public static final IconBundle USER_DESKTOP = new CachingIconBundle(new TangoProjectIconBundle("places", "user-desktop"));
@@ -455,22 +455,22 @@ public final class TangoProject
     public static final IconBundle DIALOG_INFORMATION = new CachingIconBundle(new TangoProjectIconBundle("status", "dialog-information"));
 
     /** Icon bundle for <code>status/dialog-password</code>. */
-    public static final IconBundle DIALOG_PASSWORD = new CachingIconBundle(new TangoProjectIconBundle("status", "dialog-password"));
+    //public static final IconBundle DIALOG_PASSWORD = new CachingIconBundle(new TangoProjectIconBundle("status", "dialog-password"));
 
     /** Icon bundle for <code>status/dialog-question</code>. */
-    public static final IconBundle DIALOG_QUESTION = new CachingIconBundle(new TangoProjectIconBundle("status", "dialog-question"));
+    //public static final IconBundle DIALOG_QUESTION = new CachingIconBundle(new TangoProjectIconBundle("status", "dialog-question"));
 
     /** Icon bundle for <code>status/dialog-warning</code>. */
     public static final IconBundle DIALOG_WARNING = new CachingIconBundle(new TangoProjectIconBundle("status", "dialog-warning"));
 
     /** Icon bundle for <code>status/folder-drag-accept</code>. */
-    public static final IconBundle FOLDER_DRAG_ACCEPT = new CachingIconBundle(new TangoProjectIconBundle("status", "folder-drag-accept"));
+    //public static final IconBundle FOLDER_DRAG_ACCEPT = new CachingIconBundle(new TangoProjectIconBundle("status", "folder-drag-accept"));
 
     /** Icon bundle for <code>status/folder-open</code>. */
-    public static final IconBundle FOLDER_OPEN = new CachingIconBundle(new TangoProjectIconBundle("status", "folder-open"));
+    //public static final IconBundle FOLDER_OPEN = new CachingIconBundle(new TangoProjectIconBundle("status", "folder-open"));
 
     /** Icon bundle for <code>status/folder-visiting</code>. */
-    public static final IconBundle FOLDER_VISITING = new CachingIconBundle(new TangoProjectIconBundle("status", "folder-visiting"));
+    //public static final IconBundle FOLDER_VISITING = new CachingIconBundle(new TangoProjectIconBundle("status", "folder-visiting"));
 
     /** Icon bundle for <code>status/image-loading</code>. */
     public static final IconBundle IMAGE_LOADING = new CachingIconBundle(new TangoProjectIconBundle("status", "image-loading"));
@@ -479,5 +479,5 @@ public final class TangoProject
     public static final IconBundle IMAGE_MISSING = new CachingIconBundle(new TangoProjectIconBundle("status", "image-missing"));
 
     /** Icon bundle for <code>status/user-trash-full</code>. */
-    public static final IconBundle USER_TRASH_FULL = new CachingIconBundle(new TangoProjectIconBundle("status", "user-trash-full"));
+    //public static final IconBundle USER_TRASH_FULL = new CachingIconBundle(new TangoProjectIconBundle("status", "user-trash-full"));
 }
