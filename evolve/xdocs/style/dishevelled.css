@@ -1,0 +1,197 @@
+
+body
+{
+  font-size:  10pt;
+  font-family:  Luxi Sans, Lucida Sans Unicode, Lucida Grande, serif;
+}
+
+#skipper
+{
+  display:  none;
+}
+
+#masthead
+{
+  margin:  0;
+  border:  1px solid;
+}
+
+#masthead a
+{
+  text-decoration:  none;
+  border-width:  0;
+  border-style:  none;
+}
+
+#masthead h1
+{
+  font-family:  Amerigo BT, Georgia, Luxi Sans, sans-serif;
+  font-size: 160%;
+  font-style: normal;
+  font-weight: normal;
+  margin:  0;
+  padding: 2em 0em 0em 0em;
+}
+
+#masthead h1 span
+{
+  text-align: right;
+  padding: 2em 0.33em 0em 2em;
+}
+
+#main
+{
+  border:  1px solid;
+}
+
+#content
+{
+  margin: 2em 0em 0em 0em;
+  padding: 0em 1.5em 3em 1.5em;
+}
+
+#content h1
+{
+  margin: 0;
+  font-family:  Amerigo BT, Georgia, Luxi Sans, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 140%;
+}
+
+#content h2
+{
+  margin: 0.5em 0em 0em 0em;
+  font-family:  Amerigo BT, Georgia, Luxi Sans, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 120%;
+}
+
+#content h3
+{
+  margin: 0.5em 0em 0em 0em;
+  font-family:  Amerigo BT, Georgia, Luxi Sans, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 120%;
+}
+
+#content h4
+{
+  margin: 1.25em 0em 0em 0em;
+  font-family:  Amerigo BT, Georgia, Luxi Sans, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 110%;
+}
+
+#content p
+{
+  padding-left: 0.66em;
+  margin: 0.25em 0em 1.5em 0em;
+}
+
+#content ul, #content ol
+{
+  margin: 0.25em 0.5em 1em 2.5em;
+  padding: 0;
+}
+
+#content a
+{
+  text-decoration:  none;
+  border-width:  0px 0px 1px 0px;
+  border-style:  none none dotted none;
+}
+
+#content table
+{
+  width: 95%;
+  margin: 0.5em 0em 1.5em 0.66em;
+  border-width:  1px 1px 1px 1px;
+  border-style:  solid;
+  border-spacing:  0;
+  border-collapse:  collapse;
+}
+
+#content th
+{
+  padding:  0.25em 0.5em 0.25em 0.5em;
+  border-width: 0px 0px 1px 0px;
+  border-style:  solid;
+}
+
+#content td
+{
+  padding:  0.15em 0.25em 0.15em 0.25em;
+}
+
+#source
+{
+  margin: 1.5em 0em 1.5em 0.66em;
+  padding-left: 0.66em;
+  border-width:  1px;
+  border-style:  solid;
+}
+
+#inline-nav
+{
+  margin:  0;
+  padding: 0.5em 1.5em 0em 1.5em;
+}
+
+#inline-nav p
+{
+  font-size:  85%;
+  margin:  0;
+  padding: 0em 0em 0em 0.66em;
+}
+
+#inline-nav a
+{
+  text-decoration:  none;
+  border-width:  0px;
+  border-style:  none;
+}
+
+#sidebar
+{
+  float:  right;
+  width:  14em;
+  margin: 0.1em 0.1em 0em 0em;
+  padding: 1.0em 0.66em 1.66em 1.0em;
+  border:  1px;
+  border-style:  none none dotted dotted;
+}
+
+#sidebar ul
+{
+  margin:  0;
+  padding:  0;
+}
+
+#sidebar li
+{
+  padding:  0.25em 0.25em 0em 1em;
+  list-style:  inside square;
+}
+
+#sidebar a
+{
+  text-decoration:  none;
+  border-width:  0px 0px 1px 0px;
+  border-style:  none none dotted none;
+}
+
+#footer
+{
+  font-size:  85%;
+}
+
+#footer a
+{
+  text-decoration:  none;
+  border-width:  0px 0px 1px 0px;
+  border-style:  none none dotted none;
+}
