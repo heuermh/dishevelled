@@ -51,6 +51,11 @@ Runnable shell for the codegen library.<br/>
 </p>
 
 <p>
+A simple framework for evolutionary algorithms.<br/>
+&gt; <a href="evolve">http://www.dishevelled.org/evolve</a>
+</p>
+
+<p>
 Typed functor object interfaces.<br/>
 &gt; <a href="functor">http://www.dishevelled.org/functor</a>
 </p>
