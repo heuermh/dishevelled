@@ -42,6 +42,15 @@ public final class NullSelection<I>
     public WeightedMap<I> select(final WeightedMap<I> parents,
                                  final WeightedMap<I> children)
     {
+        if (parents == null)
+        {
+            throw new IllegalArgumentException("parents must not be null");
+        }
+        if (children == null)
+        {
+            throw new IllegalArgumentException("children must not be null");
+        }
+
         return children;
     }
 }

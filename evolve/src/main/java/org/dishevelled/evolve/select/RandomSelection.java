@@ -74,6 +74,15 @@ public final class RandomSelection<I>
     public WeightedMap<I> select(final WeightedMap<I> parents,
                                  final WeightedMap<I> children)
     {
+        if (parents == null)
+        {
+            throw new IllegalArgumentException("parents must not be null");
+        }
+        if (children == null)
+        {
+            throw new IllegalArgumentException("children must not be null");
+        }
+
         int size = children.size();
         WeightedMap<I> result = new HashWeightedMap<I>(size, DEFAULT_LOAD_FACTOR);
         List<I> childrenAsList = new ArrayList<I>(children.keySet());

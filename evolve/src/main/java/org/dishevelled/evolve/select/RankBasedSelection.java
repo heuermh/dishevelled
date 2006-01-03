@@ -81,6 +81,15 @@ public final class RankBasedSelection<I>
     public WeightedMap<I> select(final WeightedMap<I> parents,
                                  final WeightedMap<I> children)
     {
+        if (parents == null)
+        {
+            throw new IllegalArgumentException("parents must not be null");
+        }
+        if (children == null)
+        {
+            throw new IllegalArgumentException("children must not be null");
+        }
+
         int size = children.size();
 
         // create intermediate map of those ranked at or above rank
