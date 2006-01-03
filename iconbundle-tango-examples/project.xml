@@ -2,10 +2,10 @@
 <project>
   <pomVersion>3</pomVersion>
 
-  <id>dsh-iconbundle-tango-example</id>
+  <id>dsh-iconbundle-tango-examples</id>
   <groupId>org.dishevelled</groupId>
-  <artifactId>dsh-iconbundle-tango-example</artifactId>
-  <name>dishevelled.org iconbundle tango example</name>
+  <artifactId>dsh-iconbundle-tango-examples</artifactId>
+  <name>dishevelled.org iconbundle tango examples</name>
   <currentVersion>SNAPSHOT</currentVersion>
 
   <organization>
@@ -14,7 +14,7 @@
   </organization>
 
   <inceptionYear>2005</inceptionYear>
-  <package>org.dishevelled.iconbundle.tango.example</package>
+  <package>org.dishevelled.iconbundle.tango.examples</package>
 
   <url>http://www.dishevelled.org</url>
   <siteAddress>www.dishevelled.org</siteAddress>
@@ -22,9 +22,9 @@
   <distributionDirectory>/home/groups/d/di/dishevelled/htdocs/iconbundle-tango-example/dist</distributionDirectory>
 
   <repository>
-    <connection>scm:cvs:pserver:anonymous@cvs.sourceforge.net:/cvsroot/dishevelled:dishevelled/iconbundle-tango-example</connection>
-    <developerConnection>scm:cvs:ext:heuermh@cvs.sourceforge.net:/cvsroot/dishevelled:dishevelled/iconbundle-tango-example</developerConnection>
-    <url>http://cvs.sourceforge.net/viewcvs.py/dishevelled/dishevelled/iconbundle-tango-example</url>
+    <connection>scm:cvs:pserver:anonymous@cvs.sourceforge.net:/cvsroot/dishevelled:dishevelled/iconbundle-tango-examples</connection>
+    <developerConnection>scm:cvs:ext:heuermh@cvs.sourceforge.net:/cvsroot/dishevelled:dishevelled/iconbundle-tango-examples</developerConnection>
+    <url>http://cvs.sourceforge.net/viewcvs.py/dishevelled/dishevelled/iconbundle-tango-examples</url>
   </repository>
 
   <mailingLists>
