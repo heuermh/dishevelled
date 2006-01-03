@@ -1,7 +1,7 @@
 /*
 
     dsh-evolve  Simple framework for evolutionary algorithms.
-    Copyright (c) 2005-2006 held jointly by the individual authors.
+    Copyright (c) 2005 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
@@ -21,29 +21,26 @@
     > http://www.opensource.org/licenses/lgpl-license.php
 
 */
-package org.dishevelled.evolve;
+package org.dishevelled.evolve.select;
 
-import org.dishevelled.weighted.WeightedMap;
+import junit.framework.TestCase;
+
+import org.dishevelled.evolve.Selection;
+import org.dishevelled.evolve.AbstractSelectionTest;
 
 /**
- * A selection function.
+ * Unit test for NullSelection.
  *
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public interface Selection<I>
+public final class NullSelectionTest
+    extends AbstractSelectionTest
 {
 
-    /**
-     * Select individuals from the specified population of child individuals
-     * given the parent generation as a reference.  Each of the child and parent
-     * populations are provided in the form of a weighted map of individuals to
-     * fitness scores.
-     *
-     * @param parents parent generation, given as a reference, must not be null
-     * @param children population of child individuals, must not be null
-     * @return a weighted map of the individuals selected from the specified
-     *    population of child individuals to their fitness scores
-     */
-    WeightedMap<I> select(WeightedMap<I> parents, WeightedMap<I> children);
+    /** @see AbstractSelectionTest */
+    protected <T> Selection<T> createSelection()
+    {
+        return new NullSelection<T>();
+    }
 }
