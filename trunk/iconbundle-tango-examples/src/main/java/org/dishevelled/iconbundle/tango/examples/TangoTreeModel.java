@@ -21,7 +21,7 @@
     > http://www.opensource.org/licenses/lgpl-license.php
 
 */
-package org.dishevelled.iconbundle.tango.example;
+package org.dishevelled.iconbundle.tango.examples;
 
 import java.util.List;
 import java.util.TreeSet;
