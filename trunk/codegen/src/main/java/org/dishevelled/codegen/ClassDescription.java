@@ -450,6 +450,28 @@ public final class ClassDescription
 
     /**
      * Add a new attribute to the set of attributes for this
+     * class description with the specified name, role name,
+     * cardinality, and bound flag.  The cardinality must be one of <b>Cardinality.ZeroToOne</b>
+     * or <b>Cardinality.StrictlyOne</b>.  Return <code>true</code> if
+     * the set of attributes changed as a result of this call.
+     *
+     * @param name attribute name
+     * @param roleName role name
+     * @param cardinality cardinality, must not be null and must be
+     *    one of <b>Cardinality.ZeroToOne</b> or <b>Cardinality.StrictlyOne</b>
+     * @param bound true if the attribute is to be a "bound" attribute
+     * @return <code>true</code> if the set of attributes
+     *    changed as a result of this call
+     */
+    public final boolean attribute(final String name, final String roleName,
+                                   final Cardinality cardinality, final boolean bound)
+    {
+        Attribute a = new Attribute(name, roleName, cardinality, bound);
+        return addAttribute(a);
+    }
+
+    /**
+     * Add a new attribute to the set of attributes for this
      * class description with the specified parameters.
      * Return <code>true</code> if the set of attributes changed as
      * a result of this call.
@@ -470,6 +492,33 @@ public final class ClassDescription
                                    final boolean indexed, final boolean unique, final boolean ordered, final boolean sorted)
     {
         Attribute a = new Attribute(name, roleName, cardinality, indexed, unique, ordered, sorted);
+        return addAttribute(a);
+    }
+
+    /**
+     * Add a new attribute to the set of attributes for this
+     * class description with the specified parameters.
+     * Return <code>true</code> if the set of attributes changed as
+     * a result of this call.
+     *
+     * @param name attribute name
+     * @param roleName role name
+     * @param cardinality cardinality, must not be null
+     * @param bound true if the attribute is to be a "bound" attribute
+     * @param indexed true if the collection should be indexed
+     * @param unique true if the collection should not allow duplicate elements
+     * @param ordered true if the collection should iterate over elements in <i>insertion-order</i>
+     * @param sorted true if the collection should iterate over elements in ascending element order,
+     *    sorted according to the <i>natural ordering</i> of its elements (see Comparable), or by a Comparator
+     *    provided at creation time     
+     * @return <code>true</code> if the set of attributes
+     *    changed as a result of this call
+     */
+    public final boolean attribute(final String name, final String roleName, final Cardinality cardinality,
+                                   final boolean bound, final boolean indexed, final boolean unique,
+                                   final boolean ordered, final boolean sorted)
+    {
+        Attribute a = new Attribute(name, roleName, cardinality, bound, indexed, unique, ordered, sorted);
         return addAttribute(a);
     }
 
@@ -537,6 +586,28 @@ public final class ClassDescription
     }
 
     /**
+     * Add a new association to the set of associations for this
+     * class description to the specified class with the
+     * specified cardinality and bound flag.  The assocation's role name will be
+     * the same as the class' name.  The cardinality must be one of
+     * <b>Cardinality.ZeroToOne</b> or <b>Cardinality.StrictlyOne</b>.
+     * Return <code>true</code> if the set of associations changed as a result of
+     * this call.
+     *
+     * @param cd class description, must not be null
+     * @param cardinality cardinality, must not be null and must be
+     *    one of <b>Cardinality.ZeroToOne</b> or <b>Cardinality.StrictlyOne</b>
+     * @param bound true if the association is to be a "bound" association
+     * @return <code>true</code> if the set of associations
+     *    changed as a result of this call
+     */
+    public final boolean associate(final ClassDescription cd, final Cardinality cardinality, final boolean bound)
+    {
+        Association a = new Association(cd, cd.getUpper(), cardinality, bound);
+        return addAssociation(a);
+    }
+
+    /**
      * Add a new association to the set of attributes for this
      * class description to the specified class with the
      * specified role name and cardinality.  The cardinality must be one of
@@ -554,6 +625,29 @@ public final class ClassDescription
     public final boolean associate(final ClassDescription cd, final String roleName, final Cardinality cardinality)
     {
         Association a = new Association(cd, roleName, cardinality);
+        return addAssociation(a);
+    }
+
+    /**
+     * Add a new association to the set of attributes for this
+     * class description to the specified class with the
+     * specified role name, cardinality, and bound flag.  The cardinality must be one of
+     * <b>Cardinality.ZeroToOne</b> or <b>Cardinality.StrictlyOne</b>.
+     * Return <code>true</code> if the set of associations changed as a result of
+     * this call.
+     *
+     * @param cd class description, must not be null
+     * @param roleName role name
+     * @param cardinality cardinality, must not be null and must be
+     *    one of <b>Cardinality.ZeroToOne</b> or <b>Cardinality.StrictlyOne</b>
+     * @param bound true if the association is to be a "bound" association
+     * @return <code>true</code> if the set of associations
+     *    changed as a result of this call
+     */
+    public final boolean associate(final ClassDescription cd, final String roleName,
+                                   final Cardinality cardinality, final boolean bound)
+    {
+        Association a = new Association(cd, roleName, cardinality, bound);
         return addAssociation(a);
     }
 
@@ -584,6 +678,31 @@ public final class ClassDescription
     /**
      * Add a new association to the set of associations for this
      * class description to the specified class with the specified
+     * parameters.  The association's role name will be the same as
+     * the class' name.
+     *
+     * @param cd class description, must not be null
+     * @param cardinality cardinality, must not be null
+     * @param bound true if the assocation is to be a "bound" association
+     * @param indexed true if the collection should be indexed
+     * @param unique true if the collection should not allow duplicate elements
+     * @param ordered true if the collection should iterate over elements in <i>insertion-order</i>
+     * @param sorted true if the collection should iterate over elements in ascending element order,
+     *    sorted according to the <i>natural ordering</i> of its elements (see Comparable), or by a Comparator
+     *    provided at creation time     
+     * @return <code>true</code> if the set of associations
+     *    changed as a result of this call
+     */
+    public final boolean associate(final ClassDescription cd, final Cardinality cardinality, final boolean bound,
+                                   final boolean indexed, final boolean unique, final boolean ordered, final boolean sorted)
+    {
+        Association a = new Association(cd, cd.getUpper(), cardinality, bound, indexed, unique, ordered, sorted);
+        return addAssociation(a);
+    }
+
+    /**
+     * Add a new association to the set of associations for this
+     * class description to the specified class with the specified
      * parameters.
      *
      * @param cd class description, must not be null
@@ -602,6 +721,32 @@ public final class ClassDescription
                                    final boolean indexed, final boolean unique, final boolean ordered, final boolean sorted)
     {
         Association a = new Association(cd, roleName, cardinality, indexed, unique, ordered, sorted);
+        return addAssociation(a);
+    }
+
+    /**
+     * Add a new association to the set of associations for this
+     * class description to the specified class with the specified
+     * parameters.
+     *
+     * @param cd class description, must not be null
+     * @param roleName role name
+     * @param cardinality cardinality, must not be null
+     * @param bound true if the association is to be a "bound" association
+     * @param indexed true if the collection should be indexed
+     * @param unique true if the collection should not allow duplicate elements
+     * @param ordered true if the collection should iterate over elements in <i>insertion-order</i>
+     * @param sorted true if the collection should iterate over elements in ascending element order,
+     *    sorted according to the <i>natural ordering</i> of its elements (see Comparable), or by a Comparator
+     *    provided at creation time     
+     * @return <code>true</code> if the set of associations
+     *    changed as a result of this call
+     */
+    public final boolean associate(final ClassDescription cd, final String roleName, final Cardinality cardinality,
+                                   final boolean bound, final boolean indexed, final boolean unique,
+                                   final boolean ordered, final boolean sorted)
+    {
+        Association a = new Association(cd, roleName, cardinality, bound, indexed, unique, ordered, sorted);
         return addAssociation(a);
     }
 
@@ -626,6 +771,27 @@ public final class ClassDescription
         return addAssociation(a);
     }
 
+    /**
+     * Add a new association to the set of associations for this
+     * class description to the specified interface with the
+     * specified cardinality and bound flag.  The assocation's role name will be
+     * the same as the interface's name.  The cardinality must be one of
+     * <b>Cardinality.ZeroToOne</b> or <b>Cardinality.StrictlyOne</b>.
+     * Return <code>true</code> if the set of associations changed as a result of
+     * this call.
+     *
+     * @param id interface description, must not be null
+     * @param cardinality cardinality, must not be null and must be
+     *    one of <b>Cardinality.ZeroToOne</b> or <b>Cardinality.StrictlyOne</b>
+     * @param bound true if the assocation is to be a "bound" association
+     * @return <code>true</code> if the set of associations
+     *    changed as a result of this call
+     */
+    public final boolean associate(final InterfaceDescription id, final Cardinality cardinality, final boolean bound)
+    {
+        Association a = new Association(id, id.getUpper(), cardinality, bound);
+        return addAssociation(a);
+    }
 
     /**
      * Add a new association to the set of attributes for this
@@ -645,6 +811,29 @@ public final class ClassDescription
     public final boolean associate(final InterfaceDescription id, final String roleName, final Cardinality cardinality)
     {
         Association a = new Association(id, roleName, cardinality);
+        return addAssociation(a);
+    }
+
+    /**
+     * Add a new association to the set of attributes for this
+     * class description to the specified interface with the
+     * specified role name, cardinality, and bound flag.  The cardinality must be one of
+     * <b>Cardinality.ZeroToOne</b> or <b>Cardinality.StrictlyOne</b>.
+     * Return <code>true</code> if the set of associations changed as a result of
+     * this call.
+     *
+     * @param id interface description, must not be null
+     * @param roleName role name
+     * @param cardinality cardinality, must not be null and must be
+     *    one of <b>Cardinality.ZeroToOne</b> or <b>Cardinality.StrictlyOne</b>
+     * @param bound true if the association is to be a "bound" association
+     * @return <code>true</code> if the set of associations
+     *    changed as a result of this call
+     */
+    public final boolean associate(final InterfaceDescription id, final String roleName,
+                                   final Cardinality cardinality, final boolean bound)
+    {
+        Association a = new Association(id, roleName, cardinality, bound);
         return addAssociation(a);
     }
 
@@ -672,6 +861,31 @@ public final class ClassDescription
         return addAssociation(a);
     }
 
+   /**
+     * Add a new association to the set of associations for this
+     * class description to the specified interface with the specified
+     * parameters.  The association's role name will be the same as
+     * the interface's name.
+     *
+     * @param id interface description, must not be null
+     * @param cardinality cardinality, must not be null
+     * @param bound true if the association is to be a "bound" association
+     * @param indexed true if the collection should be indexed
+     * @param unique true if the collection should not allow duplicate elements
+     * @param ordered true if the collection should iterate over elements in <i>insertion-order</i>
+     * @param sorted true if the collection should iterate over elements in ascending element order,
+     *    sorted according to the <i>natural ordering</i> of its elements (see Comparable), or by a Comparator
+     *    provided at creation time     
+     * @return <code>true</code> if the set of associations
+     *    changed as a result of this call
+     */
+    public final boolean associate(final InterfaceDescription id, final Cardinality cardinality, final boolean bound,
+                                   final boolean indexed, final boolean unique, final boolean ordered, final boolean sorted)
+    {
+        Association a = new Association(id, id.getUpper(), cardinality, bound, indexed, unique, ordered, sorted);
+        return addAssociation(a);
+    }
+
     /**
      * Add a new association to the set of associations for this
      * class description to the specified interface with the specified
@@ -693,6 +907,31 @@ public final class ClassDescription
                                    final boolean indexed, final boolean unique, final boolean ordered, final boolean sorted)
     {
         Association a = new Association(id, roleName, cardinality, indexed, unique, ordered, sorted);
+        return addAssociation(a);
+    }
+
+    /**
+     * Add a new association to the set of associations for this
+     * class description to the specified interface with the specified
+     * parameters.
+     *
+     * @param id interface description, must not be null
+     * @param roleName role name
+     * @param cardinality cardinality, must not be null
+     * @param bound true if the association is to be a "bound" association
+     * @param indexed true if the collection should be indexed
+     * @param unique true if the collection should not allow duplicate elements
+     * @param ordered true if the collection should iterate over elements in <i>insertion-order</i>
+     * @param sorted true if the collection should iterate over elements in ascending element order,
+     *    sorted according to the <i>natural ordering</i> of its elements (see Comparable), or by a Comparator
+     *    provided at creation time     
+     * @return <code>true</code> if the set of associations
+     *    changed as a result of this call
+     */
+    public final boolean associate(final InterfaceDescription id, final String roleName, final Cardinality cardinality,
+                                   final boolean bound, final boolean indexed, final boolean unique, final boolean ordered, final boolean sorted)
+    {
+        Association a = new Association(id, roleName, cardinality, bound, indexed, unique, ordered, sorted);
         return addAssociation(a);
     }
 }

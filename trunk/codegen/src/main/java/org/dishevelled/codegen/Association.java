@@ -55,6 +55,9 @@ public final class Association
     /** The collection description for this association. */
     private final CollectionDescription collectionDescription;
 
+    /** True if this is a "bound" association. */
+    private final boolean bound;
+
 
     /**
      * Create a new association with the specified class description, role name,
@@ -84,6 +87,40 @@ public final class Association
 
         this.cardinality = cardinality;
         this.collectionDescription = null;
+        this.bound = false;
+    }
+
+    /**
+     * Create a new association with the specified class description, role name,
+     * cardinality, and bound flag.  The cardinality must be one of <b>Cardinality.ZeroToOne</b>
+     * or <b>Cardinality.StrictlyOne</b>.
+     *
+     * @param cd class description, must not be null
+     * @param roleName role name
+     * @param cardinality cardinality, must not be null and must be one
+     *    of <b>Cardinality.ZeroToOne</b> or <b>Cardinality.StrictlyOne</b>
+     * @param bound true if this is a "bound" association
+     */
+    public Association(final ClassDescription cd,
+                       final String roleName,
+                       final Cardinality cardinality,
+                       final boolean bound)
+    {
+        if ((cardinality == Cardinality.ZeroToMany) || (cardinality == Cardinality.OneToMany))
+        {
+            throw new IllegalArgumentException("cardinality must be one of {ZeroToOne, StrictlyOne}");
+        }
+
+        this.lower = cd.getLower();
+        this.mixed = cd.getMixed();
+        this.upper = cd.getUpper();
+        this.description = cd.getDescription();
+
+        this.role = new Role(roleName);
+
+        this.cardinality = cardinality;
+        this.collectionDescription = null;
+        this.bound = bound;
     }
 
     /**
@@ -125,6 +162,51 @@ public final class Association
         {
             this.collectionDescription = null;
         }
+        this.bound = false;
+    }
+
+    /**
+     * Create a new association with the specified class description, role name,
+     * cardinality, and bound flag and choose a collection description that satisfies the
+     * specified boolean parameters.
+     *
+     * @param cd class description, must not be null
+     * @param roleName role name
+     * @param cardinality cardinality, must not be null
+     * @param bound true if this is a "bound" association
+     * @param indexed true if the collection should be indexed
+     * @param unique true if the collection should not allow duplicate elements
+     * @param ordered true if the collection should iterate over elements in <i>insertion-order</i>
+     * @param sorted true if the collection should iterate over elements in ascending element order,
+     *    sorted according to the <i>natural ordering</i> of its elements (see Comparable), or by a Comparator
+     *    provided at creation time
+     */
+    public Association(final ClassDescription cd,
+                       final String roleName,
+                       final Cardinality cardinality,
+                       final boolean bound,
+                       final boolean indexed,
+                       final boolean unique,
+                       final boolean ordered,
+                       final boolean sorted)
+    {
+        this.lower = cd.getLower();
+        this.mixed = cd.getMixed();
+        this.upper = cd.getUpper();
+        this.description = cd.getDescription();
+
+        this.role = new Role(roleName);
+
+        this.cardinality = cardinality;
+        if ((cardinality == Cardinality.ZeroToMany) || (cardinality == Cardinality.OneToMany))
+        {
+            this.collectionDescription = CollectionDescription.choose(indexed, unique, ordered, sorted);
+        }
+        else
+        {
+            this.collectionDescription = null;
+        }
+        this.bound = bound;
     }
 
     /**
@@ -155,6 +237,40 @@ public final class Association
 
         this.cardinality = cardinality;
         this.collectionDescription = null;
+        this.bound = false;
+    }
+
+    /**
+     * Create a new association with the specified interface description, role name,
+     * and cardinality.  The cardinality must be one of <b>Cardinality.ZeroToOne</b>
+     * or <b>Cardinality.StrictlyOne</b>.
+     *
+     * @param id interface description, must not be null
+     * @param roleName role name
+     * @param cardinality cardinality, must not be null and must be one
+     *    of <b>Cardinality.ZeroToOne</b> or <b>Cardinality.StrictlyOne</b>
+     * @param bound true if this is a "bound" association
+     */
+    public Association(final InterfaceDescription id,
+                       final String roleName,
+                       final Cardinality cardinality,
+                       final boolean bound)
+    {
+        if ((cardinality == Cardinality.ZeroToMany) || (cardinality == Cardinality.OneToMany))
+        {
+            throw new IllegalArgumentException("cardinality must be one of {ZeroToOne, StrictlyOne}");
+        }
+
+        this.lower = id.getLower();
+        this.mixed = id.getMixed();
+        this.upper = id.getUpper();
+        this.description = id.getDescription();
+
+        this.role = new Role(roleName);
+
+        this.cardinality = cardinality;
+        this.collectionDescription = null;
+        this.bound = bound;
     }
 
     /**
@@ -196,6 +312,51 @@ public final class Association
         {
             this.collectionDescription = null;
         }
+        this.bound = false;
+    }
+
+    /**
+     * Create a new association with the specified interface description, role name, and
+     * cardinality and choose a collection description that satisfies the
+     * specified boolean parameters.
+     *
+     * @param id interface description, must not be null
+     * @param roleName role name
+     * @param cardinality cardinality, must not be null
+     * @param bound true if this is a "bound" association
+     * @param indexed true if the collection should be indexed
+     * @param unique true if the collection should not allow duplicate elements
+     * @param ordered true if the collection should iterate over elements in <i>insertion-order</i>
+     * @param sorted true if the collection should iterate over elements in ascending element order,
+     *    sorted according to the <i>natural ordering</i> of its elements (see Comparable), or by a Comparator
+     *    provided at creation time
+     */
+    public Association(final InterfaceDescription id,
+                       final String roleName,
+                       final Cardinality cardinality,
+                       final boolean bound,
+                       final boolean indexed,
+                       final boolean unique,
+                       final boolean ordered,
+                       final boolean sorted)
+    {
+        this.lower = id.getLower();
+        this.mixed = id.getMixed();
+        this.upper = id.getUpper();
+        this.description = id.getDescription();
+
+        this.role = new Role(roleName);
+
+        this.cardinality = cardinality;
+        if ((cardinality == Cardinality.ZeroToMany) || (cardinality == Cardinality.OneToMany))
+        {
+            this.collectionDescription = CollectionDescription.choose(indexed, unique, ordered, sorted);
+        }
+        else
+        {
+            this.collectionDescription = null;
+        }
+        this.bound = bound;
     }
 
     /**
@@ -233,6 +394,47 @@ public final class Association
         this.role = role;
         this.cardinality = cardinality;
         this.collectionDescription = collectionDescription;
+        this.bound = false;
+    }
+
+    /**
+     * Create a new association from the specified parameters.
+     *
+     * @param lower lowercase name for this association
+     * @param mixed mixed-case name for this association
+     * @param upper uppercase name for this association
+     * @param description description for this association
+     * @param role role for this association, must not be null
+     * @param cardinality cardinality for this association, must not be null
+     * @param collectionDescription collection description for this association
+     * @param bound true if this is a "bound" association
+     */
+    public Association(final String lower,
+                       final String mixed,
+                       final String upper,
+                       final String description,
+                       final Role role,
+                       final Cardinality cardinality,
+                       final CollectionDescription collectionDescription,
+                       final boolean bound)
+    {
+        if (role == null)
+        {
+            throw new IllegalArgumentException("role must not be null");
+        }
+        if (cardinality == null)
+        {
+            throw new IllegalArgumentException("cardinality must not be null");
+        }
+
+        this.lower = lower;
+        this.mixed = mixed;
+        this.upper = upper;
+        this.description = description;
+        this.role = role;
+        this.cardinality = cardinality;
+        this.collectionDescription = collectionDescription;
+        this.bound = bound;
     }
 
 
@@ -305,5 +507,15 @@ public final class Association
     public CollectionDescription getCollectionDescription()
     {
         return collectionDescription;
+    }
+
+    /**
+     * Return true if this is a "bound" association.
+     *
+     * @return true if this is a "bound" association
+     */
+    public boolean isBound()
+    {
+        return bound;
     }
 }
