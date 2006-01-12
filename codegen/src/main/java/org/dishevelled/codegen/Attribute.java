@@ -54,6 +54,9 @@ public final class Attribute
     /** The collection description for this attribute. */
     private final CollectionDescription collectionDescription;
 
+    /** True if this is a "bound" attribute. */
+    private final boolean bound;
+
 
     /**
      * Create a new attribute with the specified name, role name,
@@ -83,6 +86,40 @@ public final class Attribute
 
         this.cardinality = cardinality;
         this.collectionDescription = null;
+        this.bound = false;
+    }
+
+    /**
+     * Create a new attribute with the specified name, role name,
+     * cardinality, and bound flag.  The cardinality must be one of <b>Cardinality.ZeroToOne</b>
+     * or <b>Cardinality.StrictlyOne</b>.
+     *
+     * @param name attribute name
+     * @param roleName role name
+     * @param cardinality cardinality, must not be null and must be one
+     *    of <b>Cardinality.ZeroToOne</b> or <b>Cardinality.StrictlyOne</b>
+     * @param bound true if this is a "bound" attribute
+     */
+    public Attribute(final String name,
+                     final String roleName,
+                     final Cardinality cardinality,
+                     final boolean bound)
+    {
+        if ((cardinality == Cardinality.ZeroToMany) || (cardinality == Cardinality.OneToMany))
+        {
+            throw new IllegalArgumentException("cardinality must be one of {ZeroToOne, StrictlyOne}");
+        }
+
+        this.lower = CodegenUtils.makeLowercase(name);
+        this.mixed = CodegenUtils.makeMixedCase(name);
+        this.upper = CodegenUtils.makeUppercase(name);
+        this.description = CodegenUtils.makeDescription(name);
+
+        this.role = new Role(roleName);
+
+        this.cardinality = cardinality;
+        this.collectionDescription = null;
+        this.bound = bound;
     }
 
     /**
@@ -99,7 +136,6 @@ public final class Attribute
      * @param sorted true if the collection should iterate over elements in ascending element order,
      *    sorted according to the <i>natural ordering</i> of its elements (see Comparable), or by a Comparator
      *    provided at creation time
-     *
      */
     public Attribute(final String name,
                      final String roleName,
@@ -125,6 +161,51 @@ public final class Attribute
         {
             this.collectionDescription = null;
         }
+        this.bound = false;
+    }
+
+    /**
+     * Create a new attribute with the specified name, role name,
+     * cardinality, and bound flag and choose a collection description that satisfies the
+     * specified boolean parameters.
+     *
+     * @param name attribute name
+     * @param roleName role name
+     * @param cardinality cardinality, must not be null
+     * @param bound true if this is a "bound" attribute
+     * @param indexed true if the collection should be indexed
+     * @param unique true if the collection should not allow duplicate elements
+     * @param ordered true if the collection should iterate over elements in <i>insertion-order</i>
+     * @param sorted true if the collection should iterate over elements in ascending element order,
+     *    sorted according to the <i>natural ordering</i> of its elements (see Comparable), or by a Comparator
+     *    provided at creation time
+     */
+    public Attribute(final String name,
+                     final String roleName,
+                     final Cardinality cardinality,
+                     final boolean bound,
+                     final boolean indexed,
+                     final boolean unique,
+                     final boolean ordered,
+                     final boolean sorted)
+    {
+        this.lower = CodegenUtils.makeLowercase(name);
+        this.mixed = CodegenUtils.makeMixedCase(name);
+        this.upper = CodegenUtils.makeUppercase(name);
+        this.description = CodegenUtils.makeDescription(name);
+
+        this.role = new Role(roleName);
+
+        this.cardinality = cardinality;
+        if ((cardinality == Cardinality.ZeroToMany) || (cardinality == Cardinality.OneToMany))
+        {
+            this.collectionDescription = CollectionDescription.choose(indexed, unique, ordered, sorted);
+        }
+        else
+        {
+            this.collectionDescription = null;
+        }
+        this.bound = bound;
     }
 
     /**
@@ -162,6 +243,47 @@ public final class Attribute
         this.role = role;
         this.cardinality = cardinality;
         this.collectionDescription = collectionDescription;
+        this.bound = false;
+    }
+
+    /**
+     * Create a new attribute from the specified parameters.
+     *
+     * @param lower lowercase name for this attribute
+     * @param mixed mixed-case name for this attribute
+     * @param upper uppercase name for this attribute
+     * @param description description for this attribute
+     * @param role role for this attribute, must not be null
+     * @param cardinality cardinality for this attribute, must not be null
+     * @param collectionDescription collection description for this attribute
+     * @param bound true if this is a "bound" attribute
+     */
+    public Attribute(final String lower,
+                     final String mixed,
+                     final String upper,
+                     final String description,
+                     final Role role,
+                     final Cardinality cardinality,
+                     final CollectionDescription collectionDescription,
+                     final boolean bound)
+    {
+        if (role == null)
+        {
+            throw new IllegalArgumentException("role must not be null");
+        }
+        if (cardinality == null)
+        {
+            throw new IllegalArgumentException("cardinality must not be null");
+        }
+
+        this.lower = lower;
+        this.mixed = mixed;
+        this.upper = upper;
+        this.description = description;
+        this.role = role;
+        this.cardinality = cardinality;
+        this.collectionDescription = collectionDescription;
+        this.bound = bound;
     }
 
 
@@ -234,5 +356,15 @@ public final class Attribute
     public CollectionDescription getCollectionDescription()
     {
         return collectionDescription;
+    }
+
+    /**
+     * Return true if this is a "bound" attribute.
+     *
+     * @return true if this is a "bound" attribute
+     */
+    public boolean isBound()
+    {
+        return bound;
     }
 }
