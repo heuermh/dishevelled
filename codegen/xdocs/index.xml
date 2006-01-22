@@ -38,6 +38,301 @@ The codegen project requires java version 1.5 or later.
 
 </section>
 
+<section name="Example">
+
+<p>The following example generates the subsequent Java source files.  Particular attention
+is given to proper utilization of typed collections and to reasonable javadoc comments:
+<source>
+<a href="apidocs/org/dishevelled/codegen/ClassDescription.html">ClassDescription</a> foo = new <a href="apidocs/org/dishevelled/codegen/ClassDescription.html">ClassDescription</a>("example", "Foo");
+<a href="apidocs/org/dishevelled/codegen/ClassDescription.html">ClassDescription</a> bar = new <a href="apidocs/org/dishevelled/codegen/ClassDescription.html">ClassDescription</a>("example", "Bar");
+foo.attribute("String", "Name", <a href="apidocs/org/dishevelled/codegen/Cardinality.html">Cardinality.ZeroToOne</a>);
+bar.attribute("Integer", "Value", <a href="apidocs/org/dishevelled/codegen/Cardinality.html">Cardinality.StrictlyOne</a>);
+foo.associate(bar, <a href="apidocs/org/dishevelled/codegen/Cardinality.html">Cardinality.ZeroToOne</a>);
+bar.associate(foo, <a href="apidocs/org/dishevelled/codegen/Cardinality.html">Cardinality.ZeroToMany</a>, false, true, false, false);
+<a href="apidocs/org/dishevelled/codegen/Codegen.html">Codegen</a>.generateSource(foo, <a href="apidocs/org/dishevelled/codegen/Style.html">Style.Immutable</a>);
+<a href="apidocs/org/dishevelled/codegen/Codegen.html">Codegen</a>.generateSource(bar, <a href="apidocs/org/dishevelled/codegen/Style.html">Style.RichlyMutable</a>);
+</source></p>
+
+<p>Foo.java:
+<source>
+package example;
+
+/**
+ * foo.
+ *
+ * @author codegen
+ * @version $Revision$ $Date$
+ */
+public final class Foo
+{
+    /** The name for this foo. */
+    private final String name;
+
+    /** The bar for this foo. */
+    private final Bar bar;
+
+
+    /**
+     * Create a new foo from the specified parameters.
+     *
+     * @param name name for this foo
+     * @param bar bar for this foo
+     */
+    public Foo(final String name,
+               final Bar bar)
+    {
+        this.name = name;
+        this.bar = bar;
+    }
+
+
+    /**
+     * Return the name for this foo.
+     * The name may be null.
+     *
+     * @return the name for this foo
+     */
+    public final String getName()
+    {
+        return name;
+    }
+
+    /**
+     * Return the bar for this foo.
+     * The bar may be null.
+     *
+     * @return the bar for this foo
+     */
+    public final Bar getBar()
+    {
+        return bar;
+    }
+}
+</source></p>
+
+<p>Bar.java:
+<source>
+package example;
+
+import java.util.Set;
+import java.util.HashSet;
+import java.util.Collections;
+
+/**
+ * bar.
+ *
+ * @author codegen
+ * @version $Revision$ $Date$
+ */
+public class Bar
+{
+    /** The value for this bar. */
+    private Integer value;
+
+    /** The set of foos for this bar. */
+    private final Set&lt;Foo&gt; foos;
+
+
+    /**
+     * Create a new bar from the specified required parameters.
+     *
+     * @param value value for this bar, must not be null
+     */
+    public Bar(final Integer value)
+    {
+        if (value == null)
+        {
+            throw new IllegalArgumentException("value must not be null");
+        }
+
+        setValue(value);
+        this.foos = new HashSet&lt;Foo&gt;();
+    }
+
+    /**
+     * Create a new bar from the specified parameters.
+     *
+     * &lt;p&gt;The foos in &lt;code&gt;foos&lt;/code&gt; are copied defensively
+     * into this class.&lt;/p&gt;
+     *
+     * @param value value for this bar, must not be null
+     * @param foos set of foos, must not be null
+     */
+    public Bar(final Integer value,
+               final Set&lt;Foo&gt; foos)
+    {
+        if (value == null)
+        {
+            throw new IllegalArgumentException("value must not be null");
+        }
+        if (foos == null)
+        {
+            throw new IllegalArgumentException("foos must not be null");
+        }
+
+        setValue(value);
+        this.foos = new HashSet&lt;Foo&gt;(foos);
+    }
+
+
+    /**
+     * Return the value for this bar.
+     * The value will not be null.
+     *
+     * @return the value for this bar
+     */
+    public final Integer getValue()
+    {
+        return value;
+    }
+
+    /**
+     * Set the value for this bar to &lt;code&gt;value&lt;/code&gt;.
+     *
+     * @param value value for this bar, must not be null
+     */
+    public final void setValue(final Integer value)
+    {
+        if (value == null)
+        {
+            throw new IllegalArgumentException("value must not be null");
+        }
+
+        this.value = value;
+    }
+
+    /**
+     * Return an unmodifiable set of foos
+     * for this bar.  The returned set may be
+     * empty but will not be null.
+     *
+     * @return an unmodifiable set of foos
+     *    for this bar
+     */
+    public final Set&lt;Foo&gt; getFoos()
+    {
+        return Collections.unmodifiableSet(foos);
+    }
+
+    /**
+     * Add the specified foo to the set of
+     * foos for this bar.  An exception
+     * may be thrown if the underlying set prevents
+     * &lt;code&gt;foo&lt;/code&gt; from being added.
+     *
+     * @param foo foo to add
+     */
+    public final void addFoo(final Foo foo)
+    {
+        foos.add(foo);
+    }
+
+    /**
+     * Add all of the foos in the specified collection of foos
+     * to the set of foos for this bar.
+     * An exception may be thrown if the underlying
+     * set prevents any of the foos in
+     * &lt;code&gt;foos&lt;/code&gt; from being added.
+     *
+     * @param foos collection of foos to add
+     */
+    public final void addAllFoos(final Collection&lt;? extends Foo&gt; foos)
+    {
+        this.foos.addAll(foos);
+    }
+
+    /**
+     * Remove the specified foo from the set of
+     * foos for this bar.  An exception
+     * may be thrown if the underlying set prevents
+     * &lt;code&gt;foo&lt;/code&gt; from being removed.
+     *
+     * @param foo foo to remove
+     */
+    public final void removeFoo(final Foo foo)
+    {
+        foos.remove(foo);
+    }
+
+    /**
+     * Remove all of the foos in the set of 
+     * foos for this bar that are also contained in the
+     * specified collection of foos.  An exception
+     * may be thrown if the underlying set prevents any
+     * of the foos in &lt;code&gt;foos&lt;/code&gt; from being removed.
+     *
+     * @param foos collection of foos to remove
+     */
+    public final void removeAllFoos(final Collection&lt;? extends Foo&gt; foos)
+    {
+        this.foos.removeAll(foos);
+    }
+
+    /**
+     * Retain only the foos in the set of
+     * foos for this bar that are contained in the specified
+     * collection of foos.  An exception may be thrown
+     * if the underlying set prevents any of the foos
+     * not in &lt;code&gt;foos&lt;/code&gt; from being removed.
+     *
+     * @param foos collection of foos to retain
+     */
+    public final void retainAllFoos(final Collection&lt;? extends Foo&gt; foos)
+    {
+        this.foos.retainAll(foos);
+    }
+
+    /**
+     * Remove all of the foos in the set of
+     * foos for this bar.  An exception may
+     * be thrown if the underlying set prevents any of the
+     * foos from being removed.
+     */
+    public final void clearFoos()
+    {
+        foos.clear();
+    }
+
+    /** @see Object */
+    public final boolean equals(final Object o)
+    {
+        if (o == this)
+        {
+            return true;
+        }
+        if (!(o instanceof Bar))
+        {
+            return false;
+        }
+
+        Bar bar = (Bar) o;
+
+        return (true
+            &amp;&amp; (value.equals(bar.getValue()))
+            &amp;&amp; (foos.equals(bar.getFoos()))
+        );
+    }
+
+    /** @see Object */
+    public final int hashCode()
+    {
+        int result = 17;
+        result = 37 * result + ((value == null) ? 0 : value.hashCode());
+        result = 37 * result + foos.hashCode();
+        return result;
+    }
+}
+</source></p>
+
+<p>
+For further details on source code styles, please see the javadoc for<br/>
+&gt; <a href="apidocs/org/dishevelled/codegen/Style.html">Style</a><br/>
+<br/>
+or the Velocity templates themselves<br/>
+&gt; <a href="http://cvs.sourceforge.net/viewcvs.py/dishevelled/dishevelled/codegen/src/main/resources/org/dishevelled/codegen/">src/main/resources/org/dishevelled/codegen</a>
+</p>
+</section>
+
 <section name="References">
 
 <p id="1">
