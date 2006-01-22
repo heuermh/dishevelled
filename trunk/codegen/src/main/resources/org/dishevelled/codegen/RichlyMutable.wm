@@ -614,10 +614,17 @@ public class ${cd.Upper}
      * may be thrown if the underlying ${coll.InterfaceDescription} prevents
      * <code>${r.Mixed}</code> from being removed.
      *
-     * @param ${r.Mixed} ${r.Lower} to remove
+     * @param ${r.Mixed} ${r.Lower} to remove, must not be the last ${r.Lower}
+     *    in the ${coll.InterfaceDescription} of ${r.Lower}s for this ${cd.Lower}
+     * @throws IllegalStateException if <code>${r.Mixed}</code> is the last ${r.Lower}
+     *    in the ${coll.InterfaceDescription} of ${r.Lower}s for this ${cd.Lower}
      */
     public final void remove${r.Upper}(final ${a.Upper} ${r.Mixed})
     {
+        if ((${r.Mixed}s.size() == 1) && (${r.Mixed}s.contains(${r.Mixed})))
+        {
+            throw new IllegalStateException("must not remove the last ${r.Lower} from ${r.Mixed}s");
+	}
         ${r.Mixed}s.remove(${r.Mixed});
     }
 
@@ -632,6 +639,7 @@ public class ${cd.Upper}
      */
     public final void removeAll${r.Upper}s(final Collection<? extends ${a.Upper}> ${r.Mixed}s)
     {
+        // TODO:  check for illegal state
         this.${r.Mixed}s.removeAll(${r.Mixed}s);
     }
 
@@ -646,18 +654,8 @@ public class ${cd.Upper}
      */
     public final void retainAll${r.Upper}s(final Collection<? extends ${a.Upper}> ${r.Mixed}s)
     {
+        // TODO:  check for illegal state
         this.${r.Mixed}s.retainAll(${r.Mixed}s);
-    }
-
-    /**
-     * Remove all of the ${r.Lower}s in the ${coll.InterfaceDescription} of
-     * ${r.Lower}s for this ${cd.Lower}.  An exception may
-     * be thrown if the underlying ${coll.InterfaceDescription} prevents any of the
-     * ${r.Lower}s from being removed.
-     */
-    public final void clear${r.Upper}s()
-    {
-        ${r.Mixed}s.clear();
     }
 #end
 #end
@@ -855,10 +853,17 @@ public class ${cd.Upper}
      * may be thrown if the underlying ${coll.InterfaceDescription} prevents
      * <code>${r.Mixed}</code> from being removed.
      *
-     * @param ${r.Mixed} ${r.Lower} to remove
+     * @param ${r.Mixed} ${r.Lower} to remove, must not be the last ${r.Lower}
+     *    in the ${coll.InterfaceDescription} of ${r.Lower}s for this ${cd.Lower}
+     * @throws IllegalStateException if <code>${r.Mixed}</code> is the last ${r.Lower}
+     *    in the ${coll.InterfaceDescription} of ${r.Lower}s for this ${cd.Lower}
      */
     public final void remove${r.Upper}(final ${a.Upper} ${r.Mixed})
     {
+        if ((${r.Mixed}s.size() == 1) && (${r.Mixed}s.contains(${r.Mixed})))
+        {
+            throw new IllegalStateException("must not remove the last ${r.Lower} from ${r.Mixed}s");
+	}
         ${r.Mixed}s.remove(${r.Mixed});
     }
 
@@ -873,6 +878,7 @@ public class ${cd.Upper}
      */
     public final void removeAll${r.Upper}s(final Collection<? extends ${a.Upper}> ${r.Mixed}s)
     {
+        // TODO:  check for illegal state
         this.${r.Mixed}s.removeAll(${r.Mixed}s);
     }
 
@@ -887,18 +893,8 @@ public class ${cd.Upper}
      */
     public final void retainAll${r.Upper}s(final Collection<? extends ${a.Upper}> ${r.Mixed}s)
     {
+        // TODO:  check for illegal state
         this.${r.Mixed}s.retainAll(${r.Mixed}s);
-    }
-
-    /**
-     * Remove all of the ${r.Lower}s in the ${coll.InterfaceDescription} of
-     * ${r.Lower}s for this ${cd.Lower}.  An exception may
-     * be thrown if the underlying ${coll.InterfaceDescription} prevents any of the
-     * ${r.Lower}s from being removed.
-     */
-    public final void clear${r.Upper}s()
-    {
-        ${r.Mixed}s.clear();
     }
 #end
 #end
