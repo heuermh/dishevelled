@@ -6,7 +6,7 @@
   <groupId>org.dishevelled</groupId>
   <artifactId>dsh-codegen-shell</artifactId>
   <name>dishevelled.org codegen-shell</name>
-  <currentVersion>SNAPSHOT</currentVersion>
+  <currentVersion>1.0-SNAPSHOT</currentVersion>
 
   <organization>
     <name>dishevelled.org</name>
@@ -61,7 +61,7 @@
 
   <dependencies>
     <dependency>
-      <groupId>org.dishevelled</groupId><artifactId>dsh-codegen</artifactId><version>SNAPSHOT</version>
+      <groupId>org.dishevelled</groupId><artifactId>dsh-codegen</artifactId><version>1.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>bsh</groupId><artifactId>bsh</artifactId><version>2.0b1</version>
