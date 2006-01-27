@@ -6,7 +6,7 @@
   <groupId>org.dishevelled</groupId>
   <artifactId>dsh-site</artifactId>
   <name>dishevelled.org site</name>
-  <currentVersion>SNAPSHOT</currentVersion>
+  <currentVersion>1.0-SNAPSHOT</currentVersion>
 
   <organization>
     <name>dishevelled.org</name>
