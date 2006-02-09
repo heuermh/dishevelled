@@ -29,9 +29,9 @@
 <body>
 <section name="Summary">
 <p>
-<b>dishevelled.org</b> hosts libraries for various Java Swing user interface components
-and supporting code, with emphasis on views and editors for complex data structures,
-like collections, sets, lists, maps, graphs, and matrices.
+<b>dishevelled.org</b> hosts Free and Open Source libraries for various Java Swing
+user interface components and supporting code, with emphasis on views and editors for
+complex data structures, like collections, sets, lists, maps, graphs, and matrices.
 </p>
 </section>
 
@@ -39,7 +39,6 @@ like collections, sets, lists, maps, graphs, and matrices.
 </section>
 
 <section name="Projects">
-
 <p>
 Source code generation suite based on velocity templates that generates source code in several different styles.<br/>
 &gt; <a href="codegen">http://www.dishevelled.org/codegen</a>
