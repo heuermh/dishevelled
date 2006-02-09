@@ -30,65 +30,29 @@ import javax.swing.Renderer;
 import org.dishevelled.iconbundle.IconState;
 
 /**
- * A renderer built from an IdLabel.
+ * A renderer that displays the name property
+ * and appropriate icon from an icon bundle for a given bean.
  *
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public class IdLabelRenderer
-    extends IdLabel
+public final class IdRenderer
     implements Renderer
 {
-    /**
-     * Cache of the previous state, for use in returning to the
-     * proper state following de-selection.
-     */
-    private transient IconState previousState;
+    /** IdLabel. */
+    private final IdLabel delegate = new IdLabel();
 
-
-    /**
-     * Create a new renderer with null value.
-     */
-    public IdLabelRenderer()
-    {
-        super();
-
-        previousState = IconState.NORMAL;
-    }
-
-
-    /**
-     * Create a new renderer with the specified value.
-     *
-     * @param value value
-     */
-    public IdLabelRenderer(final Object value)
-    {
-        super(value);
-
-        previousState = IconState.NORMAL;
-    }
-
-
-    /** @see Renderer */
-    public void setValue(final Object value, final boolean selected)
-    {
-        setValue(value);
-
-        if (selected)
-        {
-            previousState = getIconState();
-            setIconState(IconState.SELECTED);
-        }
-        else
-        {
-            setIconState(previousState);
-        }
-    }
 
     /** @see Renderer */
     public Component getComponent()
     {
-        return this;
+        return delegate;
+    }
+
+    /** @see Renderer */
+    public void setValue(final Object value, final boolean selected)
+    {
+        delegate.setValue(value);
+        delegate.setIconState(selected ? IconState.SELECTED : IconState.NORMAL);
     }
 }

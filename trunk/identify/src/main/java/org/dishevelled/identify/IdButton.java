@@ -25,6 +25,7 @@ package org.dishevelled.identify;
 
 import java.awt.Image;
 import java.awt.Graphics;
+import java.awt.ComponentOrientation;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseAdapter;
@@ -44,7 +45,11 @@ import org.dishevelled.iconbundle.IconBundle;
 import org.dishevelled.iconbundle.IconTextDirection;
 
 /**
- * An extension of JButton that accepts an identifiable action.
+ * An extension of JButton that displays the name property
+ * and appropriate icon from an icon bundle for an identifiable
+ * action.
+ *
+ * @see IdentifiableAction
  *
  * @author  Michael Heuer
  * @version $Revision$ $Date$
@@ -71,8 +76,8 @@ public final class IdButton
     /** Dirty flag. */
     private transient boolean dirty = false;
 
-    /** Mouseover mouse listener. */
-    private MouseListener mouseoverListener = new MouseAdapter()
+    /** Mouse listener. */
+    private MouseListener mouseListener = new MouseAdapter()
         {
             /** @see MouseListener */
             public final void mouseEntered(final MouseEvent e)
@@ -93,10 +98,27 @@ public final class IdButton
                     repaint();
                 }
             }
-        };
 
-    // TODO:
-    // add mouse pressed listener for IconState.ACTIVE
+            /** @see MouseListener */
+            public final void mousePressed(final MouseEvent e)
+            {
+                if (getIconState().equals(IconState.MOUSEOVER))
+                {
+                    setIconState(IconState.ACTIVE);
+                    repaint();
+                }
+            }
+
+            /** @see MouseListener */
+            public final void mouseReleased(final MouseEvent e)
+            {
+                if (getIconState().equals(IconState.ACTIVE))
+                {
+                    setIconState(IconState.MOUSEOVER);
+                    repaint();
+                }
+            }
+        };
 
     /**
      * Cache of the previous state, for use in returning to the
@@ -106,9 +128,9 @@ public final class IdButton
 
 
     /**
-     * Create a new IdButton with the specified identifiable action.
+     * Create a new button with the specified identifiable action.
      *
-     * @param action identifiable action for this IdButton, must not be null
+     * @param action identifiable action for this button, must not be null
      */
     public IdButton(final IdentifiableAction action)
     {
@@ -119,7 +141,7 @@ public final class IdButton
         previousState = IconState.NORMAL;
         iconTextDirection = IconTextDirection.LEFT_TO_RIGHT;
 
-        addMouseListener(mouseoverListener);
+        addMouseListener(mouseListener);
 
         setAction(action);
     }
@@ -192,14 +214,70 @@ public final class IdButton
         }
         this.action = action;
         this.action.addPropertyChangeListener(this);
-
-        // TODO:
-        // look at source for JButton and copy over keyboard stuff
         setDirty(true);
     }
 
-    // TODO:
-    // copy component orientation and enabled stuff from IdLabel
+    /** @see JButton */
+    public void setComponentOrientation(final ComponentOrientation orientation)
+    {
+        if (orientation == null)
+        {
+            return;
+        }
+
+        iconTextDirection = orientation.isLeftToRight() ?
+            IconTextDirection.LEFT_TO_RIGHT : IconTextDirection.RIGHT_TO_LEFT;
+
+        super.setComponentOrientation(orientation);
+
+        setDirty(true);
+    }
+
+    /** @see JButton */
+    public void applyComponentOrientation(final ComponentOrientation orientation)
+    {
+        if (orientation == null)
+        {
+            return;
+        }
+
+        iconTextDirection = orientation.isLeftToRight() ?
+            IconTextDirection.LEFT_TO_RIGHT : IconTextDirection.RIGHT_TO_LEFT;
+
+        super.applyComponentOrientation(orientation);
+
+        setDirty(true);
+    }
+
+    /** @see JButton */
+    public void setEnabled(final boolean enabled)
+    {
+        boolean previousEnabled = isEnabled();
+        boolean disabledState = getIconState().equals(IconState.DISABLED);
+
+        if (enabled && !previousEnabled)
+        {
+            setIconState(previousState);
+        }
+        else if (!enabled && disabledState)
+        {
+            previousState = getIconState();
+            setIconState(IconState.DISABLED);
+        }
+
+        super.setEnabled(enabled);
+
+        setDirty(true);
+    }
+
+    /** @see PropertyChangeListener */
+    public void propertyChange(final PropertyChangeEvent e)
+    {
+        if (action.equals(e.getSource()))
+        {
+            setDirty(true);
+        }
+    }
 
     /**
      * Set the dirty flag to the logical OR of <code>dirty</code>
@@ -231,6 +309,12 @@ public final class IdButton
      */
     protected void rebuild()
     {
+        setText(action.getName());
+        setEnabled(action.isEnabled());
+        setToolTipText((String) action.getValue(Action.SHORT_DESCRIPTION));
+        // TODO:
+        // install/update keyboard event and mnemonic &c.
+
         IconBundle bndl = action.getIconBundle();
 
         Image image = bndl.getImage(this,
@@ -247,20 +331,10 @@ public final class IdButton
             imageIcon.setImage(image);
         }
 
-        setText(action.getName());
-        setToolTipText((String) action.getValue(Action.SHORT_DESCRIPTION));
         setIcon(imageIcon);
-
         dirty = false;
     }
 
-    /** @see PropertyChangeListener */
-    public void propertyChange(final PropertyChangeEvent e)
-    {
-        // TODO:
-        // do enabled stuff
-        setDirty(true);
-    }
 
     // TODO:
     // override other JButton methods

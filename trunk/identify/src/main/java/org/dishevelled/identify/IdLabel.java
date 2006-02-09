@@ -49,9 +49,18 @@ import org.dishevelled.iconbundle.IconTextDirection;
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public class IdLabel
+public final class IdLabel
     extends JLabel
 {
+    /** Default icon size. */
+    public static final IconSize DEFAULT_ICON_SIZE = IconSize.DEFAULT_32X32;
+
+    /** Default icon state. */
+    public static final IconState DEFAULT_ICON_STATE = IconState.NORMAL;
+
+    /** Default icon text direction. */
+    public static final IconTextDirection DEFAULT_ICON_TEXT_DIRECTION = IconTextDirection.LEFT_TO_RIGHT;
+
     /** Bound value property. */
     private Object value;
 
@@ -102,16 +111,16 @@ public class IdLabel
 
 
     /**
-     * Create a new IdLabel with a null value.
+     * Create a new label with a null value.
      */
     public IdLabel()
     {
         super();
 
-        iconSize = IconSize.DEFAULT_32X32;
-        iconState = IconState.NORMAL;
-        previousState = IconState.NORMAL;
-        iconTextDirection = IconTextDirection.LEFT_TO_RIGHT;
+        iconSize = DEFAULT_ICON_SIZE;
+        iconState = DEFAULT_ICON_STATE;
+        previousState = DEFAULT_ICON_STATE;
+        iconTextDirection = DEFAULT_ICON_TEXT_DIRECTION;
 
         value = null;
 
@@ -119,7 +128,7 @@ public class IdLabel
     }
 
     /**
-     * Create a new IdLabel for the specified value.
+     * Create a new label for the specified value.
      *
      * @param value value
      */
@@ -213,8 +222,6 @@ public class IdLabel
 
     //
     //  synchronize IconTextDirection and AWT componentOrientation
-    //
-
 
     /** @see JLabel */
     public void setComponentOrientation(final ComponentOrientation orientation)
@@ -251,8 +258,6 @@ public class IdLabel
 
     //
     //  synchronize IconState and Swing isEnabled
-    //
-
 
     /** @see JLabel */
     public void setEnabled(final boolean enabled)
@@ -278,8 +283,6 @@ public class IdLabel
 
     //
     //  rebuild JLabel text and icon properties
-    //
-
 
     /**
      * Set the dirty flag to the logical OR of <code>dirty</code>
@@ -337,8 +340,6 @@ public class IdLabel
 
     //
     //  override JLabel methods
-    //
-
 
     /** @see JLabel */
     public Icon getIcon()
@@ -359,7 +360,6 @@ public class IdLabel
         {
             rebuild();
         }
-
         return super.getBounds();
     }
 
@@ -370,7 +370,6 @@ public class IdLabel
         {
             rebuild();
         }
-
         return super.getBounds(rv);
     }
 
@@ -381,7 +380,6 @@ public class IdLabel
         {
             rebuild();
         }
-
         return super.getMaximumSize();
     }
 
@@ -392,7 +390,6 @@ public class IdLabel
         {
             rebuild();
         }
-
         return super.getMinimumSize();
     }
 
@@ -403,7 +400,6 @@ public class IdLabel
         {
             rebuild();
         }
-
         return super.getPreferredSize();
     }
 
@@ -414,7 +410,6 @@ public class IdLabel
         {
             rebuild();
         }
-
         return super.getSize();
     }
 
@@ -425,7 +420,6 @@ public class IdLabel
         {
             rebuild();
         }
-
         return super.getVisibleRect();
     }
 
@@ -436,7 +430,6 @@ public class IdLabel
         {
             rebuild();
         }
-
         return super.getHeight();
     }
 
@@ -447,7 +440,6 @@ public class IdLabel
         {
             rebuild();
         }
-
         return super.getWidth();
     }
 
@@ -458,7 +450,6 @@ public class IdLabel
         {
             rebuild();
         }
-
         super.paintComponent(g);
     }
 }
