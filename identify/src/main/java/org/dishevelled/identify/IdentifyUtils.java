@@ -206,8 +206,6 @@ public final class IdentifyUtils
 
     //
     //  strategies
-    //
-
 
     /**
      * Strategy used to determine the value for a name
