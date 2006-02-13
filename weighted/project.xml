@@ -6,7 +6,7 @@
   <groupId>org.dishevelled</groupId>
   <artifactId>dsh-weighted</artifactId>
   <name>dishevelled.org weighted</name>
-  <currentVersion>1.0-SNAPSHOT</currentVersion>
+  <currentVersion>SNAPSHOT</currentVersion>
 
   <organization>
     <name>dishevelled.org</name>

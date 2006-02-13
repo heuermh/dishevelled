@@ -6,7 +6,7 @@
   <groupId>org.dishevelled</groupId>
   <artifactId>dsh-identify</artifactId>
   <name>dishevelled.org identify</name>
-  <currentVersion>1.0-SNAPSHOT</currentVersion>
+  <currentVersion>SNAPSHOT</currentVersion>
 
   <organization>
     <name>dishevelled.org</name>
@@ -61,7 +61,7 @@
 
   <dependencies>
     <!-- compile-time dependencies -->
-    <dependency><groupId>org.dishevelled</groupId><artifactId>dsh-iconbundle</artifactId><version>1.0-SNAPSHOT</version></dependency>
+    <dependency><groupId>org.dishevelled</groupId><artifactId>dsh-iconbundle</artifactId><version>SNAPSHOT</version></dependency>
   </dependencies>
 
   <build>

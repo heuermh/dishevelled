@@ -6,7 +6,7 @@
   <groupId>org.dishevelled</groupId>
   <artifactId>dsh-evolve</artifactId>
   <name>dishevelled.org evolve</name>
-  <currentVersion>1.0-SNAPSHOT</currentVersion>
+  <currentVersion>SNAPSHOT</currentVersion>
 
   <organization>
     <name>dishevelled.org</name>
@@ -63,7 +63,7 @@
     <dependency>
       <groupId>org.dishevelled</groupId>
       <artifactId>dsh-weighted</artifactId>
-      <version>1.0-SNAPSHOT</version>
+      <version>SNAPSHOT</version>
     </dependency>
   </dependencies>
 
