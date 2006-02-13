@@ -280,10 +280,13 @@ public final class IdentifyUtils
                 if (beanDescriptor instanceof IdentifiableBeanDescriptor)
                 {
                     int namePropertyIndex = ((IdentifiableBeanDescriptor) beanDescriptor).getNamePropertyIndex();
-                    PropertyDescriptor namePropertyDescriptor = beanInfo.getPropertyDescriptors()[namePropertyIndex];
-                    Method readMethod = namePropertyDescriptor.getReadMethod();
-                    String name = (String) readMethod.invoke(bean, new Object[] {});
-                    return name;
+                    if (namePropertyIndex != -1)
+                    {
+                        PropertyDescriptor namePropertyDescriptor = beanInfo.getPropertyDescriptors()[namePropertyIndex];
+                        Method readMethod = namePropertyDescriptor.getReadMethod();
+                        String name = (String) readMethod.invoke(bean, new Object[] {});
+                        return name;
+                    }
                 }
             }
             catch (IntrospectionException ie)
