@@ -23,20 +23,43 @@
 */
 package org.dishevelled.identify;
 
-import junit.framework.TestCase;
-
 /**
- * Unit test for IdentifiableBeanInfo.
+ * Example object with name property.
  *
- * @author  Michael Heuer
+ * @author  Michael
  * @version $Revision$ $Date$
  */
-public final class IdentifiableBeanInfoTest
-    extends TestCase
+public final class ExampleWithNameProperty
 {
+    /** The name for this example object with name property. */
+    private final String name;
 
-    public void testIdentifiableBeanInfo()
+
+    /**
+     * Create a new example object with name property with the specified name.
+     *
+     * @param name name for this example object with name property, must not be null
+     */
+    public ExampleWithNameProperty(final String name)
     {
-        // empty
+        if (name == null)
+        {
+            throw new IllegalArgumentException("name must not be null");
+        }
+
+        this.name = name;
+    }
+
+
+    /**
+     * Return the name for this example object with name property.
+     * The name will not be null.  The identifiable BeanInfo for
+     * this class will identify this property as the name property.
+     *
+     * @return the name for this example object with name property
+     */
+    public final String getName()
+    {
+        return name;
     }
 }

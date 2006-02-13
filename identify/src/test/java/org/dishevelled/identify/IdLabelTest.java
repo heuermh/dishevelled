@@ -25,6 +25,8 @@ package org.dishevelled.identify;
 
 import junit.framework.TestCase;
 
+import org.dishevelled.iconbundle.tango.TangoProject;
+
 /**
  * Unit test for IdLabel.
  *
@@ -35,8 +37,11 @@ public final class IdLabelTest
     extends TestCase
 {
 
-    public void testIdLabel()
+    public void testConstructor()
     {
-        IdLabel label = new IdLabel(null);
+        IdLabel label0 = new IdLabel(null);
+        IdLabel label1 = new IdLabel("name");
+        IdLabel label2 = new IdLabel(new ExampleIdentifiable("name", TangoProject.TEXT_X_GENERIC));
+        IdLabel label3 = new IdLabel(new ExampleWithNameProperty("name"));
     }
 }
