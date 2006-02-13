@@ -23,34 +23,20 @@
 */
 package org.dishevelled.identify;
 
-import java.beans.BeanInfo;
-
-import org.dishevelled.iconbundle.IconBundle;
+import junit.framework.TestCase;
 
 /**
- * Marks a BeanInfo as having a name property descriptor
- * and an icon bundle.
+ * Unit test for IdentifiableBeanDescriptor.
  *
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public interface IdentifiableBeanInfo
-    extends BeanInfo
+public final class IdentifiableBeanDescriptorTest
+    extends TestCase
 {
 
-    /**
-     * Return the index of the name property descriptor, or
-     * <code>-1</code> if one does not exist.
-     *
-     * @return the index of the name property descriptor, or
-     *    <code>-1</code> if one does not exist
-     */
-    int getNamePropertyIndex();
-
-    /**
-     * Return the icon bundle.
-     *
-     * @return the icon bundle
-     */
-    IconBundle getIconBundle();
+    public void testIdentifiableBeanDescriptor()
+    {
+        // empty
+    }
 }

@@ -25,6 +25,10 @@ package org.dishevelled.identify;
 
 import junit.framework.TestCase;
 
+import org.dishevelled.iconbundle.IconBundle;
+
+import org.dishevelled.iconbundle.tango.TangoProject;
+
 /**
  * Unit test for IdentifyUtils.
  *
@@ -37,6 +41,149 @@ public final class IdentifyUtilsTest
 
     public void testIdentifyUtils()
     {
-        // empty
+        IdentifyUtils identifyUtils = IdentifyUtils.getInstance();
+
+        assertNotNull(identifyUtils);
+        assertEquals(IdentifyUtils.getInstance(), identifyUtils);
+
+        assertNotNull(identifyUtils.getNameStrategy());
+        assertNotNull(identifyUtils.getIconBundleStrategy());
+        //assertNotNull(identifyUtils.getDefaultIconBundle());
+
+        try
+        {
+            identifyUtils.setNameStrategy(null);
+            fail("setNameStrategy(null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+
+        try
+        {
+            identifyUtils.setIconBundleStrategy(null);
+            fail("setIconBundleStrategy(null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+
+        try
+        {
+            identifyUtils.setDefaultIconBundle(null);
+            fail("setDefaultIconBundle(null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+    }
+
+    public void testGetNameFor()
+    {
+        assertEquals("null", IdentifyUtils.getNameFor(null));
+
+        assertEquals("Example identifiable",
+                     IdentifyUtils.getNameFor(new ExampleIdentifiable("Example identifiable", TangoProject.TEXT_X_GENERIC)));
+
+        assertEquals("Example with name property",
+                     IdentifyUtils.getNameFor(new ExampleWithNameProperty("Example with name property")));
+
+        assertEquals("name", IdentifyUtils.getNameFor("name"));
+    }
+
+    public void testCustomNameStrategy()
+    {
+        IdentifyUtils identifyUtils = IdentifyUtils.getInstance();
+
+        IdentifyUtils.NameStrategy oldNameStrategy = identifyUtils.getNameStrategy();
+
+        IdentifyUtils.NameStrategy nameStrategy = new IdentifyUtils.NameStrategy()
+            {
+                /** @see IdentifyUtils.NameStrategy */
+                public String getNameFor(final Object bean)
+                {
+                    return (bean == null) ? null : "foo";
+                }
+            };
+
+        identifyUtils.setNameStrategy(nameStrategy);
+
+        assertEquals(null, IdentifyUtils.getNameFor(null));
+
+        assertEquals("foo",
+                     IdentifyUtils.getNameFor(new ExampleIdentifiable("Example identifiable", TangoProject.TEXT_X_GENERIC)));
+
+        assertEquals("foo",
+                     IdentifyUtils.getNameFor(new ExampleWithNameProperty("Example with name property")));
+
+        assertEquals("foo", IdentifyUtils.getNameFor("name"));
+
+        identifyUtils.setNameStrategy(oldNameStrategy);
+    }
+
+    public void testGetIconBundleFor()
+    {
+        IdentifyUtils identifyUtils = IdentifyUtils.getInstance();
+
+        assertEquals(null, IdentifyUtils.getIconBundleFor(null));
+
+        assertEquals(TangoProject.TEXT_X_GENERIC,
+                     IdentifyUtils.getIconBundleFor(new ExampleIdentifiable("name", TangoProject.TEXT_X_GENERIC)));
+
+        assertEquals(TangoProject.TEXT_X_GENERIC,
+                     IdentifyUtils.getIconBundleFor(new ExampleWithNameProperty("name")));
+
+        assertEquals(identifyUtils.getDefaultIconBundle(), IdentifyUtils.getIconBundleFor("name"));
+    }
+
+    public void testCustomIconBundleStrategy()
+    {
+        final IconBundle foo = null; //...;
+        //IconBundle testIconBundle0 = ...;
+        //IconBundle testIconBundle1 = ...;
+        IdentifyUtils identifyUtils = IdentifyUtils.getInstance();
+
+        IdentifyUtils.IconBundleStrategy oldIconBundleStrategy = identifyUtils.getIconBundleStrategy();
+
+        IdentifyUtils.IconBundleStrategy iconBundleStrategy = new IdentifyUtils.IconBundleStrategy()
+            {
+                /** @see IdentifyUtils.IconBundleStrategy */
+                public IconBundle getIconBundleFor(final Object bean)
+                {
+                    return (bean == null) ? null : foo;
+                }
+            };
+
+        identifyUtils.setIconBundleStrategy(iconBundleStrategy);
+
+        assertEquals(null, IdentifyUtils.getIconBundleFor(null));
+
+        //assertEquals(foo,
+        //             IdentifyUtils.getIconBundleFor(new TestIdentifiable(testIconBundle0)));
+
+        //assertEquals(foo,
+        //             IdentifyUtils.getIconBundleFor(new TestWithIdentifiableBeanInfo(testIconBundle1)));
+
+        assertEquals(identifyUtils.getDefaultIconBundle(), IdentifyUtils.getIconBundleFor("name"));
+
+        identifyUtils.setIconBundleStrategy(oldIconBundleStrategy);
+    }
+
+    public void testCustomDefaultIconBundle()
+    {
+        //IconBundle foo = null;
+        IdentifyUtils identifyUtils = IdentifyUtils.getInstance();
+
+        IconBundle oldDefaultIconBundle = identifyUtils.getDefaultIconBundle();
+
+        //identifyUtils.setDefaultIconBundle(foo);
+
+        //assertEquals(foo, identifyUtils.getDefaultIconBundle());
+        //assertEquals(foo, IdentifyUtils.getIconBundleFor("name"));
+
+        //identifyUtils.setDefaultIconBundle(oldDefaultIconBundle);
     }
 }

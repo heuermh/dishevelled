@@ -24,6 +24,7 @@
 package org.dishevelled.identify;
 
 import java.beans.BeanInfo;
+import java.beans.BeanDescriptor;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 import java.beans.IntrospectionException;
@@ -250,7 +251,7 @@ public final class IdentifyUtils
      * if the specified bean is null.  Otherwise
      * <ul>
      * <li>checks if the bean is instanceof Identifiable</li>
-     * <li>checks if the bean's BeanInfo is instanceof IdentifiableBeanInfo</li>
+     * <li>checks if the bean's BeanInfo's BeanDescriptor is instanceof IdentifiableBeanDescriptor</li>
      * <li>finally, returns <code>bean.toString()</code></li>
      *</ul>
      */
@@ -274,15 +275,14 @@ public final class IdentifyUtils
             try
             {
                 BeanInfo beanInfo = Introspector.getBeanInfo(bean.getClass());
+                BeanDescriptor beanDescriptor = beanInfo.getBeanDescriptor();
 
-                if (beanInfo instanceof IdentifiableBeanInfo)
+                if (beanDescriptor instanceof IdentifiableBeanDescriptor)
                 {
-                    int namePropertyIndex = ((IdentifiableBeanInfo) beanInfo).getNamePropertyIndex();
+                    int namePropertyIndex = ((IdentifiableBeanDescriptor) beanDescriptor).getNamePropertyIndex();
                     PropertyDescriptor namePropertyDescriptor = beanInfo.getPropertyDescriptors()[namePropertyIndex];
-
                     Method readMethod = namePropertyDescriptor.getReadMethod();
                     String name = (String) readMethod.invoke(bean, new Object[] {});
-
                     return name;
                 }
             }
@@ -308,7 +308,7 @@ public final class IdentifyUtils
      * the specified bean is null.  Otherwise
      * <ul>
      * <li>checks if the bean is instanceof Identifiable</li>
-     * <li>checks if the bean's BeanInfo is instanceof IdentifiableBeanInfo</li>
+     * <li>checks if the bean's BeanInfo's BeanDescriptor is instanceof IdentifiableBeanDescriptor</li>
      * <li>finally, returns the default icon bundle</li>
      * </ul>
      *
@@ -334,10 +334,11 @@ public final class IdentifyUtils
             try
             {
                 BeanInfo beanInfo = Introspector.getBeanInfo(bean.getClass());
+                BeanDescriptor beanDescriptor = beanInfo.getBeanDescriptor();
 
-                if (beanInfo instanceof IdentifiableBeanInfo)
+                if (beanDescriptor instanceof IdentifiableBeanDescriptor)
                 {
-                    return ((IdentifiableBeanInfo) beanInfo).getIconBundle();
+                    return ((IdentifiableBeanDescriptor) beanDescriptor).getIconBundle();
                 }
             }
             catch (IntrospectionException ie)
