@@ -56,10 +56,10 @@ public final class IdLabel
     public static final IconSize DEFAULT_ICON_SIZE = IconSize.DEFAULT_32X32;
 
     /** Default icon state. */
-    public static final IconState DEFAULT_ICON_STATE = IconState.NORMAL;
+    private static final IconState DEFAULT_ICON_STATE = IconState.NORMAL;
 
     /** Default icon text direction. */
-    public static final IconTextDirection DEFAULT_ICON_TEXT_DIRECTION = IconTextDirection.LEFT_TO_RIGHT;
+    private static final IconTextDirection DEFAULT_ICON_TEXT_DIRECTION = IconTextDirection.LEFT_TO_RIGHT;
 
     /** Bound value property. */
     private Object value;

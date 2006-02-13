@@ -25,6 +25,8 @@ package org.dishevelled.identify;
 
 import junit.framework.TestCase;
 
+import org.dishevelled.iconbundle.IconSize;
+
 /**
  * Unit test for IdTableCellRenderer.
  *
@@ -35,8 +37,19 @@ public final class IdTableCellRendererTest
     extends TestCase
 {
 
-    public void testIdTableCellRenderer()
+    public void testConstructor()
     {
-        // empty
+        IdTableCellRenderer tableCellRenderer0 = new IdTableCellRenderer();
+        IdTableCellRenderer tableCellRenderer1 = new IdTableCellRenderer(IconSize.DEFAULT_16X16);
+
+        try
+        {
+            IdTableCellRenderer tableCellRenderer = new IdTableCellRenderer(null);
+            fail("ctr(null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
     }
 }

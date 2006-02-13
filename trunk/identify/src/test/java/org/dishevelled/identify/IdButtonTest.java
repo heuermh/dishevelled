@@ -23,7 +23,21 @@
 */
 package org.dishevelled.identify;
 
+import java.awt.ComponentOrientation;
+
+import java.awt.event.ActionEvent;
+
+import java.awt.image.BufferedImage;
+
+import javax.swing.Action;
+
 import junit.framework.TestCase;
+
+import org.dishevelled.iconbundle.IconSize;
+import org.dishevelled.iconbundle.IconState;
+import org.dishevelled.iconbundle.IconTextDirection;
+
+import org.dishevelled.iconbundle.tango.TangoProject;
 
 /**
  * Unit test for IdButton.
@@ -35,8 +49,25 @@ public final class IdButtonTest
     extends TestCase
 {
 
-    public void testIdButton()
+    public void testConstructor()
     {
-        // empty
+        IdButton button = new IdButton(new IdentifiableAction("name", TangoProject.TEXT_X_GENERIC)
+            {
+                /** @see IdentifiableAction */
+                public void actionPerformed(final ActionEvent e)
+                {
+                    // empty
+                }
+            });
+
+        try
+        {
+            IdButton nullAction = new IdButton(null);
+            fail("ctr(null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
     }
 }

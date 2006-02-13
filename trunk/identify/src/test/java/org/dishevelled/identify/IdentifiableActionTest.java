@@ -23,7 +23,11 @@
 */
 package org.dishevelled.identify;
 
+import java.awt.event.ActionEvent;
+
 import junit.framework.TestCase;
+
+import org.dishevelled.iconbundle.tango.TangoProject;
 
 /**
  * Unit test for IdentifiableAction.
@@ -34,9 +38,53 @@ import junit.framework.TestCase;
 public final class IdentifiableActionTest
     extends TestCase
 {
-
     public void testIdentifiableAction()
     {
-        // empty
+        IdentifiableAction action = new IdentifiableAction("name", TangoProject.TEXT_X_GENERIC)
+            {
+                /** @see IdentifiableAction */
+                public void actionPerformed(final ActionEvent e)
+                {
+                    // empty
+                }
+            };
+
+        assertNotNull("action not null", action);
+        assertNotNull("action name not null", action.getName());
+        assertNotNull("action iconBundle not null", action.getIconBundle());
+        assertEquals("name", action.getName());
+        assertEquals(TangoProject.TEXT_X_GENERIC, action.getIconBundle());
+
+        IdentifiableAction nullName = new IdentifiableAction(null, TangoProject.TEXT_X_GENERIC)
+            {
+                /** @see IdentifiableAction */
+                public void actionPerformed(final ActionEvent e)
+                {
+                    // empty
+                }
+            };
+
+        assertNotNull("nullName not null", nullName);
+        assertNotNull("nullName iconBundle not null", nullName.getIconBundle());
+        assertEquals(null, nullName.getName());
+        assertEquals(TangoProject.TEXT_X_GENERIC, nullName.getIconBundle());
+
+        try
+        {
+            IdentifiableAction nullIconBundle = new IdentifiableAction("name", null)
+                {
+                    /** @see IdentifiableAction */
+                    public void actionPerformed(final ActionEvent e)
+                    {
+                        // empty
+                    }
+                };
+
+            fail("ctr(,null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
     }
 }
