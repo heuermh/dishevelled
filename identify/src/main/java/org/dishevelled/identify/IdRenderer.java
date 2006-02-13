@@ -32,6 +32,16 @@ import org.dishevelled.iconbundle.IconState;
 /**
  * A renderer that displays the name property
  * and appropriate icon from an icon bundle for a given bean.
+ * <p>
+ * The AWT component returned by the <code>getComponent</code>
+ * method is an instance of IdLabel, so the following cast is safe
+ * <pre>
+ * IdRenderer renderer = new IdRenderer();
+ * IdLabel rendererComponent = (IdLabel) renderer.getComponent();
+ * // set properties on the IdLabel, e.g.
+ * rendererComponent.setIconSize(IconSize.DEFAULT_16X16);
+ * </pre>
+ * <p>
  *
  * @author  Michael Heuer
  * @version $Revision$ $Date$

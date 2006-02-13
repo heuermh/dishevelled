@@ -37,6 +37,6 @@ public final class IdRendererTest
 
     public void testIdRenderer()
     {
-        // empty
+        IdRenderer renderer = new IdRenderer();
     }
 }

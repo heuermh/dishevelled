@@ -58,6 +58,15 @@ public final class IdButton
     extends JButton
     implements PropertyChangeListener
 {
+    /** Default icon size. */
+    public static final IconSize DEFAULT_ICON_SIZE = IconSize.DEFAULT_32X32;
+
+    /** Default icon state. */
+    private static final IconState DEFAULT_ICON_STATE = IconState.NORMAL;
+
+    /** Default icon text direction. */
+    private static final IconTextDirection DEFAULT_ICON_TEXT_DIRECTION = IconTextDirection.LEFT_TO_RIGHT;
+
     /** Identifiable action. */
     private IdentifiableAction action;
 
@@ -136,10 +145,10 @@ public final class IdButton
     {
         super();
 
-        iconSize = IconSize.DEFAULT_32X32;
-        iconState = IconState.NORMAL;
-        previousState = IconState.NORMAL;
-        iconTextDirection = IconTextDirection.LEFT_TO_RIGHT;
+        iconSize = DEFAULT_ICON_SIZE;
+        iconState = DEFAULT_ICON_STATE;
+        previousState = DEFAULT_ICON_STATE;
+        iconTextDirection = DEFAULT_ICON_TEXT_DIRECTION;
 
         addMouseListener(mouseListener);
 

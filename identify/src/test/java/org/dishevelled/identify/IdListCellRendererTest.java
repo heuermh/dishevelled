@@ -25,6 +25,8 @@ package org.dishevelled.identify;
 
 import junit.framework.TestCase;
 
+import org.dishevelled.iconbundle.IconSize;
+
 /**
  * Unit test for IdListCellRenderer.
  *
@@ -35,8 +37,19 @@ public final class IdListCellRendererTest
     extends TestCase
 {
 
-    public void testIdListCellRenderer()
+    public void testConstructor()
     {
-        // empty
+        IdListCellRenderer listCellRenderer0 = new IdListCellRenderer();
+        IdListCellRenderer listCellRenderer1 = new IdListCellRenderer(IconSize.DEFAULT_16X16);
+
+        try
+        {
+            IdListCellRenderer listCellRenderer = new IdListCellRenderer(null);
+            fail("ctr(null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
     }
 }
