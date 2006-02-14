@@ -84,6 +84,11 @@
     <dependency><groupId>batik</groupId><artifactId>batik-util</artifactId><version>1.6</version></dependency>
     <dependency><groupId>batik</groupId><artifactId>batik-xml</artifactId><version>1.6</version></dependency>
     <dependency><groupId>xerces</groupId><artifactId>xercesImpl</artifactId><version>2.6.2</version></dependency>
+
+    <!-- plugin dependency -->
+    <dependency>
+      <groupId>maven-plugins</groupId><artifactId>maven-cobertura-plugin</artifactId><version>1.1</version><type>plugin</type>
+    </dependency>
   </dependencies>
 
   <build>
@@ -102,7 +107,9 @@
 
   <reports>
     <report>maven-jxr-plugin</report>
+    <report>maven-junit-report-plugin</report>
     <report>maven-javadoc-plugin</report>
     <report>maven-checkstyle-plugin</report>
+    <report>maven-cobertura-plugin</report>
   </reports>
 </project>
