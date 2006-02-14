@@ -43,8 +43,8 @@
   <a href="cvs-usage.html">Repository</a> |
   <a href="apidocs/index.html">Javadocs</a> |
   <a href="checkstyle-report.html">Checkstyle</a> |
-  Unit tests |
-  Test coverage |
+  <a href="junit-report.html">Unit tests</a> |
+  <a href="cobertura/index.html">Test coverage</a> |
   Changes |
   Changelog
 </p>

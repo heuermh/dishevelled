@@ -34,7 +34,7 @@
 dishevelled.org <b>identify</b> provides lightweight components for identifiable
 beans, those marked as having a name and an icon bundle.  The identify project has
 a dependency on the dishevelled.org <a href="http://www.dishevelled.org/iconbundle">iconbundle</a>
-project.
+project and requires java version 1.4 or later.
 </p>
 
 <p>
@@ -61,33 +61,54 @@ class MyBean
     }
 }
 </source>
-by having its BeanInfo class implement the
-<a href="apidocs/org/dishevelled/identify/IdentifiableBeanInfo.html">IdentifiableBeanInfo</a> interface:
+</p>
+<p>
+by having the BeanDescriptor in its BeanInfo class extend
+<a href="apidocs/org/dishevelled/identify/IdentifiableBeanDescriptor.html">IdentifiableBeanDescriptor</a>:
 <source>
-class MyBeanInfo
+final class MyBeanInfo
     extends SimpleBeanInfo
-    implements IdentifiableBeanInfo
 {
     /** Icon bundle. */
     private static final IconBundle BNDL = new PNGIconBundle("mybean.png");
 
+    /** Bean descriptor. */
+    private final beanDescriptor = new IdentifiableBeanDescriptor(MyBean.class)
+        {
+            /** @see IdentifiableBeanDescriptor */
+            public int getNamePropertyIndex()
+            {
+                // return the index of a property descriptor
+                //    to use as the "name" property
+                return 1;
+            }
 
-    /** @see IdentifiableBeanInfo */
-    public IconBundle getIconBundle()
-    {
-        return BNDL;
-    }
+            /** @see IdentifiableBeanDescriptor */
+            public IconBundle getIconBundle()
+            {
+                return BNDL;
+            }
+        }
 
-    /** @see IdentifiableBeanInfo */
-    public int getNamePropertyIndex()
+
+    /** @see BeanInfo */
+    public BeanDescriptor getBeanDescriptor()
     {
-        // return the index of a property descriptor to use as the "name" property
-        return 1;
+        return beanDescriptor;
     }
 }
 </source>
+</p>
+<p>
 or by doing nothing and accepting the defaults as
 implemented in <a href="apidocs/org/dishevelled/identify/IdentifyUtils.html">IdentifyUtils</a>.
+</p>
+</section>
+
+<section name="Components">
+<p>
+TODO:<br/>
+provide a list of available components and a screenshot with callouts
 </p>
 </section>
 
