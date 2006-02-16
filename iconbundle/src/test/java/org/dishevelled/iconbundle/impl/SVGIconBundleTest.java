@@ -47,16 +47,18 @@ public final class SVGIconBundleTest
     public IconBundle createIconBundle()
     {
         File file = null;
+        URL url = null;
         try
         {
             file = new File(TEST_IMAGE_PATH);
+            url = new URL("file:///" + file.getAbsolutePath());
         }
         catch (Exception e)
         {
             // ignore
         }
 
-        return new SVGIconBundle(file);
+        return new SVGIconBundle(url);
     }
 
     public void testConstructor()
