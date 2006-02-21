@@ -65,10 +65,10 @@ import hep.aida.bin.StaticBin1D;
  *
  * <p>Given a few benchmarks to run, wrap them in Runnable objects
  * <pre>
- * Runnable r0 = new Runnable() { public void run() { ... }};
- * Runnable r1 = new Runnable() { public void run() { ... }};
- * Runnable r2 = new Runnable() { public void run() { ... }};
- * List&lt;Runnable&gt; benchmarks = Arrays.asList(new Runnable[] { r0, r1, r2 };
+ * Runnable r0 = new Runnable() { public void run() { ... } };
+ * Runnable r1 = new Runnable() { public void run() { ... } };
+ * Runnable r2 = new Runnable() { public void run() { ... } };
+ * List&lt;Runnable&gt; benchmarks = Arrays.asList(new Runnable[] { r0, r1, r2 });
  * </pre>
  * Prime the JIT by running the benchmarks several times
  * <pre>
