@@ -43,6 +43,7 @@ import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 import javax.swing.JScrollPane;
+import javax.swing.JToolBar;
 import javax.swing.JSplitPane;
 import javax.swing.JComponent;
 import javax.swing.SwingUtilities;
@@ -63,7 +64,10 @@ import org.dishevelled.iconbundle.IconBundle;
 import org.dishevelled.iconbundle.tango.TangoProject;
 
 import org.dishevelled.identify.IdLabel;
+import org.dishevelled.identify.IdButton;
 import org.dishevelled.identify.Identifiable;
+import org.dishevelled.identify.IdentifiableAction;
+import org.dishevelled.identify.IdTreeCellRenderer;
 
 import org.dishevelled.layout.LabelFieldLayout;
 
@@ -110,6 +114,7 @@ public final class TangoExample
         setLayout(new BorderLayout());
 
         JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, createContextTreePanel(), createDetailsPanel());
+        add("North", createToolBar());
         add("Center", splitPane);
     }
 
@@ -225,6 +230,46 @@ public final class TangoExample
     }
 
     /**
+     * Create a return a new toolbar component.
+     *
+     * @return a new toolbar component
+     */
+    private JComponent createToolBar()
+    {
+        IdButton cut = new IdButton(new IdentifiableAction("Cut", TangoProject.EDIT_CUT)
+            {
+                public void actionPerformed(final ActionEvent e)
+                {
+                    // empty
+                }
+            });
+        IdButton copy = new IdButton(new IdentifiableAction("Copy", TangoProject.EDIT_COPY)
+            {
+                public void actionPerformed(final ActionEvent e)
+                {
+                    // empty
+                }
+            });
+        IdButton paste = new IdButton(new IdentifiableAction("Paste", TangoProject.EDIT_PASTE)
+            {
+                public void actionPerformed(final ActionEvent e)
+                {
+                    // empty
+                }
+            });
+
+        cut.setIconSize(TangoProject.EXTRA_SMALL);
+        copy.setIconSize(TangoProject.SMALL);
+        paste.setIconSize(TangoProject.LARGE);
+
+        JToolBar toolBar = new JToolBar();
+        toolBar.add(cut);
+        toolBar.add(copy);
+        toolBar.add(paste);
+        return toolBar;
+    }
+
+    /**
      * Set the selected identifiable to <code>selection</code>.
      *
      * @param selection selected identifiable
@@ -270,48 +315,7 @@ public final class TangoExample
         public ContextTree()
         {
             super(new TangoTreeModel());
-
-            setCellRenderer(new DefaultTreeCellRenderer()
-                {
-                    /** @see DefaultTreeCellRenderer */
-                    public Component getTreeCellRendererComponent(JTree tree,
-                                                                  Object value,
-                                                                  boolean isSelected,
-                                                                  boolean isExpanded,
-                                                                  boolean isLeaf,
-                                                                  int row,
-                                                                  boolean hasFocus)
-                    {
-                        JLabel label = (JLabel) super.getTreeCellRendererComponent(tree, value, isSelected, isExpanded, isLeaf, row, hasFocus);
-
-                        Identifiable identifiable = (Identifiable) value;
-                        label.setText(identifiable.getName());
-
-                        IconBundle iconBundle = identifiable.getIconBundle();
-
-                        IconState state = IconState.NORMAL;
-                        if (isSelected)
-                        {
-                            state = IconState.SELECTED;
-                        }
-                        else
-                        {
-                            if (hasFocus)
-                            {
-                                state = IconState.ACTIVE;
-                            }
-                        }
-
-                        Image image = iconBundle.getImage(label,
-                                                          IconTextDirection.LEFT_TO_RIGHT,
-                                                          state,
-                                                          TangoProject.EXTRA_SMALL);
-
-                        label.setIcon(new ImageIcon(image));
-                        return label;
-                    }
-                });
-
+            setCellRenderer(new IdTreeCellRenderer(TangoProject.EXTRA_SMALL));
             getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
         }
     }
