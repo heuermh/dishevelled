@@ -64,7 +64,7 @@
     <dependency><groupId>org.dishevelled</groupId><artifactId>dsh-iconbundle</artifactId><version>SNAPSHOT</version></dependency>
 
     <!-- runtime dependencies -->
-    <dependency><groupId>org.tango-project</groupId><artifactId>tango-icon-theme</artifactId><version>0.6.1</version></dependency>
+    <dependency><groupId>org.tango-project</groupId><artifactId>tango-icon-theme</artifactId><version>0.7.0</version></dependency>
 
     <dependency><groupId>batik</groupId><artifactId>batik-transcoder</artifactId><version>1.6</version></dependency>
     <dependency><groupId>batik</groupId><artifactId>batik-awt-util</artifactId><version>1.6</version></dependency>

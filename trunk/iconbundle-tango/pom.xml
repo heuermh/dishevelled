@@ -67,7 +67,7 @@
     <dependency>
       <groupId>org.tango-project</groupId>
       <artifactId>tango-icon-theme</artifactId>
-      <version>0.6.1</version>
+      <version>0.7.0</version>
       <scope>runtime</scope>
     </dependency>
     <dependency>
