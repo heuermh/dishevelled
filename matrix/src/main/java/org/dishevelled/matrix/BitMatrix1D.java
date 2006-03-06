@@ -84,11 +84,13 @@ public final class BitMatrix1D
 
         for (int k = 0; k < i; k++)
         {
-            bitSets.add(new BitSet(Integer.MAX_VALUE));
+            bitSets.add(new BitSet());
+            //bitSets.add(new BitSet(Integer.MAX_VALUE));
         }
         if (j > 0)
         {
-            bitSets.add(new BitSet(j));
+            bitSets.add(new BitSet());
+            //bitSets.add(new BitSet(j));
         }
     }
 
