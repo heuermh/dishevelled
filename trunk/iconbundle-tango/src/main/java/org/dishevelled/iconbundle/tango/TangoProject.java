@@ -137,7 +137,7 @@ public final class TangoProject
     public static final IconBundle EDIT_REDO = new CachingIconBundle(new TangoProjectIconBundle("actions", "edit-redo"));
 
     /** Icon bundle for <code>actions/edit-select-all</code>. */
-    //public static final IconBundle EDIT_SELECT_ALL = new CachingIconBundle(new TangoProjectIconBundle("actions", "edit-select-all"));
+    public static final IconBundle EDIT_SELECT_ALL = new CachingIconBundle(new TangoProjectIconBundle("actions", "edit-select-all"));
 
     /** Icon bundle for <code>actions/edit-undo</code>. */
     public static final IconBundle EDIT_UNDO = new CachingIconBundle(new TangoProjectIconBundle("actions", "edit-undo"));
@@ -354,9 +354,6 @@ public final class TangoProject
 
     /** Icon bundle for <code>apps/help-browser</code>. */
     public static final IconBundle HELP_BROWSER = new CachingIconBundle(new TangoProjectIconBundle("apps", "help-browser"));
-
-    /** Icon bundle for <code>apps/multimedia-volume-control</code>. */
-    public static final IconBundle MULTIMEDIA_VOLUME_CONTROL = new CachingIconBundle(new TangoProjectIconBundle("apps", "multimedia-volume-control"));
 
     /** Icon bundle for <code>apps/preferences-desktop-accessibility</code>. */
     public static final IconBundle PREFERENCES_DESKTOP_ACCESSIBILITY = new CachingIconBundle(new TangoProjectIconBundle("apps", "preferences-desktop-accessibility"));

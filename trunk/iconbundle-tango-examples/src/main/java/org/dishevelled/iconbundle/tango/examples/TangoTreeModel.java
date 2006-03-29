@@ -130,7 +130,7 @@ final class TangoTreeModel
         multiMap.put("actions", new Icon("edit-find-replace", TangoProject.EDIT_FIND_REPLACE));
         multiMap.put("actions", new Icon("edit-paste", TangoProject.EDIT_PASTE));
         multiMap.put("actions", new Icon("edit-redo", TangoProject.EDIT_REDO));
-        //multiMap.put("actions", new Icon("edit-select-all", TangoProject.EDIT_SELECT_ALL));
+        multiMap.put("actions", new Icon("edit-select-all", TangoProject.EDIT_SELECT_ALL));
         multiMap.put("actions", new Icon("edit-undo", TangoProject.EDIT_UNDO));
         multiMap.put("actions", new Icon("format-indent-less", TangoProject.FORMAT_INDENT_LESS));
         multiMap.put("actions", new Icon("format-indent-more", TangoProject.FORMAT_INDENT_MORE));
@@ -205,7 +205,6 @@ final class TangoTreeModel
         //multiMap.put("apps", new Icon("accessories-dictionary", TangoProject.ACCESSORIES_DICTIONARY));
         multiMap.put("apps", new Icon("accessories-text-editor", TangoProject.ACCESSORIES_TEXT_EDITOR));
         multiMap.put("apps", new Icon("help-browser", TangoProject.HELP_BROWSER));
-        multiMap.put("apps", new Icon("multimedia-volume-control", TangoProject.MULTIMEDIA_VOLUME_CONTROL));
         multiMap.put("apps", new Icon("preferences-desktop-accessibility", TangoProject.PREFERENCES_DESKTOP_ACCESSIBILITY));
         multiMap.put("apps", new Icon("preferences-desktop-font", TangoProject.PREFERENCES_DESKTOP_FONT));
         //multiMap.put("apps", new Icon("preferences-desktop-keyboard", TangoProject.PREFERENCES_DESKTOP_KEYBOARD));
