@@ -80,7 +80,7 @@ Image multimediaPlayerLtrSelectedSmall = multimediaPlayer.getImage(label,
 // Extra Small (16x16)
 Image viewRefreshLtrMouseoverExtraSmall = viewRefresh.getImage(label,
                                                                IconTextDirection.LEFT_TO_RIGHT,
-                                                               IconTextDirection.LEFT_TO_RIGHT,
+                                                               IconState.MOUSEOVER,
                                                                TangoProject.EXTRA_SMALL);
 </source>
 
