@@ -78,7 +78,7 @@ public final class EvolutionaryAlgorithm<I>
     {
         checkParameters(individuals, exitStrategy, recombination, mutation, fitness, selection);
 
-        // intialize population with individuals
+        // initialize population with individuals
         WeightedMap<I> population = new HashWeightedMap<I>(individuals.size(), DEFAULT_LOAD_FACTOR);
         for (I i : individuals)
         {
@@ -89,18 +89,18 @@ public final class EvolutionaryAlgorithm<I>
         int time = 0;
         while (exitStrategy.evaluate(population, time) == false)
         {
-            fireExitFailedEvent(population, time);
+            fireExitFailed(population, time);
 
             // copy reference to parent generation
             WeightedMap<I> parents = population;
 
             // recombine parents into children
             Set<I> recombined = recombination.recombine(parents.keySet());
-            fireRecombinedEvent(parents.keySet(), recombined);
+            fireRecombined(parents.keySet(), recombined);
 
             // mutate children amongst themselves
             Set<I> mutated = mutation.mutate(recombined);
-            fireMutatedEvent(recombined, mutated);
+            fireMutated(recombined, mutated);
 
             // create new weighted map for evaluating children
             WeightedMap<I> children = new HashWeightedMap<I>(parents.size(), DEFAULT_LOAD_FACTOR);
@@ -110,17 +110,17 @@ public final class EvolutionaryAlgorithm<I>
             {
                 Double score = fitness.score(i);
                 children.put(i, score);
-                fireFitnessCalculatedEvent(i, score);
+                fireFitnessCalculated(i, score);
             }
 
             // select individuals for next generation from children, using parent generation as reference
             population = selection.select(parents, children);
-            fireSelectedEvent(parents, children, population);
+            fireSelected(parents, children, population);
 
             time++;
         }
 
-        fireExitSucceededEvent(population, time);
+        fireExitSucceeded(population, time);
 
         // exit strategy condition(s) met, return successful population
         return population;
@@ -226,7 +226,7 @@ public final class EvolutionaryAlgorithm<I>
      * @param population population
      * @param time time
      */
-    private void fireExitFailedEvent(final WeightedMap<I> population, final int time)
+    private void fireExitFailed(final WeightedMap<I> population, final int time)
     {
         Object[] listeners = listenerList.getListenerList();
         EvolutionaryAlgorithmEvent<I> e = null;
@@ -251,7 +251,7 @@ public final class EvolutionaryAlgorithm<I>
      * @param population population
      * @param time time
      */
-    private void fireExitSucceededEvent(final WeightedMap<I> population, final int time)
+    private void fireExitSucceeded(final WeightedMap<I> population, final int time)
     {
         Object[] listeners = listenerList.getListenerList();
         EvolutionaryAlgorithmEvent<I> e = null;
@@ -276,7 +276,7 @@ public final class EvolutionaryAlgorithm<I>
      * @param parents parents
      * @param recombined recombined
      */
-    private void fireRecombinedEvent(final Set<I> parents, final Set<I> recombined)
+    private void fireRecombined(final Set<I> parents, final Set<I> recombined)
     {
         Object[] listeners = listenerList.getListenerList();
         EvolutionaryAlgorithmEvent<I> e = null;
@@ -301,7 +301,7 @@ public final class EvolutionaryAlgorithm<I>
      * @param recombined recombined
      * @param mutated mutated
      */
-    private void fireMutatedEvent(final Set<I> recombined, final Set<I> mutated)
+    private void fireMutated(final Set<I> recombined, final Set<I> mutated)
     {
         Object[] listeners = listenerList.getListenerList();
         EvolutionaryAlgorithmEvent<I> e = null;
@@ -326,7 +326,7 @@ public final class EvolutionaryAlgorithm<I>
      * @param individual individual
      * @param score score
      */
-    private void fireFitnessCalculatedEvent(final I individual, final Double score)
+    private void fireFitnessCalculated(final I individual, final Double score)
     {
         Object[] listeners = listenerList.getListenerList();
         EvolutionaryAlgorithmEvent<I> e = null;
@@ -352,9 +352,9 @@ public final class EvolutionaryAlgorithm<I>
      * @param childPopulation child population
      * @param population population
      */
-    private void fireSelectedEvent(final WeightedMap<I> parentPopulation,
-                                   final WeightedMap<I> childPopulation,
-                                   final WeightedMap<I> population)
+    private void fireSelected(final WeightedMap<I> parentPopulation,
+                              final WeightedMap<I> childPopulation,
+                              final WeightedMap<I> population)
     {
         Object[] listeners = listenerList.getListenerList();
         EvolutionaryAlgorithmEvent<I> e = null;
