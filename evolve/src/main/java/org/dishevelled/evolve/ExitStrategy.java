@@ -40,6 +40,8 @@ public interface ExitStrategy<I>
      *
      * @param population population
      * @param time time
+     * @return true if the specified population has met the criteria
+     *    of this exit strategy function
      */
     boolean evaluate(WeightedMap<I> population, int time);
 }

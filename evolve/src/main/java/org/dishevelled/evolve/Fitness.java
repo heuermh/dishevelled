@@ -35,6 +35,7 @@ public interface Fitness<I>
     /**
      * Return a measure of fitness for the specified individual.
      *
+     * @param individual individual
      * @return a measure of fitness for the specified individual
      */
     Double score(I individual);
