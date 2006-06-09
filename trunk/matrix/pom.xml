@@ -51,7 +51,7 @@
   <scm>
     <connection>scm:cvs:pserver:anonymous@dishevelled.cvs.sourceforge.net:/cvsroot/dishevelled:dishevelled/matrix</connection>
     <developerConnection>scm:cvs:ext:heuermh@dishevelled.cvs.sourceforge.net:/cvsroot/dishevelled:dishevelled/matrix</developerConnection>
-    <url>http://cvs.sourceforge.net/viewcvs.py/dishevelled/dishevelled/matrix</url>
+    <url>http://dishevelled.cvs.sourceforge.net/dishevelled/dishevelled/matrix</url>
   </scm>
   <organization>
     <name>dishevelled.org</name>

@@ -24,7 +24,7 @@
   <repository>
     <connection>scm:cvs:pserver:anonymous@dishevelled.cvs.sourceforge.net:/cvsroot/dishevelled:dishevelled/evolve</connection>
     <developerConnection>scm:cvs:ext:heuermh@dishevelled.cvs.sourceforge.net:/cvsroot/dishevelled:dishevelled/evolve</developerConnection>
-    <url>http://cvs.sourceforge.net/viewcvs.py/dishevelled/dishevelled/evolve</url>
+    <url>http://dishevelled.cvs.sourceforge.net/dishevelled/dishevelled/evolve</url>
   </repository>
 
   <mailingLists>

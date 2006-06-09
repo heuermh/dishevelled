@@ -24,7 +24,7 @@
   <repository>
     <connection>scm:cvs:pserver:anonymous@dishevelled.cvs.sourceforge.net:/cvsroot/dishevelled:dishevelled/iconbundle-tango</connection>
     <developerConnection>scm:cvs:ext:heuermh@dishevelled.cvs.sourceforge.net:/cvsroot/dishevelled:dishevelled/iconbundle-tango</developerConnection>
-    <url>http://cvs.sourceforge.net/viewcvs.py/dishevelled/dishevelled/iconbundle-tango</url>
+    <url>http://dishevelled.cvs.sourceforge.net/dishevelled/dishevelled/iconbundle-tango</url>
   </repository>
 
   <mailingLists>
