@@ -51,7 +51,7 @@
   <scm>
     <connection>scm:cvs:pserver:anonymous@dishevelled.cvs.sourceforge.net:/cvsroot/dishevelled:dishevelled/codegen-shell</connection>
     <developerConnection>scm:cvs:ext:heuermh@dishevelled.cvs.sourceforge.net:/cvsroot/dishevelled:dishevelled/codegen-shell</developerConnection>
-    <url>http://cvs.sourceforge.net/viewcvs.py/dishevelled/dishevelled/codegen-shell</url>
+    <url>http://dishevelled.cvs.sourceforge.net/dishevelled/dishevelled/codegen-shell</url>
   </scm>
   <organization>
     <name>dishevelled.org</name>
