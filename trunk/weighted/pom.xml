@@ -55,8 +55,8 @@
     </license>
   </licenses>
   <scm>
-    <connection>scm:cvs:pserver:anonymous@cvs.sourceforge.net:/cvsroot/dishevelled:dishevelled/weighted</connection>
-    <developerConnection>scm:cvs:ext:heuermh@cvs.sourceforge.net:/cvsroot/dishevelled:dishevelled/weighted</developerConnection>
+    <connection>scm:cvs:pserver:anonymous@dishevelled.cvs.sourceforge.net:/cvsroot/dishevelled:dishevelled/weighted</connection>
+    <developerConnection>scm:cvs:ext:heuermh@dishevelled.cvs.sourceforge.net:/cvsroot/dishevelled:dishevelled/weighted</developerConnection>
     <url>http://cvs.sourceforge.net/viewcvs.py/dishevelled/dishevelled/weighted</url>
   </scm>
   <organization>
