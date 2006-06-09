@@ -22,8 +22,8 @@
   <distributionDirectory>/home/groups/d/di/dishevelled/htdocs/functor/dist</distributionDirectory>
 
   <repository>
-    <connection>scm:cvs:pserver:anonymous@cvs.sourceforge.net:/cvsroot/dishevelled:dishevelled/functor</connection>
-    <developerConnection>scm:cvs:ext:heuermh@cvs.sourceforge.net:/cvsroot/dishevelled:dishevelled/functor</developerConnection>
+    <connection>scm:cvs:pserver:anonymous@dishevelled.cvs.sourceforge.net:/cvsroot/dishevelled:dishevelled/functor</connection>
+    <developerConnection>scm:cvs:ext:heuermh@dishevelled.cvs.sourceforge.net:/cvsroot/dishevelled:dishevelled/functor</developerConnection>
     <url>http://cvs.sourceforge.net/viewcvs.py/dishevelled/dishevelled/functor</url>
   </repository>
 

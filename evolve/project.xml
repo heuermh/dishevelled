@@ -22,8 +22,8 @@
   <distributionDirectory>/home/groups/d/di/dishevelled/htdocs/evolve/dist</distributionDirectory>
 
   <repository>
-    <connection>scm:cvs:pserver:anonymous@cvs.sourceforge.net:/cvsroot/dishevelled:dishevelled/evolve</connection>
-    <developerConnection>scm:cvs:ext:heuermh@cvs.sourceforge.net:/cvsroot/dishevelled:dishevelled/evolve</developerConnection>
+    <connection>scm:cvs:pserver:anonymous@dishevelled.cvs.sourceforge.net:/cvsroot/dishevelled:dishevelled/evolve</connection>
+    <developerConnection>scm:cvs:ext:heuermh@dishevelled.cvs.sourceforge.net:/cvsroot/dishevelled:dishevelled/evolve</developerConnection>
     <url>http://cvs.sourceforge.net/viewcvs.py/dishevelled/dishevelled/evolve</url>
   </repository>
 
