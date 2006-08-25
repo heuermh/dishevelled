@@ -39,7 +39,7 @@ import org.dishevelled.iconbundle.IconBundle;
 import org.dishevelled.iconbundle.IconTextDirection;
 
 /**
- * A table cell renderer that displays the name property
+ * A table cell renderer that displays the name property value
  * and appropriate icon from an icon bundle for a given bean.
  *
  * @author  Michael Heuer

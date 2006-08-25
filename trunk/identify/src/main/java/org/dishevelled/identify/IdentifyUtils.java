@@ -37,7 +37,7 @@ import org.dishevelled.iconbundle.IconBundle;
 
 /**
  * Provides static utility methods for determining
- * the name property and icon bundle for a bean.
+ * the name property value and icon bundle for a bean.
  *
  * @author  Michael Heuer
  * @version $Revision$ $Date$

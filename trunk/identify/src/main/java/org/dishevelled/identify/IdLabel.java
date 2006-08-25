@@ -43,7 +43,7 @@ import org.dishevelled.iconbundle.IconBundle;
 import org.dishevelled.iconbundle.IconTextDirection;
 
 /**
- * An extension of JLabel that displays the name property
+ * An extension of JLabel that displays the name property value
  * and appropriate icon from an icon bundle for a given bean.
  *
  * @author  Michael Heuer
