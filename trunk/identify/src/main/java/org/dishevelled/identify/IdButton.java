@@ -219,10 +219,12 @@ public final class IdButton
         }
         if (this.action != null)
         {
+            removeActionListener(this.action);
             this.action.removePropertyChangeListener(this);
         }
         this.action = action;
         this.action.addPropertyChangeListener(this);
+        addActionListener(this.action);
         setDirty(true);
     }
 
