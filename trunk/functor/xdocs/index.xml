@@ -70,13 +70,14 @@ tf = new TertiaryFunction&lt;Double, Integer, Double, Double&gt;()
                                final Double d1) { ... }
     }
 
-QuaternaryPredicate&lt;Integer, Double, Double&gt; qp;
-qp = new QuaternaryPredicate&lt;Integer, Double, Double&gt;()
+QuaternaryPredicate&lt;Integer, Double, Double, Float&gt; qp;
+qp = new QuaternaryPredicate&lt;Integer, Double, Double, Float&gt;()
     {
         /** @see QuaternaryPredicate */
         public boolean test(final Integer i,
                             final Double d0,
-                            final Double d2) { ... }
+                            final Double d2,
+                            final Float f) { ... }
     }
 
 NaryProcedure&lt;Double&gt; np;
