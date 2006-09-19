@@ -27,6 +27,8 @@ import java.io.File;
 
 import java.net.URL;
 
+import org.apache.commons.lang.SystemUtils;
+
 import org.dishevelled.iconbundle.IconBundle;
 import org.dishevelled.iconbundle.AbstractIconBundleTest;
 
@@ -39,6 +41,9 @@ import org.dishevelled.iconbundle.AbstractIconBundleTest;
 public final class SVGIconBundleTest
     extends AbstractIconBundleTest
 {
+    /** File url prefix. */
+    private static final String FILE_URL_PREFIX = SystemUtils.IS_OS_WINDOWS ? "file:///" : "file://";
+
     /** Relative path to test image. */
     private static final String TEST_IMAGE_PATH = "./src/test/resources/org/dishevelled/iconbundle/impl/test.svg";
 
@@ -51,7 +56,7 @@ public final class SVGIconBundleTest
         try
         {
             file = new File(TEST_IMAGE_PATH);
-            url = new URL("file:///" + file.getAbsolutePath());
+            url = new URL(FILE_URL_PREFIX + file.getAbsolutePath());
         }
         catch (Exception e)
         {
@@ -67,7 +72,7 @@ public final class SVGIconBundleTest
         File file = new File(TEST_IMAGE_PATH);
         IconBundle ib1 = new SVGIconBundle(file);
 
-        URL url = new URL("file:///" + file.getAbsolutePath());
+        URL url = new URL(FILE_URL_PREFIX + file.getAbsolutePath());
         IconBundle ib2 = new SVGIconBundle(url);
 
         try
