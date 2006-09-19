@@ -23,25 +23,15 @@
 */
 package org.dishevelled.identify;
 
-import java.awt.Image;
-import java.awt.Graphics;
 import java.awt.ComponentOrientation;
 
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseListener;
-
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-
-import javax.swing.Icon;
 import javax.swing.Action;
-import javax.swing.JButton;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 
+import org.dishevelled.iconbundle.IconBundle;
 import org.dishevelled.iconbundle.IconSize;
 import org.dishevelled.iconbundle.IconState;
-import org.dishevelled.iconbundle.IconBundle;
 import org.dishevelled.iconbundle.IconTextDirection;
 
 /**
@@ -56,102 +46,62 @@ import org.dishevelled.iconbundle.IconTextDirection;
  */
 public final class IdButton
     extends JButton
-    implements PropertyChangeListener
 {
     /** Default icon size. */
-    public static final IconSize DEFAULT_ICON_SIZE = IconSize.DEFAULT_32X32;
-
-    /** Default icon state. */
-    private static final IconState DEFAULT_ICON_STATE = IconState.NORMAL;
+    public static final IconSize DEFAULT_ICON_SIZE = IconSize.DEFAULT_16X16;
 
     /** Default icon text direction. */
     private static final IconTextDirection DEFAULT_ICON_TEXT_DIRECTION = IconTextDirection.LEFT_TO_RIGHT;
 
-    /** Identifiable action. */
-    private IdentifiableAction action;
-
     /** Icon size. */
     private IconSize iconSize;
-
-    /** Icon state. */
-    private IconState iconState;
 
     /** Icon text direction. */
     private IconTextDirection iconTextDirection;
 
-    /** ImageIcon wrapper for image from icon bundle. */
-    private transient ImageIcon imageIcon;
-
     /** Dirty flag. */
-    private transient boolean dirty = false;
-
-    /** Mouse listener. */
-    private MouseListener mouseListener = new MouseAdapter()
-        {
-            /** @see MouseListener */
-            public final void mouseEntered(final MouseEvent e)
-            {
-                if (getIconState().equals(IconState.NORMAL))
-                {
-                    setIconState(IconState.MOUSEOVER);
-                    repaint();
-                }
-            }
-
-            /** @see MouseListener */
-            public final void mouseExited(final MouseEvent e)
-            {
-                if (getIconState().equals(IconState.MOUSEOVER))
-                {
-                    setIconState(IconState.NORMAL);
-                    repaint();
-                }
-            }
-
-            /** @see MouseListener */
-            public final void mousePressed(final MouseEvent e)
-            {
-                if (getIconState().equals(IconState.MOUSEOVER))
-                {
-                    setIconState(IconState.ACTIVE);
-                    repaint();
-                }
-            }
-
-            /** @see MouseListener */
-            public final void mouseReleased(final MouseEvent e)
-            {
-                if (getIconState().equals(IconState.ACTIVE))
-                {
-                    setIconState(IconState.MOUSEOVER);
-                    repaint();
-                }
-            }
-        };
-
-    /**
-     * Cache of the previous state, for use in returning to the
-     * proper state following a call of <code>setEnabled(true)</code>.
-     */
-    private transient IconState previousState;
+    private transient boolean dirty = true;
 
 
     /**
      * Create a new button with the specified identifiable action.
      *
-     * @param action identifiable action for this button, must not be null
+     * @param action identifiable action, must not be null
      */
     public IdButton(final IdentifiableAction action)
     {
         super();
 
+        if (action == null)
+        {
+            throw new IllegalArgumentException("action must not be null");
+        }
         iconSize = DEFAULT_ICON_SIZE;
-        iconState = DEFAULT_ICON_STATE;
-        previousState = DEFAULT_ICON_STATE;
         iconTextDirection = DEFAULT_ICON_TEXT_DIRECTION;
+        setAction(action);
+    }
 
-        addMouseListener(mouseListener);
+    /**
+     * Create a new button with the specified identifiable action
+     * and icon size.
+     *
+     * @param action identifiable action, must not be null
+     * @param iconSize icon size, must not be null
+     */
+    public IdButton(final IdentifiableAction action, final IconSize iconSize)
+    {
+        super();
 
+        if (action == null)
+        {
+            throw new IllegalArgumentException("action must not be null");
+        }
+        if (iconSize == null)
+        {
+            throw new IllegalArgumentException("iconSize must not be null");
+        }
+        this.iconSize = iconSize;
+        iconTextDirection = DEFAULT_ICON_TEXT_DIRECTION;
         setAction(action);
     }
 
@@ -169,6 +119,8 @@ public final class IdButton
     /**
      * Set the icon size for this button to <code>iconSize</code>.
      *
+     * <p>This is a bound property.</p>
+     *
      * @param iconSize icon size, must not be null
      */
     public void setIconSize(final IconSize iconSize)
@@ -177,56 +129,18 @@ public final class IdButton
         {
             throw new IllegalArgumentException("iconSize must not be null");
         }
+        IconSize oldIconSize = this.iconSize;
         this.iconSize = iconSize;
-        setDirty(true);
+
+        if (!this.iconSize.equals(oldIconSize))
+        {
+            firePropertyChange("iconSize", oldIconSize, this.iconSize);
+            setDirty(true);
+        }
     }
 
-    /**
-     * Return the icon state for this button.
-     *
-     * @return the icon state for this button
-     */
-    public IconState getIconState()
-    {
-        return iconState;
-    }
-
-    /**
-     * Set the icon state for this button to <code>iconState</code>.
-     *
-     * @param iconState icon state, must not be null
-     */
-    public void setIconState(final IconState iconState)
-    {
-        if (iconState == null)
-        {
-            throw new IllegalArgumentException("iconState must not be null");
-        }
-        this.iconState = iconState;
-        setDirty(true);
-    }
-
-    /**
-     * Set the identifiable action for this button to <code>action</code>.
-     *
-     * @param action identifiable action for this button, must not be null
-     */
-    private void setAction(final IdentifiableAction action)
-    {
-        if (action == null)
-        {
-            throw new IllegalArgumentException("action must not be null");
-        }
-        if (this.action != null)
-        {
-            removeActionListener(this.action);
-            this.action.removePropertyChangeListener(this);
-        }
-        this.action = action;
-        this.action.addPropertyChangeListener(this);
-        addActionListener(this.action);
-        setDirty(true);
-    }
+    //
+    //  synchronize IconTextDirection and AWT componentOrientation
 
     /** @see JButton */
     public void setComponentOrientation(final ComponentOrientation orientation)
@@ -261,32 +175,13 @@ public final class IdButton
     }
 
     /** @see JButton */
-    public void setEnabled(final boolean enabled)
+    protected void configurePropertiesFromAction(final Action action)
     {
-        boolean previousEnabled = isEnabled();
-        boolean disabledState = getIconState().equals(IconState.DISABLED);
+        super.configurePropertiesFromAction(action);
 
-        if (enabled && !previousEnabled)
+        if (isDirty())
         {
-            setIconState(previousState);
-        }
-        else if (!enabled && disabledState)
-        {
-            previousState = getIconState();
-            setIconState(IconState.DISABLED);
-        }
-
-        super.setEnabled(enabled);
-
-        setDirty(true);
-    }
-
-    /** @see PropertyChangeListener */
-    public void propertyChange(final PropertyChangeEvent e)
-    {
-        if (action.equals(e.getSource()))
-        {
-            setDirty(true);
+            rebuild();
         }
     }
 
@@ -296,67 +191,40 @@ public final class IdButton
      *
      * @param dirty dirty flag
      */
-    protected void setDirty(final boolean dirty)
+    private void setDirty(final boolean dirty)
     {
         this.dirty = (this.dirty || dirty);
     }
 
     /**
-     * Return true if a rebuild of the text and icon properties
-     * is necessary.
+     * Return true if a rebuild of the icons for this button is necessary.
      *
-     * @return true if a rebuild of the text and icon properties
-     *    is necessary
+     * @return true if a rebuild of the icons for this button is necessary
      */
-    protected boolean isDirty()
+    private boolean isDirty()
     {
         return dirty;
     }
 
     /**
-     * Rebuild the text and icon properties of this button
-     * with the name property and icon bundle image of
-     * the identifiable action, respectively.
+     * Rebuild the icons for this button from the icon bundle
+     * provided by the identifiable action for this button.
      */
-    protected void rebuild()
+    private void rebuild()
     {
-        setText(action.getName());
-        setEnabled(action.isEnabled());
-        setToolTipText((String) action.getValue(Action.SHORT_DESCRIPTION));
-        // TODO:
-        // install/update keyboard event and mnemonic &c.
-
-        IconBundle bndl = action.getIconBundle();
-
-        Image image = bndl.getImage(this,
-                                    iconTextDirection,
-                                    iconState,
-                                    iconSize);
-
-        if (imageIcon == null)
+        Action action = getAction();
+        if ((action != null) && (action instanceof IdentifiableAction))
         {
-            imageIcon = new ImageIcon(image);
+            IdentifiableAction identifiableAction = (IdentifiableAction) action;
+            IconBundle bndl = identifiableAction.getIconBundle();
+            setIcon(new ImageIcon(bndl.getImage(this, iconTextDirection, IconState.NORMAL, iconSize)));
+            setPressedIcon(new ImageIcon(bndl.getImage(this, iconTextDirection, IconState.ACTIVE, iconSize)));
+            setSelectedIcon(new ImageIcon(bndl.getImage(this, iconTextDirection, IconState.SELECTED, iconSize)));
+            setRolloverIcon(new ImageIcon(bndl.getImage(this, iconTextDirection, IconState.MOUSEOVER, iconSize)));
+            setRolloverSelectedIcon(new ImageIcon(bndl.getImage(this, iconTextDirection, IconState.SELECTED, iconSize)));
+            setDisabledIcon(new ImageIcon(bndl.getImage(this, iconTextDirection, IconState.DISABLED, iconSize)));
+            setDisabledIcon(new ImageIcon(bndl.getImage(this, iconTextDirection, IconState.DISABLED, iconSize)));
         }
-        else
-        {
-            imageIcon.setImage(image);
-        }
-
-        setIcon(imageIcon);
         dirty = false;
-    }
-
-
-    // TODO:
-    // override other JButton methods
-
-    /** @see JButton */
-    public void paintComponent(final Graphics g)
-    {
-        if (isDirty())
-        {
-            rebuild();
-        }
-        super.paintComponent(g);
     }
 }

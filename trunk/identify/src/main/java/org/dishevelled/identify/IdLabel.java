@@ -290,7 +290,7 @@ public final class IdLabel
      *
      * @param dirty dirty flag
      */
-    protected void setDirty(final boolean dirty)
+    private void setDirty(final boolean dirty)
     {
         this.dirty = (this.dirty || dirty);
     }
@@ -302,7 +302,7 @@ public final class IdLabel
      * @return true if a rebuild of the text and icon properties
      *    is necessary
      */
-    protected boolean isDirty()
+    private boolean isDirty()
     {
         return dirty;
     }
@@ -312,7 +312,7 @@ public final class IdLabel
      * with the name property and icon bundle image of
      * <code>getValue()</code>, respectively.
      */
-    protected void rebuild()
+    private void rebuild()
     {
         String name = IdentifyUtils.getNameFor(getValue());
         IconBundle bndl = IdentifyUtils.getIconBundleFor(getValue());
