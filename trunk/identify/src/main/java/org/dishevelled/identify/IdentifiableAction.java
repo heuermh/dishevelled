@@ -60,6 +60,8 @@ public abstract class IdentifiableAction
     /**
      * Set the icon bundle for this identifiable action to <code>iconBundle</code>.
      *
+     * <p>This is a bound property.</p>
+     *
      * @param iconBundle icon bundle for this identifiable action, must not be null
      */
     public final void setIconBundle(final IconBundle iconBundle)
