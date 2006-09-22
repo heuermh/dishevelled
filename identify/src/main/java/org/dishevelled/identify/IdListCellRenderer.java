@@ -94,6 +94,8 @@ public class IdListCellRenderer
     /**
      * Set the icon size for this list cell renderer to <code>iconSize</code>.
      *
+     * <p>This is a bound property.</p>
+     *
      * @param iconSize icon size, must not be null
      */
     public final void setIconSize(final IconSize iconSize)
@@ -102,7 +104,9 @@ public class IdListCellRenderer
         {
             throw new IllegalArgumentException("iconSize must not be null");
         }
+        IconSize oldIconSize = this.iconSize;
         this.iconSize = iconSize;
+        firePropertyChange("iconSize", oldIconSize, this.iconSize);
     }
 
     /** @see DefaultListCellRenderer */
@@ -115,24 +119,31 @@ public class IdListCellRenderer
         JLabel label = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, hasFocus);
 
         String name = IdentifyUtils.getNameFor(value);
+        label.setText(name);
+
         IconBundle iconBundle = IdentifyUtils.getIconBundleFor(value);
 
-        IconState state = determineState(label, isSelected, hasFocus);
-        IconTextDirection textDirection = determineTextDirection(label);
-
-        Image image = iconBundle.getImage(label, textDirection, state, iconSize);
-
-        if (imageIcon == null)
+        if (iconBundle == null)
         {
-            imageIcon = new ImageIcon(image);
+            label.setIcon(null);
         }
         else
         {
-            imageIcon.setImage(image);
-        }
+            IconState state = determineState(label, isSelected, hasFocus);
+            IconTextDirection textDirection = determineTextDirection(label);
+            Image image = iconBundle.getImage(label, textDirection, state, iconSize);
 
-        label.setText(name);
-        label.setIcon(imageIcon);
+            if (imageIcon == null)
+            {
+                imageIcon = new ImageIcon(image);
+            }
+            else
+            {
+                imageIcon.setImage(image);
+            }
+
+            label.setIcon(imageIcon);
+        }
 
         return label;
     }
@@ -147,27 +158,20 @@ public class IdListCellRenderer
      */
     private final IconState determineState(final JLabel label, final boolean isSelected, final boolean hasFocus)
     {
-        if (label.isEnabled())
+        if (isSelected)
         {
-            if (isSelected)
-            {
-                return IconState.SELECTED;
-            }
-            else
-            {
-                if (hasFocus)
-                {
-                    return IconState.ACTIVE;
-                }
-                else
-                {
-                    return IconState.NORMAL;
-                }
-            }
+            return IconState.SELECTED;
         }
         else
         {
-            return IconState.DISABLED;
+            if (hasFocus)
+            {
+                return IconState.MOUSEOVER;
+            }
+            else
+            {
+                return IconState.NORMAL;
+            }
         }
     }
 

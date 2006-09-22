@@ -122,9 +122,10 @@ public final class IdLabel
         previousState = DEFAULT_ICON_STATE;
         iconTextDirection = DEFAULT_ICON_TEXT_DIRECTION;
 
-        value = null;
-
         addMouseListener(mouseoverListener);
+
+        setValue(null);
+        rebuild();
     }
 
     /**
@@ -134,9 +135,38 @@ public final class IdLabel
      */
     public IdLabel(final Object value)
     {
-        this();
+        super();
+
+        iconSize = DEFAULT_ICON_SIZE;
+        iconState = DEFAULT_ICON_STATE;
+        previousState = DEFAULT_ICON_STATE;
+        iconTextDirection = DEFAULT_ICON_TEXT_DIRECTION;
+
+        addMouseListener(mouseoverListener);
 
         setValue(value);
+        rebuild();
+    }
+
+    /**
+     * Create a new label for the specified value with the specified icon size.
+     *
+     * @param value value
+     * @param iconSize icon size, must not be null
+     */
+    public IdLabel(final Object value, final IconSize iconSize)
+    {
+        super();
+
+        iconState = DEFAULT_ICON_STATE;
+        previousState = DEFAULT_ICON_STATE;
+        iconTextDirection = DEFAULT_ICON_TEXT_DIRECTION;
+
+        addMouseListener(mouseoverListener);
+
+        setValue(value);
+        setIconSize(iconSize);
+        rebuild();
     }
 
 
@@ -152,7 +182,8 @@ public final class IdLabel
 
     /**
      * Set the value for this label to <code>value</code>.
-     * This is a bound property.
+     *
+     * <p>This is a bound property.</p>
      *
      * @param value value for this label
      */
@@ -177,6 +208,8 @@ public final class IdLabel
 
     /**
      * Set the icon size for this label to <code>iconSize</code>.
+     *
+     * <p>This is a bound property.</p>
      *
      * @param iconSize icon size, must not be null
      */
@@ -204,6 +237,8 @@ public final class IdLabel
 
     /**
      * Set the icon state for this label to <code>iconState</code>.
+     *
+     * <p>This is a bound property.</p>
      *
      * @param iconState icon state, must not be null
      */
@@ -315,24 +350,30 @@ public final class IdLabel
     private void rebuild()
     {
         String name = IdentifyUtils.getNameFor(getValue());
-        IconBundle bndl = IdentifyUtils.getIconBundleFor(getValue());
+        setText(name);
 
-        Image image = bndl.getImage(this,
-                                    iconTextDirection,
-                                    iconState,
-                                    iconSize);
+        IconBundle iconBundle = IdentifyUtils.getIconBundleFor(getValue());
 
-        if (imageIcon == null)
+        if (iconBundle == null)
         {
-            imageIcon = new ImageIcon(image);
+            super.setIcon(null);
+            imageIcon = null;
         }
         else
         {
-            imageIcon.setImage(image);
-        }
+            Image image = iconBundle.getImage(this, iconTextDirection, iconState, iconSize);
 
-        setText(name);
-        setIcon(imageIcon);
+            if (imageIcon == null)
+            {
+                imageIcon = new ImageIcon(image);
+            }
+            else
+            {
+                imageIcon.setImage(image);
+            }
+
+            super.setIcon(imageIcon);
+        }
 
         dirty = false;
     }
@@ -342,14 +383,32 @@ public final class IdLabel
     //  override JLabel methods
 
     /** @see JLabel */
+    public String getText()
+    {
+        if (isDirty())
+        {
+            rebuild();
+        }
+        return super.getText();
+    }
+
+    /** @see JLabel */
     public Icon getIcon()
     {
+        if (isDirty())
+        {
+            rebuild();
+        }
         return imageIcon;
     }
 
     /** @see JLabel */
     public Icon getDisabledIcon()
     {
+        if (isDirty())
+        {
+            rebuild();
+        }
         return imageIcon;
     }
 

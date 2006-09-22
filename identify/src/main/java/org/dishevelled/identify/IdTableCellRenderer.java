@@ -117,24 +117,31 @@ public class IdTableCellRenderer
         JLabel label = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 
         String name = IdentifyUtils.getNameFor(value);
+        label.setText(name);
+
         IconBundle iconBundle = IdentifyUtils.getIconBundleFor(value);
 
-        IconState state = determineState(label, isSelected, hasFocus);
-        IconTextDirection textDirection = determineTextDirection(label);
-
-        Image image = iconBundle.getImage(label, textDirection, state, iconSize);
-
-        if (imageIcon == null)
+        if (iconBundle == null)
         {
-            imageIcon = new ImageIcon(image);
+            label.setIcon(null);
         }
         else
         {
-            imageIcon.setImage(image);
-        }
+            IconState state = determineState(label, isSelected, hasFocus);
+            IconTextDirection textDirection = determineTextDirection(label);
+            Image image = iconBundle.getImage(label, textDirection, state, iconSize);
 
-        label.setText(name);
-        label.setIcon(imageIcon);
+            if (imageIcon == null)
+            {
+                imageIcon = new ImageIcon(image);
+            }
+            else
+            {
+                imageIcon.setImage(image);
+            }
+
+            label.setIcon(imageIcon);
+        }
 
         return label;
     }
@@ -149,27 +156,20 @@ public class IdTableCellRenderer
      */
     private final IconState determineState(final JLabel label, final boolean isSelected, final boolean hasFocus)
     {
-        if (label.isEnabled())
+        if (isSelected)
         {
-            if (isSelected)
-            {
-                return IconState.SELECTED;
-            }
-            else
-            {
-                if (hasFocus)
-                {
-                    return IconState.ACTIVE;
-                }
-                else
-                {
-                    return IconState.NORMAL;
-                }
-            }
+            return IconState.SELECTED;
         }
         else
         {
-            return IconState.DISABLED;
+            if (hasFocus)
+            {
+                return IconState.MOUSEOVER;
+            }
+            else
+            {
+                return IconState.NORMAL;
+            }
         }
     }
 
