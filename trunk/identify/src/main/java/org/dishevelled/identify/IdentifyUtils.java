@@ -32,8 +32,11 @@ import java.beans.IntrospectionException;
 import java.lang.reflect.Method;
 import java.lang.reflect.InvocationTargetException;
 
+import java.net.URL;
+
 import org.dishevelled.iconbundle.IconBundle;
-//import org.dishevelled.iconbundle.SVGIconBundle;
+
+import org.dishevelled.iconbundle.impl.PNGIconBundle;
 
 /**
  * Provides static utility methods for determining
@@ -117,7 +120,9 @@ public final class IdentifyUtils
     {
         nameStrategy = new DefaultNameStrategy();
         iconBundleStrategy = new DefaultIconBundleStrategy();
-        //defaultIconBundle = new SVGIconBundle("default", "/org/dishevelled/identify", false);
+
+        URL url = getClass().getResource("default.png");
+        defaultIconBundle = new PNGIconBundle(url);
     }
 
 
