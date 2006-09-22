@@ -25,6 +25,10 @@ package org.dishevelled.identify;
 
 import junit.framework.TestCase;
 
+import org.dishevelled.iconbundle.IconState;
+
+import org.dishevelled.iconbundle.tango.TangoProject;
+
 /**
  * Unit test for IdRenderer.
  *
@@ -38,5 +42,39 @@ public final class IdRendererTest
     public void testIdRenderer()
     {
         IdRenderer renderer = new IdRenderer();
+        IdLabel label = (IdLabel) renderer.getComponent();
+        assertNotNull("label not null", label);
+        assertEquals(null, label.getValue());
+        assertEquals(IconState.NORMAL, label.getIconState());
+
+        renderer.setValue("foo", true);
+        assertEquals("foo", label.getValue());
+        assertEquals(IconState.SELECTED, label.getIconState());
+        renderer.setValue("foo", false);
+        assertEquals("foo", label.getValue());
+        assertEquals(IconState.NORMAL, label.getIconState());
+
+        ExampleIdentifiable exampleIdentifiable = new ExampleIdentifiable("example", TangoProject.TEXT_X_GENERIC);
+        renderer.setValue(exampleIdentifiable, true);
+        assertEquals(exampleIdentifiable, label.getValue());
+        assertEquals(IconState.SELECTED, label.getIconState());
+        renderer.setValue(exampleIdentifiable, false);
+        assertEquals(exampleIdentifiable, label.getValue());
+        assertEquals(IconState.NORMAL, label.getIconState());
+
+        ExampleWithNameProperty exampleWithNameProperty = new ExampleWithNameProperty("example");
+        renderer.setValue(exampleWithNameProperty, true);
+        assertEquals(exampleWithNameProperty, label.getValue());
+        assertEquals(IconState.SELECTED, label.getIconState());
+        renderer.setValue(exampleWithNameProperty, false);
+        assertEquals(exampleWithNameProperty, label.getValue());
+        assertEquals(IconState.NORMAL, label.getIconState());
+
+        renderer.setValue(null, true);
+        assertEquals(null, label.getValue());
+        assertEquals(IconState.SELECTED, label.getIconState());
+        renderer.setValue(null, false);
+        assertEquals(null, label.getValue());
+        assertEquals(IconState.NORMAL, label.getIconState());
     }
 }

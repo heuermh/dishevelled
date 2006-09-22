@@ -48,7 +48,7 @@ public final class ExampleWithNamePropertyBeanInfo
     private static final IconBundle ICON_BUNDLE = TangoProject.TEXT_X_GENERIC;
 
     /** Identifiable bean descriptor. */
-    private BeanDescriptor beanDescriptor;
+    private final BeanDescriptor beanDescriptor;
 
 
     /**
@@ -73,6 +73,7 @@ public final class ExampleWithNamePropertyBeanInfo
                 }
             };
     }
+
 
     /** @see BeanInfo */
     public BeanDescriptor getBeanDescriptor()

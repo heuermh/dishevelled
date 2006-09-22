@@ -40,12 +40,12 @@ import org.dishevelled.iconbundle.IconTextDirection;
 import org.dishevelled.iconbundle.tango.TangoProject;
 
 /**
- * Unit test for IdButton.
+ * Unit test for IdMenuItem.
  *
  * @author  Michael Heuer
- * @version $Revision$ $Date$
+ * @version $Revision: 62 $ $Date: 2006-02-13 17:36:34 -0600 (Mon, 13 Feb 2006) $
  */
-public final class IdButtonTest
+public final class IdMenuItemTest
     extends TestCase
 {
 
@@ -60,12 +60,12 @@ public final class IdButtonTest
                 }
             };
 
-        IdButton button0 = new IdButton(action);
-        IdButton button1 = new IdButton(action, TangoProject.SMALL);
+        IdMenuItem button0 = new IdMenuItem(action);
+        IdMenuItem button1 = new IdMenuItem(action, TangoProject.SMALL);
 
         try
         {
-            IdButton nullAction = new IdButton(null);
+            IdMenuItem nullAction = new IdMenuItem(null);
             fail("ctr(null) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
@@ -74,7 +74,7 @@ public final class IdButtonTest
         }
         try
         {
-            IdButton nullSize = new IdButton(action, null);
+            IdMenuItem nullSize = new IdMenuItem(action, null);
             fail("ctr(action, null) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)

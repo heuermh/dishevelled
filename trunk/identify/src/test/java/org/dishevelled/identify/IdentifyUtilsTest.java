@@ -48,7 +48,7 @@ public final class IdentifyUtilsTest
 
         assertNotNull(identifyUtils.getNameStrategy());
         assertNotNull(identifyUtils.getIconBundleStrategy());
-        //assertNotNull(identifyUtils.getDefaultIconBundle());
+        assertNotNull(identifyUtils.getDefaultIconBundle());
 
         try
         {
@@ -141,49 +141,43 @@ public final class IdentifyUtilsTest
 
     public void testCustomIconBundleStrategy()
     {
-        final IconBundle foo = null; //...;
-        //IconBundle testIconBundle0 = ...;
-        //IconBundle testIconBundle1 = ...;
         IdentifyUtils identifyUtils = IdentifyUtils.getInstance();
-
-        IdentifyUtils.IconBundleStrategy oldIconBundleStrategy = identifyUtils.getIconBundleStrategy();
 
         IdentifyUtils.IconBundleStrategy iconBundleStrategy = new IdentifyUtils.IconBundleStrategy()
             {
                 /** @see IdentifyUtils.IconBundleStrategy */
                 public IconBundle getIconBundleFor(final Object bean)
                 {
-                    return (bean == null) ? null : foo;
+                    // ignore what might be set for bean
+                    return (bean == null) ? null : TangoProject.TEXT_HTML;
                 }
             };
 
+        IdentifyUtils.IconBundleStrategy oldIconBundleStrategy = identifyUtils.getIconBundleStrategy();
         identifyUtils.setIconBundleStrategy(iconBundleStrategy);
 
         assertEquals(null, IdentifyUtils.getIconBundleFor(null));
 
-        //assertEquals(foo,
-        //             IdentifyUtils.getIconBundleFor(new TestIdentifiable(testIconBundle0)));
+        assertEquals(TangoProject.TEXT_HTML,
+                     IdentifyUtils.getIconBundleFor(new ExampleIdentifiable("name", TangoProject.TEXT_X_GENERIC)));
 
-        //assertEquals(foo,
-        //             IdentifyUtils.getIconBundleFor(new TestWithIdentifiableBeanInfo(testIconBundle1)));
+        assertEquals(TangoProject.TEXT_HTML,
+                     IdentifyUtils.getIconBundleFor(new ExampleWithNameProperty("name")));
 
-        assertEquals(identifyUtils.getDefaultIconBundle(), IdentifyUtils.getIconBundleFor("name"));
+        assertEquals(TangoProject.TEXT_HTML, IdentifyUtils.getIconBundleFor("name"));
 
         identifyUtils.setIconBundleStrategy(oldIconBundleStrategy);
     }
 
     public void testCustomDefaultIconBundle()
     {
-        //IconBundle foo = null;
         IdentifyUtils identifyUtils = IdentifyUtils.getInstance();
-
         IconBundle oldDefaultIconBundle = identifyUtils.getDefaultIconBundle();
+        identifyUtils.setDefaultIconBundle(TangoProject.TEXT_X_GENERIC);
 
-        //identifyUtils.setDefaultIconBundle(foo);
+        assertEquals(TangoProject.TEXT_X_GENERIC, identifyUtils.getDefaultIconBundle());
+        assertEquals(TangoProject.TEXT_X_GENERIC, IdentifyUtils.getIconBundleFor("name"));
 
-        //assertEquals(foo, identifyUtils.getDefaultIconBundle());
-        //assertEquals(foo, IdentifyUtils.getIconBundleFor("name"));
-
-        //identifyUtils.setDefaultIconBundle(oldDefaultIconBundle);
+        identifyUtils.setDefaultIconBundle(oldDefaultIconBundle);
     }
 }

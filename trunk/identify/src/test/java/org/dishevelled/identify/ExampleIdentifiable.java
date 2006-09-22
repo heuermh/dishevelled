@@ -47,7 +47,7 @@ final class ExampleIdentifiable
      * @param name name for this example identifiable, must not be null
      * @param iconBundle icon bundle for this example identifiable, must not be null
      */
-    public ExampleIdentifiable(final String name, final IconBundle iconBundle)
+    ExampleIdentifiable(final String name, final IconBundle iconBundle)
     {
         if (name == null)
         {
@@ -64,13 +64,13 @@ final class ExampleIdentifiable
 
 
     /** @see Identifiable */
-    public final String getName()
+    public String getName()
     {
         return name;
     }
 
     /** @see Identifiable */
-    public final IconBundle getIconBundle()
+    public IconBundle getIconBundle()
     {
         return iconBundle;
     }

@@ -58,7 +58,7 @@ public final class ExampleWithNameProperty
      *
      * @return the name for this example object with name property
      */
-    public final String getName()
+    public String getName()
     {
         return name;
     }
