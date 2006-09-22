@@ -65,8 +65,9 @@
 
     <!-- test dependencies -->
     <dependency><groupId>org.dishevelled</groupId><artifactId>dsh-iconbundle-tango</artifactId><version>SNAPSHOT</version></dependency>
-    <dependency><groupId>org.tango-project</groupId><artifactId>tango-icon-theme</artifactId><version>0.6.1</version></dependency>
+    <dependency><groupId>org.tango-project</groupId><artifactId>tango-icon-theme</artifactId><version>0.7.1</version></dependency>
 
+    <dependency><groupId>batik</groupId><artifactId>batik-transcoder</artifactId><version>1.6</version></dependency>
     <dependency><groupId>batik</groupId><artifactId>batik-awt-util</artifactId><version>1.6</version></dependency>
     <dependency><groupId>batik</groupId><artifactId>batik-bridge</artifactId><version>1.6</version></dependency>
     <dependency><groupId>batik</groupId><artifactId>batik-css</artifactId><version>1.6</version></dependency>
@@ -95,12 +96,20 @@
     <nagEmailAddress>dishevelled-devel@lists.sourceforge.net</nagEmailAddress>
     <sourceDirectory>src/main/java</sourceDirectory>
     <unitTestSourceDirectory>src/test/java</unitTestSourceDirectory>
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+        <includes>
+          <include>**/*.png</include>
+        </includes>
+      </resource>
+    </resources>
     <unitTest>
       <includes>
         <include>**/*Test.java</include>
       </includes>
       <excludes>
-	<exclude>**/Abstract*</exclude>
+        <exclude>**/Abstract*</exclude>
       </excludes>
     </unitTest>
   </build>
