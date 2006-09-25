@@ -70,11 +70,11 @@ public final class IdLabelTest
 
         IdLabel label0 = new IdLabel(null);
         assertEquals(IdLabel.DEFAULT_ICON_SIZE, label0.getIconSize());
-        label0.setIconSize(IconSize.DEFAULT_32X32);
-        assertEquals(IconSize.DEFAULT_32X32, label0.getIconSize());
+        label0.setIconSize(IconSize.DEFAULT_16X16);
+        assertEquals(IconSize.DEFAULT_16X16, label0.getIconSize());
 
-        IdLabel label1 = new IdLabel(null, IconSize.DEFAULT_32X32);
-        assertEquals(IconSize.DEFAULT_32X32, label1.getIconSize());
+        IdLabel label1 = new IdLabel(null, IconSize.DEFAULT_16X16);
+        assertEquals(IconSize.DEFAULT_16X16, label1.getIconSize());
         label1.setIconSize(IdLabel.DEFAULT_ICON_SIZE);
         assertEquals(IdLabel.DEFAULT_ICON_SIZE, label1.getIconSize());
 
@@ -93,6 +93,8 @@ public final class IdLabelTest
 
     public void testIconState()
     {
+        assertNotNull("DEFAULT_ICON_STATE not null", IdLabel.DEFAULT_ICON_STATE);
+
         IdLabel label0 = new IdLabel(null);
         assertNotNull("label0 iconState not null", label0.getIconState());
         IconState oldIconState = label0.getIconState();
@@ -175,42 +177,174 @@ public final class IdLabelTest
     {
         IdLabel label0 = new IdLabel();
         assertEquals(null, label0.getIcon());
-        assertEquals(null, label0.getDisabledIcon());
 
         IdLabel label1 = new IdLabel(null);
         assertEquals(null, label1.getIcon());
-        assertEquals(null, label1.getDisabledIcon());
 
         IdLabel label2 = new IdLabel("name");
         assertNotNull(label2.getIcon());
-        assertNotNull(label2.getDisabledIcon());
 
         IdLabel label3 = new IdLabel(new ExampleIdentifiable("name", TangoProject.TEXT_X_GENERIC));
         assertNotNull(label3.getIcon());
-        assertNotNull(label3.getDisabledIcon());
 
         IdLabel label4 = new IdLabel(new ExampleWithNameProperty("name"));
         assertNotNull(label3.getIcon());
-        assertNotNull(label3.getDisabledIcon());
 
         IdLabel label5 = new IdLabel();
         assertEquals(null, label5.getIcon());
-        assertEquals(null, label5.getDisabledIcon());
 
         label5.setValue("name");
         assertNotNull(label5.getIcon());
-        assertNotNull(label5.getDisabledIcon());
 
         label5.setValue(new ExampleIdentifiable("name", TangoProject.TEXT_X_GENERIC));
         assertNotNull(label5.getIcon());
-        assertNotNull(label5.getDisabledIcon());
 
         label5.setValue(new ExampleWithNameProperty("name"));
         assertNotNull(label5.getIcon());
-        assertNotNull(label5.getDisabledIcon());
 
         label5.setValue(null);
         assertEquals(null, label5.getIcon());
+    }
+
+    public void testDisabledIcon()
+    {
+        IdLabel label0 = new IdLabel();
+        assertEquals(null, label0.getDisabledIcon());
+
+        IdLabel label1 = new IdLabel(null);
+        assertEquals(null, label1.getDisabledIcon());
+
+        IdLabel label2 = new IdLabel("name");
+        assertNotNull(label2.getDisabledIcon());
+
+        IdLabel label3 = new IdLabel(new ExampleIdentifiable("name", TangoProject.TEXT_X_GENERIC));
+        assertNotNull(label3.getDisabledIcon());
+
+        IdLabel label4 = new IdLabel(new ExampleWithNameProperty("name"));
+        assertNotNull(label3.getDisabledIcon());
+
+        IdLabel label5 = new IdLabel();
         assertEquals(null, label5.getDisabledIcon());
+
+        label5.setValue("name");
+        assertNotNull(label5.getDisabledIcon());
+
+        label5.setValue(new ExampleIdentifiable("name", TangoProject.TEXT_X_GENERIC));
+        assertNotNull(label5.getDisabledIcon());
+
+        label5.setValue(new ExampleWithNameProperty("name"));
+        assertNotNull(label5.getDisabledIcon());
+
+        label5.setValue(null);
+        assertEquals(null, label5.getDisabledIcon());
+    }
+
+    public void testEnabledDisabled()
+    {
+        IdLabel label = new IdLabel();
+
+        // icon state should be default on construction
+        assertEquals(IdLabel.DEFAULT_ICON_STATE, label.getIconState());
+
+        // disable --> DISABLED icon state
+        label.setEnabled(false);
+        assertEquals(IconState.DISABLED, label.getIconState());
+
+        // re-enable --> previous icon state (default)
+        label.setEnabled(true);
+        assertEquals(IdLabel.DEFAULT_ICON_STATE, label.getIconState());
+
+
+        // set icon state to something other than default
+        label.setIconState(IconState.DRAGGING);
+        assertEquals(IconState.DRAGGING, label.getIconState());
+
+        // disable --> DISABLED icon state
+        label.setEnabled(false);
+        assertEquals(IconState.DISABLED, label.getIconState());
+
+        // re-enable --> previous icon state (dragging)
+        label.setEnabled(true);
+        assertEquals(IconState.DRAGGING, label.getIconState());
+
+
+        // set icon state back to default
+        label.setIconState(IdLabel.DEFAULT_ICON_STATE);
+        assertEquals(IdLabel.DEFAULT_ICON_STATE, label.getIconState());
+
+        // disable --> DISABLED icon state
+        label.setEnabled(false);
+        assertEquals(IconState.DISABLED, label.getIconState());
+
+        // set icon state to something other than disabled, doesn't effect enabled status
+        label.setIconState(IconState.MOUSEOVER);
+        assertEquals(IconState.MOUSEOVER, label.getIconState());
+        assertFalse(label.isEnabled());
+
+        // re-enable --> previous icon state (default)
+        label.setEnabled(true);
+        assertEquals(IdLabel.DEFAULT_ICON_STATE, label.getIconState());
+
+
+        // set icon state back to default
+        label.setIconState(IdLabel.DEFAULT_ICON_STATE);
+        assertEquals(IdLabel.DEFAULT_ICON_STATE, label.getIconState());
+
+        // set icon state to disabled
+        label.setIconState(IconState.DISABLED);
+        assertEquals(IconState.DISABLED, label.getIconState());
+        // icon state disabled doesn't mean component is disabled
+        assertTrue(label.isEnabled());
+
+        // disable --> DISABLED icon state
+        label.setEnabled(false);
+        assertEquals(IconState.DISABLED, label.getIconState());
+        assertFalse(label.isEnabled());
+
+        // re-enable --> previous icon state (disabled)
+        label.setEnabled(true);
+        assertEquals(IconState.DISABLED, label.getIconState());
+        assertTrue(label.isEnabled());
+
+
+        // set icon state back to default
+        label.setIconState(IdLabel.DEFAULT_ICON_STATE);
+        assertEquals(IdLabel.DEFAULT_ICON_STATE, label.getIconState());
+
+        // set icon state to disabled twice
+        label.setIconState(IconState.DISABLED);
+        assertEquals(IconState.DISABLED, label.getIconState());
+
+        label.setIconState(IconState.DISABLED);
+        assertEquals(IconState.DISABLED, label.getIconState());
+
+        // disable --> DISABLED icon state
+        label.setEnabled(false);
+        assertEquals(IconState.DISABLED, label.getIconState());
+        assertFalse(label.isEnabled());
+
+        // re-enable --> previous icon state (disabled)
+        label.setEnabled(true);
+        assertEquals(IconState.DISABLED, label.getIconState());
+        assertTrue(label.isEnabled());
+
+
+        // set icon state back to default
+        label.setIconState(IdLabel.DEFAULT_ICON_STATE);
+        assertEquals(IdLabel.DEFAULT_ICON_STATE, label.getIconState());
+
+        // disable twice
+        label.setEnabled(false);
+        assertEquals(IconState.DISABLED, label.getIconState());
+
+        label.setEnabled(false);
+        assertEquals(IconState.DISABLED, label.getIconState());
+
+        // re-enable twice
+        label.setEnabled(true);
+        assertEquals(IdLabel.DEFAULT_ICON_STATE, label.getIconState());
+
+        label.setEnabled(true);
+        assertEquals(IdLabel.DEFAULT_ICON_STATE, label.getIconState());
     }
 }
