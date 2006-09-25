@@ -56,7 +56,7 @@ public final class IdLabel
     public static final IconSize DEFAULT_ICON_SIZE = IconSize.DEFAULT_32X32;
 
     /** Default icon state. */
-    private static final IconState DEFAULT_ICON_STATE = IconState.NORMAL;
+    public static final IconState DEFAULT_ICON_STATE = IconState.NORMAL;
 
     /** Default icon text direction. */
     private static final IconTextDirection DEFAULT_ICON_TEXT_DIRECTION = IconTextDirection.LEFT_TO_RIGHT;
@@ -65,13 +65,13 @@ public final class IdLabel
     private Object value;
 
     /** Icon size. */
-    private IconSize iconSize;
+    private IconSize iconSize = DEFAULT_ICON_SIZE;
 
     /** Icon state. */
-    private IconState iconState;
+    private IconState iconState = DEFAULT_ICON_STATE;
 
     /** Icon text direction. */
-    private IconTextDirection iconTextDirection;
+    private IconTextDirection iconTextDirection = DEFAULT_ICON_TEXT_DIRECTION;
 
     /** ImageIcon wrapper for image from icon bundle. */
     private transient ImageIcon imageIcon;
@@ -107,7 +107,7 @@ public final class IdLabel
      * Cache of the previous state, for use in returning to the
      * proper state following a call of <code>setEnabled(true)</code>.
      */
-    private transient IconState previousState;
+    private transient IconState previousState = DEFAULT_ICON_STATE;
 
 
     /**
@@ -116,11 +116,6 @@ public final class IdLabel
     public IdLabel()
     {
         super();
-
-        iconSize = DEFAULT_ICON_SIZE;
-        iconState = DEFAULT_ICON_STATE;
-        previousState = DEFAULT_ICON_STATE;
-        iconTextDirection = DEFAULT_ICON_TEXT_DIRECTION;
 
         addMouseListener(mouseoverListener);
 
@@ -137,11 +132,6 @@ public final class IdLabel
     {
         super();
 
-        iconSize = DEFAULT_ICON_SIZE;
-        iconState = DEFAULT_ICON_STATE;
-        previousState = DEFAULT_ICON_STATE;
-        iconTextDirection = DEFAULT_ICON_TEXT_DIRECTION;
-
         addMouseListener(mouseoverListener);
 
         setValue(value);
@@ -157,10 +147,6 @@ public final class IdLabel
     public IdLabel(final Object value, final IconSize iconSize)
     {
         super();
-
-        iconState = DEFAULT_ICON_STATE;
-        previousState = DEFAULT_ICON_STATE;
-        iconTextDirection = DEFAULT_ICON_TEXT_DIRECTION;
 
         addMouseListener(mouseoverListener);
 
@@ -220,9 +206,14 @@ public final class IdLabel
             throw new IllegalArgumentException("iconSize must not be null");
         }
 
+        IconSize oldIconSize = this.iconSize;
         this.iconSize = iconSize;
 
-        setDirty(true);
+        if (!oldIconSize.equals(this.iconSize))
+        {
+            setDirty(true);
+            firePropertyChange("iconSize", oldIconSize, iconSize);
+        }
     }
 
     /**
@@ -249,9 +240,14 @@ public final class IdLabel
             throw new IllegalArgumentException("iconState must not be null");
         }
 
+        IconState oldIconState = this.iconState;
         this.iconState = iconState;
 
-        setDirty(true);
+        if (!oldIconState.equals(this.iconState))
+        {
+            setDirty(true);
+            firePropertyChange("iconState", oldIconState, this.iconState);
+        }
     }
 
 
@@ -298,13 +294,12 @@ public final class IdLabel
     public void setEnabled(final boolean enabled)
     {
         boolean previousEnabled = isEnabled();
-        boolean disabledState = getIconState().equals(IconState.DISABLED);
 
         if (enabled && !previousEnabled)
         {
             setIconState(previousState);
         }
-        else if (!enabled && disabledState)
+        else if (!enabled && previousEnabled)
         {
             previousState = getIconState();
             setIconState(IconState.DISABLED);
@@ -349,10 +344,10 @@ public final class IdLabel
      */
     private void rebuild()
     {
-        String name = IdentifyUtils.getNameFor(getValue());
+        String name = IdentifyUtils.getNameFor(value);
         setText(name);
 
-        IconBundle iconBundle = IdentifyUtils.getIconBundleFor(getValue());
+        IconBundle iconBundle = IdentifyUtils.getIconBundleFor(value);
 
         if (iconBundle == null)
         {
