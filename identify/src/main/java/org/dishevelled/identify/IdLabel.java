@@ -250,45 +250,53 @@ public final class IdLabel
         }
     }
 
-
-    //
-    //  synchronize IconTextDirection and AWT componentOrientation
+    /**
+     * Return the icon text direction for this label.
+     *
+     * @return the icon text direction for this label
+     */
+    IconTextDirection getIconTextDirection()
+    {
+        return iconTextDirection;
+    }
 
     /** @see JLabel */
     public void setComponentOrientation(final ComponentOrientation orientation)
     {
-        if (orientation == null)
+        ComponentOrientation oldOrientation = getComponentOrientation();
+
+        if (!oldOrientation.equals(orientation))
         {
-            return;
+            if (orientation != null)
+            {
+                iconTextDirection = orientation.isLeftToRight() ?
+                    IconTextDirection.LEFT_TO_RIGHT : IconTextDirection.RIGHT_TO_LEFT;
+
+                setDirty(true);
+            }
         }
 
-        iconTextDirection = orientation.isLeftToRight() ?
-            IconTextDirection.LEFT_TO_RIGHT : IconTextDirection.RIGHT_TO_LEFT;
-
         super.setComponentOrientation(orientation);
-
-        setDirty(true);
     }
 
     /** @see JLabel */
     public void applyComponentOrientation(final ComponentOrientation orientation)
     {
-        if (orientation == null)
+        ComponentOrientation oldOrientation = getComponentOrientation();
+
+        if (!oldOrientation.equals(orientation))
         {
-            return;
+            if (orientation != null)
+            {
+                iconTextDirection = orientation.isLeftToRight() ?
+                    IconTextDirection.LEFT_TO_RIGHT : IconTextDirection.RIGHT_TO_LEFT;
+
+                setDirty(true);
+            }
         }
 
-        iconTextDirection = orientation.isLeftToRight() ?
-            IconTextDirection.LEFT_TO_RIGHT : IconTextDirection.RIGHT_TO_LEFT;
-
         super.applyComponentOrientation(orientation);
-
-        setDirty(true);
     }
-
-
-    //
-    //  synchronize IconState and Swing isEnabled
 
     /** @see JLabel */
     public void setEnabled(final boolean enabled)
@@ -309,10 +317,6 @@ public final class IdLabel
 
         setDirty(true);
     }
-
-
-    //
-    //  rebuild JLabel text and icon properties
 
     /**
      * Set the dirty flag to the logical OR of <code>dirty</code>
@@ -372,10 +376,6 @@ public final class IdLabel
 
         dirty = false;
     }
-
-
-    //
-    //  override JLabel methods
 
     /** @see JLabel */
     public String getText()

@@ -72,6 +72,17 @@ public final class IdButtonTest
         {
             // expected
         }
+
+        try
+        {
+            IdButton nullAction = new IdButton(null, TangoProject.SMALL);
+            fail("ctr(null, TangoProject.SMALL) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+
         try
         {
             IdButton nullSize = new IdButton(action, null);
