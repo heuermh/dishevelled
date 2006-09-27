@@ -54,10 +54,10 @@ public final class IdMenuItem
     private static final IconTextDirection DEFAULT_ICON_TEXT_DIRECTION = IconTextDirection.LEFT_TO_RIGHT;
 
     /** Icon size. */
-    private IconSize iconSize;
+    private IconSize iconSize = DEFAULT_ICON_SIZE;
 
     /** Icon text direction. */
-    private IconTextDirection iconTextDirection;
+    private IconTextDirection iconTextDirection = DEFAULT_ICON_TEXT_DIRECTION;
 
     /** Dirty flag. */
     private transient boolean dirty = true;
@@ -76,8 +76,6 @@ public final class IdMenuItem
         {
             throw new IllegalArgumentException("action must not be null");
         }
-        iconSize = DEFAULT_ICON_SIZE;
-        iconTextDirection = DEFAULT_ICON_TEXT_DIRECTION;
         setAction(action);
     }
 
@@ -96,12 +94,7 @@ public final class IdMenuItem
         {
             throw new IllegalArgumentException("action must not be null");
         }
-        if (iconSize == null)
-        {
-            throw new IllegalArgumentException("iconSize must not be null");
-        }
-        this.iconSize = iconSize;
-        iconTextDirection = DEFAULT_ICON_TEXT_DIRECTION;
+        setIconSize(iconSize);
         setAction(action);
     }
 
@@ -139,39 +132,52 @@ public final class IdMenuItem
         }
     }
 
-    //
-    //  synchronize IconTextDirection and AWT componentOrientation
+    /**
+     * Return the icon text direction for this menu item.
+     *
+     * @return the icon text direction for this menu item
+     */
+    IconTextDirection getIconTextDirection()
+    {
+        return iconTextDirection;
+    }
 
     /** @see JMenuItem */
     public void setComponentOrientation(final ComponentOrientation orientation)
     {
-        if (orientation == null)
+        ComponentOrientation oldOrientation = getComponentOrientation();
+
+        if (!oldOrientation.equals(orientation))
         {
-            return;
+            if (orientation != null)
+            {
+                iconTextDirection = orientation.isLeftToRight() ?
+                    IconTextDirection.LEFT_TO_RIGHT : IconTextDirection.RIGHT_TO_LEFT;
+
+                setDirty(true);
+            }
         }
 
-        iconTextDirection = orientation.isLeftToRight() ?
-            IconTextDirection.LEFT_TO_RIGHT : IconTextDirection.RIGHT_TO_LEFT;
-
         super.setComponentOrientation(orientation);
-
-        setDirty(true);
     }
 
     /** @see JMenuItem */
     public void applyComponentOrientation(final ComponentOrientation orientation)
     {
-        if (orientation == null)
+        ComponentOrientation oldOrientation = getComponentOrientation();
+
+        if (!oldOrientation.equals(orientation))
         {
-            return;
+            if (orientation != null)
+            {
+                iconTextDirection = orientation.isLeftToRight() ?
+                    IconTextDirection.LEFT_TO_RIGHT : IconTextDirection.RIGHT_TO_LEFT;
+
+                setDirty(true);
+            }
         }
 
-        iconTextDirection = orientation.isLeftToRight() ?
-            IconTextDirection.LEFT_TO_RIGHT : IconTextDirection.RIGHT_TO_LEFT;
-
         super.applyComponentOrientation(orientation);
-
-        setDirty(true);
     }
 
     /** @see JMenuItem */
@@ -222,7 +228,6 @@ public final class IdMenuItem
             setSelectedIcon(new ImageIcon(bndl.getImage(this, iconTextDirection, IconState.SELECTED, iconSize)));
             setRolloverIcon(new ImageIcon(bndl.getImage(this, iconTextDirection, IconState.MOUSEOVER, iconSize)));
             setRolloverSelectedIcon(new ImageIcon(bndl.getImage(this, iconTextDirection, IconState.SELECTED, iconSize)));
-            setDisabledIcon(new ImageIcon(bndl.getImage(this, iconTextDirection, IconState.DISABLED, iconSize)));
             setDisabledIcon(new ImageIcon(bndl.getImage(this, iconTextDirection, IconState.DISABLED, iconSize)));
         }
         dirty = false;

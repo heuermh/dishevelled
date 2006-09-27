@@ -52,7 +52,7 @@ public abstract class IdentifiableAction
     protected IdentifiableAction(final String name, final IconBundle iconBundle)
     {
         super(name);
-	putValue(SHORT_DESCRIPTION, name);
+        putValue(SHORT_DESCRIPTION, name);
         setIconBundle(iconBundle);
     }
 
