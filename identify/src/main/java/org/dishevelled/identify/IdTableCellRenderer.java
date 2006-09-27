@@ -154,7 +154,7 @@ public class IdTableCellRenderer
      * @param hasFocus true if the specified cell has focus
      * @return an icon state for the specified label and flags
      */
-    private final IconState determineState(final JLabel label, final boolean isSelected, final boolean hasFocus)
+    private IconState determineState(final JLabel label, final boolean isSelected, final boolean hasFocus)
     {
         if (isSelected)
         {
@@ -181,7 +181,7 @@ public class IdTableCellRenderer
      * @return a text direction for the component orientation of
      *    the specified label
      */
-    private final IconTextDirection determineTextDirection(final JLabel label)
+    private IconTextDirection determineTextDirection(final JLabel label)
     {
         ComponentOrientation componentOrientation = label.getComponentOrientation();
         return componentOrientation.isLeftToRight() ? IconTextDirection.LEFT_TO_RIGHT : IconTextDirection.RIGHT_TO_LEFT;
