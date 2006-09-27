@@ -83,7 +83,7 @@ public final class IdLabel
     private MouseListener mouseoverListener = new MouseAdapter()
         {
             /** @see MouseListener */
-            public final void mouseEntered(final MouseEvent e)
+            public void mouseEntered(final MouseEvent e)
             {
                 if (getIconState().equals(IconState.NORMAL))
                 {
@@ -93,7 +93,7 @@ public final class IdLabel
             }
 
             /** @see MouseListener */
-            public final void mouseExited(final MouseEvent e)
+            public void mouseExited(final MouseEvent e)
             {
                 if (getIconState().equals(IconState.MOUSEOVER))
                 {
