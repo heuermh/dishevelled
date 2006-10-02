@@ -242,25 +242,29 @@ public final class TangoExample
                 {
                     // empty
                 }
-            });
+            },TangoProject.EXTRA_SMALL);
         IdButton copy = new IdButton(new IdentifiableAction("Copy", TangoProject.EDIT_COPY)
             {
                 public void actionPerformed(final ActionEvent e)
                 {
                     // empty
                 }
-            });
-        IdButton paste = new IdButton(new IdentifiableAction("Paste", TangoProject.EDIT_PASTE)
+            }, TangoProject.SMALL);
+
+        IdentifiableAction pasteAction = new IdentifiableAction("Paste", TangoProject.EDIT_PASTE)
             {
                 public void actionPerformed(final ActionEvent e)
                 {
                     // empty
                 }
-            });
+            };
 
-        cut.setIconSize(TangoProject.EXTRA_SMALL);
-        copy.setIconSize(TangoProject.SMALL);
-        paste.setIconSize(TangoProject.LARGE);
+        pasteAction.setEnabled(false);
+        IdButton paste = new IdButton(pasteAction, TangoProject.LARGE);
+
+        //cut.setIconSize(TangoProject.EXTRA_SMALL);
+        //copy.setIconSize(TangoProject.SMALL);
+        //paste.setIconSize(TangoProject.LARGE);
 
         JToolBar toolBar = new JToolBar();
         toolBar.add(cut);

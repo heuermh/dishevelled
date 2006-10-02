@@ -82,7 +82,7 @@ public final class PNGIconBundle
         }
         catch (Exception e)
         {
-            throw new IllegalArgumentException("could not create base image", e);
+            throw new IllegalArgumentException("could not create base image; " + e.getMessage());
         }
     }
 
@@ -105,7 +105,7 @@ public final class PNGIconBundle
         }
         catch (Exception e)
         {
-            throw new IllegalArgumentException("could not create base image", e);
+            throw new IllegalArgumentException("could not create base image; " + e.getMessage());
         }
     }
 
@@ -128,7 +128,7 @@ public final class PNGIconBundle
         }
         catch (Exception e)
         {
-            throw new IllegalArgumentException("could not create base image", e);
+            throw new IllegalArgumentException("could not create base image; " + e.getMessage());
         }
     }
 
@@ -151,7 +151,8 @@ public final class PNGIconBundle
         }
         catch (Exception e)
         {
-            throw new IllegalArgumentException("could not create base image", e);
+            e.printStackTrace();
+            throw new IllegalArgumentException("could not create base image; " + e.getMessage());
         }
     }
 

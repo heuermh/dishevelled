@@ -83,7 +83,7 @@
     <dependency><groupId>xerces</groupId><artifactId>xercesImpl</artifactId><version>2.6.2</version></dependency>
 
     <!-- unit test dependencies -->
-    <dependency><groupId>commons-lang</groupId><artifactId>commons-lang</artifactId><version>2.1</version><scope>test</scope></dependency>
+    <dependency><groupId>commons-lang</groupId><artifactId>commons-lang</artifactId><version>2.1</version></dependency>
   </dependencies>
 
   <build>
@@ -95,7 +95,7 @@
         <include>**/*Test.java</include>
       </includes>
       <excludes>
-	<exclude>**/Abstract*</exclude>
+        <exclude>**/Abstract*</exclude>
       </excludes>
     </unitTest>
   </build>
