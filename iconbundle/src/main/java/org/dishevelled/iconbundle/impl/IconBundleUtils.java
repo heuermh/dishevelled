@@ -112,8 +112,9 @@ public final class IconBundleUtils
      */
     public static Image makeDisabled(final BufferedImage src)
     {
-        BufferedImage dest = new BufferedImage(src.getColorModel(), src.copyData(null), src.isAlphaPremultiplied(), null);
+        // TODO:  looks like clearlooks 1) sets transparency to 0.3; 2) composites with bg image; 3) saturates to 0.1
 
+        BufferedImage dest = new BufferedImage(src.getColorModel(), src.copyData(null), src.isAlphaPremultiplied(), null);
         DISABLED_SATURATION_OP.filter(src, dest);
         DISABLED_PATTERN_OP.filter(src.getRaster(), dest.getRaster());
 
@@ -190,6 +191,27 @@ public final class IconBundleUtils
     private static RescaleOp DRAGGING_OP = new RescaleOp(new float[] { 1.0f, 1.0f, 1.0f, 0.2f },
                                                          new float[] { 0.0f, 0.0f, 0.0f, 0.0f },
                                                          null);
+
+    /**
+     * RescaleOp for creating transparent disabled images.
+     */
+    private static RescaleOp DISABLED_TRANSPARENCY_OP = new RescaleOp(new float[] { 1.0f, 1.0f, 1.0f, 0.3f },
+                                                                      new float[] { 0.0f, 0.0f, 0.0f, 0.0f },
+                                                                      null);
+
+    /**
+     * RescaleOp for desaturating disabled images.
+     */
+    private static RescaleOp DISABLED_NEW_SATURATION_OP = new RescaleOp(new float[] { 0.1f, 0.1f, 0.1f, 1.0f },
+                                                                    new float[] { 0.0f, 0.0f, 0.0f, 0.0f },
+                                                                    null);
+
+    /**
+     * RescaleOp for desaturating disabled images.
+     */
+    private static RescaleOp DISABLED_NEW_COMBO_OP = new RescaleOp(new float[] { 0.1f, 0.1f, 0.1f, 0.3f },
+                                                                    new float[] { 0.0f, 0.0f, 0.0f, 0.0f },
+                                                                    null);
 
     /**
      * RescaleOp for desaturating disabled images.
