@@ -151,7 +151,6 @@ public final class PNGIconBundle
         }
         catch (Exception e)
         {
-            e.printStackTrace();
             throw new IllegalArgumentException("could not create base image; " + e.getMessage());
         }
     }
