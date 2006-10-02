@@ -22,9 +22,9 @@
   <distributionDirectory>/home/groups/d/di/dishevelled/htdocs/identify/dist</distributionDirectory>
 
   <repository>
-    <connection>scm:cvs:pserver:anonymous@dishevelled.cvs.sourceforge.net:/cvsroot/dishevelled:dishevelled/identify</connection>
-    <developerConnection>scm:cvs:ext:heuermh@dishevelled.cvs.sourceforge.net:/cvsroot/dishevelled:dishevelled/identify</developerConnection>
-    <url>http://dishevelled.cvs.sourceforge.net/dishevelled/dishevelled/iconbundle</url>
+    <connection>scm|svn|http://svn.sourceforge.net/svnroot/dishevelled/trunk/identify</connection>
+    <developerConnection>scm|svn|https://svn.sourceforge.net/svnroot/dishevelled/trunk/identify</developerConnection>
+    <url>http://svn.sourceforge.net/viewcvs.cgi/dishevelled/trunk/identify</url>
   </repository>
 
   <mailingLists>

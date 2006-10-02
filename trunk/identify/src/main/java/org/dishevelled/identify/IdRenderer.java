@@ -53,13 +53,13 @@ public final class IdRenderer
     private final IdLabel delegate = new IdLabel();
 
 
-    /** @see Renderer */
+    /** {@inheritDoc} */
     public Component getComponent()
     {
         return delegate;
     }
 
-    /** @see Renderer */
+    /** {@inheritDoc} */
     public void setValue(final Object value, final boolean selected)
     {
         delegate.setValue(value);

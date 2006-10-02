@@ -264,7 +264,7 @@ public final class IdentifyUtils
         implements NameStrategy
     {
 
-        /** @see NameStrategy */
+        /** {@inheritDoc} */
         public String getNameFor(final Object bean)
         {
             if (bean == null)
@@ -326,7 +326,7 @@ public final class IdentifyUtils
         implements IconBundleStrategy
     {
 
-        /** @see IconBundleStrategy */
+        /** {@inheritDoc} */
         public IconBundle getIconBundleFor(final Object bean)
         {
             if (bean == null)

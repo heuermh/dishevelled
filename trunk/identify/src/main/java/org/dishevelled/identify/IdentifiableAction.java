@@ -75,13 +75,13 @@ public abstract class IdentifiableAction
         firePropertyChange("iconBundle", oldIconBundle, this.iconBundle);
     }
 
-    /** @see Identifiable */
+    /** {@inheritDoc} */
     public final String getName()
     {
         return (String) getValue(NAME);
     }
 
-    /** @see Identifiable */
+    /** {@inheritDoc} */
     public final IconBundle getIconBundle()
     {
         return iconBundle;
