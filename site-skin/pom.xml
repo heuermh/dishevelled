@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<project>
+<model>
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.dishevelled</groupId>
-  <artifactId>dsh-identify</artifactId>
+  <artifactId>dsh-site-skin</artifactId>
   <packaging>jar</packaging>
-  <name>dishevelled.org identify</name>
+  <name>dishevelled.org site-skin</name>
   <version>1.0-SNAPSHOT</version>
-  <description>Lightweight components for identifiable beans.</description>
-  <url>http://www.dishevelled.org/identify</url>
-  <inceptionYear>2003</inceptionYear>
+  <description>dishevelled.org maven 2 site plugin skin.</description>
+  <url>http://www.dishevelled.org/site-skin</url>
+  <inceptionYear>2006</inceptionYear>
   <mailingLists>
     <mailingList>
       <name>dishevelled.org announce mailing list</name>
@@ -49,56 +49,13 @@
     </license>
   </licenses>
   <scm>
-    <connection>scm|svn|http://svn.sourceforge.net/svnroot/dishevelled/trunk/identify</connection>
-    <developerConnection>scm|svn|https://svn.sourceforge.net/svnroot/dishevelled/trunk/identify</developerConnection>
-    <url>http://svn.sourceforge.net/viewcvs.cgi/dishevelled/trunk/identify</url>
+    <connection>scm|svn|http://svn.sourceforge.net/svnroot/dishevelled/trunk/site-skin</connection>
+    <developerConnection>scm|svn|https://svn.sourceforge.net/svnroot/dishevelled/trunk/site-skin</developerConnection>
+    <url>http://svn.sourceforge.net/viewcvs.cgi/dishevelled/trunk/site-skin</url>
   </scm>
   <organization>
     <name>dishevelled.org</name>
     <url>http://www.dishevelled.org</url>
   </organization>
-  <dependencies>
-    <dependency>
-      <groupId>org.dishevelled</groupId>
-      <artifactId>dsh-iconbundle</artifactId>
-      <version>1.0-SNAPSHOT</version>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.dishevelled</groupId>
-      <artifactId>dsh-iconbundle-tango</artifactId>
-      <version>1.0-SNAPSHOT</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.1</version>
-      <scope>test</scope>
-    </dependency>
-  </dependencies>
-  <reporting>
-    <plugins>
-      <plugin>
-        <artifactId>maven-checkstyle-plugin</artifactId>
-        <configuration>
-          <configLocation>src/build/conf/checkstyle.xml</configLocation>
-        </configuration>
-      </plugin>
-      <plugin>
-        <artifactId>maven-javadoc-plugin</artifactId>
-      </plugin>
-      <plugin>
-        <artifactId>maven-surefire-report-plugin</artifactId>
-      </plugin>
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>jxr-maven-plugin</artifactId>
-      </plugin>
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>cobertura-maven-plugin</artifactId>
-      </plugin>
-    </plugins>
-  </reporting>
-</project>
+  <dependencies/>
+</model>

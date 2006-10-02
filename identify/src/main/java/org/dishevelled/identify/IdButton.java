@@ -142,7 +142,7 @@ public final class IdButton
         return iconTextDirection;
     }
 
-    /** @see JButton */
+    /** {@inheritDoc} */
     public void setComponentOrientation(final ComponentOrientation orientation)
     {
         ComponentOrientation oldOrientation = getComponentOrientation();
@@ -161,7 +161,7 @@ public final class IdButton
         super.setComponentOrientation(orientation);
     }
 
-    /** @see JButton */
+    /** {@inheritDoc} */
     public void applyComponentOrientation(final ComponentOrientation orientation)
     {
         ComponentOrientation oldOrientation = getComponentOrientation();
@@ -180,7 +180,7 @@ public final class IdButton
         super.applyComponentOrientation(orientation);
     }
 
-    /** @see JButton */
+    /** {@inheritDoc} */
     protected void configurePropertiesFromAction(final Action action)
     {
         super.configurePropertiesFromAction(action);

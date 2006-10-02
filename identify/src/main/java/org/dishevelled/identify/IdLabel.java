@@ -82,7 +82,7 @@ public final class IdLabel
     /** Mouseover mouse listener. */
     private MouseListener mouseoverListener = new MouseAdapter()
         {
-            /** @see MouseListener */
+            /** {@inheritDoc} */
             public void mouseEntered(final MouseEvent e)
             {
                 if (getIconState().equals(IconState.NORMAL))
@@ -92,7 +92,7 @@ public final class IdLabel
                 }
             }
 
-            /** @see MouseListener */
+            /** {@inheritDoc} */
             public void mouseExited(final MouseEvent e)
             {
                 if (getIconState().equals(IconState.MOUSEOVER))
@@ -260,7 +260,7 @@ public final class IdLabel
         return iconTextDirection;
     }
 
-    /** @see JLabel */
+    /** {@inheritDoc} */
     public void setComponentOrientation(final ComponentOrientation orientation)
     {
         ComponentOrientation oldOrientation = getComponentOrientation();
@@ -279,7 +279,7 @@ public final class IdLabel
         super.setComponentOrientation(orientation);
     }
 
-    /** @see JLabel */
+    /** {@inheritDoc} */
     public void applyComponentOrientation(final ComponentOrientation orientation)
     {
         ComponentOrientation oldOrientation = getComponentOrientation();
@@ -298,7 +298,7 @@ public final class IdLabel
         super.applyComponentOrientation(orientation);
     }
 
-    /** @see JLabel */
+    /** {@inheritDoc} */
     public void setEnabled(final boolean enabled)
     {
         boolean previousEnabled = isEnabled();
@@ -377,7 +377,7 @@ public final class IdLabel
         dirty = false;
     }
 
-    /** @see JLabel */
+    /** {@inheritDoc} */
     public String getText()
     {
         if (isDirty())
@@ -387,7 +387,7 @@ public final class IdLabel
         return super.getText();
     }
 
-    /** @see JLabel */
+    /** {@inheritDoc} */
     public Icon getIcon()
     {
         if (isDirty())
@@ -397,7 +397,7 @@ public final class IdLabel
         return imageIcon;
     }
 
-    /** @see JLabel */
+    /** {@inheritDoc} */
     public Icon getDisabledIcon()
     {
         if (isDirty())
@@ -407,7 +407,7 @@ public final class IdLabel
         return imageIcon;
     }
 
-    /** @see JLabel */
+    /** {@inheritDoc} */
     public Rectangle getBounds()
     {
         if (isDirty())
@@ -417,7 +417,7 @@ public final class IdLabel
         return super.getBounds();
     }
 
-    /** @see JLabel */
+    /** {@inheritDoc} */
     public Rectangle getBounds(final Rectangle rv)
     {
         if (isDirty())
@@ -427,7 +427,7 @@ public final class IdLabel
         return super.getBounds(rv);
     }
 
-    /** @see JLabel */
+    /** {@inheritDoc} */
     public Dimension getMaximumSize()
     {
         if (isDirty())
@@ -437,7 +437,7 @@ public final class IdLabel
         return super.getMaximumSize();
     }
 
-    /** @see JLabel */
+    /** {@inheritDoc} */
     public Dimension getMinimumSize()
     {
         if (isDirty())
@@ -447,7 +447,7 @@ public final class IdLabel
         return super.getMinimumSize();
     }
 
-    /** @see JLabel */
+    /** {@inheritDoc} */
     public Dimension getPreferredSize()
     {
         if (isDirty())
@@ -457,7 +457,7 @@ public final class IdLabel
         return super.getPreferredSize();
     }
 
-    /** @see JLabel */
+    /** {@inheritDoc} */
     public Dimension getSize()
     {
         if (isDirty())
@@ -467,7 +467,7 @@ public final class IdLabel
         return super.getSize();
     }
 
-    /** @see JLabel */
+    /** {@inheritDoc} */
     public Rectangle getVisibleRect()
     {
         if (isDirty())
@@ -477,7 +477,7 @@ public final class IdLabel
         return super.getVisibleRect();
     }
 
-    /** @see JLabel */
+    /** {@inheritDoc} */
     public int getHeight()
     {
         if (isDirty())
@@ -487,7 +487,7 @@ public final class IdLabel
         return super.getHeight();
     }
 
-    /** @see JLabel */
+    /** {@inheritDoc} */
     public int getWidth()
     {
         if (isDirty())
@@ -497,7 +497,7 @@ public final class IdLabel
         return super.getWidth();
     }
 
-    /** @see JLabel */
+    /** {@inheritDoc} */
     public void paintComponent(final Graphics g)
     {
         if (isDirty())

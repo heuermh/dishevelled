@@ -142,7 +142,7 @@ public final class IdMenuItem
         return iconTextDirection;
     }
 
-    /** @see JMenuItem */
+    /** {@inheritDoc} */
     public void setComponentOrientation(final ComponentOrientation orientation)
     {
         ComponentOrientation oldOrientation = getComponentOrientation();
@@ -161,7 +161,7 @@ public final class IdMenuItem
         super.setComponentOrientation(orientation);
     }
 
-    /** @see JMenuItem */
+    /** {@inheritDoc} */
     public void applyComponentOrientation(final ComponentOrientation orientation)
     {
         ComponentOrientation oldOrientation = getComponentOrientation();
@@ -180,7 +180,7 @@ public final class IdMenuItem
         super.applyComponentOrientation(orientation);
     }
 
-    /** @see JMenuItem */
+    /** {@inheritDoc} */
     protected void configurePropertiesFromAction(final Action action)
     {
         super.configurePropertiesFromAction(action);

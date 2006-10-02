@@ -109,7 +109,7 @@ public class IdListCellRenderer
         firePropertyChange("iconSize", oldIconSize, this.iconSize);
     }
 
-    /** @see DefaultListCellRenderer */
+    /** {@inheritDoc} */
     public Component getListCellRendererComponent(final JList list,
                                                   final Object value,
                                                   final int index,
