@@ -1,35 +1,47 @@
 
 body
 {
-  font-size:  10pt;
-  font-family:  Luxi Sans, Lucida Sans Unicode, Lucida Grande, serif;
+  font-size: 10pt;
+  font-family: Luxi Sans, Lucida Sans Unicode, Lucida Grande, serif;
+}
+
+code
+{
+  font-size: 10pt;
+  font-family: Courier New, Courier, monospace;
+}
+
+pre
+{
+  font-size: 10pt;
+  font-family: Courier New, Courier, monospace;
 }
 
 #skipper
 {
-  display:  none;
+  display: none;
 }
 
 #masthead
 {
-  margin:  0;
-  border:  1px solid;
+  margin: 0;
+  border: 1px solid;
 }
 
 #masthead a
 {
-  text-decoration:  none;
-  border-width:  0;
-  border-style:  none;
+  text-decoration: none;
+  border-width: 0;
+  border-style: none;
 }
 
 #masthead h1
 {
-  font-family:  Amerigo BT, Georgia, Luxi Sans, sans-serif;
+  font-family: Amerigo BT, Georgia, Luxi Sans, sans-serif;
   font-size: 160%;
   font-style: normal;
   font-weight: normal;
-  margin:  0;
+  margin: 0;
   padding: 2em 0em 0em 0em;
 }
 
@@ -41,7 +53,7 @@ body
 
 #main
 {
-  border:  1px solid;
+  border: 1px solid;
 }
 
 #content
@@ -53,7 +65,7 @@ body
 #content h1
 {
   margin: 0;
-  font-family:  Amerigo BT, Georgia, Luxi Sans, sans-serif;
+  font-family: Amerigo BT, Georgia, Luxi Sans, sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 140%;
@@ -62,7 +74,7 @@ body
 #content h2
 {
   margin: 0.5em 0em 0em 0em;
-  font-family:  Amerigo BT, Georgia, Luxi Sans, sans-serif;
+  font-family: Amerigo BT, Georgia, Luxi Sans, sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 120%;
@@ -71,7 +83,7 @@ body
 #content h3
 {
   margin: 0.5em 0em 0em 0em;
-  font-family:  Amerigo BT, Georgia, Luxi Sans, sans-serif;
+  font-family: Amerigo BT, Georgia, Luxi Sans, sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 120%;
@@ -80,7 +92,7 @@ body
 #content h4
 {
   margin: 1.25em 0em 0em 0em;
-  font-family:  Amerigo BT, Georgia, Luxi Sans, sans-serif;
+  font-family: Amerigo BT, Georgia, Luxi Sans, sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 110%;
@@ -100,98 +112,98 @@ body
 
 #content a
 {
-  text-decoration:  none;
-  border-width:  0px 0px 1px 0px;
-  border-style:  none none dotted none;
+  text-decoration: none;
+  border-width: 0px 0px 1px 0px;
+  border-style: none none dotted none;
 }
 
 #content table
 {
   width: 95%;
   margin: 0.5em 0em 1.5em 0.66em;
-  border-width:  1px 1px 1px 1px;
-  border-style:  solid;
-  border-spacing:  0;
-  border-collapse:  collapse;
+  border-width: 1px 1px 1px 1px;
+  border-style: solid;
+  border-spacing: 0;
+  border-collapse: collapse;
 }
 
 #content th
 {
-  padding:  0.25em 0.5em 0.25em 0.5em;
+  padding: 0.25em 0.5em 0.25em 0.5em;
   border-width: 0px 0px 1px 0px;
-  border-style:  solid;
+  border-style: solid;
 }
 
 #content td
 {
-  padding:  0.15em 0.25em 0.15em 0.25em;
+  padding: 0.15em 0.25em 0.15em 0.25em;
 }
 
-#source
+.source
 {
   margin: 1.5em 0em 1.5em 0.66em;
   padding-left: 0.66em;
-  border-width:  1px;
-  border-style:  solid;
+  border-width: 1px;
+  border-style: solid;
 }
 
 #inline-nav
 {
-  margin:  0;
+  margin: 0;
   padding: 0.5em 1.5em 0em 1.5em;
 }
 
 #inline-nav p
 {
-  font-size:  85%;
-  margin:  0;
+  font-size: 85%;
+  margin: 0;
   padding: 0em 0em 0em 0.66em;
 }
 
 #inline-nav a
 {
-  text-decoration:  none;
-  border-width:  0px;
-  border-style:  none;
+  text-decoration: none;
+  border-width: 0px;
+  border-style: none;
 }
 
 #sidebar
 {
-  float:  right;
-  width:  14em;
+  float: right;
+  width: 14em;
   margin: 0.1em 0.1em 0em 0em;
   padding: 1.0em 0.66em 1.66em 1.0em;
-  border:  1px;
-  border-style:  none none dotted dotted;
+  border: 1px;
+  border-style: none none dotted dotted;
 }
 
 #sidebar ul
 {
-  margin:  0;
-  padding:  0;
+  margin: 0;
+  padding: 0;
 }
 
 #sidebar li
 {
-  padding:  0.25em 0.25em 0em 1em;
-  list-style:  inside square;
+  padding: 0.25em 0.25em 0em 1em;
+  list-style: inside square;
 }
 
 #sidebar a
 {
-  text-decoration:  none;
-  border-width:  0px 0px 1px 0px;
-  border-style:  none none dotted none;
+  text-decoration: none;
+  border-width: 0px 0px 1px 0px;
+  border-style: none none dotted none;
 }
 
 #footer
 {
-  font-size:  85%;
+  font-size: 85%;
 }
 
 #footer a
 {
-  text-decoration:  none;
-  border-width:  0px 0px 1px 0px;
-  border-style:  none none dotted none;
+  text-decoration: none;
+  border-width: 0px 0px 1px 0px;
+  border-style: none none dotted none;
 }
