@@ -29,7 +29,6 @@
       <item name="Repository" href="source-repository.html"/>
       <item name="Javadocs" href="apidocs/index.html"/>
       <item name="Checkstyle" href="checkstyle.html"/>
-      <item name="Unit tests" href="surefire-report.html"/>
       <item name="Test coverage" href="cobertura/index.html"/>
       <item name="Changes"/>
       <item name="Changelog"/>
