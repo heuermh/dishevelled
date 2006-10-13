@@ -23,7 +23,6 @@
 */
 package org.dishevelled.commandline;
 
-import java.util.List;
 import java.util.Collections;
 
 import junit.framework.TestCase;
@@ -41,7 +40,7 @@ public final class CommandLineParserTest
     public void testParse()
     {
         CommandLine commandLine = new CommandLine(new String[0]);
-        List<Argument<?>> arguments = Collections.<Argument<?>>emptyList();
+        ArgumentList arguments = new ArgumentList(Collections.<Argument>emptyList());
 
         try
         {

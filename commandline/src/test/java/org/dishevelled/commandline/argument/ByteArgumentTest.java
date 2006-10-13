@@ -29,6 +29,7 @@ import java.util.Arrays;
 import junit.framework.TestCase;
 
 import org.dishevelled.commandline.Argument;
+import org.dishevelled.commandline.ArgumentList;
 import org.dishevelled.commandline.CommandLine;
 import org.dishevelled.commandline.CommandLineParser;
 import org.dishevelled.commandline.CommandLineParseException;
@@ -59,7 +60,7 @@ public class ByteArgumentTest
         throws CommandLineParseException
     {
         Argument<Byte> byteArgument = new ByteArgument("b", "byte", "Byte argument", true);
-        List<Argument<?>> arguments = Arrays.asList(new Argument<?>[] { byteArgument });
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { byteArgument }));
 
         String[] args = new String[] { "-b", "127" };
         CommandLine commandLine = new CommandLine(args);
@@ -72,7 +73,7 @@ public class ByteArgumentTest
         throws CommandLineParseException
     {
         Argument<Byte> byteArgument = new ByteArgument("b", "byte", "Byte argument", true);
-        List<Argument<?>> arguments = Arrays.asList(new Argument<?>[] { byteArgument });
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { byteArgument }));
 
         String[] args = new String[] { "--byte", "127" };
         CommandLine commandLine = new CommandLine(args);
@@ -85,7 +86,7 @@ public class ByteArgumentTest
         throws CommandLineParseException
     {
         Argument<Byte> byteArgument = new ByteArgument("b", "byte", "Byte argument", true);
-        List<Argument<?>> arguments = Arrays.asList(new Argument<?>[] { byteArgument });
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { byteArgument }));
 
         String[] args = new String[] { "-b", "-128" };
         CommandLine commandLine = new CommandLine(args);
@@ -98,7 +99,7 @@ public class ByteArgumentTest
         throws CommandLineParseException
     {
         Argument<Byte> byteArgument = new ByteArgument("b", "byte", "Byte argument", true);
-        List<Argument<?>> arguments = Arrays.asList(new Argument<?>[] { byteArgument });
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { byteArgument }));
 
         String[] args = new String[] { "--byte", "-128" };
         CommandLine commandLine = new CommandLine(args);
@@ -112,7 +113,7 @@ public class ByteArgumentTest
         try
         {
             Argument<Byte> byteArgument = new ByteArgument("b", "byte", "Byte argument", true);
-            List<Argument<?>> arguments = Arrays.asList(new Argument<?>[] { byteArgument });
+            ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { byteArgument }));
 
             String[] args = new String[] { "-b", "not-a-byte" };
             CommandLine commandLine = new CommandLine(args);
@@ -131,7 +132,7 @@ public class ByteArgumentTest
         try
         {
             Argument<Byte> byteArgument = new ByteArgument("b", "byte", "Byte argument", true);
-            List<Argument<?>> arguments = Arrays.asList(new Argument<?>[] { byteArgument });
+            ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { byteArgument }));
 
             String[] args = new String[] { "--byte", "not-a-byte" };
             CommandLine commandLine = new CommandLine(args);
@@ -150,7 +151,7 @@ public class ByteArgumentTest
         try
         {
             Argument<Byte> byteArgument = new ByteArgument("b", "byte", "Byte argument", true);
-            List<Argument<?>> arguments = Arrays.asList(new Argument<?>[] { byteArgument });
+            ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { byteArgument }));
 
             String[] args = new String[] { "-b", "-129" };
             CommandLine commandLine = new CommandLine(args);
@@ -169,7 +170,7 @@ public class ByteArgumentTest
         try
         {
             Argument<Byte> byteArgument = new ByteArgument("b", "byte", "Byte argument", true);
-            List<Argument<?>> arguments = Arrays.asList(new Argument<?>[] { byteArgument });
+            ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { byteArgument }));
 
             String[] args = new String[] { "-b", "128" };
             CommandLine commandLine = new CommandLine(args);
@@ -188,7 +189,7 @@ public class ByteArgumentTest
         try
         {
             Argument<Byte> byteArgument = new ByteArgument("b", "byte", "Byte argument", true);
-            List<Argument<?>> arguments = Arrays.asList(new Argument<?>[] { byteArgument });
+            ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { byteArgument }));
 
             String[] args = new String[] { "--byte", "-129" };
             CommandLine commandLine = new CommandLine(args);
@@ -207,7 +208,7 @@ public class ByteArgumentTest
         try
         {
             Argument<Byte> byteArgument = new ByteArgument("b", "byte", "Byte argument", true);
-            List<Argument<?>> arguments = Arrays.asList(new Argument<?>[] { byteArgument });
+            ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { byteArgument }));
 
             String[] args = new String[] { "--byte", "128" };
             CommandLine commandLine = new CommandLine(args);

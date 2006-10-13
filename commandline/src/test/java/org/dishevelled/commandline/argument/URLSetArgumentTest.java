@@ -25,6 +25,7 @@ package org.dishevelled.commandline.argument;
 
 import java.net.URL;
 
+import java.util.Set;
 import java.util.List;
 import java.util.Arrays;
 
@@ -37,33 +38,31 @@ import org.dishevelled.commandline.CommandLineParser;
 import org.dishevelled.commandline.CommandLineParseException;
 
 /**
- * Unit test for URLArgument.
+ * Unit test for URLSetArgument.
  *
  * @author  Michael Heuer
- * @version $Revision$ $Date$
+ * @version $Revision: 1.2 $ $Date: 2006/01/02 23:16:28 $
  */
-public class URLArgumentTest
+public class URLSetArgumentTest
     extends TestCase
 {
-    // TODO:
-    //    fix case of URL long description
 
-    public void testURLArgument()
+    public void testURLSetArgument()
     {
-        URLArgument ua = new URLArgument("u", "URL", "URL argument", true);
-        assertNotNull("ua not null", ua);
-        assertEquals("ua shortName == u", "u", ua.getShortName());
-        assertEquals("ua longName == URL", "URL", ua.getLongName());
-        assertEquals("ua description == URL argument", "URL argument", ua.getDescription());
-        assertTrue("ua isRequired", ua.isRequired());
-        assertFalse("ua wasFound == false", ua.wasFound());
-        assertEquals("ua value == null", null, ua.getValue());
+        URLSetArgument usa = new URLSetArgument("u", "url-set", "URL set argument", true);
+        assertNotNull("usa not null", usa);
+        assertEquals("usa shortName == u", "u", usa.getShortName());
+        assertEquals("usa longName == url-set", "url-set", usa.getLongName());
+        assertEquals("usa description == URL set argument", "URL set argument", usa.getDescription());
+        assertTrue("usa isRequired", usa.isRequired());
+        assertFalse("usa wasFound == false", usa.wasFound());
+        assertEquals("usa value == null", null, usa.getValue());
     }
 
     public void testObjectContract()
     {
-        URLArgument a0 = new URLArgument("u", "url", "URL argument", true);
-        URLArgument a1 = new URLArgument("u", "url", "URL argument", true);
+        URLSetArgument a0 = new URLSetArgument("u", "url-set", "URL set argument", true);
+        URLSetArgument a1 = new URLSetArgument("u", "url-set", "URL set argument", true);
 
         assertEquals("a0 equals itself", a0, a0);
         assertEquals("a1 equals itself", a1, a1);
@@ -76,9 +75,10 @@ public class URLArgumentTest
     public void testValidArgumentShort()
         throws CommandLineParseException
     {
-        Argument<URL> URLArgument = new URLArgument("u", "URL-argument", "URL argument", true);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { URLArgument }));
-        List<String> values = Arrays.asList(new String[] { "http://localhost" });
+        Argument<Set<URL>> urlSetArgument = new URLSetArgument("u", "url-set", "URL set argument", true);
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { urlSetArgument }));
+        List<String> values = Arrays.asList(new String[] { "http://localhost", "http://localhost, http://127.0.0.1",
+                                                           "http://localhost, http://127.0.0.1", " http://localhost , http://127.0.0.1 " });
 
         for (String value : values)
         {
@@ -86,32 +86,37 @@ public class URLArgumentTest
             CommandLine commandLine = new CommandLine(args);
             CommandLineParser.parse(commandLine, arguments);
 
-            assertNotNull("-u " + value + " not null", URLArgument.getValue());
+            Set<URL> set = urlSetArgument.getValue();
+            assertNotNull("-u set not null", set);
+            assertFalse("-u set not empty", set.isEmpty());
         }
     }
 
     public void testValidArgumentLong()
         throws CommandLineParseException
     {
-        Argument<URL> URLArgument = new URLArgument("u", "URL-argument", "URL argument", true);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { URLArgument }));
-        List<String> values = Arrays.asList(new String[] { "http://localhost" });
+        Argument<Set<URL>> urlSetArgument = new URLSetArgument("u", "url-set", "URL set argument", true);
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { urlSetArgument }));
+        List<String> values = Arrays.asList(new String[] { "http://localhost", "http://localhost, http://127.0.0.1",
+                                                           "http://localhost, http://127.0.0.1", " http://localhost , http://127.0.0.1 " });
 
         for (String value : values)
         {
-            String[] args = new String[] { "--URL-argument", value };
+            String[] args = new String[] { "--url-set", value };
             CommandLine commandLine = new CommandLine(args);
             CommandLineParser.parse(commandLine, arguments);
 
-            assertNotNull("--URL-argument " + value + " not null", URLArgument.getValue());
+            Set<URL> set = urlSetArgument.getValue();
+            assertNotNull("--url-set set not null", set);
+            assertFalse("--url-set set not empty", set.isEmpty());
         }
     }
 
     public void testInvalidArgumentShort()
     {
-        Argument<URL> URLArgument = new URLArgument("u", "URL-argument", "URL argument", true);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { URLArgument }));
-        List<String> values = Arrays.asList(new String[] { "not-a-URL" });
+        Argument<Set<URL>> urlSetArgument = new URLSetArgument("u", "url-set", "URL set argument", true);
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { urlSetArgument }));
+        List<String> values = Arrays.asList(new String[] { "not-a-url" });
 
         for (String value : values)
         {
@@ -132,19 +137,19 @@ public class URLArgumentTest
 
     public void testInvalidArgumentLong()
     {
-        Argument<URL> URLArgument = new URLArgument("u", "URL-argument", "URL argument", true);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { URLArgument }));
-        List<String> values = Arrays.asList(new String[] { "not-a-URL" });
+        Argument<Set<URL>> urlSetArgument = new URLSetArgument("u", "url-set", "URL set argument", true);
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { urlSetArgument }));
+        List<String> values = Arrays.asList(new String[] { "not-a-url" });
 
         for (String value : values)
         {
             try
             {
-                String[] args = new String[] { "--URL-argument", value };
+                String[] args = new String[] { "--url-set", value };
                 CommandLine commandLine = new CommandLine(args);
                 CommandLineParser.parse(commandLine, arguments);
 
-                fail("--URL-argument " + value + " expected CommandLineParseException");
+                fail("--url-set " + value + " expected CommandLineParseException");
             }
             catch (CommandLineParseException e)
             {
@@ -157,10 +162,10 @@ public class URLArgumentTest
     {
         try
         {
-            Argument<URL> URLArgument = new URLArgument("u", "URL-argument", "URL argument", true);
-            ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { URLArgument }));
+            Argument<Set<URL>> urlSetArgument = new URLSetArgument("u", "url-set", "URL set argument", true);
+            ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { urlSetArgument }));
 
-            String[] args = new String[] { "not-an-argument" };
+            String[] args = new String[] { "not-an-argument", "not-a-url" };
             CommandLine commandLine = new CommandLine(args);
             CommandLineParser.parse(commandLine, arguments);
 
@@ -175,15 +180,15 @@ public class URLArgumentTest
     public void testNotRequiredArgument()
         throws CommandLineParseException
     {
-        Argument<URL> URLArgument = new URLArgument("u", "URL-argument", "URL argument", false);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { URLArgument }));
+        Argument<Set<URL>> urlSetArgument = new URLSetArgument("u", "url-set", "URL set argument", false);
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { urlSetArgument }));
 
-        String[] args = new String[] { "not-an-argument" };
+        String[] args = new String[] { "not-an-argument", "not-a-url" };
         CommandLine commandLine = new CommandLine(args);
         CommandLineParser.parse(commandLine, arguments);
 
-        assertFalse("URLArgument isRequired == false", URLArgument.isRequired());
-        assertFalse("URLArgument wasFound == false", URLArgument.wasFound());
-        assertEquals("URLArgument value == null", null, URLArgument.getValue());
+        assertFalse("urlSetArgument isRequired == false", urlSetArgument.isRequired());
+        assertFalse("urlSetArgument wasFound == false", urlSetArgument.wasFound());
+        assertEquals("urlSetArgument value == null", null, urlSetArgument.getValue());
     }
 }

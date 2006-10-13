@@ -26,7 +26,6 @@ package org.dishevelled.commandline;
 import java.io.PrintWriter;
 import java.io.OutputStream;
 
-import java.util.List;
 import java.util.Arrays;
 
 import java.lang.reflect.ParameterizedType;
@@ -52,18 +51,16 @@ public final class Usage
     /**
      * Generate an usage string to the specified output stream.
      *
-     * @param r runnable
      * @param message message
      * @param cause cause
      * @param commandLine command line
      * @param arguments list of arguments
      * @param out output stream, must not be null
      */
-    public static void usage(final Runnable r,
-                             final String message,
+    public static void usage(final String message,
                              final Throwable cause,
                              final CommandLine commandLine,
-                             final List<Argument<?>> arguments,
+                             final ArgumentList arguments,
                              final OutputStream out)
     {
         if (out == null)
@@ -73,12 +70,6 @@ public final class Usage
 
         PrintWriter pw = new PrintWriter(out, false);
         pw.println("usage:");
-
-        if (r != null)
-        {
-            pw.println("java " + r.getClass().getName());
-            pw.print("\n");
-        }
 
         if (message != null)
         {

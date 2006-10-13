@@ -29,6 +29,8 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 
+import org.apache.commons.lang.StringUtils;
+
 /**
  * A file list argument.
  *
@@ -64,7 +66,7 @@ public final class FileListArgument
         StringTokenizer st = new StringTokenizer(s, ",");
         while (st.hasMoreTokens())
         {
-            String token = st.nextToken();
+            String token = StringUtils.stripToEmpty(st.nextToken());
             File f = new File(token);
             list.add(f);
         }

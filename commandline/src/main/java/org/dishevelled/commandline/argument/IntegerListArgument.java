@@ -27,6 +27,8 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 
+import org.apache.commons.lang.StringUtils;
+
 /**
  * An integer list argument.
  *
@@ -62,7 +64,7 @@ public final class IntegerListArgument
         StringTokenizer st = new StringTokenizer(s, ",");
         while (st.hasMoreTokens())
         {
-            String token = st.nextToken();
+            String token = StringUtils.stripToEmpty(st.nextToken());
             Integer i = Integer.valueOf(token);
             list.add(i);
         }

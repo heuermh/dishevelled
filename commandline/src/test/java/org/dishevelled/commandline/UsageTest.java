@@ -25,7 +25,6 @@ package org.dishevelled.commandline;
 
 import java.io.ByteArrayOutputStream;
 
-import java.util.List;
 import java.util.Arrays;
 
 import junit.framework.TestCase;
@@ -45,36 +44,26 @@ public final class UsageTest
     public void testUsage()
     {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        Runnable r = new Runnable()
-            {
-
-                /** @see Runnable */
-                public void run()
-                {
-                    // empty
-                }
-            };
         String message = "message";
         Throwable cause = new Exception("cause");
         CommandLine emptyCommandLine = new CommandLine(new String[0]);
         CommandLine fullCommandLine = new CommandLine(new String[] { "--foo" });
-        List<Argument<?>> emptyArguments = Arrays.asList(new Argument<?>[0]);
+        ArgumentList emptyArguments = new ArgumentList(Arrays.asList(new Argument[0]));
         Argument<Integer> integerArgument = new IntegerArgument("f", "foo", "Foo", false);
         Argument<Integer> requiredIntegerArgument = new IntegerArgument("b", "bar", "Bar", true);
-        List<Argument<?>> fullArguments = Arrays.asList(new Argument<?>[] { integerArgument, requiredIntegerArgument });
+        ArgumentList fullArguments = new ArgumentList(Arrays.asList(new Argument[] { integerArgument, requiredIntegerArgument }));
 
-        Usage.usage(null, null, null, null, null, out);
-        Usage.usage(r, null, null, null, null, out);
-        Usage.usage(r, message, null, null, null, out);
-        Usage.usage(r, message, cause, null, null, out);
-        Usage.usage(r, message, cause, emptyCommandLine, null, out);
-        Usage.usage(r, message, cause, fullCommandLine, null, out);
-        Usage.usage(r, message, cause, fullCommandLine, emptyArguments, out);
-        Usage.usage(r, message, cause, fullCommandLine, fullArguments, out);
+        Usage.usage(null, null, null, null, out);
+        Usage.usage(message, null, null, null, out);
+        Usage.usage(message, cause, null, null, out);
+        Usage.usage(message, cause, emptyCommandLine, null, out);
+        Usage.usage(message, cause, fullCommandLine, null, out);
+        Usage.usage(message, cause, fullCommandLine, emptyArguments, out);
+        Usage.usage(message, cause, fullCommandLine, fullArguments, out);
 
         try
         {
-            Usage.usage(r, message, cause, fullCommandLine, fullArguments, null);
+            Usage.usage(message, cause, fullCommandLine, fullArguments, null);
             fail("usage(,,,,out) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)

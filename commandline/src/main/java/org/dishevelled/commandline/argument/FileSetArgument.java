@@ -29,6 +29,8 @@ import java.util.Set;
 import java.util.HashSet;
 import java.util.StringTokenizer;
 
+import org.apache.commons.lang.StringUtils;
+
 /**
  * A file set argument.
  *
@@ -64,7 +66,7 @@ public final class FileSetArgument
         StringTokenizer st = new StringTokenizer(s, ",");
         while (st.hasMoreTokens())
         {
-            String token = st.nextToken();
+            String token = StringUtils.stripToEmpty(st.nextToken());
             File f = new File(token);
             set.add(f);
         }
