@@ -29,6 +29,7 @@ import java.util.Arrays;
 import junit.framework.TestCase;
 
 import org.dishevelled.commandline.Argument;
+import org.dishevelled.commandline.ArgumentList;
 import org.dishevelled.commandline.CommandLine;
 import org.dishevelled.commandline.CommandLineParser;
 import org.dishevelled.commandline.CommandLineParseException;
@@ -55,11 +56,24 @@ public class StringArgumentTest
         assertEquals("sa value == null", null, sa.getValue());
     }
 
+    public void testObjectContract()
+    {
+        StringArgument a0 = new StringArgument("s", "string", "String argument", true);
+        StringArgument a1 = new StringArgument("s", "string", "String argument", true);
+
+        assertEquals("a0 equals itself", a0, a0);
+        assertEquals("a1 equals itself", a1, a1);
+        assertEquals("a0 hashCode == a0 hashCode", a0.hashCode(), a0.hashCode());
+        assertEquals("a1 hashCode == a1 hashCode", a1.hashCode(), a1.hashCode());
+        assertFalse("a0 not equals a1", a0.equals(a1));
+        assertFalse("a1 not equals a0", a1.equals(a0));
+    }
+
     public void testValidArgumentShort()
         throws CommandLineParseException
     {
         Argument<String> stringArgument = new StringArgument("s", "string-argument", "String argument", true);
-        List<Argument<?>> arguments = Arrays.asList(new Argument<?>[] { stringArgument });
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { stringArgument }));
         List<String> values = Arrays.asList(new String[] { "foo" });
 
         for (String value : values)
@@ -76,7 +90,7 @@ public class StringArgumentTest
         throws CommandLineParseException
     {
         Argument<String> stringArgument = new StringArgument("s", "string-argument", "String argument", true);
-        List<Argument<?>> arguments = Arrays.asList(new Argument<?>[] { stringArgument });
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { stringArgument }));
         List<String> values = Arrays.asList(new String[] { "foo" });
 
         for (String value : values)
@@ -93,7 +107,7 @@ public class StringArgumentTest
     public void testInvalidArgumentShort()
     {
         Argument<String> stringArgument = new StringArgument("d", "string-argument", "String argument", true);
-        List<Argument<?>> arguments = Arrays.asList(new Argument<?>[] { stringArgument });
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { stringArgument }));
         List<String> values = Arrays.asList(new String[] { "not-a-string" });
 
         for (String value : values)
@@ -116,7 +130,7 @@ public class StringArgumentTest
     public void testInvalidArgumentLong()
     {
         Argument<String> stringArgument = new StringArgument("d", "string-argument", "String argument", true);
-        List<Argument<?>> arguments = Arrays.asList(new Argument<?>[] { stringArgument });
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { stringArgument }));
         List<String> values = Arrays.asList(new String[] { "not-a-string" });
 
         for (String value : values)
@@ -142,7 +156,7 @@ public class StringArgumentTest
         try
         {
             Argument<String> stringArgument = new StringArgument("s", "string-argument", "String argument", true);
-            List<Argument<?>> arguments = Arrays.asList(new Argument<?>[] { stringArgument });
+            ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { stringArgument }));
 
             String[] args = new String[] { "not-an-argument" };
             CommandLine commandLine = new CommandLine(args);
@@ -160,7 +174,7 @@ public class StringArgumentTest
         throws CommandLineParseException
     {
         Argument<String> stringArgument = new StringArgument("s", "string-argument", "String argument", false);
-        List<Argument<?>> arguments = Arrays.asList(new Argument<?>[] { stringArgument });
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { stringArgument }));
 
         String[] args = new String[] { "not-an-argument" };
         CommandLine commandLine = new CommandLine(args);

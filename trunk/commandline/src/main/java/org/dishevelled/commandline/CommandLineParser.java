@@ -23,8 +23,6 @@
 */
 package org.dishevelled.commandline;
 
-import java.util.List;
-
 /**
  * Command line parser.
  *
@@ -51,7 +49,7 @@ public final class CommandLineParser
      * @param arguments list of arguments, must not be null
      * @throws CommandLineParseException if an error occurs
      */
-    public static void parse(final CommandLine commandLine, final List<Argument<?>> arguments)
+    public static void parse(final CommandLine commandLine, final ArgumentList arguments)
         throws CommandLineParseException
     {
         if (commandLine == null)

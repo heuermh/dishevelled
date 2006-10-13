@@ -23,6 +23,7 @@
 */
 package org.dishevelled.commandline.argument;
 
+import java.util.Set;
 import java.util.List;
 import java.util.Arrays;
 
@@ -35,33 +36,33 @@ import org.dishevelled.commandline.CommandLineParser;
 import org.dishevelled.commandline.CommandLineParseException;
 
 /**
- * Unit test for LongArgument.
+ * Unit test for LongSetArgument.
  *
  * @author  Michael Heuer
- * @version $Revision$ $Date$
+ * @version $Revision: 1.2 $ $Date: 2006/01/02 23:16:28 $
  */
-public class LongArgumentTest
+public class LongSetArgumentTest
     extends TestCase
 {
 
-    public void testLongArgument()
+    public void testLongSetArgument()
     {
-        LongArgument la = new LongArgument("l", "long", "Long argument", true);
-        assertNotNull("la not null", la);
-        assertEquals("la shortName == l", "l", la.getShortName());
-        assertEquals("la longName == long", "long", la.getLongName());
-        assertEquals("la description == Long argument", "Long argument", la.getDescription());
-        assertTrue("la isRequired", la.isRequired());
-        assertFalse("la wasFound == false", la.wasFound());
-        assertEquals("la value == null", null, la.getValue());
+        LongSetArgument lsa = new LongSetArgument("l", "long-set", "Long set argument", true);
+        assertNotNull("lsa not null", lsa);
+        assertEquals("lsa shortName == l", "l", lsa.getShortName());
+        assertEquals("lsa longName == long-set", "long-set", lsa.getLongName());
+        assertEquals("lsa description == Long set argument", "Long set argument", lsa.getDescription());
+        assertTrue("lsa isRequired", lsa.isRequired());
+        assertFalse("lsa wasFound == false", lsa.wasFound());
+        assertEquals("lsa value == null", null, lsa.getValue());
     }
 
     public void testValidArgumentShort()
         throws CommandLineParseException
     {
-        Argument<Long> longArgument = new LongArgument("l", "long-argument", "Long argument", true);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { longArgument }));
-        List<String> values = Arrays.asList(new String[] { "1" });
+        Argument<Set<Long>> longSetArgument = new LongSetArgument("l", "long-set", "Long set argument", true);
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { longSetArgument }));
+        List<String> values = Arrays.asList(new String[] { "1", "-1", "1,2", "1, 2", " 1,2 " });
 
         for (String value : values)
         {
@@ -69,31 +70,35 @@ public class LongArgumentTest
             CommandLine commandLine = new CommandLine(args);
             CommandLineParser.parse(commandLine, arguments);
 
-            assertNotNull("-l" + value + " not null", longArgument.getValue());
+            Set<Long> set = longSetArgument.getValue();
+            assertNotNull("-l set not null", set);
+            assertFalse("-l set not empty", set.isEmpty());
         }
     }
 
     public void testValidArgumentLong()
         throws CommandLineParseException
     {
-        Argument<Long> longArgument = new LongArgument("l", "long-argument", "Long argument", true);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { longArgument }));
-        List<String> values = Arrays.asList(new String[] { "1" });
+        Argument<Set<Long>> longSetArgument = new LongSetArgument("l", "long-set", "Long set argument", true);
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { longSetArgument }));
+        List<String> values = Arrays.asList(new String[] { "1", "-1", "1,2", "1, 2", " 1,2 " });
 
         for (String value : values)
         {
-            String[] args = new String[] { "--long-argument", value };
+            String[] args = new String[] { "--long-set", value };
             CommandLine commandLine = new CommandLine(args);
             CommandLineParser.parse(commandLine, arguments);
 
-            assertNotNull("--long-argument " + value + " not null", longArgument.getValue());
+            Set<Long> set = longSetArgument.getValue();
+            assertNotNull("--long-set set not null", set);
+            assertFalse("--long-set set not empty", set.isEmpty());
         }
     }
 
     public void testInvalidArgumentShort()
     {
-        Argument<Long> longArgument = new LongArgument("l", "long-argument", "Long argument", true);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { longArgument }));
+        Argument<Set<Long>> longSetArgument = new LongSetArgument("l", "long-set", "Long set argument", true);
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { longSetArgument }));
         List<String> values = Arrays.asList(new String[] { "not-a-long" });
 
         for (String value : values)
@@ -115,19 +120,19 @@ public class LongArgumentTest
 
     public void testInvalidArgumentLong()
     {
-        Argument<Long> longArgument = new LongArgument("l", "long-argument", "Long argument", true);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { longArgument }));
+        Argument<Set<Long>> longSetArgument = new LongSetArgument("l", "long-set", "Long set argument", true);
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { longSetArgument }));
         List<String> values = Arrays.asList(new String[] { "not-a-long" });
 
         for (String value : values)
         {
             try
             {
-                String[] args = new String[] { "--long-argument", value };
+                String[] args = new String[] { "--long-set", value };
                 CommandLine commandLine = new CommandLine(args);
                 CommandLineParser.parse(commandLine, arguments);
 
-                fail("--long-argument " + value + " expected CommandLineParseException");
+                fail("--long-set " + value + " expected CommandLineParseException");
             }
             catch (CommandLineParseException e)
             {
@@ -140,8 +145,8 @@ public class LongArgumentTest
     {
         try
         {
-            Argument<Long> longArgument = new LongArgument("l", "long-argument", "Long argument", true);
-            ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { longArgument }));
+            Argument<Set<Long>> longSetArgument = new LongSetArgument("l", "long-set", "Long set argument", true);
+            ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { longSetArgument }));
 
             String[] args = new String[] { "not-an-argument", "not-a-long" };
             CommandLine commandLine = new CommandLine(args);
@@ -158,15 +163,15 @@ public class LongArgumentTest
     public void testNotRequiredArgument()
         throws CommandLineParseException
     {
-        Argument<Long> longArgument = new LongArgument("l", "long-argument", "Long argument", false);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { longArgument }));
+        Argument<Set<Long>> longSetArgument = new LongSetArgument("l", "long-set", "Long set argument", false);
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { longSetArgument }));
 
         String[] args = new String[] { "not-an-argument", "not-a-long" };
         CommandLine commandLine = new CommandLine(args);
         CommandLineParser.parse(commandLine, arguments);
 
-        assertFalse("longArgument isRequired == false", longArgument.isRequired());
-        assertFalse("longArgument wasFound == false", longArgument.wasFound());
-        assertEquals("longArgument value == null", null, longArgument.getValue());
+        assertFalse("longSetArgument isRequired == false", longSetArgument.isRequired());
+        assertFalse("longSetArgument wasFound == false", longSetArgument.wasFound());
+        assertEquals("longSetArgument value == null", null, longSetArgument.getValue());
     }
 }

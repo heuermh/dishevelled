@@ -29,6 +29,7 @@ import java.util.Arrays;
 import junit.framework.TestCase;
 
 import org.dishevelled.commandline.Argument;
+import org.dishevelled.commandline.ArgumentList;
 import org.dishevelled.commandline.CommandLine;
 import org.dishevelled.commandline.CommandLineParser;
 import org.dishevelled.commandline.CommandLineParseException;
@@ -59,7 +60,7 @@ public class CharacterArgumentTest
         throws CommandLineParseException
     {
         Argument<Character> characterArgument = new CharacterArgument("c", "character-argument", "Character argument", true);
-        List<Argument<?>> arguments = Arrays.asList(new Argument<?>[] { characterArgument });
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { characterArgument }));
         List<String> values = Arrays.asList(new String[] { "a", "b", "c", "1" });
 
         for (String value : values)
@@ -76,7 +77,7 @@ public class CharacterArgumentTest
         throws CommandLineParseException
     {
         Argument<Character> characterArgument = new CharacterArgument("c", "character-argument", "Character argument", true);
-        List<Argument<?>> arguments = Arrays.asList(new Argument<?>[] { characterArgument });
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { characterArgument }));
         List<String> values = Arrays.asList(new String[] { "a", "b", "c", "1" });
 
         for (String value : values)
@@ -92,7 +93,7 @@ public class CharacterArgumentTest
     public void testInvalidArgumentShort()
     {
         Argument<Character> characterArgument = new CharacterArgument("c", "character-argument", "Character argument", true);
-        List<Argument<?>> arguments = Arrays.asList(new Argument<?>[] { characterArgument });
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { characterArgument }));
         List<String> values = Arrays.asList(new String[] { "not-a-character", " b", "c " });
 
         for (String value : values)
@@ -115,7 +116,7 @@ public class CharacterArgumentTest
     public void testInvalidArgumentLong()
     {
         Argument<Character> characterArgument = new CharacterArgument("c", "character-argument", "Character argument", true);
-        List<Argument<?>> arguments = Arrays.asList(new Argument<?>[] { characterArgument });
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { characterArgument }));
         List<String> values = Arrays.asList(new String[] { "not-a-character", " b", "c " });
 
         for (String value : values)
@@ -140,7 +141,7 @@ public class CharacterArgumentTest
         try
         {
             Argument<Character> characterArgument = new CharacterArgument("c", "character-argument", "Character argument", true);
-            List<Argument<?>> arguments = Arrays.asList(new Argument<?>[] { characterArgument });
+            ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { characterArgument }));
 
             String[] args = new String[] { "not-an-argument", "not-a-character" };
             CommandLine commandLine = new CommandLine(args);
@@ -158,7 +159,7 @@ public class CharacterArgumentTest
         throws CommandLineParseException
     {
         Argument<Character> characterArgument = new CharacterArgument("c", "character-argument", "Character argument", false);
-        List<Argument<?>> arguments = Arrays.asList(new Argument<?>[] { characterArgument });
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { characterArgument }));
 
         String[] args = new String[] { "not-an-argument", "not-a-character" };
         CommandLine commandLine = new CommandLine(args);

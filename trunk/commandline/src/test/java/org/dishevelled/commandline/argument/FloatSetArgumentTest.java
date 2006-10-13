@@ -23,8 +23,7 @@
 */
 package org.dishevelled.commandline.argument;
 
-import java.io.File;
-
+import java.util.Set;
 import java.util.List;
 import java.util.Arrays;
 
@@ -37,33 +36,33 @@ import org.dishevelled.commandline.CommandLineParser;
 import org.dishevelled.commandline.CommandLineParseException;
 
 /**
- * Unit test for FileArgument.
+ * Unit test for FloatSetArgument.
  *
  * @author  Michael Heuer
- * @version $Revision$ $Date$
+ * @version $Revision: 1.2 $ $Date: 2006/01/02 23:16:28 $
  */
-public class FileArgumentTest
+public class FloatSetArgumentTest
     extends TestCase
 {
 
-    public void testFileArgument()
+    public void testFloatSetArgument()
     {
-        FileArgument fa = new FileArgument("f", "file", "File argument", true);
-        assertNotNull("fa not null", fa);
-        assertEquals("fa shortName == f", "f", fa.getShortName());
-        assertEquals("fa longName == file", "file", fa.getLongName());
-        assertEquals("fa description == File argument", "File argument", fa.getDescription());
-        assertTrue("fa isRequired", fa.isRequired());
-        assertFalse("fa wasFound == false", fa.wasFound());
-        assertEquals("fa value == null", null, fa.getValue());
+        FloatSetArgument fsa = new FloatSetArgument("f", "float-set", "Float set argument", true);
+        assertNotNull("fsa not null", fsa);
+        assertEquals("fsa shortName == f", "f", fsa.getShortName());
+        assertEquals("fsa longName == float-set", "float-set", fsa.getLongName());
+        assertEquals("fsa description == Float set argument", "Float set argument", fsa.getDescription());
+        assertTrue("fsa isRequired", fsa.isRequired());
+        assertFalse("fsa wasFound == false", fsa.wasFound());
+        assertEquals("fsa value == null", null, fsa.getValue());
     }
 
     public void testValidArgumentShort()
         throws CommandLineParseException
     {
-        Argument<File> fileArgument = new FileArgument("f", "file-argument", "File argument", true);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { fileArgument }));
-        List<String> values = Arrays.asList(new String[] { "foo" });
+        Argument<Set<Float>> floatSetArgument = new FloatSetArgument("f", "float-set", "Float set argument", true);
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { floatSetArgument }));
+        List<String> values = Arrays.asList(new String[] { "1", "-1", "1.0", "-1.0", "1.0f", "1,2", "1, 2", " 1,2 " });
 
         for (String value : values)
         {
@@ -71,35 +70,36 @@ public class FileArgumentTest
             CommandLine commandLine = new CommandLine(args);
             CommandLineParser.parse(commandLine, arguments);
 
-            assertTrue("fileArgument wasFound == true", fileArgument.wasFound());
-            assertNotNull("-d not null", fileArgument.getValue());
+            Set<Float> set = floatSetArgument.getValue();
+            assertNotNull("-f set not null", set);
+            assertFalse("-f set not empty", set.isEmpty());
         }
     }
 
     public void testValidArgumentLong()
         throws CommandLineParseException
     {
-        Argument<File> fileArgument = new FileArgument("f", "file-argument", "File argument", true);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { fileArgument }));
-        List<String> values = Arrays.asList(new String[] { "foo" });
+        Argument<Set<Float>> floatSetArgument = new FloatSetArgument("f", "float-set", "Float set argument", true);
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { floatSetArgument }));
+        List<String> values = Arrays.asList(new String[] { "1", "-1", "1.0", "-1.0", "1.0f", "1,2", "1, 2", " 1,2 " });
 
         for (String value : values)
         {
-            String[] args = new String[] { "--file-argument", value };
+            String[] args = new String[] { "--float-set", value };
             CommandLine commandLine = new CommandLine(args);
             CommandLineParser.parse(commandLine, arguments);
 
-            assertTrue("fileArgument wasFound == true", fileArgument.wasFound());
-            assertNotNull("--file-argument " + value + " not null", fileArgument.getValue());
+            Set<Float> set = floatSetArgument.getValue();
+            assertNotNull("--float-set set not null", set);
+            assertFalse("--float-set set not empty", set.isEmpty());
         }
     }
 
-    /*
     public void testInvalidArgumentShort()
     {
-        Argument<File> fileArgument = new FileArgument("f", "file-argument", "File argument", true);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { fileArgument }));
-        List<String> values = Arrays.asList(new String[] { ":" });
+        Argument<Set<Float>> floatSetArgument = new FloatSetArgument("f", "float-set", "Float set argument", true);
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { floatSetArgument }));
+        List<String> values = Arrays.asList(new String[] { "not-a-float" });
 
         for (String value : values)
         {
@@ -120,19 +120,19 @@ public class FileArgumentTest
 
     public void testInvalidArgumentLong()
     {
-        Argument<File> fileArgument = new FileArgument("f", "file-argument", "File argument", true);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { fileArgument }));
-        List<String> values = Arrays.asList(new String[] { ":" });
+        Argument<Set<Float>> floatSetArgument = new FloatSetArgument("f", "float-set", "Float set argument", true);
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { floatSetArgument }));
+        List<String> values = Arrays.asList(new String[] { "not-a-float" });
 
         for (String value : values)
         {
             try
             {
-                String[] args = new String[] { "--file-argument", value };
+                String[] args = new String[] { "--float-set", value };
                 CommandLine commandLine = new CommandLine(args);
                 CommandLineParser.parse(commandLine, arguments);
 
-                fail("--file-argument " + value + " expected CommandLineParseException");
+                fail("--float-set " + value + " expected CommandLineParseException");
             }
             catch (CommandLineParseException e)
             {
@@ -140,16 +140,15 @@ public class FileArgumentTest
             }
         }
     }
-    */
 
     public void testRequiredArgument()
     {
         try
         {
-            Argument<File> fileArgument = new FileArgument("f", "file-argument", "File argument", true);
-            ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { fileArgument }));
+            Argument<Set<Float>> floatSetArgument = new FloatSetArgument("f", "float-set", "Float set argument", true);
+            ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { floatSetArgument }));
 
-            String[] args = new String[] { "not-an-argument" };
+            String[] args = new String[] { "not-an-argument", "not-a-float" };
             CommandLine commandLine = new CommandLine(args);
             CommandLineParser.parse(commandLine, arguments);
 
@@ -164,15 +163,15 @@ public class FileArgumentTest
     public void testNotRequiredArgument()
         throws CommandLineParseException
     {
-        Argument<File> fileArgument = new FileArgument("f", "file-argument", "File argument", false);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { fileArgument }));
+        Argument<Set<Float>> floatSetArgument = new FloatSetArgument("f", "float-set", "Float set argument", false);
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { floatSetArgument }));
 
-        String[] args = new String[] { "not-an-argument" };
+        String[] args = new String[] { "not-an-argument", "not-a-float" };
         CommandLine commandLine = new CommandLine(args);
         CommandLineParser.parse(commandLine, arguments);
 
-        assertFalse("fileArgument isRequired == false", fileArgument.isRequired());
-        assertFalse("fileArgument wasFound == false", fileArgument.wasFound());
-        assertEquals("fileArgument value == null", null, fileArgument.getValue());
+        assertFalse("floatSetArgument isRequired == false", floatSetArgument.isRequired());
+        assertFalse("floatSetArgument wasFound == false", floatSetArgument.wasFound());
+        assertEquals("floatSetArgument value == null", null, floatSetArgument.getValue());
     }
 }

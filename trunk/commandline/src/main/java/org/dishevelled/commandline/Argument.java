@@ -26,6 +26,7 @@ package org.dishevelled.commandline;
 /**
  * A typed argument.
  *
+ * @param <E> argument type
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */

@@ -64,7 +64,7 @@ public final class Switch
 
 
     /** @see Argument */
-    public final void visit(final String current, final CommandLine commandLine)
+    public void visit(final String current, final CommandLine commandLine)
         throws Exception
     {
         if (("-" + getShortName()).equals(current) || ("--" + getLongName()).equals(current))
@@ -75,37 +75,37 @@ public final class Switch
 
 
     /** @see Argument */
-    public final String getShortName()
+    public String getShortName()
     {
         return shortName;
     }
 
     /** @see Argument */
-    public final String getLongName()
+    public String getLongName()
     {
         return longName;
     }
 
     /** @see Argument */
-    public final String getDescription()
+    public String getDescription()
     {
         return description;
     }
 
     /** @see Argument */
-    public final boolean isRequired()
+    public boolean isRequired()
     {
         return false;
     }
 
     /** @see Argument */
-    public final boolean wasFound()
+    public boolean wasFound()
     {
         return found;
     }
 
     /** @see Argument */
-    public final Boolean getValue()
+    public Boolean getValue()
     {
         return Boolean.valueOf(found);
     }

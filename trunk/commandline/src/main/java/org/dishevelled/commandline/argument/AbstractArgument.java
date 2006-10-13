@@ -29,6 +29,7 @@ import org.dishevelled.commandline.CommandLine;
 /**
  * Abstract implementation of Argument.
  *
+ * @param <E> argument type
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
@@ -74,6 +75,7 @@ public abstract class AbstractArgument<E>
         this.found = false;
     }
 
+
     /** @see Argument */
     public final void visit(final String current, final CommandLine commandLine)
         throws Exception
@@ -100,7 +102,7 @@ public abstract class AbstractArgument<E>
                     }
                     ignore = commandLine.next();
                 }
-                
+
                 ignore = commandLine.next();
             }
         }

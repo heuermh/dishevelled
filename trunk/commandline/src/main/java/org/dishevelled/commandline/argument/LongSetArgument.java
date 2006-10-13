@@ -1,6 +1,6 @@
 /*
 
-     dsh-commandline  Simple command line parser based on typed arguments.
+    dsh-commandline  Simple command line parser based on typed arguments.
     Copyright (c) 2004-2006 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
@@ -26,6 +26,8 @@ package org.dishevelled.commandline.argument;
 import java.util.Set;
 import java.util.HashSet;
 import java.util.StringTokenizer;
+
+import org.apache.commons.lang.StringUtils;
 
 /**
  * A long set argument.
@@ -62,7 +64,7 @@ public final class LongSetArgument
         StringTokenizer st = new StringTokenizer(s, ",");
         while (st.hasMoreTokens())
         {
-            String token = st.nextToken();
+            String token = StringUtils.stripToEmpty(st.nextToken());
             Long l = Long.valueOf(token);
             set.add(l);
         }

@@ -30,6 +30,7 @@ import java.util.Arrays;
 import junit.framework.TestCase;
 
 import org.dishevelled.commandline.Argument;
+import org.dishevelled.commandline.ArgumentList;
 import org.dishevelled.commandline.CommandLine;
 import org.dishevelled.commandline.CommandLineParser;
 import org.dishevelled.commandline.CommandLineParseException;
@@ -60,10 +61,11 @@ public class BooleanSetArgumentTest
         throws CommandLineParseException
     {
         Argument<Set<Boolean>> booleanSetArgument = new BooleanSetArgument("b", "boolean-set", "Boolean set argument", true);
-        List<Argument<?>> arguments = Arrays.asList(new Argument<?>[] { booleanSetArgument });
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { booleanSetArgument }));
         List<String> values = Arrays.asList(new String[] { "true", "TRUE", "TRue", "t", "T", "1",
                                                            "false", "FALSE", "FALse", "f", "F", "0",
                                                            "true,true", "true,false", "false,true", "false,false",
+                                                           "true, true", "true, false", "false, true", "false, false",
                                                            "true,", "false,", ",true", ",false", "true,,false",
                                                            "true,TRUE,TRue,t,T,1", "false,FALSE,FALse,f,F,0",
                                                            "true,TRUE,TRue,t,T,1,false,FALSE,FALse,f,F,0" });
@@ -85,10 +87,11 @@ public class BooleanSetArgumentTest
         throws CommandLineParseException
     {
         Argument<Set<Boolean>> booleanSetArgument = new BooleanSetArgument("b", "boolean-set", "Boolean set argument", true);
-        List<Argument<?>> arguments = Arrays.asList(new Argument<?>[] { booleanSetArgument });
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { booleanSetArgument }));
         List<String> values = Arrays.asList(new String[] { "true", "TRUE", "TRue", "t", "T", "1",
                                                            "false", "FALSE", "FALse", "f", "F", "0",
                                                            "true,true", "true,false", "false,true", "false,false",
+                                                           "true, true", "true, false", "false, true", "false, false",
                                                            "true,", "false,", ",true", ",false", "true,,false",
                                                            "true,TRUE,TRue,t,T,1", "false,FALSE,FALse,f,F,0",
                                                            "true,TRUE,TRue,t,T,1,false,FALSE,FALse,f,F,0" });
@@ -109,8 +112,8 @@ public class BooleanSetArgumentTest
     public void testInvalidArgumentShort()
     {
         Argument<Set<Boolean>> booleanSetArgument = new BooleanSetArgument("b", "boolean-set", "Boolean set argument", true);
-        List<Argument<?>> arguments = Arrays.asList(new Argument<?>[] { booleanSetArgument });
-        List<String> values = Arrays.asList(new String[] { "not-a-boolean", "9", " true", "false " });
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { booleanSetArgument }));
+        List<String> values = Arrays.asList(new String[] { "not-a-boolean", "9", "!true", "false!" });
 
         for (String value : values)
         {
@@ -132,8 +135,8 @@ public class BooleanSetArgumentTest
     public void testInvalidArgumentLong()
     {
         Argument<Set<Boolean>> booleanSetArgument = new BooleanSetArgument("b", "boolean-set", "Boolean set argument", true);
-        List<Argument<?>> arguments = Arrays.asList(new Argument<?>[] { booleanSetArgument });
-        List<String> values = Arrays.asList(new String[] { "not-a-boolean", "9", " true", "false " });
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { booleanSetArgument }));
+        List<String> values = Arrays.asList(new String[] { "not-a-boolean", "9", "!true", "false!" });
 
         for (String value : values)
         {
@@ -157,7 +160,7 @@ public class BooleanSetArgumentTest
         try
         {
             Argument<Set<Boolean>> booleanSetArgument = new BooleanSetArgument("b", "boolean-set", "Boolean set argument", true);
-            List<Argument<?>> arguments = Arrays.asList(new Argument<?>[] { booleanSetArgument });
+            ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { booleanSetArgument }));
 
             String[] args = new String[] { "not-an-argument", "not-a-boolean" };
             CommandLine commandLine = new CommandLine(args);
@@ -175,7 +178,7 @@ public class BooleanSetArgumentTest
         throws CommandLineParseException
     {
         Argument<Set<Boolean>> booleanSetArgument = new BooleanSetArgument("b", "boolean-set", "Boolean set argument", false);
-        List<Argument<?>> arguments = Arrays.asList(new Argument<?>[] { booleanSetArgument });
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { booleanSetArgument }));
 
         String[] args = new String[] { "not-an-argument", "not-a-boolean" };
         CommandLine commandLine = new CommandLine(args);

@@ -23,6 +23,7 @@
 */
 package org.dishevelled.commandline.argument;
 
+import java.util.Set;
 import java.util.List;
 import java.util.Arrays;
 
@@ -35,33 +36,33 @@ import org.dishevelled.commandline.CommandLineParser;
 import org.dishevelled.commandline.CommandLineParseException;
 
 /**
- * Unit test for DoubleArgument.
+ * Unit test for DoubleSetArgument.
  *
  * @author  Michael Heuer
- * @version $Revision$ $Date$
+ * @version $Revision: 1.2 $ $Date: 2006/01/02 23:16:28 $
  */
-public class DoubleArgumentTest
+public class DoubleSetArgumentTest
     extends TestCase
 {
 
-    public void testDoubleArgument()
+    public void testDoubleSetArgument()
     {
-        DoubleArgument da = new DoubleArgument("d", "double", "Double argument", true);
-        assertNotNull("da not null", da);
-        assertEquals("da shortName == d", "d", da.getShortName());
-        assertEquals("da longName == double", "double", da.getLongName());
-        assertEquals("da description == Double argument", "Double argument", da.getDescription());
-        assertTrue("da isRequired", da.isRequired());
-        assertFalse("da wasFound == false", da.wasFound());
-        assertEquals("da value == null", null, da.getValue());
+        DoubleSetArgument dsa = new DoubleSetArgument("d", "double-set", "Double set argument", true);
+        assertNotNull("dsa not null", dsa);
+        assertEquals("dsa shortName == d", "d", dsa.getShortName());
+        assertEquals("dsa longName == double-set", "double-set", dsa.getLongName());
+        assertEquals("dsa description == Double set argument", "Double set argument", dsa.getDescription());
+        assertTrue("dsa isRequired", dsa.isRequired());
+        assertFalse("dsa wasFound == false", dsa.wasFound());
+        assertEquals("dsa value == null", null, dsa.getValue());
     }
 
     public void testValidArgumentShort()
         throws CommandLineParseException
     {
-        Argument<Double> doubleArgument = new DoubleArgument("d", "double-argument", "Double argument", true);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { doubleArgument }));
-        List<String> values = Arrays.asList(new String[] { "1.0d" });
+        Argument<Set<Double>> doubleSetArgument = new DoubleSetArgument("d", "double-set", "Double set argument", true);
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { doubleSetArgument }));
+        List<String> values = Arrays.asList(new String[] { "1", "-1", "1.0", "-1.0", "1.0d", "1,2", "1, 2", " 1,2 " });
 
         for (String value : values)
         {
@@ -69,31 +70,35 @@ public class DoubleArgumentTest
             CommandLine commandLine = new CommandLine(args);
             CommandLineParser.parse(commandLine, arguments);
 
-            assertNotNull("-d not null", doubleArgument.getValue());
+            Set<Double> set = doubleSetArgument.getValue();
+            assertNotNull("-d set not null", set);
+            assertFalse("-d set not empty", set.isEmpty());
         }
     }
 
     public void testValidArgumentLong()
         throws CommandLineParseException
     {
-        Argument<Double> doubleArgument = new DoubleArgument("d", "double-argument", "Double argument", true);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { doubleArgument }));
-        List<String> values = Arrays.asList(new String[] { "1.0d" });
+        Argument<Set<Double>> doubleSetArgument = new DoubleSetArgument("d", "double-set", "Double set argument", true);
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { doubleSetArgument }));
+        List<String> values = Arrays.asList(new String[] { "1", "-1", "1.0", "-1.0", "1.0d", "1,2", "1, 2", " 1,2 " });
 
         for (String value : values)
         {
-            String[] args = new String[] { "--double-argument", value };
+            String[] args = new String[] { "--double-set", value };
             CommandLine commandLine = new CommandLine(args);
             CommandLineParser.parse(commandLine, arguments);
 
-            assertNotNull("--double-argument " + value + " not null", doubleArgument.getValue());
+            Set<Double> set = doubleSetArgument.getValue();
+            assertNotNull("--double-set set not null", set);
+            assertFalse("--double-set set not empty", set.isEmpty());
         }
     }
 
     public void testInvalidArgumentShort()
     {
-        Argument<Double> doubleArgument = new DoubleArgument("d", "double-argument", "Double argument", true);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { doubleArgument }));
+        Argument<Set<Double>> doubleSetArgument = new DoubleSetArgument("d", "double-set", "Double set argument", true);
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { doubleSetArgument }));
         List<String> values = Arrays.asList(new String[] { "not-a-double" });
 
         for (String value : values)
@@ -115,19 +120,19 @@ public class DoubleArgumentTest
 
     public void testInvalidArgumentLong()
     {
-        Argument<Double> doubleArgument = new DoubleArgument("d", "double-argument", "Double argument", true);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { doubleArgument }));
+        Argument<Set<Double>> doubleSetArgument = new DoubleSetArgument("d", "double-set", "Double set argument", true);
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { doubleSetArgument }));
         List<String> values = Arrays.asList(new String[] { "not-a-double" });
 
         for (String value : values)
         {
             try
             {
-                String[] args = new String[] { "--double-argument", value };
+                String[] args = new String[] { "--double-set", value };
                 CommandLine commandLine = new CommandLine(args);
                 CommandLineParser.parse(commandLine, arguments);
 
-                fail("--double-argument " + value + " expected CommandLineParseException");
+                fail("--double-set " + value + " expected CommandLineParseException");
             }
             catch (CommandLineParseException e)
             {
@@ -140,8 +145,8 @@ public class DoubleArgumentTest
     {
         try
         {
-            Argument<Double> doubleArgument = new DoubleArgument("d", "double-argument", "Double argument", true);
-            ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { doubleArgument }));
+            Argument<Set<Double>> doubleSetArgument = new DoubleSetArgument("d", "double-set", "Double set argument", true);
+            ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { doubleSetArgument }));
 
             String[] args = new String[] { "not-an-argument", "not-a-double" };
             CommandLine commandLine = new CommandLine(args);
@@ -158,15 +163,15 @@ public class DoubleArgumentTest
     public void testNotRequiredArgument()
         throws CommandLineParseException
     {
-        Argument<Double> doubleArgument = new DoubleArgument("d", "double-argument", "Double argument", false);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { doubleArgument }));
+        Argument<Set<Double>> doubleSetArgument = new DoubleSetArgument("d", "double-set", "Double set argument", false);
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { doubleSetArgument }));
 
         String[] args = new String[] { "not-an-argument", "not-a-double" };
         CommandLine commandLine = new CommandLine(args);
         CommandLineParser.parse(commandLine, arguments);
 
-        assertFalse("doubleArgument isRequired == false", doubleArgument.isRequired());
-        assertFalse("doubleArgument wasFound == false", doubleArgument.wasFound());
-        assertEquals("doubleArgument value == null", null, doubleArgument.getValue());
+        assertFalse("doubleSetArgument isRequired == false", doubleSetArgument.isRequired());
+        assertFalse("doubleSetArgument wasFound == false", doubleSetArgument.wasFound());
+        assertEquals("doubleSetArgument value == null", null, doubleSetArgument.getValue());
     }
 }

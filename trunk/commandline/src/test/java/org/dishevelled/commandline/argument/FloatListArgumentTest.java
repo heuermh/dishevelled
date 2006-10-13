@@ -35,33 +35,33 @@ import org.dishevelled.commandline.CommandLineParser;
 import org.dishevelled.commandline.CommandLineParseException;
 
 /**
- * Unit test for FloatArgument.
+ * Unit test for FloatListArgument.
  *
  * @author  Michael Heuer
- * @version $Revision$ $Date$
+ * @version $Revision: 1.2 $ $Date: 2006/01/02 23:16:28 $
  */
-public class FloatArgumentTest
+public class FloatListArgumentTest
     extends TestCase
 {
 
-    public void testFloatArgument()
+    public void testFloatListArgument()
     {
-        FloatArgument fa = new FloatArgument("f", "float", "Float argument", true);
-        assertNotNull("fa not null", fa);
-        assertEquals("fa shortName == f", "f", fa.getShortName());
-        assertEquals("fa longName == float", "float", fa.getLongName());
-        assertEquals("fa description == Float argument", "Float argument", fa.getDescription());
-        assertTrue("fa isRequired", fa.isRequired());
-        assertFalse("fa wasFound == false", fa.wasFound());
-        assertEquals("fa value == null", null, fa.getValue());
+        FloatListArgument fla = new FloatListArgument("f", "float-list", "Float list argument", true);
+        assertNotNull("fla not null", fla);
+        assertEquals("fla shortName == f", "f", fla.getShortName());
+        assertEquals("fla longName == float-list", "float-list", fla.getLongName());
+        assertEquals("fla description == Float list argument", "Float list argument", fla.getDescription());
+        assertTrue("fla isRequired", fla.isRequired());
+        assertFalse("fla wasFound == false", fla.wasFound());
+        assertEquals("fla value == null", null, fla.getValue());
     }
 
     public void testValidArgumentShort()
         throws CommandLineParseException
     {
-        Argument<Float> floatArgument = new FloatArgument("f", "float-argument", "Float argument", true);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { floatArgument }));
-        List<String> values = Arrays.asList(new String[] { "1.0f" });
+        Argument<List<Float>> floatListArgument = new FloatListArgument("f", "float-list", "Float list argument", true);
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { floatListArgument }));
+        List<String> values = Arrays.asList(new String[] { "1", "-1", "1.0", "-1.0", "1.0f", "1,2", "1, 2", " 1,2 " });
 
         for (String value : values)
         {
@@ -69,33 +69,58 @@ public class FloatArgumentTest
             CommandLine commandLine = new CommandLine(args);
             CommandLineParser.parse(commandLine, arguments);
 
-            assertTrue("floatArgument wasFound == true", floatArgument.wasFound());
-            assertNotNull("-f " + value + " not null", floatArgument.getValue());
+            List<Float> list = floatListArgument.getValue();
+            assertNotNull("-f list not null", list);
+            assertFalse("-f list not empty", list.isEmpty());
         }
     }
 
     public void testValidArgumentLong()
         throws CommandLineParseException
     {
-        Argument<Float> floatArgument = new FloatArgument("f", "float-argument", "Float argument", true);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { floatArgument }));
-        List<String> values = Arrays.asList(new String[] { "1.0f" });
+        Argument<List<Float>> floatListArgument = new FloatListArgument("f", "float-list", "Float list argument", true);
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { floatListArgument }));
+        List<String> values = Arrays.asList(new String[] { "1", "-1", "1.0", "-1.0", "1.0f", "1,2", "1, 2", " 1,2 " });
 
         for (String value : values)
         {
-            String[] args = new String[] { "--float-argument", value };
+            String[] args = new String[] { "--float-list", value };
             CommandLine commandLine = new CommandLine(args);
             CommandLineParser.parse(commandLine, arguments);
 
-            assertTrue("floatArgument wasFound == true", floatArgument.wasFound());
-            assertNotNull("--float-argument " + value + " not null", floatArgument.getValue());
+            List<Float> list = floatListArgument.getValue();
+            assertNotNull("--float-list list not null", list);
+            assertFalse("--float-list list not empty", list.isEmpty());
+        }
+    }
+
+    public void testInvalidArgumentLong()
+    {
+        Argument<List<Float>> floatListArgument = new FloatListArgument("f", "float-list", "Float list argument", true);
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { floatListArgument }));
+        List<String> values = Arrays.asList(new String[] { "not-a-float" });
+
+        for (String value : values)
+        {
+            try
+            {
+                String[] args = new String[] { "--float-list", value };
+                CommandLine commandLine = new CommandLine(args);
+                CommandLineParser.parse(commandLine, arguments);
+
+                fail("--float-list " + value + " expected CommandLineParseException");
+            }
+            catch (CommandLineParseException e)
+            {
+                // expected
+            }
         }
     }
 
     public void testInvalidArgumentShort()
     {
-        Argument<Float> floatArgument = new FloatArgument("f", "float-argument", "Float argument", true);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { floatArgument }));
+        Argument<List<Float>> floatListArgument = new FloatListArgument("f", "float-list", "Float list argument", true);
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { floatListArgument }));
         List<String> values = Arrays.asList(new String[] { "not-a-float" });
 
         for (String value : values)
@@ -115,35 +140,12 @@ public class FloatArgumentTest
         }
     }
 
-    public void testInvalidArgumentLong()
-    {
-        Argument<Float> floatArgument = new FloatArgument("f", "float-argument", "Float argument", true);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { floatArgument }));
-        List<String> values = Arrays.asList(new String[] { "not-a-float" });
-
-        for (String value : values)
-        {
-            try
-            {
-                String[] args = new String[] { "--float-argument", value };
-                CommandLine commandLine = new CommandLine(args);
-                CommandLineParser.parse(commandLine, arguments);
-
-                fail("--float-argument " + value + " expected CommandLineParseException");
-            }
-            catch (CommandLineParseException e)
-            {
-                // expected
-            }
-        }
-    }
-
     public void testRequiredArgument()
     {
         try
         {
-            Argument<Float> floatArgument = new FloatArgument("f", "float-argument", "Float argument", true);
-            ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { floatArgument }));
+            Argument<List<Float>> floatListArgument = new FloatListArgument("f", "float-list", "Float list argument", true);
+            ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { floatListArgument }));
 
             String[] args = new String[] { "not-an-argument", "not-a-float" };
             CommandLine commandLine = new CommandLine(args);
@@ -160,15 +162,15 @@ public class FloatArgumentTest
     public void testNotRequiredArgument()
         throws CommandLineParseException
     {
-        Argument<Float> floatArgument = new FloatArgument("f", "float-argument", "Float argument", false);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { floatArgument }));
+        Argument<List<Float>> floatListArgument = new FloatListArgument("f", "float-list", "Float list argument", false);
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { floatListArgument }));
 
         String[] args = new String[] { "not-an-argument", "not-a-float" };
         CommandLine commandLine = new CommandLine(args);
         CommandLineParser.parse(commandLine, arguments);
 
-        assertFalse("floatArgument isRequired == false", floatArgument.isRequired());
-        assertFalse("floatArgument wasFound == false", floatArgument.wasFound());
-        assertEquals("floatArgument value == null", null, floatArgument.getValue());
+        assertFalse("floatListArgument isRequired == false", floatListArgument.isRequired());
+        assertFalse("floatListArgument wasFound == false", floatListArgument.wasFound());
+        assertEquals("floatListArgument value == null", null, floatListArgument.getValue());
     }
 }

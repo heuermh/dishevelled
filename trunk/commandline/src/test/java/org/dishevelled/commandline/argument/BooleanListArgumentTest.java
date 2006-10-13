@@ -29,6 +29,7 @@ import java.util.Arrays;
 import junit.framework.TestCase;
 
 import org.dishevelled.commandline.Argument;
+import org.dishevelled.commandline.ArgumentList;
 import org.dishevelled.commandline.CommandLine;
 import org.dishevelled.commandline.CommandLineParser;
 import org.dishevelled.commandline.CommandLineParseException;
@@ -59,10 +60,11 @@ public class BooleanListArgumentTest
         throws CommandLineParseException
     {
         Argument<List<Boolean>> booleanListArgument = new BooleanListArgument("b", "boolean-list", "Boolean list argument", true);
-        List<Argument<?>> arguments = Arrays.asList(new Argument<?>[] { booleanListArgument });
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { booleanListArgument }));
         List<String> values = Arrays.asList(new String[] { "true", "TRUE", "TRue", "t", "T", "1",
                                                            "false", "FALSE", "FALse", "f", "F", "0",
                                                            "true,true", "true,false", "false,true", "false,false",
+                                                           "true, true", "true, false", "false, true", "false, false",
                                                            "true,TRUE,TRue,t,T,1", "false,FALSE,FALse,f,F,0",
                                                            "true,TRUE,TRue,t,T,1,false,FALSE,FALse,f,F,0" });
 
@@ -83,10 +85,11 @@ public class BooleanListArgumentTest
         throws CommandLineParseException
     {
         Argument<List<Boolean>> booleanListArgument = new BooleanListArgument("b", "boolean-list", "Boolean list argument", true);
-        List<Argument<?>> arguments = Arrays.asList(new Argument<?>[] { booleanListArgument });
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { booleanListArgument }));
         List<String> values = Arrays.asList(new String[] { "true", "TRUE", "TRue", "t", "T", "1",
                                                            "false", "FALSE", "FALse", "f", "F", "0",
                                                            "true,true", "true,false", "false,true", "false,false",
+                                                           "true, true", "true, false", "false, true", "false, false",
                                                            "true,TRUE,TRue,t,T,1", "false,FALSE,FALse,f,F,0",
                                                            "true,TRUE,TRue,t,T,1,false,FALSE,FALse,f,F,0" });
 
@@ -106,8 +109,8 @@ public class BooleanListArgumentTest
     public void testInvalidArgumentLong()
     {
         Argument<List<Boolean>> booleanListArgument = new BooleanListArgument("b", "boolean-list", "Boolean list argument", true);
-        List<Argument<?>> arguments = Arrays.asList(new Argument<?>[] { booleanListArgument });
-        List<String> values = Arrays.asList(new String[] { "not-a-boolean", "9", " true", "false " });
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { booleanListArgument }));
+        List<String> values = Arrays.asList(new String[] { "not-a-boolean", "9", "!true", "false!" });
 
         for (String value : values)
         {
@@ -129,8 +132,8 @@ public class BooleanListArgumentTest
     public void testInvalidArgumentShort()
     {
         Argument<List<Boolean>> booleanListArgument = new BooleanListArgument("b", "boolean-list", "Boolean list argument", true);
-        List<Argument<?>> arguments = Arrays.asList(new Argument<?>[] { booleanListArgument });
-        List<String> values = Arrays.asList(new String[] { "not-a-boolean", "9", " true", "false " });
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { booleanListArgument }));
+        List<String> values = Arrays.asList(new String[] { "not-a-boolean", "9", "!true", "false!" });
 
         for (String value : values)
         {
@@ -154,7 +157,7 @@ public class BooleanListArgumentTest
         try
         {
             Argument<List<Boolean>> booleanListArgument = new BooleanListArgument("b", "boolean-list", "Boolean list argument", true);
-            List<Argument<?>> arguments = Arrays.asList(new Argument<?>[] { booleanListArgument });
+            ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { booleanListArgument }));
 
             String[] args = new String[] { "not-an-argument", "not-a-boolean" };
             CommandLine commandLine = new CommandLine(args);
@@ -172,7 +175,7 @@ public class BooleanListArgumentTest
         throws CommandLineParseException
     {
         Argument<List<Boolean>> booleanListArgument = new BooleanListArgument("b", "boolean-list", "Boolean list argument", false);
-        List<Argument<?>> arguments = Arrays.asList(new Argument<?>[] { booleanListArgument });
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { booleanListArgument }));
 
         String[] args = new String[] { "not-an-argument", "not-a-boolean" };
         CommandLine commandLine = new CommandLine(args);

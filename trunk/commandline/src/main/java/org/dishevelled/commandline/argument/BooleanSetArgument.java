@@ -27,6 +27,8 @@ import java.util.Set;
 import java.util.HashSet;
 import java.util.StringTokenizer;
 
+import org.apache.commons.lang.StringUtils;
+
 /**
  * A boolean set argument.
  *
@@ -62,7 +64,7 @@ public final class BooleanSetArgument
         StringTokenizer st = new StringTokenizer(s, ",");
         while (st.hasMoreTokens())
         {
-            String token = st.nextToken();
+            String token = StringUtils.stripToEmpty(st.nextToken());
 
             if ("true".equalsIgnoreCase(token))
             {
