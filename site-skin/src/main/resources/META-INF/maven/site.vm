@@ -38,11 +38,15 @@
 <p>
   <a href="index.html">${project.name}</a> ${project.version} ::
 #foreach ($menu in $decoration.body.menus)
+#set ($lastIndex = $menu.items.size())
 #foreach ($item in $menu.items)
 #if (!$StringUtils.isEmpty($item.href))
-  <a href="$item.href">$item.name</a> |
+  <a href="$item.href">$item.name</a>
 #else
-  $item.name |
+  $item.name
+#end
+#if ($velocityCount != $lastIndex)
+ |
 #end
 #end
 #end
