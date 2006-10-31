@@ -26,6 +26,7 @@ package org.dishevelled.timer;
 
 import java.util.Map;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.HashMap;
 import java.util.Collections;
@@ -387,8 +388,9 @@ public final class Timer
      */
     public static Map<Runnable, Timer> shuffle(final List<Runnable> codeBlocks, final int n, final Random random)
     {
-        Collections.shuffle(codeBlocks, random);
-        return loop(codeBlocks, n);
+        List<Runnable> codeBlocksCopy = new ArrayList<Runnable>(codeBlocks);
+        Collections.shuffle(codeBlocksCopy, random);
+        return loop(codeBlocksCopy, n);
     }
 
     /**
@@ -422,11 +424,12 @@ public final class Timer
                                                final int m,
                                                final Random random)
     {
-        Map<Runnable, Timer> map = new HashMap<Runnable, Timer>(codeBlocks.size());
+        List<Runnable> codeBlocksCopy = new ArrayList<Runnable>(codeBlocks);
+        Map<Runnable, Timer> map = new HashMap<Runnable, Timer>(codeBlocksCopy.size());
         for (int i = 0; i < n; i++)
         {
-            Collections.shuffle(codeBlocks, random);
-            for (Runnable codeBlock : codeBlocks)
+            Collections.shuffle(codeBlocksCopy, random);
+            for (Runnable codeBlock : codeBlocksCopy)
             {
                 if (map.containsKey(codeBlock))
                 {
