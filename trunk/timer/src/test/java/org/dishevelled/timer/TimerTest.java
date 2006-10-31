@@ -602,4 +602,35 @@ public class TimerTest
         assertTrue("t5 mean > 0.0d", t5.mean() > 0.0d);
         assertTrue("t5 standardDeviation > 0.0d", t5.standardDeviation() > 0.0d);
     }
+
+    public void testShuffleDoesNotAlterListOrder()
+    {
+        List<Runnable> codeBlocks0 = new ArrayList<Runnable>(Arrays.asList(new Runnable[] { r0, r1, r2 }));
+        Timer.shuffle(codeBlocks0, 2);
+
+        assertEquals(r0, codeBlocks0.get(0));
+        assertEquals(r1, codeBlocks0.get(1));
+        assertEquals(r2, codeBlocks0.get(2));
+
+        List<Runnable> codeBlocks1 = new ArrayList<Runnable>(Arrays.asList(new Runnable[] { r0, r1, r2 }));
+        Timer.shuffle(codeBlocks1, 2, new Random());
+
+        assertEquals(r0, codeBlocks1.get(0));
+        assertEquals(r1, codeBlocks1.get(1));
+        assertEquals(r2, codeBlocks1.get(2));
+
+        List<Runnable> codeBlocks2 = new ArrayList<Runnable>(Arrays.asList(new Runnable[] { r0, r1, r2 }));
+        Timer.shuffle(codeBlocks2, 2);
+
+        assertEquals(r0, codeBlocks2.get(0));
+        assertEquals(r1, codeBlocks2.get(1));
+        assertEquals(r2, codeBlocks2.get(2));
+
+        List<Runnable> codeBlocks3 = new ArrayList<Runnable>(Arrays.asList(new Runnable[] { r0, r1, r2 }));
+        Timer.shuffle(codeBlocks3, 2, 2, new Random());
+
+        assertEquals(r0, codeBlocks3.get(0));
+        assertEquals(r1, codeBlocks3.get(1));
+        assertEquals(r2, codeBlocks3.get(2));
+    }
 }
