@@ -51,7 +51,7 @@ package org.dishevelled.codegen;
  *   <tr><td>removeAll method</td><td>&nbsp;</td><td>&nbsp;</td><td>X</td><td>X</td><td>&nbsp;</td></tr>
  *   <tr><td>retainAll method</td><td>&nbsp;</td><td>&nbsp;</td><td>X</td><td>X</td><td>&nbsp;</td></tr>
  *   <tr><td>clear method</td><td>&nbsp;</td><td>&nbsp;</td><td>X</td><td>X</td><td>&nbsp;</td></tr>
- *   <tr><td>final methods</td><td>X</td><td>X</td><td>X</td><td>X</td><td>&nbsp;</td></tr>
+ *   <tr><td>final methods</td><td>&nbsp;</td><td>X</td><td>X</td><td>X</td><td>&nbsp;</td></tr>
  *   <tr><td>default constructor</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
  *   <tr><td>required argument only constructor</td><td>&nbsp;</td><td>X</td><td>X</td><td>X</td><td>X</td></tr>
  *   <tr><td>full argument constructor</td><td>X</td><td>X</td><td>X</td><td>X</td><td>X</td></tr>

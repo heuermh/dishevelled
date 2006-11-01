@@ -284,7 +284,7 @@ public final class ${cd.Upper}
      *
      * @return the ${r.Lower} for this ${cd.Lower}
      */
-    public final ${a.Upper} get${r.Upper}()
+    public ${a.Upper} get${r.Upper}()
     {
         return ${r.Mixed};
     }
@@ -296,7 +296,7 @@ public final class ${cd.Upper}
      *
      * @return the ${r.Lower} for this ${cd.Lower}
      */
-    public final ${a.Upper} get${r.Upper}()
+    public ${a.Upper} get${r.Upper}()
     {
         return ${r.Mixed};
     }
@@ -311,7 +311,7 @@ public final class ${cd.Upper}
      * @return an unmodifiable ${coll.InterfaceDescription} of ${r.Lower}s
      *    for this ${cd.Lower}
      */
-    public final ${coll.InterfaceName}<${a.Upper}> get${r.Upper}s()
+    public ${coll.InterfaceName}<${a.Upper}> get${r.Upper}s()
     {
         return ${r.Mixed}s;
     }
@@ -326,7 +326,7 @@ public final class ${cd.Upper}
      * @return an unmodifiable ${coll.InterfaceDescription} of ${r.Lower}s
      *    for this ${cd.Lower}
      */
-    public final ${coll.InterfaceName}<${a.Upper}> get${r.Upper}s()
+    public ${coll.InterfaceName}<${a.Upper}> get${r.Upper}s()
     {
         return ${r.Mixed}s;
     }
@@ -342,7 +342,7 @@ public final class ${cd.Upper}
      *
      * @return the ${r.Lower} for this ${cd.Lower}
      */
-    public final ${a.Upper} get${r.Upper}()
+    public ${a.Upper} get${r.Upper}()
     {
         return ${r.Mixed};
     }
@@ -354,7 +354,7 @@ public final class ${cd.Upper}
      *
      * @return the ${r.Lower} for this ${cd.Lower}
      */
-    public final ${a.Upper} get${r.Upper}()
+    public ${a.Upper} get${r.Upper}()
     {
         return ${r.Mixed};
     }
@@ -369,7 +369,7 @@ public final class ${cd.Upper}
      * @return an unmodifiable ${coll.InterfaceDescription} of ${r.Lower}s
      *    for this ${cd.Lower}
      */
-    public final ${coll.interfaceName}<${a.Upper}> get${r.Upper}s()
+    public ${coll.interfaceName}<${a.Upper}> get${r.Upper}s()
     {
         return ${r.Mixed}s;
     }
@@ -384,7 +384,7 @@ public final class ${cd.Upper}
      * @return an unmodifiable ${coll.InterfaceDescription} of ${r.Lower}s
      *    for this ${cd.Lower}
      */
-    public final ${coll.InterfaceName}<${a.Upper}> get${r.Upper}s()
+    public ${coll.InterfaceName}<${a.Upper}> get${r.Upper}s()
     {
         return ${r.Mixed}s;
     }
