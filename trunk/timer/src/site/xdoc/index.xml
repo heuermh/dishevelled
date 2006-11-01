@@ -30,13 +30,13 @@
 
 <body>
 <section name="Summary">
-
 <p>
-Provides a simple timer class with nanosecond resolution and summary
-statistics on recorded elapsed times.</p>
+dishevelled.org <b>timer</b> provides a simple timer class with nanosecond resolution and summary
+statistics on recorded elapsed times.  The timer project requires java 1.5 or later.</p>
+</section>
 
+<section name="Example">
 <p>
-For example:
 <source>
 Timer t = new Timer();
 for (int i = 0; i &lt; 100; i++) {
@@ -57,7 +57,47 @@ the summary statistics.  As a consequence <code>start()</code> and
 <code>stop()</code> can be called many number of times without
 requiring large amounts of memory.
 </p>
+</section>
 
+<section name="Benchmarks">
+<p>
+Execution time can be sensitive to various factors, such as order of execution, runtime optimization from the just-in-time compiler (JIT), and garbage collection. This library provides static methods on <a href="apidocs/org/dishevelled/timer/Timer.html">Timer</a> to help deal with these factors.
+</p>
+
+<p>
+Given a few benchmarks to run, wrap them in Runnable objects
+<source>
+Runnable r0 = new Runnable() { public void run() { ... } };
+Runnable r1 = new Runnable() { public void run() { ... } };
+Runnable r2 = new Runnable() { public void run() { ... } };
+List&lt;Runnable&gt; benchmarks = Arrays.asList(new Runnable[] { r0, r1, r2 });
+</source>
+</p>
+ 
+<p>
+Prime the JIT by running the benchmarks several times
+<source>
+Timer.prime(benchmarks, 1000);
+</source>
+</p>
+
+<p>
+Then measure the execution times of the benchmarks by running them several times in random execution order
+<source>
+Map&lt;Runnable, Timer&gt; result = Timer.shuffle(benchmarks, 100, 100);
+</source>
+</p>
+
+<p>
+Summary statistics on recorded execution times are captured by the timer returned for each Runnable benchmark
+<source>
+for (Map.Entry&lt;Runnable, Timer&gt; e : result.entrySet()) {
+  Runnable r = e.getKey();
+  Timer t = e.getValue();
+  System.out.println("runnable=" + r + " mean execution time=" + t.mean() + "ns");
+}
+</source>
+</p>
 </section>
 
 <section name="Acknowledgements">
