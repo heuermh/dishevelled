@@ -57,13 +57,13 @@ public final class InterfaceDescription
     private String description;
 
     /** Set of interfaces this interface description specializes. */
-    private Set<InterfaceDescription> specializes;
+    private final Set<InterfaceDescription> specializes;
 
     /** Set of attributes for this interface description. */
-    private Set<Attribute> attributes;
+    private final Set<Attribute> attributes;
 
     /** Set of associations for this interface description. */
-    private Set<Association> associations;
+    private final Set<Association> associations;
 
 
     /**
@@ -195,7 +195,7 @@ public final class InterfaceDescription
      *
      * @return the package name for this interface description
      */
-    public final String getPackageName()
+    public String getPackageName()
     {
         return packageName;
     }
@@ -205,7 +205,7 @@ public final class InterfaceDescription
      *
      * @return the lowercase name for this interface description
      */
-    public final String getLower()
+    public String getLower()
     {
         return lower;
     }
@@ -215,7 +215,7 @@ public final class InterfaceDescription
      *
      * @return the mixed-case name for this interface description
      */
-    public final String getMixed()
+    public String getMixed()
     {
         return mixed;
     }
@@ -225,7 +225,7 @@ public final class InterfaceDescription
      *
      * @return the uppercase name for this interface description
      */
-    public final String getUpper()
+    public String getUpper()
     {
         return upper;
     }
@@ -235,7 +235,7 @@ public final class InterfaceDescription
      *
      * @return the author for this interface description
      */
-    public final String getAuthor()
+    public String getAuthor()
     {
         return author;
     }
@@ -245,7 +245,7 @@ public final class InterfaceDescription
      *
      * @return the version for this interface description
      */
-    public final String getVersion()
+    public String getVersion()
     {
         return version;
     }
@@ -255,7 +255,7 @@ public final class InterfaceDescription
      *
      * @return the description for this interface description
      */
-    public final String getDescription()
+    public String getDescription()
     {
         return description;
     }
@@ -265,7 +265,7 @@ public final class InterfaceDescription
      *
      * @return an unmodifiable set of interfaces this interface description specializes
      */
-    public final Set<InterfaceDescription> getSpecializes()
+    public Set<InterfaceDescription> getSpecializes()
     {
         return Collections.unmodifiableSet(specializes);
     }
@@ -279,7 +279,7 @@ public final class InterfaceDescription
      * @return <code>true</code> if the set of interfaces this interface description specializes
      *    changed as a result of this call
      */
-    public final boolean addSpecializes(final InterfaceDescription specializes)
+    public boolean addSpecializes(final InterfaceDescription specializes)
     {
         if (specializes == null)
         {
@@ -314,7 +314,7 @@ public final class InterfaceDescription
      * @return <code>true</code> if the set of interfaces this interface description specializes
      *    changed as a result of this call
      */
-    public final boolean specializes(final InterfaceDescription specializes)
+    public boolean specializes(final InterfaceDescription specializes)
     {
         return addSpecializes(specializes);
     }
@@ -324,7 +324,7 @@ public final class InterfaceDescription
      *
      * @return an unmodifiable set of attributes for this interface description
      */
-    public final Set<Attribute> getAttributes()
+    public Set<Attribute> getAttributes()
     {
         return Collections.unmodifiableSet(attributes);
     }
@@ -338,7 +338,7 @@ public final class InterfaceDescription
      * @return <code>true</code> if the set of attributes
      *    changed as a result of this call
      */
-    public final boolean addAttribute(final Attribute attribute)
+    public boolean addAttribute(final Attribute attribute)
     {
         if (attribute == null)
         {
@@ -356,7 +356,7 @@ public final class InterfaceDescription
      * @return <code>true</code> if the set of attributes
      *    changed as a result of this call
      */
-    public final boolean attribute(final Attribute attribute)
+    public boolean attribute(final Attribute attribute)
     {
         return addAttribute(attribute);
     }
@@ -375,7 +375,7 @@ public final class InterfaceDescription
      * @return <code>true</code> if the set of attributes
      *    changed as a result of this call
      */
-    public final boolean attribute(final String name, final String roleName, final Cardinality cardinality)
+    public boolean attribute(final String name, final String roleName, final Cardinality cardinality)
     {
         Attribute a = new Attribute(name, roleName, cardinality);
         return addAttribute(a);
@@ -395,12 +395,12 @@ public final class InterfaceDescription
      * @param ordered true if the collection should iterate over elements in <i>insertion-order</i>
      * @param sorted true if the collection should iterate over elements in ascending element order,
      *    sorted according to the <i>natural ordering</i> of its elements (see Comparable), or by a Comparator
-     *    provided at creation time     
+     *    provided at creation time
      * @return <code>true</code> if the set of attributes
      *    changed as a result of this call
      */
-    public final boolean attribute(final String name, final String roleName, final Cardinality cardinality,
-                                   final boolean indexed, final boolean unique, final boolean ordered, final boolean sorted)
+    public boolean attribute(final String name, final String roleName, final Cardinality cardinality,
+                             final boolean indexed, final boolean unique, final boolean ordered, final boolean sorted)
     {
         Attribute a = new Attribute(name, roleName, cardinality, indexed, unique, ordered, sorted);
         return addAttribute(a);
@@ -411,7 +411,7 @@ public final class InterfaceDescription
      *
      * @return an unmodifiable set of associations for this interface description
      */
-    public final Set<Association> getAssociations()
+    public Set<Association> getAssociations()
     {
         return Collections.unmodifiableSet(associations);
     }
@@ -425,7 +425,7 @@ public final class InterfaceDescription
      * @return <code>true</code> if the set of associations
      *    changed as a result of this call
      */
-    public final boolean addAssociation(final Association association)
+    public boolean addAssociation(final Association association)
     {
         if (association == null)
         {
@@ -443,7 +443,7 @@ public final class InterfaceDescription
      * @return <code>true</code> if the set of associations
      *    changed as a result of this call
      */
-    public final boolean associate(final Association association)
+    public boolean associate(final Association association)
     {
         return addAssociation(association);
     }
@@ -463,7 +463,7 @@ public final class InterfaceDescription
      * @return <code>true</code> if the set of associations
      *    changed as a result of this call
      */
-    public final boolean associate(final ClassDescription cd, final Cardinality cardinality)
+    public boolean associate(final ClassDescription cd, final Cardinality cardinality)
     {
         Association a = new Association(cd, cd.getUpper(), cardinality);
         return addAssociation(a);
@@ -484,7 +484,7 @@ public final class InterfaceDescription
      * @return <code>true</code> if the set of associations
      *    changed as a result of this call
      */
-    public final boolean associate(final ClassDescription cd, final String roleName, final Cardinality cardinality)
+    public boolean associate(final ClassDescription cd, final String roleName, final Cardinality cardinality)
     {
         Association a = new Association(cd, roleName, cardinality);
         return addAssociation(a);
@@ -503,12 +503,12 @@ public final class InterfaceDescription
      * @param ordered true if the collection should iterate over elements in <i>insertion-order</i>
      * @param sorted true if the collection should iterate over elements in ascending element order,
      *    sorted according to the <i>natural ordering</i> of its elements (see Comparable), or by a Comparator
-     *    provided at creation time     
+     *    provided at creation time
      * @return <code>true</code> if the set of associations
      *    changed as a result of this call
      */
-    public final boolean associate(final ClassDescription cd, final Cardinality cardinality,
-                                   final boolean indexed, final boolean unique, final boolean ordered, final boolean sorted)
+    public boolean associate(final ClassDescription cd, final Cardinality cardinality,
+                             final boolean indexed, final boolean unique, final boolean ordered, final boolean sorted)
     {
         Association a = new Association(cd, cd.getUpper(), cardinality, indexed, unique, ordered, sorted);
         return addAssociation(a);
@@ -527,12 +527,12 @@ public final class InterfaceDescription
      * @param ordered true if the collection should iterate over elements in <i>insertion-order</i>
      * @param sorted true if the collection should iterate over elements in ascending element order,
      *    sorted according to the <i>natural ordering</i> of its elements (see Comparable), or by a Comparator
-     *    provided at creation time     
+     *    provided at creation time
      * @return <code>true</code> if the set of associations
      *    changed as a result of this call
      */
-    public final boolean associate(final ClassDescription cd, final String roleName, final Cardinality cardinality,
-                                   final boolean indexed, final boolean unique, final boolean ordered, final boolean sorted)
+    public boolean associate(final ClassDescription cd, final String roleName, final Cardinality cardinality,
+                             final boolean indexed, final boolean unique, final boolean ordered, final boolean sorted)
     {
         Association a = new Association(cd, roleName, cardinality, indexed, unique, ordered, sorted);
         return addAssociation(a);
@@ -553,7 +553,7 @@ public final class InterfaceDescription
      * @return <code>true</code> if the set of associations
      *    changed as a result of this call
      */
-    public final boolean associate(final InterfaceDescription id, final Cardinality cardinality)
+    public boolean associate(final InterfaceDescription id, final Cardinality cardinality)
     {
         Association a = new Association(id, id.getUpper(), cardinality);
         return addAssociation(a);
@@ -575,7 +575,7 @@ public final class InterfaceDescription
      * @return <code>true</code> if the set of associations
      *    changed as a result of this call
      */
-    public final boolean associate(final InterfaceDescription id, final String roleName, final Cardinality cardinality)
+    public boolean associate(final InterfaceDescription id, final String roleName, final Cardinality cardinality)
     {
         Association a = new Association(id, roleName, cardinality);
         return addAssociation(a);
@@ -594,12 +594,12 @@ public final class InterfaceDescription
      * @param ordered true if the collection should iterate over elements in <i>insertion-order</i>
      * @param sorted true if the collection should iterate over elements in ascending element order,
      *    sorted according to the <i>natural ordering</i> of its elements (see Comparable), or by a Comparator
-     *    provided at creation time     
+     *    provided at creation time
      * @return <code>true</code> if the set of associations
      *    changed as a result of this call
      */
-    public final boolean associate(final InterfaceDescription id, final Cardinality cardinality,
-                                   final boolean indexed, final boolean unique, final boolean ordered, final boolean sorted)
+    public boolean associate(final InterfaceDescription id, final Cardinality cardinality,
+                             final boolean indexed, final boolean unique, final boolean ordered, final boolean sorted)
     {
         Association a = new Association(id, id.getUpper(), cardinality, indexed, unique, ordered, sorted);
         return addAssociation(a);
@@ -618,12 +618,12 @@ public final class InterfaceDescription
      * @param ordered true if the collection should iterate over elements in <i>insertion-order</i>
      * @param sorted true if the collection should iterate over elements in ascending element order,
      *    sorted according to the <i>natural ordering</i> of its elements (see Comparable), or by a Comparator
-     *    provided at creation time     
+     *    provided at creation time
      * @return <code>true</code> if the set of associations
      *    changed as a result of this call
      */
-    public final boolean associate(final InterfaceDescription id, final String roleName, final Cardinality cardinality,
-                                   final boolean indexed, final boolean unique, final boolean ordered, final boolean sorted)
+    public boolean associate(final InterfaceDescription id, final String roleName, final Cardinality cardinality,
+                             final boolean indexed, final boolean unique, final boolean ordered, final boolean sorted)
     {
         Association a = new Association(id, roleName, cardinality, indexed, unique, ordered, sorted);
         return addAssociation(a);

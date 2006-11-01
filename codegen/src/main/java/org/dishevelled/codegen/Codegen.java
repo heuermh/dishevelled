@@ -41,6 +41,15 @@ public final class Codegen
 {
 
     /**
+     * Private default constructor.
+     */
+    private Codegen()
+    {
+        // empty
+    }
+
+
+    /**
      * Generate a java source file for the specified interface
      * description.
      *
