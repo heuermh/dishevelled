@@ -60,7 +60,7 @@ import hep.aida.bin.StaticBin1D;
  *
  * <h4>Static methods</h4>
  * <p>Execution time can be sensitive to various factors, such
- * as order of execution, runtime optimization from the just-in-compiler
+ * as order of execution, runtime optimization from the just-in-time compiler
  * (JIT), and garbage collection.  This class provides static methods
  * to help deal with these factors.</p>
  *
