@@ -52,6 +52,7 @@ import java.util.Map;
  * assert(cardinality in list of &quot;baz&quot; approximately equal to 62.5)
  * </pre>
  *
+ * @param <E> the type of elements maintained by this weighted map
  * @author  Michael Heuer
  * @author  Mark Schreiber
  * @version $Revision$ $Date$

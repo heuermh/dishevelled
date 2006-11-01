@@ -39,11 +39,12 @@ import java.util.AbstractCollection;
 /**
  * Implementation of WeightedMap that delegates to a HashMap.
  *
+ * @param <E> the type of elements maintained by this weighted map
  * @author  Michael Heuer
  * @author  Mark Schreiber
  * @version $Revision$ $Date$
  */
-public class HashWeightedMap<E>
+public final class HashWeightedMap<E>
     implements WeightedMap<E>
 {
     /** Map of elements to weights. */
@@ -69,6 +70,12 @@ public class HashWeightedMap<E>
 
     /** Values view. */
     private transient Values values;
+
+    /** Default initial capacity, <code>16</code>. */
+    private static final int DEFAULT_INITIAL_CAPACITY = 16;
+
+    /** Default load factor, <code>0.75f</code>. */
+    private static final float DEFAULT_LOAD_FACTOR = 0.75f;
 
 
     /**
@@ -102,7 +109,7 @@ public class HashWeightedMap<E>
      */
     public HashWeightedMap(final WeightedMap<? extends E> t)
     {
-        map = new HashMap<E, Double>(Math.max(2 * t.size(), 16), 0.75f);
+        map = new HashMap<E, Double>(Math.max(2 * t.size(), DEFAULT_INITIAL_CAPACITY), DEFAULT_LOAD_FACTOR);
         putAll(t);
     }
 
@@ -113,7 +120,7 @@ public class HashWeightedMap<E>
      *
      * @param random source of randomness, must not be null
      */
-    public final void setRandom(final Random random)
+    public void setRandom(final Random random)
     {
         if (random == null)
         {
@@ -122,7 +129,7 @@ public class HashWeightedMap<E>
         this.random = random;
     }
 
-    /** @see WeightedMap */
+    /** {@inheritDoc} */
     public void clear()
     {
         map.clear();
@@ -130,37 +137,37 @@ public class HashWeightedMap<E>
         totalWeight = 0.0d;
     }
 
-    /** @see WeightedMap */
+    /** {@inheritDoc} */
     public int size()
     {
         return map.size();
     }
 
-    /** @see WeightedMap */
+    /** {@inheritDoc} */
     public boolean isEmpty()
     {
         return map.isEmpty();
     }
 
-    /** @see WeightedMap */
+    /** {@inheritDoc} */
     public boolean containsKey(final Object o)
     {
         return map.containsKey(o);
     }
 
-    /** @see WeightedMap */
+    /** {@inheritDoc} */
     public boolean containsValue(final Object o)
     {
         return map.containsValue(o);
     }
 
-    /** @see WeightedMap */
+    /** {@inheritDoc} */
     public Double get(final Object o)
     {
         return map.get(o);
     }
 
-    /** @see WeightedMap */
+    /** {@inheritDoc} */
     public Double put(final E e, final Double w)
     {
         // TODO:  need to add this assertion to the API specification somehow
@@ -179,8 +186,8 @@ public class HashWeightedMap<E>
         return oldWeight;
     }
 
-    /** @see WeightedMap */
-    public void putAll(final Map<? extends E,? extends Double> t)
+    /** {@inheritDoc} */
+    public void putAll(final Map<? extends E, ? extends Double> t)
     {
         for (Map.Entry<? extends E, ? extends Double> e : t.entrySet())
         {
@@ -188,7 +195,7 @@ public class HashWeightedMap<E>
         }
     }
 
-    /** @see WeightedMap */
+    /** {@inheritDoc} */
     public Double remove(final Object o)
     {
         Double w = map.remove(o);
@@ -200,7 +207,7 @@ public class HashWeightedMap<E>
         return w;
     }
 
-    /** @see WeightedMap */
+    /** {@inheritDoc} */
     public E sample()
     {
         Double r = random.nextDouble();
@@ -217,13 +224,13 @@ public class HashWeightedMap<E>
         return null;
     }
 
-    /** @see WeightedMap */
+    /** {@inheritDoc} */
     public Double weight(final E e)
     {
         return map.get(e);
     }
 
-    /** @see WeightedMap */
+    /** {@inheritDoc} */
     public Double normalizedWeight(final E e)
     {
         if (isEmpty())
@@ -245,13 +252,13 @@ public class HashWeightedMap<E>
         return (w / totalWeight);
     }
 
-    /** @see WeightedMap */
+    /** {@inheritDoc} */
     public Double totalWeight()
     {
         return totalWeight;
     }
 
-    /** @see WeightedMap */
+    /** {@inheritDoc} */
     public int rank(final E e)
     {
         if (dirty)
@@ -262,7 +269,7 @@ public class HashWeightedMap<E>
         return rank.containsKey(e) ? rank.get(e) : -1;
     }
 
-    /** @see WeightedMap */
+    /** {@inheritDoc} */
     public int maximumRank()
     {
         if (isEmpty())
@@ -273,25 +280,80 @@ public class HashWeightedMap<E>
         int maximumRank = 0;
         for (E e : keySet())
         {
-            int rank = rank(e);
+            int currentRank = rank(e);
 
-            if (rank > maximumRank)
+            if (currentRank > maximumRank)
             {
-                maximumRank = rank;
+                maximumRank = currentRank;
             }
         }
 
         return maximumRank;
     }
 
+    /**
+     * Sort the elements in descending order according
+     * to their normalized weights and calculate rank.
+     */
+    private void calculateRank()
+    {
+        rank = new HashMap<E, Integer>(size());
+
+        int r = 0;
+        List<E> l = new ArrayList<E>(keySet());
+        Collections.sort(l, byRankDescending);
+
+        Double lastWeight = Double.NaN;
+        for (E e : l)
+        {
+            Double w = normalizedWeight(e);
+            if (!lastWeight.equals(w))
+            {
+                r++;
+            }
+            rank.put(e, r);
+            lastWeight = w;
+        }
+        l = null;
+    }
+
+    /** {@inheritDoc} */
+    public Set<E> keySet()
+    {
+        if (keySet == null)
+        {
+            keySet = new KeySet();
+        }
+        return keySet;
+    }
+
+    /** {@inheritDoc} */
+    public Collection<Double> values()
+    {
+        if (values == null)
+        {
+            values = new Values();
+        }
+        return values;
+    }
+
+    /** {@inheritDoc} */
+    public Set<Map.Entry<E, Double>> entrySet()
+    {
+        if (entrySet == null)
+        {
+            entrySet = new EntrySet();
+        }
+        return entrySet;
+    }
 
     /**
      * Sort elements in descending order according to their
      * normalized weights.
      */
-    private Comparator<E> BY_RANK_DESC = new Comparator<E>()
+    private final Comparator<E> byRankDescending = new Comparator<E>()
         {
-            /** @see Comparator */
+            /** {@inheritDoc} */
             public int compare(final E e1, final E e2)
             {
                 Double w1 = normalizedWeight(e1);
@@ -302,83 +364,25 @@ public class HashWeightedMap<E>
         };
 
     /**
-     * Sort the elements in descending order according
-     * to their normalized weights and calculate rank.
-     */
-    private void calculateRank()
-    {
-        rank = new HashMap<E,Integer>(size());
-
-        int r = 0;
-        List<E> l = new ArrayList<E>(keySet());
-        Collections.sort(l, BY_RANK_DESC);
-
-        Double lastWeight = Double.NaN;
-        for (E e : l)
-        {
-            Double w = normalizedWeight(e);
-            if (lastWeight.equals(w) == false)
-            {
-                r++;
-            }
-            rank.put(e, r);
-            lastWeight = w;
-        }
-        l = null;
-    }
-
-
-    /** @see WeightedMap */
-    public Set<E> keySet()
-    {
-        if (keySet == null)
-        {
-            keySet = new KeySet();
-        }
-        return keySet;
-    }
-
-    /** @see WeightedMap */
-    public Collection<Double> values()
-    {
-        if (values == null)
-        {
-            values = new Values();
-        }
-        return values;
-    }
-
-    /** @see WeightedMap */
-    public Set<Map.Entry<E, Double>> entrySet()
-    {
-        if (entrySet == null)
-        {
-            entrySet = new EntrySet();
-        }
-        return entrySet;
-    }
-
-
-    /**
      * Key set wrapper.
      */
     private class KeySet
         extends AbstractSet<E>
     {
 
-        /** @see AbstractSet */
+        /** {@inheritDoc} */
         public int size()
         {
             return map.keySet().size();
         }
 
-        /** @see AbstractSet */
+        /** {@inheritDoc} */
         public void clear()
         {
             HashWeightedMap.this.clear();
         }
 
-        /** @see AbstractSet */
+        /** {@inheritDoc} */
         public Iterator<E> iterator()
         {
             return new KeySetIterator();
@@ -407,20 +411,20 @@ public class HashWeightedMap<E>
         }
 
 
-        /** @see Iterator */
+        /** {@inheritDoc} */
         public boolean hasNext()
         {
             return iterator.hasNext();
         }
 
-        /** @see Iterator */
+        /** {@inheritDoc} */
         public E next()
         {
             e = iterator.next();
             return e;
         }
 
-        /** @see Iterator */
+        /** {@inheritDoc} */
         public void remove()
         {
             Double w = weight(e);
@@ -430,7 +434,6 @@ public class HashWeightedMap<E>
         }
     }
 
-
     /**
      * Values wrapper.
      */
@@ -438,19 +441,19 @@ public class HashWeightedMap<E>
         extends AbstractCollection<Double>
     {
 
-        /** @see AbstractCollection */
+        /** {@inheritDoc} */
         public int size()
         {
             return map.values().size();
         }
 
-        /** @see AbstractCollection */
+        /** {@inheritDoc} */
         public void clear()
         {
             HashWeightedMap.this.clear();
         }
 
-        /** @see AbstractCollection */
+        /** {@inheritDoc} */
         public Iterator<Double> iterator()
         {
             return new ValuesIterator();
@@ -479,20 +482,20 @@ public class HashWeightedMap<E>
         }
 
 
-        /** @see Iterator */
+        /** {@inheritDoc} */
         public boolean hasNext()
         {
             return iterator.hasNext();
         }
 
-        /** @see Iterator */
+        /** {@inheritDoc} */
         public Double next()
         {
             w = iterator.next();
             return w;
         }
 
-        /** @see Iterator */
+        /** {@inheritDoc} */
         public void remove()
         {
             iterator.remove();
@@ -501,27 +504,26 @@ public class HashWeightedMap<E>
         }
     }
 
-
     /**
      * Entry set wrapper.
      */
     private class EntrySet
-        extends AbstractSet<Map.Entry<E,Double>>
+        extends AbstractSet<Map.Entry<E, Double>>
     {
 
-        /** @see AbstractSet */
+        /** {@inheritDoc} */
         public int size()
         {
             return map.entrySet().size();
         }
 
-        /** @see AbstractSet */
+        /** {@inheritDoc} */
         public void clear()
         {
             HashWeightedMap.this.clear();
         }
 
-        /** @see AbstractSet */
+        /** {@inheritDoc} */
         public Iterator<Map.Entry<E, Double>> iterator()
         {
             return new EntrySetIterator();
@@ -538,7 +540,7 @@ public class HashWeightedMap<E>
         private Iterator<Map.Entry<E, Double>> iterator;
 
         /** Last entry. */
-        private Map.Entry<E,Double> e;
+        private Map.Entry<E, Double> e;
 
 
         /**
@@ -550,20 +552,20 @@ public class HashWeightedMap<E>
         }
 
 
-        /** @see Iterator */
+        /** {@inheritDoc} */
         public boolean hasNext()
         {
             return iterator.hasNext();
         }
 
-        /** @see Iterator */
+        /** {@inheritDoc} */
         public Map.Entry<E, Double> next()
         {
             e = iterator.next();
             return new MapEntry(e);
         }
 
-        /** @see Iterator */
+        /** {@inheritDoc} */
         public void remove()
         {
             iterator.remove();
@@ -593,31 +595,31 @@ public class HashWeightedMap<E>
         }
 
 
-        /** @see Map.Entry */
+        /** {@inheritDoc} */
         public boolean equals(final Object o)
         {
             return e.equals(o);
         }
 
-        /** @see Map.Entry */
+        /** {@inheritDoc} */
         public int hashCode()
         {
             return e.hashCode();
         }
 
-        /** @see Map.Entry */
+        /** {@inheritDoc} */
         public E getKey()
         {
             return e.getKey();
         }
 
-        /** @see Map.Entry */
+        /** {@inheritDoc} */
         public Double getValue()
         {
             return e.getValue();
         }
 
-        /** @see Map.Entry */
+        /** {@inheritDoc} */
         public Double setValue(final Double w)
         {
             // TODO:  need to add this assertion to the API specification somehow
