@@ -57,16 +57,16 @@ public final class ClassDescription
     private String description;
 
     /** Set of classes this class description specializes. */
-    private Set<ClassDescription> specializes;
+    private final Set<ClassDescription> specializes;
 
     /** Set of interfaces this class description realizes. */
-    private Set<InterfaceDescription> realizes;
+    private final Set<InterfaceDescription> realizes;
 
     /** Set of attributes for this class description. */
-    private Set<Attribute> attributes;
+    private final Set<Attribute> attributes;
 
     /** Set of associations for this class description. */
-    private Set<Association> associations;
+    private final Set<Association> associations;
 
 
     /**
@@ -210,7 +210,7 @@ public final class ClassDescription
      *
      * @return the package name for this class description
      */
-    public final String getPackageName()
+    public String getPackageName()
     {
         return packageName;
     }
@@ -220,7 +220,7 @@ public final class ClassDescription
      *
      * @return the lowercase name for this class description
      */
-    public final String getLower()
+    public String getLower()
     {
         return lower;
     }
@@ -230,7 +230,7 @@ public final class ClassDescription
      *
      * @return the mixed-case name for this class description
      */
-    public final String getMixed()
+    public String getMixed()
     {
         return mixed;
     }
@@ -240,7 +240,7 @@ public final class ClassDescription
      *
      * @return the uppercase name for this class description
      */
-    public final String getUpper()
+    public String getUpper()
     {
         return upper;
     }
@@ -250,7 +250,7 @@ public final class ClassDescription
      *
      * @return the author for this class description
      */
-    public final String getAuthor()
+    public String getAuthor()
     {
         return author;
     }
@@ -260,7 +260,7 @@ public final class ClassDescription
      *
      * @return the version for this class description
      */
-    public final String getVersion()
+    public String getVersion()
     {
         return version;
     }
@@ -270,7 +270,7 @@ public final class ClassDescription
      *
      * @return the description for this class description
      */
-    public final String getDescription()
+    public String getDescription()
     {
         return description;
     }
@@ -280,7 +280,7 @@ public final class ClassDescription
      *
      * @return an unmodifiable set of classes this class description specializes
      */
-    public final Set<ClassDescription> getSpecializes()
+    public Set<ClassDescription> getSpecializes()
     {
         return Collections.unmodifiableSet(specializes);
     }
@@ -294,7 +294,7 @@ public final class ClassDescription
      * @return <code>true</code> if the set of classes this class description specializes
      *    changed as a result of this call
      */
-    public final boolean addSpecializes(final ClassDescription specializes)
+    public boolean addSpecializes(final ClassDescription specializes)
     {
         if (specializes == null)
         {
@@ -309,7 +309,7 @@ public final class ClassDescription
             {
                 addAttribute(a);
             }
-            for (Association a: specializes.getAssociations())
+            for (Association a : specializes.getAssociations())
             {
                 addAssociation(a);
             }
@@ -326,7 +326,7 @@ public final class ClassDescription
      * @return <code>true</code> if the set of classes this class description specializes
      *    changed as a result of this call
      */
-    public final boolean specializes(final ClassDescription specializes)
+    public boolean specializes(final ClassDescription specializes)
     {
         return addSpecializes(specializes);
     }
@@ -336,7 +336,7 @@ public final class ClassDescription
      *
      * @return an unmodifiable set of interfaces this class description realizes
      */
-    public final Set<InterfaceDescription> getRealizes()
+    public Set<InterfaceDescription> getRealizes()
     {
         return Collections.unmodifiableSet(realizes);
     }
@@ -350,7 +350,7 @@ public final class ClassDescription
      * @return <code>true</code> if the set of interfaces this class description realizes
      *    changed as a result of this call
      */
-    public final boolean addRealizes(final InterfaceDescription realizes)
+    public boolean addRealizes(final InterfaceDescription realizes)
     {
         if (realizes == null)
         {
@@ -381,7 +381,7 @@ public final class ClassDescription
      * @return <code>true</code> if the set of interfaces this class description realizes
      *    changed as a result of this call
      */
-    public final boolean realizes(final InterfaceDescription realizes)
+    public boolean realizes(final InterfaceDescription realizes)
     {
         return addRealizes(realizes);
     }
@@ -391,7 +391,7 @@ public final class ClassDescription
      *
      * @return an unmodifiable set of attributes for this class description
      */
-    public final Set<Attribute> getAttributes()
+    public Set<Attribute> getAttributes()
     {
         return Collections.unmodifiableSet(attributes);
     }
@@ -405,7 +405,7 @@ public final class ClassDescription
      * @return <code>true</code> if the set of attributes
      *    changed as a result of this call
      */
-    public final boolean addAttribute(final Attribute attribute)
+    public boolean addAttribute(final Attribute attribute)
     {
         if (attribute == null)
         {
@@ -423,7 +423,7 @@ public final class ClassDescription
      * @return <code>true</code> if the set of attributes
      *    changed as a result of this call
      */
-    public final boolean attribute(final Attribute attribute)
+    public boolean attribute(final Attribute attribute)
     {
         return addAttribute(attribute);
     }
@@ -442,7 +442,7 @@ public final class ClassDescription
      * @return <code>true</code> if the set of attributes
      *    changed as a result of this call
      */
-    public final boolean attribute(final String name, final String roleName, final Cardinality cardinality)
+    public boolean attribute(final String name, final String roleName, final Cardinality cardinality)
     {
         Attribute a = new Attribute(name, roleName, cardinality);
         return addAttribute(a);
@@ -463,7 +463,7 @@ public final class ClassDescription
      * @return <code>true</code> if the set of attributes
      *    changed as a result of this call
      */
-    public final boolean attribute(final String name, final String roleName,
+    public boolean attribute(final String name, final String roleName,
                                    final Cardinality cardinality, final boolean bound)
     {
         Attribute a = new Attribute(name, roleName, cardinality, bound);
@@ -484,12 +484,12 @@ public final class ClassDescription
      * @param ordered true if the collection should iterate over elements in <i>insertion-order</i>
      * @param sorted true if the collection should iterate over elements in ascending element order,
      *    sorted according to the <i>natural ordering</i> of its elements (see Comparable), or by a Comparator
-     *    provided at creation time     
+     *    provided at creation time
      * @return <code>true</code> if the set of attributes
      *    changed as a result of this call
      */
-    public final boolean attribute(final String name, final String roleName, final Cardinality cardinality,
-                                   final boolean indexed, final boolean unique, final boolean ordered, final boolean sorted)
+    public boolean attribute(final String name, final String roleName, final Cardinality cardinality,
+                             final boolean indexed, final boolean unique, final boolean ordered, final boolean sorted)
     {
         Attribute a = new Attribute(name, roleName, cardinality, indexed, unique, ordered, sorted);
         return addAttribute(a);
@@ -510,13 +510,13 @@ public final class ClassDescription
      * @param ordered true if the collection should iterate over elements in <i>insertion-order</i>
      * @param sorted true if the collection should iterate over elements in ascending element order,
      *    sorted according to the <i>natural ordering</i> of its elements (see Comparable), or by a Comparator
-     *    provided at creation time     
+     *    provided at creation time
      * @return <code>true</code> if the set of attributes
      *    changed as a result of this call
      */
-    public final boolean attribute(final String name, final String roleName, final Cardinality cardinality,
-                                   final boolean bound, final boolean indexed, final boolean unique,
-                                   final boolean ordered, final boolean sorted)
+    public boolean attribute(final String name, final String roleName, final Cardinality cardinality,
+                             final boolean bound,
+                             final boolean indexed, final boolean unique, final boolean ordered, final boolean sorted)
     {
         Attribute a = new Attribute(name, roleName, cardinality, bound, indexed, unique, ordered, sorted);
         return addAttribute(a);
@@ -527,7 +527,7 @@ public final class ClassDescription
      *
      * @return an unmodifiable set of associations for this class description
      */
-    public final Set<Association> getAssociations()
+    public Set<Association> getAssociations()
     {
         return Collections.unmodifiableSet(associations);
     }
@@ -541,7 +541,7 @@ public final class ClassDescription
      * @return <code>true</code> if the set of associations
      *    changed as a result of this call
      */
-    public final boolean addAssociation(final Association association)
+    public boolean addAssociation(final Association association)
     {
         if (association == null)
         {
@@ -559,7 +559,7 @@ public final class ClassDescription
      * @return <code>true</code> if the set of associations
      *    changed as a result of this call
      */
-    public final boolean associate(final Association association)
+    public boolean associate(final Association association)
     {
         return addAssociation(association);
     }
@@ -579,7 +579,7 @@ public final class ClassDescription
      * @return <code>true</code> if the set of associations
      *    changed as a result of this call
      */
-    public final boolean associate(final ClassDescription cd, final Cardinality cardinality)
+    public boolean associate(final ClassDescription cd, final Cardinality cardinality)
     {
         Association a = new Association(cd, cd.getUpper(), cardinality);
         return addAssociation(a);
@@ -601,7 +601,7 @@ public final class ClassDescription
      * @return <code>true</code> if the set of associations
      *    changed as a result of this call
      */
-    public final boolean associate(final ClassDescription cd, final Cardinality cardinality, final boolean bound)
+    public boolean associate(final ClassDescription cd, final Cardinality cardinality, final boolean bound)
     {
         Association a = new Association(cd, cd.getUpper(), cardinality, bound);
         return addAssociation(a);
@@ -622,7 +622,7 @@ public final class ClassDescription
      * @return <code>true</code> if the set of associations
      *    changed as a result of this call
      */
-    public final boolean associate(final ClassDescription cd, final String roleName, final Cardinality cardinality)
+    public boolean associate(final ClassDescription cd, final String roleName, final Cardinality cardinality)
     {
         Association a = new Association(cd, roleName, cardinality);
         return addAssociation(a);
@@ -644,8 +644,8 @@ public final class ClassDescription
      * @return <code>true</code> if the set of associations
      *    changed as a result of this call
      */
-    public final boolean associate(final ClassDescription cd, final String roleName,
-                                   final Cardinality cardinality, final boolean bound)
+    public boolean associate(final ClassDescription cd, final String roleName,
+                             final Cardinality cardinality, final boolean bound)
     {
         Association a = new Association(cd, roleName, cardinality, bound);
         return addAssociation(a);
@@ -664,12 +664,12 @@ public final class ClassDescription
      * @param ordered true if the collection should iterate over elements in <i>insertion-order</i>
      * @param sorted true if the collection should iterate over elements in ascending element order,
      *    sorted according to the <i>natural ordering</i> of its elements (see Comparable), or by a Comparator
-     *    provided at creation time     
+     *    provided at creation time
      * @return <code>true</code> if the set of associations
      *    changed as a result of this call
      */
-    public final boolean associate(final ClassDescription cd, final Cardinality cardinality,
-                                   final boolean indexed, final boolean unique, final boolean ordered, final boolean sorted)
+    public boolean associate(final ClassDescription cd, final Cardinality cardinality,
+                             final boolean indexed, final boolean unique, final boolean ordered, final boolean sorted)
     {
         Association a = new Association(cd, cd.getUpper(), cardinality, indexed, unique, ordered, sorted);
         return addAssociation(a);
@@ -689,12 +689,12 @@ public final class ClassDescription
      * @param ordered true if the collection should iterate over elements in <i>insertion-order</i>
      * @param sorted true if the collection should iterate over elements in ascending element order,
      *    sorted according to the <i>natural ordering</i> of its elements (see Comparable), or by a Comparator
-     *    provided at creation time     
+     *    provided at creation time
      * @return <code>true</code> if the set of associations
      *    changed as a result of this call
      */
-    public final boolean associate(final ClassDescription cd, final Cardinality cardinality, final boolean bound,
-                                   final boolean indexed, final boolean unique, final boolean ordered, final boolean sorted)
+    public boolean associate(final ClassDescription cd, final Cardinality cardinality, final boolean bound,
+                             final boolean indexed, final boolean unique, final boolean ordered, final boolean sorted)
     {
         Association a = new Association(cd, cd.getUpper(), cardinality, bound, indexed, unique, ordered, sorted);
         return addAssociation(a);
@@ -713,12 +713,12 @@ public final class ClassDescription
      * @param ordered true if the collection should iterate over elements in <i>insertion-order</i>
      * @param sorted true if the collection should iterate over elements in ascending element order,
      *    sorted according to the <i>natural ordering</i> of its elements (see Comparable), or by a Comparator
-     *    provided at creation time     
+     *    provided at creation time
      * @return <code>true</code> if the set of associations
      *    changed as a result of this call
      */
-    public final boolean associate(final ClassDescription cd, final String roleName, final Cardinality cardinality,
-                                   final boolean indexed, final boolean unique, final boolean ordered, final boolean sorted)
+    public boolean associate(final ClassDescription cd, final String roleName, final Cardinality cardinality,
+                             final boolean indexed, final boolean unique, final boolean ordered, final boolean sorted)
     {
         Association a = new Association(cd, roleName, cardinality, indexed, unique, ordered, sorted);
         return addAssociation(a);
@@ -738,13 +738,13 @@ public final class ClassDescription
      * @param ordered true if the collection should iterate over elements in <i>insertion-order</i>
      * @param sorted true if the collection should iterate over elements in ascending element order,
      *    sorted according to the <i>natural ordering</i> of its elements (see Comparable), or by a Comparator
-     *    provided at creation time     
+     *    provided at creation time
      * @return <code>true</code> if the set of associations
      *    changed as a result of this call
      */
-    public final boolean associate(final ClassDescription cd, final String roleName, final Cardinality cardinality,
-                                   final boolean bound, final boolean indexed, final boolean unique,
-                                   final boolean ordered, final boolean sorted)
+    public boolean associate(final ClassDescription cd, final String roleName, final Cardinality cardinality,
+                             final boolean bound,
+                             final boolean indexed, final boolean unique, final boolean ordered, final boolean sorted)
     {
         Association a = new Association(cd, roleName, cardinality, bound, indexed, unique, ordered, sorted);
         return addAssociation(a);
@@ -765,7 +765,7 @@ public final class ClassDescription
      * @return <code>true</code> if the set of associations
      *    changed as a result of this call
      */
-    public final boolean associate(final InterfaceDescription id, final Cardinality cardinality)
+    public boolean associate(final InterfaceDescription id, final Cardinality cardinality)
     {
         Association a = new Association(id, id.getUpper(), cardinality);
         return addAssociation(a);
@@ -787,7 +787,7 @@ public final class ClassDescription
      * @return <code>true</code> if the set of associations
      *    changed as a result of this call
      */
-    public final boolean associate(final InterfaceDescription id, final Cardinality cardinality, final boolean bound)
+    public boolean associate(final InterfaceDescription id, final Cardinality cardinality, final boolean bound)
     {
         Association a = new Association(id, id.getUpper(), cardinality, bound);
         return addAssociation(a);
@@ -808,7 +808,7 @@ public final class ClassDescription
      * @return <code>true</code> if the set of associations
      *    changed as a result of this call
      */
-    public final boolean associate(final InterfaceDescription id, final String roleName, final Cardinality cardinality)
+    public boolean associate(final InterfaceDescription id, final String roleName, final Cardinality cardinality)
     {
         Association a = new Association(id, roleName, cardinality);
         return addAssociation(a);
@@ -830,8 +830,8 @@ public final class ClassDescription
      * @return <code>true</code> if the set of associations
      *    changed as a result of this call
      */
-    public final boolean associate(final InterfaceDescription id, final String roleName,
-                                   final Cardinality cardinality, final boolean bound)
+    public boolean associate(final InterfaceDescription id, final String roleName,
+                             final Cardinality cardinality, final boolean bound)
     {
         Association a = new Association(id, roleName, cardinality, bound);
         return addAssociation(a);
@@ -850,12 +850,12 @@ public final class ClassDescription
      * @param ordered true if the collection should iterate over elements in <i>insertion-order</i>
      * @param sorted true if the collection should iterate over elements in ascending element order,
      *    sorted according to the <i>natural ordering</i> of its elements (see Comparable), or by a Comparator
-     *    provided at creation time     
+     *    provided at creation time
      * @return <code>true</code> if the set of associations
      *    changed as a result of this call
      */
-    public final boolean associate(final InterfaceDescription id, final Cardinality cardinality,
-                                   final boolean indexed, final boolean unique, final boolean ordered, final boolean sorted)
+    public boolean associate(final InterfaceDescription id, final Cardinality cardinality,
+                             final boolean indexed, final boolean unique, final boolean ordered, final boolean sorted)
     {
         Association a = new Association(id, id.getUpper(), cardinality, indexed, unique, ordered, sorted);
         return addAssociation(a);
@@ -875,12 +875,12 @@ public final class ClassDescription
      * @param ordered true if the collection should iterate over elements in <i>insertion-order</i>
      * @param sorted true if the collection should iterate over elements in ascending element order,
      *    sorted according to the <i>natural ordering</i> of its elements (see Comparable), or by a Comparator
-     *    provided at creation time     
+     *    provided at creation time
      * @return <code>true</code> if the set of associations
      *    changed as a result of this call
      */
-    public final boolean associate(final InterfaceDescription id, final Cardinality cardinality, final boolean bound,
-                                   final boolean indexed, final boolean unique, final boolean ordered, final boolean sorted)
+    public boolean associate(final InterfaceDescription id, final Cardinality cardinality, final boolean bound,
+                             final boolean indexed, final boolean unique, final boolean ordered, final boolean sorted)
     {
         Association a = new Association(id, id.getUpper(), cardinality, bound, indexed, unique, ordered, sorted);
         return addAssociation(a);
@@ -899,12 +899,12 @@ public final class ClassDescription
      * @param ordered true if the collection should iterate over elements in <i>insertion-order</i>
      * @param sorted true if the collection should iterate over elements in ascending element order,
      *    sorted according to the <i>natural ordering</i> of its elements (see Comparable), or by a Comparator
-     *    provided at creation time     
+     *    provided at creation time
      * @return <code>true</code> if the set of associations
      *    changed as a result of this call
      */
-    public final boolean associate(final InterfaceDescription id, final String roleName, final Cardinality cardinality,
-                                   final boolean indexed, final boolean unique, final boolean ordered, final boolean sorted)
+    public boolean associate(final InterfaceDescription id, final String roleName, final Cardinality cardinality,
+                             final boolean indexed, final boolean unique, final boolean ordered, final boolean sorted)
     {
         Association a = new Association(id, roleName, cardinality, indexed, unique, ordered, sorted);
         return addAssociation(a);
@@ -924,12 +924,13 @@ public final class ClassDescription
      * @param ordered true if the collection should iterate over elements in <i>insertion-order</i>
      * @param sorted true if the collection should iterate over elements in ascending element order,
      *    sorted according to the <i>natural ordering</i> of its elements (see Comparable), or by a Comparator
-     *    provided at creation time     
+     *    provided at creation time
      * @return <code>true</code> if the set of associations
      *    changed as a result of this call
      */
-    public final boolean associate(final InterfaceDescription id, final String roleName, final Cardinality cardinality,
-                                   final boolean bound, final boolean indexed, final boolean unique, final boolean ordered, final boolean sorted)
+    public boolean associate(final InterfaceDescription id, final String roleName, final Cardinality cardinality,
+                             final boolean bound,
+                             final boolean indexed, final boolean unique, final boolean ordered, final boolean sorted)
     {
         Association a = new Association(id, roleName, cardinality, bound, indexed, unique, ordered, sorted);
         return addAssociation(a);

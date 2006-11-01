@@ -33,9 +33,9 @@ final class CodegenUtils
 {
 
     /**
-     * CodegenUtils should not normally be instantiated.
+     * Private default constructor.
      */
-    public CodegenUtils()
+    private CodegenUtils()
     {
         // empty
     }
