@@ -329,7 +329,7 @@ public final class Timer
         {
             map.put(codeBlock, loop(codeBlock, n));
         }
-        return map;
+        return Collections.unmodifiableMap(map);
     }
 
     /**
@@ -360,7 +360,7 @@ public final class Timer
                 }
             }
         }
-        return map;
+        return Collections.unmodifiableMap(map);
     }
 
     /**
@@ -443,6 +443,6 @@ public final class Timer
                 }
             }
         }
-        return map;
+        return Collections.unmodifiableMap(map);
     }
 }
