@@ -33,22 +33,22 @@ public enum Cardinality
 {
 
     /**
-     * A cardinality of class --&gt; association target <code>[0..1]</code>.
+     * A cardinality of class --&gt; attribute or association target <code>[0..1]</code>.
      */
     ZeroToOne,
 
     /**
-     * A cardinality of class --&gt; association target <code>[1]</code>.
+     * A cardinality of class --&gt; attribute or association target <code>[1]</code>.
      */
     StrictlyOne,
 
     /**
-     * A cardinality of class --&gt; association target <code>[0..*]</code>.
+     * A cardinality of class --&gt; attribute or association target <code>[0..*]</code>.
      */
     ZeroToMany,
 
     /**
-     * A cardinality of class --&gt; association target <code>[1..*]</code>.
+     * A cardinality of class --&gt; attribute or association target <code>[1..*]</code>.
      */
     OneToMany
 };
