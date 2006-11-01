@@ -412,6 +412,17 @@ public class TimerTest
         assertTrue("t2 mean > 0.0d", t2.mean() > 0.0d);
         assertTrue("t2 standardDeviation > 0.0d", t2.standardDeviation() > 0.0d);
 
+        // map0 should be unmodifiable
+        try
+        {
+            map0.put(r0, t1);
+            fail("map0 put expected UnsupportedOperationException");
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
+
         Map<Runnable,Timer> map1 = Timer.loop(codeBlocks, 2, 5);
 
         assertNotNull("map1 not null", map1);
@@ -447,6 +458,17 @@ public class TimerTest
         assertTrue("t5 sum > 0.0d", t5.sum() > 0.0d);
         assertTrue("t5 mean > 0.0d", t5.mean() > 0.0d);
         assertTrue("t5 standardDeviation > 0.0d", t5.standardDeviation() > 0.0d);
+
+        // map1 should be unmodifiable
+        try
+        {
+            map1.put(r0, t5);
+            fail("map1 put expected UnsupportedOperationException");
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
     }
 
     public void testShuffle()
@@ -488,6 +510,17 @@ public class TimerTest
         assertTrue("t2 mean > 0.0d", t2.mean() > 0.0d);
         assertTrue("t2 standardDeviation > 0.0d", t2.standardDeviation() > 0.0d);
 
+        // map0 should be unmodifiable
+        try
+        {
+            map0.put(r0, t1);
+            fail("map0 put expected UnsupportedOperationException");
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
+
         List<Runnable> codeBlocks1 = new ArrayList<Runnable>(Arrays.asList(new Runnable[] { r0, r1, r2 }));
         Map<Runnable,Timer> map1 = Timer.shuffle(codeBlocks1, 2, 5);
 
@@ -524,6 +557,17 @@ public class TimerTest
         assertTrue("t5 sum > 0.0d", t5.sum() > 0.0d);
         assertTrue("t5 mean > 0.0d", t5.mean() > 0.0d);
         assertTrue("t5 standardDeviation > 0.0d", t5.standardDeviation() > 0.0d);
+
+        // map1 should be unmodifiable
+        try
+        {
+            map1.put(r0, t5);
+            fail("map1 put expected UnsupportedOperationException");
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
     }
 
     public void testShuffleWithRandom()
@@ -565,6 +609,17 @@ public class TimerTest
         assertTrue("t2 mean > 0.0d", t2.mean() > 0.0d);
         assertTrue("t2 standardDeviation > 0.0d", t2.standardDeviation() > 0.0d);
 
+        // map0 should be unmodifiable
+        try
+        {
+            map0.put(r0, t1);
+            fail("map0 put expected UnsupportedOperationException");
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
+
         List<Runnable> codeBlocks1 = new ArrayList<Runnable>(Arrays.asList(new Runnable[] { r0, r1, r2 }));
         Map<Runnable,Timer> map1 = Timer.shuffle(codeBlocks1, 2, 5);
 
@@ -601,6 +656,17 @@ public class TimerTest
         assertTrue("t5 sum > 0.0d", t5.sum() > 0.0d);
         assertTrue("t5 mean > 0.0d", t5.mean() > 0.0d);
         assertTrue("t5 standardDeviation > 0.0d", t5.standardDeviation() > 0.0d);
+
+        // map1 should be unmodifiable
+        try
+        {
+            map1.put(r0, t5);
+            fail("map1 put expected UnsupportedOperationException");
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
     }
 
     public void testShuffleDoesNotAlterListOrder()
