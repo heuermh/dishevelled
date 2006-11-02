@@ -27,6 +27,8 @@ package org.dishevelled.functor;
  * Typed functor that takes one argument of type <code>E</code>
  *  and returns a value of type <code>RV</code>.
  *
+ * @param <E> argument type
+ * @param <RV> return value type
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */

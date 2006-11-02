@@ -28,6 +28,7 @@ package org.dishevelled.functor;
  * a <code>boolean</code> value.  Of limited utility,
  * included here only for completeness' sake.
  *
+ * @param <E> argument type
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */

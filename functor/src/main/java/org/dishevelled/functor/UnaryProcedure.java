@@ -26,6 +26,7 @@ package org.dishevelled.functor;
 /**
  * Typed functor that takes one argument and returns no value.
  *
+ * @param <E> argument type
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
