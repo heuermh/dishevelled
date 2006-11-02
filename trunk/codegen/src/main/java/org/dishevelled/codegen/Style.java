@@ -75,7 +75,7 @@ public enum Style
     Mutable,
 
     /**
-     * Mutable javabean source code generation style, with property change support.
+     * Mutable bean source code generation style, with property change support.
      */
     MutableBean,
 
