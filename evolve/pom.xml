@@ -49,9 +49,9 @@
     </license>
   </licenses>
   <scm>
-    <connection>scm:cvs:pserver:anonymous@dishevelled.cvs.sourceforge.net:/cvsroot/dishevelled:dishevelled/evolve</connection>
-    <developerConnection>scm:cvs:ext:heuermh@dishevelled.cvs.sourceforge.net:/cvsroot/dishevelled:dishevelled/evolve</developerConnection>
-    <url>http://dishevelled.cvs.sourceforge.net/dishevelled/dishevelled/evolve</url>
+    <connection>scm|svn|http://svn.sourceforge.net/svnroot/dishevelled/trunk/evolve</connection>
+    <developerConnection>scm|svn|https://svn.sourceforge.net/svnroot/dishevelled/trunk/evolve</developerConnection>
+    <url>http://svn.sourceforge.net/viewcvs.cgi/dishevelled/trunk/evolve</url>
   </scm>
   <organization>
     <name>dishevelled.org</name>
@@ -84,4 +84,30 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
+  <reporting>
+    <plugins>
+      <plugin>
+        <artifactId>maven-checkstyle-plugin</artifactId>
+        <configuration>
+          <configLocation>src/build/conf/checkstyle.xml</configLocation>
+          <enableRulesSummary>false</enableRulesSummary>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <configuration>
+          <!-- todo:  must manually update the copyright dates here -->
+          <bottom>Copyright (c) 2005-2006 held jointly by the individual authors. Licensed under the &lt;a href="http://www.opensource.org/licenses/lgpl-license.php"&gt;GNU Lesser General Public License&lt;a&gt; (LGPL).</bottom>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>jxr-maven-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>cobertura-maven-plugin</artifactId>
+      </plugin>
+    </plugins>
+  </reporting>
 </model>
