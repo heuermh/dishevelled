@@ -28,6 +28,11 @@ package org.dishevelled.functor;
  * <code>F</code>, <code>G</code>, and <code>H</code> and returns a
  * value of type <code>RV</code>.
  *
+ * @param <E> first argument type
+ * @param <F> second argument type
+ * @param <G> third argument type
+ * @param <H> fourth argument type
+ * @param <RV> return value type
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
@@ -41,6 +46,7 @@ public interface QuaternaryFunction<E, F, G, H, RV>
      * @param f second argument to this evaluation
      * @param g third argument to this evaluation
      * @param h fourth argument to this evaluation
+     * @return the result of this evaluation
      */
     RV evaluate(E e, F f, G g, H h);
 }

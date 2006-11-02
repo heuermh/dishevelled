@@ -27,6 +27,9 @@ package org.dishevelled.functor;
  * Typed functor that takes three arguments and returns a <code>boolean</code>
  * value.
  *
+ * @param <E> first argument type
+ * @param <F> second argument type
+ * @param <G> third argument type
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
