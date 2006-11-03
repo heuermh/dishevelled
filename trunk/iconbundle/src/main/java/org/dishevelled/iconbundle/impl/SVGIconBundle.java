@@ -49,7 +49,7 @@ import org.dishevelled.iconbundle.IconTextDirection;
 public final class SVGIconBundle
     implements IconBundle
 {
-    /** SVG document or somesuch? */
+    /** SVG document url. */
     private URL url;
 
 
@@ -72,7 +72,7 @@ public final class SVGIconBundle
         }
         catch (Exception e)
         {
-            throw new IllegalArgumentException("could not create base image URL", e);
+            throw new IllegalArgumentException("could not create base image URL: " + e.getMessage());
         }
     }
 
