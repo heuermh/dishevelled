@@ -37,6 +37,7 @@ import java.util.Arrays;
 import org.dishevelled.commandline.Usage;
 import org.dishevelled.commandline.Switch;
 import org.dishevelled.commandline.Argument;
+import org.dishevelled.commandline.ArgumentList;
 import org.dishevelled.commandline.CommandLine;
 import org.dishevelled.commandline.CommandLineParser;
 import org.dishevelled.commandline.CommandLineParseException;
@@ -66,9 +67,8 @@ public final class ShapeVariants
      */
     public static void main(final String[] args)
     {
-        ShowAllVariants sav = null;
-        CommandLine commandLine = null;
-        List<Argument<?>> arguments = null;
+       CommandLine commandLine = null;
+        ArgumentList arguments = null;
         try
         {
             commandLine = new CommandLine(args);
@@ -84,7 +84,7 @@ public final class ShapeVariants
             Argument<String> o = new StringArgument("o", "output", "output file name", true);
             Argument<Boolean> b = new Switch("b", "draw-borders", "true to draw borders");
 
-            arguments = Arrays.asList(new Argument<?>[] { x, y, w, h, s, t, f, k, o, b });
+            arguments = new ArgumentList(new Argument[] { x, y, w, h, s, t, f, k, o, b });
 
             CommandLineParser.parse(commandLine, arguments);
 
@@ -108,12 +108,12 @@ public final class ShapeVariants
 
             IconBundle iconBundle = new ShapeIconBundle(shape, stroke, fillColor, strokeColor);
 
-            sav = new ShowAllVariants(iconBundle, o.getValue(), b.getValue());
+            Runnable sav = new ShowAllVariants(iconBundle, o.getValue(), b.getValue());
             sav.run();
         }
         catch (CommandLineParseException e)
         {
-            Usage.usage(sav, "java -jar shape-variants.jar [args]\n\nShape Variants", e, commandLine, arguments, System.err);
+            Usage.usage("java -jar shape-variants.jar [args]\n\nShape Variants", e, commandLine, arguments, System.err);
         }
     }
 }

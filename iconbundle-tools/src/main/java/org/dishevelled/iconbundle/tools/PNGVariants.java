@@ -31,6 +31,7 @@ import java.util.Arrays;
 import org.dishevelled.commandline.Usage;
 import org.dishevelled.commandline.Switch;
 import org.dishevelled.commandline.Argument;
+import org.dishevelled.commandline.ArgumentList;
 import org.dishevelled.commandline.CommandLine;
 import org.dishevelled.commandline.CommandLineParser;
 import org.dishevelled.commandline.CommandLineParseException;
@@ -58,9 +59,8 @@ public final class PNGVariants
      */
     public static final void main(final String[] args)
     {
-        ShowAllVariants sav = null;
         CommandLine commandLine = null;
-        List<Argument<?>> arguments = null;
+        ArgumentList arguments = null;
         try
         {
             commandLine = new CommandLine(args);
@@ -69,22 +69,22 @@ public final class PNGVariants
             Argument<String> o = new StringArgument("o", "output", "output file name", true);
             Argument<Boolean> b = new Switch("b", "draw-borders", "true to draw borders");
 
-            arguments = Arrays.asList(new Argument<?>[] { i, o, b });
+            arguments = new ArgumentList(new Argument[] { i, o, b });
 
             CommandLineParser.parse(commandLine, arguments);
 
             IconBundle iconBundle = new PNGIconBundle(i.getValue());
 
-            sav = new ShowAllVariants(iconBundle, o.getValue(), b.getValue());
+            Runnable sav = new ShowAllVariants(iconBundle, o.getValue(), b.getValue());
             sav.run();
         }
         catch (CommandLineParseException e)
         {
-            Usage.usage(sav, "java -jar png-variants.jar [args]\n\nPNG Variants", e, commandLine, arguments, System.err);
+            Usage.usage("java -jar png-variants.jar [args]\n\nPNG Variants", e, commandLine, arguments, System.err);
         }
         catch (IllegalArgumentException e)
         {
-            Usage.usage(sav, "java -jar png-variants.jar [args]\n\nPNG Variants", e, commandLine, arguments, System.err);
+            Usage.usage("java -jar png-variants.jar [args]\n\nPNG Variants", e, commandLine, arguments, System.err);
         }
     }
 }
