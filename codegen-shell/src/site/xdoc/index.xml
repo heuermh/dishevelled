@@ -2,7 +2,7 @@
 <!--
 
     dsh-codegen-shell  Runnable shell for the codegen library.
-    Copyright (c) 2004-2005 held jointly by the individual authors.
+    Copyright (c) 2004-2006 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
@@ -95,7 +95,7 @@ public final class Foo
      *
      * @return the name for this foo
      */
-    public final String getName()
+    public String getName()
     {
         return name;
     }
@@ -106,7 +106,7 @@ public final class Foo
      *
      * @return the bar for this foo
      */
-    public final Bar getBar()
+    public Bar getBar()
     {
         return bar;
     }
