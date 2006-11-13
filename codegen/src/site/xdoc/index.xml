@@ -92,7 +92,7 @@ public final class Foo
      *
      * @return the name for this foo
      */
-    public final String getName()
+    public String getName()
     {
         return name;
     }
@@ -103,7 +103,7 @@ public final class Foo
      *
      * @return the bar for this foo
      */
-    public final Bar getBar()
+    public Bar getBar()
     {
         return bar;
     }
