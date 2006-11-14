@@ -30,32 +30,33 @@ package org.dishevelled.codegen;
  * <style type="text/css">.header th { text-decoration: underline; }</style>
  * <table width="90%">
  *   <tr class="header">
- *     <th>Consideration</th><th>Immutable</th><th>Mutable</th>
+ *     <th>Consideration</th><th>Immutable</th><th>ImmutableWithCopyMutators</th><th>Mutable</th>
  *     <th>RichlyMutable</th><th>ExtendedRichlyMutable</th><th>Unsafe</th>
  *   </tr>
- *   <tr><td>final field</td><td class="value">X</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
- *   <tr><td>final collection field</td><td>X</td><td>X</td><td>X</td><td>X</td><td>&nbsp;</td></tr>
- *   <tr><td>final class</td><td>X</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
- *   <tr><td>defensive copy</td><td>X</td><td>X</td><td>X</td><td>X</td><td>&nbsp;</td></tr>
- *   <tr><td>unmodifiable at creation</td><td>X</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
- *   <tr><td>unmodifiable at access</td><td>&nbsp;</td><td>X</td><td>X</td><td>X</td><td>&nbsp;</td></tr>
- *   <tr><td>get method</td><td>X</td><td>X</td><td>X</td><td>X</td><td>X</td></tr>
- *   <tr><td>set method</td><td>&nbsp;</td><td>X</td><td>X</td><td>X</td><td>X</td></tr>
- *   <tr><td>set collection method</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>X</td></tr>
- *   <tr><td>has method</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>X</td><td>&nbsp;</td></tr>
- *   <tr><td>add method</td><td>&nbsp;</td><td>X</td><td>X</td><td>X</td><td>&nbsp;</td></tr>
- *   <tr><td>add... method</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>X</td><td>&nbsp;</td></tr>
- *   <tr><td>addAll method</td><td>&nbsp;</td><td>&nbsp;</td><td>X</td><td>X</td><td>&nbsp;</td></tr>
- *   <tr><td>remove method</td><td>&nbsp;</td><td>X</td><td>X</td><td>X</td><td>&nbsp;</td></tr>
- *   <tr><td>remove... method</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>X</td><td>&nbsp;</td></tr>
- *   <tr><td>removeAll method</td><td>&nbsp;</td><td>&nbsp;</td><td>X</td><td>X</td><td>&nbsp;</td></tr>
- *   <tr><td>retainAll method</td><td>&nbsp;</td><td>&nbsp;</td><td>X</td><td>X</td><td>&nbsp;</td></tr>
- *   <tr><td>clear method</td><td>&nbsp;</td><td>&nbsp;</td><td>X</td><td>X</td><td>&nbsp;</td></tr>
- *   <tr><td>final methods</td><td>&nbsp;</td><td>X</td><td>X</td><td>X</td><td>&nbsp;</td></tr>
- *   <tr><td>default constructor</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
- *   <tr><td>required argument only constructor</td><td>&nbsp;</td><td>X</td><td>X</td><td>X</td><td>X</td></tr>
- *   <tr><td>full argument constructor</td><td>X</td><td>X</td><td>X</td><td>X</td><td>X</td></tr>
- *   <tr><td>override toString and hashCode</td><td>&nbsp;</td><td>X</td><td>X</td><td>X</td><td>X</td></tr>
+ *   <tr><td>final field</td><td>X</td><td>X</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+ *   <tr><td>final collection field</td><td>X</td><td>X</td><td>X</td><td>X</td><td>X</td><td>&nbsp;</td></tr>
+ *   <tr><td>final class</td><td>X</td><td>X</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+ *   <tr><td>defensive copy</td><td>X</td><td>X</td><td>X</td><td>X</td><td>X</td><td>&nbsp;</td></tr>
+ *   <tr><td>unmodifiable at creation</td><td>X</td><td>X</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+ *   <tr><td>unmodifiable at access</td><td>&nbsp;</td><td>&nbsp;</td><td>X</td><td>X</td><td>X</td><td>&nbsp;</td></tr>
+ *   <tr><td>get method</td><td>X</td><td>X</td><td>X</td><td>X</td><td>X</td><td>X</td></tr>
+ *   <tr><td>set method</td><td>&nbsp;</td><td>&nbsp;</td><td>X</td><td>X</td><td>X</td><td>X</td></tr>
+ *   <tr><td>set collection method</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>X</td></tr>
+ *   <tr><td>with copy mutator</td><td>&nbsp;</td><td>X</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+ *   <tr><td>has method</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>X</td><td>&nbsp;</td></tr>
+ *   <tr><td>add method</td><td>&nbsp;</td><td>&nbsp;</td><td>X</td><td>X</td><td>X</td><td>&nbsp;</td></tr>
+ *   <tr><td>add... method</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>X</td><td>&nbsp;</td></tr>
+ *   <tr><td>addAll method</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>X</td><td>X</td><td>&nbsp;</td></tr>
+ *   <tr><td>remove method</td><td>&nbsp;</td><td>&nbsp;</td><td>X</td><td>X</td><td>X</td><td>&nbsp;</td></tr>
+ *   <tr><td>remove... method</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>X</td><td>&nbsp;</td></tr>
+ *   <tr><td>removeAll method</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>X</td><td>X</td><td>&nbsp;</td></tr>
+ *   <tr><td>retainAll method</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>X</td><td>X</td><td>&nbsp;</td></tr>
+ *   <tr><td>clear method</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>X</td><td>X</td><td>&nbsp;</td></tr>
+ *   <tr><td>final methods</td><td>&nbsp;</td><td>&nbsp;</td><td>X</td><td>X</td><td>X</td><td>&nbsp;</td></tr>
+ *   <tr><td>default constructor</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+ *   <tr><td>required argument only constructor</td><td>&nbsp;</td><td>&nbsp;</td><td>X</td><td>X</td><td>X</td><td>X</td></tr>
+ *   <tr><td>full argument constructor</td><td>X</td><td>X</td><td>X</td><td>X</td><td>X</td><td>X</td></tr>
+ *   <tr><td>override toString and hashCode</td><td>&nbsp;</td><td>&nbsp;</td><td>X</td><td>X</td><td>X</td><td>X</td></tr>
  * </table></p>
  *
  * @author  Michael Heuer
@@ -68,6 +69,11 @@ public enum Style
      * Immutable source code generation style.
      */
     Immutable,
+
+    /**
+     * Immutable with copy mutators source code generation style.
+     */
+    ImmutableWithCopyMutators,
 
     /**
      * Mutable source code generation style.
