@@ -61,7 +61,6 @@ public class ${cd.Upper}
 #if ($cd.Realizes.size() > 0)
     implements #foreach ($r in $cd.Realizes)${r.Upper}#if ($velocityCount < ($cd.Realizes.size() - 1)), #end#end
 #end
-
 {
 #foreach ($a in $cd.Attributes)
 #set ($r = $a.Role)
@@ -364,7 +363,6 @@ public class ${cd.Upper}
         {
             throw new IllegalArgumentException("${r.Mixed} must not be null");
         }
-
         this.${r.Mixed} = ${r.Mixed};
     }
 #elseif ($a.Cardinality.toString() == "ZeroToMany")
@@ -395,7 +393,6 @@ public class ${cd.Upper}
         {
             throw new IllegalArgumentException("${r.Mixed}s must not be null");
         }
-
         this.${r.Mixed}s = ${r.Mixed}s;
     }
 #elseif ($a.Cardinality.toString() == "OneToMany")
@@ -434,7 +431,6 @@ public class ${cd.Upper}
         {
             throw new IllegalArgumentException("${r.Mixed}s must contain at least one ${r.Lower}");
         }
-
         this.${r.Mixed}s = ${r.Mixed}s;
     }
 #end
@@ -487,7 +483,6 @@ public class ${cd.Upper}
         {
             throw new IllegalArgumentException("${r.Mixed} must not be null");
         }
-
         this.${r.Mixed} = ${r.Mixed};
     }
 #elseif ($a.Cardinality.toString() == "ZeroToMany")
@@ -518,7 +513,6 @@ public class ${cd.Upper}
         {
             throw new IllegalArgumentException("${r.Mixed}s must not be null");
         }
-
         this.${r.Mixed}s = ${r.Mixed}s;
     }
 #elseif ($a.Cardinality.toString() == "OneToMany")
@@ -557,7 +551,6 @@ public class ${cd.Upper}
         {
             throw new IllegalArgumentException("${r.Mixed}s must contain at least one ${r.Lower}");
         }
-
         this.${r.Mixed}s = ${r.Mixed}s;
     }
 #end
