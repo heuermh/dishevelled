@@ -56,7 +56,6 @@ public class ${cd.Upper}
 #else
     implements Runnable
 #end
-
 {
 #foreach ($a in $cd.Attributes)
 #set ($r = $a.Role)
@@ -295,7 +294,6 @@ public class ${cd.Upper}
         {
             throw new IllegalArgumentException("${r.Mixed} must not be null");
         }
-
         this.${r.Mixed} = ${r.Mixed};
     }
 #elseif ($a.Cardinality.toString() == "ZeroToMany")
