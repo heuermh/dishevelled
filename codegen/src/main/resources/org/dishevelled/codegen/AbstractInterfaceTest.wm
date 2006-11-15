@@ -1,0 +1,325 @@
+#*
+
+    dsh-codegen  Source code generation suite.
+    Copyright (c) 2004-2006 held jointly by the individual authors.
+
+    This library is free software; you can redistribute it and/or modify it 
+    under the terms of the GNU Lesser General Public License as published 
+    by the Free Software Foundation; either version 2.1 of the License, or (at 
+    your option) any later version.
+
+    This library is distributed in the hope that it will be useful, but WITHOUT 
+    ANY WARRANTY; with out even the implied warranty of MERCHANTABILITY or 
+    FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public 
+    License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License 
+    along with this library;  if not, write to the Free Software Foundation, 
+    Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307  USA.
+
+    > http://www.gnu.org/copyleft/lesser.html 
+    > http://www.opensource.org/licenses/lgpl-license.php
+
+*#
+$!{license}
+package ${id.PackageName};
+
+#foreach ($a in $id.Attributes)
+#if (($a.Cardinality.toString() == "ZeroToMany") || ($a.Cardinality.toString() == "OneToMany"))
+import ${a.CollectionDescription.InterfacePackageName}.${a.CollectionDescription.InterfaceName};
+#end
+#end
+#foreach ($a in $id.Associations)
+#if (($a.Cardinality.toString() == "ZeroToMany") || ($a.Cardinality.toString() == "OneToMany"))
+import ${a.CollectionDescription.InterfacePackageName}.${a.CollectionDescription.InterfaceName};
+#end
+#end
+
+import junit.framework.TestCase;
+#if (($cd.Associations.size() > 0) || ($cd.Specializes.size() > 0))
+
+#end
+#foreach ($a in $id.Associations)
+import ${a.PackageName}.${a.Upper};
+#end
+#foreach ($i in $id.Specializes)
+import ${i.PackageName}.${i.Upper};
+#end
+
+/**
+ * Abstract unit test for implementations of ${id.Upper}.
+ *
+ * @author ${id.Author}
+ * @version ${id.Version}
+ */
+public abstract class Abstract${id.Upper}Test
+    extends TestCase
+{
+
+    /**
+     * Create and return a new instance of ${id.Upper} to test.
+     *
+     * @return a new instance of ${id.Upper} to test
+     */
+    protected abstract ${id.Upper} create${id.Upper}();
+
+#foreach ($a in $id.Attributes)
+#set ($r = $a.Role)
+#if (($a.Cardinality.toString() == "ZeroToMany") || ($a.Cardinality.toString() == "OneToMany"))
+#set ($coll = $a.CollectionDescription)
+    /**
+     * Create and return an empty ${coll.InterfaceDescription} of ${a.Lower}s
+     * for testing <code>${r.Mixed}s</code>.
+     *
+     * @return an empty ${coll.InterfaceDescription} of ${a.Lower}s
+     */
+    protected abstract ${coll.InterfaceName}<${a.Upper}> createEmpty${r.Upper}s();
+
+    /**
+     * Create and return a singleton ${coll.InterfaceDescription} of ${a.Lower}s
+     * for testing <code>${r.Mixed}s</code>.
+     *
+     * @return a singleton ${coll.InterfaceDescription} of ${a.Lower}s
+     */
+    protected abstract ${coll.InterfaceName}<${a.Upper}> createSingleton${r.Upper}s();
+
+    /**
+     * Create and return a full ${coll.InterfaceDescription} of ${a.Lower}s
+     * for testing <code>${r.Mixed}s</code>.  The ${coll.InterfaceDescription} of
+     * ${a.Lower}s should contain more than one ${a.Upper}.
+     *
+     * @return a full ${coll.InterfaceDescription} of ${a.Lower}s
+     */
+    protected abstract ${coll.InterfaceName}<${a.Upper}> createFull${r.Upper}s();
+
+#end
+#end
+#foreach ($a in $id.Associations)
+#set ($r = $a.Role)
+#if (($a.Cardinality.toString() == "ZeroToMany") || ($a.Cardinality.toString() == "OneToMany"))
+#set ($coll = $a.CollectionDescription)
+    /**
+     * Create and return an empty ${coll.InterfaceDescription} of ${a.Lower}s
+     * for testing <code>${r.Mixed}s</code>.
+     *
+     * @return an empty ${coll.InterfaceDescription} of ${a.Lower}s
+     */
+    protected abstract ${coll.InterfaceName}<${a.Upper}> createEmpty${r.Upper}s();
+
+    /**
+     * Create and return a singleton ${coll.InterfaceDescription} of ${a.Lower}s
+     * for testing <code>${r.Mixed}s</code>.
+     *
+     * @return a singleton ${coll.InterfaceDescription} of ${a.Lower}s
+     */
+    protected abstract ${coll.InterfaceName}<${a.Upper}> createSingleton${r.Upper}s();
+
+    /**
+     * Create and return a full ${coll.InterfaceDescription} of ${a.Lower}s
+     * for testing <code>${r.Mixed}s</code>.  The ${coll.InterfaceDescription} of
+     * ${a.Lower}s should contain more than one ${a.Upper}.
+     *
+     * @return a full ${coll.InterfaceDescription} of ${a.Lower}s
+     */
+    protected abstract ${coll.InterfaceName}<${a.Upper}> createFull${r.Upper}s();
+
+#end
+#end
+    public void test${id.Upper}()
+    {
+        ${id.Upper} ${id.Mixed} = create${id.Upper}();
+        assertNotNull("${id.Mixed} not null", ${id.Mixed});
+#foreach ($a in $id.Attributes)
+#set ($r = $a.Role)
+#if ($a.Cardinality.toString() == "StrictlyOne")
+        assertNotNull("${id.Mixed} ${r.Mixed} not null", ${id.Mixed}.get${r.Upper}());
+#elseif ($a.Cardinality.toString() == "ZeroToMany")
+        assertNotNull("${id.Mixed} ${r.Mixed}s not null", ${id.Mixed}.get${r.Upper}s());
+        assertTrue("${id.Mixed} ${r.Mixed}s size >= 0", (${id.Mixed}.get${r.Upper}s().size() >= 0));
+#elseif ($a.Cardinality.toString() == "ZeroToMany")
+        assertNotNull("${id.Mixed} ${r.Mixed}s not null", ${id.Mixed}.get${r.Upper}s());
+        assertTrue("${id.Mixed} ${r.Mixed}s size >= 1", (${id.Mixed}.get${r.Upper}s().size() >= 1));
+#end
+#end
+#foreach ($a in $id.Associations)
+#set ($r = $a.Role)
+#if ($a.Cardinality.toString() == "StrictlyOne")
+        assertNotNull("${id.Mixed} ${r.Mixed} not null", ${id.Mixed}.get${r.Upper}());
+#elseif ($a.Cardinality.toString() == "ZeroToMany")
+        assertNotNull("${id.Mixed} ${r.Mixed}s not null", ${id.Mixed}.get${r.Upper}s());
+        assertTrue("${id.Mixed} ${r.Mixed}s size >= 0", (${id.Mixed}.get${r.Upper}s().size() >= 0));
+#elseif ($a.Cardinality.toString() == "ZeroToMany")
+        assertNotNull("${id.Mixed} ${r.Mixed}s not null", ${id.Mixed}.get${r.Upper}s());
+        assertTrue("${id.Mixed} ${r.Mixed}s size >= 1", (${id.Mixed}.get${r.Upper}s().size() >= 1));
+#end
+#end
+    }
+#foreach ($a in $id.Attributes)
+#set ($r = $a.Role)
+#if (($a.Cardinality.toString() == "ZeroToMany") || ($a.Cardinality.toString() == "OneToMany"))
+#set ($coll = $a.CollectionDescription)
+
+    public void test${r.Upper}sIsImmutable()
+    {
+        ${id.Upper} ${id.Mixed} = create${id.Upper}();
+        try
+        {
+            ${id.Mixed}.get${r.Upper}s().clear();
+            fail("${id.Mixed} ${r.Mixed}s clear() expected UnsupportedOperationException");
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
+        try
+        {
+            ${a.Upper} ${r.Mixed} = createSingleton${r.Upper}s().iterator().next();
+            ${id.Mixed}.get${r.Upper}s().add(${r.Mixed});
+            fail("${id.Mixed} ${r.Mixed}s add(${r.Mixed}) expected UnsupportedOperationException");
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
+        try
+        {
+            ${a.Upper} ${r.Mixed} = createSingleton${r.Upper}s().iterator().next();
+            ${id.Mixed}.get${r.Upper}s().remove(${r.Mixed});
+            fail("${id.Mixed} ${r.Mixed}s remove(${r.Mixed}) expected UnsupportedOperationException");
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
+        try
+        {
+            ${coll.InterfaceName}<${a.Upper}> ${r.Mixed}s = createFull${r.Upper}s();
+            ${id.Mixed}.get${r.Upper}s().addAll(${r.Mixed}s);
+            fail("${id.Mixed} ${r.Mixed}s addAll(${r.Mixed}) expected UnsupportedOperationException");
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
+        try
+        {
+            ${coll.InterfaceName}<${a.Upper}> ${r.Mixed}s = createFull${r.Upper}s();
+            ${id.Mixed}.get${r.Upper}s().removeAll(${r.Mixed}s);
+            fail("${id.Mixed} ${r.Mixed}s removeAll(${r.Mixed}) expected UnsupportedOperationException");
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
+        try
+        {
+            ${coll.InterfaceName}<${a.Upper}> ${r.Mixed}s = createFull${r.Upper}s();
+            ${id.Mixed}.get${r.Upper}s().retainAll(${r.Mixed}s);
+            fail("${id.Mixed} ${r.Mixed}s retainAll(${r.Mixed}) expected UnsupportedOperationException");
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
+        try
+        {
+            Iterator<${a.Upper}> ${r.Mixed}s = ${id.Mixed}.get${r.Upper}s().iterator();
+            if (${r.Mixed}s.hasNext())
+            {
+                ${r.Mixed}s.next();
+                ${r.Mixed}s.remove();
+                fail("${id.Mixed} ${r.Mixed}s iterator remove() expected UnsupportedOperationException");
+            }
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
+    }
+#end
+#end
+#foreach ($a in $id.Associations)
+#set ($r = $a.Role)
+#if (($a.Cardinality.toString() == "ZeroToMany") || ($a.Cardinality.toString() == "OneToMany"))
+#set ($coll = $a.CollectionDescription)
+
+    public void test${r.Upper}sIsImmutable()
+    {
+        ${id.Upper} ${id.Mixed} = create${id.Upper}();
+        try
+        {
+            ${id.Mixed}.get${r.Upper}s().clear();
+            fail("${id.Mixed} ${r.Mixed}s clear() expected UnsupportedOperationException");
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
+        try
+        {
+            ${a.Upper} ${r.Mixed} = createSingleton${r.Upper}s().iterator().next();
+            ${id.Mixed}.get${r.Upper}s().add(${r.Mixed});
+            fail("${id.Mixed} ${r.Mixed}s add(${r.Mixed}) expected UnsupportedOperationException");
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
+        try
+        {
+            ${a.Upper} ${r.Mixed} = createSingleton${r.Upper}s().iterator().next();
+            ${id.Mixed}.get${r.Upper}s().remove(${r.Mixed});
+            fail("${id.Mixed} ${r.Mixed}s remove(${r.Mixed}) expected UnsupportedOperationException");
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
+        try
+        {
+            ${coll.InterfaceName}<${a.Upper}> ${r.Mixed}s = createFull${r.Upper}s();
+            ${id.Mixed}.get${r.Upper}s().addAll(${r.Mixed}s);
+            fail("${id.Mixed} ${r.Mixed}s addAll(${r.Mixed}) expected UnsupportedOperationException");
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
+        try
+        {
+            ${coll.InterfaceName}<${a.Upper}> ${r.Mixed}s = createFull${r.Upper}s();
+            ${id.Mixed}.get${r.Upper}s().removeAll(${r.Mixed}s);
+            fail("${id.Mixed} ${r.Mixed}s removeAll(${r.Mixed}) expected UnsupportedOperationException");
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
+        try
+        {
+            ${coll.InterfaceName}<${a.Upper}> ${r.Mixed}s = createFull${r.Upper}s();
+            ${id.Mixed}.get${r.Upper}s().retainAll(${r.Mixed}s);
+            fail("${id.Mixed} ${r.Mixed}s retainAll(${r.Mixed}) expected UnsupportedOperationException");
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
+        try
+        {
+            Iterator<${a.Upper}> ${r.Mixed}s = ${id.Mixed}.get${r.Upper}s().iterator();
+            if (${r.Mixed}s.hasNext())
+            {
+                ${r.Mixed}s.next();
+                ${r.Mixed}s.remove();
+                fail("${id.Mixed} ${r.Mixed}s iterator remove() expected UnsupportedOperationException");
+            }
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
+    }
+#end
+#end
+}

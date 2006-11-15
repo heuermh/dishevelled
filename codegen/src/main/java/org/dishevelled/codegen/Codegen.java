@@ -99,6 +99,55 @@ public final class Codegen
     }
 
     /**
+     * Generate an abstract unit test java source file for the specified interface
+     * description.
+     *
+     * @param id interface description, must not be null
+     */
+    public static void generateAbstractUnitTest(final InterfaceDescription id)
+    {
+        if (id == null)
+        {
+            throw new IllegalArgumentException("id must not be null");
+        }
+
+        FileWriter fw = null;
+        try
+        {
+            Properties p = new Properties();
+            p.setProperty("resource.loader", "class");
+            p.setProperty("class.resource.loader.class",
+                          "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
+
+            Velocity.init(p);
+
+            fw = new FileWriter("Abstract" + id.getUpper() + "Test.java");
+
+            VelocityContext context = new VelocityContext();
+            context.put("id", id);
+
+            Template template = Velocity.getTemplate("org/dishevelled/codegen/AbstractInterfaceTest.wm");
+            template.merge(context, fw);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            System.exit(1);
+        }
+        finally
+        {
+            try
+            {
+                fw.close();
+            }
+            catch (Exception e)
+            {
+                // empty
+            }
+        }
+    }
+
+    /**
      * Generate a java source file for the specified class
      * description and style.
      *

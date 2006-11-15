@@ -44,7 +44,7 @@ import java.util.Collection;
 import java.util.Collections;
 #end
 #end
-#if (($cd.Associations > 0) || ($cd.Specializes.size() > 0) || ($cd.Realizes.size() > 0))
+#if (($cd.Associations.size() > 0) || ($cd.Specializes.size() > 0) || ($cd.Realizes.size() > 0))
 
 #end
 #foreach ($a in $cd.Associations)
