@@ -31,8 +31,11 @@ import ${a.CollectionDescription.ImplementationPackageName}.${a.CollectionDescri
 import java.util.Collections;
 #end
 #end
-#if ($cd.Specializes.size() > 0) || ($cd.Realizes.size() > 0)
+#if (($cd.Associations > 0) || ($cd.Specializes.size() > 0) || ($cd.Realizes.size() > 0))
 
+#end
+#foreach ($a in $cd.Associations)
+import ${a.PackageName}.${a.Upper};
 #end
 #foreach ($s in $cd.Specializes)
 import ${s.PackageName}.${s.Upper};
