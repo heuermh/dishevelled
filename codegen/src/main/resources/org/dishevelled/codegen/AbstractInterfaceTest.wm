@@ -36,14 +36,18 @@ import ${a.CollectionDescription.InterfacePackageName}.${a.CollectionDescription
 #end
 
 import junit.framework.TestCase;
-#if (($cd.Associations.size() > 0) || ($cd.Specializes.size() > 0))
+#if (($id.Associations.size() > 0) || ($id.Specializes.size() > 0))
 
 #end
 #foreach ($a in $id.Associations)
+#if (${id.PackageName} != ${a.PackageName})
 import ${a.PackageName}.${a.Upper};
 #end
-#foreach ($i in $id.Specializes)
-import ${i.PackageName}.${i.Upper};
+#end
+#foreach ($s in $id.Specializes)
+#if (${id.PackageName} != ${s.PackageName})
+import ${s.PackageName}.${s.Upper};
+#end
 #end
 
 /**
