@@ -35,13 +35,19 @@ import java.util.Collections;
 
 #end
 #foreach ($a in $cd.Associations)
+#if (${cd.PackageName} != ${a.PackageName})
 import ${a.PackageName}.${a.Upper};
 #end
+#end
 #foreach ($s in $cd.Specializes)
+#if (${cd.PackageName} != ${s.PackageName})
 import ${s.PackageName}.${s.Upper};
 #end
+#end
 #foreach ($r in $cd.Realizes)
+#if (${cd.PackageName} != ${r.PackageName})
 import ${r.PackageName}.${r.Upper};
+#end
 #end
 
 /**
