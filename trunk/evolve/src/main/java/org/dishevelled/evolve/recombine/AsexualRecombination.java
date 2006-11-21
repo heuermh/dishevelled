@@ -26,7 +26,6 @@ package org.dishevelled.evolve.recombine;
 import java.util.Set;
 import java.util.HashSet;
 
-//import org.dishevelled.evolve.Individual;
 import org.dishevelled.evolve.Recombination;
 
 /**
@@ -34,6 +33,7 @@ import org.dishevelled.evolve.Recombination;
  * Subclasses need only to implement the abstract individual-wise method
  * <code>I recombine(I)</code>.
  *
+ * @param <I> individual type
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
@@ -41,7 +41,7 @@ public abstract class AsexualRecombination<I>
     implements Recombination<I>
 {
 
-    /** @see Recombination */
+    /** {@inheritDoc} */
     public final Set<I> recombine(final Set<I> parents)
     {
         Set<I> recombined = new HashSet<I>(parents.size());
@@ -50,7 +50,6 @@ public abstract class AsexualRecombination<I>
         {
             recombined.add(recombine(parent));
         }
-
         return recombined;
     }
 

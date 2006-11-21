@@ -38,6 +38,7 @@ import org.dishevelled.evolve.Individual;
 /**
  * Elitist selection function.
  *
+ * @param <I> individual type
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
@@ -51,7 +52,7 @@ public final class ElitistSelection<I>
     private static final float DEFAULT_LOAD_FACTOR = 0.75f;
 
     /** WeightedMap entry comparator. */
-    private WeightedMapEntryComparator WEIGHTED_MAP_ENTRY_COMPARATOR = new WeightedMapEntryComparator();
+    private final WeightedMapEntryComparator weightedMapEntryComparator = new WeightedMapEntryComparator();
 
 
     /**
@@ -91,7 +92,7 @@ public final class ElitistSelection<I>
         return individuals;
     }
 
-    /** @see Selection */
+    /** {@inheritDoc} */
     public WeightedMap<I> select(final WeightedMap<I> parents,
                                  final WeightedMap<I> children)
     {
@@ -108,7 +109,7 @@ public final class ElitistSelection<I>
 
         // sort keys by score
         List<Map.Entry<I, Double>> sortedKeys = new ArrayList<Map.Entry<I, Double>>(children.entrySet());
-        Collections.sort(sortedKeys, WEIGHTED_MAP_ENTRY_COMPARATOR);
+        Collections.sort(sortedKeys, weightedMapEntryComparator);
 
         // take the top n individuals
         List<Map.Entry<I, Double>> eliteKeys = sortedKeys.subList(0, individuals);
@@ -123,7 +124,7 @@ public final class ElitistSelection<I>
         // update fitness based on number of top n individuals
         for (I i : intermediate.keySet())
         {
-            intermediate.put(i, Double.valueOf(1.0d/individuals));
+            intermediate.put(i, Double.valueOf(1.0d / individuals));
         }
 
         // fitness proportional selection on intermediate map
@@ -150,16 +151,10 @@ public final class ElitistSelection<I>
         implements Comparator<Map.Entry<I, Double>>
     {
 
-        /** @see Comparator */
+        /** {@inheritDoc} */
         public int compare(final Map.Entry<I, Double> e1, final Map.Entry<I, Double> e2)
         {
             return e1.getValue().compareTo(e2.getValue());
-        }
-
-        /** @see Comparator */
-        public boolean equals(final Object o)
-        {
-            return super.equals(o);
         }
     }
 }

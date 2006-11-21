@@ -31,6 +31,7 @@ import org.dishevelled.weighted.WeightedMap;
 /**
  * An event representing progress in an evolutionary algorithm function.
  *
+ * @param <I> individual type
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
@@ -130,6 +131,7 @@ public final class EvolutionaryAlgorithmEvent<I>
     /**
      * Create a new evolutionary algorithm event with the specified parameters.
      *
+     * @param source source of this event
      * @param parentPopulation parent population, for selected events
      * @param childPopulation child population, for selected events
      * @param population population, for selected events

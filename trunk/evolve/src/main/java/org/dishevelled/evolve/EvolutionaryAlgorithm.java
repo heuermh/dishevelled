@@ -33,6 +33,7 @@ import org.dishevelled.weighted.HashWeightedMap;
 /**
  * An evolutionary algorithm function.
  *
+ * @param <I> individual type
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
@@ -87,7 +88,7 @@ public final class EvolutionaryAlgorithm<I>
         }
 
         int time = 0;
-        while (exitStrategy.evaluate(population, time) == false)
+        while (!exitStrategy.evaluate(population, time))
         {
             fireExitFailed(population, time);
 

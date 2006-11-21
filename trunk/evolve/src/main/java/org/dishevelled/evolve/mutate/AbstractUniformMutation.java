@@ -27,13 +27,13 @@ import java.util.Set;
 import java.util.HashSet;
 
 import org.dishevelled.evolve.Mutation;
-//import org.dishevelled.evolve.Individual;
 
 /**
  * Apply an uniform mutation to all individuals in a population.
  * Subclasses need only to implement the abstract individual-wise method
  * <code>I mutate(I individual)</code>.
  *
+ * @param <I> individual type
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
@@ -44,7 +44,7 @@ public abstract class AbstractUniformMutation<I>
     private static final float DEFAULT_LOAD_FACTOR = 0.75f;
 
 
-    /** @see Mutation */
+    /** {@inheritDoc} */
     public final Set<I> mutate(final Set<I> recombined)
     {
         Set<I> mutated = new HashSet<I>(recombined.size(), DEFAULT_LOAD_FACTOR);
@@ -53,7 +53,6 @@ public abstract class AbstractUniformMutation<I>
         {
             mutated.add(mutate(i));
         }
-        
         return mutated;
     }
 

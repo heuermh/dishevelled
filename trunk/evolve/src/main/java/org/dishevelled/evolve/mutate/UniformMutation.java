@@ -23,12 +23,10 @@
 */
 package org.dishevelled.evolve.mutate;
 
-import org.dishevelled.evolve.Mutation;
-//import org.dishevelled.evolve.Individual;
-
 /**
  * Apply a specified uniform mutation to all individuals in a population.
  *
+ * @param <I> individual type
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
@@ -56,7 +54,7 @@ public final class UniformMutation<I>
     }
 
 
-    /** @see AbstractUniformMutation */
+    /** {@inheritDoc} */
     protected I mutate(final I individual)
     {
         return mutation.mutate(individual);

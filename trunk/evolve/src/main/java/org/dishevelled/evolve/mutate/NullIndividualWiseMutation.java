@@ -23,11 +23,10 @@
 */
 package org.dishevelled.evolve.mutate;
 
-//import org.dishevelled.evolve.Individual;
-
 /**
  * Null individual-wise mutation function.
  *
+ * @param <I> individual type
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
@@ -35,7 +34,7 @@ public final class NullIndividualWiseMutation<I>
     implements IndividualWiseMutation<I>
 {
 
-    /** @see IndividualWiseMutation */
+    /** {@inheritDoc} */
     public I mutate(final I individual)
     {
         return individual;

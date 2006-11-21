@@ -36,6 +36,7 @@ import org.dishevelled.evolve.Individual;
 /**
  * Random selection function.
  *
+ * @param <I> individual type
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
@@ -70,7 +71,7 @@ public final class RandomSelection<I>
         return random;
     }
 
-    /** @see Selection */
+    /** {@inheritDoc} */
     public WeightedMap<I> select(final WeightedMap<I> parents,
                                  final WeightedMap<I> children)
     {

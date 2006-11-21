@@ -26,11 +26,11 @@ package org.dishevelled.evolve.select;
 import org.dishevelled.weighted.WeightedMap;
 
 import org.dishevelled.evolve.Selection;
-//import org.dishevelled.evolve.Individual;
 
 /**
  * Null selection function.
  *
+ * @param <I> individual type
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
@@ -38,7 +38,7 @@ public final class NullSelection<I>
     implements Selection<I>
 {
 
-    /** @see Selection */
+    /** {@inheritDoc} */
     public WeightedMap<I> select(final WeightedMap<I> parents,
                                  final WeightedMap<I> children)
     {
@@ -50,7 +50,6 @@ public final class NullSelection<I>
         {
             throw new IllegalArgumentException("children must not be null");
         }
-
         return children;
     }
 }

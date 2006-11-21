@@ -32,6 +32,7 @@ import org.dishevelled.evolve.Individual;
 /**
  * Rank-based selection function.
  *
+ * @param <I> individual type
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
@@ -77,7 +78,7 @@ public final class RankBasedSelection<I>
         return rank;
     }
 
-    /** @see Selection */
+    /** {@inheritDoc} */
     public WeightedMap<I> select(final WeightedMap<I> parents,
                                  final WeightedMap<I> children)
     {
@@ -107,7 +108,7 @@ public final class RankBasedSelection<I>
         int intermediateSize = intermediate.size();
         for (I i : intermediate.keySet())
         {
-            intermediate.put(i, Double.valueOf(rank/intermediateSize));
+            intermediate.put(i, Double.valueOf(rank / intermediateSize));
         }
 
         // fitness proportional selection on intermediate map
@@ -118,9 +119,7 @@ public final class RankBasedSelection<I>
             // unsafe cast!
             result.put((I) ((Individual) individual).shallowCopy(), children.get(individual));
         }
-
         intermediate = null;
-
         return result;
     }
 }

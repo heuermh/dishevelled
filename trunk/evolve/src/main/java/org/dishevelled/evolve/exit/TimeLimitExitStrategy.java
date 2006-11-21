@@ -32,7 +32,8 @@ import org.dishevelled.evolve.ExitStrategy;
  * the time (in number of generations) meets or exceeds a set
  * time limit.
  *
- * @param   Michael Heuer
+ * @param <I> individual type
+ * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
 public final class TimeLimitExitStrategy<I>
@@ -59,7 +60,7 @@ public final class TimeLimitExitStrategy<I>
     }
 
 
-    /** @see ExitStrategy */
+    /** {@inheritDoc} */
     public boolean evaluate(final WeightedMap<I> population, final int time)
     {
         return (time >= timeLimit);

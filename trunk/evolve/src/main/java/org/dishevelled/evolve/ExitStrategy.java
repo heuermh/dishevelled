@@ -28,6 +28,7 @@ import org.dishevelled.weighted.WeightedMap;
 /**
  * An exit strategy function.
  *
+ * @param <I> individual type
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */

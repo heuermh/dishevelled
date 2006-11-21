@@ -32,6 +32,7 @@ import org.dishevelled.evolve.ExitStrategy;
  * at least one individual has a fitness score above a
  * set fitness threshold.
  *
+ * @param <I> individual type
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
@@ -53,7 +54,7 @@ public final class FitnessThresholdExitStrategy<I>
     }
 
 
-    /** @see ExitStrategy */
+    /** {@inheritDoc} */
     public boolean evaluate(final WeightedMap<I> population, final int time)
     {
         for (I i : population.keySet())

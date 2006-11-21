@@ -30,11 +30,11 @@ import org.dishevelled.weighted.WeightedMap;
 import org.dishevelled.weighted.HashWeightedMap;
 
 import org.dishevelled.evolve.Mutation;
-//import org.dishevelled.evolve.Individual;
 
 /**
  * Proportional mutation function.
  *
+ * @param <I> individual type
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
@@ -77,7 +77,7 @@ public final class ProportionalMutation<I>
         mutations.put(mutation, Double.valueOf(weight));
     }
 
-    /** @see Mutation */
+    /** {@inheritDoc} */
     public Set<I> mutate(final Set<I> recombined)
     {
         Set<I> mutated = new HashSet<I>(recombined.size(), DEFAULT_LOAD_FACTOR);
@@ -90,10 +90,8 @@ public final class ProportionalMutation<I>
             {
                 mutation = nullMutation;
             }
-
             mutated.add(mutation.mutate(i));
         }
-
         return mutated;
     }
 }

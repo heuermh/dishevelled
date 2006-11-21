@@ -29,6 +29,7 @@ import java.util.EventListener;
  * A listener that receives notification of progress
  * in an evolutionary algorithm function.
  *
+ * @param <I> individual type
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
