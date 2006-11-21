@@ -34,7 +34,7 @@ import ${a.CollectionDescription.InterfacePackageName}.${a.CollectionDescription
 import ${a.CollectionDescription.InterfacePackageName}.${a.CollectionDescription.InterfaceName};
 #end
 #end
-#if (($cd.Associations.size() > 0) || ($cd.Specializes.size() > 0))
+#if (($id.Associations.size() > 0) || ($id.Specializes.size() > 0))
 
 #end
 #foreach ($a in $id.Associations)
