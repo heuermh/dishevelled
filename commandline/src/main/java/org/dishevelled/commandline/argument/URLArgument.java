@@ -52,7 +52,7 @@ public final class URLArgument
     }
 
 
-    /** @see AbstractArgument */
+    /** {@inheritDoc} */
     protected URL convert(final String s)
         throws Exception
     {

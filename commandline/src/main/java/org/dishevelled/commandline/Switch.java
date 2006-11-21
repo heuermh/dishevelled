@@ -63,7 +63,7 @@ public final class Switch
     }
 
 
-    /** @see Argument */
+    /** {@inheritDoc} */
     public void visit(final String current, final CommandLine commandLine)
         throws Exception
     {
@@ -73,38 +73,37 @@ public final class Switch
         }
     }
 
-
-    /** @see Argument */
+    /** {@inheritDoc} */
     public String getShortName()
     {
         return shortName;
     }
 
-    /** @see Argument */
+    /** {@inheritDoc} */
     public String getLongName()
     {
         return longName;
     }
 
-    /** @see Argument */
+    /** {@inheritDoc} */
     public String getDescription()
     {
         return description;
     }
 
-    /** @see Argument */
+    /** {@inheritDoc} */
     public boolean isRequired()
     {
         return false;
     }
 
-    /** @see Argument */
+    /** {@inheritDoc} */
     public boolean wasFound()
     {
         return found;
     }
 
-    /** @see Argument */
+    /** {@inheritDoc} */
     public Boolean getValue()
     {
         return Boolean.valueOf(found);

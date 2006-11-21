@@ -56,7 +56,7 @@ public final class BooleanSetArgument
     }
 
 
-    /** @see AbstractArgument */
+    /** {@inheritDoc} */
     protected Set<Boolean> convert(final String s)
         throws Exception
     {

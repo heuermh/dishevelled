@@ -56,7 +56,7 @@ public final class BooleanListArgument
     }
 
 
-    /** @see AbstractArgument */
+    /** {@inheritDoc} */
     protected List<Boolean> convert(final String s)
         throws Exception
     {

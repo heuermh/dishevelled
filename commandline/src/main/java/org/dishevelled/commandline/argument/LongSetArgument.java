@@ -56,7 +56,7 @@ public final class LongSetArgument
     }
 
 
-    /** @see AbstractArgument */
+    /** {@inheritDoc} */
     protected Set<Long> convert(final String s)
         throws Exception
     {

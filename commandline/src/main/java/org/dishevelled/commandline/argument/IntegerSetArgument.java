@@ -56,7 +56,7 @@ public final class IntegerSetArgument
     }
 
 
-    /** @see AbstractArgument */
+    /** {@inheritDoc} */
     protected Set<Integer> convert(final String s)
         throws Exception
     {

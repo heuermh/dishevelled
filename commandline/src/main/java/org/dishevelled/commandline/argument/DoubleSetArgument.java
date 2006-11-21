@@ -56,7 +56,7 @@ public final class DoubleSetArgument
     }
 
 
-    /** @see AbstractArgument */
+    /** {@inheritDoc} */
     protected Set<Double> convert(final String s)
         throws Exception
     {

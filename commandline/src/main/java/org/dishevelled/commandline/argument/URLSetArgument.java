@@ -58,7 +58,7 @@ public final class URLSetArgument
     }
 
 
-    /** @see AbstractArgument */
+    /** {@inheritDoc} */
     protected Set<URL> convert(final String s)
         throws Exception
     {

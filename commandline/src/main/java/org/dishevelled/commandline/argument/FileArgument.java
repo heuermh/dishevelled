@@ -52,7 +52,7 @@ public final class FileArgument
     }
 
 
-    /** @see AbstractArgument */
+    /** {@inheritDoc} */
     protected File convert(final String s)
         throws Exception
     {

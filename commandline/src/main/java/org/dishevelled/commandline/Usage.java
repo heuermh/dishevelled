@@ -29,6 +29,7 @@ import java.io.OutputStream;
 import java.util.Arrays;
 
 import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 
 /**
  * Usage string.
@@ -98,7 +99,9 @@ public final class Usage
                 if (!(a instanceof Switch))
                 {
                     sb.append(" ");
-                    sb.append(Arrays.asList(((ParameterizedType) a.getClass().getGenericSuperclass()).getActualTypeArguments()));
+                    ParameterizedType parameterizedType = (ParameterizedType) a.getClass().getGenericSuperclass();
+                    Type[] types = parameterizedType.getActualTypeArguments();
+                    sb.append(Arrays.asList(types));
                 }
 
                 sb.append("  ");

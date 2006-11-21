@@ -76,7 +76,7 @@ public abstract class AbstractArgument<E>
     }
 
 
-    /** @see Argument */
+    /** {@inheritDoc} */
     public final void visit(final String current, final CommandLine commandLine)
         throws Exception
     {
@@ -108,7 +108,6 @@ public abstract class AbstractArgument<E>
         }
     }
 
-
     /**
      * Return true if the specified string is an argument name.
      *
@@ -117,8 +116,8 @@ public abstract class AbstractArgument<E>
      */
     protected boolean isArgumentString(final String s)
     {
-        return (("-" + getShortName()).equals(s)) ||
-            (("--" + getLongName()).equals(s));
+        return (("-" + getShortName()).equals(s))
+            || (("--" + getLongName()).equals(s));
     }
 
     /**
@@ -145,50 +144,49 @@ public abstract class AbstractArgument<E>
         throws Exception;
 
 
-    /** @see Argument */
+    /** {@inheritDoc} */
     public final String getShortName()
     {
         return shortName;
     }
 
-    /** @see Argument */
+    /** {@inheritDoc} */
     public final String getLongName()
     {
         return longName;
     }
 
-    /** @see Argument */
+    /** {@inheritDoc} */
     public final String getDescription()
     {
         return description;
     }
 
-    /** @see Argument */
+    /** {@inheritDoc} */
     public final boolean isRequired()
     {
         return required;
     }
 
-    /** @see Argument */
+    /** {@inheritDoc} */
     public final boolean wasFound()
     {
         return found;
     }
 
-    /** @see Argument */
+    /** {@inheritDoc} */
     public final E getValue()
     {
         return value;
     }
 
-
-    /** @see Object */
+    /** {@inheritDoc} */
     public final boolean equals(final Object o)
     {
         return super.equals(o);
     }
 
-    /** @see Object */
+    /** {@inheritDoc} */
     public final int hashCode()
     {
         return super.hashCode();

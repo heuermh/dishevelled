@@ -57,55 +57,55 @@ public final class CommandLine
     }
 
 
-    /** @see ListIterator */
+    /** {@inheritDoc} */
     public void add(final String s)
     {
         throw new UnsupportedOperationException("add operation not supported by CommandLine");
     }
 
-    /** @see ListIterator */
+    /** {@inheritDoc} */
     public boolean hasNext()
     {
         return iterator.hasNext();
     }
 
-    /** @see ListIterator */
+    /** {@inheritDoc} */
     public boolean hasPrevious()
     {
         return iterator.hasPrevious();
     }
 
-    /** @see ListIterator */
+    /** {@inheritDoc} */
     public String next()
     {
         return iterator.next();
     }
 
-    /** @see ListIterator */
+    /** {@inheritDoc} */
     public int nextIndex()
     {
         return iterator.nextIndex();
     }
 
-    /** @see ListIterator */
+    /** {@inheritDoc} */
     public String previous()
     {
         return iterator.previous();
     }
 
-    /** @see ListIterator */
+    /** {@inheritDoc} */
     public int previousIndex()
     {
         return iterator.previousIndex();
     }
 
-    /** @see ListIterator */
+    /** {@inheritDoc} */
     public void remove()
     {
         throw new UnsupportedOperationException("remove operation not supported by CommandLine");
     }
 
-    /** @see ListIterator */
+    /** {@inheritDoc} */
     public void set(final String s)
     {
         throw new UnsupportedOperationException("set operation not supported by CommandLine");

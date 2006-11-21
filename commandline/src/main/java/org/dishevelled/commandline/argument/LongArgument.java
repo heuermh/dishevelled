@@ -50,7 +50,7 @@ public final class LongArgument
     }
 
 
-    /** @see AbstractArgument */
+    /** {@inheritDoc} */
     protected Long convert(final String s)
         throws Exception
     {

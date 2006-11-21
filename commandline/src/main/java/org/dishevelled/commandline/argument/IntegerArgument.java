@@ -50,7 +50,7 @@ public final class IntegerArgument
     }
 
 
-    /** @see AbstractArgument */
+    /** {@inheritDoc} */
     protected Integer convert(final String s)
         throws Exception
     {

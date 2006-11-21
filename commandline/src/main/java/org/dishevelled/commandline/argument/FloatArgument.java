@@ -50,7 +50,7 @@ public final class FloatArgument
     }
 
 
-    /** @see AbstractArgument */
+    /** {@inheritDoc} */
     protected Float convert(final String s)
         throws Exception
     {

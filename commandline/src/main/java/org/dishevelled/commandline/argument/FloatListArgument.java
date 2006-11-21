@@ -56,7 +56,7 @@ public final class FloatListArgument
     }
 
 
-    /** @see AbstractArgument */
+    /** {@inheritDoc} */
     protected List<Float> convert(final String s)
         throws Exception
     {

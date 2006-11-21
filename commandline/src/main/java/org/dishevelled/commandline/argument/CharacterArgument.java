@@ -50,7 +50,7 @@ public final class CharacterArgument
     }
 
 
-    /** @see AbstractArgument */
+    /** {@inheritDoc} */
     protected Character convert(final String s)
         throws Exception
     {

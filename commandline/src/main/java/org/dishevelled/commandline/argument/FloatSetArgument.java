@@ -56,7 +56,7 @@ public final class FloatSetArgument
     }
 
 
-    /** @see AbstractArgument */
+    /** {@inheritDoc} */
     protected Set<Float> convert(final String s)
         throws Exception
     {

@@ -50,7 +50,7 @@ public final class DoubleArgument
     }
 
 
-    /** @see AbstractArgument */
+    /** {@inheritDoc} */
     protected Double convert(final String s)
         throws Exception
     {

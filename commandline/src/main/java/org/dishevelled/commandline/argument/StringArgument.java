@@ -50,7 +50,7 @@ public final class StringArgument
     }
 
 
-    /** @see AbstractArgument */
+    /** {@inheritDoc} */
     protected String convert(final String s)
         throws Exception
     {
