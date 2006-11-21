@@ -85,7 +85,7 @@ public final class Association
         this.mixed = cd.getMixed();
         this.upper = cd.getUpper();
         this.description = cd.getDescription();
-	this.packageName = cd.getPackageName();
+        this.packageName = cd.getPackageName();
 
         this.role = new Role(roleName);
 
@@ -119,7 +119,7 @@ public final class Association
         this.mixed = cd.getMixed();
         this.upper = cd.getUpper();
         this.description = cd.getDescription();
-	this.packageName = cd.getPackageName();
+        this.packageName = cd.getPackageName();
 
         this.role = new Role(roleName);
 
@@ -155,7 +155,7 @@ public final class Association
         this.mixed = cd.getMixed();
         this.upper = cd.getUpper();
         this.description = cd.getDescription();
-	this.packageName = cd.getPackageName();
+        this.packageName = cd.getPackageName();
 
         this.role = new Role(roleName);
 
@@ -200,7 +200,7 @@ public final class Association
         this.mixed = cd.getMixed();
         this.upper = cd.getUpper();
         this.description = cd.getDescription();
-	this.packageName = cd.getPackageName();
+        this.packageName = cd.getPackageName();
 
         this.role = new Role(roleName);
 
@@ -239,7 +239,7 @@ public final class Association
         this.mixed = id.getMixed();
         this.upper = id.getUpper();
         this.description = id.getDescription();
-	this.packageName = id.getPackageName();
+        this.packageName = id.getPackageName();
 
         this.role = new Role(roleName);
 
@@ -273,7 +273,7 @@ public final class Association
         this.mixed = id.getMixed();
         this.upper = id.getUpper();
         this.description = id.getDescription();
-	this.packageName = id.getPackageName();
+        this.packageName = id.getPackageName();
 
         this.role = new Role(roleName);
 
@@ -309,7 +309,7 @@ public final class Association
         this.mixed = id.getMixed();
         this.upper = id.getUpper();
         this.description = id.getDescription();
-	this.packageName = id.getPackageName();
+        this.packageName = id.getPackageName();
 
         this.role = new Role(roleName);
 
@@ -354,7 +354,7 @@ public final class Association
         this.mixed = id.getMixed();
         this.upper = id.getUpper();
         this.description = id.getDescription();
-	this.packageName = id.getPackageName();
+        this.packageName = id.getPackageName();
 
         this.role = new Role(roleName);
 
@@ -402,7 +402,7 @@ public final class Association
         this.mixed = mixed;
         this.upper = upper;
         this.description = description;
-	this.packageName = "";
+        this.packageName = "";
         this.role = role;
         this.cardinality = cardinality;
         this.collectionDescription = collectionDescription;
@@ -443,7 +443,7 @@ public final class Association
         this.mixed = mixed;
         this.upper = upper;
         this.description = description;
-	this.packageName = "";
+        this.packageName = "";
         this.role = role;
         this.cardinality = cardinality;
         this.collectionDescription = collectionDescription;
