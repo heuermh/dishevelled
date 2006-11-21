@@ -61,10 +61,7 @@ bsh % generateSource(bar, Style.RichlyMutable);
 package example;
 
 /**
- * foo.
- *
- * @author codegen
- * @version $Revision$ $Date$
+ * Foo.
  */
 public final class Foo
 {
@@ -122,10 +119,7 @@ import java.util.HashSet;
 import java.util.Collections;
 
 /**
- * bar.
- *
- * @author codegen
- * @version $Revision$ $Date$
+ * Bar.
  */
 public class Bar
 {
@@ -200,7 +194,6 @@ public class Bar
         {
             throw new IllegalArgumentException("value must not be null");
         }
-
         this.value = value;
     }
 
