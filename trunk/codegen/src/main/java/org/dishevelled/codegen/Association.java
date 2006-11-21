@@ -43,6 +43,9 @@ public final class Association
     /** The uppercase name for this association. */
     private final String upper;
 
+    /** The package name for this association. */
+    private final String packageName;
+
     /** The description for this association. */
     private final String description;
 
@@ -82,6 +85,7 @@ public final class Association
         this.mixed = cd.getMixed();
         this.upper = cd.getUpper();
         this.description = cd.getDescription();
+	this.packageName = cd.getPackageName();
 
         this.role = new Role(roleName);
 
@@ -115,6 +119,7 @@ public final class Association
         this.mixed = cd.getMixed();
         this.upper = cd.getUpper();
         this.description = cd.getDescription();
+	this.packageName = cd.getPackageName();
 
         this.role = new Role(roleName);
 
@@ -150,6 +155,7 @@ public final class Association
         this.mixed = cd.getMixed();
         this.upper = cd.getUpper();
         this.description = cd.getDescription();
+	this.packageName = cd.getPackageName();
 
         this.role = new Role(roleName);
 
@@ -194,6 +200,7 @@ public final class Association
         this.mixed = cd.getMixed();
         this.upper = cd.getUpper();
         this.description = cd.getDescription();
+	this.packageName = cd.getPackageName();
 
         this.role = new Role(roleName);
 
@@ -232,6 +239,7 @@ public final class Association
         this.mixed = id.getMixed();
         this.upper = id.getUpper();
         this.description = id.getDescription();
+	this.packageName = id.getPackageName();
 
         this.role = new Role(roleName);
 
@@ -265,6 +273,7 @@ public final class Association
         this.mixed = id.getMixed();
         this.upper = id.getUpper();
         this.description = id.getDescription();
+	this.packageName = id.getPackageName();
 
         this.role = new Role(roleName);
 
@@ -300,6 +309,7 @@ public final class Association
         this.mixed = id.getMixed();
         this.upper = id.getUpper();
         this.description = id.getDescription();
+	this.packageName = id.getPackageName();
 
         this.role = new Role(roleName);
 
@@ -344,6 +354,7 @@ public final class Association
         this.mixed = id.getMixed();
         this.upper = id.getUpper();
         this.description = id.getDescription();
+	this.packageName = id.getPackageName();
 
         this.role = new Role(roleName);
 
@@ -391,6 +402,7 @@ public final class Association
         this.mixed = mixed;
         this.upper = upper;
         this.description = description;
+	this.packageName = "";
         this.role = role;
         this.cardinality = cardinality;
         this.collectionDescription = collectionDescription;
@@ -431,6 +443,7 @@ public final class Association
         this.mixed = mixed;
         this.upper = upper;
         this.description = description;
+	this.packageName = "";
         this.role = role;
         this.cardinality = cardinality;
         this.collectionDescription = collectionDescription;
@@ -476,6 +489,16 @@ public final class Association
     public String getDescription()
     {
         return description;
+    }
+
+    /**
+     * Return the package name for this association.
+     *
+     * @return the package name for this association
+     */
+    public String getPackageName()
+    {
+        return packageName;
     }
 
     /**
