@@ -54,7 +54,7 @@ public final class StringSetArgument
     }
 
 
-    /** @see AbstractArgument */
+    /** {@inheritDoc} */
     protected Set<String> convert(final String s)
         throws Exception
     {

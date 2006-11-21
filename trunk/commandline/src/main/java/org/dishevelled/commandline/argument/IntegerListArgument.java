@@ -56,7 +56,7 @@ public final class IntegerListArgument
     }
 
 
-    /** @see AbstractArgument */
+    /** {@inheritDoc} */
     protected List<Integer> convert(final String s)
         throws Exception
     {

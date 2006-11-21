@@ -55,7 +55,7 @@ public final class DateArgument
     }
 
 
-    /** @see AbstractArgument */
+    /** {@inheritDoc} */
     protected Date convert(final String s)
         throws Exception
     {

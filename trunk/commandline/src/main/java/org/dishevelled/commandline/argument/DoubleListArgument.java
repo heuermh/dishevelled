@@ -56,7 +56,7 @@ public final class DoubleListArgument
     }
 
 
-    /** @see AbstractArgument */
+    /** {@inheritDoc} */
     protected List<Double> convert(final String s)
         throws Exception
     {

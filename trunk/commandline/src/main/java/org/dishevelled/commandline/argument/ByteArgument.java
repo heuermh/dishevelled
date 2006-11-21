@@ -50,7 +50,7 @@ public final class ByteArgument
     }
 
 
-    /** @see AbstractArgument */
+    /** {@inheritDoc} */
     protected Byte convert(final String s)
         throws Exception
     {

@@ -58,7 +58,7 @@ public final class URLListArgument
     }
 
 
-    /** @see AbstractArgument */
+    /** {@inheritDoc} */
     protected List<URL> convert(final String s)
         throws Exception
     {

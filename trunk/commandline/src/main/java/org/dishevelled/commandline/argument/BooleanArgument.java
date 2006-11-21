@@ -50,7 +50,7 @@ public final class BooleanArgument
     }
 
 
-    /** @see AbstractArgument */
+    /** {@inheritDoc} */
     protected Boolean convert(final String s)
         throws Exception
     {

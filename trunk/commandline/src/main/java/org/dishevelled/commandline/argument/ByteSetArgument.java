@@ -56,7 +56,7 @@ public final class ByteSetArgument
     }
 
 
-    /** @see AbstractArgument */
+    /** {@inheritDoc} */
     protected Set<Byte> convert(final String s)
         throws Exception
     {

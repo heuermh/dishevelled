@@ -56,7 +56,7 @@ public final class LongListArgument
     }
 
 
-    /** @see AbstractArgument */
+    /** {@inheritDoc} */
     protected List<Long> convert(final String s)
         throws Exception
     {

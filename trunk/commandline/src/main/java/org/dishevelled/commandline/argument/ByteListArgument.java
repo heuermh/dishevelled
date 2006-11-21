@@ -56,7 +56,7 @@ public final class ByteListArgument
     }
 
 
-    /** @see AbstractArgument */
+    /** {@inheritDoc} */
     protected List<Byte> convert(final String s)
         throws Exception
     {

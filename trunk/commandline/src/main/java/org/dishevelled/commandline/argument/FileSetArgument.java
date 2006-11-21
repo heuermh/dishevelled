@@ -58,7 +58,7 @@ public final class FileSetArgument
     }
 
 
-    /** @see AbstractArgument */
+    /** {@inheritDoc} */
     protected Set<File> convert(final String s)
         throws Exception
     {

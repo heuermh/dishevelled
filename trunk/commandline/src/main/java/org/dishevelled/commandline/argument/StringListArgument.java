@@ -54,7 +54,7 @@ public final class StringListArgument
     }
 
 
-    /** @see AbstractArgument */
+    /** {@inheritDoc} */
     protected List<String> convert(final String s)
         throws Exception
     {

@@ -58,7 +58,7 @@ public final class FileListArgument
     }
 
 
-    /** @see AbstractArgument */
+    /** {@inheritDoc} */
     protected List<File> convert(final String s)
         throws Exception
     {

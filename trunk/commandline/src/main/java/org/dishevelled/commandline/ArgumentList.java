@@ -113,11 +113,13 @@ public final class ArgumentList
         }
         if (shortNames.contains(argument.getShortName()))
         {
-            throw new IllegalArgumentException("this argument list already contains an argument with short name " + argument.getShortName());
+            throw new IllegalArgumentException("this argument list already contains an argument with short name "
+                                               + argument.getShortName());
         }
         if (longNames.contains(argument.getLongName()))
         {
-            throw new IllegalArgumentException("this argument list already contains an argument with long name " + argument.getLongName());
+            throw new IllegalArgumentException("this argument list already contains an argument with long name "
+                                               + argument.getLongName());
         }
         if (arguments.add(argument))
         {
@@ -163,7 +165,7 @@ public final class ArgumentList
         return arguments.size();
     }
 
-    /** @see Iterable */
+    /** {@inheritDoc} */
     public Iterator<Argument> iterator()
     {
         return Collections.unmodifiableList(arguments).iterator();
