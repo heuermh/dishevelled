@@ -24,11 +24,11 @@
 package org.dishevelled.evolve.fitness;
 
 import org.dishevelled.evolve.Fitness;
-//import org.dishevelled.evolve.Individual;
 
 /**
  * Uniform fitness function.
  *
+ * @param <I> individual type
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
@@ -60,7 +60,7 @@ public final class UniformFitness<I>
     }
 
 
-    /** @see Fitness */
+    /** {@inheritDoc} */
     public Double score(final I individual)
     {
         return Double.valueOf(score);

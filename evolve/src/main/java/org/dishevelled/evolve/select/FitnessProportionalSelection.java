@@ -32,6 +32,7 @@ import org.dishevelled.evolve.Individual;
 /**
  * Fitness proportional selection function.
  *
+ * @param <I> individual type
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
@@ -42,7 +43,7 @@ public final class FitnessProportionalSelection<I>
     private static final float DEFAULT_LOAD_FACTOR = 0.75f;
 
 
-    /** @see Selection */
+    /** {@inheritDoc} */
     public WeightedMap<I> select(final WeightedMap<I> parents,
                                  final WeightedMap<I> children)
     {

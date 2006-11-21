@@ -25,12 +25,12 @@ package org.dishevelled.evolve.recombine;
 
 import java.util.Set;
 
-//import org.dishevelled.evolve.Individual;
 import org.dishevelled.evolve.Recombination;
 
 /**
  * Null recombination.
  *
+ * @param <I> individual type
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
@@ -38,7 +38,7 @@ public final class NullRecombination<I>
     implements Recombination<I>
 {
 
-    /** @see Recombination */
+    /** {@inheritDoc} */
     public Set<I> recombine(final Set<I> parents)
     {
         return parents;

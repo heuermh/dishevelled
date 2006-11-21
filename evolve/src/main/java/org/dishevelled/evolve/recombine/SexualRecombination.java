@@ -28,7 +28,6 @@ import java.util.List;
 import java.util.HashSet;
 import java.util.ArrayList;
 
-//import org.dishevelled.evolve.Individual;
 import org.dishevelled.evolve.Recombination;
 
 /**
@@ -36,6 +35,7 @@ import org.dishevelled.evolve.Recombination;
  * Subclasses need only to implement the abstract individual-wise method
  * <code>I recombine(I parent0, I parent1)</code>.
  *
+ * @param <I> individual type
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
@@ -43,7 +43,7 @@ public abstract class SexualRecombination<I>
     implements Recombination<I>
 {
 
-    /** @see Recombination */
+    /** {@inheritDoc} */
     public final Set<I> recombine(final Set<I> parents)
     {
         List<I> parentsAsList = new ArrayList<I>(parents);
@@ -58,9 +58,7 @@ public abstract class SexualRecombination<I>
 
             recombined.add(recombine(parent0, parent1));
         }
-
         recombined.add(recombine(parentsAsList.get(size - 1), parentsAsList.get(size - 1)));
-
         return recombined;
     }
 

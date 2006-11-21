@@ -28,6 +28,7 @@ import org.dishevelled.weighted.WeightedMap;
 /**
  * A selection function.
  *
+ * @param <I> individual type
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */

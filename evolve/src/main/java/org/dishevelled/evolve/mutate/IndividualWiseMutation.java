@@ -23,10 +23,12 @@
 */
 package org.dishevelled.evolve.mutate;
 
-//import org.dishevelled.evolve.Individual;
-
 /**
  * Individual-wise mutation function.
+ *
+ * @param <I> individual type
+ * @author  Michael Heuer
+ * @version $Revision$ $Date$
  */
 public interface IndividualWiseMutation<I>
 {

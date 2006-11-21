@@ -28,6 +28,7 @@ import java.util.Set;
 /**
  * A mutation function.
  *
+ * @param <I> individual type
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */

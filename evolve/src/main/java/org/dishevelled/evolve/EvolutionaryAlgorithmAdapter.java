@@ -27,6 +27,7 @@ package org.dishevelled.evolve;
  * Adapter for the EvolutionaryAlgorithmListener interface that
  * provides empty implementation of all required methods.
  *
+ * @param <I> individual type
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
@@ -34,37 +35,37 @@ public class EvolutionaryAlgorithmAdapter<I>
     implements EvolutionaryAlgorithmListener<I>
 {
 
-    /** @see EvolutionaryAlgorithmListener */
+    /** {@inheritDoc} */
     public void exitFailed(final EvolutionaryAlgorithmEvent<I> e)
     {
         // empty
     }
 
-    /** @see EvolutionaryAlgorithmListener */
+    /** {@inheritDoc} */
     public void exitSucceeded(final EvolutionaryAlgorithmEvent<I> e)
     {
         // empty
     }
 
-    /** @see EvolutionaryAlgorithmListener */
+    /** {@inheritDoc} */
     public void recombined(final EvolutionaryAlgorithmEvent<I> e)
     {
         // empty
     }
 
-    /** @see EvolutionaryAlgorithmListener */
+    /** {@inheritDoc} */
     public void mutated(final EvolutionaryAlgorithmEvent<I> e)
     {
         // empty
     }
 
-    /** @see EvolutionaryAlgorithmListener */
+    /** {@inheritDoc} */
     public void fitnessCalculated(final EvolutionaryAlgorithmEvent<I> e)
     {
         // empty
     }
 
-    /** @see EvolutionaryAlgorithmListener */
+    /** {@inheritDoc} */
     public void selected(final EvolutionaryAlgorithmEvent<I> e)
     {
         // empty

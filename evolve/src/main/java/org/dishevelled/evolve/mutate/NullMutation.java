@@ -26,11 +26,11 @@ package org.dishevelled.evolve.mutate;
 import java.util.Set;
 
 import org.dishevelled.evolve.Mutation;
-//import org.dishevelled.evolve.Individual;
 
 /**
  * Null mutation.
  *
+ * @param <I> individual type
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
@@ -38,7 +38,7 @@ public final class NullMutation<I>
     implements Mutation<I>
 {
 
-    /** @see Mutation */
+    /** {@inheritDoc} */
     public Set<I> mutate(final Set<I> recombined)
     {
         return recombined;

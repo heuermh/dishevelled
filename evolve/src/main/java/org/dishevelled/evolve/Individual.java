@@ -66,7 +66,7 @@ public interface Individual
 
     /**
      * Create and return a new shallow copy of this individual.
-     * 
+     *
      * <p>Any or all of the internal state of the new shallow copy
      * may be shared with this individual, but the shallow copy
      * must not be equal to this individual and should have a

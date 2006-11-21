@@ -26,6 +26,7 @@ package org.dishevelled.evolve;
 /**
  * A fitness function.
  *
+ * @param <I> individual type
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
