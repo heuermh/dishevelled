@@ -149,18 +149,20 @@ public abstract class IconSize
     /**
      * Private array of default enumeration values.
      */
-    private static final IconSize[] values = { DEFAULT_16X16,
-                                               DEFAULT_24X24,
-                                               DEFAULT_32X32,
-                                               DEFAULT_48X48,
-                                               DEFAULT_64X64,
-                                               DEFAULT_96X96,
-                                               DEFAULT_128X128 };
+    private static final IconSize[] VALUES_ARRAY = {
+                                                     DEFAULT_16X16,
+                                                     DEFAULT_24X24,
+                                                     DEFAULT_32X32,
+                                                     DEFAULT_48X48,
+                                                     DEFAULT_64X64,
+                                                     DEFAULT_96X96,
+                                                     DEFAULT_128X128
+                                                    };
 
     /**
      * Public list of default enumeration values.
      */
-    public static final List VALUES = Collections.unmodifiableList(Arrays.asList(values));
+    public static final List VALUES = Collections.unmodifiableList(Arrays.asList(VALUES_ARRAY));
 
 
     /** Next ordinal -- necessary for serialization. */
@@ -180,6 +182,6 @@ public abstract class IconSize
     Object readResolve()
         throws ObjectStreamException
     {
-        return values[ordinal];
+        return VALUES_ARRAY[ordinal];
     }
 }

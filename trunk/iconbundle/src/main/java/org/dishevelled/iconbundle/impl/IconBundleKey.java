@@ -36,6 +36,12 @@ import org.dishevelled.iconbundle.IconTextDirection;
  */
 final class IconBundleKey
 {
+    /** Hash start. */
+    private static final int HASH_START = 17;
+
+    /** Hash factor. */
+    private static final int HASH_FACTOR = 37;
+
     /** Icon text direction. */
     private final IconTextDirection direction;
 
@@ -107,17 +113,17 @@ final class IconBundleKey
         return state;
     }
 
-    /** @see Object */
+    /** {@inheritDoc} */
     public int hashCode()
     {
-        int result = 17;
-        result = 37 * result + direction.hashCode();
-        result = 37 * result + state.hashCode();
-        result = 37 * result + size.hashCode();
+        int result = HASH_START;
+        result = HASH_FACTOR * result + direction.hashCode();
+        result = HASH_FACTOR * result + state.hashCode();
+        result = HASH_FACTOR * result + size.hashCode();
         return result;
     }
 
-    /** @see Object */
+    /** {@inheritDoc} */
     public boolean equals(final Object o)
     {
         if (this == o)
@@ -136,7 +142,7 @@ final class IconBundleKey
             && (size.equals(key.getSize()));
     }
 
-    /** @see Object */
+    /** {@inheritDoc} */
     public String toString()
     {
         StringBuffer sb = new StringBuffer();

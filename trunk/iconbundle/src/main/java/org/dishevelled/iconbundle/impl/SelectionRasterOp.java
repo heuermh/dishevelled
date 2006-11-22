@@ -37,6 +37,12 @@ import java.awt.image.WritableRaster;
 final class SelectionRasterOp
     extends AbstractRasterOp
 {
+    /** Pixel array size. */
+    private static final int PIXEL_ARRAY_SIZE = 4;
+
+    /** White color component. */
+    private static final int WHITE = 255;
+
     /** Selection color. */
     private final Color selectionColor;
 
@@ -53,25 +59,24 @@ final class SelectionRasterOp
     }
 
 
-    /** @see RasterOp */
+    /** {@inheritDoc} */
     public WritableRaster filter(final Raster src, final WritableRaster dest)
     {
-        float[] pixel = new float[4];
-        float[] selection = selectionColor.getColorComponents(new float[4]);
+        float[] pixel = new float[PIXEL_ARRAY_SIZE];
+        float[] selection = selectionColor.getColorComponents(new float[PIXEL_ARRAY_SIZE]);
 
         for (int x = 0, w = src.getWidth(); x < w; x++)
         {
             for (int y = 0, h = src.getHeight(); y < h; y++)
             {
                 pixel = src.getPixel(x, y, pixel);
-                pixel[0] = Math.min(pixel[0], selection[0] * 255);
-                pixel[1] = Math.min(pixel[1], selection[1] * 255);
-                pixel[2] = Math.min(pixel[2], selection[2] * 255);
+                pixel[0] = Math.min(pixel[0], selection[0] * WHITE);
+                pixel[1] = Math.min(pixel[1], selection[1] * WHITE);
+                pixel[2] = Math.min(pixel[2], selection[2] * WHITE);
 
                 dest.setPixel(x, y, pixel);
             }
         }
-
         return dest;
     }
 }
