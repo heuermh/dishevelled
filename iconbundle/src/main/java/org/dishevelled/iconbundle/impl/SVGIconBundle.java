@@ -93,7 +93,7 @@ public final class SVGIconBundle
     }
 
 
-    /** @see IconBundle */
+    /** {@inheritDoc} */
     public Image getImage(final Component component,
                           final IconTextDirection direction,
                           final IconState state,

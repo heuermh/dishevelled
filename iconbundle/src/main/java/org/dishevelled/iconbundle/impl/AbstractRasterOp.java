@@ -42,25 +42,25 @@ abstract class AbstractRasterOp
     implements RasterOp
 {
 
-    /** @see RasterOp */
+    /** {@inheritDoc} */
     public final WritableRaster createCompatibleDestRaster(final Raster src)
     {
         return null;
     }
 
-    /** @see RasterOp */
+    /** {@inheritDoc} */
     public final Rectangle2D getBounds2D(final Raster src)
     {
         return null;
     }
 
-    /** @see RasterOp */
+    /** {@inheritDoc} */
     public final Point2D getPoint2D(final Point2D srcPoint, final Point2D destPoint)
     {
         return srcPoint;
     }
 
-    /** @see RasterOp */
+    /** {@inheritDoc} */
     public final RenderingHints getRenderingHints()
     {
         return null;

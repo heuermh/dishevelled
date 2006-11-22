@@ -72,11 +72,13 @@ public final class IconTextDirection
     /**
      * Private array of enumeration values.
      */
-    private static final IconTextDirection[] values = { LEFT_TO_RIGHT,
-                                                        RIGHT_TO_LEFT };
+    private static final IconTextDirection[] VALUES_ARRAY = {
+                                                              LEFT_TO_RIGHT,
+                                                              RIGHT_TO_LEFT
+                                                            };
 
     /**
      * Public list of enumeration values.
      */
-    public static final List VALUES = Collections.unmodifiableList(Arrays.asList(values));
+    public static final List VALUES = Collections.unmodifiableList(Arrays.asList(VALUES_ARRAY));
 }

@@ -84,15 +84,17 @@ public final class IconState
     /**
      * Private array of enumeration values.
      */
-    private static final IconState[] values = { NORMAL,
-                                                ACTIVE,
-                                                MOUSEOVER,
-                                                SELECTED,
-                                                DRAGGING,
-                                                DISABLED };
+    private static final IconState[] VALUES_ARRAY = {
+                                                      NORMAL,
+                                                      ACTIVE,
+                                                      MOUSEOVER,
+                                                      SELECTED,
+                                                      DRAGGING,
+                                                      DISABLED
+                                                    };
 
     /**
      * Public list of enumeration values.
      */
-    public static final List VALUES = Collections.unmodifiableList(Arrays.asList(values));
+    public static final List VALUES = Collections.unmodifiableList(Arrays.asList(VALUES_ARRAY));
 }

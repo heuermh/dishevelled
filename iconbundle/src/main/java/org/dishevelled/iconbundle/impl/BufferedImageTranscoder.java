@@ -53,13 +53,13 @@ final class BufferedImageTranscoder
         return image;
     }
 
-    /** @see ImageTranscoder */
+    /** {@inheritDoc} */
     public BufferedImage createImage(final int width, final int height)
     {
         return new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
     }
 
-    /** @see ImageTranscoder */
+    /** {@inheritDoc} */
     public void writeImage(final BufferedImage image, final TranscoderOutput output)
     {
         this.image = image;
