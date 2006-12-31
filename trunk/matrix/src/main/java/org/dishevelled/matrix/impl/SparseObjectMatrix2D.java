@@ -155,12 +155,28 @@ public class SparseObjectMatrix2D<E>
     /** @see org.dishevelled.matrix.ObjectMatrix2D */
     public ObjectMatrix1D<E> viewRow(final long row)
     {
+        if (row < 0)
+        {
+            throw new IndexOutOfBoundsException(row + " < 0");
+        }
+        if (row >= rows)
+        {
+            throw new IndexOutOfBoundsException(row + " >= " + rows);
+        }
         return new RowView(row);
     }
 
     /** @see org.dishevelled.matrix.ObjectMatrix2D */
     public ObjectMatrix1D<E> viewColumn(final long column)
     {
+        if (column < 0)
+        {
+            throw new IndexOutOfBoundsException(column + " < 0");
+        }
+        if (column >= columns)
+        {
+            throw new IndexOutOfBoundsException(column + " >= " + columns);
+        }
         return new ColumnView(column);
     }
 

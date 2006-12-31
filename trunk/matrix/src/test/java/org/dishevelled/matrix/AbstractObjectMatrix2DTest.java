@@ -782,6 +782,25 @@ public abstract class AbstractObjectMatrix2DTest
         assertEquals("lastRow.get(1) == 9x1", "9x1", lastRow.get(1));
         assertEquals("lastRow.get(8) == 9x8", "9x8", lastRow.get(8));
         assertEquals("lastRow.get(9) == 9x9", "9x9", lastRow.get(9));
+
+        try
+        {
+            m.viewRow(-1);
+            fail("viewRow(-1) expected IndexOutOfBoundsException");
+        }
+        catch (IndexOutOfBoundsException e)
+        {
+            // expected
+        }
+        try
+        {
+            m.viewRow(10);
+            fail("viewRow(10) expected IndexOutOfBoundsException");
+        }
+        catch (IndexOutOfBoundsException e)
+        {
+            // expected
+        }
     }
 
     public void testViewColumn()
@@ -821,6 +840,25 @@ public abstract class AbstractObjectMatrix2DTest
         assertEquals("lastColumn.get(1) == 1x9", "1x9", lastColumn.get(1));
         assertEquals("lastColumn.get(8) == 8x9", "8x9", lastColumn.get(8));
         assertEquals("lastColumn.get(9) == 9x9", "9x9", lastColumn.get(9));
+
+        try
+        {
+            m.viewColumn(-1);
+            fail("viewColumn(-1) expected IndexOutOfBoundsException");
+        }
+        catch (IndexOutOfBoundsException e)
+        {
+            // expected
+        }
+        try
+        {
+            m.viewColumn(10);
+            fail("viewColumn(10) expected IndexOutOfBoundsException");
+        }
+        catch (IndexOutOfBoundsException e)
+        {
+            // expected
+        }
     }
 
     public void testViewDice()
