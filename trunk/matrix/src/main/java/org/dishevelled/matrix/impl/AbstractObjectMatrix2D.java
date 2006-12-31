@@ -518,6 +518,30 @@ public abstract class AbstractObjectMatrix2D<E>
     public ObjectMatrix2D<E> viewPart(final long row, final long column,
                                       final long height, final long width)
     {
+        if (row < 0)
+        {
+            throw new IndexOutOfBoundsException(row + " < 0");
+        }
+        if (row >= rows)
+        {
+            throw new IndexOutOfBoundsException(row + " >= " + rows);
+        }
+        if (column < 0)
+        {
+            throw new IndexOutOfBoundsException(column + " < 0");
+        }
+        if (column >= columns)
+        {
+            throw new IndexOutOfBoundsException(column + " >= " + columns);
+        }
+        if ((row + height) > rows)
+        {
+            throw new IndexOutOfBoundsException("(row + height), " + (row + height) + " > " + rows);
+        }
+        if ((column + width) > columns)
+        {
+            throw new IndexOutOfBoundsException("(column + width), " + (column + width) + " > " + columns);
+        }
         return view().vPart(row, column, height, width);
     }
 
