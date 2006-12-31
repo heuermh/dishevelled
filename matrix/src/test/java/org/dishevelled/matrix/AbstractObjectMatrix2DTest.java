@@ -1073,6 +1073,79 @@ public abstract class AbstractObjectMatrix2DTest
         assertEquals("middleFive.get(0, 1) == 2x3", "2x3", middleFive.get(0, 1));
         assertEquals("middleFive.get(1, 1) == 3x3", "3x3", middleFive.get(1, 1));
         assertEquals("middleFive.get(4, 4) == 6x6", "6x6", middleFive.get(4, 4));
+
+        try
+        {
+            m.viewPart(-1, 0, 5, 5);
+            fail("viewPart(-1,,,) expected IndexOutOfBoundsException");
+        }
+        catch (IndexOutOfBoundsException e)
+        {
+            // expected
+        }
+        try
+        {
+            m.viewPart(m.rows(), 0, 5, 5);
+            fail("viewPart(rows,,,) expected IndexOutOfBoundsException");
+        }
+        catch (IndexOutOfBoundsException e)
+        {
+            // expected
+        }
+        try
+        {
+            m.viewPart(m.rows() + 1, 0, 5, 5);
+            fail("viewPart(rows + 1,,,) expected IndexOutOfBoundsException");
+        }
+        catch (IndexOutOfBoundsException e)
+        {
+            // expected
+        }
+        try
+        {
+            m.viewPart(0, -1, 5, 5);
+            fail("viewPart(,-1,,) expected IndexOutOfBoundsException");
+        }
+        catch (IndexOutOfBoundsException e)
+        {
+            // expected
+        }
+        try
+        {
+            m.viewPart(0, m.columns(), 5, 5);
+            fail("viewPart(,columns,,) expected IndexOutOfBoundsException");
+        }
+        catch (IndexOutOfBoundsException e)
+        {
+            // expected
+        }
+        try
+        {
+            m.viewPart(0, m.columns() + 1, 5, 5);
+            fail("viewPart(,columns + 1,,) expected IndexOutOfBoundsException");
+        }
+        catch (IndexOutOfBoundsException e)
+        {
+            // expected
+        }
+        try
+        {
+            m.viewPart(0, 0, m.rows() + 1, 5);
+            fail("viewPart(,,rows + 1,) expected IndexOutOfBoundsException");
+        }
+        catch (IndexOutOfBoundsException e)
+        {
+            // expected
+        }
+        try
+        {
+            m.viewPart(0, 0, 5, m.columns() + 1);
+            fail("viewPart(,,,columns + 1) expected IndexOutOfBoundsException");
+        }
+        catch (IndexOutOfBoundsException e)
+        {
+            // expected
+        }
     }
 
     public void testViewSelection()
