@@ -43,10 +43,10 @@ import edu.umd.cs.piccolo.PCanvas;
 
 import edu.umd.cs.piccolox.PFrame;
 
-import org.dishevelled.piccolo.sprite.Sprite;
 import org.dishevelled.piccolo.sprite.Animation;
-import org.dishevelled.piccolo.sprite.SingleFrameAnimation;
 import org.dishevelled.piccolo.sprite.LoopedFramesAnimation;
+import org.dishevelled.piccolo.sprite.SingleFrameAnimation;
+import org.dishevelled.piccolo.sprite.Sprite;
 
 import org.dishevelled.piccolo.tilemap.TileMap;
 
@@ -64,7 +64,9 @@ public final class TileMapExample
     public void initialize()
     {
         PCanvas canvas = getCanvas();
-        PLayer layer = canvas.getLayer();
+        canvas.setDefaultRenderQuality(PPaintContext.HIGH_QUALITY_RENDERING);
+        canvas.setAnimatingRenderQuality(PPaintContext.HIGH_QUALITY_RENDERING);
+        canvas.setInteractingRenderQuality(PPaintContext.HIGH_QUALITY_RENDERING);
 
         Image f = loadImage("f");
         Animation fAnimation = new SingleFrameAnimation(f);
@@ -94,6 +96,7 @@ public final class TileMapExample
 
         tileMap.offset(20.0d, 20.d);
 
+        PLayer layer = canvas.getLayer();
         layer.addChild(tileMap);
 
         Timer timer = new Timer((int) (1000 / 3), new ActionListener()
