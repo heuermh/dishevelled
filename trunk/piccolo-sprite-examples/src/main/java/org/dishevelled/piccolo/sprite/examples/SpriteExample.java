@@ -32,10 +32,12 @@ import java.awt.geom.Rectangle2D;
 
 import java.io.IOException;
 
-import java.util.Set;
-import java.util.List;
+import java.util.Arrays;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import javax.imageio.ImageIO;
 
@@ -51,9 +53,10 @@ import edu.umd.cs.piccolo.util.PPaintContext;
 
 import edu.umd.cs.piccolox.PFrame;
 
-import org.dishevelled.piccolo.sprite.Sprite;
 import org.dishevelled.piccolo.sprite.Animation;
 import org.dishevelled.piccolo.sprite.LoopedFramesAnimation;
+import org.dishevelled.piccolo.sprite.Sprite;
+import org.dishevelled.piccolo.sprite.SingleFrameAnimation;
 
 /**
  * Sprite example.
@@ -72,94 +75,33 @@ public class SpriteExample
         canvas.setDefaultRenderQuality(PPaintContext.HIGH_QUALITY_RENDERING);
         canvas.setAnimatingRenderQuality(PPaintContext.HIGH_QUALITY_RENDERING);
         canvas.setInteractingRenderQuality(PPaintContext.HIGH_QUALITY_RENDERING);
-        canvas.removeInputEventListener(canvas.getPanEventHandler());
-        canvas.removeInputEventListener(canvas.getZoomEventHandler());
 
-        List<Image> frontImages = loadImages("front", 8);
-        final Animation front = new LoopedFramesAnimation(frontImages);
+        Image f = loadImage("f");
+        Animation fAnimation = new SingleFrameAnimation(f);
+        final Sprite fSprite = new Sprite(fAnimation, Collections.singleton(fAnimation));
+        fSprite.setBounds(0.0d, 0.0d, 64.0d, 64.0d);
+        fSprite.offset(100.0d, 100.0d);
 
-        List<Image> backImages = loadImages("back", 8);
-        final Animation back = new LoopedFramesAnimation(backImages);
-
-        List<Image> leftImages = loadImages("left", 8);
-        final Animation left = new LoopedFramesAnimation(leftImages);
-
-        List<Image> rightImages = loadImages("right", 8);
-        final Animation right = new LoopedFramesAnimation(rightImages);
-
-        Set<Animation> animations = new HashSet<Animation>();
-        animations.add(front);
-        animations.add(back);
-        animations.add(left);
-        animations.add(right);
-
-        final Sprite sprite = new Sprite(front, animations);
-        sprite.setHeight(24.0d);
-        sprite.setWidth(17.0d);
-        sprite.offset(270.0d, 260.0d);
-
-        Image backgroundImage = loadImage("background");
-        PImage background = new PImage(backgroundImage);
+        Image b = loadImage("b");
+        Image a = loadImage("a");
+        Image r = loadImage("r");
+        List<Image> bar = Arrays.asList(new Image[] { b, a, r });
+        Animation barAnimation = new LoopedFramesAnimation(bar);
+        final Sprite barSprite = new Sprite(barAnimation, Collections.singleton(barAnimation));
+        barSprite.setBounds(0.0d, 0.0d, 64.0d, 64.0d);
+        barSprite.offset(200.0d, 100.0d);
 
         PLayer layer = canvas.getLayer();
-        layer.addChild(background);
-        layer.addChild(sprite);
+        layer.addChild(fSprite);
+        layer.addChild(barSprite);
 
-        PCamera camera = canvas.getCamera();
-        camera.setViewBounds(new Rectangle2D.Double(170.0d, 160.0d, 200.0d, 200.0d));
-
-        Timer turn = new Timer(1000, new ActionListener()
+        Timer timer = new Timer((int) (1000 / 3), new ActionListener()
             {
                 /** {@inheritDoc} */
                 public void actionPerformed(final ActionEvent e)
                 {
-                    Animation currentAnimation = sprite.getCurrentAnimation();
-                    if (currentAnimation.equals(right))
-                    {
-                        sprite.setCurrentAnimation(front);
-                    }
-                    else if (currentAnimation.equals(front))
-                    {
-                        sprite.setCurrentAnimation(left);
-                    }
-                    else if (currentAnimation.equals(left))
-                    {
-                        sprite.setCurrentAnimation(back);
-                    }
-                    else if (currentAnimation.equals(back))
-                    {
-                        sprite.setCurrentAnimation(right);
-                    }
-                }
-            });
-
-        turn.setRepeats(true);
-        turn.start();
-
-        Timer timer = new Timer(1000/20, new ActionListener()
-            {
-                /** {@inheritDoc} */
-                public void actionPerformed(final ActionEvent e)
-                {
-                    sprite.advance();
-
-                    Animation currentAnimation = sprite.getCurrentAnimation();
-                    if (currentAnimation.equals(right))
-                    {
-                        sprite.offset(2.0d, 0.0d);
-                    }
-                    else if (currentAnimation.equals(front))
-                    {
-                        sprite.offset(0.0d, 2.0d);
-                    }
-                    else if (currentAnimation.equals(left))
-                    {
-                        sprite.offset(-2.0d, 0.0d);
-                    }
-                    else if (currentAnimation.equals(back))
-                    {
-                        sprite.offset(0.0d, -2.0d);
-                    }
+                    fSprite.advance();
+                    barSprite.advance();
                 }
             });
 
@@ -190,33 +132,6 @@ public class SpriteExample
         }
     }
 
-    /**
-     * Load a series of images with the specified name.
-     *
-     * @param name name
-     * @param count number of images
-     * @return list of images
-     */
-    private List<Image> loadImages(final String name, final int count)
-    {
-        List<Image> images = new ArrayList<Image>(count);
-        try
-        {
-            for (int i = 0; i < count; i++)
-            {
-                Image image = ImageIO.read(getClass().getResource(name + i + ".png"));
-                images.add(image);
-            }
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-        }
-        finally
-        {
-            return images;
-        }
-    }
 
     /**
      * Main.
