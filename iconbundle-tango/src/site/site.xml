@@ -1,3 +1,4 @@
+<?xml version="1.0"?>
 <!--
 
     dsh-iconbundle-tango  Icon bundles for the Tango Project icon theme.
@@ -21,8 +22,21 @@
     > http://www.opensource.org/licenses/lgpl-license.php
 
 -->
-<html>
+<project>
   <body>
-Icon bundles and icon sizes for the Tango Project icon theme.
+    <menu>
+      <item name="Downloads"/>
+      <item name="Repository" href="source-repository.html"/>
+      <item name="Javadocs" href="apidocs/index.html"/>
+      <item name="Checkstyle" href="checkstyle.html"/>
+      <item name="Test coverage" href="cobertura/index.html"/>
+      <item name="Changes"/>
+      <item name="Changelog"/>
+    </menu>
   </body>
-</html>
+  <skin>
+    <groupId>org.dishevelled</groupId>
+    <artifactId>dsh-site-skin</artifactId>
+    <version>1.0-SNAPSHOT</version>
+  </skin>
+</project>
