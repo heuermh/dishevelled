@@ -1,7 +1,7 @@
 /*
 
     dsh-evolve  Simple framework for evolutionary algorithms.
-    Copyright (c) 2005 held jointly by the individual authors.
+    Copyright (c) 2005-2007 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
