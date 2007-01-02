@@ -1,7 +1,7 @@
 /*
 
     dsh-layout  Layout manager(s) for lightweight components.
-    Copyright (c) 2003-2006 held jointly by the individual authors.
+    Copyright (c) 2003-2007 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
@@ -35,9 +35,6 @@ public class LabelFieldLayoutTest
     extends TestCase
 {
 
-    /**
-     * Test the LabelFieldLayout contract.
-     */
     public void testLabelFieldLayout()
     {
         LabelFieldLayout layout0 = new LabelFieldLayout();
