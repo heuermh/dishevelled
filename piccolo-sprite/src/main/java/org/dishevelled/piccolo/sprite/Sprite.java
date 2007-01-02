@@ -1,7 +1,7 @@
 /*
 
     dsh-piccolo-sprite  Piccolo sprite nodes and supporting classes.
-    Copyright (c) 2006 held jointly by the individual authors.
+    Copyright (c) 2006-2007 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
@@ -98,6 +98,8 @@ public class Sprite
         // advance the current animation
         currentAnimation.advance();
         // and schedule a repaint
+        // todo:
+        //    -- advance() returns a boolean if the animation requires a repaint
         repaint();
     }
 
