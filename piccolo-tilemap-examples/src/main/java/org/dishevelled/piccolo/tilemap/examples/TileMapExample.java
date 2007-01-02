@@ -41,6 +41,8 @@ import javax.swing.Timer;
 import edu.umd.cs.piccolo.PLayer;
 import edu.umd.cs.piccolo.PCanvas;
 
+import edu.umd.cs.piccolo.util.PPaintContext;
+
 import edu.umd.cs.piccolox.PFrame;
 
 import org.dishevelled.piccolo.sprite.Animation;
