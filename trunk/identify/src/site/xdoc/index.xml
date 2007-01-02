@@ -42,23 +42,23 @@ A bean becomes identifiable by implementing the
 <a href="apidocs/org/dishevelled/identify/Identifiable.html">Identifiable</a> interface:
 <source>
 class MyBean
-    implements Identifiable
+  implements Identifiable
 {
-    /** Icon bundle. */
-    private static final IconBundle BNDL = new PNGIconBundle("mybean.png");
+  /** Icon bundle. */
+  private static final IconBundle BNDL = new PNGIconBundle("mybean.png");
 
 
-    /** @see Identifiable */
-    public String getName()
-    {
-        return "MyBean";
-    }
+  /** {@inheritDoc} */
+  public String getName()
+  {
+    return "MyBean";
+  }
 
-    /** @see Identifiable */
-    public IconBundle getIconBundle()
-    {
-        return BNDL;
-    }
+  /** {@inheritDoc} */
+  public IconBundle getIconBundle()
+  {
+    return BNDL;
+  }
 }
 </source>
 </p>
@@ -67,35 +67,35 @@ by having the BeanDescriptor in its BeanInfo class extend
 <a href="apidocs/org/dishevelled/identify/IdentifiableBeanDescriptor.html">IdentifiableBeanDescriptor</a>:
 <source>
 final class MyBeanInfo
-    extends SimpleBeanInfo
+  extends SimpleBeanInfo
 {
-    /** Icon bundle. */
-    private static final IconBundle BNDL = new PNGIconBundle("mybean.png");
+  /** Icon bundle. */
+  private static final IconBundle BNDL = new PNGIconBundle("mybean.png");
 
-    /** Bean descriptor. */
-    private final beanDescriptor = new IdentifiableBeanDescriptor(MyBean.class)
-        {
-            /** @see IdentifiableBeanDescriptor */
-            public int getNamePropertyIndex()
-            {
-                // return the index of a property descriptor
-                //    to use as the "name" property
-                return 1;
-            }
-
-            /** @see IdentifiableBeanDescriptor */
-            public IconBundle getIconBundle()
-            {
-                return BNDL;
-            }
-        }
-
-
-    /** @see BeanInfo */
-    public BeanDescriptor getBeanDescriptor()
+  /** Bean descriptor. */
+  private final beanDescriptor = new IdentifiableBeanDescriptor(MyBean.class)
     {
-        return beanDescriptor;
-    }
+      /** {@inheritDoc} */
+      public int getNamePropertyIndex()
+      {
+        // return the index of a property descriptor
+        //    to use as the "name" property
+        return 1;
+      }
+
+      /** {@inheritDoc} */
+      public IconBundle getIconBundle()
+      {
+        return BNDL;
+      }
+    };
+
+
+  /** {@inheritDoc} */
+  public BeanDescriptor getBeanDescriptor()
+  {
+    return beanDescriptor;
+  }
 }
 </source>
 </p>
