@@ -30,7 +30,7 @@ import javax.swing.Renderer;
 import org.dishevelled.iconbundle.IconState;
 
 /**
- * A renderer that displays the name property value
+ * Renderer that displays the name property value
  * and appropriate icon from an icon bundle for a given bean.
  * <p>
  * The AWT component returned by the <code>getComponent</code>
