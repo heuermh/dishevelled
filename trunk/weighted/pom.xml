@@ -97,7 +97,7 @@
         <artifactId>maven-javadoc-plugin</artifactId>
         <configuration>
           <!-- todo:  must manually update the copyright dates here -->
-          <bottom>Copyright (c) 2005-2006 held jointly by the individual authors. Licensed under the &lt;a href="http://www.opensource.org/licenses/lgpl-license.php"&gt;GNU Lesser General Public License&lt;a&gt; (LGPL).</bottom>
+          <bottom>Copyright (c) 2005-2007 held jointly by the individual authors. Licensed under the &lt;a href="http://www.opensource.org/licenses/lgpl-license.php"&gt;GNU Lesser General Public License&lt;a&gt; (LGPL).</bottom>
         </configuration>
       </plugin>
       <plugin>
