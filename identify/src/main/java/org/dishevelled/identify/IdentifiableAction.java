@@ -28,7 +28,7 @@ import javax.swing.AbstractAction;
 import org.dishevelled.iconbundle.IconBundle;
 
 /**
- * An abstract identifiable action.
+ * Abstract identifiable action.
  *
  * @author  Michael Heuer
  * @version $Revision$ $Date$
