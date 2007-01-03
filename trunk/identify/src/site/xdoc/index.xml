@@ -34,7 +34,7 @@
 dishevelled.org <b>identify</b> provides lightweight components for identifiable
 beans, those marked as having a name and an icon bundle.  The identify project has
 a dependency on the dishevelled.org <a href="http://www.dishevelled.org/iconbundle">iconbundle</a>
-project and requires java version 1.4 or later.
+library and requires java version 1.4 or later.
 </p>
 
 <p>
@@ -78,8 +78,7 @@ final class MyBeanInfo
       /** {@inheritDoc} */
       public int getNamePropertyIndex()
       {
-        // return the index of a property descriptor
-        //    to use as the "name" property
+        // return the index of a property descriptor to use as the "name" property
         return 1;
       }
 
@@ -107,8 +106,7 @@ implemented in <a href="apidocs/org/dishevelled/identify/IdentifyUtils.html">Ide
 
 <section name="Components">
 <p>
-TODO:<br/>
-provide a list of available components and a screenshot with callouts
+<!-- provide list of components and screenshot with callouts -->
 </p>
 </section>
 
