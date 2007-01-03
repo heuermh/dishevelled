@@ -42,50 +42,50 @@ numbers of parameters.  Functions also include a type for the return value.  Som
 <source>
 Function&lt;Double&gt; f;
 f = new Function&lt;Double&gt;()
-    {
-        /** @see Function */
-        public Double evaluate() { ... }
-    }
+  {
+    /** {@inheritDoc} */
+    public Double evaluate() { ... }
+  };
 
 UnaryPredicate&lt;Double&gt; up;
 up = new UnaryPredicate&lt;Double&gt;()
-    {
-        /** @see UnaryPredicate */
-        public boolean test(final Double d) { ... }
-    }
+  {
+    /** {@inheritDoc} */
+    public boolean test(final Double d) { ... }
+  };
 
 BinaryProcedure&lt;Integer, Double&gt; bp;
 bp = new BinaryProcedure&lt;Integer, Double&gt;()
-    {
-        /** @see BinaryProcedure */
-        public void run(final Integer i, final Double d) { ... }
-    }
+  {
+    /** {@inheritDoc} */
+    public void run(final Integer i, final Double d) { ... }
+  };
 
 TertiaryFunction&lt;Double, Integer, Double, Double&gt; tf;
 tf = new TertiaryFunction&lt;Double, Integer, Double, Double&gt;()
-    {
-        /** @see TertiaryFunction */
-        public Double evaluate(final Integer i,
-                               final Double d0,
-                               final Double d1) { ... }
-    }
+  {
+    /** {@inheritDoc} */
+    public Double evaluate(final Integer i,
+                           final Double d0,
+                           final Double d1) { ... }
+  };
 
 QuaternaryPredicate&lt;Integer, Double, Double, Float&gt; qp;
 qp = new QuaternaryPredicate&lt;Integer, Double, Double, Float&gt;()
-    {
-        /** @see QuaternaryPredicate */
-        public boolean test(final Integer i,
-                            final Double d0,
-                            final Double d2,
-                            final Float f) { ... }
-    }
+  {
+    /** {@inheritDoc} */
+    public boolean test(final Integer i,
+                        final Double d0,
+                        final Double d2,
+                        final Float f) { ... }
+  };
 
 NaryProcedure&lt;Double&gt; np;
 np = new NaryProcedure&lt;Double&gt;()
-    {
-        /** @see NaryProcedure */
-        public void run(final Double... ds) { ... }
-    }
+  {
+    /** {@inheritDoc} */
+    public void run(final Double... ds) { ... }
+  }
 </source>
 </p>
 
