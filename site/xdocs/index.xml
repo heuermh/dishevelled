@@ -50,6 +50,11 @@ Runnable shell for the codegen library.<br/>
 </p>
 
 <p>
+Simple command line parser based on typed arguments.
+&gt; <a href="commandline">http://www.dishevelled.org/commandline</a>
+</p>
+
+<p>
 Simple framework for evolutionary algorithms.<br/>
 &gt; <a href="evolve">http://www.dishevelled.org/evolve</a>
 </p>
