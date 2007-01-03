@@ -69,19 +69,19 @@ bundle to provide hints as to e.g. selection colors for the image.
 JComponent label = new JLabel();
 
 Image rtlNormal48x48 = iconBundle.getImage(label,
-                                           IconTextDirection.RIGHT_TO_LEFT,
-                                           IconState.NORMAL,
-                                           IconSize.DEFAULT_48X48);
+  IconTextDirection.RIGHT_TO_LEFT,
+  IconState.NORMAL,
+  IconSize.DEFAULT_48X48);
 
 Image ltrSelected32x32 = iconBundle.getImage(label,
-                                             IconTextDirection.LEFT_TO_RIGHT,
-                                             IconState.SELECTED,
-                                             IconSize.DEFAULT_32X32);
+  IconTextDirection.LEFT_TO_RIGHT,
+  IconState.SELECTED,
+  IconSize.DEFAULT_32X32);
 
 Image ltrMouseover16x16 = iconBundle.getImage(label,
-                                              IconTextDirection.LEFT_TO_RIGHT,
-                                              IconState.SELECTED,
-                                              IconSize.DEFAULT_16X16);
+  IconTextDirection.LEFT_TO_RIGHT,
+  IconState.SELECTED,
+  IconSize.DEFAULT_16X16);
 </source>
 </p>
 
