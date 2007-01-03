@@ -41,7 +41,9 @@ java version 1.5 or later.
 
 <section name="Example">
 
-<p>The following example, as run from a command line, generates the subsequent Java source files:
+<p>The following example, as run from a command line, generates the subsequent Java source files.
+Particular attention is given to proper utilization of typed collections and to reasonable javadoc
+comments:
 <source>
 $ java -jar dsh-codegen-shell.jar
 Shell interface to org.dishevelled.codegen.Codegen
