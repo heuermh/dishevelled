@@ -50,7 +50,7 @@ Runnable shell for the codegen library.<br/>
 </p>
 
 <p>
-Simple command line parser based on typed arguments.
+Simple command line parser based on typed arguments.<br/>
 &gt; <a href="commandline">http://www.dishevelled.org/commandline</a>
 </p>
 
