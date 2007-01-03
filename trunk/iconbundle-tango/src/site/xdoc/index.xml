@@ -67,21 +67,21 @@ JComponent label = new JLabel();
 
 // Large (48x48)
 Image folderRtlNormalLarge = folder.getImage(label,
-                                             IconTextDirection.RIGHT_TO_LEFT,
-                                             IconState.NORMAL,
-                                             TangoProject.LARGE);
+  IconTextDirection.RIGHT_TO_LEFT,
+  IconState.NORMAL,
+  TangoProject.LARGE);
 
 // Small (22x22)
 Image multimediaPlayerLtrSelectedSmall = multimediaPlayer.getImage(label,
-                                                                   IconTextDirection.LEFT_TO_RIGHT,
-                                                                   IconState.SELECTED,
-                                                                   TangoProject.SMALL);
+  IconTextDirection.LEFT_TO_RIGHT,
+  IconState.SELECTED,
+  TangoProject.SMALL);
 
 // Extra Small (16x16)
 Image viewRefreshLtrMouseoverExtraSmall = viewRefresh.getImage(label,
-                                                               IconTextDirection.LEFT_TO_RIGHT,
-                                                               IconState.MOUSEOVER,
-                                                               TangoProject.EXTRA_SMALL);
+  IconTextDirection.LEFT_TO_RIGHT,
+  IconState.MOUSEOVER,
+  TangoProject.EXTRA_SMALL);
 </source>
 
 <p>
