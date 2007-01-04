@@ -35,8 +35,8 @@
       <email>heuermh at users.sourceforge.net</email>
       <organization>dishevelled.org</organization>
       <roles>
-	<role>developer</role>
-	<role>project admin</role>
+        <role>developer</role>
+        <role>project admin</role>
       </roles>
       <timezone>6</timezone>
     </developer>
@@ -67,17 +67,20 @@
             <target>1.5</target>
           </configuration>
         </plugin>
-	<plugin>
-	  <groupId>org.apache.maven.plugins</groupId>
-	  <artifactId>maven-assembly-plugin</artifactId>
-	  <configuration>
-	    <archive>
-	      <manifest>
-		<mainClass>org.dishevelled.codegen.shell.CodegenShell</mainClass>
-	      </manifest>
-	    </archive>
-	  </configuration>
-	</plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-assembly-plugin</artifactId>
+          <configuration>
+            <archive>
+              <manifest>
+                <mainClass>org.dishevelled.codegen.shell.CodegenShell</mainClass>
+              </manifest>
+            </archive>
+            <descriptorRefs>
+              <descriptorRef>jar-with-dependencies</descriptorRef>
+            </descriptorRefs>
+          </configuration>
+        </plugin>
       </plugins>
     </pluginManagement>
   </build>
