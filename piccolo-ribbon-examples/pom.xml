@@ -76,6 +76,9 @@
                 <mainClass>org.dishevelled.piccolo.ribbon.examples.RibbonExample</mainClass>
               </manifest>
             </archive>
+            <descriptorRefs>
+              <descriptorRef>jar-with-dependencies</descriptorRef>
+            </descriptorRefs>
           </configuration>
         </plugin>
       </plugins>
