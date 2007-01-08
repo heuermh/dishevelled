@@ -25,6 +25,7 @@ package org.dishevelled.disclosuretriangle;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
+import java.awt.Dimension;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -32,6 +33,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.Icon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.RootPaneContainer;
 import javax.swing.UIManager;
 
 /**
@@ -112,7 +114,10 @@ public final class DisclosureTriangle
         collapsed = false;
         label.setIcon(collapseIcon);
         invalidate();
-        getParent().validate();
+        Container rootPaneContainer = getParentRootPaneContainer();
+        Dimension d0 = rootPaneContainer.getSize();
+        Dimension d1 = container.getPreferredSize();
+        rootPaneContainer.setSize(d0.width, d0.height + d1.height);
     }
 
     /**
@@ -124,7 +129,25 @@ public final class DisclosureTriangle
         collapsed = true;
         label.setIcon(expandIcon);
         invalidate();
-        getParent().validate();
+        Container rootPaneContainer = getParentRootPaneContainer();
+        Dimension d0 = rootPaneContainer.getSize();
+        Dimension d1 = container.getPreferredSize();
+        rootPaneContainer.setSize(d0.width, d0.height - d1.height);
+    }
+
+    /**
+     * Return the parent root pane container for this disclosure triangle container.
+     *
+     * @return the parent root pane container for this disclosure triangle container
+     */
+    private Container getParentRootPaneContainer()
+    {
+        Container c = this;
+        while (!(c instanceof RootPaneContainer))
+        {
+            c = c.getParent();
+        }
+        return c;
     }
 
     /**
