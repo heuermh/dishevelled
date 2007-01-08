@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!--
 
-    dsh-swarm  Simple framework for particle swarm optimization algorithms.
+    dsh-swarm  Framework for particle swarm optimization algorithms.
     Copyright (c) 2006-2007 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it

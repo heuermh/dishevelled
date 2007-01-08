@@ -6,7 +6,7 @@
   <packaging>jar</packaging>
   <name>dishevelled.org swarm</name>
   <version>1.0-SNAPSHOT</version>
-  <description>Simple framework for particle swarm optimization algorithms.</description>
+  <description>Framework for particle swarm optimization algorithms.</description>
   <url>http://www.dishevelled.org/swarm</url>
   <inceptionYear>2006</inceptionYear>
   <mailingLists>
