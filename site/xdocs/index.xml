@@ -111,7 +111,7 @@ Simple framework for particle swarm optimization algorithms.<br/>
 </p>
 
 <p>
-Simple timer class with nanosecond resolution and summary statistics on recorded elapsed times.<br/>
+Timer class with nanosecond resolution and summary statistics on recorded elapsed times.<br/>
 &gt; <a href="timer">http://www.dishevelled.org/timer</a>
 </p>
 
