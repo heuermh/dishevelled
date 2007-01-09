@@ -113,11 +113,11 @@ public final class DisclosureTriangle
         add("Center", container);
         collapsed = false;
         label.setIcon(collapseIcon);
-        invalidate();
         Container rootPaneContainer = getParentRootPaneContainer();
         Dimension d0 = rootPaneContainer.getSize();
-        Dimension d1 = container.getPreferredSize();
-        rootPaneContainer.setSize(d0.width, d0.height + d1.height);
+        Dimension d1 = container.getSize();
+        Dimension d2 = container.getPreferredSize();
+        rootPaneContainer.setSize(d0.width, d0.height + Math.max(d1.height, d2.height));
     }
 
     /**
@@ -128,11 +128,11 @@ public final class DisclosureTriangle
         remove(container);
         collapsed = true;
         label.setIcon(expandIcon);
-        invalidate();
         Container rootPaneContainer = getParentRootPaneContainer();
         Dimension d0 = rootPaneContainer.getSize();
-        Dimension d1 = container.getPreferredSize();
-        rootPaneContainer.setSize(d0.width, d0.height - d1.height);
+        Dimension d1 = container.getSize();
+        Dimension d2 = container.getPreferredSize();
+        rootPaneContainer.setSize(d0.width, d0.height - Math.max(d1.height, d2.height));
     }
 
     /**
