@@ -6,7 +6,7 @@
   <packaging>jar</packaging>
   <name>dishevelled.org evolve</name>
   <version>1.0-SNAPSHOT</version>
-  <description>Simple framework for evolutionary algorithms.</description>
+  <description>Framework for evolutionary algorithms.</description>
   <url>http://www.dishevelled.org/evolve</url>
   <inceptionYear>2005</inceptionYear>
   <mailingLists>
