@@ -390,14 +390,14 @@ public class ${cd.Upper}
 #end
 #end
 
-    /** @see Runnable */
+    /** {@inheritDoc} */
     public void run()
     {
         // empty
     }
 
 
-    /** @see Object */
+    /** {@inheritDoc} */
     public final boolean equals(final Object o)
     {
         if (o == this)
@@ -425,7 +425,7 @@ public class ${cd.Upper}
         );
     }
 
-    /** @see Object */
+    /** {@inheritDoc} */
     public final int hashCode()
     {
         int result = 17;
