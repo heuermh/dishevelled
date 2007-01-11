@@ -28,6 +28,7 @@ package ${cd.packageName};
 #if (($a.Cardinality.toString() == "ZeroToMany") || ($a.Cardinality.toString() == "OneToMany"))
 import ${a.CollectionDescription.InterfacePackageName}.${a.CollectionDescription.InterfaceName};
 import ${a.CollectionDescription.ImplementationPackageName}.${a.CollectionDescription.ImplementationName};
+import java.util.Collection;
 import java.util.Collections;
 #end
 #end
@@ -35,6 +36,7 @@ import java.util.Collections;
 #if (($a.Cardinality.toString() == "ZeroToMany") || ($a.Cardinality.toString() == "OneToMany"))
 import ${a.CollectionDescription.InterfacePackageName}.${a.CollectionDescription.InterfaceName};
 import ${a.CollectionDescription.ImplementationPackageName}.${a.CollectionDescription.ImplementationName};
+import java.util.Collection;
 import java.util.Collections;
 #end
 #end
@@ -115,6 +117,12 @@ public class ${cd.Upper}
 
 #end
 #end
+    /** Hash code prime. */
+    private static final int HASH_CODE_PRIME = 17;
+
+    /** Hash code prime factor. */
+    private static final int HASH_CODE_PRIME_FACTOR = 37;
+
 
     /**
      * Create a new ${cd.Lower} from the specified required parameters.
@@ -535,7 +543,7 @@ public class ${cd.Upper}
     }
 
     /**
-     * Remove all of the ${r.Lower}s in the ${coll.InterfaceDescription} of 
+     * Remove all of the ${r.Lower}s in the ${coll.InterfaceDescription} of
      * ${r.Lower}s for this ${cd.Lower} that are also contained in the
      * specified collection of ${r.Lower}s.  An exception
      * may be thrown if the underlying ${coll.InterfaceDescription} prevents any
@@ -636,7 +644,7 @@ public class ${cd.Upper}
     }
 
     /**
-     * Remove all of the ${r.Lower}s in the ${coll.InterfaceDescription} of 
+     * Remove all of the ${r.Lower}s in the ${coll.InterfaceDescription} of
      * ${r.Lower}s for this ${cd.Lower} that are also contained in the
      * specified collection of ${r.Lower}s.  An exception
      * may be thrown if the underlying ${coll.InterfaceDescription} prevents any
@@ -773,7 +781,7 @@ public class ${cd.Upper}
     }
 
     /**
-     * Remove all of the ${r.Lower}s in the ${coll.InterfaceDescription} of 
+     * Remove all of the ${r.Lower}s in the ${coll.InterfaceDescription} of
      * ${r.Lower}s for this ${cd.Lower} that are also contained in the
      * specified collection of ${r.Lower}s.  An exception
      * may be thrown if the underlying ${coll.InterfaceDescription} prevents any
@@ -874,7 +882,7 @@ public class ${cd.Upper}
     }
 
     /**
-     * Remove all of the ${r.Lower}s in the ${coll.InterfaceDescription} of 
+     * Remove all of the ${r.Lower}s in the ${coll.InterfaceDescription} of
      * ${r.Lower}s for this ${cd.Lower} that are also contained in the
      * specified collection of ${r.Lower}s.  An exception
      * may be thrown if the underlying ${coll.InterfaceDescription} prevents any
@@ -905,7 +913,7 @@ public class ${cd.Upper}
 #end
 #end
 
-    /** @see Object */
+    /** {@inheritDoc} */
     public final boolean equals(final Object o)
     {
         if (o == this)
@@ -943,36 +951,36 @@ public class ${cd.Upper}
         );
     }
 
-    /** @see Object */
+    /** {@inheritDoc} */
     public final int hashCode()
     {
-        int result = 17;
+        int result = HASH_CODE_PRIME;
 #foreach ($a in $cd.Attributes)
 #set ($r = $a.Role)
 #if (($a.Cardinality.toString() == "ZeroToOne") || ($a.Cardinality.toString() == "StrictlyOne"))
 #if ($a.Upper == "boolean")
-        result = 37 * result + (${r.Mixed} ? 0 : 1);
+        result = HASH_CODE_PRIME_FACTOR * result + (${r.Mixed} ? 0 : 1);
 #elseif (($a.Upper == "byte") || ($a.Upper == "char") || ($a.Upper == "short") || ($a.Upper == "int"))
-        result = 37 * result + (int) ${r.Mixed};
+        result = HASH_CODE_PRIME_FACTOR * result + (int) ${r.Mixed};
 #elseif ($a.Upper == "long")
-        result = 37 * result + (int) (${r.Mixed} ^ (${r.Mixed} >>> 32));
+        result = HASH_CODE_PRIME_FACTOR * result + (int) (${r.Mixed} ^ (${r.Mixed} >>> 32));
 #elseif ($a.Upper == "float")
-        result = 37 * result + Float.floatToIntBits(${r.Mixed});
+        result = HASH_CODE_PRIME_FACTOR * result + Float.floatToIntBits(${r.Mixed});
 #elseif ($a.Upper == "double")
-        result = 37 * result + (int) (Double.doubleToLongBits(${r.Mixed}) ^ (Double.doubleToLongBits(${r.Mixed}) >>> 32));
+        result = HASH_CODE_PRIME_FACTOR * result + (int) (Double.doubleToLongBits(${r.Mixed}) ^ (Double.doubleToLongBits(${r.Mixed}) >>> 32));
 #else
-        result = 37 * result + ((${r.Mixed} == null) ? 0 : ${r.Mixed}.hashCode());
+        result = HASH_CODE_PRIME_FACTOR * result + ((${r.Mixed} == null) ? 0 : ${r.Mixed}.hashCode());
 #end
 #elseif (($a.Cardinality.toString() == "ZeroToMany") || ($a.Cardinality.toString() == "OneToMany"))
-        result = 37 * result + ${r.Mixed}s.hashCode();
+        result = HASH_CODE_PRIME_FACTOR * result + ${r.Mixed}s.hashCode();
 #end
 #end
 #foreach ($a in $cd.Associations)
 #set ($r = $a.Role)
 #if (($a.Cardinality.toString() == "ZeroToOne") || ($a.Cardinality.toString() == "StrictlyOne"))
-        result = 37 * result + ((${r.Mixed} == null) ? 0 : ${r.Mixed}.hashCode());
+        result = HASH_CODE_PRIME_FACTOR * result + ((${r.Mixed} == null) ? 0 : ${r.Mixed}.hashCode());
 #elseif (($a.Cardinality.toString() == "ZeroToMany") || ($a.Cardinality.toString() == "OneToMany"))
-        result = 37 * result + ${r.Mixed}s.hashCode();
+        result = HASH_CODE_PRIME_FACTOR * result + ${r.Mixed}s.hashCode();
 #end
 #end
         return result;

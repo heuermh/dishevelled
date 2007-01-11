@@ -27,11 +27,13 @@ package ${id.PackageName};
 #foreach ($a in $id.Attributes)
 #if (($a.Cardinality.toString() == "ZeroToMany") || ($a.Cardinality.toString() == "OneToMany"))
 import ${a.CollectionDescription.InterfacePackageName}.${a.CollectionDescription.InterfaceName};
+import java.util.Iterator;
 #end
 #end
 #foreach ($a in $id.Associations)
 #if (($a.Cardinality.toString() == "ZeroToMany") || ($a.Cardinality.toString() == "OneToMany"))
 import ${a.CollectionDescription.InterfacePackageName}.${a.CollectionDescription.InterfaceName};
+import java.util.Iterator;
 #end
 #end
 
@@ -199,7 +201,7 @@ public abstract class Abstract${id.Upper}Test
         {
             ${coll.InterfaceName}<${a.Upper}> ${r.Mixed}s = createFull${r.Upper}s();
             ${id.Mixed}.get${r.Upper}s().addAll(${r.Mixed}s);
-            fail("${id.Mixed} ${r.Mixed}s addAll(${r.Mixed}) expected UnsupportedOperationException");
+            fail("${id.Mixed} ${r.Mixed}s addAll(${r.Mixed}s) expected UnsupportedOperationException");
         }
         catch (UnsupportedOperationException e)
         {
@@ -209,7 +211,7 @@ public abstract class Abstract${id.Upper}Test
         {
             ${coll.InterfaceName}<${a.Upper}> ${r.Mixed}s = createFull${r.Upper}s();
             ${id.Mixed}.get${r.Upper}s().removeAll(${r.Mixed}s);
-            fail("${id.Mixed} ${r.Mixed}s removeAll(${r.Mixed}) expected UnsupportedOperationException");
+            fail("${id.Mixed} ${r.Mixed}s removeAll(${r.Mixed}s) expected UnsupportedOperationException");
         }
         catch (UnsupportedOperationException e)
         {
@@ -219,7 +221,7 @@ public abstract class Abstract${id.Upper}Test
         {
             ${coll.InterfaceName}<${a.Upper}> ${r.Mixed}s = createFull${r.Upper}s();
             ${id.Mixed}.get${r.Upper}s().retainAll(${r.Mixed}s);
-            fail("${id.Mixed} ${r.Mixed}s retainAll(${r.Mixed}) expected UnsupportedOperationException");
+            fail("${id.Mixed} ${r.Mixed}s retainAll(${r.Mixed}s) expected UnsupportedOperationException");
         }
         catch (UnsupportedOperationException e)
         {
@@ -283,7 +285,7 @@ public abstract class Abstract${id.Upper}Test
         {
             ${coll.InterfaceName}<${a.Upper}> ${r.Mixed}s = createFull${r.Upper}s();
             ${id.Mixed}.get${r.Upper}s().addAll(${r.Mixed}s);
-            fail("${id.Mixed} ${r.Mixed}s addAll(${r.Mixed}) expected UnsupportedOperationException");
+            fail("${id.Mixed} ${r.Mixed}s addAll(${r.Mixed}s) expected UnsupportedOperationException");
         }
         catch (UnsupportedOperationException e)
         {
@@ -293,7 +295,7 @@ public abstract class Abstract${id.Upper}Test
         {
             ${coll.InterfaceName}<${a.Upper}> ${r.Mixed}s = createFull${r.Upper}s();
             ${id.Mixed}.get${r.Upper}s().removeAll(${r.Mixed}s);
-            fail("${id.Mixed} ${r.Mixed}s removeAll(${r.Mixed}) expected UnsupportedOperationException");
+            fail("${id.Mixed} ${r.Mixed}s removeAll(${r.Mixed}s) expected UnsupportedOperationException");
         }
         catch (UnsupportedOperationException e)
         {
@@ -303,7 +305,7 @@ public abstract class Abstract${id.Upper}Test
         {
             ${coll.InterfaceName}<${a.Upper}> ${r.Mixed}s = createFull${r.Upper}s();
             ${id.Mixed}.get${r.Upper}s().retainAll(${r.Mixed}s);
-            fail("${id.Mixed} ${r.Mixed}s retainAll(${r.Mixed}) expected UnsupportedOperationException");
+            fail("${id.Mixed} ${r.Mixed}s retainAll(${r.Mixed}s) expected UnsupportedOperationException");
         }
         catch (UnsupportedOperationException e)
         {

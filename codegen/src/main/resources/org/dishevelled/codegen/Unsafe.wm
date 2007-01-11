@@ -28,14 +28,12 @@ package ${cd.packageName};
 #if (($a.Cardinality.toString() == "ZeroToMany") || ($a.Cardinality.toString() == "OneToMany"))
 import ${a.CollectionDescription.InterfacePackageName}.${a.CollectionDescription.InterfaceName};
 import ${a.CollectionDescription.ImplementationPackageName}.${a.CollectionDescription.ImplementationName};
-import java.util.Collections;
 #end
 #end
 #foreach ($a in $cd.Associations)
 #if (($a.Cardinality.toString() == "ZeroToMany") || ($a.Cardinality.toString() == "OneToMany"))
 import ${a.CollectionDescription.InterfacePackageName}.${a.CollectionDescription.InterfaceName};
 import ${a.CollectionDescription.ImplementationPackageName}.${a.CollectionDescription.ImplementationName};
-import java.util.Collections;
 #end
 #end
 #if (($cd.Associations.size() > 0) || ($cd.Specializes.size() > 0) || ($cd.Realizes.size() > 0))
