@@ -180,7 +180,7 @@ public final class ${cd.Upper}Test
      *
      * @return a full ${coll.InterfaceDescription} of ${a.Lower}s
      */
-    private ${coll.InterfaceName}<${a.Upper}> createSingleton${r.Upper}s()
+    private ${coll.InterfaceName}<${a.Upper}> createFull${r.Upper}s()
     {
         ${coll.InterfaceName}<${a.Upper}> ${r.Mixed}s = new ${coll.ImplementationName}<${a.Upper}>();
         ${r.Mixed}s.add(create${r.Upper}());
@@ -260,7 +260,7 @@ public final class ${cd.Upper}Test
      *
      * @return a full ${coll.InterfaceDescription} of ${a.Lower}s
      */
-    private ${coll.InterfaceName}<${a.Upper}> createSingleton${r.Upper}s()
+    private ${coll.InterfaceName}<${a.Upper}> createFull${r.Upper}s()
     {
         ${coll.InterfaceName}<${a.Upper}> ${r.Mixed}s = new ${coll.ImplementationName}<${a.Upper}>();
         ${r.Mixed}s.add(create${r.Upper}());
