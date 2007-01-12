@@ -200,4 +200,58 @@ public final class Codegen
             }
         }
     }
+
+    /**
+     * Generate a unit test source file for the specified class
+     * description and style.
+     *
+     * @param cd class description, must not be null
+     * @param style style, must not be null
+     */
+    public static void generateUnitTest(final ClassDescription cd, final Style style)
+    {
+        if (cd == null)
+        {
+            throw new IllegalArgumentException("cd must not be null");
+        }
+        if (style == null)
+        {
+            throw new IllegalArgumentException("style must not be null");
+        }
+
+        FileWriter fw = null;
+        try
+        {
+            Properties p = new Properties();
+            p.setProperty("resource.loader", "class");
+            p.setProperty("class.resource.loader.class",
+                          "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
+
+            Velocity.init(p);
+
+            fw = new FileWriter(cd.getUpper() + "Test.java");
+
+            VelocityContext context = new VelocityContext();
+            context.put("cd", cd);
+
+            Template template = Velocity.getTemplate("org/dishevelled/codegen/" + style + "Test.wm");
+            template.merge(context, fw);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            System.exit(1);
+        }
+        finally
+        {
+            try
+            {
+                fw.close();
+            }
+            catch (Exception e)
+            {
+                // empty
+            }
+        }
+    }
 }
