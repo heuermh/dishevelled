@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!--
 
-    dsh-commandline  Simple command line parser based on typed arguments.
+    dsh-commandline  Command line parser based on typed arguments.
     Copyright (c) 2004-2007 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
@@ -31,7 +31,7 @@
 <section name="Summary">
 
 <p>
-dishevelled.org <b>commandline</b> is a simple command line parser based on typed arguments.
+dishevelled.org <b>commandline</b> is a command line parser based on typed arguments.
 The commandline project requires java version 1.5 or later.
 </p>
 

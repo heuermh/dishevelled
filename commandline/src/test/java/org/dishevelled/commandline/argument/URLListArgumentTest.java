@@ -1,6 +1,6 @@
 /*
 
-    dsh-commandline  Simple command line parser based on typed arguments.
+    dsh-commandline  Command line parser based on typed arguments.
     Copyright (c) 2004-2007 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
