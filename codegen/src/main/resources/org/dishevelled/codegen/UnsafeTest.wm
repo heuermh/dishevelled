@@ -296,7 +296,83 @@ public final class ${cd.Upper}Test
 #end
     }
 
-    public void testConstructor()
+    public void testRequiredParametersConstructor()
+    {
+        // TODO:  enumerate all valid required parameter combinations
+        //    foo for 1, singletonFoos/fullFoos for 1:*
+        ${cd.Upper} ${cd.Mixed}0 = new ${cd.Upper}(...);
+
+#foreach ($a in $cd.Attributes)
+#set ($r = $a.Role)
+#if ($a.Cardinality.toString() == "StrictlyOne")
+        try
+        {
+            ${cd.Upper} ${cd.Mixed} = new ${cd.Upper}(null, ...);
+            fail("ctr(null ${r.Mixed}) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+#elseif ($a.Cardinality.toString() == "OneToMany")
+#set ($coll = $a.CollectionDescription)
+        try
+        {
+            ${cd.Upper} ${cd.Mixed} = new ${cd.Upper}(null, ...);
+            fail("ctr(null ${r.Mixed}s) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+        try
+        {
+            ${cd.Upper} ${cd.Mixed} = new ${cd.Upper}(empty${r.Upper}s, ...);
+            fail("ctr(empty${r.Upper}s) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+#end
+#end
+#foreach ($a in $cd.Associations)
+#set ($r = $a.Role)
+#if ($a.Cardinality.toString() == "StrictlyOne")
+        try
+        {
+            ${cd.Upper} ${cd.Mixed} = new ${cd.Upper}(null, ...);
+            fail("ctr(null ${r.Mixed}) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+#elseif ($a.Cardinality.toString() == "OneToMany")
+#set ($coll = $a.CollectionDescription)
+        try
+        {
+            ${cd.Upper} ${cd.Mixed} = new ${cd.Upper}(null, ...);
+            fail("ctr(null ${r.Mixed}s) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+        try
+        {
+            ${cd.Upper} ${cd.Mixed} = new ${cd.Upper}(empty${r.Upper}s, ...);
+            fail("ctr(empty${r.Upper}s) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+#end
+#end
+    }
+
+    public void testFullConstructor()
     {
         // TODO:  enumerate all valid parameter combinations
         //    null/foo for 0:1, foo for 1, emptyFoos/singletonFoos/fullFoos for 0:*, singletonFoos/fullFoos for 1:*
@@ -401,8 +477,16 @@ public final class ${cd.Upper}Test
     {
         ${cd.Upper} ${cd.Mixed}0 = new ${cd.Upper}(null, ...);
         assertEquals(null, ${cd.Mixed}0.get${r.Upper}());
+        ${cd.Mixed}0.set${r.Upper}(null);
+        assertEquals(null, ${cd.Mixed}0.get${r.Upper}());
+        ${cd.Mixed}0.set${r.Upper}(${r.Mixed});
+        assertEquals(${r.Mixed}, ${cd.Mixed}0.get${r.Upper}());
 
         ${cd.Upper} ${cd.Mixed}1 = new ${cd.Upper}(${r.Mixed}, ...);
+        assertEquals(${r.Mixed}, ${cd.Mixed}1.get${r.Upper}());
+        ${cd.Mixed}1.set${r.Upper}(null);
+        assertEquals(null, ${cd.Mixed}1.get${r.Upper}());
+        ${cd.Mixed}1.set${r.Upper}(${r.Mixed});
         assertEquals(${r.Mixed}, ${cd.Mixed}1.get${r.Upper}());
     }
 
@@ -411,7 +495,20 @@ public final class ${cd.Upper}Test
     {
         ${cd.Upper} ${cd.Mixed} = new ${cd.Upper}(${r.Mixed}, ...);
         assertTrue(${cd.Mixed}.get${r.Upper}() != null);
-        assertEquals(${r.Mixed}, ${cd.Upper}.get${r.Upper}());
+        assertEquals(${r.Mixed}, ${cd.Mixed}.get${r.Upper}());
+        ${cd.Mixed}.set${r.Upper}(${r.Mixed});
+        assertTrue(${cd.Mixed}.get${r.Upper}() != null);
+        assertEquals(${r.Mixed}, ${cd.Mixed}.get${r.Upper}());
+
+        try
+        {
+            ${cd.Mixed}.set${r.Upper}(null);
+            fail("set${r.Upper}(null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
     }
 
 #elseif ($a.Cardinality.toString() == "ZeroToMany")
@@ -421,14 +518,42 @@ public final class ${cd.Upper}Test
         ${cd.Upper} ${cd.Mixed}0 = new ${cd.Upper}(empty${r.Upper}s, ...);
         assertTrue(${cd.Mixed}0.get${r.Upper}s() != null);
         assertEquals(empty${r.Upper}s, ${cd.Mixed}0.get${r.Upper}s());
+        ${cd.Mixed}0.set${r.Upper}s(singleton${r.Upper}s);
+        assertTrue(${cd.Mixed}0.get${r.Upper}s() != null);
+        assertEquals(singleton${r.Upper}s, ${cd.Mixed}0.get${r.Upper}s());
+        ${cd.Mixed}0.set${r.Upper}s(full${r.Upper}s);
+        assertTrue(${cd.Mixed}0.get${r.Upper}s() != null);
+        assertEquals(full${r.Upper}s, ${cd.Mixed}0.get${r.Upper}s());
 
         ${cd.Upper} ${cd.Mixed}1 = new ${cd.Upper}(singleton${r.Upper}s, ...);
         assertTrue(${cd.Mixed}1.get${r.Upper}s() != null);
         assertEquals(singleton${r.Upper}s, ${cd.Mixed}1.get${r.Upper}s());
+        ${cd.Mixed}0.set${r.Upper}s(empty${r.Upper}s);
+        assertTrue(${cd.Mixed}1.get${r.Upper}s() != null);
+        assertEquals(empty${r.Upper}s, ${cd.Mixed}1.get${r.Upper}s());
+        ${cd.Mixed}1.set${r.Upper}s(full${r.Upper}s);
+        assertTrue(${cd.Mixed}1.get${r.Upper}s() != null);
+        assertEquals(full${r.Upper}s, ${cd.Mixed}1.get${r.Upper}s());
 
         ${cd.Upper} ${cd.Mixed}2 = new ${cd.Upper}(full${r.Upper}s, ...);
         assertTrue(${cd.Mixed}2.get${r.Upper}s() != null);
         assertEquals(full${r.Upper}s, ${cd.Mixed}2.get${r.Upper}s());
+        ${cd.Mixed}2.set${r.Upper}s(empty${r.Upper}s);
+        assertTrue(${cd.Mixed}2.get${r.Upper}s() != null);
+        assertEquals(empty${r.Upper}s, ${cd.Mixed}2.get${r.Upper}s());
+        ${cd.Mixed}2.set${r.Upper}s(singleton${r.Upper}s);
+        assertTrue(${cd.Mixed}2.get${r.Upper}s() != null);
+        assertEquals(singleton${r.Upper}s, ${cd.Mixed}2.get${r.Upper}s());
+
+        try
+        {
+            ${cd.Mixed}0.set${r.Upper}s(null);
+            fail("set${r.Upper}s(null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
     }
 
     public void test${r.Upper}sIsCopiedDefensively()
@@ -526,11 +651,38 @@ public final class ${cd.Upper}Test
         assertTrue(${cd.Mixed}0.get${r.Upper}s() != null);
         assertTrue(${cd.Mixed}0.get${r.Upper}s().size() >= 1);
         assertEquals(singleton${r.Upper}s, ${cd.Mixed}0.get${r.Upper}s());
+        ${cd.Mixed}0.set${r.Upper}s(full${r.Upper}s);
+        assertTrue(${cd.Mixed}0.get${r.Upper}s() != null);
+        assertTrue(${cd.Mixed}0.get${r.Upper}s().size() >= 1);
+        assertEquals(full${r.Upper}s, ${cd.Mixed}0.get${r.Upper}s());
 
         ${cd.Upper} ${cd.Mixed}1 = new ${cd.Upper}(full${r.Upper}s, ...);
         assertTrue(${cd.Mixed}1.get${r.Upper}s() != null);
         assertTrue(${cd.Mixed}1.get${r.Upper}s().size() >= 1);
         assertEquals(full${r.Upper}s, ${cd.Mixed}1.get${r.Upper}s());
+        ${cd.Mixed}1.set${r.Upper}s(singleton${r.Upper}s);
+        assertTrue(${cd.Mixed}1.get${r.Upper}s() != null);
+        assertTrue(${cd.Mixed}1.get${r.Upper}s().size() >= 1);
+        assertEquals(singleton${r.Upper}s, ${cd.Mixed}1.get${r.Upper}s());
+
+        try
+        {
+            ${cd.Mixed}0.set${r.Upper}s(null);
+            fail("set${r.Upper}s(null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+        try
+        {
+            ${cd.Mixed}0.set${r.Upper}s(empty${r.Upper}s);
+            fail("set${r.Upper}s(empty${r.Upper}s) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
     }
 
     public void test${r.Upper}sIsCopiedDefensively()
@@ -629,8 +781,16 @@ public final class ${cd.Upper}Test
     {
         ${cd.Upper} ${cd.Mixed}0 = new ${cd.Upper}(null, ...);
         assertEquals(null, ${cd.Mixed}0.get${r.Upper}());
+        ${cd.Mixed}0.set${r.Upper}(null);
+        assertEquals(null, ${cd.Mixed}0.get${r.Upper}());
+        ${cd.Mixed}0.set${r.Upper}(${r.Mixed});
+        assertEquals(${r.Mixed}, ${cd.Mixed}0.get${r.Upper}());
 
         ${cd.Upper} ${cd.Mixed}1 = new ${cd.Upper}(${r.Mixed}, ...);
+        assertEquals(${r.Mixed}, ${cd.Mixed}1.get${r.Upper}());
+        ${cd.Mixed}1.set${r.Upper}(null);
+        assertEquals(null, ${cd.Mixed}1.get${r.Upper}());
+        ${cd.Mixed}1.set${r.Upper}(${r.Mixed});
         assertEquals(${r.Mixed}, ${cd.Mixed}1.get${r.Upper}());
     }
 
@@ -639,7 +799,20 @@ public final class ${cd.Upper}Test
     {
         ${cd.Upper} ${cd.Mixed} = new ${cd.Upper}(${r.Mixed}, ...);
         assertTrue(${cd.Mixed}.get${r.Upper}() != null);
-        assertEquals(${r.Mixed}, ${cd.Upper}.get${r.Upper}());
+        assertEquals(${r.Mixed}, ${cd.Mixed}.get${r.Upper}());
+        ${cd.Mixed}.set${r.Upper}(${r.Mixed});
+        assertTrue(${cd.Mixed}.get${r.Upper}() != null);
+        assertEquals(${r.Mixed}, ${cd.Mixed}.get${r.Upper}());
+
+        try
+        {
+            ${cd.Mixed}.set${r.Upper}(null);
+            fail("set${r.Upper}(null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
     }
 
 #elseif ($a.Cardinality.toString() == "ZeroToMany")
@@ -649,14 +822,42 @@ public final class ${cd.Upper}Test
         ${cd.Upper} ${cd.Mixed}0 = new ${cd.Upper}(empty${r.Upper}s, ...);
         assertTrue(${cd.Mixed}0.get${r.Upper}s() != null);
         assertEquals(empty${r.Upper}s, ${cd.Mixed}0.get${r.Upper}s());
+        ${cd.Mixed}0.set${r.Upper}s(singleton${r.Upper}s);
+        assertTrue(${cd.Mixed}0.get${r.Upper}s() != null);
+        assertEquals(singleton${r.Upper}s, ${cd.Mixed}0.get${r.Upper}s());
+        ${cd.Mixed}0.set${r.Upper}s(full${r.Upper}s);
+        assertTrue(${cd.Mixed}0.get${r.Upper}s() != null);
+        assertEquals(full${r.Upper}s, ${cd.Mixed}0.get${r.Upper}s());
 
         ${cd.Upper} ${cd.Mixed}1 = new ${cd.Upper}(singleton${r.Upper}s, ...);
         assertTrue(${cd.Mixed}1.get${r.Upper}s() != null);
         assertEquals(singleton${r.Upper}s, ${cd.Mixed}1.get${r.Upper}s());
+        ${cd.Mixed}0.set${r.Upper}s(empty${r.Upper}s);
+        assertTrue(${cd.Mixed}1.get${r.Upper}s() != null);
+        assertEquals(empty${r.Upper}s, ${cd.Mixed}1.get${r.Upper}s());
+        ${cd.Mixed}1.set${r.Upper}s(full${r.Upper}s);
+        assertTrue(${cd.Mixed}1.get${r.Upper}s() != null);
+        assertEquals(full${r.Upper}s, ${cd.Mixed}1.get${r.Upper}s());
 
         ${cd.Upper} ${cd.Mixed}2 = new ${cd.Upper}(full${r.Upper}s, ...);
         assertTrue(${cd.Mixed}2.get${r.Upper}s() != null);
         assertEquals(full${r.Upper}s, ${cd.Mixed}2.get${r.Upper}s());
+        ${cd.Mixed}2.set${r.Upper}s(empty${r.Upper}s);
+        assertTrue(${cd.Mixed}2.get${r.Upper}s() != null);
+        assertEquals(empty${r.Upper}s, ${cd.Mixed}2.get${r.Upper}s());
+        ${cd.Mixed}2.set${r.Upper}s(singleton${r.Upper}s);
+        assertTrue(${cd.Mixed}2.get${r.Upper}s() != null);
+        assertEquals(singleton${r.Upper}s, ${cd.Mixed}2.get${r.Upper}s());
+
+        try
+        {
+            ${cd.Mixed}0.set${r.Upper}s(null);
+            fail("set${r.Upper}s(null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
     }
 
     public void test${r.Upper}sIsCopiedDefensively()
@@ -754,11 +955,38 @@ public final class ${cd.Upper}Test
         assertTrue(${cd.Mixed}0.get${r.Upper}s() != null);
         assertTrue(${cd.Mixed}0.get${r.Upper}s().size() >= 1);
         assertEquals(singleton${r.Upper}s, ${cd.Mixed}0.get${r.Upper}s());
+        ${cd.Mixed}0.set${r.Upper}s(full${r.Upper}s);
+        assertTrue(${cd.Mixed}0.get${r.Upper}s() != null);
+        assertTrue(${cd.Mixed}0.get${r.Upper}s().size() >= 1);
+        assertEquals(full${r.Upper}s, ${cd.Mixed}0.get${r.Upper}s());
 
         ${cd.Upper} ${cd.Mixed}1 = new ${cd.Upper}(full${r.Upper}s, ...);
         assertTrue(${cd.Mixed}1.get${r.Upper}s() != null);
         assertTrue(${cd.Mixed}1.get${r.Upper}s().size() >= 1);
         assertEquals(full${r.Upper}s, ${cd.Mixed}1.get${r.Upper}s());
+        ${cd.Mixed}1.set${r.Upper}s(singleton${r.Upper}s);
+        assertTrue(${cd.Mixed}1.get${r.Upper}s() != null);
+        assertTrue(${cd.Mixed}1.get${r.Upper}s().size() >= 1);
+        assertEquals(singleton${r.Upper}s, ${cd.Mixed}1.get${r.Upper}s());
+
+        try
+        {
+            ${cd.Mixed}0.set${r.Upper}s(null);
+            fail("set${r.Upper}s(null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+        try
+        {
+            ${cd.Mixed}0.set${r.Upper}s(empty${r.Upper}s);
+            fail("set${r.Upper}s(empty${r.Upper}s) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
     }
 
     public void test${r.Upper}sIsCopiedDefensively()
@@ -863,7 +1091,20 @@ public final class ${cd.Upper}Test
         assertTrue(${cd.Mixed}0.equals(${cd.Mixed}0));
         assertTrue(${cd.Mixed}1.equals(${cd.Mixed}1));
         assertFalse(${cd.Mixed}0 == ${cd.Mixed}1);
-        assertFalse(${cd.Mixed}0.equals(${cd.Mixed}1));
-        assertFalse(${cd.Mixed}1.equals(${cd.Mixed}0));
+        assertTrue(${cd.Mixed}0.equals(${cd.Mixed}1));
+        assertTrue(${cd.Mixed}1.equals(${cd.Mixed}0));
+    }
+
+    public void testHashCode()
+    {
+        ${cd.Upper} ${cd.Mixed}0 = new ${cd.Upper}(...);
+        ${cd.Upper} ${cd.Mixed}1 = new ${cd.Upper}(...);
+
+        assertTrue(${cd.Mixed}0.equals(${cd.Mixed}1));
+        assertTrue(${cd.Mixed}1.equals(${cd.Mixed}0));
+        assertEquals(${cd.Mixed}0.hashCode(), ${cd.Mixed}0.hashCode());
+        assertEquals(${cd.Mixed}1.hashCode(), ${cd.Mixed}1.hashCode());
+        assertEquals(${cd.Mixed}0.hashCode(), ${cd.Mixed}1.hashCode());
+        assertEquals(${cd.Mixed}1.hashCode(), ${cd.Mixed}0.hashCode());
     }
 }
