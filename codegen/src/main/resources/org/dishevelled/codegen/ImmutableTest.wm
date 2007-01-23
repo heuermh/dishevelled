@@ -111,6 +111,7 @@ public final class ${cd.Upper}Test
 
 #end
 #end
+
 #foreach ($a in $cd.Attributes)
 #set ($r = $a.Role)
 #if ($a.Cardinality.toString() == "ZeroToOne")
@@ -454,7 +455,7 @@ public final class ${cd.Upper}Test
         }
         try
         {
-            ${a.Upper} ${r.Mixed} = createSingleton${r.Upper}s().iterator().next();
+            ${a.Upper} ${r.Mixed} = create${r.Upper}();
             ${cd.Mixed}.get${r.Upper}s().add(${r.Mixed});
             fail("${cd.Mixed} ${r.Mixed}s add(${r.Mixed}) expected UnsupportedOperationException");
         }
@@ -464,7 +465,7 @@ public final class ${cd.Upper}Test
         }
         try
         {
-            ${a.Upper} ${r.Mixed} = createSingleton${r.Upper}s().iterator().next();
+            ${a.Upper} ${r.Mixed} = create${r.Upper}();
             ${cd.Mixed}.get${r.Upper}s().remove(${r.Mixed});
             fail("${cd.Mixed} ${r.Mixed}s remove(${r.Mixed}) expected UnsupportedOperationException");
         }
@@ -474,9 +475,8 @@ public final class ${cd.Upper}Test
         }
         try
         {
-            ${coll.InterfaceName}<${a.Upper}> ${r.Mixed}s = createFull${r.Upper}s();
-            ${cd.Mixed}.get${r.Upper}s().addAll(${r.Mixed}s);
-            fail("${cd.Mixed} ${r.Mixed}s addAll(${r.Mixed}s) expected UnsupportedOperationException");
+            ${cd.Mixed}.get${r.Upper}s().addAll(full${r.Upper}s);
+            fail("${cd.Mixed} ${r.Mixed}s addAll(full${r.Upper}s) expected UnsupportedOperationException");
         }
         catch (UnsupportedOperationException e)
         {
@@ -484,9 +484,8 @@ public final class ${cd.Upper}Test
         }
         try
         {
-            ${coll.InterfaceName}<${a.Upper}> ${r.Mixed}s = createFull${r.Upper}s();
-            ${cd.Mixed}.get${r.Upper}s().removeAll(${r.Mixed}s);
-            fail("${cd.Mixed} ${r.Mixed}s removeAll(${r.Mixed}s) expected UnsupportedOperationException");
+            ${cd.Mixed}.get${r.Upper}s().removeAll(full${r.Upper}s);
+            fail("${cd.Mixed} ${r.Mixed}s removeAll(full${r.Upper}s) expected UnsupportedOperationException");
         }
         catch (UnsupportedOperationException e)
         {
@@ -494,9 +493,8 @@ public final class ${cd.Upper}Test
         }
         try
         {
-            ${coll.InterfaceName}<${a.Upper}> ${r.Mixed}s = createFull${r.Upper}s();
-            ${cd.Mixed}.get${r.Upper}s().retainAll(${r.Mixed}s);
-            fail("${cd.Mixed} ${r.Mixed}s retainAll(${r.Mixed}s) expected UnsupportedOperationException");
+            ${cd.Mixed}.get${r.Upper}s().retainAll(full${r.Upper}s);
+            fail("${cd.Mixed} ${r.Mixed}s retainAll(full${r.Upper}s) expected UnsupportedOperationException");
         }
         catch (UnsupportedOperationException e)
         {
@@ -556,7 +554,7 @@ public final class ${cd.Upper}Test
         }
         try
         {
-            ${a.Upper} ${r.Mixed} = createSingleton${r.Upper}s().iterator().next();
+            ${a.Upper} ${r.Mixed} = create${r.Upper}();
             ${cd.Mixed}.get${r.Upper}s().add(${r.Mixed});
             fail("${cd.Mixed} ${r.Mixed}s add(${r.Mixed}) expected UnsupportedOperationException");
         }
@@ -566,7 +564,7 @@ public final class ${cd.Upper}Test
         }
         try
         {
-            ${a.Upper} ${r.Mixed} = createSingleton${r.Upper}s().iterator().next();
+            ${a.Upper} ${r.Mixed} = create${r.Upper}();
             ${cd.Mixed}.get${r.Upper}s().remove(${r.Mixed});
             fail("${cd.Mixed} ${r.Mixed}s remove(${r.Mixed}) expected UnsupportedOperationException");
         }
@@ -576,9 +574,8 @@ public final class ${cd.Upper}Test
         }
         try
         {
-            ${coll.InterfaceName}<${a.Upper}> ${r.Mixed}s = createFull${r.Upper}s();
-            ${cd.Mixed}.get${r.Upper}s().addAll(${r.Mixed}s);
-            fail("${cd.Mixed} ${r.Mixed}s addAll(${r.Mixed}s) expected UnsupportedOperationException");
+            ${cd.Mixed}.get${r.Upper}s().addAll(full${r.Upper}s);
+            fail("${cd.Mixed} ${r.Mixed}s addAll(full${r.Upper}s) expected UnsupportedOperationException");
         }
         catch (UnsupportedOperationException e)
         {
@@ -586,9 +583,8 @@ public final class ${cd.Upper}Test
         }
         try
         {
-            ${coll.InterfaceName}<${a.Upper}> ${r.Mixed}s = createFull${r.Upper}s();
-            ${cd.Mixed}.get${r.Upper}s().removeAll(${r.Mixed}s);
-            fail("${cd.Mixed} ${r.Mixed}s removeAll(${r.Mixed}s) expected UnsupportedOperationException");
+            ${cd.Mixed}.get${r.Upper}s().removeAll(full${r.Upper}s);
+            fail("${cd.Mixed} ${r.Mixed}s removeAll(full${r.Upper}s) expected UnsupportedOperationException");
         }
         catch (UnsupportedOperationException e)
         {
@@ -596,9 +592,8 @@ public final class ${cd.Upper}Test
         }
         try
         {
-            ${coll.InterfaceName}<${a.Upper}> ${r.Mixed}s = createFull${r.Upper}s();
-            ${cd.Mixed}.get${r.Upper}s().retainAll(${r.Mixed}s);
-            fail("${cd.Mixed} ${r.Mixed}s retainAll(${r.Mixed}s) expected UnsupportedOperationException");
+            ${cd.Mixed}.get${r.Upper}s().retainAll(full${r.Upper}s);
+            fail("${cd.Mixed} ${r.Mixed}s retainAll(full${r.Upper}s) expected UnsupportedOperationException");
         }
         catch (UnsupportedOperationException e)
         {
@@ -682,7 +677,7 @@ public final class ${cd.Upper}Test
         }
         try
         {
-            ${a.Upper} ${r.Mixed} = createSingleton${r.Upper}s().iterator().next();
+            ${a.Upper} ${r.Mixed} = create${r.Upper}();
             ${cd.Mixed}.get${r.Upper}s().add(${r.Mixed});
             fail("${cd.Mixed} ${r.Mixed}s add(${r.Mixed}) expected UnsupportedOperationException");
         }
@@ -692,7 +687,7 @@ public final class ${cd.Upper}Test
         }
         try
         {
-            ${a.Upper} ${r.Mixed} = createSingleton${r.Upper}s().iterator().next();
+            ${a.Upper} ${r.Mixed} = create${r.Upper}();
             ${cd.Mixed}.get${r.Upper}s().remove(${r.Mixed});
             fail("${cd.Mixed} ${r.Mixed}s remove(${r.Mixed}) expected UnsupportedOperationException");
         }
@@ -702,9 +697,8 @@ public final class ${cd.Upper}Test
         }
         try
         {
-            ${coll.InterfaceName}<${a.Upper}> ${r.Mixed}s = createFull${r.Upper}s();
-            ${cd.Mixed}.get${r.Upper}s().addAll(${r.Mixed}s);
-            fail("${cd.Mixed} ${r.Mixed}s addAll(${r.Mixed}s) expected UnsupportedOperationException");
+            ${cd.Mixed}.get${r.Upper}s().addAll(full${r.Upper}s);
+            fail("${cd.Mixed} ${r.Mixed}s addAll(full${r.Upper}s) expected UnsupportedOperationException");
         }
         catch (UnsupportedOperationException e)
         {
@@ -712,9 +706,8 @@ public final class ${cd.Upper}Test
         }
         try
         {
-            ${coll.InterfaceName}<${a.Upper}> ${r.Mixed}s = createFull${r.Upper}s();
-            ${cd.Mixed}.get${r.Upper}s().removeAll(${r.Mixed}s);
-            fail("${cd.Mixed} ${r.Mixed}s removeAll(${r.Mixed}s) expected UnsupportedOperationException");
+            ${cd.Mixed}.get${r.Upper}s().removeAll(full${r.Upper}s);
+            fail("${cd.Mixed} ${r.Mixed}s removeAll(full${r.Upper}s) expected UnsupportedOperationException");
         }
         catch (UnsupportedOperationException e)
         {
@@ -722,9 +715,8 @@ public final class ${cd.Upper}Test
         }
         try
         {
-            ${coll.InterfaceName}<${a.Upper}> ${r.Mixed}s = createFull${r.Upper}s();
-            ${cd.Mixed}.get${r.Upper}s().retainAll(${r.Mixed}s);
-            fail("${cd.Mixed} ${r.Mixed}s retainAll(${r.Mixed}s) expected UnsupportedOperationException");
+            ${cd.Mixed}.get${r.Upper}s().retainAll(full${r.Upper}s);
+            fail("${cd.Mixed} ${r.Mixed}s retainAll(full${r.Upper}s) expected UnsupportedOperationException");
         }
         catch (UnsupportedOperationException e)
         {
@@ -784,7 +776,7 @@ public final class ${cd.Upper}Test
         }
         try
         {
-            ${a.Upper} ${r.Mixed} = createSingleton${r.Upper}s().iterator().next();
+            ${a.Upper} ${r.Mixed} = create${r.Upper}();
             ${cd.Mixed}.get${r.Upper}s().add(${r.Mixed});
             fail("${cd.Mixed} ${r.Mixed}s add(${r.Mixed}) expected UnsupportedOperationException");
         }
@@ -794,7 +786,7 @@ public final class ${cd.Upper}Test
         }
         try
         {
-            ${a.Upper} ${r.Mixed} = createSingleton${r.Upper}s().iterator().next();
+            ${a.Upper} ${r.Mixed} = create${r.Upper}();
             ${cd.Mixed}.get${r.Upper}s().remove(${r.Mixed});
             fail("${cd.Mixed} ${r.Mixed}s remove(${r.Mixed}) expected UnsupportedOperationException");
         }
@@ -804,9 +796,8 @@ public final class ${cd.Upper}Test
         }
         try
         {
-            ${coll.InterfaceName}<${a.Upper}> ${r.Mixed}s = createFull${r.Upper}s();
-            ${cd.Mixed}.get${r.Upper}s().addAll(${r.Mixed}s);
-            fail("${cd.Mixed} ${r.Mixed}s addAll(${r.Mixed}s) expected UnsupportedOperationException");
+            ${cd.Mixed}.get${r.Upper}s().addAll(full${r.Upper}s);
+            fail("${cd.Mixed} ${r.Mixed}s addAll(full${r.Upper}s) expected UnsupportedOperationException");
         }
         catch (UnsupportedOperationException e)
         {
@@ -814,9 +805,8 @@ public final class ${cd.Upper}Test
         }
         try
         {
-            ${coll.InterfaceName}<${a.Upper}> ${r.Mixed}s = createFull${r.Upper}s();
-            ${cd.Mixed}.get${r.Upper}s().removeAll(${r.Mixed}s);
-            fail("${cd.Mixed} ${r.Mixed}s removeAll(${r.Mixed}s) expected UnsupportedOperationException");
+            ${cd.Mixed}.get${r.Upper}s().removeAll(full${r.Upper}s);
+            fail("${cd.Mixed} ${r.Mixed}s removeAll(full${r.Upper}s) expected UnsupportedOperationException");
         }
         catch (UnsupportedOperationException e)
         {
@@ -824,9 +814,8 @@ public final class ${cd.Upper}Test
         }
         try
         {
-            ${coll.InterfaceName}<${a.Upper}> ${r.Mixed}s = createFull${r.Upper}s();
-            ${cd.Mixed}.get${r.Upper}s().retainAll(${r.Mixed}s);
-            fail("${cd.Mixed} ${r.Mixed}s retainAll(${r.Mixed}s) expected UnsupportedOperationException");
+            ${cd.Mixed}.get${r.Upper}s().retainAll(full${r.Upper}s);
+            fail("${cd.Mixed} ${r.Mixed}s retainAll(full${r.Upper}s) expected UnsupportedOperationException");
         }
         catch (UnsupportedOperationException e)
         {
