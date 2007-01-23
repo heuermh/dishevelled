@@ -88,7 +88,6 @@ public final class ${cd.Upper}Test
 
 #end
 #end
-
 #foreach ($a in $cd.Associations)
 #set ($r = $a.Role)
 #if ($a.Cardinality.toString() == "ZeroToOne")
@@ -519,74 +518,128 @@ public final class ${cd.Upper}Test
         ${cd.Upper} ${cd.Mixed}0 = new ${cd.Upper}(empty${r.Upper}s, ...);
         assertTrue(${cd.Mixed}0.get${r.Upper}s() != null);
         assertEquals(empty${r.Upper}s, ${cd.Mixed}0.get${r.Upper}s());
-        ${cd.Mixed}0.set${r.Upper}s(singleton${r.Upper}s);
-        assertTrue(${cd.Mixed}0.get${r.Upper}s() != null);
-        assertEquals(singleton${r.Upper}s, ${cd.Mixed}0.get${r.Upper}s());
-        ${cd.Mixed}0.set${r.Upper}s(full${r.Upper}s);
-        assertTrue(${cd.Mixed}0.get${r.Upper}s() != null);
-        assertEquals(full${r.Upper}s, ${cd.Mixed}0.get${r.Upper}s());
 
         ${cd.Upper} ${cd.Mixed}1 = new ${cd.Upper}(singleton${r.Upper}s, ...);
         assertTrue(${cd.Mixed}1.get${r.Upper}s() != null);
         assertEquals(singleton${r.Upper}s, ${cd.Mixed}1.get${r.Upper}s());
-        ${cd.Mixed}1.set${r.Upper}s(empty${r.Upper}s);
-        assertTrue(${cd.Mixed}1.get${r.Upper}s() != null);
-        assertEquals(empty${r.Upper}s, ${cd.Mixed}1.get${r.Upper}s());
-        ${cd.Mixed}1.set${r.Upper}s(full${r.Upper}s);
-        assertTrue(${cd.Mixed}1.get${r.Upper}s() != null);
-        assertEquals(full${r.Upper}s, ${cd.Mixed}1.get${r.Upper}s());
 
         ${cd.Upper} ${cd.Mixed}2 = new ${cd.Upper}(full${r.Upper}s, ...);
         assertTrue(${cd.Mixed}2.get${r.Upper}s() != null);
         assertEquals(full${r.Upper}s, ${cd.Mixed}2.get${r.Upper}s());
-        ${cd.Mixed}2.set${r.Upper}s(empty${r.Upper}s);
-        assertTrue(${cd.Mixed}2.get${r.Upper}s() != null);
-        assertEquals(empty${r.Upper}s, ${cd.Mixed}2.get${r.Upper}s());
-        ${cd.Mixed}2.set${r.Upper}s(singleton${r.Upper}s);
-        assertTrue(${cd.Mixed}2.get${r.Upper}s() != null);
-        assertEquals(singleton${r.Upper}s, ${cd.Mixed}2.get${r.Upper}s());
-
-        try
-        {
-            ${cd.Mixed}0.set${r.Upper}s(null);
-            fail("set${r.Upper}s(null) expected IllegalArgumentException");
-        }
-        catch (IllegalArgumentException e)
-        {
-            // expected
-        }
     }
 
-    public void test${r.Upper}sIsNotCopiedDefensively()
+    public void testAdd${r.Upper}()
+    {
+        ${cd.Upper} ${cd.Mixed} = new ${cd.Upper}(empty${r.Upper}s, ...);
+        assertFalse(${cd.Mixed}.get${r.Upper}s().contains(null));
+        ${cd.Mixed}.add${r.Upper}(null);
+        assertTrue(${cd.Mixed}.get${r.Upper}s().contains(null));
+        ${a.Upper} ${r.Mixed} = create${r.Upper}();
+        assertFalse(${cd.Mixed}.get${r.Upper}s().contains(${r.Mixed}));
+        ${cd.Mixed}.add${r.Upper}(${r.Mixed});
+        assertTrue(${cd.Mixed}.get${r.Upper}s().contains(${r.Mixed}));
+        ${cd.Mixed}.add${r.Upper}(${r.Mixed});
+        assertTrue(${cd.Mixed}.get${r.Upper}s().contains(${r.Mixed}));
+    }
+
+    public void testRemove${r.Upper}()
+    {
+        ${cd.Upper} ${cd.Mixed} = new ${cd.Upper}(full${r.Upper}s, ...);
+        assertFalse(${cd.Mixed}.get${r.Upper}s().contains(null));
+        ${cd.Mixed}.add${r.Upper}(null);
+        assertTrue(${cd.Mixed}.get${r.Upper}s().contains(null));
+        ${cd.Mixed}.remove${r.Upper}(null);
+        assertFalse(${cd.Mixed}.get${r.Upper}s().contains(null));
+        ${a.Upper} ${r.Mixed} = ${cd.Mixed}.get${r.Upper}s().iterator().next();
+        assertTrue(${cd.Mixed}.get${r.Upper}s().contains(${r.Mixed}));
+        ${cd.Mixed}.remove${r.Upper}(${r.Mixed});
+        assertFalse(${cd.Mixed}.get${r.Upper}s().contains(${r.Mixed}));
+        ${cd.Mixed}.remove${r.Upper}(${r.Mixed});
+        assertFalse(${cd.Mixed}.get${r.Upper}s().contains(${r.Mixed}));
+    }
+
+    public void test${r.Upper}sIsCopiedDefensively()
     {
         ${coll.InterfaceName}<${a.Upper}> full${r.Upper}sCopy = createFull${r.Upper}s();
         ${cd.Upper} ${cd.Mixed} = new ${cd.Upper}(full${r.Upper}sCopy, ...);
         assertEquals(full${r.Upper}sCopy, ${cd.Mixed}.get${r.Upper}s());
         full${r.Upper}sCopy.clear();
-        // note that modifying our reference modifies ${cd.Mixed}.get${r.Upper}s()
-        assertEquals(0, ${cd.Mixed}.get${r.Upper}s().size());
+        assertTrue(full${r.Upper}sCopy.size() != ${cd.Mixed}.get${r.Upper}s().size());
     }
 
-    public void test${r.Upper}sIsMutable()
+    public void test${r.Upper}sIsImmutable()
     {
         ${cd.Upper} ${cd.Mixed} = new ${cd.Upper}(full${r.Upper}s, ...);
-        ${a.Upper} ${r.Mixed} = create${r.Upper}();
-        ${coll.InterfaceName}<${a.Upper}> full${r.Upper}sCopy = createFull${r.Upper}s();
-        ${cd.Mixed}.get${r.Upper}s.clear();
-        ${cd.Mixed}.get${r.Upper}s.add(${r.Mixed});
-        ${cd.Mixed}.get${r.Upper}s.remove(${r.Mixed});
-        ${cd.Mixed}.get${r.Upper}s.addAll(full${r.Upper}sCopy);
-        ${cd.Mixed}.get${r.Upper}s.removeAll(full${r.Upper}sCopy);
-        ${cd.Mixed}.get${r.Upper}s.addAll(full${r.Upper}sCopy);
-        ${cd.Mixed}.get${r.Upper}s.retainAll(singleton${r.Upper}s);
-        ${cd.Mixed}.get${r.Upper}s.clear();
-        ${cd.Mixed}.get${r.Upper}s.addAll(full${r.Upper}sCopy);
-        for (Iterator<${a.Upper}> i = ${cd.Mixed}.get${r.Upper}s().iterator(); i.hasNext(); )
+        try
         {
-            i.next();
-            i.remove();
+            ${cd.Mixed}.get${r.Upper}s().clear();
+            fail("${cd.Mixed} ${r.Mixed}s clear() expected UnsupportedOperationException");
         }
-        ${cd.Mixed}.get${r.Upper}s.addAll(full${r.Upper}sCopy);
+        catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
+        try
+        {
+            ${a.Upper} ${r.Mixed} = create${r.Upper}();
+            ${cd.Mixed}.get${r.Upper}s().add(${r.Mixed});
+            fail("${cd.Mixed} ${r.Mixed}s add(${r.Mixed}) expected UnsupportedOperationException");
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
+        try
+        {
+            ${a.Upper} ${r.Mixed} = create${r.Upper}();
+            ${cd.Mixed}.get${r.Upper}s().remove(${r.Mixed});
+            fail("${cd.Mixed} ${r.Mixed}s remove(${r.Mixed}) expected UnsupportedOperationException");
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
+        try
+        {
+            ${cd.Mixed}.get${r.Upper}s().addAll(full${r.Upper}s);
+            fail("${cd.Mixed} ${r.Mixed}s addAll(full${r.Upper}s) expected UnsupportedOperationException");
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
+        try
+        {
+            ${cd.Mixed}.get${r.Upper}s().removeAll(full${r.Upper}s);
+            fail("${cd.Mixed} ${r.Mixed}s removeAll(full${r.Upper}s) expected UnsupportedOperationException");
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
+        try
+        {
+            ${cd.Mixed}.get${r.Upper}s().retainAll(full${r.Upper}s);
+            fail("${cd.Mixed} ${r.Mixed}s retainAll(full${r.Upper}s) expected UnsupportedOperationException");
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
+        try
+        {
+            Iterator<${a.Upper}> ${r.Mixed}s = ${cd.Mixed}.get${r.Upper}s().iterator();
+            if (${r.Mixed}s.hasNext())
+            {
+                ${r.Mixed}s.next();
+                ${r.Mixed}s.remove();
+                fail("${cd.Mixed} ${r.Mixed}s iterator remove() expected UnsupportedOperationException");
+            }
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
     }
 
 #elseif ($a.Cardinality.toString() == "OneToMany")
@@ -597,73 +650,151 @@ public final class ${cd.Upper}Test
         assertTrue(${cd.Mixed}0.get${r.Upper}s() != null);
         assertTrue(${cd.Mixed}0.get${r.Upper}s().size() >= 1);
         assertEquals(singleton${r.Upper}s, ${cd.Mixed}0.get${r.Upper}s());
-        ${cd.Mixed}0.set${r.Upper}s(full${r.Upper}s);
-        assertTrue(${cd.Mixed}0.get${r.Upper}s() != null);
-        assertTrue(${cd.Mixed}0.get${r.Upper}s().size() >= 1);
-        assertEquals(full${r.Upper}s, ${cd.Mixed}0.get${r.Upper}s());
 
         ${cd.Upper} ${cd.Mixed}1 = new ${cd.Upper}(full${r.Upper}s, ...);
         assertTrue(${cd.Mixed}1.get${r.Upper}s() != null);
         assertTrue(${cd.Mixed}1.get${r.Upper}s().size() >= 1);
         assertEquals(full${r.Upper}s, ${cd.Mixed}1.get${r.Upper}s());
-        ${cd.Mixed}1.set${r.Upper}s(singleton${r.Upper}s);
-        assertTrue(${cd.Mixed}1.get${r.Upper}s() != null);
-        assertTrue(${cd.Mixed}1.get${r.Upper}s().size() >= 1);
-        assertEquals(singleton${r.Upper}s, ${cd.Mixed}1.get${r.Upper}s());
+    }
+
+    public void testAdd${r.Upper}()
+    {
+        ${coll.InterfaceDescription} singleton${r.Upper}sCopy = new ${coll.ImplementationName}<${a.Upper}>(singleton${r.Upper}s);
+        ${cd.Upper} ${cd.Mixed} = new ${cd.Upper}(singleton${r.Upper}sCopy, ...);
+        assertFalse(${cd.Mixed}.get${r.Upper}s().contains(null));
+        ${cd.Mixed}.add${r.Upper}(null);
+        assertTrue(${cd.Mixed}.get${r.Upper}s().contains(null));
+        ${a.Upper} ${r.Mixed} = create${r.Upper}();
+        assertFalse(${cd.Mixed}.get${r.Upper}s().contains(${r.Mixed}));
+        ${cd.Mixed}.add${r.Upper}(${r.Mixed});
+        assertTrue(${cd.Mixed}.get${r.Upper}s().contains(${r.Mixed}));
+        ${cd.Mixed}.add${r.Upper}(${r.Mixed});
+        assertTrue(${cd.Mixed}.get${r.Upper}s().contains(${r.Mixed}));
+    }
+
+    public void testRemove${r.Upper}()
+    {
+        ${cd.Upper} ${cd.Mixed} = new ${cd.Upper}(full${r.Upper}s, ...);
+        assertFalse(${cd.Mixed}.get${r.Upper}s().contains(null));
+        ${cd.Mixed}.add${r.Upper}(null);
+        assertTrue(${cd.Mixed}.get${r.Upper}s().contains(null));
+        ${cd.Mixed}.remove${r.Upper}(null);
+        ${a.Upper} ${r.Mixed} = ${cd.Mixed}.get${r.Upper}s().iterator().next();
+        assertTrue(${cd.Mixed}.get${r.Upper}s().contains(${r.Mixed}));
+        ${cd.Mixed}.remove${r.Upper}(${r.Mixed});
+        assertFalse(${cd.Mixed}.get${r.Upper}s().contains(${r.Mixed}));
+        ${cd.Mixed}.remove${r.Upper}(${r.Mixed});
+        assertFalse(${cd.Mixed}.get${r.Upper}s().contains(${r.Mixed}));
+    }
+
+    public void testRemoveLast${r.Upper}()
+    {
+        ${cd.Upper} ${cd.Mixed} = new ${cd.Upper}(full${r.Upper}s, ...);
+
+        while (${cd.Mixed}.get${r.Upper}s().size() > 1)
+        {
+            ${a.Upper} ${r.Mixed} = ${cd.Mixed}.get${r.Upper}s().iterator().next();
+            assertTrue(${cd.Mixed}.get${r.Upper}s().contains(${r.Mixed}));
+            ${cd.Mixed}.remove${r.Upper}(${r.Mixed});
+            assertFalse(${cd.Mixed}.get${r.Upper}s().contains(${r.Mixed}));
+        }
 
         try
         {
-            ${cd.Mixed}0.set${r.Upper}s(null);
-            fail("set${r.Upper}s(null) expected IllegalArgumentException");
+            ${a.Upper} ${r.Mixed} = ${cd.Mixed}.get${r.Upper}s().iterator().next();
+            assertTrue(${cd.Mixed}.get${r.Upper}s().contains(${r.Mixed}));
+            assertEquals(1, ${cd.Mixed}.get${r.Upper}s().size());
+            ${cd.Mixed}.remove${r.Upper}(${r.Mixed});
+            fail("remove${r.Upper}(last ${r.Mixed}) expected IllegalStateException");
         }
-        catch (IllegalArgumentException e)
-        {
-            // expected
-        }
-        try
-        {
-            ${cd.Mixed}0.set${r.Upper}s(empty${r.Upper}s);
-            fail("set${r.Upper}s(empty${r.Upper}s) expected IllegalArgumentException");
-        }
-        catch (IllegalArgumentException e)
+        catch (IllegalStateException e)
         {
             // expected
         }
     }
 
-    public void test${r.Upper}sIsNotCopiedDefensively()
+    public void test${r.Upper}sIsCopiedDefensively()
     {
         ${coll.InterfaceName}<${a.Upper}> full${r.Upper}sCopy = createFull${r.Upper}s();
         ${cd.Upper} ${cd.Mixed} = new ${cd.Upper}(full${r.Upper}sCopy, ...);
         assertEquals(full${r.Upper}sCopy, ${cd.Mixed}.get${r.Upper}s());
         full${r.Upper}sCopy.clear();
-        // note that the contract has been broken
-        assertEquals(0, ${cd.Mixed}.get${r.Upper}s.size());
+        assertTrue(full${r.Upper}sCopy.size() != ${cd.Mixed}.get${r.Upper}s().size());
     }
 
-    public void test${r.Upper}sIsMutable()
+    public void test${r.Upper}sIsImmutable()
     {
         ${cd.Upper} ${cd.Mixed} = new ${cd.Upper}(full${r.Upper}s, ...);
-        ${a.Upper} ${r.Mixed} = create${r.Upper}();
-        ${coll.InterfaceName}<${a.Upper}> full${r.Upper}sCopy = createFull${r.Upper}s();
-        ${cd.Mixed}.get${r.Upper}s.clear();
-        // note that the contract has been broken
-        assertEquals(0, ${cd.Mixed}.get${r.Upper}s().size());
-
-        ${cd.Mixed}.get${r.Upper}s.add(${r.Mixed});
-        ${cd.Mixed}.get${r.Upper}s.remove(${r.Mixed});
-        ${cd.Mixed}.get${r.Upper}s.addAll(full${r.Upper}sCopy);
-        ${cd.Mixed}.get${r.Upper}s.removeAll(full${r.Upper}sCopy);
-        ${cd.Mixed}.get${r.Upper}s.addAll(full${r.Upper}sCopy);
-        ${cd.Mixed}.get${r.Upper}s.retainAll(singleton${r.Upper}s);
-        ${cd.Mixed}.get${r.Upper}s.clear();
-        ${cd.Mixed}.get${r.Upper}s.addAll(full${r.Upper}sCopy);
-        for (Iterator<${a.Upper}> i = ${cd.Mixed}.get${r.Upper}s().iterator(); i.hasNext(); )
+        try
         {
-            i.next();
-            i.remove();
+            ${cd.Mixed}.get${r.Upper}s().clear();
+            fail("${cd.Mixed} ${r.Mixed}s clear() expected UnsupportedOperationException");
         }
-        ${cd.Mixed}.get${r.Upper}s.addAll(full${r.Upper}sCopy);
+        catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
+        try
+        {
+            ${a.Upper} ${r.Mixed} = create${r.Upper}();
+            ${cd.Mixed}.get${r.Upper}s().add(${r.Mixed});
+            fail("${cd.Mixed} ${r.Mixed}s add(${r.Mixed}) expected UnsupportedOperationException");
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
+        try
+        {
+            ${a.Upper} ${r.Mixed} = create${r.Upper}();
+            ${cd.Mixed}.get${r.Upper}s().remove(${r.Mixed});
+            fail("${cd.Mixed} ${r.Mixed}s remove(${r.Mixed}) expected UnsupportedOperationException");
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
+        try
+        {
+            ${cd.Mixed}.get${r.Upper}s().addAll(full${r.Upper}s);
+            fail("${cd.Mixed} ${r.Mixed}s addAll(full${r.Upper}s) expected UnsupportedOperationException");
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
+        try
+        {
+            ${cd.Mixed}.get${r.Upper}s().removeAll(full${r.Upper}s);
+            fail("${cd.Mixed} ${r.Mixed}s removeAll(full${r.Upper}s) expected UnsupportedOperationException");
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
+        try
+        {
+            ${cd.Mixed}.get${r.Upper}s().retainAll(full${r.Upper}s);
+            fail("${cd.Mixed} ${r.Mixed}s retainAll(full${r.Upper}s) expected UnsupportedOperationException");
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
+        try
+        {
+            Iterator<${a.Upper}> ${r.Mixed}s = ${cd.Mixed}.get${r.Upper}s().iterator();
+            if (${r.Mixed}s.hasNext())
+            {
+                ${r.Mixed}s.next();
+                ${r.Mixed}s.remove();
+                fail("${cd.Mixed} ${r.Mixed}s iterator remove() expected UnsupportedOperationException");
+            }
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
     }
 
 #end
@@ -716,74 +847,128 @@ public final class ${cd.Upper}Test
         ${cd.Upper} ${cd.Mixed}0 = new ${cd.Upper}(empty${r.Upper}s, ...);
         assertTrue(${cd.Mixed}0.get${r.Upper}s() != null);
         assertEquals(empty${r.Upper}s, ${cd.Mixed}0.get${r.Upper}s());
-        ${cd.Mixed}0.set${r.Upper}s(singleton${r.Upper}s);
-        assertTrue(${cd.Mixed}0.get${r.Upper}s() != null);
-        assertEquals(singleton${r.Upper}s, ${cd.Mixed}0.get${r.Upper}s());
-        ${cd.Mixed}0.set${r.Upper}s(full${r.Upper}s);
-        assertTrue(${cd.Mixed}0.get${r.Upper}s() != null);
-        assertEquals(full${r.Upper}s, ${cd.Mixed}0.get${r.Upper}s());
 
         ${cd.Upper} ${cd.Mixed}1 = new ${cd.Upper}(singleton${r.Upper}s, ...);
         assertTrue(${cd.Mixed}1.get${r.Upper}s() != null);
         assertEquals(singleton${r.Upper}s, ${cd.Mixed}1.get${r.Upper}s());
-        ${cd.Mixed}1.set${r.Upper}s(empty${r.Upper}s);
-        assertTrue(${cd.Mixed}1.get${r.Upper}s() != null);
-        assertEquals(empty${r.Upper}s, ${cd.Mixed}1.get${r.Upper}s());
-        ${cd.Mixed}1.set${r.Upper}s(full${r.Upper}s);
-        assertTrue(${cd.Mixed}1.get${r.Upper}s() != null);
-        assertEquals(full${r.Upper}s, ${cd.Mixed}1.get${r.Upper}s());
 
         ${cd.Upper} ${cd.Mixed}2 = new ${cd.Upper}(full${r.Upper}s, ...);
         assertTrue(${cd.Mixed}2.get${r.Upper}s() != null);
         assertEquals(full${r.Upper}s, ${cd.Mixed}2.get${r.Upper}s());
-        ${cd.Mixed}2.set${r.Upper}s(empty${r.Upper}s);
-        assertTrue(${cd.Mixed}2.get${r.Upper}s() != null);
-        assertEquals(empty${r.Upper}s, ${cd.Mixed}2.get${r.Upper}s());
-        ${cd.Mixed}2.set${r.Upper}s(singleton${r.Upper}s);
-        assertTrue(${cd.Mixed}2.get${r.Upper}s() != null);
-        assertEquals(singleton${r.Upper}s, ${cd.Mixed}2.get${r.Upper}s());
-
-        try
-        {
-            ${cd.Mixed}0.set${r.Upper}s(null);
-            fail("set${r.Upper}s(null) expected IllegalArgumentException");
-        }
-        catch (IllegalArgumentException e)
-        {
-            // expected
-        }
     }
 
-    public void test${r.Upper}sIsNotCopiedDefensively()
+    public void testAdd${r.Upper}()
+    {
+        ${cd.Upper} ${cd.Mixed} = new ${cd.Upper}(empty${r.Upper}s, ...);
+        assertFalse(${cd.Mixed}.get${r.Upper}s().contains(null));
+        ${cd.Mixed}.add${r.Upper}(null);
+        assertTrue(${cd.Mixed}.get${r.Upper}s().contains(null));
+        ${a.Upper} ${r.Mixed} = create${r.Upper}();
+        assertFalse(${cd.Mixed}.get${r.Upper}s().contains(${r.Mixed}));
+        ${cd.Mixed}.add${r.Upper}(${r.Mixed});
+        assertTrue(${cd.Mixed}.get${r.Upper}s().contains(${r.Mixed}));
+        ${cd.Mixed}.add${r.Upper}(${r.Mixed});
+        assertTrue(${cd.Mixed}.get${r.Upper}s().contains(${r.Mixed}));
+    }
+
+    public void testRemove${r.Upper}()
+    {
+        ${cd.Upper} ${cd.Mixed} = new ${cd.Upper}(full${r.Upper}s, ...);
+        assertFalse(${cd.Mixed}.get${r.Upper}s().contains(null));
+        ${cd.Mixed}.add${r.Upper}(null);
+        assertTrue(${cd.Mixed}.get${r.Upper}s().contains(null));
+        ${cd.Mixed}.remove${r.Upper}(null);
+        assertFalse(${cd.Mixed}.get${r.Upper}s().contains(null));
+        ${a.Upper} ${r.Mixed} = ${cd.Mixed.}.get${r.Upper}s().iterator().next();
+        assertTrue(${cd.Mixed}.get${r.Upper}s().contains(${r.Mixed}));
+        ${cd.Mixed}.remove${r.Upper}(${r.Mixed});
+        assertFalse(${cd.Mixed}.get${r.Upper}s().contains(${r.Mixed}));
+        ${cd.Mixed}.remove${r.Upper}(${r.Mixed});
+        assertFalse(${cd.Mixed}.get${r.Upper}s().contains(${r.Mixed}));
+    }
+
+    public void test${r.Upper}sIsCopiedDefensively()
     {
         ${coll.InterfaceName}<${a.Upper}> full${r.Upper}sCopy = createFull${r.Upper}s();
         ${cd.Upper} ${cd.Mixed} = new ${cd.Upper}(full${r.Upper}sCopy, ...);
         assertEquals(full${r.Upper}sCopy, ${cd.Mixed}.get${r.Upper}s());
         full${r.Upper}sCopy.clear();
-        // note that modifying our reference modifies ${cd.Mixed}.get${r.Upper}s()
-        assertEquals(0, ${cd.Mixed}.get${r.Upper}s().size());
+        assertTrue(full${r.Upper}sCopy.size() != ${cd.Mixed}.get${r.Upper}s().size());
     }
 
-    public void test${r.Upper}sIsMutable()
+    public void test${r.Upper}sIsImmutable()
     {
         ${cd.Upper} ${cd.Mixed} = new ${cd.Upper}(full${r.Upper}s, ...);
-        ${a.Upper} ${r.Mixed} = create${r.Upper}();
-        ${coll.InterfaceName}<${a.Upper}> full${r.Upper}sCopy = createFull${r.Upper}s();
-        ${cd.Mixed}.get${r.Upper}s.clear();
-        ${cd.Mixed}.get${r.Upper}s.add(${r.Mixed});
-        ${cd.Mixed}.get${r.Upper}s.remove(${r.Mixed});
-        ${cd.Mixed}.get${r.Upper}s.addAll(full${r.Upper}sCopy);
-        ${cd.Mixed}.get${r.Upper}s.removeAll(full${r.Upper}sCopy);
-        ${cd.Mixed}.get${r.Upper}s.addAll(full${r.Upper}sCopy);
-        ${cd.Mixed}.get${r.Upper}s.retainAll(singleton${r.Upper}s);
-        ${cd.Mixed}.get${r.Upper}s.clear();
-        ${cd.Mixed}.get${r.Upper}s.addAll(full${r.Upper}sCopy);
-        for (Iterator<${a.Upper}> i = ${cd.Mixed}.get${r.Upper}s().iterator(); i.hasNext(); )
+        try
         {
-            i.next();
-            i.remove();
+            ${cd.Mixed}.get${r.Upper}s().clear();
+            fail("${cd.Mixed} ${r.Mixed}s clear() expected UnsupportedOperationException");
         }
-        ${cd.Mixed}.get${r.Upper}s.addAll(full${r.Upper}sCopy);
+        catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
+        try
+        {
+            ${a.Upper} ${r.Mixed} = create${r.Upper}();
+            ${cd.Mixed}.get${r.Upper}s().add(${r.Mixed});
+            fail("${cd.Mixed} ${r.Mixed}s add(${r.Mixed}) expected UnsupportedOperationException");
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
+        try
+        {
+            ${a.Upper} ${r.Mixed} = create${r.Upper}();
+            ${cd.Mixed}.get${r.Upper}s().remove(${r.Mixed});
+            fail("${cd.Mixed} ${r.Mixed}s remove(${r.Mixed}) expected UnsupportedOperationException");
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
+        try
+        {
+            ${cd.Mixed}.get${r.Upper}s().addAll(full${r.Upper}s);
+            fail("${cd.Mixed} ${r.Mixed}s addAll(full${r.Upper}s) expected UnsupportedOperationException");
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
+        try
+        {
+            ${cd.Mixed}.get${r.Upper}s().removeAll(full${r.Upper}s);
+            fail("${cd.Mixed} ${r.Mixed}s removeAll(full${r.Upper}s) expected UnsupportedOperationException");
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
+        try
+        {
+            ${cd.Mixed}.get${r.Upper}s().retainAll(full${r.Upper}s);
+            fail("${cd.Mixed} ${r.Mixed}s retainAll(full${r.Upper}s) expected UnsupportedOperationException");
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
+        try
+        {
+            Iterator<${a.Upper}> ${r.Mixed}s = ${cd.Mixed}.get${r.Upper}s().iterator();
+            if (${r.Mixed}s.hasNext())
+            {
+                ${r.Mixed}s.next();
+                ${r.Mixed}s.remove();
+                fail("${cd.Mixed} ${r.Mixed}s iterator remove() expected UnsupportedOperationException");
+            }
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
     }
 
 #elseif ($a.Cardinality.toString() == "OneToMany")
@@ -794,77 +979,157 @@ public final class ${cd.Upper}Test
         assertTrue(${cd.Mixed}0.get${r.Upper}s() != null);
         assertTrue(${cd.Mixed}0.get${r.Upper}s().size() >= 1);
         assertEquals(singleton${r.Upper}s, ${cd.Mixed}0.get${r.Upper}s());
-        ${cd.Mixed}0.set${r.Upper}s(full${r.Upper}s);
-        assertTrue(${cd.Mixed}0.get${r.Upper}s() != null);
-        assertTrue(${cd.Mixed}0.get${r.Upper}s().size() >= 1);
-        assertEquals(full${r.Upper}s, ${cd.Mixed}0.get${r.Upper}s());
 
         ${cd.Upper} ${cd.Mixed}1 = new ${cd.Upper}(full${r.Upper}s, ...);
         assertTrue(${cd.Mixed}1.get${r.Upper}s() != null);
         assertTrue(${cd.Mixed}1.get${r.Upper}s().size() >= 1);
         assertEquals(full${r.Upper}s, ${cd.Mixed}1.get${r.Upper}s());
-        ${cd.Mixed}1.set${r.Upper}s(singleton${r.Upper}s);
-        assertTrue(${cd.Mixed}1.get${r.Upper}s() != null);
-        assertTrue(${cd.Mixed}1.get${r.Upper}s().size() >= 1);
-        assertEquals(singleton${r.Upper}s, ${cd.Mixed}1.get${r.Upper}s());
+    }
+
+    public void testAdd${r.Upper}()
+    {
+        ${coll.InterfaceDescription} singleton${r.Upper}sCopy = new ${coll.ImplementationName}<${a.Upper}>(singleton${r.Upper}s);
+        ${cd.Upper} ${cd.Mixed} = new ${cd.Upper}(singleton${r.Upper}sCopy, ...);
+        assertFalse(${cd.Mixed}.get${r.Upper}s().contains(null));
+        ${cd.Mixed}.add${r.Upper}(null);
+        assertTrue(${cd.Mixed}.get${r.Upper}s().contains(null));
+        ${a.Upper} ${r.Mixed} = create${r.Upper}();
+        assertFalse(${cd.Mixed}.get${r.Upper}s().contains(${r.Mixed}));
+        ${cd.Mixed}.add${r.Upper}(${r.Mixed});
+        assertTrue(${cd.Mixed}.get${r.Upper}s().contains(${r.Mixed}));
+        ${cd.Mixed}.add${r.Upper}(${r.Mixed});
+        assertTrue(${cd.Mixed}.get${r.Upper}s().contains(${r.Mixed}));
+    }
+
+    public void testRemove${r.Upper}()
+    {
+        ${cd.Upper} ${cd.Mixed} = new ${cd.Upper}(full${r.Upper}s, ...);
+        assertFalse(${cd.Mixed}.get${r.Upper}s().contains(null));
+        ${cd.Mixed}.add${r.Upper}(null);
+        assertTrue(${cd.Mixed}.get${r.Upper}s().contains(null));
+        ${cd.Mixed}.remove${r.Upper}(null);
+        assertFalse(${cd.Mixed}.get${r.Upper}s().contains(null));
+        ${a.Upper} ${r.Mixed} = ${cd.Mixed}.get${r.Upper}s().iterator().next();
+        assertTrue(${cd.Mixed}.get${r.Upper}s().contains(${r.Mixed}));
+        ${cd.Mixed}.remove${r.Upper}(${r.Mixed});
+        assertFalse(${cd.Mixed}.get${r.Upper}s().contains(${r.Mixed}));
+        ${cd.Mixed}.remove${r.Upper}(${r.Mixed});
+        assertFalse(${cd.Mixed}.get${r.Upper}s().contains(${r.Mixed}));
+    }
+
+    public void testRemoveLast${r.Upper}()
+    {
+        ${cd.Upper} ${cd.Mixed} = new ${cd.Upper}(full${r.Upper}s, ...);
+
+        while (${cd.Mixed}.get${r.Upper}s().size() > 1)
+        {
+            ${a.Upper} ${r.Mixed} = ${cd.Mixed}.get${r.Upper}s().iterator().next();
+            assertTrue(${cd.Mixed}.get${r.Upper}s().contains(${r.Mixed}));
+            ${cd.Mixed}.remove${r.Upper}(${r.Mixed});
+            assertFalse(${cd.Mixed}.get${r.Upper}s().contains(${r.Mixed}));
+        }
 
         try
         {
-            ${cd.Mixed}0.set${r.Upper}s(null);
-            fail("set${r.Upper}s(null) expected IllegalArgumentException");
+            ${a.Upper} ${r.Mixed} = ${cd.Mixed}.get${r.Upper}s().iterator().next();
+            assertTrue(${cd.Mixed}.get${r.Upper}s().contains(${r.Mixed}));
+            assertEquals(1, ${cd.Mixed}.get${r.Upper}s().size());
+            ${cd.Mixed}.remove${r.Upper}(${r.Mixed});
+            fail("remove${r.Upper}(last ${r.Mixed}) expected IllegalStateException");
         }
-        catch (IllegalArgumentException e)
-        {
-            // expected
-        }
-        try
-        {
-            ${cd.Mixed}0.set${r.Upper}s(empty${r.Upper}s);
-            fail("set${r.Upper}s(empty${r.Upper}s) expected IllegalArgumentException");
-        }
-        catch (IllegalArgumentException e)
+        catch (IllegalStateException e)
         {
             // expected
         }
     }
 
-    public void test${r.Upper}sIsNotCopiedDefensively()
+    public void test${r.Upper}sIsCopiedDefensively()
     {
         ${coll.InterfaceName}<${a.Upper}> full${r.Upper}sCopy = createFull${r.Upper}s();
         ${cd.Upper} ${cd.Mixed} = new ${cd.Upper}(full${r.Upper}sCopy, ...);
         assertEquals(full${r.Upper}sCopy, ${cd.Mixed}.get${r.Upper}s());
         full${r.Upper}sCopy.clear();
-        // note that the contract has been broken
-        assertEquals(0, ${cd.Mixed}.get${r.Upper}s.size());
+        assertTrue(full${r.Upper}sCopy.size() != ${cd.Mixed}.get${r.Upper}s().size());
     }
 
-    public void test${r.Upper}sIsMutable()
+    public void test${r.Upper}sIsImmutable()
     {
         ${cd.Upper} ${cd.Mixed} = new ${cd.Upper}(full${r.Upper}s, ...);
-        ${a.Upper} ${r.Mixed} = create${r.Upper}();
-        ${coll.InterfaceName}<${a.Upper}> full${r.Upper}sCopy = createFull${r.Upper}s();
-        ${cd.Mixed}.get${r.Upper}s.clear();
-        // note that the contract has been broken
-        assertEquals(0, ${cd.Mixed}.get${r.Upper}s().size());
-
-        ${cd.Mixed}.get${r.Upper}s.add(${r.Mixed});
-        ${cd.Mixed}.get${r.Upper}s.remove(${r.Mixed});
-        ${cd.Mixed}.get${r.Upper}s.addAll(full${r.Upper}sCopy);
-        ${cd.Mixed}.get${r.Upper}s.removeAll(full${r.Upper}sCopy);
-        ${cd.Mixed}.get${r.Upper}s.addAll(full${r.Upper}sCopy);
-        ${cd.Mixed}.get${r.Upper}s.retainAll(singleton${r.Upper}s);
-        ${cd.Mixed}.get${r.Upper}s.clear();
-        ${cd.Mixed}.get${r.Upper}s.addAll(full${r.Upper}sCopy);
-        for (Iterator<${a.Upper}> i = ${cd.Mixed}.get${r.Upper}s().iterator(); i.hasNext(); )
+        try
         {
-            i.next();
-            i.remove();
+            ${cd.Mixed}.get${r.Upper}s().clear();
+            fail("${cd.Mixed} ${r.Mixed}s clear() expected UnsupportedOperationException");
         }
-        ${cd.Mixed}.get${r.Upper}s.addAll(full${r.Upper}sCopy);
+        catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
+        try
+        {
+            ${a.Upper} ${r.Mixed} = create${r.Upper}();
+            ${cd.Mixed}.get${r.Upper}s().add(${r.Mixed});
+            fail("${cd.Mixed} ${r.Mixed}s add(${r.Mixed}) expected UnsupportedOperationException");
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
+        try
+        {
+            ${a.Upper} ${r.Mixed} = create${r.Upper}();
+            ${cd.Mixed}.get${r.Upper}s().remove(${r.Mixed});
+            fail("${cd.Mixed} ${r.Mixed}s remove(${r.Mixed}) expected UnsupportedOperationException");
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
+        try
+        {
+            ${cd.Mixed}.get${r.Upper}s().addAll(full${r.Upper}s);
+            fail("${cd.Mixed} ${r.Mixed}s addAll(full${r.Upper}s) expected UnsupportedOperationException");
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
+        try
+        {
+            ${cd.Mixed}.get${r.Upper}s().removeAll(full${r.Upper}s);
+            fail("${cd.Mixed} ${r.Mixed}s removeAll(full${r.Upper}s) expected UnsupportedOperationException");
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
+        try
+        {
+            ${cd.Mixed}.get${r.Upper}s().retainAll(full${r.Upper}s);
+            fail("${cd.Mixed} ${r.Mixed}s retainAll(full${r.Upper}s) expected UnsupportedOperationException");
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
+        try
+        {
+            Iterator<${a.Upper}> ${r.Mixed}s = ${cd.Mixed}.get${r.Upper}s().iterator();
+            if (${r.Mixed}s.hasNext())
+            {
+                ${r.Mixed}s.next();
+                ${r.Mixed}s.remove();
+                fail("${cd.Mixed} ${r.Mixed}s iterator remove() expected UnsupportedOperationException");
+            }
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
     }
 
 #end
 #end
+
     public void testEquals()
     {
         ${cd.Upper} ${cd.Mixed}0 = new ${cd.Upper}(...);
@@ -877,14 +1142,8 @@ public final class ${cd.Upper}Test
         assertTrue(${cd.Mixed}0.equals(${cd.Mixed}0));
         assertTrue(${cd.Mixed}1.equals(${cd.Mixed}1));
         assertFalse(${cd.Mixed}0 == ${cd.Mixed}1);
-        if (${cd.Mixed}0.equals(${cd.Mixed}1))
-        {
-            assertTrue(${cd.Mixed}1.equals(${cd.Mixed}0));
-        }
-        if (${cd.Mixed}1.equals(${cd.Mixed}0))
-        {
-            assertTrue(${cd.Mixed}0.equals(${cd.Mixed}1));
-        }
+        assertTrue(${cd.Mixed}0.equals(${cd.Mixed}1));
+        assertTrue(${cd.Mixed}1.equals(${cd.Mixed}0));
     }
 
     public void testHashCode()
@@ -892,17 +1151,11 @@ public final class ${cd.Upper}Test
         ${cd.Upper} ${cd.Mixed}0 = new ${cd.Upper}(...);
         ${cd.Upper} ${cd.Mixed}1 = new ${cd.Upper}(...);
 
+        assertTrue(${cd.Mixed}0.equals(${cd.Mixed}1));
+        assertTrue(${cd.Mixed}1.equals(${cd.Mixed}0));
         assertEquals(${cd.Mixed}0.hashCode(), ${cd.Mixed}0.hashCode());
         assertEquals(${cd.Mixed}1.hashCode(), ${cd.Mixed}1.hashCode());
-        if (${cd.Mixed}0.equals(${cd.Mixed}1))
-        {
-            assertEquals(${cd.Mixed}0.hashCode(), ${cd.Mixed}1.hashCode());
-            assertEquals(${cd.Mixed}1.hashCode(), ${cd.Mixed}0.hashCode());
-        }
-        if (${cd.Mixed}1.equals(${cd.Mixed}0))
-        {
-            assertEquals(${cd.Mixed}0.hashCode(), ${cd.Mixed}1.hashCode());
-            assertEquals(${cd.Mixed}1.hashCode(), ${cd.Mixed}0.hashCode());
-        }
+        assertEquals(${cd.Mixed}0.hashCode(), ${cd.Mixed}1.hashCode());
+        assertEquals(${cd.Mixed}1.hashCode(), ${cd.Mixed}0.hashCode());
     }
 }
