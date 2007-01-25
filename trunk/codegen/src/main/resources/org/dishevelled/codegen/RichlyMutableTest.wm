@@ -1129,7 +1129,6 @@ public final class ${cd.Upper}Test
 
 #end
 #end
-
     public void testEquals()
     {
         ${cd.Upper} ${cd.Mixed}0 = new ${cd.Upper}(...);
