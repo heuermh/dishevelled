@@ -407,12 +407,54 @@ public final class ${cd.Upper}Test
         assertEquals(${r.Mixed}, ${cd.Mixed}1.get${r.Upper}());
     }
 
+    public void testWith${r.Upper}()
+    {
+        ${cd.Upper} example = new ${cd.Upper}(${r.Mixed}, ...);
+
+        ${cd.Upper} copy0 = example.with${r.Upper}(null);
+        assertEquals(${r.Mixed}, example.get${r.Upper}());
+        assertEquals(null, copy0.get${r.Upper}());
+        assertFalse(example == copy0);
+        assertFalse(example.equals(copy0));
+        assertFalse(copy0.equals(example));
+
+        ${a.Upper} ${r.Mixed}Copy = create${r.Upper}();
+        ${cd.Upper} copy1 = example.with${r.Upper}(${r.Mixed}Copy);
+        assertEquals(${r.Mixed}, example.get${r.Upper}());
+        assertEquals(${r.Mixed}Copy, copy1.get${r.Upper}());
+        assertFalse(example == copy1);
+        assertFalse(example.equals(copy1));
+        assertFalse(copy1.equals(example));
+    }
+
 #elseif ($a.Cardinality.toString() == "StrictlyOne")
     public void test${r.Upper}()
     {
         ${cd.Upper} ${cd.Mixed} = new ${cd.Upper}(${r.Mixed}, ...);
         assertTrue(${cd.Mixed}.get${r.Upper}() != null);
         assertEquals(${r.Mixed}, ${cd.Mixed}.get${r.Upper}());
+    }
+
+    public void testWith${r.Upper}()
+    {
+        ${cd.Upper} example = new ${cd.Upper}(${r.Mixed}, ...);
+        ${a.Upper} ${r.Mixed}Copy = create${r.Upper}();
+        ${cd.Upper} copy = example.with${r.Upper}(${r.Mixed}Copy);
+        assertEquals(${r.Mixed}, example.get${r.Upper}());
+        assertEquals(${r.Mixed}Copy, copy.get${r.Upper}());
+        assertFalse(example == copy);
+        assertFalse(example.equals(copy));
+        assertFalse(copy.equals(example));
+
+        try
+        {
+            example.with${r.Upper}(null);
+            fail("with${r.Upper}(null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
     }
 
 #elseif ($a.Cardinality.toString() == "ZeroToMany")
@@ -516,6 +558,27 @@ public final class ${cd.Upper}Test
         }
     }
 
+    public void testWith${r.Upper}s()
+    {
+        ${cd.Upper} example = new ${cd.Upper}(empty${r.Upper}s, ...);
+        ${cd.Upper} copy = example.with${r.Upper}s(singleton${r.Upper}s);
+        assertEquals(empty${r.Upper}s, example.get${r.Upper}());
+        assertEquals(singleton${r.Upper}s, copy.get${r.Upper}());
+        assertFalse(example == copy);
+        assertFalse(example.equals(copy));
+        assertFalse(copy.equals(example));
+
+        try
+        {
+            example.with${r.Upper}s(null);
+            fail("with${r.Upper}s(null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+    }
+
 #elseif ($a.Cardinality.toString() == "OneToMany")
 #set ($coll = $a.CollectionDescription)
     public void test${r.Upper}s()
@@ -610,6 +673,36 @@ public final class ${cd.Upper}Test
             }
         }
         catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
+    }
+
+    public void testWith${r.Upper}s()
+    {
+        ${cd.Upper} example = new ${cd.Upper}(singleton${r.Upper}s, ...);
+        ${cd.Upper} copy = example.with${r.Upper}s(full${r.Upper}s);
+        assertEquals(singleton${r.Upper}s, example.get${r.Upper}());
+        assertEquals(full${r.Upper}s, copy.get${r.Upper}());
+        assertFalse(example == copy);
+        assertFalse(example.equals(copy));
+        assertFalse(copy.equals(example));
+
+        try
+        {
+            example.with${r.Upper}s(null);
+            fail("with${r.Upper}s(null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+        try
+        {
+            example.with${r.Upper}s(empty${r.Upper}s);
+            fail("with${r.Upper}s(empty${r.Upper}s) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
         {
             // expected
         }
@@ -628,6 +721,25 @@ public final class ${cd.Upper}Test
         ${cd.Upper} ${cd.Mixed}1 = new ${cd.Upper}(${r.Mixed}, ...);
         assertEquals(${r.Mixed}, ${cd.Mixed}1.get${r.Upper}());
     }
+    public void testWith${r.Upper}()
+    {
+        ${cd.Upper} example = new ${cd.Upper}(${r.Mixed}, ...);
+
+        ${cd.Upper} copy0 = example.with${r.Upper}(null);
+        assertEquals(${r.Mixed}, example.get${r.Upper}());
+        assertEquals(null, copy0.get${r.Upper}());
+        assertFalse(example == copy0);
+        assertFalse(example.equals(copy0));
+        assertFalse(copy0.equals(example));
+
+        ${a.Upper} ${r.Mixed}Copy = create${r.Upper}();
+        ${cd.Upper} copy1 = example.with${r.Upper}(${r.Mixed}Copy);
+        assertEquals(${r.Mixed}, example.get${r.Upper}());
+        assertEquals(${r.Mixed}Copy, copy1.get${r.Upper}());
+        assertFalse(example == copy1);
+        assertFalse(example.equals(copy1));
+        assertFalse(copy1.equals(example));
+    }
 
 #elseif ($a.Cardinality.toString() == "StrictlyOne")
     public void test${r.Upper}()
@@ -635,6 +747,28 @@ public final class ${cd.Upper}Test
         ${cd.Upper} ${cd.Mixed} = new ${cd.Upper}(${r.Mixed}, ...);
         assertTrue(${cd.Mixed}.get${r.Upper}() != null);
         assertEquals(${r.Mixed}, ${cd.Mixed}.get${r.Upper}());
+    }
+
+    public void testWith${r.Upper}()
+    {
+        ${cd.Upper} example = new ${cd.Upper}(${r.Mixed}, ...);
+        ${a.Upper} ${r.Mixed}Copy = create${r.Upper}();
+        ${cd.Upper} copy = example.with${r.Upper}(${r.Mixed}Copy);
+        assertEquals(${r.Mixed}, example.get${r.Upper}());
+        assertEquals(${r.Mixed}Copy, copy.get${r.Upper}());
+        assertFalse(example == copy);
+        assertFalse(example.equals(copy));
+        assertFalse(copy.equals(example));
+
+        try
+        {
+            example.with${r.Upper}(null);
+            fail("with${r.Upper}(null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
     }
 
 #elseif ($a.Cardinality.toString() == "ZeroToMany")
@@ -738,6 +872,27 @@ public final class ${cd.Upper}Test
         }
     }
 
+    public void testWith${r.Upper}s()
+    {
+        ${cd.Upper} example = new ${cd.Upper}(empty${r.Upper}s, ...);
+        ${cd.Upper} copy = example.with${r.Upper}s(singleton${r.Upper}s);
+        assertEquals(empty${r.Upper}s, example.get${r.Upper}());
+        assertEquals(singleton${r.Upper}s, copy.get${r.Upper}());
+        assertFalse(example == copy);
+        assertFalse(example.equals(copy));
+        assertFalse(copy.equals(example));
+
+        try
+        {
+            example.with${r.Upper}s(null);
+            fail("with${r.Upper}s(null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+    }
+
 #elseif ($a.Cardinality.toString() == "OneToMany")
 #set ($coll = $a.CollectionDescription)
     public void test${r.Upper}s()
@@ -832,6 +987,36 @@ public final class ${cd.Upper}Test
             }
         }
         catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
+    }
+
+    public void testWith${r.Upper}s()
+    {
+        ${cd.Upper} example = new ${cd.Upper}(singleton${r.Upper}s, ...);
+        ${cd.Upper} copy = example.with${r.Upper}s(full${r.Upper}s);
+        assertEquals(singleton${r.Upper}s, example.get${r.Upper}());
+        assertEquals(full${r.Upper}s, copy.get${r.Upper}());
+        assertFalse(example == copy);
+        assertFalse(example.equals(copy));
+        assertFalse(copy.equals(example));
+
+        try
+        {
+            example.with${r.Upper}s(null);
+            fail("with${r.Upper}s(null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+        try
+        {
+            example.with${r.Upper}(empty${r.Upper}s);
+            fail("with${r.Upper}(empty${r.Upper}s) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
         {
             // expected
         }
