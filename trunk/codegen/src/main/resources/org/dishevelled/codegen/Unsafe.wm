@@ -139,8 +139,8 @@ public class ${cd.Upper}
      * @param ${r.Mixed} ${r.Lower} for this ${cd.Lower}, must not be null
 #elseif ($a.Cardinality.toString() == "OneToMany")
 #set ($coll = $a.CollectionDescription)
-     * @param ${r.Mixed}s ${coll.InterfaceDescription} of ${a.Description}s, must not be null and must
-     *    contain at least one ${a.Description}
+     * @param ${r.Mixed}s ${coll.InterfaceDescription} of ${r.Lower}s, must not be null and must
+     *    contain at least one ${r.Lower}
 #end
 #end
 #foreach ($a in $cd.Associations)
@@ -149,8 +149,8 @@ public class ${cd.Upper}
      * @param ${r.Mixed} ${r.Lower} for this ${cd.Lower}, must not be null
 #elseif ($a.Cardinality.toString() == "OneToMany")
 #set ($coll = $a.CollectionDescription)
-     * @param ${r.Mixed}s ${coll.InterfaceDescription} of ${a.Description}s, must not be null and must
-     *    contain at least one ${a.Description}
+     * @param ${r.Mixed}s ${coll.InterfaceDescription} of ${r.Lower}s, must not be null and must
+     *    contain at least one ${r.Lower}
 #end
 #end
 #foreach ($a in $cd.Attributes)
@@ -247,8 +247,8 @@ public class ${cd.Upper}
      * @param ${r.Mixed}s ${coll.InterfaceDescription} of ${r.Lower}s, must not be null
 #elseif ($a.Cardinality.toString() == "OneToMany")
 #set ($coll = $a.CollectionDescription)
-     * @param ${r.Mixed}s ${coll.InterfaceDescription} of ${a.Description}s, must not be null and must
-     *    contain at least one ${a.Description}
+     * @param ${r.Mixed}s ${coll.InterfaceDescription} of ${r.Lower}s, must not be null and must
+     *    contain at least one ${r.Lower}
 #end
 #end
 #foreach ($a in $cd.Associations)
@@ -262,8 +262,8 @@ public class ${cd.Upper}
      * @param ${r.Mixed}s ${coll.InterfaceDescription} of ${r.Lower}s, must not be null
 #elseif ($a.Cardinality.toString() == "OneToMany")
 #set ($coll = $a.CollectionDescription)
-     * @param ${r.Mixed}s ${coll.InterfaceDescription} of ${a.Description}s, must not be null and must
-     *    contain at least one ${a.Description}
+     * @param ${r.Mixed}s ${coll.InterfaceDescription} of ${r.Lower}s, must not be null and must
+     *    contain at least one ${r.Lower}
 #end
 #end
 #foreach ($a in $cd.Attributes)
@@ -392,7 +392,7 @@ public class ${cd.Upper}
      * Set the ${coll.InterfaceDescription} of ${r.Lower}s
      * for this ${cd.Lower} to <code>${r.Mixed}s</code>.
      *
-     * @param ${r.Mixed}s ${coll.InterfaceDescription} of ${a.Description}s, must not be null
+     * @param ${r.Mixed}s ${coll.InterfaceDescription} of ${r.Lower}s, must not be null
      */
     public final void set${r.Upper}s(final ${coll.InterfaceName}<${a.Upper}> ${r.Mixed}s)
     {
@@ -423,8 +423,8 @@ public class ${cd.Upper}
      * for this ${cd.Lower} to <code>${r.Mixed}s</code>.
      * The specified ${coll.InterfaceDescription} of ${r.Lower}s must contain at least one ${r.Lower}.
      *
-     * @param ${r.Mixed}s ${coll.InterfaceDescription} of ${a.Description}s, must not be null and must
-     *    contain at least one ${a.Description}
+     * @param ${r.Mixed}s ${coll.InterfaceDescription} of ${r.Lower}s, must not be null and must
+     *    contain at least one ${r.Lower}
      *
      * @throws IllegalArgumentException if <code>${r.Mixed}s.size() &lt; 1</code>
      */
@@ -512,7 +512,7 @@ public class ${cd.Upper}
      * Set the ${coll.InterfaceDescription} of ${r.Lower}s
      * for this ${cd.Lower} to <code>${r.Mixed}s</code>.
      *
-     * @param ${r.Mixed}s ${coll.InterfaceDescription} of ${a.Description}s, must not be null
+     * @param ${r.Mixed}s ${coll.InterfaceDescription} of ${r.Lower}s, must not be null
      */
     public final void set${r.Upper}s(final ${coll.InterfaceName}<${a.Upper}> ${r.Mixed}s)
     {
@@ -543,8 +543,8 @@ public class ${cd.Upper}
      * for this ${cd.Lower} to <code>${r.Mixed}s</code>.
      * The specified ${coll.InterfaceDescription} of ${r.Lower}s must contain at least one ${r.Lower}.
      *
-     * @param ${r.Mixed}s ${coll.InterfaceDescription} of ${a.Description}s, must not be null and must
-     *    contain at least one ${a.Description}
+     * @param ${r.Mixed}s ${coll.InterfaceDescription} of ${r.Lower}s, must not be null and must
+     *    contain at least one ${r.Lower}
      *
      * @throws IllegalArgumentException if <code>${r.Mixed}s.size() &lt; 1</code>
      */

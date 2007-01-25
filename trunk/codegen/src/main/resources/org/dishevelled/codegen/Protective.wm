@@ -160,8 +160,8 @@ public class ${cd.Upper}
      * @param ${r.Mixed}s ${coll.InterfaceDescription} of ${r.Lower}s, must not be null
 #elseif ($a.Cardinality.toString() == "OneToMany")
 #set ($coll = $a.CollectionDescription)
-     * @param ${r.Mixed}s ${coll.InterfaceDescription} of ${a.Description}s, must not be null and must
-     *    contain at least one ${a.Description}
+     * @param ${r.Mixed}s ${coll.InterfaceDescription} of ${r.Lower}s, must not be null and must
+     *    contain at least one ${r.Lower}
 #end
 #end
 #foreach ($a in $cd.Associations)
@@ -175,8 +175,8 @@ public class ${cd.Upper}
      * @param ${r.Mixed}s ${coll.InterfaceDescription} of ${r.Lower}s, must not be null
 #elseif ($a.Cardinality.toString() == "OneToMany")
 #set ($coll = $a.CollectionDescription)
-     * @param ${r.Mixed}s ${coll.InterfaceDescription} of ${a.Description}s, must not be null and must
-     *    contain at least one ${a.Description}
+     * @param ${r.Mixed}s ${coll.InterfaceDescription} of ${r.Lower}s, must not be null and must
+     *    contain at least one ${r.Lower}
 #end
 #end
 #foreach ($a in $cd.Attributes)
