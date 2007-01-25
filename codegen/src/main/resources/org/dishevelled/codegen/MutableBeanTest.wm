@@ -24,6 +24,9 @@
 $!{license}
 package ${cd.PackageName};
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+
 #foreach ($a in $cd.Attributes)
 #if (($a.Cardinality.toString() == "ZeroToMany") || ($a.Cardinality.toString() == "OneToMany"))
 import ${a.CollectionDescription.InterfacePackageName}.${a.CollectionDescription.InterfaceName};
@@ -111,6 +114,17 @@ public final class ${cd.Upper}Test
 
 #end
 #end
+    /** Property change listener. */
+    public static final PropertyChangeListener PROPERTY_CHANGE_LISTENER = new PropertyChangeListener()
+        {
+            /** {@inheritDoc} */
+            public void propertyChange(final PropertyChangeEvent event)
+            {
+                // empty
+            }
+        };
+
+
 #foreach ($a in $cd.Attributes)
 #set ($r = $a.Role)
 #if ($a.Cardinality.toString() == "ZeroToOne")
@@ -1129,6 +1143,42 @@ public final class ${cd.Upper}Test
 
 #end
 #end
+    public void testPropertyChangeListeners()
+    {
+        ${cd.Upper} ${cd.Mixed} = new ${cd.Upper}(...);
+        ${cd.Mixed}.addPropertyChangeListener(null);
+        ${cd.Mixed}.removePropertyChangeListener(null);
+        ${cd.Mixed}.addPropertyChangeListener(PROPERTY_CHANGE_LISTENER);
+        ${cd.Mixed}.removePropertyChangeListener(PROPERTY_CHANGE_LISTENER);
+#foreach ($a in $cd.Attributes)
+#set ($r = $a.Role)
+#if (($a.Cardinality.toString() == "ZeroToOne") || ($a.Cardinality.toString() == "StrictlyOne"))
+        ${cd.Mixed}.addPropertyChangeListener("${r.Mixed}", null);
+        ${cd.Mixed}.removePropertyChangeListener("${r.Mixed}", null);
+        ${cd.Mixed}.addPropertyChangeListener("${r.Mixed}", PROPERTY_CHANGE_LISTENER);
+        ${cd.Mixed}.removePropertyChangeListener("${r.Mixed}", PROPERTY_CHANGE_LISTENER);
+#elseif (($a.Cardinality.toString() == "ZeroToMany") || ($a.Cardinality.toString() == "OneToMany"))
+        ${cd.Mixed}.addPropertyChangeListener("${r.Mixed}s", null);
+        ${cd.Mixed}.removePropertyChangeListener("${r.Mixed}s", null);
+        ${cd.Mixed}.addPropertyChangeListener("${r.Mixed}s", PROPERTY_CHANGE_LISTENER);
+        ${cd.Mixed}.removePropertyChangeListener("${r.Mixed}s", PROPERTY_CHANGE_LISTENER);
+#end
+#end
+#foreach ($a in $cd.Associations)
+#set ($r = $a.Role)
+#if (($a.Cardinality.toString() == "ZeroToOne") || ($a.Cardinality.toString() == "StrictlyOne"))
+        ${cd.Mixed}.addPropertyChangeListener("${r.Mixed}", null);
+        ${cd.Mixed}.removePropertyChangeListener("${r.Mixed}", null);
+        ${cd.Mixed}.addPropertyChangeListener("${r.Mixed}", PROPERTY_CHANGE_LISTENER);
+        ${cd.Mixed}.removePropertyChangeListener("${r.Mixed}", PROPERTY_CHANGE_LISTENER);
+#elseif (($a.Cardinality.toString() == "ZeroToMany") || ($a.Cardinality.toString() == "OneToMany"))
+        ${cd.Mixed}.addPropertyChangeListener("${r.Mixed}s", null);
+        ${cd.Mixed}.removePropertyChangeListener("${r.Mixed}s", null);
+        ${cd.Mixed}.addPropertyChangeListener("${r.Mixed}s", PROPERTY_CHANGE_LISTENER);
+        ${cd.Mixed}.removePropertyChangeListener("${r.Mixed}s", PROPERTY_CHANGE_LISTENER);
+#end
+#end
+    }
 
     public void testEquals()
     {
