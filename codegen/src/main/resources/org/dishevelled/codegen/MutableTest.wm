@@ -879,7 +879,7 @@ public final class ${cd.Upper}Test
         assertTrue(${cd.Mixed}.get${r.Upper}s().contains(null));
         ${cd.Mixed}.remove${r.Upper}(null);
         assertFalse(${cd.Mixed}.get${r.Upper}s().contains(null));
-        ${a.Upper} ${r.Mixed} = ${cd.Mixed.}.get${r.Upper}s().iterator().next();
+        ${a.Upper} ${r.Mixed} = ${cd.Mixed}.get${r.Upper}s().iterator().next();
         assertTrue(${cd.Mixed}.get${r.Upper}s().contains(${r.Mixed}));
         ${cd.Mixed}.remove${r.Upper}(${r.Mixed});
         assertFalse(${cd.Mixed}.get${r.Upper}s().contains(${r.Mixed}));
