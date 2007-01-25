@@ -412,7 +412,7 @@ public final class ${cd.Upper}Test
     {
         ${cd.Upper} ${cd.Mixed} = new ${cd.Upper}(${r.Mixed}, ...);
         assertTrue(${cd.Mixed}.get${r.Upper}() != null);
-        assertEquals(${r.Mixed}, ${cd.Upper}.get${r.Upper}());
+        assertEquals(${r.Mixed}, ${cd.Mixed}.get${r.Upper}());
     }
 
 #elseif ($a.Cardinality.toString() == "ZeroToMany")
@@ -443,7 +443,7 @@ public final class ${cd.Upper}Test
 
     public void test${r.Upper}sIsImmutable()
     {
-        ${cd.Upper} ${cd.Mixed} = new ${cd.Upper}(...);
+        ${cd.Upper} ${cd.Mixed} = new ${cd.Upper}(full${r.Upper}s, ...);
         try
         {
             ${cd.Mixed}.get${r.Upper}s().clear();
@@ -542,7 +542,7 @@ public final class ${cd.Upper}Test
 
     public void test${r.Upper}sIsImmutable()
     {
-        ${cd.Upper} ${cd.Mixed} = new ${cd.Upper}(...);
+        ${cd.Upper} ${cd.Mixed} = new ${cd.Upper}(full${r.Upper}s, ...);
         try
         {
             ${cd.Mixed}.get${r.Upper}s().clear();
@@ -634,7 +634,7 @@ public final class ${cd.Upper}Test
     {
         ${cd.Upper} ${cd.Mixed} = new ${cd.Upper}(${r.Mixed}, ...);
         assertTrue(${cd.Mixed}.get${r.Upper}() != null);
-        assertEquals(${r.Mixed}, ${cd.Upper}.get${r.Upper}());
+        assertEquals(${r.Mixed}, ${cd.Mixed}.get${r.Upper}());
     }
 
 #elseif ($a.Cardinality.toString() == "ZeroToMany")
@@ -665,7 +665,7 @@ public final class ${cd.Upper}Test
 
     public void test${r.Upper}sIsImmutable()
     {
-        ${cd.Upper} ${cd.Mixed} = new ${cd.Upper}(...);
+        ${cd.Upper} ${cd.Mixed} = new ${cd.Upper}(full${r.Upper}s, ...);
         try
         {
             ${cd.Mixed}.get${r.Upper}s().clear();
@@ -764,7 +764,7 @@ public final class ${cd.Upper}Test
 
     public void test${r.Upper}sIsImmutable()
     {
-        ${cd.Upper} ${cd.Mixed} = new ${cd.Upper}(...);
+        ${cd.Upper} ${cd.Mixed} = new ${cd.Upper}(full${r.Upper}s, ...);
         try
         {
             ${cd.Mixed}.get${r.Upper}s().clear();
@@ -839,7 +839,6 @@ public final class ${cd.Upper}Test
 
 #end
 #end
-
     public void testEquals()
     {
         ${cd.Upper} ${cd.Mixed}0 = new ${cd.Upper}(...);
@@ -854,5 +853,24 @@ public final class ${cd.Upper}Test
         assertFalse(${cd.Mixed}0 == ${cd.Mixed}1);
         assertFalse(${cd.Mixed}0.equals(${cd.Mixed}1));
         assertFalse(${cd.Mixed}1.equals(${cd.Mixed}0));
+    }
+
+    public void testHashCode()
+    {
+        ${cd.Upper} ${cd.Mixed}0 = new ${cd.Upper}(...);
+        ${cd.Upper} ${cd.Mixed}1 = new ${cd.Upper}(...);
+
+        assertEquals(${cd.Mixed}0.hashCode(), ${cd.Mixed}0.hashCode());
+        assertEquals(${cd.Mixed}1.hashCode(), ${cd.Mixed}1.hashCode());
+        if (${cd.Mixed}0.equals(${cd.Mixed}1))
+        {
+            assertEquals(${cd.Mixed}0.hashCode(), ${cd.Mixed}1.hashCode());
+            assertEquals(${cd.Mixed}1.hashCode(), ${cd.Mixed}0.hashCode());
+        }
+        if (${cd.Mixed}1.equals(${cd.Mixed}0))
+        {
+            assertEquals(${cd.Mixed}0.hashCode(), ${cd.Mixed}1.hashCode());
+            assertEquals(${cd.Mixed}1.hashCode(), ${cd.Mixed}0.hashCode());
+        }
     }
 }
