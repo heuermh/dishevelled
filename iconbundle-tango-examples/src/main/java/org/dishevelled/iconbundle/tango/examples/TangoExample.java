@@ -23,29 +23,33 @@
 */
 package org.dishevelled.iconbundle.tango.examples;
 
-import java.awt.Image;
+import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.BorderLayout;
+import java.awt.Image;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.Box;
+import javax.swing.ImageIcon;
+import javax.swing.JComponent;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
-import javax.swing.AbstractAction;
-import javax.swing.JTree;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JLabel;
-import javax.swing.ImageIcon;
+import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
-import javax.swing.JToolBar;
 import javax.swing.JSplitPane;
-import javax.swing.JComponent;
+import javax.swing.JToolBar;
+import javax.swing.JTree;
 import javax.swing.SwingUtilities;
 
 import javax.swing.event.TreeSelectionEvent;
@@ -53,20 +57,21 @@ import javax.swing.event.TreeSelectionListener;
 
 import javax.swing.border.EmptyBorder;
 
-import javax.swing.tree.TreeSelectionModel;
 import javax.swing.tree.DefaultTreeCellRenderer;
+import javax.swing.tree.TreeSelectionModel;
 
+import org.dishevelled.iconbundle.IconBundle;
 import org.dishevelled.iconbundle.IconSize;
 import org.dishevelled.iconbundle.IconState;
 import org.dishevelled.iconbundle.IconTextDirection;
-import org.dishevelled.iconbundle.IconBundle;
 
 import org.dishevelled.iconbundle.tango.TangoProject;
 
-import org.dishevelled.identify.IdLabel;
 import org.dishevelled.identify.IdButton;
 import org.dishevelled.identify.Identifiable;
 import org.dishevelled.identify.IdentifiableAction;
+import org.dishevelled.identify.IdLabel;
+import org.dishevelled.identify.IdMenuItem;
 import org.dishevelled.identify.IdTreeCellRenderer;
 
 import org.dishevelled.layout.LabelFieldLayout;
@@ -84,6 +89,21 @@ public final class TangoExample
     /** Selected Identifiable. */
     private Identifiable selection;
 
+    /** Copy action. */
+    private IdentifiableAction copy;
+
+    /** Cut action. */
+    private IdentifiableAction cut;
+
+    /** Paste action. */
+    private IdentifiableAction paste;
+
+    /** Exit action. */
+    private Action exit;
+
+    /** Context menu. */
+    private JPopupMenu contextMenu;
+
 
     /**
      * Create a new tango example.
@@ -92,12 +112,22 @@ public final class TangoExample
     {
         super();
 
+        initComponents();
+        layoutComponents();
+    }
+
+
+    /**
+     * Initialize components.
+     */
+    private void initComponents()
+    {
         contextTree = new ContextTree();
         selection = (Identifiable) contextTree.getModel().getRoot();
 
         contextTree.addTreeSelectionListener(new TreeSelectionListener()
             {
-                /** @see TreeSelectionListener */
+                /** {@inheritDoc} */
                 public void valueChanged(final TreeSelectionEvent e)
                 {
                     if (e.isAddedPath())
@@ -111,8 +141,84 @@ public final class TangoExample
                 }
             });
 
-        setLayout(new BorderLayout());
+        copy = new IdentifiableAction("Copy", TangoProject.EDIT_COPY)
+            {
+                /** {@inheritDoc} */
+                public void actionPerformed(final ActionEvent e)
+                {
+                    // empty
+                }
+            };
 
+        cut = new IdentifiableAction("Cut", TangoProject.EDIT_CUT)
+            {
+                /** {@inheritDoc} */
+                public void actionPerformed(final ActionEvent e)
+                {
+                    // empty
+                }
+            };
+
+        paste = new IdentifiableAction("Paste", TangoProject.EDIT_PASTE)
+            {
+                /** {@inheritDoc} */
+                public void actionPerformed(final ActionEvent e)
+                {
+                    // empty
+                }
+            };
+
+        paste.setEnabled(false);
+
+        exit = new AbstractAction("Exit")
+            {
+                /** {@inheritDoc} */
+                public void actionPerformed(final ActionEvent event)
+                {
+                    System.exit(0);
+                }
+            };
+
+        contextMenu = createContextMenu();
+
+        contextTree.addMouseListener(new MouseAdapter()
+            {
+                /** {@inheritDoc} */
+                public void mousePressed(final MouseEvent event)
+                {
+                    if (event.isPopupTrigger())
+                    {
+                        showContextMenu(event);
+                    }
+                }
+
+                /** {@inheritDoc} */
+                public void mouseReleased(final MouseEvent event)
+                {
+                    if (event.isPopupTrigger())
+                    {
+                        showContextMenu(event);
+                    }
+                }
+
+                /**
+                 * Show the context menu.
+                 *
+                 * @param event mouse event
+                 */
+                private void showContextMenu(final MouseEvent event)
+                {
+                    contextMenu.show(contextTree, event.getX(), event.getY());
+                }
+            });
+    }
+
+    /**
+     * Layout components.
+     */
+    private void layoutComponents()
+    {
+        setLayout(new BorderLayout());
         JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, createContextTreePanel(), createDetailsPanel());
         add("North", createToolBar());
         add("Center", splitPane);
@@ -151,7 +257,7 @@ public final class TangoExample
 
         addPropertyChangeListener("selection", new PropertyChangeListener()
             {
-                /** @see PropertyChangeListener */
+                /** {@inheritDoc} */
                 public void propertyChange(final PropertyChangeEvent e)
                 {
                     extraSmall.setValue(selection);
@@ -164,7 +270,7 @@ public final class TangoExample
 
         addPropertyChangeListener("selection", new PropertyChangeListener()
             {
-                /** @see PropertyChangeListener */
+                /** {@inheritDoc} */
                 public void propertyChange(final PropertyChangeEvent e)
                 {
                     small.setValue(selection);
@@ -179,7 +285,7 @@ public final class TangoExample
 
         addPropertyChangeListener("selection", new PropertyChangeListener()
             {
-                /** @see PropertyChangeListener */
+                /** {@inheritDoc} */
                 public void propertyChange(final PropertyChangeEvent e)
                 {
                     large.setValue(selection);
@@ -194,7 +300,7 @@ public final class TangoExample
 
         addPropertyChangeListener("selection", new PropertyChangeListener()
             {
-                /** @see PropertyChangeListener */
+                /** {@inheritDoc} */
                 public void propertyChange(final PropertyChangeEvent e)
                 {
                     huge.setValue(selection);
@@ -236,41 +342,60 @@ public final class TangoExample
      */
     private JComponent createToolBar()
     {
-        IdButton cut = new IdButton(new IdentifiableAction("Cut", TangoProject.EDIT_CUT)
-            {
-                public void actionPerformed(final ActionEvent e)
-                {
-                    // empty
-                }
-            },TangoProject.EXTRA_SMALL);
-        IdButton copy = new IdButton(new IdentifiableAction("Copy", TangoProject.EDIT_COPY)
-            {
-                public void actionPerformed(final ActionEvent e)
-                {
-                    // empty
-                }
-            }, TangoProject.SMALL);
+        IdButton copyButton = new IdButton(copy, TangoProject.SMALL);
+        IdButton cutButton = new IdButton(cut, TangoProject.SMALL);
+        IdButton pasteButton = new IdButton(paste, TangoProject.SMALL);
 
-        IdentifiableAction pasteAction = new IdentifiableAction("Paste", TangoProject.EDIT_PASTE)
-            {
-                public void actionPerformed(final ActionEvent e)
-                {
-                    // empty
-                }
-            };
+        // in 1.6+
+        //copyButton.setHideActionText(true);
+        //cutButton.setHideActionText(true);
+        //pasteButton.setHideActionText(true);
 
-        pasteAction.setEnabled(false);
-        IdButton paste = new IdButton(pasteAction, TangoProject.LARGE);
-
-        //cut.setIconSize(TangoProject.EXTRA_SMALL);
-        //copy.setIconSize(TangoProject.SMALL);
-        //paste.setIconSize(TangoProject.LARGE);
+        // in 1.5 or earlier
+        copyButton.setText(null);
+        cutButton.setText(null);
+        pasteButton.setText(null);
 
         JToolBar toolBar = new JToolBar();
-        toolBar.add(cut);
-        toolBar.add(copy);
-        toolBar.add(paste);
+        toolBar.add(cutButton);
+        toolBar.add(copyButton);
+        toolBar.add(pasteButton);
         return toolBar;
+    }
+
+    /**
+     * Create a return a new menu bar component.
+     *
+     * @return a new menu bar component
+     */
+    private JMenuBar createMenuBar()
+    {
+        JMenu file = new JMenu("File");
+        file.add(exit);
+
+        JMenu edit = new JMenu("Edit");
+        edit.add(new IdMenuItem(cut, TangoProject.EXTRA_SMALL));
+        edit.add(new IdMenuItem(copy, TangoProject.EXTRA_SMALL));
+        edit.add(new IdMenuItem(paste, TangoProject.EXTRA_SMALL));
+
+        JMenuBar menuBar = new JMenuBar();
+        menuBar.add(file);
+        menuBar.add(edit);
+        return menuBar;
+    }
+
+    /**
+     * Create and return a new context menu.
+     *
+     * @return a new context menu
+     */
+    private JPopupMenu createContextMenu()
+    {
+        JPopupMenu contextMenu = new JPopupMenu();
+        contextMenu.add(new IdMenuItem(cut, TangoProject.EXTRA_SMALL));
+        contextMenu.add(new IdMenuItem(copy, TangoProject.EXTRA_SMALL));
+        contextMenu.add(new IdMenuItem(paste, TangoProject.EXTRA_SMALL));
+        return contextMenu;
     }
 
     /**
@@ -282,22 +407,22 @@ public final class TangoExample
     {
         Identifiable oldSelection = this.selection;
         this.selection = selection;
-
         firePropertyChange("selection", oldSelection, this.selection);
     }
 
 
-    /** @see Runnable */
+    /** {@inheritDoc} */
     public void run()
     {
         final JFrame f = new JFrame("Tango Project");
         f.setContentPane(this);
+        f.setJMenuBar(createMenuBar());
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.setBounds(100, 100, 750, 550);
 
         SwingUtilities.invokeLater(new Runnable()
             {
-                /** @see Runnable */
+                /** {@inheritDoc} */
                 public void run()
                 {
                     f.setVisible(true);
