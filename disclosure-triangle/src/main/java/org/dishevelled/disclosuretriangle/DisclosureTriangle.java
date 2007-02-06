@@ -66,7 +66,7 @@ public final class DisclosureTriangle
 
     /**
      * Create a new disclosure triangle container wrapping the specified container.
-     * This disclosure triangle will be collapsed, its label text will be <code>Details</code>,
+     * This disclosure triangle container will be collapsed, its label text will be <code>Details</code>,
      * its collapse icon will be <code>UIManager.getIcon("Tree.expandedIcon")</code>,
      * and its expand icon will be <code>UIManager.getIcon("Tree.collapsedIcon")</code>
      * by default.
@@ -161,9 +161,9 @@ public final class DisclosureTriangle
     }
 
     /**
-     * Return true if this disclosure triangle is collapsed.
+     * Return true if this disclosure triangle container is collapsed.
      *
-     * @return true if this disclosure triangle is collapsed
+     * @return true if this disclosure triangle container is collapsed
      */
     public boolean isCollapsed()
     {
@@ -171,12 +171,12 @@ public final class DisclosureTriangle
     }
 
     /**
-     * Set to true to collapse this disclosure triangle.  Alternatively, call
+     * Set to true to collapse this disclosure triangle container.  Alternatively, call
      * <code>collapse()</code> or <code>expand()</code> as appropriate.
      *
      * <p>This is a bound property.</p>
      *
-     * @param collapsed true to collapse this disclosure triangle
+     * @param collapsed true to collapse this disclosure triangle container
      */
     public void setCollapsed(final boolean collapsed)
     {
@@ -215,9 +215,9 @@ public final class DisclosureTriangle
     }
 
     /**
-     * Return the label text for this disclosure triangle.
+     * Return the label text for this disclosure triangle container.
      *
-     * @return the label text for this disclosure triangle
+     * @return the label text for this disclosure triangle container
      */
     public String getLabelText()
     {
@@ -239,9 +239,9 @@ public final class DisclosureTriangle
     }
 
     /**
-     * Return the collapse icon for this disclosure triangle.
+     * Return the collapse icon for this disclosure triangle container.
      *
-     * @return the collapse icon for this disclosure triangle
+     * @return the collapse icon for this disclosure triangle container
      */
     public Icon getCollapseIcon()
     {
@@ -267,9 +267,9 @@ public final class DisclosureTriangle
     }
 
     /**
-     * Return the expand icon for this disclosure triangle.
+     * Return the expand icon for this disclosure triangle container.
      *
-     * @return the expand icon for this disclosure triangle
+     * @return the expand icon for this disclosure triangle container
      */
     public Icon getExpandIcon()
     {
