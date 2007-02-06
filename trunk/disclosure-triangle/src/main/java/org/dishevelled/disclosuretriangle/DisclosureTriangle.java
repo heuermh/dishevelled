@@ -60,14 +60,19 @@ public final class DisclosureTriangle
     /** Expand icon. */
     private Icon expandIcon;
 
-    /** Default label text. */
-    private static final String DEFAULT_LABEL_TEXT = "Details";
+    /** Default label text, <code>Details</code>. */
+    public static final String DEFAULT_LABEL_TEXT = "Details";
 
 
     /**
-     * Create a new disclosure triangle container wrapping
-     * the specified container.
+     * Create a new disclosure triangle container wrapping the specified container.
+     * This disclosure triangle will be collapsed, its label text will be <code>Details</code>,
+     * its collapse icon will be <code>UIManager.getIcon("Tree.expandedIcon")</code>,
+     * and its expand icon will be <code>UIManager.getIcon("Tree.collapsedIcon")</code>
+     * by default.
      *
+     * @see #DEFAULT_LABEL_TEXT
+     * @see javax.swing.UIManager#getIcon
      * @param container container to wrap, must not be null
      */
     public DisclosureTriangle(final Container container)
@@ -110,14 +115,24 @@ public final class DisclosureTriangle
      */
     public void expand()
     {
+        setCollapsed(false);
+    }
+
+    /**
+     * Actually perform the expand operation.
+     */
+    private void doExpand()
+    {
         add("Center", container);
-        collapsed = false;
         label.setIcon(collapseIcon);
         Container rootPaneContainer = getParentRootPaneContainer();
-        Dimension d0 = rootPaneContainer.getSize();
-        Dimension d1 = container.getSize();
-        Dimension d2 = container.getPreferredSize();
-        rootPaneContainer.setSize(d0.width, d0.height + Math.max(d1.height, d2.height));
+        if (rootPaneContainer != null)
+        {
+            Dimension d0 = rootPaneContainer.getSize();
+            Dimension d1 = container.getSize();
+            Dimension d2 = container.getPreferredSize();
+            rootPaneContainer.setSize(d0.width, d0.height + Math.max(d1.height, d2.height));
+        }
     }
 
     /**
@@ -125,29 +140,88 @@ public final class DisclosureTriangle
      */
     public void collapse()
     {
-        remove(container);
-        collapsed = true;
-        label.setIcon(expandIcon);
-        Container rootPaneContainer = getParentRootPaneContainer();
-        Dimension d0 = rootPaneContainer.getSize();
-        Dimension d1 = container.getSize();
-        Dimension d2 = container.getPreferredSize();
-        rootPaneContainer.setSize(d0.width, d0.height - Math.max(d1.height, d2.height));
+        setCollapsed(true);
     }
 
     /**
-     * Return the parent root pane container for this disclosure triangle container.
+     * Actually perform the collapse operation.
+     */
+    private void doCollapse()
+    {
+        remove(container);
+        label.setIcon(expandIcon);
+        Container rootPaneContainer = getParentRootPaneContainer();
+        if (rootPaneContainer != null)
+        {
+            Dimension d0 = rootPaneContainer.getSize();
+            Dimension d1 = container.getSize();
+            Dimension d2 = container.getPreferredSize();
+            rootPaneContainer.setSize(d0.width, d0.height - Math.max(d1.height, d2.height));
+        }
+    }
+
+    /**
+     * Return true if this disclosure triangle is collapsed.
+     *
+     * @return true if this disclosure triangle is collapsed
+     */
+    public boolean isCollapsed()
+    {
+        return collapsed;
+    }
+
+    /**
+     * Set to true to collapse this disclosure triangle.  Alternatively, call
+     * <code>collapse()</code> or <code>expand()</code> as appropriate.
+     *
+     * <p>This is a bound property.</p>
+     *
+     * @param collapsed true to collapse this disclosure triangle
+     */
+    public void setCollapsed(final boolean collapsed)
+    {
+        boolean oldCollapsed = this.collapsed;
+        if (collapsed && !oldCollapsed)
+        {
+            doCollapse();
+        }
+        if (!collapsed && oldCollapsed)
+        {
+            doExpand();
+        }
+        this.collapsed = collapsed;
+        firePropertyChange("collapsed", oldCollapsed, this.collapsed);
+    }
+
+    /**
+     * Return the parent root pane container for this disclosure triangle container
+     * or null if one does not exist.
      *
      * @return the parent root pane container for this disclosure triangle container
+     *    or null if one does not exist
      */
     private Container getParentRootPaneContainer()
     {
         Container c = this;
         while (!(c instanceof RootPaneContainer))
         {
+            if (c.getParent() == null)
+            {
+                return null;
+            }
             c = c.getParent();
         }
         return c;
+    }
+
+    /**
+     * Return the label text for this disclosure triangle.
+     *
+     * @return the label text for this disclosure triangle
+     */
+    public String getLabelText()
+    {
+        return label.getText();
     }
 
     /**
@@ -162,6 +236,16 @@ public final class DisclosureTriangle
         String oldLabelText = label.getText();
         label.setText(labelText);
         firePropertyChange("labelText", oldLabelText, label.getText());
+    }
+
+    /**
+     * Return the collapse icon for this disclosure triangle.
+     *
+     * @return the collapse icon for this disclosure triangle
+     */
+    public Icon getCollapseIcon()
+    {
+        return collapseIcon;
     }
 
     /**
@@ -180,6 +264,16 @@ public final class DisclosureTriangle
         {
             label.setIcon(this.collapseIcon);
         }
+    }
+
+    /**
+     * Return the expand icon for this disclosure triangle.
+     *
+     * @return the expand icon for this disclosure triangle
+     */
+    public Icon getExpandIcon()
+    {
+        return expandIcon;
     }
 
     /**
