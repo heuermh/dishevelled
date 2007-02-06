@@ -23,6 +23,12 @@
 */
 package org.dishevelled.disclosuretriangle;
 
+import java.awt.Container;
+
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.UIManager;
+
 import junit.framework.TestCase;
 
 /**
@@ -35,8 +41,100 @@ public final class DisclosureTriangleTest
     extends TestCase
 {
 
-    public void testDisclosureTriangle()
+    public void testConstructor()
     {
-        // empty
+        Container container = new Container();
+        DisclosureTriangle disclosureTriangle0 = new DisclosureTriangle(container);
+
+        try
+        {
+            DisclosureTriangle disclosureTriangle = new DisclosureTriangle(null);
+            fail("ctr(null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+    }
+
+    public void testExpand()
+    {        
+        Container container = new Container();
+        DisclosureTriangle disclosureTriangle = new DisclosureTriangle(container);
+        assertTrue(disclosureTriangle.isCollapsed());
+        disclosureTriangle.expand();
+        assertFalse(disclosureTriangle.isCollapsed());
+    }
+
+    public void testCollapse()
+    {
+        Container container = new Container();
+        DisclosureTriangle disclosureTriangle = new DisclosureTriangle(container);
+        assertTrue(disclosureTriangle.isCollapsed());
+        disclosureTriangle.expand();
+        assertFalse(disclosureTriangle.isCollapsed());
+        disclosureTriangle.collapse();
+        assertTrue(disclosureTriangle.isCollapsed());
+    }
+
+    public void testLabelText()
+    {
+        Container container = new Container();
+        DisclosureTriangle disclosureTriangle = new DisclosureTriangle(container);
+        assertEquals(DisclosureTriangle.DEFAULT_LABEL_TEXT, disclosureTriangle.getLabelText());
+        disclosureTriangle.setLabelText(null);
+        assertEquals(null, disclosureTriangle.getLabelText());
+        disclosureTriangle.setLabelText("foo");
+        assertEquals("foo", disclosureTriangle.getLabelText());
+    }
+
+    public void testCollapseIcon()
+    {
+        Icon icon = new ImageIcon();
+        Container container = new Container();
+        DisclosureTriangle disclosureTriangle = new DisclosureTriangle(container);
+        Icon treeExpandedIcon = UIManager.getIcon("Tree.expandedIcon");
+        assertEquals(treeExpandedIcon, disclosureTriangle.getCollapseIcon());
+        disclosureTriangle.setCollapseIcon(null);
+        assertEquals(null, disclosureTriangle.getCollapseIcon());
+        disclosureTriangle.setCollapseIcon(icon);
+        assertEquals(icon, disclosureTriangle.getCollapseIcon());
+
+        disclosureTriangle.expand();
+        disclosureTriangle.setCollapseIcon(null);
+        assertEquals(null, disclosureTriangle.getCollapseIcon());
+        disclosureTriangle.setCollapseIcon(icon);
+        assertEquals(icon, disclosureTriangle.getCollapseIcon());
+
+        disclosureTriangle.collapse();
+        disclosureTriangle.setCollapseIcon(null);
+        assertEquals(null, disclosureTriangle.getCollapseIcon());
+        disclosureTriangle.setCollapseIcon(icon);
+        assertEquals(icon, disclosureTriangle.getCollapseIcon());
+    }
+
+    public void testExpandIcon()
+    {
+        Icon icon = new ImageIcon();
+        Container container = new Container();
+        DisclosureTriangle disclosureTriangle = new DisclosureTriangle(container);
+        Icon treeCollapsedIcon = UIManager.getIcon("Tree.collapsedIcon");
+        assertEquals(treeCollapsedIcon, disclosureTriangle.getExpandIcon());
+        disclosureTriangle.setExpandIcon(null);
+        assertEquals(null, disclosureTriangle.getExpandIcon());
+        disclosureTriangle.setExpandIcon(icon);
+        assertEquals(icon, disclosureTriangle.getExpandIcon());
+
+        disclosureTriangle.expand();
+        disclosureTriangle.setExpandIcon(null);
+        assertEquals(null, disclosureTriangle.getExpandIcon());
+        disclosureTriangle.setExpandIcon(icon);
+        assertEquals(icon, disclosureTriangle.getExpandIcon());
+
+        disclosureTriangle.collapse();
+        disclosureTriangle.setExpandIcon(null);
+        assertEquals(null, disclosureTriangle.getExpandIcon());
+        disclosureTriangle.setExpandIcon(icon);
+        assertEquals(icon, disclosureTriangle.getExpandIcon());
     }
 }
