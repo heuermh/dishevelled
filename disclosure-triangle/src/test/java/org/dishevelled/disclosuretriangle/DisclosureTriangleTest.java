@@ -23,10 +23,20 @@
 */
 package org.dishevelled.disclosuretriangle;
 
+import java.awt.Component;
 import java.awt.Container;
+
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JDesktopPane;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
+import javax.swing.JLabel;
+import javax.swing.JWindow;
 import javax.swing.UIManager;
 
 import junit.framework.TestCase;
@@ -136,5 +146,74 @@ public final class DisclosureTriangleTest
         assertEquals(null, disclosureTriangle.getExpandIcon());
         disclosureTriangle.setExpandIcon(icon);
         assertEquals(icon, disclosureTriangle.getExpandIcon());
+    }
+
+    public void testRootPaneContainers()
+    {
+        Container container = new Container();
+        DisclosureTriangle disclosureTriangle = new DisclosureTriangle(container);
+
+        JFrame f = new JFrame("Frame");
+        f.getContentPane().add(disclosureTriangle);
+        disclosureTriangle.expand();
+        disclosureTriangle.collapse();
+        disclosureTriangle.expand();
+        disclosureTriangle.collapse();
+        f.getContentPane().remove(disclosureTriangle);
+
+        JDialog d = new JDialog(f, "Dialog");
+        d.getContentPane().add(disclosureTriangle);
+        disclosureTriangle.expand();
+        disclosureTriangle.collapse();
+        disclosureTriangle.expand();
+        disclosureTriangle.collapse();
+        d.getContentPane().remove(disclosureTriangle);
+
+        JWindow w = new JWindow(f);
+        w.getContentPane().add(disclosureTriangle);
+        disclosureTriangle.expand();
+        disclosureTriangle.collapse();
+        disclosureTriangle.expand();
+        disclosureTriangle.collapse();
+        w.getContentPane().remove(disclosureTriangle);
+
+        JDialog desktop = new JDialog(f, "Desktop");
+        JDesktopPane desktopPane = new JDesktopPane();
+        JInternalFrame internalFrame = new JInternalFrame("Internal frame");
+        internalFrame.getContentPane().add(disclosureTriangle);
+        internalFrame.setVisible(true);
+        desktopPane.add(internalFrame);
+        desktop.setContentPane(desktopPane);
+        disclosureTriangle.expand();
+        disclosureTriangle.collapse();
+        disclosureTriangle.expand();
+        disclosureTriangle.collapse();
+        internalFrame.getContentPane().remove(disclosureTriangle);
+    }
+
+    public void testSimulatedMouseClicks()
+    {
+        Container container = new Container();
+        DisclosureTriangle disclosureTriangle = new DisclosureTriangle(container);
+        MouseEvent mouseEvent = new MouseEvent(disclosureTriangle, 0, 0L, 0, 0, 0, 0, false);
+        Component[] children = disclosureTriangle.getComponents();
+        for (int i = 0, size = children.length; i < size; i++)
+        {
+            Component c = children[i];
+            if (c instanceof JLabel)
+            {
+                JLabel label = (JLabel) c;
+                MouseListener listener = label.getMouseListeners()[0];
+                assertTrue(disclosureTriangle.isCollapsed());
+                listener.mouseClicked(mouseEvent);
+                assertFalse(disclosureTriangle.isCollapsed());
+                listener.mouseClicked(mouseEvent);
+                assertTrue(disclosureTriangle.isCollapsed());
+                listener.mouseClicked(mouseEvent);
+                assertFalse(disclosureTriangle.isCollapsed());
+                listener.mouseClicked(mouseEvent);
+                assertTrue(disclosureTriangle.isCollapsed());
+            }
+        }
     }
 }
