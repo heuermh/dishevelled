@@ -60,16 +60,19 @@ public final class DisclosureTriangle
     /** Expand icon. */
     private Icon expandIcon;
 
-    /** Default label text, <code>Details</code>. */
+    /** Default label text, <code>"Details"</code>. */
     public static final String DEFAULT_LABEL_TEXT = "Details";
 
 
     /**
      * Create a new disclosure triangle container wrapping the specified container.
-     * This disclosure triangle container will be collapsed, its label text will be <code>Details</code>,
-     * its collapse icon will be <code>UIManager.getIcon("Tree.expandedIcon")</code>,
-     * and its expand icon will be <code>UIManager.getIcon("Tree.collapsedIcon")</code>
-     * by default.
+     *
+     * <p>
+     * By default this disclosure triangle container will be collapsed, its label text will be
+     * <code>"Details"</code>, its collapse icon will be the icon resource returned by
+     * <code>UIManager.getIcon("Tree.expandedIcon")</code>, and its expand icon will be
+     * the icon resource returned by <code>UIManager.getIcon("Tree.collapsedIcon")</code>.
+     * </p>
      *
      * @see #DEFAULT_LABEL_TEXT
      * @see javax.swing.UIManager#getIcon
