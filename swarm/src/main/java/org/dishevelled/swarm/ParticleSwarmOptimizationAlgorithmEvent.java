@@ -85,7 +85,7 @@ public final class ParticleSwarmOptimizationAlgorithmEvent
      * Create a new particle swarm optimization algorithm event with the
      * specified parameters.
      *
-     * @param source source of this event
+     * @param source source of this event, must not be null
      * @param position particle position
      * @param velocity particle velocity
      * @param cognitiveMemory cognitive or individual memory
@@ -116,7 +116,7 @@ public final class ParticleSwarmOptimizationAlgorithmEvent
      * Create a new particle swarm optimization algorithm event with the
      * specified parameters.
      *
-     * @param source source of this event
+     * @param source source of this event, must not be null
      * @param particle particle
      * @param dimension dimension
      * @param value value, may be position or velocity
@@ -143,7 +143,7 @@ public final class ParticleSwarmOptimizationAlgorithmEvent
      * Create a new particle swarm optimization algorithm event with the
      * specified parameters.
      *
-     * @param source source of this event
+     * @param source source of this event, must not be null
      * @param particle particle
      * @param dimension dimension
      * @param value value, may be position or velocity

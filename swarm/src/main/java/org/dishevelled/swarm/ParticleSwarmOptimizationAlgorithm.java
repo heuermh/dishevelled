@@ -88,7 +88,7 @@ public final class ParticleSwarmOptimizationAlgorithm
     /** Randomize function. */
     private final UnaryFunction<Double, Double> randomizeFunction = new UnaryFunction<Double, Double>()
             {
-                /** @see UnaryFunction */
+                /** {@inheritDoc} */
                 public Double evaluate(final Double ignore)
                 {
                     return Double.valueOf(random.nextDouble() * maximumPosition);
@@ -407,6 +407,32 @@ public final class ParticleSwarmOptimizationAlgorithm
     public void removeParticleSwarmOptimizationAlgorithmListener(final ParticleSwarmOptimizationAlgorithmListener l)
     {
         listenerList.remove(ParticleSwarmOptimizationAlgorithmListener.class, l);
+    }
+
+    /**
+     * Return the number of particle swarm optimization algorithm listeners registered to this
+     * particle swarm optimization algorithm.
+     *
+     * @return the number of particle swarm optimization algorithm listeners registered to this
+     *    particle swarm optimization algorithm
+     */
+    public int getParticleSwarmOptimizationAlgorithmListenerCount()
+    {
+        return listenerList.getListenerCount(ParticleSwarmOptimizationAlgorithmListener.class);
+    }
+
+    /**
+     * Return an array of particle swarm optimization algorithm listeners registered to this particle
+     * swarm optimization algorithm.  The returned array may be empty but will
+     * not be null.
+     *
+     * @return an array of particle swarm optimization algorithm listeners registered to this particle
+     *    swarm optimization algorithm
+     */
+    public ParticleSwarmOptimizationAlgorithmListener[] getParticleSwarmOptimizationAlgorithmListeners()
+    {
+        return (ParticleSwarmOptimizationAlgorithmListener[])
+            listenerList.getListeners(ParticleSwarmOptimizationAlgorithmListener.class);
     }
 
     /**
