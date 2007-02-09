@@ -23,47 +23,43 @@
 */
 package org.dishevelled.evolve.fitness;
 
-import org.dishevelled.weighted.WeightedMap;
-import org.dishevelled.weighted.HashWeightedMap;
+import java.util.Random;
+
+import junit.framework.TestCase;
 
 import org.dishevelled.evolve.Fitness;
-import org.dishevelled.evolve.AbstractFitnessTest;
 
 /**
- * Unit test for UniformFitness.
+ * Unit test for RandomFitness.
  *
  * @author  Michael Heuer
- * @version $Revision$ $Date$
+ * @version $Revision: 225 $ $Date: 2007-01-08 23:25:51 -0600 (Mon, 08 Jan 2007) $
  */
-public final class UniformFitnessTest
-    extends AbstractFitnessTest
+public final class RandomFitnessTest
+    extends TestCase
 {
-
-    /** {@inheritDoc} */
-    protected <T> Fitness<T> createFitness()
-    {
-        return new UniformFitness<T>();
-    }
-
-    /** {@inheritDoc} */
-    protected <T> WeightedMap<T> getExpectedValues(final T t)
-    {
-        WeightedMap<T> expectedValues = new HashWeightedMap<T>();
-        expectedValues.put(t, Double.valueOf(1.0));
-
-        return expectedValues;
-    }
-
 
     public void testConstructor()
     {
-        Fitness<Integer> fitness0 = new UniformFitness<Integer>(2.0d);
-        assertEquals(Double.valueOf(2.0d), fitness0.score(Integer.valueOf(0)));
+        Fitness<Integer> fitness0 = new RandomFitness<Integer>();
+        Fitness<Integer> fitness1 = new RandomFitness<Integer>(new Random());
 
-        Fitness<Integer> fitness1 = new UniformFitness<Integer>(-2.0d);
-        assertEquals(Double.valueOf(-2.0d), fitness1.score(Integer.valueOf(0)));
+        try
+        {
+            Fitness<Integer> fitness = new RandomFitness<Integer>(null);
+            fail("ctr(null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+    }
 
-        Fitness<Integer> fitness2 = new UniformFitness<Integer>(0.0d);
-        assertEquals(Double.valueOf(0.0d), fitness2.score(Integer.valueOf(0)));
+    public void testRandomFitness()
+    {
+        Fitness<Integer> fitness = new RandomFitness<Integer>();
+        double score = fitness.score(Integer.valueOf(1));
+        assertTrue(score >= 0.0d);
+        assertTrue(score < 1.0d);
     }
 }

@@ -23,47 +23,50 @@
 */
 package org.dishevelled.evolve.fitness;
 
-import org.dishevelled.weighted.WeightedMap;
-import org.dishevelled.weighted.HashWeightedMap;
+import java.util.Random;
 
 import org.dishevelled.evolve.Fitness;
-import org.dishevelled.evolve.AbstractFitnessTest;
 
 /**
- * Unit test for UniformFitness.
+ * Random fitness function.
  *
+ * @param <I> individual type
  * @author  Michael Heuer
- * @version $Revision$ $Date$
+ * @version $Revision: 225 $ $Date: 2007-01-08 23:25:51 -0600 (Mon, 08 Jan 2007) $
  */
-public final class UniformFitnessTest
-    extends AbstractFitnessTest
+public final class RandomFitness<I>
+    implements Fitness<I>
 {
+    /** Source of randomness for this random fitness function. */
+    private final Random random;
 
-    /** {@inheritDoc} */
-    protected <T> Fitness<T> createFitness()
+
+    /**
+     * Create a new random fitness function with a default source of randomness.
+     */
+    public RandomFitness()
     {
-        return new UniformFitness<T>();
+        random = new Random();
     }
 
-    /** {@inheritDoc} */
-    protected <T> WeightedMap<T> getExpectedValues(final T t)
+    /**
+     * Create a new random fitness function with the specified source of randomness.
+     *
+     * @param random source of randomness for this random fitness function, must not be null
+     */
+    public RandomFitness(final Random random)
     {
-        WeightedMap<T> expectedValues = new HashWeightedMap<T>();
-        expectedValues.put(t, Double.valueOf(1.0));
-
-        return expectedValues;
+        if (random == null)
+        {
+            throw new IllegalArgumentException("random must not be null");
+        }
+        this.random = random;
     }
 
 
-    public void testConstructor()
+    /** {@inheritDoc} */
+    public Double score(final I individual)
     {
-        Fitness<Integer> fitness0 = new UniformFitness<Integer>(2.0d);
-        assertEquals(Double.valueOf(2.0d), fitness0.score(Integer.valueOf(0)));
-
-        Fitness<Integer> fitness1 = new UniformFitness<Integer>(-2.0d);
-        assertEquals(Double.valueOf(-2.0d), fitness1.score(Integer.valueOf(0)));
-
-        Fitness<Integer> fitness2 = new UniformFitness<Integer>(0.0d);
-        assertEquals(Double.valueOf(0.0d), fitness2.score(Integer.valueOf(0)));
+        return Double.valueOf(random.nextDouble());
     }
 }
