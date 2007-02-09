@@ -25,12 +25,6 @@ package org.dishevelled.swarm;
 
 import junit.framework.TestCase;
 
-import org.dishevelled.matrix.ObjectMatrix1D;
-import org.dishevelled.matrix.ObjectMatrix2D;
-
-import org.dishevelled.matrix.impl.SparseObjectMatrix1D;
-import org.dishevelled.matrix.impl.SparseObjectMatrix2D;
-
 /**
  * Unit test for ParticleSwarmOptimizationAlgorithmEvent.
  *
@@ -44,20 +38,13 @@ public final class ParticleSwarmOptimizationAlgorithmEventTest
     public void testConstructor()
     {
         ParticleSwarmOptimizationAlgorithm source = new ParticleSwarmOptimizationAlgorithm();
-        ObjectMatrix2D<Double> position = new SparseObjectMatrix2D<Double>(0, 0);
-        ObjectMatrix2D<Double> velocity = new SparseObjectMatrix2D<Double>(0, 0);
-        ObjectMatrix2D<Double> cognitiveMemory = new SparseObjectMatrix2D<Double>(0, 0);
-        ObjectMatrix1D<Double> socialMemory = new SparseObjectMatrix1D<Double>(0);
+        ParticleSwarm swarm = new TestParticleSwarm();
 
-        ParticleSwarmOptimizationAlgorithmEvent event0 = new ParticleSwarmOptimizationAlgorithmEvent(source, position, velocity, cognitiveMemory, socialMemory, 0);
-        ParticleSwarmOptimizationAlgorithmEvent event2 = new ParticleSwarmOptimizationAlgorithmEvent(source, null, velocity, cognitiveMemory, socialMemory, 0);
-        ParticleSwarmOptimizationAlgorithmEvent event3 = new ParticleSwarmOptimizationAlgorithmEvent(source, position, null, cognitiveMemory, socialMemory, 0);
-        ParticleSwarmOptimizationAlgorithmEvent event4 = new ParticleSwarmOptimizationAlgorithmEvent(source, position, velocity, null, socialMemory, 0);
-        ParticleSwarmOptimizationAlgorithmEvent event5 = new ParticleSwarmOptimizationAlgorithmEvent(source, position, velocity, cognitiveMemory, null, 0);
-        ParticleSwarmOptimizationAlgorithmEvent event6 = new ParticleSwarmOptimizationAlgorithmEvent(source, position, velocity, cognitiveMemory, socialMemory, 1);
-        ParticleSwarmOptimizationAlgorithmEvent event7 = new ParticleSwarmOptimizationAlgorithmEvent(source, position, velocity, cognitiveMemory, socialMemory, -1);
-        ParticleSwarmOptimizationAlgorithmEvent event8 = new ParticleSwarmOptimizationAlgorithmEvent(source, position, velocity, cognitiveMemory, socialMemory, Integer.MAX_VALUE);
-        ParticleSwarmOptimizationAlgorithmEvent event9 = new ParticleSwarmOptimizationAlgorithmEvent(source, position, velocity, cognitiveMemory, socialMemory, Integer.MIN_VALUE);
+        ParticleSwarmOptimizationAlgorithmEvent event0 = new ParticleSwarmOptimizationAlgorithmEvent(source, swarm, 0);
+        ParticleSwarmOptimizationAlgorithmEvent event2 = new ParticleSwarmOptimizationAlgorithmEvent(source, swarm, 1);
+        ParticleSwarmOptimizationAlgorithmEvent event3 = new ParticleSwarmOptimizationAlgorithmEvent(source, swarm, -1);
+        ParticleSwarmOptimizationAlgorithmEvent event4 = new ParticleSwarmOptimizationAlgorithmEvent(source, swarm, Integer.MIN_VALUE);
+        ParticleSwarmOptimizationAlgorithmEvent event5 = new ParticleSwarmOptimizationAlgorithmEvent(source, swarm, Integer.MAX_VALUE);
 
         ParticleSwarmOptimizationAlgorithmEvent event10 = new ParticleSwarmOptimizationAlgorithmEvent(source, 0, 0, 0.0d);
         ParticleSwarmOptimizationAlgorithmEvent event11 = new ParticleSwarmOptimizationAlgorithmEvent(source, 1, 0, 0.0d);
@@ -93,8 +80,8 @@ public final class ParticleSwarmOptimizationAlgorithmEventTest
 
         try
         {
-            ParticleSwarmOptimizationAlgorithmEvent event = new ParticleSwarmOptimizationAlgorithmEvent(null, position, velocity, cognitiveMemory, socialMemory, 0);
-            fail("ctr(null,,,, 0) expected IllegalArgumentException");
+            ParticleSwarmOptimizationAlgorithmEvent event = new ParticleSwarmOptimizationAlgorithmEvent(null, swarm, 0);
+            fail("ctr(null,,) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
         {
@@ -123,19 +110,13 @@ public final class ParticleSwarmOptimizationAlgorithmEventTest
     public void testParticleSwarmOptimizationAlgorithmEvent()
     {
         ParticleSwarmOptimizationAlgorithm source = new ParticleSwarmOptimizationAlgorithm();
-        ObjectMatrix2D<Double> position = new SparseObjectMatrix2D<Double>(0, 0);
-        ObjectMatrix2D<Double> velocity = new SparseObjectMatrix2D<Double>(0, 0);
-        ObjectMatrix2D<Double> cognitiveMemory = new SparseObjectMatrix2D<Double>(0, 0);
-        ObjectMatrix1D<Double> socialMemory = new SparseObjectMatrix1D<Double>(0);
+        ParticleSwarm swarm = new TestParticleSwarm();
 
-        ParticleSwarmOptimizationAlgorithmEvent event0 = new ParticleSwarmOptimizationAlgorithmEvent(source, position, velocity, cognitiveMemory, socialMemory, 0);
+        ParticleSwarmOptimizationAlgorithmEvent event0 = new ParticleSwarmOptimizationAlgorithmEvent(source, swarm, 0);
         assertNotNull("event0 not null", event0);
         assertEquals(source, event0.getSource());
         assertEquals(source, event0.getParticleSwarmOptimizationAlgorithm());
-        assertEquals(position, event0.getPosition());
-        assertEquals(velocity, event0.getVelocity());
-        assertEquals(cognitiveMemory, event0.getCognitiveMemory());
-        assertEquals(socialMemory, event0.getSocialMemory());
+        assertEquals(swarm, event0.getParticleSwarm());
         assertEquals(0, event0.getEpoch());
         assertEquals(ParticleSwarmOptimizationAlgorithmEvent.DEFAULT_PARTICLE, event0.getParticle());
         assertEquals(ParticleSwarmOptimizationAlgorithmEvent.DEFAULT_DIMENSION, event0.getDimension());
@@ -146,10 +127,7 @@ public final class ParticleSwarmOptimizationAlgorithmEventTest
         assertNotNull("event1 not null", event1);
         assertEquals(source, event1.getSource());
         assertEquals(source, event1.getParticleSwarmOptimizationAlgorithm());
-        assertEquals(null, event1.getPosition());
-        assertEquals(null, event1.getVelocity());
-        assertEquals(null, event1.getCognitiveMemory());
-        assertEquals(null, event1.getSocialMemory());
+        assertEquals(null, event1.getParticleSwarm());
         assertEquals(ParticleSwarmOptimizationAlgorithmEvent.DEFAULT_EPOCH, event1.getEpoch());
         assertEquals(1, event1.getParticle());
         assertEquals(2, event1.getDimension());
@@ -160,10 +138,7 @@ public final class ParticleSwarmOptimizationAlgorithmEventTest
         assertNotNull("event2 not null", event2);
         assertEquals(source, event2.getSource());
         assertEquals(source, event2.getParticleSwarmOptimizationAlgorithm());
-        assertEquals(null, event2.getPosition());
-        assertEquals(null, event2.getVelocity());
-        assertEquals(null, event2.getCognitiveMemory());
-        assertEquals(null, event2.getSocialMemory());
+        assertEquals(null, event2.getParticleSwarm());
         assertEquals(ParticleSwarmOptimizationAlgorithmEvent.DEFAULT_EPOCH, event2.getEpoch());
         assertEquals(1, event2.getParticle());
         assertEquals(2, event2.getDimension());

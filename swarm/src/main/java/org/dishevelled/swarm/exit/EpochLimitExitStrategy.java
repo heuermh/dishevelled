@@ -23,10 +23,8 @@
 */
 package org.dishevelled.swarm.exit;
 
-import org.dishevelled.matrix.ObjectMatrix1D;
-import org.dishevelled.matrix.ObjectMatrix2D;
-
 import org.dishevelled.swarm.ExitStrategy;
+import org.dishevelled.swarm.ParticleSwarm;
 
 /**
  * Epoch limit exit strategy.  Exits as soon as the epoch meets or exceeds a set epoch limit.
@@ -57,11 +55,7 @@ public final class EpochLimitExitStrategy
 
 
     /** {@inheritDoc} */
-    public boolean evaluate(final ObjectMatrix2D<Double> position,
-                            final ObjectMatrix2D<Double> velocity,
-                            final ObjectMatrix2D<Double> cognitiveMemory,
-                            final ObjectMatrix1D<Double> socialMemory,
-                            final int epoch)
+    public boolean evaluate(final ParticleSwarm swarm, final int epoch)
     {
         return (epoch >= epochLimit);
     }

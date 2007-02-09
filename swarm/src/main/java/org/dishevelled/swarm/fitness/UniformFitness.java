@@ -62,7 +62,7 @@ public final class UniformFitness
 
 
     /** {@inheritDoc} */
-    public double score(final double position)
+    public double score(final double[] position)
     {
         return score;
     }

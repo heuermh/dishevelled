@@ -56,18 +56,18 @@ public final class UniformFitnessTest
     {
         UniformFitness uniformFitness0 = new UniformFitness();
         assertNotNull("uniformFitness0 not null", uniformFitness0);
-        assertEquals(UniformFitness.DEFAULT_SCORE, uniformFitness0.score(0.0d));
-        assertEquals(UniformFitness.DEFAULT_SCORE, uniformFitness0.score(1.0d));
-        assertEquals(UniformFitness.DEFAULT_SCORE, uniformFitness0.score(-1.0d));
-        assertEquals(UniformFitness.DEFAULT_SCORE, uniformFitness0.score(Double.MIN_VALUE));
-        assertEquals(UniformFitness.DEFAULT_SCORE, uniformFitness0.score(Double.MAX_VALUE));
+        assertEquals(UniformFitness.DEFAULT_SCORE, uniformFitness0.score(ZERO));
+        assertEquals(UniformFitness.DEFAULT_SCORE, uniformFitness0.score(ONE));
+        assertEquals(UniformFitness.DEFAULT_SCORE, uniformFitness0.score(NEGATIVE_ONE));
+        assertEquals(UniformFitness.DEFAULT_SCORE, uniformFitness0.score(MIN_VALUE));
+        assertEquals(UniformFitness.DEFAULT_SCORE, uniformFitness0.score(MAX_VALUE));
 
         UniformFitness uniformFitness1 = new UniformFitness(1.0d);
         assertNotNull("uniformFitness1 not null", uniformFitness1);
-        assertEquals(1.0d, uniformFitness1.score(0.0d));
-        assertEquals(1.0d, uniformFitness1.score(1.0d));
-        assertEquals(1.0d, uniformFitness1.score(-1.0d));
-        assertEquals(1.0d, uniformFitness1.score(Double.MIN_VALUE));
-        assertEquals(1.0d, uniformFitness1.score(Double.MAX_VALUE));
+        assertEquals(1.0d, uniformFitness1.score(ZERO));
+        assertEquals(1.0d, uniformFitness1.score(ONE));
+        assertEquals(1.0d, uniformFitness1.score(NEGATIVE_ONE));
+        assertEquals(1.0d, uniformFitness1.score(MIN_VALUE));
+        assertEquals(1.0d, uniformFitness1.score(MAX_VALUE));
     }
 }

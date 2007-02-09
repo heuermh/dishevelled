@@ -31,11 +31,10 @@ import java.util.Random;
 
 import junit.framework.TestCase;
 
-import org.dishevelled.matrix.ObjectMatrix1D;
-import org.dishevelled.matrix.ObjectMatrix2D;
-
+// todo:  circular package dependency!
 import org.dishevelled.swarm.exit.EpochLimitExitStrategy;
 
+// todo:  circular package dependency!
 import org.dishevelled.swarm.fitness.RandomFitness;
 
 /**
@@ -217,10 +216,14 @@ public final class ParticleSwarmOptimizationAlgorithmTest
         ParticleSwarmOptimizationAlgorithmListener listener = new ParticleSwarmOptimizationAlgorithmAdapter();
         algorithm.addParticleSwarmOptimizationAlgorithmListener(listener);
 
-        ObjectMatrix2D<Double> position = algorithm.optimize(100, 10, exitStrategy, fitness);
-        assertNotNull("position not null", position);
-        assertEquals(100, position.rows());
-        assertEquals(10, position.columns());
+        ParticleSwarm swarm = algorithm.optimize(100, 10, exitStrategy, fitness);
+        assertNotNull("swarm not null");
+        assertEquals(100, swarm.getParticles());
+        assertEquals(10, swarm.getDimensions());
+        for (Particle particle : swarm)
+        {
+            assertNotNull("particle not null", particle);
+        }
 
         algorithm.removeParticleSwarmOptimizationAlgorithmListener(listener);
 

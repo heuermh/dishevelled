@@ -30,14 +30,6 @@ import java.beans.PropertyChangeListener;
 
 import javax.swing.event.EventListenerList;
 
-import org.dishevelled.functor.UnaryFunction;
-
-import org.dishevelled.matrix.ObjectMatrix1D;
-import org.dishevelled.matrix.ObjectMatrix2D;
-
-import org.dishevelled.matrix.impl.SparseObjectMatrix1D;
-import org.dishevelled.matrix.impl.SparseObjectMatrix2D;
-
 /**
  * Particle swarm optimization (PSO) algorithm function.
  *
@@ -64,8 +56,14 @@ public final class ParticleSwarmOptimizationAlgorithm
     /** Social weight. */
     private double socialWeight;
 
+    /** Minimum position. */
+    private double minimumPosition;
+
     /** Maximum position. */
     private double maximumPosition;
+
+    /** Minimum velocity. */
+    private double minimumVelocity;
 
     /** Maximum velocity. */
     private double maximumVelocity;
@@ -79,21 +77,17 @@ public final class ParticleSwarmOptimizationAlgorithm
     /** Default social weight. */
     public static final double DEFAULT_SOCIAL_WEIGHT = 0.2d;
 
+    /** Default minimum position. */
+    public static final double DEFAULT_MINIMUM_POSITION = 0.0d;
+
     /** Default maximum position. */
     public static final double DEFAULT_MAXIMUM_POSITION = 1.0d;
 
-    /** Default maximum velocity. */
-    public static final double DEFAULT_MAXIMUM_VELOCITY = Double.MAX_VALUE;
+    /** Default minimum velocity. */
+    public static final double DEFAULT_MINIMUM_VELOCITY = -0.5d;
 
-    /** Randomize function. */
-    private final UnaryFunction<Double, Double> randomizeFunction = new UnaryFunction<Double, Double>()
-            {
-                /** {@inheritDoc} */
-                public Double evaluate(final Double ignore)
-                {
-                    return Double.valueOf(random.nextDouble() * maximumPosition);
-                }
-            };
+    /** Default maximum velocity. */
+    public static final double DEFAULT_MAXIMUM_VELOCITY = 0.5d;
 
 
     /**
@@ -109,7 +103,9 @@ public final class ParticleSwarmOptimizationAlgorithm
         this.inertiaWeight = DEFAULT_INERTIA_WEIGHT;
         this.cognitiveWeight = DEFAULT_COGNITIVE_WEIGHT;
         this.socialWeight = DEFAULT_SOCIAL_WEIGHT;
+        this.minimumPosition = DEFAULT_MINIMUM_POSITION;
         this.maximumPosition = DEFAULT_MAXIMUM_POSITION;
+        this.minimumVelocity = DEFAULT_MINIMUM_VELOCITY;
         this.maximumVelocity = DEFAULT_MAXIMUM_VELOCITY;
     }
 
@@ -129,19 +125,11 @@ public final class ParticleSwarmOptimizationAlgorithm
      * @return 2D matrix of particle positions with <code>particles</code>
      *    rows and <code>dimensions</code> columns
      */
-    public ObjectMatrix2D<Double> optimize(final int particles,
-                                           final int dimensions,
-                                           final ExitStrategy exitStrategy,
-                                           final Fitness fitness)
+    public ParticleSwarm optimize(final int particles,
+                                  final int dimensions,
+                                  final ExitStrategy exitStrategy,
+                                  final Fitness fitness)
     {
-        if (particles < 1)
-        {
-            throw new IllegalArgumentException("particles must be >= 1");
-        }
-        if (dimensions < 1)
-        {
-            throw new IllegalArgumentException("dimensions must be >= 1");
-        }
         if (exitStrategy == null)
         {
             throw new IllegalArgumentException("exitStrategy must not be null");
@@ -150,25 +138,12 @@ public final class ParticleSwarmOptimizationAlgorithm
         {
             throw new IllegalArgumentException("fitness must not be null");
         }
+        ParticleSwarmImpl swarm = new ParticleSwarmImpl(particles, dimensions);
 
-        ObjectMatrix2D<Double> position = new SparseObjectMatrix2D<Double>(particles, dimensions);
-        ObjectMatrix2D<Double> velocity = new SparseObjectMatrix2D<Double>(particles, dimensions);
-        ObjectMatrix2D<Double> cognitiveMemory = new SparseObjectMatrix2D<Double>(particles, dimensions);
-        ObjectMatrix1D<Double> socialMemory = new SparseObjectMatrix1D<Double>(dimensions);
-
-        // initialize and randomize particles
-        position.assign(randomizeFunction);
-        velocity.assign(Double.valueOf(0.0d));
-        cognitiveMemory.assign(position);
-        socialMemory.assign(position.viewRow(0));
-
-        // increment velocities and positions of particles until termination conditions are met
         int epoch = 0;
-        // todo:  need to guard matrices with ObjectMatrixUtils.unmodifiableMatrix(...) or similar
-        while (!exitStrategy.evaluate(position, velocity, cognitiveMemory, socialMemory, epoch))
+        while (!exitStrategy.evaluate(swarm, epoch))
         {
-            fireExitFailed(position, velocity, cognitiveMemory, socialMemory, epoch);
-
+            fireExitFailed(swarm, epoch);
             for (int particle = 0; particle < particles; particle++)
             {
                 for (int dimension = 0; dimension < dimensions; dimension++)
@@ -179,13 +154,15 @@ public final class ParticleSwarmOptimizationAlgorithm
                     //  i               i       1   1    i   i        2   2    best   i
                     double r1 = random.nextDouble();
                     double r2 = random.nextDouble();
-                    double x = position.getQuick(particle, dimension);
-                    double v = velocity.getQuick(particle, dimension);
-                    double p = cognitiveMemory.getQuick(particle, dimension);
-                    double s = socialMemory.getQuick(dimension);
+                    double x = swarm.getPosition(particle, dimension);
+                    double v = swarm.getVelocity(particle, dimension);
+                    double p = swarm.getCognitiveMemory(particle, dimension);
+                    double s = swarm.getSocialMemory(dimension);
 
                     v = inertiaWeight * v + cognitiveWeight * r1 * (p - x) + socialWeight * r2 * (s - x);
-                    velocity.setQuick(particle, dimension, v);
+                    v = Math.max(v, minimumVelocity);
+                    v = Math.min(v, maximumVelocity);
+                    swarm.setVelocity(particle, dimension, v);
                     fireVelocityCalculated(particle, dimension, v);
 
                     // eq. 2
@@ -193,39 +170,33 @@ public final class ParticleSwarmOptimizationAlgorithm
                     // x (t + 1) = x (t) + v (t + 1)
                     //  i           i       i
                     x = x + v;
-                    position.setQuick(particle, dimension, x);
+                    x = Math.max(x, minimumPosition);
+                    x = Math.min(x, maximumPosition);
+                    swarm.setPosition(particle, dimension, x);
                     firePositionUpdated(particle, dimension, x);
+                }
+                double fx = fitness.score(swarm.getPosition(particle));
+                swarm.setFitness(particle, fx);
+                //fireFitnessCalculated(particle, dimension, x, fx);
 
-                    // todo:
-                    // - determine scope of what fitness functions need
-                    // - calculate fitness per dimension or per particle over all dimensions?
-                    double fp = fitness.score(p);
-                    double fs = fitness.score(s);
-                    double fx = fitness.score(x);
-                    fireFitnessCalculated(particle, dimension, x, fx);
+                double fp = fitness.score(swarm.getCognitiveMemory(particle));
+                double fs = fitness.score(swarm.getSocialMemory());
 
-                    if (fx > fp)
-                    {
-                        cognitiveMemory.setQuick(particle, dimension, x);
-                        fireCognitiveMemoryUpdated(particle, dimension, x);
-                    }
-                    if (fx > fs)
-                    {
-                        socialMemory.setQuick(dimension, x);
-                        fireSocialMemoryUpdated(particle, dimension, x);
-                    }
+                if (fx > fp)
+                {
+                    swarm.updateCognitiveMemory(particle);
+                    //fireCognitiveMemoryUpdated(particle, dimension, x);
+                }
+                if (fx > fs)
+                {
+                    swarm.updateSocialMemory(particle);
+                    //fireSocialMemoryUpdated(particle, dimension, x);
                 }
             }
-
             epoch++;
         }
-        fireExitSucceeded(position, velocity, cognitiveMemory, socialMemory, epoch);
-
-        velocity = null;
-        cognitiveMemory = null;
-        socialMemory = null;
-
-        return position;
+        fireExitSucceeded(swarm, epoch);
+        return swarm;
     }
 
     /**
@@ -338,6 +309,32 @@ public final class ParticleSwarmOptimizationAlgorithm
     }
 
     /**
+     * Return the minimum position for this particle swarm optimization algorithm.
+     * Defaults to <code>0.0d</code>.
+     *
+     * @see #DEFAULT_MINIMUM_POSITION
+     * @return the minimum position for this particle swarm optimization algorithm
+     */
+    public double getMinimumPosition()
+    {
+        return minimumPosition;
+    }
+
+    /**
+     * Set the minimum position for this particle swarm optimization algorithm to <code>minimumPosition</code>.
+     *
+     * <p>This is a bound property.</p>
+     *
+     * @param minimumPosition minimum position for this particle swarm optimization algorithm
+     */
+    public void setMinimumPosition(final double minimumPosition)
+    {
+        double oldMinimumPosition = this.minimumPosition;
+        this.minimumPosition = minimumPosition;
+        propertyChangeSupport.firePropertyChange("minimumPosition", oldMinimumPosition, this.minimumPosition);
+    }
+
+    /**
      * Return the maximum position for this particle swarm optimization algorithm.
      * Defaults to <code>1.0d</code>.
      *
@@ -361,6 +358,32 @@ public final class ParticleSwarmOptimizationAlgorithm
         double oldMaximumPosition = this.maximumPosition;
         this.maximumPosition = maximumPosition;
         propertyChangeSupport.firePropertyChange("maximumPosition", oldMaximumPosition, this.maximumPosition);
+    }
+
+    /**
+     * Return the minimum velocity for this particle swarm optimization algorithm.
+     * Defaults to <code>-0.5d</code>.
+     *
+     * @see #DEFAULT_MINIMUM_VELOCITY
+     * @return the minimum velocity for this particle swarm optimization algorithm
+     */
+    public double getMinimumVelocity()
+    {
+        return minimumVelocity;
+    }
+
+    /**
+     * Set the minimum velocity for this particle swarm optimization algorithm to <code>minimumVelocity</code>.
+     *
+     * <p>This is a bound property.</p>
+     *
+     * @param minimumVelocity maximum velocity for this particle swarm optimization algorithm
+     */
+    public void setMinimumVelocity(final double minimumVelocity)
+    {
+        double oldMinimumVelocity = this.minimumVelocity;
+        this.minimumVelocity = minimumVelocity;
+        propertyChangeSupport.firePropertyChange("minimumVelocity", oldMinimumVelocity, this.minimumVelocity);
     }
 
     /**
@@ -539,17 +562,10 @@ public final class ParticleSwarmOptimizationAlgorithm
     /**
      * Fire an exit failed event to all registered listeners.
      *
-     * @param position particle position
-     * @param velocity particle velocity
-     * @param cognitiveMemory cognitive or individual memory
-     * @param socialMemory social or swarm memory
+     * @param swarm particle swarm, must not be null
      * @param epoch epoch
      */
-    private void fireExitFailed(final ObjectMatrix2D<Double> position,
-                                final ObjectMatrix2D<Double> velocity,
-                                final ObjectMatrix2D<Double> cognitiveMemory,
-                                final ObjectMatrix1D<Double> socialMemory,
-                                final int epoch)
+    private void fireExitFailed(final ParticleSwarm swarm, final int epoch)
     {
         Object[] listeners = listenerList.getListenerList();
         ParticleSwarmOptimizationAlgorithmEvent e = null;
@@ -560,12 +576,7 @@ public final class ParticleSwarmOptimizationAlgorithm
             {
                 if (e == null)
                 {
-                    e = new ParticleSwarmOptimizationAlgorithmEvent(this,
-                                                                    position,
-                                                                    velocity,
-                                                                    cognitiveMemory,
-                                                                    socialMemory,
-                                                                    epoch);
+                    e = new ParticleSwarmOptimizationAlgorithmEvent(this, swarm, epoch);
                 }
                 ((ParticleSwarmOptimizationAlgorithmListener) listeners[i + 1]).exitFailed(e);
             }
@@ -575,17 +586,10 @@ public final class ParticleSwarmOptimizationAlgorithm
     /**
      * Fire an exit succeeded event to all registered listeners.
      *
-     * @param position particle position
-     * @param velocity particle velocity
-     * @param cognitiveMemory cognitive or individual memory
-     * @param socialMemory social or swarm memory
+     * @param swarm particle swarm, must not be null
      * @param epoch epoch
      */
-    private void fireExitSucceeded(final ObjectMatrix2D<Double> position,
-                                   final ObjectMatrix2D<Double> velocity,
-                                   final ObjectMatrix2D<Double> cognitiveMemory,
-                                   final ObjectMatrix1D<Double> socialMemory,
-                                   final int epoch)
+    private void fireExitSucceeded(final ParticleSwarm swarm, final int epoch)
     {
         Object[] listeners = listenerList.getListenerList();
         ParticleSwarmOptimizationAlgorithmEvent e = null;
@@ -596,12 +600,7 @@ public final class ParticleSwarmOptimizationAlgorithm
             {
                 if (e == null)
                 {
-                    e = new ParticleSwarmOptimizationAlgorithmEvent(this,
-                                                                    position,
-                                                                    velocity,
-                                                                    cognitiveMemory,
-                                                                    socialMemory,
-                                                                    epoch);
+                    e = new ParticleSwarmOptimizationAlgorithmEvent(this, swarm, epoch);
                 }
                 ((ParticleSwarmOptimizationAlgorithmListener) listeners[i + 1]).exitSucceeded(e);
             }

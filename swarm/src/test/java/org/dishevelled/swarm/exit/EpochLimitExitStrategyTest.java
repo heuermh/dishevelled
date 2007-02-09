@@ -23,14 +23,10 @@
 */
 package org.dishevelled.swarm.exit;
 
-import org.dishevelled.matrix.ObjectMatrix1D;
-import org.dishevelled.matrix.ObjectMatrix2D;
-
-import org.dishevelled.matrix.impl.SparseObjectMatrix1D;
-import org.dishevelled.matrix.impl.SparseObjectMatrix2D;
-
 import org.dishevelled.swarm.AbstractExitStrategyTest;
 import org.dishevelled.swarm.ExitStrategy;
+import org.dishevelled.swarm.ParticleSwarm;
+import org.dishevelled.swarm.TestParticleSwarm;
 
 /**
  * Unit test for EpochLimitExitStrategy.
@@ -76,33 +72,30 @@ public final class EpochLimitExitStrategyTest
 
     public void testEpochLimitExitStrategy()
     {
-        ObjectMatrix2D<Double> position = new SparseObjectMatrix2D<Double>(0, 0);
-        ObjectMatrix2D<Double> velocity = new SparseObjectMatrix2D<Double>(0, 0);
-        ObjectMatrix2D<Double> cognitiveMemory = new SparseObjectMatrix2D<Double>(0, 0);
-        ObjectMatrix1D<Double> socialMemory = new SparseObjectMatrix1D<Double>(0);
+        ParticleSwarm swarm = new TestParticleSwarm();
 
         EpochLimitExitStrategy epochLimitExitStrategy0 = new EpochLimitExitStrategy(0);
-        assertTrue(epochLimitExitStrategy0.evaluate(position, velocity, cognitiveMemory, socialMemory, 0));
-        assertTrue(epochLimitExitStrategy0.evaluate(position, velocity, cognitiveMemory, socialMemory, 1));
-        assertTrue(epochLimitExitStrategy0.evaluate(position, velocity, cognitiveMemory, socialMemory, Integer.MAX_VALUE));
+        assertTrue(epochLimitExitStrategy0.evaluate(swarm, 0));
+        assertTrue(epochLimitExitStrategy0.evaluate(swarm, 1));
+        assertTrue(epochLimitExitStrategy0.evaluate(swarm, Integer.MAX_VALUE));
 
         EpochLimitExitStrategy epochLimitExitStrategy1 = new EpochLimitExitStrategy(1);
-        assertFalse(epochLimitExitStrategy1.evaluate(position, velocity, cognitiveMemory, socialMemory, 0));
-        assertTrue(epochLimitExitStrategy1.evaluate(position, velocity, cognitiveMemory, socialMemory, 1));
-        assertTrue(epochLimitExitStrategy1.evaluate(position, velocity, cognitiveMemory, socialMemory, Integer.MAX_VALUE));
+        assertFalse(epochLimitExitStrategy1.evaluate(swarm, 0));
+        assertTrue(epochLimitExitStrategy1.evaluate(swarm, 1));
+        assertTrue(epochLimitExitStrategy1.evaluate(swarm, Integer.MAX_VALUE));
 
         EpochLimitExitStrategy epochLimitExitStrategy2 = new EpochLimitExitStrategy(100);
-        assertFalse(epochLimitExitStrategy2.evaluate(position, velocity, cognitiveMemory, socialMemory, 0));
-        assertFalse(epochLimitExitStrategy2.evaluate(position, velocity, cognitiveMemory, socialMemory, 1));
-        assertFalse(epochLimitExitStrategy2.evaluate(position, velocity, cognitiveMemory, socialMemory, 99));
-        assertTrue(epochLimitExitStrategy2.evaluate(position, velocity, cognitiveMemory, socialMemory, 100));
-        assertTrue(epochLimitExitStrategy2.evaluate(position, velocity, cognitiveMemory, socialMemory, Integer.MAX_VALUE));
+        assertFalse(epochLimitExitStrategy2.evaluate(swarm, 0));
+        assertFalse(epochLimitExitStrategy2.evaluate(swarm, 1));
+        assertFalse(epochLimitExitStrategy2.evaluate(swarm, 99));
+        assertTrue(epochLimitExitStrategy2.evaluate(swarm, 100));
+        assertTrue(epochLimitExitStrategy2.evaluate(swarm, Integer.MAX_VALUE));
 
         EpochLimitExitStrategy epochLimitExitStrategy3 = new EpochLimitExitStrategy(Integer.MAX_VALUE);
-        assertFalse(epochLimitExitStrategy3.evaluate(position, velocity, cognitiveMemory, socialMemory, 0));
-        assertFalse(epochLimitExitStrategy3.evaluate(position, velocity, cognitiveMemory, socialMemory, 1));
-        assertFalse(epochLimitExitStrategy3.evaluate(position, velocity, cognitiveMemory, socialMemory, 99));
-        assertFalse(epochLimitExitStrategy3.evaluate(position, velocity, cognitiveMemory, socialMemory, 100));
-        assertTrue(epochLimitExitStrategy3.evaluate(position, velocity, cognitiveMemory, socialMemory, Integer.MAX_VALUE));
+        assertFalse(epochLimitExitStrategy3.evaluate(swarm, 0));
+        assertFalse(epochLimitExitStrategy3.evaluate(swarm, 1));
+        assertFalse(epochLimitExitStrategy3.evaluate(swarm, 99));
+        assertFalse(epochLimitExitStrategy3.evaluate(swarm, 100));
+        assertTrue(epochLimitExitStrategy3.evaluate(swarm, Integer.MAX_VALUE));
     }
 }
