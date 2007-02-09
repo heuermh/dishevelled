@@ -49,8 +49,8 @@
     </license>
   </licenses>
   <scm>
-    <connection>scm|svn|http://svn.sourceforge.net/svnroot/dishevelled/trunk/functor</connection>
-    <developerConnection>scm|svn|https://svn.sourceforge.net/svnroot/dishevelled/trunk/functor</developerConnection>
+    <connection>scm|svn|http://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/functor</connection>
+    <developerConnection>scm|svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/functor</developerConnection>
     <url>http://svn.sourceforge.net/viewcvs.cgi/dishevelled/trunk/functor</url>
   </scm>
   <organization>
