@@ -21,32 +21,47 @@
     > http://www.opensource.org/licenses/lgpl-license.php
 
 */
-package org.dishevelled.swarm;
+package org.dishevelled.swarm.exit;
 
-import junit.framework.TestCase;
+import org.dishevelled.swarm.ExitStrategy;
+import org.dishevelled.swarm.Particle;
+import org.dishevelled.swarm.ParticleSwarm;
 
 /**
- * Abstract unit test for implementations of ExitStrategy.
+ * Fitness threshold exit strategy.  Exits as soon as at least one particle has
+ * a fitness score above a set fitness threshold.
  *
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public abstract class AbstractExitStrategyTest
-    extends TestCase
+public final class FitnessThresholdExitStrategy
+    implements ExitStrategy
 {
+    /** Fitness threshold for this fitness threshold exit strategy. */
+    private final double fitnessThreshold;
+
 
     /**
-     * Create and return a new instance of an implemenation of ExitStrategy to test.
+     * Create a new fitness threshold exit strategy with the specified fitness threshold.
      *
-     * @return a new instance of an implementation of ExitStrategy to test
+     * @param fitnessThreshold fitness threshold for this fitness threshold exit strategy
      */
-    protected abstract ExitStrategy createExitStrategy();
-
-    public void testExitStrategy()
+    public FitnessThresholdExitStrategy(final double fitnessThreshold)
     {
-        ParticleSwarm swarm = new TestParticleSwarm();
-        int epoch = 0;
-        ExitStrategy exitStrategy = createExitStrategy();
-        boolean evaluation = exitStrategy.evaluate(swarm, epoch);
+        this.fitnessThreshold = fitnessThreshold;
+    }
+
+
+    /** {@inheritDoc} */
+    public boolean evaluate(final ParticleSwarm swarm, final int epoch)
+    {
+        for (Particle particle : swarm)
+        {
+            if (particle.getFitness() > fitnessThreshold)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 }

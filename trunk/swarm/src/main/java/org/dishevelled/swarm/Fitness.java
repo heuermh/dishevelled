@@ -33,11 +33,12 @@ public interface Fitness
 {
 
     /**
-     * Return a measure of fitness for the specified position.
+     * Return a measure of fitness for the specified position.  The specified array
+     * of doubles will not be null.  The length of the array will be equal to the
+     * number of dimensions for the position.
      *
      * @param position position
      * @return a measure of fitness for the specified position
      */
-    // todo:  define additional parameters as necessary
-    double score(double position);
+    double score(double[] position);
 }

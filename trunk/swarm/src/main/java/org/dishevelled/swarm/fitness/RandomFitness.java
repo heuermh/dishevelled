@@ -65,7 +65,7 @@ public final class RandomFitness
 
 
     /** {@inheritDoc} */
-    public double score(final double position)
+    public double score(final double[] position)
     {
         return random.nextDouble();
     }

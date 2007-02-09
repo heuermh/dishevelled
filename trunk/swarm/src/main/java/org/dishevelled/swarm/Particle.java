@@ -24,38 +24,49 @@
 package org.dishevelled.swarm;
 
 /**
- * Particle swarm.
+ * Particle in a particle swarm.
  *
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public interface ParticleSwarm
-    extends Iterable<Particle>
+public interface Particle
 {
 
     /**
-     * Return the number of particles in this particle swarm.
+     * Return the number of dimensions for this particle.
      *
-     * @return the number of particles in this particle swarm
-     */
-    int getParticles();
-
-    /**
-     * Return the number of dimensions for this particle swarm.
-     *
-     * @return the number of dimensions for this particle swarm
+     * @return the number of dimensions for this particle
      */
     int getDimensions();
 
     /**
-     * Return a view of the social memory matrix for this particle swarm.  The length
-     * of the array will be equal to the number of dimensions for this particle
-     * swarm.
+     * Return the fitness for this particle.
      *
-     * @return a view of the social memory matrix for this particle swarm
+     * @return the fitness for this particle
      */
-    double[] getSocialMemory();
+    double getFitness();
 
-    // from Iterable:
-    //    Iterator<Particle> iterator();
+    /**
+     * Return a view of the position matrix for this particle.  The length of
+     * the array will be equal to the number of dimensions for this particle.
+     *
+     * @return a view of the position matrix for this particle
+     */
+    double[] getPosition();
+
+    /**
+     * Return a view of the velocity matrix for this particle.  The length of
+     * the array will be equal to the number of dimensions for this particle.
+     *
+     * @return a view of the velocity matrix for this particle
+     */
+    double[] getVelocity();
+
+    /**
+     * Return a view of the cognitive memory matrix for this particle.  The length
+     * of the array will be equal to the number of dimensions for this particle.
+     *
+     * @return a view of the cognitive memory matrix for this particle
+     */
+    double[] getCognitiveMemory();
 }

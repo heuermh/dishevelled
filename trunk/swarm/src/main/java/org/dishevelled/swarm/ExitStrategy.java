@@ -23,9 +23,6 @@
 */
 package org.dishevelled.swarm;
 
-import org.dishevelled.matrix.ObjectMatrix1D;
-import org.dishevelled.matrix.ObjectMatrix2D;
-
 /**
  * An exit strategy function for a particle swarm optimization algorithm.
  *
@@ -37,19 +34,12 @@ public interface ExitStrategy
 
     /**
      * Return <code>true</code> if the specified particle swarm has met the
-     * criteria of this exit strategy function.
+     * criteria of this exit strategy function.  The particle swarm will not be null.
      *
-     * @param position particle position
-     * @param velocity particle velocity
-     * @param cognitiveMemory cognitive or individual memory
-     * @param socialMemory social or swarm memory
+     * @param swarm particle swarm
      * @param epoch epoch
      * @return true if the specified particle swarm has met the criteria of
      *    this exit strategy function
      */
-    boolean evaluate(ObjectMatrix2D<Double> position,
-                     ObjectMatrix2D<Double> velocity,
-                     ObjectMatrix2D<Double> cognitiveMemory,
-                     ObjectMatrix1D<Double> socialMemory,
-                     int epoch);
+    boolean evaluate(ParticleSwarm swarm, int epoch);
 }

@@ -25,9 +25,6 @@ package org.dishevelled.swarm;
 
 import java.util.EventObject;
 
-import org.dishevelled.matrix.ObjectMatrix1D;
-import org.dishevelled.matrix.ObjectMatrix2D;
-
 /**
  * An event representing progress in a particle swarm optimization
  * algorithm function.
@@ -38,17 +35,8 @@ import org.dishevelled.matrix.ObjectMatrix2D;
 public final class ParticleSwarmOptimizationAlgorithmEvent
     extends EventObject
 {
-    /** Particle position. */
-    private final ObjectMatrix2D<Double> position;
-
-    /** Particle velocity. */
-    private final ObjectMatrix2D<Double> velocity;
-
-    /** Cognitive or individual memory. */
-    private final ObjectMatrix2D<Double> cognitiveMemory;
-
-    /** Social or swarm memory. */
-    private final ObjectMatrix1D<Double> socialMemory;
+    /** Particle swarm. */
+    private ParticleSwarm swarm;
 
     /** Epoch. */
     private final int epoch;
@@ -86,25 +74,20 @@ public final class ParticleSwarmOptimizationAlgorithmEvent
      * specified parameters.
      *
      * @param source source of this event, must not be null
-     * @param position particle position
-     * @param velocity particle velocity
-     * @param cognitiveMemory cognitive or individual memory
-     * @param socialMemory social or swarm memory
+     * @param swarm particle swarm, must not be null
      * @param epoch epoch
      */
     ParticleSwarmOptimizationAlgorithmEvent(final ParticleSwarmOptimizationAlgorithm source,
-                                            final ObjectMatrix2D<Double> position,
-                                            final ObjectMatrix2D<Double> velocity,
-                                            final ObjectMatrix2D<Double> cognitiveMemory,
-                                            final ObjectMatrix1D<Double> socialMemory,
+                                            final ParticleSwarm swarm,
                                             final int epoch)
     {
         super(source);
 
-        this.position = position;
-        this.velocity = velocity;
-        this.cognitiveMemory = cognitiveMemory;
-        this.socialMemory = socialMemory;
+        if (swarm == null)
+        {
+            throw new IllegalArgumentException("swarm must not be null");
+        }
+        this.swarm = swarm;
         this.epoch = epoch;
         this.particle = DEFAULT_PARTICLE;
         this.dimension = DEFAULT_DIMENSION;
@@ -128,10 +111,7 @@ public final class ParticleSwarmOptimizationAlgorithmEvent
     {
         super(source);
 
-        this.position = null;
-        this.velocity = null;
-        this.cognitiveMemory = null;
-        this.socialMemory = null;
+        this.swarm = null;
         this.epoch = DEFAULT_EPOCH;
         this.particle = particle;
         this.dimension = dimension;
@@ -157,10 +137,7 @@ public final class ParticleSwarmOptimizationAlgorithmEvent
     {
         super(source);
 
-        this.position = null;
-        this.velocity = null;
-        this.cognitiveMemory = null;
-        this.socialMemory = null;
+        this.swarm = null;
         this.epoch = DEFAULT_EPOCH;
         this.particle = particle;
         this.dimension = dimension;
@@ -180,47 +157,13 @@ public final class ParticleSwarmOptimizationAlgorithmEvent
     }
 
     /**
-     * Return the 2D particle position matrix for this event, if any.  The matrix may be null.
+     * Return the particle swarm for this event, if any.  The particle swarm may be null.
      *
-     * @return the 2D particle position matrix for this event, if any.
+     * @return the particle swarm for this event, if any
      */
-    public ObjectMatrix2D<Double> getPosition()
+    public ParticleSwarm getParticleSwarm()
     {
-        // return ObjectMatrixUtils.unmodifiableObjectMatrix2D(position);
-        return position;
-    }
-
-    /**
-     * Return the 2D particle velocity matrix for this event, if any.  The matrix may be null.
-     *
-     * @return the 2D particle velocity matrix for this event, if any.
-     */
-    public ObjectMatrix2D<Double> getVelocity()
-    {
-        // return ObjectMatrixUtils.unmodifiableObjectMatrix2D(velocity);
-        return velocity;
-    }
-
-    /**
-     * Return the 2D cognitive memory matrix for this event, if any.  The matrix may be null.
-     *
-     * @return the 2D cognitive memory matrix for this event, if any.
-     */
-    public ObjectMatrix2D<Double> getCognitiveMemory()
-    {
-        // return ObjectMatrixUtils.unmodifiableObjectMatrix2D(cognitiveMemory);
-        return cognitiveMemory;
-    }
-
-    /**
-     * Return the 1D social memory matrix for this event, if any.  The matrix may be null.
-     *
-     * @return the 1D social memory matrix for this event, if any.
-     */
-    public ObjectMatrix1D<Double> getSocialMemory()
-    {
-        // return ObjectMatrixUtils.unmodifiableObjectMatrix1D(socialMemory);
-        return socialMemory;
+        return swarm;
     }
 
     /**
