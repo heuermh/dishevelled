@@ -49,8 +49,8 @@
     </license>
   </licenses>
   <scm>
-    <connection>scm|svn|http://svn.sourceforge.net/svnroot/dishevelled/trunk/timer</connection>
-    <developerConnection>scm|svn|https://svn.sourceforge.net/svnroot/dishevelled/trunk/timer</developerConnection>
+    <connection>scm|svn|http://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/timer</connection>
+    <developerConnection>scm|svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/timer</developerConnection>
     <url>http://svn.sourceforge.net/viewcvs.cgi/dishevelled/trunk/timer</url>
   </scm>
   <organization>

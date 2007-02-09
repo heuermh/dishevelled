@@ -49,8 +49,8 @@
     </license>
   </licenses>
   <scm>
-    <connection>scm|svn|http://svn.sourceforge.net/svnroot/dishevelled/trunk/codegen</connection>
-    <developerConnection>scm|svn|https://svn.sourceforge.net/svnroot/dishevelled/trunk/codegen</developerConnection>
+    <connection>scm|svn|http://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/codegen</connection>
+    <developerConnection>scm|svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/codegen</developerConnection>
     <url>http://svn.sourceforge.net/viewcvs.cgi/dishevelled/trunk/codegen</url>
   </scm>
   <organization>
