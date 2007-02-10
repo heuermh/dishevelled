@@ -94,7 +94,7 @@ final class ParticleSwarmImpl
         }
         this.particles = particles;
         this.dimensions = dimensions;
-        swarm = new DenseDoubleMatrix3D(particles, dimensions, SLICES);
+        swarm = new DenseDoubleMatrix3D(SLICES, particles, dimensions);
         fitness = new DenseDoubleMatrix1D(particles);
         socialMemory = new DenseDoubleMatrix1D(dimensions);
         array = new double[dimensions];
@@ -134,7 +134,7 @@ final class ParticleSwarmImpl
      */
     double getPosition(final int particle, final int dimension)
     {
-        return swarm.getQuick(particle, dimension, POSITION_SLICE);
+        return swarm.getQuick(POSITION_SLICE, particle, dimension);
     }
 
     /**
@@ -146,7 +146,7 @@ final class ParticleSwarmImpl
      */
     void setPosition(final int particle, final int dimension, final double position)
     {
-        swarm.setQuick(particle, dimension, POSITION_SLICE, position);
+        swarm.setQuick(POSITION_SLICE, particle, dimension, position);
     }
 
     /**
@@ -170,7 +170,7 @@ final class ParticleSwarmImpl
      */
     double getVelocity(final int particle, final int dimension)
     {
-        return swarm.getQuick(particle, dimension, VELOCITY_SLICE);
+        return swarm.getQuick(VELOCITY_SLICE, particle, dimension);
     }
 
     /**
@@ -182,7 +182,7 @@ final class ParticleSwarmImpl
      */
     void setVelocity(final int particle, final int dimension, final double velocity)
     {
-        swarm.setQuick(particle, dimension, VELOCITY_SLICE, velocity);
+        swarm.setQuick(VELOCITY_SLICE, particle, dimension, velocity);
     }
 
     /**
@@ -206,7 +206,7 @@ final class ParticleSwarmImpl
      */
     double getCognitiveMemory(final int particle, final int dimension)
     {
-        return swarm.getQuick(particle, dimension, COGNITIVE_MEMORY_SLICE);
+        return swarm.getQuick(COGNITIVE_MEMORY_SLICE, particle, dimension);
     }
 
     /** {@inheritDoc} */
@@ -258,8 +258,8 @@ final class ParticleSwarmImpl
     {
         for (int dimension = 0; dimension < dimensions; dimension++)
         {
-            double value = swarm.getQuick(particle, dimension, POSITION_SLICE);
-            swarm.setQuick(particle, dimension, COGNITIVE_MEMORY_SLICE, value);
+            double value = swarm.getQuick(POSITION_SLICE, particle, dimension);
+            swarm.setQuick(COGNITIVE_MEMORY_SLICE, particle, dimension, value);
         }
     }
 
@@ -273,7 +273,7 @@ final class ParticleSwarmImpl
     {
         for (int dimension = 0; dimension < dimensions; dimension++)
         {
-            double value = swarm.getQuick(particle, dimension, POSITION_SLICE);
+            double value = swarm.getQuick(POSITION_SLICE, particle, dimension);
             socialMemory.setQuick(dimension, value);
         }
     }
