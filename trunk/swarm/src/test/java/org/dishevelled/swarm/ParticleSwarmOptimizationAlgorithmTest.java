@@ -59,7 +59,9 @@ public final class ParticleSwarmOptimizationAlgorithmTest
         assertNotNull("random not null", algorithm.getRandom());
         assertEquals(ParticleSwarmOptimizationAlgorithm.DEFAULT_COGNITIVE_WEIGHT, algorithm.getCognitiveWeight());
         assertEquals(ParticleSwarmOptimizationAlgorithm.DEFAULT_INERTIA_WEIGHT, algorithm.getInertiaWeight());
+        assertEquals(ParticleSwarmOptimizationAlgorithm.DEFAULT_MINIMUM_POSITION, algorithm.getMinimumPosition());
         assertEquals(ParticleSwarmOptimizationAlgorithm.DEFAULT_MAXIMUM_POSITION, algorithm.getMaximumPosition());
+        assertEquals(ParticleSwarmOptimizationAlgorithm.DEFAULT_MINIMUM_VELOCITY, algorithm.getMinimumVelocity());
         assertEquals(ParticleSwarmOptimizationAlgorithm.DEFAULT_MAXIMUM_VELOCITY, algorithm.getMaximumVelocity());
         assertEquals(ParticleSwarmOptimizationAlgorithm.DEFAULT_SOCIAL_WEIGHT, algorithm.getSocialWeight());
         assertEquals(0, algorithm.getPropertyChangeListenerCount());
@@ -67,7 +69,9 @@ public final class ParticleSwarmOptimizationAlgorithmTest
         assertEquals(0, algorithm.getPropertyChangeListenerCount("random"));
         assertEquals(0, algorithm.getPropertyChangeListenerCount("cognitiveWeight"));
         assertEquals(0, algorithm.getPropertyChangeListenerCount("inertiaWeight"));
+        assertEquals(0, algorithm.getPropertyChangeListenerCount("minimumPosition"));
         assertEquals(0, algorithm.getPropertyChangeListenerCount("maximumPosition"));
+        assertEquals(0, algorithm.getPropertyChangeListenerCount("minimumVelocity"));
         assertEquals(0, algorithm.getPropertyChangeListenerCount("maximumVelocity"));
         assertEquals(0, algorithm.getPropertyChangeListenerCount("socialWeight"));
         assertNotNull(algorithm.getPropertyChangeListeners());
@@ -75,7 +79,9 @@ public final class ParticleSwarmOptimizationAlgorithmTest
         assertNotNull(algorithm.getPropertyChangeListeners("random"));
         assertNotNull(algorithm.getPropertyChangeListeners("cognitiveWeight"));
         assertNotNull(algorithm.getPropertyChangeListeners("inertiaWeight"));
+        assertNotNull(algorithm.getPropertyChangeListeners("minimumPosition"));
         assertNotNull(algorithm.getPropertyChangeListeners("maximumPosition"));
+        assertNotNull(algorithm.getPropertyChangeListeners("minimumVelocity"));
         assertNotNull(algorithm.getPropertyChangeListeners("maximumVelocity"));
         assertNotNull(algorithm.getPropertyChangeListeners("socialWeight"));
         assertEquals(0, algorithm.getPropertyChangeListeners().length);
@@ -83,7 +89,9 @@ public final class ParticleSwarmOptimizationAlgorithmTest
         assertEquals(0, algorithm.getPropertyChangeListeners("random").length);
         assertEquals(0, algorithm.getPropertyChangeListeners("cognitiveWeight").length);
         assertEquals(0, algorithm.getPropertyChangeListeners("inertiaWeight").length);
+        assertEquals(0, algorithm.getPropertyChangeListeners("minimumPosition").length);
         assertEquals(0, algorithm.getPropertyChangeListeners("maximumPosition").length);
+        assertEquals(0, algorithm.getPropertyChangeListeners("minimumVelocity").length);
         assertEquals(0, algorithm.getPropertyChangeListeners("maximumVelocity").length);
         assertEquals(0, algorithm.getPropertyChangeListeners("socialWeight").length);
     }
@@ -123,12 +131,28 @@ public final class ParticleSwarmOptimizationAlgorithmTest
         assertEquals(1.0d, algorithm.getInertiaWeight());
     }
 
+    public void testMinimumPosition()
+    {
+        ParticleSwarmOptimizationAlgorithm algorithm = new ParticleSwarmOptimizationAlgorithm();
+        assertEquals(ParticleSwarmOptimizationAlgorithm.DEFAULT_MINIMUM_POSITION, algorithm.getMinimumPosition());
+        algorithm.setMinimumPosition(-1.0d);
+        assertEquals(-1.0d, algorithm.getMinimumPosition());
+    }
+
     public void testMaximumPosition()
     {
         ParticleSwarmOptimizationAlgorithm algorithm = new ParticleSwarmOptimizationAlgorithm();
         assertEquals(ParticleSwarmOptimizationAlgorithm.DEFAULT_MAXIMUM_POSITION, algorithm.getMaximumPosition());
         algorithm.setMaximumPosition(1.0d);
         assertEquals(1.0d, algorithm.getMaximumPosition());
+    }
+
+    public void testMinimumVelocity()
+    {
+        ParticleSwarmOptimizationAlgorithm algorithm = new ParticleSwarmOptimizationAlgorithm();
+        assertEquals(ParticleSwarmOptimizationAlgorithm.DEFAULT_MINIMUM_VELOCITY, algorithm.getMinimumVelocity());
+        algorithm.setMinimumVelocity(-1.0d);
+        assertEquals(-1.0d, algorithm.getMinimumVelocity());
     }
 
     public void testMaximumVelocity()
@@ -223,6 +247,13 @@ public final class ParticleSwarmOptimizationAlgorithmTest
         for (Particle particle : swarm)
         {
             assertNotNull("particle not null", particle);
+            assertEquals(10, particle.getDimensions());
+            // todo:
+            //    what might reasonable assertions here be?
+            particle.getFitness();
+            particle.getPosition();
+            particle.getVelocity();
+            particle.getCognitiveMemory();
         }
 
         algorithm.removeParticleSwarmOptimizationAlgorithmListener(listener);
