@@ -140,6 +140,16 @@ public final class ParticleSwarmOptimizationAlgorithm
         }
         ParticleSwarmImpl swarm = new ParticleSwarmImpl(particles, dimensions);
 
+        double range = Math.abs(maximumPosition - minimumPosition);
+        for (int particle = 0; particle < particles; particle++)
+        {
+            for (int dimension = 0; dimension < dimensions; dimension++)
+            {
+                double r = (random.nextDouble() * range) + minimumPosition;
+                swarm.setPosition(particle, dimension, r);
+            }
+        }
+
         int epoch = 0;
         while (!exitStrategy.evaluate(swarm, epoch))
         {

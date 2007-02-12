@@ -25,6 +25,7 @@ package org.dishevelled.swarm.exit;
 
 import org.dishevelled.swarm.AbstractExitStrategyTest;
 import org.dishevelled.swarm.ExitStrategy;
+import org.dishevelled.swarm.Particle;
 import org.dishevelled.swarm.ParticleSwarm;
 import org.dishevelled.swarm.TestParticleSwarm;
 
@@ -57,7 +58,23 @@ public final class FitnessThresholdExitStrategyTest
     {
         ParticleSwarm swarm = new TestParticleSwarm();
 
-        FitnessThresholdExitStrategy fitnessThresholdExitStrategy0 = new FitnessThresholdExitStrategy(0.0d);
-        assertFalse(fitnessThresholdExitStrategy0.evaluate(swarm, 0));
+        double maxFitness = Double.MIN_VALUE;
+        for (Particle p : swarm)
+        {
+            double fitness = p.getFitness();
+            if (fitness > maxFitness)
+            {
+                maxFitness = fitness;
+            }
+        }
+
+        FitnessThresholdExitStrategy fitnessThresholdExitStrategy0 = new FitnessThresholdExitStrategy(maxFitness - 1.0d);
+        assertTrue(fitnessThresholdExitStrategy0.evaluate(swarm, 0));
+
+        FitnessThresholdExitStrategy fitnessThresholdExitStrategy1 = new FitnessThresholdExitStrategy(maxFitness);
+        assertFalse(fitnessThresholdExitStrategy1.evaluate(swarm, 0));
+
+        FitnessThresholdExitStrategy fitnessThresholdExitStrategy2 = new FitnessThresholdExitStrategy(maxFitness + 1.0d);
+        assertFalse(fitnessThresholdExitStrategy2.evaluate(swarm, 0));
     }
 }
