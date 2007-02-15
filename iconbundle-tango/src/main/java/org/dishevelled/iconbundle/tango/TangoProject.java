@@ -292,6 +292,18 @@ public final class TangoProject
     /** Icon bundle for <code>actions/media-skip-forward</code>. */
     public static final IconBundle MEDIA_SKIP_FORWARD = new CachingIconBundle(new TangoProjectIconBundle("actions", "media-skip-forward"));
 
+    /** Icon bundle for <code>actions/object-flip-horizontal</code>. */
+    //public static final IconBundle OBJECT_FLIP_HORIZONTAL = new CachingIconBundle(new TangoProjectIconBundle("actions", "object-flip-horizontal"));
+
+    /** Icon bundle for <code>actions/object-flip-vertical</code>. */
+    //public static final IconBundle OBJECT_FLIP_VERTICAL = new CachingIconBundle(new TangoProjectIconBundle("actions", "object-flip-vertical"));
+
+    /** Icon bundle for <code>actions/object-rotate-left</code>. */
+    //public static final IconBundle OBJECT_ROTATE_LEFT = new CachingIconBundle(new TangoProjectIconBundle("actions", "object-rotate-left"));
+
+    /** Icon bundle for <code>actions/object-rotate-right</code>. */
+    //public static final IconBundle OBJECT_ROTATE_RIGHT = new CachingIconBundle(new TangoProjectIconBundle("actions", "object-rotate-right"));
+
     /** Icon bundle for <code>actions/system-lock-screen</code>. */
     public static final IconBundle SYSTEM_LOCK_SCREEN = new CachingIconBundle(new TangoProjectIconBundle("actions", "system-lock-screen"));
 
@@ -308,10 +320,13 @@ public final class TangoProject
     //public static final IconBundle TOOLS_CHECK_SPELLING = new CachingIconBundle(new TangoProjectIconBundle("actions", "tools-check-spelling"));
 
     /** Icon bundle for <code>actions/view-fullscreen</code>. */
-    //public static final IconBundle VIEW_FULLSCREEN = new CachingIconBundle(new TangoProjectIconBundle("actions", "view-fullscreen"));
+    public static final IconBundle VIEW_FULLSCREEN = new CachingIconBundle(new TangoProjectIconBundle("actions", "view-fullscreen"));
 
     /** Icon bundle for <code>actions/view-refresh</code>. */
     public static final IconBundle VIEW_REFRESH = new CachingIconBundle(new TangoProjectIconBundle("actions", "view-refresh"));
+
+    /** Icon bundle for <code>actions/view-restore</code>. */
+    //public static final IconBundle VIEW_RESTORE = new CachingIconBundle(new TangoProjectIconBundle("actions", "view-restore"));
 
     /** Icon bundle for <code>actions/view-sort-ascending</code>. */
     //public static final IconBundle VIEW_SORT_ASCENDING = new CachingIconBundle(new TangoProjectIconBundle("actions", "view-sort-ascending"));
@@ -385,6 +400,9 @@ public final class TangoProject
     /** Icon bundle for <code>apps/system-software-update</code>. */
     //public static final IconBundle SYSTEM_SOFTWARE_UPDATE = new CachingIconBundle(new TangoProjectIconBundle("apps", "system-software-update"));
 
+    /** Icon bundle for <code>apps/utilities-system-monitor</code>. */
+    public static final IconBundle UTILITIES_SYSTEM_MONITOR = new CachingIconBundle(new TangoProjectIconBundle("apps", "utilities-system-monitor"));
+
     /** Icon bundle for <code>apps/utilities-terminal</code>. */
     public static final IconBundle UTILITIES_TERMINAL = new CachingIconBundle(new TangoProjectIconBundle("apps", "utilities-terminal"));
 
@@ -393,6 +411,9 @@ public final class TangoProject
 
     /** Icon bundle for <code>categories/applications-development</code>. */
     //public static final IconBundle APPLICATIONS_DEVELOPMENT = new CachingIconBundle(new TangoProjectIconBundle("categories", "applications-development"));
+
+    /** Icon bundle for <code>categories/applications-engineering</code>. */
+    //public static final IconBundle APPLICATIONS_ENGINEERING = new CachingIconBundle(new TangoProjectIconBundle("categories", "applications-engineering"));
 
     /** Icon bundle for <code>categories/applications-games</code>. */
     public static final IconBundle APPLICATIONS_GAMES = new CachingIconBundle(new TangoProjectIconBundle("categories", "applications-games"));
@@ -412,6 +433,9 @@ public final class TangoProject
     /** Icon bundle for <code>categories/applications-other</code>. */
     public static final IconBundle APPLICATIONS_OTHER = new CachingIconBundle(new TangoProjectIconBundle("categories", "applications-other"));
 
+    /** Icon bundle for <code>categories/applications-science</code>. */
+    //public static final IconBundle APPLICATIONS_SCIENCE = new CachingIconBundle(new TangoProjectIconBundle("categories", "applications-science"));
+
     /** Icon bundle for <code>categories/applications-system</code>. */
     public static final IconBundle APPLICATIONS_SYSTEM = new CachingIconBundle(new TangoProjectIconBundle("categories", "applications-system"));
 
@@ -420,9 +444,6 @@ public final class TangoProject
 
     /** Icon bundle for <code>categories/preferences-desktop</code>. */
     public static final IconBundle PREFERENCES_DESKTOP = new CachingIconBundle(new TangoProjectIconBundle("categories", "preferences-desktop"));
-
-    /** Icon bundle for <code>categories/preferences-desktop-accessibility</code>. */
-    //public static final IconBundle PREFERENCES_DESKTOP_ACCESSIBILITY = new CachingIconBundle(new TangoProjectIconBundle("categories", "preferences-desktop-accessibility"));
 
     /** Icon bundle for <code>categories/preferences-desktop-peripherals</code>. */
     public static final IconBundle PREFERENCES_DESKTOP_PERIPHERALS = new CachingIconBundle(new TangoProjectIconBundle("categories", "preferences-desktop-peripherals"));
@@ -460,11 +481,12 @@ public final class TangoProject
     /** Icon bundle for <code>devices/computer</code>. */
     public static final IconBundle COMPUTER = new CachingIconBundle(new TangoProjectIconBundle("devices", "computer"));
 
-    /** Icon bundle for <code>devices/drive-cdrom</code>. */
-    public static final IconBundle DRIVE_CDROM = new CachingIconBundle(new TangoProjectIconBundle("devices", "drive-cdrom"));
-
     /** Icon bundle for <code>devices/drive-harddisk</code>. */
     public static final IconBundle DRIVE_HARDDISK = new CachingIconBundle(new TangoProjectIconBundle("devices", "drive-harddisk"));
+
+    /** Icon bundle for <code>devices/drive-optical</code>. */
+    //public static final IconBundle DRIVE_OPTICAL = new CachingIconBundle(new TangoProjectIconBundle("devices", "drive-optical"));
+    public static final IconBundle DRIVE_OPTICAL = new CachingIconBundle(new TangoProjectIconBundle("devices", "drive-cdrom"));
 
     /** Icon bundle for <code>devices/drive-removable-media</code>. */
     public static final IconBundle DRIVE_REMOVABLE_MEDIA = new CachingIconBundle(new TangoProjectIconBundle("devices", "drive-removable-media"));
@@ -478,11 +500,21 @@ public final class TangoProject
     /** Icon bundle for <code>devices/input-mouse</code>. */
     public static final IconBundle INPUT_MOUSE = new CachingIconBundle(new TangoProjectIconBundle("devices", "input-mouse"));
 
-    /** Icon bundle for <code>devices/media-cdrom</code>. */
-    public static final IconBundle MEDIA_CDROM = new CachingIconBundle(new TangoProjectIconBundle("devices", "media-cdrom"));
+    /** Icon bundle for <code>devices/media-flash</code>. */
+    //public static final IconBundle MEDIA_FLASH = new CachingIconBundle(new TangoProjectIconBundle("devices", "media-flash"));
 
     /** Icon bundle for <code>devices/media-floppy</code>. */
     public static final IconBundle MEDIA_FLOPPY = new CachingIconBundle(new TangoProjectIconBundle("devices", "media-floppy"));
+
+    /** Icon bundle for <code>devices/media-optical</code>. */
+    //public static final IconBundle MEDIA_OPTICAL = new CachingIconBundle(new TangoProjectIconBundle("devices", "media-optical"));
+    public static final IconBundle MEDIA_OPTICAL = new CachingIconBundle(new TangoProjectIconBundle("devices", "media-cdrom"));
+
+    /** Icon bundle for <code>devices/media-tape</code>. */
+    //public static final IconBundle MEDIA_TAPE = new CachingIconBundle(new TangoProjectIconBundle("devices", "media-tape"));
+
+    /** Icon bundle for <code>devices/modem</code>. */
+    //public static final IconBundle MODEM = new CachingIconBundle(new TangoProjectIconBundle("devices", "modem"));
 
     /** Icon bundle for <code>devices/multimedia-player</code>. */
     public static final IconBundle MULTIMEDIA_PLAYER = new CachingIconBundle(new TangoProjectIconBundle("devices", "multimedia-player"));
@@ -754,6 +786,15 @@ public final class TangoProject
     /** Icon bundle for <code>status/printer-printing</code>. */
     //public static final IconBundle PRINTER_PRINTING = new CachingIconBundle(new TangoProjectIconBundle("status", "printer-printing"));
 
+    /** Icon bundle for <code>status/security-high</code>. */
+    //public static final IconBundle SECURITY_HIGH = new CachingIconBundle(new TangoProjectIconBundle("status", "security-high"));
+
+    /** Icon bundle for <code>status/security-medium</code>. */
+    //public static final IconBundle SECURITY_MEDIUM = new CachingIconBundle(new TangoProjectIconBundle("status", "security-medium"));
+
+    /** Icon bundle for <code>status/security-low</code>. */
+    //public static final IconBundle SECURITY_LOW = new CachingIconBundle(new TangoProjectIconBundle("status", "security-low"));
+
     /** Icon bundle for <code>status/software-update-available</code>. */
     //public static final IconBundle SOFTWARE_UPDATE_AVAILABLE = new CachingIconBundle(new TangoProjectIconBundle("status", "software-update-available"));
 
@@ -819,5 +860,4 @@ public final class TangoProject
 
     /** Icon bundle for <code>status/weather-storm</code>. */
     public static final IconBundle WEATHER_STORM = new CachingIconBundle(new TangoProjectIconBundle("status", "weather-storm"));
-
 }
