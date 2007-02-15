@@ -1,0 +1,224 @@
+/*
+
+    dsh-matrix  long-addressable bit and typed object matrix implementations.
+    Copyright (c) 2004-2007 held jointly by the individual authors.
+
+    This library is free software; you can redistribute it and/or modify it
+    under the terms of the GNU Lesser General Public License as published
+    by the Free Software Foundation; either version 2.1 of the License, or (at
+    your option) any later version.
+
+    This library is distributed in the hope that it will be useful, but WITHOUT
+    ANY WARRANTY; with out even the implied warranty of MERCHANTABILITY or
+    FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
+    License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with this library;  if not, write to the Free Software Foundation,
+    Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307  USA.
+
+    > http://www.gnu.org/copyleft/lesser.html
+    > http://www.opensource.org/licenses/lgpl-license.php
+
+*/
+package org.dishevelled.matrix;
+
+import junit.framework.TestCase;
+
+import org.dishevelled.functor.BinaryFunction;
+import org.dishevelled.functor.BinaryPredicate;
+import org.dishevelled.functor.BinaryProcedure;
+import org.dishevelled.functor.UnaryFunction;
+import org.dishevelled.functor.UnaryPredicate;
+import org.dishevelled.functor.UnaryProcedure;
+
+/**
+ * Abstract unit test for ObjectMatrixUtils.
+ *
+ * @author  Michael Heuer
+ * @version $Revision$ $Date$
+ */
+public abstract class AbstractObjectMatrixUtilsTest
+    extends TestCase
+{
+    /** Binary function. */
+    BinaryFunction<String, String, String> binaryFunction = new BinaryFunction<String, String, String>()
+    {
+        /** {@inheritDoc} */
+        public String evaluate(final String string0, final String string1)
+        {
+            return "foo";
+        }
+    };
+
+    /** Binary predicate. */
+    BinaryPredicate<Long, String> binaryPredicate = new BinaryPredicate<Long, String>()
+    {
+        /** {@inheritDoc} */
+        public boolean test(final Long index, final String string)
+        {
+            return true;
+        }
+    };
+
+    /** Binary procedure. */
+    BinaryProcedure<Long, String> binaryProcedure = new BinaryProcedure<Long, String>()
+    {
+        /** {@inheritDoc} */
+        public void run(final Long index, final String string)
+        {
+            // empty
+        }
+    };
+
+    /** Unary function. */
+    UnaryFunction<String, String> unaryFunction = new UnaryFunction<String, String>()
+    {
+        /** {@inheritDoc} */
+        public String evaluate(final String string)
+        {
+            return "foo";
+        }
+    };
+
+    /** Unary predicate. */
+    UnaryPredicate<String> unaryPredicate = new UnaryPredicate<String>()
+    {
+        /** {@inheritDoc} */
+        public boolean test(final String string)
+        {
+            return true;
+        }
+    };
+
+    /** Unary procedure. */
+    UnaryProcedure<String> unaryProcedure = new UnaryProcedure<String>()
+    {
+        /** {@inheritDoc} */
+        public void run(final String string)
+        {
+            // empty
+        }
+    };
+
+
+    /**
+     * Create and return a new instance of an implementation of ObjectMatrix1D<T> to test.
+     *
+     * @param T 1D object matrix type
+     * @return a new instance of an implementation of ObjectMatrix1D<T> to test
+     */
+    protected abstract <T> ObjectMatrix1D<T> createObjectMatrix1D();
+
+
+    public void testUnmodifiableObjectMatrix1D()
+    {
+        ObjectMatrix1D<String> matrix = createObjectMatrix1D();
+        ObjectMatrix1D<String> other = createObjectMatrix1D();
+        ObjectMatrix1D<String> unmodifiableView = ObjectMatrixUtils.unmodifiableObjectMatrix(matrix);
+        assertNotNull("unmodifiableView not null", unmodifiableView);
+
+        assertNotNull("aggregate(BinaryFunction, UnaryFunction) not null",
+                      unmodifiableView.aggregate(binaryFunction, unaryFunction));
+
+        assertNotNull("aggregate(ObjectMatrix1D, BinaryFunction, BinaryFunction) not null",
+                      unmodifiableView.aggregate(other, binaryFunction, binaryFunction));
+
+        assertEquals(matrix.cardinality(), unmodifiableView.cardinality());
+
+        unmodifiableView.forEach(binaryPredicate, binaryProcedure);
+        unmodifiableView.forEach(binaryProcedure);
+        unmodifiableView.forEach(unaryPredicate, unaryProcedure);
+        unmodifiableView.forEach(unaryProcedure);
+
+        assertEquals(matrix.get(0L), unmodifiableView.get(0L));
+        assertEquals(matrix.getQuick(0L), unmodifiableView.getQuick(0L));
+        assertEquals(matrix.isEmpty(), unmodifiableView.isEmpty());
+
+        assertNotNull("iterator not null", unmodifiableView.iterator());
+        // todo:  assert iterator.delete() throws UnsupportedOperationException
+
+        assertEquals(matrix.size(), unmodifiableView.size());
+
+        assertNotNull("viewFlip not null", unmodifiableView.viewFlip());
+        assertNotNull("viewPart not null", unmodifiableView.viewPart(0L, 1L));
+        //assertNotNull("viewSelection(long[]) not null", unmodifiableView.viewSelection(new long[] { 0L }));
+        //assertNotNull("viewSelection(UnaryPredicate) not null", unmodifiableView.viewSelection(unaryPredicate));
+        assertNotNull("viewStrides not null", unmodifiableView.viewStrides(1L));
+        // todo:  assert views are unmodifiable
+
+        try
+        {
+            unmodifiableView.assign("foo");
+            fail("assign(E) expected UnsupportedOperationException");
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
+        try
+        {
+            unmodifiableView.assign(other);
+            fail("assign(ObjectMatrix1D) expected UnsupportedOperationException");
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
+        try
+        {
+            unmodifiableView.assign(other, binaryFunction);
+            fail("assign(ObjectMatrix1D, BinaryFunction) expected UnsupportedOperationException");
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
+        try
+        {
+            unmodifiableView.assign(unaryFunction);
+            fail("assign(UnaryFunction) expected UnsupportedOperationException");
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
+        try
+        {
+            unmodifiableView.clear();
+            fail("clear() expected UnsupportedOperationException");
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
+        try
+        {
+            unmodifiableView.set(0L, "foo");
+            fail("set(Long, E) expected UnsupportedOperationException");
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
+        try
+        {
+            unmodifiableView.setQuick(0L, "foo");
+            fail("setQuick(Long, E) expected UnsupportedOperationException");
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
+
+        try
+        {
+            ObjectMatrixUtils.unmodifiableObjectMatrix((ObjectMatrix1D<String>) null);
+            fail("unmodifiableObjectMatrix(null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+    }
+}
