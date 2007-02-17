@@ -76,7 +76,7 @@ final class TangoProjectIconBundle
     }
 
 
-    /** @see IconBundle */
+    /** {@inheritDoc} */
     public Image getImage(final Component component,
                           final IconTextDirection direction,
                           final IconState state,
@@ -98,7 +98,7 @@ final class TangoProjectIconBundle
         URL url = null;
         BufferedImage image = null;
 
-        if (TangoProject.EXTRA_SMALL.equals(size) || TangoProject.SMALL.equals(size))
+        if (TangoProject.EXTRA_SMALL.equals(size) || TangoProject.SMALL.equals(size) || TangoProject.MEDIUM.equals(size))
         {
             try
             {

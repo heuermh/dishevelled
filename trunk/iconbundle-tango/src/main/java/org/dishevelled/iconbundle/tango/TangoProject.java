@@ -50,12 +50,15 @@ public final class TangoProject
     /** Custom icon size, tango project "small". */
     public static final IconSize SMALL = new IconSize(22, 22) { };
 
+    /** Custom icon size, tango project "medium". */
+    public static final IconSize MEDIUM = new IconSize(32, 32) { };
+
     /** Custom icon size, tango project "large". */
     public static final IconSize LARGE = new IconSize(48, 48) { };
 
 
     /** Private array of tango custom icon sizes. */
-    private static IconSize[] sizes = new IconSize[] { EXTRA_SMALL, SMALL, LARGE };
+    private static IconSize[] sizes = new IconSize[] { EXTRA_SMALL, SMALL, MEDIUM, LARGE };
 
     /** Public unmodifiable collection of tango project custom icon sizes. */
     public static final Collection SIZES = Collections.unmodifiableList(Arrays.asList(sizes));
