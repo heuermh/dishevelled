@@ -93,10 +93,6 @@ public class AssignableSupport
         {
             throw new IllegalArgumentException("assignment must not be null");
         }
-        if (assignment.getAssignable() == null)
-        {
-            throw new IllegalArgumentException("assignment's assignable must not be null");
-        }
         if (!assignment.getAssignable().equals(assignable))
         {
             throw new IllegalArgumentException("assignment's assignable must equal this");
