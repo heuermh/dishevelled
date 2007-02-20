@@ -124,6 +124,43 @@ public class DomainTest
         assertTrue("mappings contains mapping3", target.getMappings().contains(mapping3));
         assertEquals("mapping3 source domain equals source1", source1, mapping3.getSource());
         assertEquals("mapping3 target domain equals target", target, mapping3.getTarget());
+
+        try
+        {
+            d.addConcept(null);
+            fail("addConcept(null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+        try
+        {
+            d.addRelation(null);
+            fail("addRelation(null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+        try
+        {
+            d.addInMapping(null);
+            fail("addInMapping(null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+        try
+        {
+            d.addOutMapping(null);
+            fail("addOutMapping(null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
     }
 
     public void testConstructor()
@@ -209,6 +246,17 @@ public class DomainTest
         {
             Relation r6 = d.createRelation("relation0", source, target);
             fail("createRelation(relation0,,) expected IllegalArgumentException, " +
+                 "combination of name, source, target not unique");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+
+        try
+        {
+            Relation r7 = d.createRelation(null, source, target);
+            fail("createRelation(null,,) expected IllegalArgumentException, " +
                  "combination of name, source, target not unique");
         }
         catch (IllegalArgumentException e)

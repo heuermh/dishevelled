@@ -85,6 +85,34 @@ public class AuthorityTest
 
         assertTrue("assignments contains assignment", a.getAssignments().contains(assignment));
         assertEquals("assignment authority equals a", a, assignment.getAuthority());
+
+        try
+        {
+            a.addDomain(null);
+            fail("addDomain(null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+        try
+        {
+            a.addMapping(null);
+            fail("addMapping(null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+        try
+        {
+            a.addAssignment(null);
+            fail("addAssignment(null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
     }
 
     public void testCreateDomain()
@@ -180,6 +208,19 @@ public class AuthorityTest
         {
             Assignment a7 = a.createAssignment(concept0, null, new TreeSet<Evidence>(Arrays.asList(new Evidence[] { evidence0, evidence1 })));
             fail("createAssignment(,null,) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+    }
+
+    public void testConstructor()
+    {
+        try
+        {
+            Authority authority = new Authority(null);
+            fail("ctr(null) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
         {

@@ -181,5 +181,9 @@ public class EvidenceTest
         assertEquals("evidence5 get(7) equals e2", e2, evidence5.get(7));
         assertEquals("evidence5 get(8) equals e1", e1, evidence5.get(8));
         assertEquals("evidence5 get(9) equals e0", e0, evidence5.get(9));
+
+        Evidence e10 = new Evidence(null, 1.0d, 1.0d);
+        assertEquals(0, e10.compareTo(e2));
+        assertEquals(0, e2.compareTo(e10));
     }
 }

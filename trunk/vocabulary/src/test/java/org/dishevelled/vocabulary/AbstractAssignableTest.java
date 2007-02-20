@@ -23,6 +23,8 @@
 */
 package org.dishevelled.vocabulary;
 
+import java.util.Set;
+
 import junit.framework.TestCase;
 
 /**
@@ -41,4 +43,40 @@ public abstract class AbstractAssignableTest
      * @return a new instance of an implementation of Assignable
      */
     protected abstract Assignable createAssignable();
+
+    public void testAbstractAssignable()
+    {
+        Assignable assignable = createAssignable();
+        Assignable invalidAssignable = createAssignable();
+
+        Authority authority = new Authority("test authority");
+        Domain domain = authority.createDomain("test domain");
+        Concept concept = domain.createConcept("name", "accession", "description");
+        Set<Evidence> evidence = null;
+        Assignment assignment = authority.createAssignment(concept, assignable, evidence);
+        Assignment invalidAssignment = authority.createAssignment(concept, invalidAssignable, evidence);
+
+        assertNotNull("assignments not null", assignable.getAssignments());
+        assignable.addAssignment(assignment);
+        assertTrue(assignable.getAssignments().contains(assignment));
+
+        try
+        {
+            assignable.addAssignment(null);
+            fail("addAssignment(null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+        try
+        {
+            assignable.addAssignment(invalidAssignment);
+            fail("addAssignment(invalidAssignment) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+    }
 }
