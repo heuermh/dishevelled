@@ -74,6 +74,16 @@ public class MappingTest
         assertTrue("targetDomain inMappings contains m", targetDomain.inMappings().contains(m));
         assertTrue("targetDomain mappings contains m", targetDomain.getMappings().contains(m));
         assertTrue("authority mappings contains m", authority.getMappings().contains(m));
+
+        try
+        {
+            m.addProjection(null);
+            fail("addProjection(null) expected IllegalArgumentException e");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
     }
 
     public void testConstructor()
@@ -201,12 +211,23 @@ public class MappingTest
             // expected
         }
 
+        try
+        {
+            Projection p13 = m.createProjection(null, sourceConcept0, targetConcept0, null);
+            fail("createProjection(projection0,sourceConcept0,targetConcept0,) expected IllegalArgumentException, "
+                 + "combination of name, source, target not unique");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+
 
         // source and target must not be null
 
         try
         {
-            Projection p13 = m.createProjection("projection13", null, targetConcept0, null);
+            Projection p14 = m.createProjection("projection13", null, targetConcept0, null);
             fail("createProjection(,null,,) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
@@ -216,7 +237,7 @@ public class MappingTest
 
         try
         {
-            Projection p14 = m.createProjection("projection14", sourceConcept0, null, null);
+            Projection p15 = m.createProjection("projection14", sourceConcept0, null, null);
             fail("createProjection(,,null,) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)

@@ -73,6 +73,16 @@ public class AssignmentTest
         Evidence evidence1 = new Evidence("evidence1", 1.0d, 1.0d);
         a.addEvidence(evidence1);
         assertTrue("a evidence contains evidence1", a.getEvidence().contains(evidence1));
+
+        try
+        {
+            a.addEvidence(null);
+            fail("addEvidence(null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
     }
 
     public void testConstructor()

@@ -192,6 +192,52 @@ public class ConceptTest
         assertTrue("assignments contains assignment0", c.getAssignments().contains(assignment0));
         assertEquals("assignment0 concept equals c", c, assignment0.getConcept());
         assertTrue("degree >= 9, was " + c.degree(), c.degree() >= 9);
+
+        try
+        {
+            c.addInRelation(null);
+            fail("addInRelation(null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+        try
+        {
+            c.addOutRelation(null);
+            fail("addOutRelation(null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+        try
+        {
+            c.addInProjection(null);
+            fail("addInProjection(null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+        try
+        {
+            c.addOutProjection(null);
+            fail("addOutProjection(null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+        try
+        {
+            c.addAssignment(null);
+            fail("addAssignment(null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
     }
 
     public void testConstructor()
