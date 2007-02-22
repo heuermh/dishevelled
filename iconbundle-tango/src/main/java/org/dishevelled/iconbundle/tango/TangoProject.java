@@ -265,6 +265,9 @@ public final class TangoProject
     /** Icon bundle for <code>actions/mail-reply-sender</code>. */
     public static final IconBundle MAIL_REPLY_SENDER = new CachingIconBundle(new TangoProjectIconBundle("actions", "mail-reply-sender"));
 
+    /** Icon bundle for <code>actions/mail-send</code>. */
+    //public static final IconBundle MAIL_SEND = new CachingIconBundle(new TangoProjectIconBundle("actions", "mail-send"));
+
     /** Icon bundle for <code>actions/mail-send-receive</code>. */
     public static final IconBundle MAIL_SEND_RECEIVE = new CachingIconBundle(new TangoProjectIconBundle("actions", "mail-send-receive"));
 
@@ -373,6 +376,9 @@ public final class TangoProject
     /** Icon bundle for <code>apps/help-browser</code>. */
     public static final IconBundle HELP_BROWSER = new CachingIconBundle(new TangoProjectIconBundle("apps", "help-browser"));
 
+    /** Icon bundle for <code>apps/multimedia-volume-control</code>. */
+    public static final IconBundle MULTIMEDIA_VOLUME_CONTROL = new CachingIconBundle(new TangoProjectIconBundle("apps", "multimedia-volume-control"));
+
     /** Icon bundle for <code>apps/preferences-desktop-accessibility</code>. */
     public static final IconBundle PREFERENCES_DESKTOP_ACCESSIBILITY = new CachingIconBundle(new TangoProjectIconBundle("apps", "preferences-desktop-accessibility"));
 
@@ -401,7 +407,7 @@ public final class TangoProject
     public static final IconBundle SYSTEM_FILE_MANAGER = new CachingIconBundle(new TangoProjectIconBundle("apps", "system-file-manager"));
 
     /** Icon bundle for <code>apps/system-software-update</code>. */
-    //public static final IconBundle SYSTEM_SOFTWARE_UPDATE = new CachingIconBundle(new TangoProjectIconBundle("apps", "system-software-update"));
+    public static final IconBundle SYSTEM_SOFTWARE_UPDATE = new CachingIconBundle(new TangoProjectIconBundle("apps", "system-software-update"));
 
     /** Icon bundle for <code>apps/utilities-system-monitor</code>. */
     public static final IconBundle UTILITIES_SYSTEM_MONITOR = new CachingIconBundle(new TangoProjectIconBundle("apps", "utilities-system-monitor"));
@@ -488,8 +494,7 @@ public final class TangoProject
     public static final IconBundle DRIVE_HARDDISK = new CachingIconBundle(new TangoProjectIconBundle("devices", "drive-harddisk"));
 
     /** Icon bundle for <code>devices/drive-optical</code>. */
-    //public static final IconBundle DRIVE_OPTICAL = new CachingIconBundle(new TangoProjectIconBundle("devices", "drive-optical"));
-    public static final IconBundle DRIVE_OPTICAL = new CachingIconBundle(new TangoProjectIconBundle("devices", "drive-cdrom"));
+    public static final IconBundle DRIVE_OPTICAL = new CachingIconBundle(new TangoProjectIconBundle("devices", "drive-optical"));
 
     /** Icon bundle for <code>devices/drive-removable-media</code>. */
     public static final IconBundle DRIVE_REMOVABLE_MEDIA = new CachingIconBundle(new TangoProjectIconBundle("devices", "drive-removable-media"));
@@ -504,14 +509,13 @@ public final class TangoProject
     public static final IconBundle INPUT_MOUSE = new CachingIconBundle(new TangoProjectIconBundle("devices", "input-mouse"));
 
     /** Icon bundle for <code>devices/media-flash</code>. */
-    //public static final IconBundle MEDIA_FLASH = new CachingIconBundle(new TangoProjectIconBundle("devices", "media-flash"));
+    public static final IconBundle MEDIA_FLASH = new CachingIconBundle(new TangoProjectIconBundle("devices", "media-flash"));
 
     /** Icon bundle for <code>devices/media-floppy</code>. */
     public static final IconBundle MEDIA_FLOPPY = new CachingIconBundle(new TangoProjectIconBundle("devices", "media-floppy"));
 
     /** Icon bundle for <code>devices/media-optical</code>. */
-    //public static final IconBundle MEDIA_OPTICAL = new CachingIconBundle(new TangoProjectIconBundle("devices", "media-optical"));
-    public static final IconBundle MEDIA_OPTICAL = new CachingIconBundle(new TangoProjectIconBundle("devices", "media-cdrom"));
+    public static final IconBundle MEDIA_OPTICAL = new CachingIconBundle(new TangoProjectIconBundle("devices", "media-optical"));
 
     /** Icon bundle for <code>devices/media-tape</code>. */
     //public static final IconBundle MEDIA_TAPE = new CachingIconBundle(new TangoProjectIconBundle("devices", "media-tape"));
@@ -592,7 +596,7 @@ public final class TangoProject
     public static final IconBundle FACE_KISS = new CachingIconBundle(new TangoProjectIconBundle("emotes", "face-kiss"));
 
     /** Icon bundle for <code>emotes/face-monkey</code>. */
-    //public static final IconBundle FACE_MONKEY = new CachingIconBundle(new TangoProjectIconBundle("emotes", "face-monkey"));
+    public static final IconBundle FACE_MONKEY = new CachingIconBundle(new TangoProjectIconBundle("emotes", "face-monkey"));
 
     /** Icon bundle for <code>emotes/face-plain</code>. */
     public static final IconBundle FACE_PLAIN = new CachingIconBundle(new TangoProjectIconBundle("emotes", "face-plain"));

@@ -172,6 +172,7 @@ final class TangoTreeModel
         multiMap.put("actions", new Icon("mail-message-new", TangoProject.MAIL_MESSAGE_NEW));
         multiMap.put("actions", new Icon("mail-reply-all", TangoProject.MAIL_REPLY_ALL));
         multiMap.put("actions", new Icon("mail-reply-sender", TangoProject.MAIL_REPLY_SENDER));
+        //multiMap.put("actions", new Icon("mail-send", TangoProject.MAIL_SEND));
         multiMap.put("actions", new Icon("mail-send-receive", TangoProject.MAIL_SEND_RECEIVE));
         multiMap.put("actions", new Icon("media-eject", TangoProject.MEDIA_EJECT));
         multiMap.put("actions", new Icon("media-playback-pause", TangoProject.MEDIA_PLAYBACK_PAUSE));
@@ -209,6 +210,7 @@ final class TangoTreeModel
         //multiMap.put("apps", new Icon("accessories-dictionary", TangoProject.ACCESSORIES_DICTIONARY));
         multiMap.put("apps", new Icon("accessories-text-editor", TangoProject.ACCESSORIES_TEXT_EDITOR));
         multiMap.put("apps", new Icon("help-browser", TangoProject.HELP_BROWSER));
+        //multiMap.put("apps", new Icon("multimedia-volume-control", TangoProject.MULTIMEDIA_VOLUME_CONTROL));
         multiMap.put("apps", new Icon("preferences-desktop-accessibility", TangoProject.PREFERENCES_DESKTOP_ACCESSIBILITY));
         multiMap.put("apps", new Icon("preferences-desktop-font", TangoProject.PREFERENCES_DESKTOP_FONT));
         //multiMap.put("apps", new Icon("preferences-desktop-keyboard", TangoProject.PREFERENCES_DESKTOP_KEYBOARD));
@@ -254,7 +256,7 @@ final class TangoTreeModel
         multiMap.put("devices", new Icon("input-gaming", TangoProject.INPUT_GAMING));
         multiMap.put("devices", new Icon("input-keyboard", TangoProject.INPUT_KEYBOARD));
         multiMap.put("devices", new Icon("input-mouse", TangoProject.INPUT_MOUSE));
-        //multiMap.put("devices", new Icon("media-flash", TangoProject.MEDIA_FLASH));
+        multiMap.put("devices", new Icon("media-flash", TangoProject.MEDIA_FLASH));
         multiMap.put("devices", new Icon("media-floppy", TangoProject.MEDIA_FLOPPY));
         multiMap.put("devices", new Icon("media-optical", TangoProject.MEDIA_OPTICAL));
         //multiMap.put("devices", new Icon("media-tape", TangoProject.MEDIA_TAPE));
@@ -285,7 +287,7 @@ final class TangoTreeModel
         //multiMap.put("emotes", new Icon("face-devil-grin", TangoProject.FACE_DEVIL_SAD));
         multiMap.put("emotes", new Icon("face-glasses", TangoProject.FACE_GLASSES));
         multiMap.put("emotes", new Icon("face-kiss", TangoProject.FACE_KISS));
-        //multiMap.put("emotes", new Icon("face-monkey", TangoProject.FACE_MONKEY));
+        multiMap.put("emotes", new Icon("face-monkey", TangoProject.FACE_MONKEY));
         multiMap.put("emotes", new Icon("face-plain", TangoProject.FACE_PLAIN));
         multiMap.put("emotes", new Icon("face-sad", TangoProject.FACE_SAD));
         multiMap.put("emotes", new Icon("face-smile", TangoProject.FACE_SMILE));
@@ -398,13 +400,13 @@ final class TangoTreeModel
         keys = null;
     }
 
-    /** @see TreeModel */
+    /** {@inheritDoc} */
     public void addTreeModelListener(final TreeModelListener l)
     {
         // ignore
     }
 
-    /** @see TreeModel */
+    /** {@inheritDoc} */
     public Object getChild(final Object parent, final int index)
     {
         if (root == parent)
@@ -422,7 +424,7 @@ final class TangoTreeModel
         }
     }
 
-    /** @see TreeModel */
+    /** {@inheritDoc} */
     public int getChildCount(final Object parent)
     {
         if (root == parent)
@@ -440,7 +442,7 @@ final class TangoTreeModel
         }
     }
 
-    /** @see TreeModel */
+    /** {@inheritDoc} */
     public int getIndexOfChild(final Object parent, final Object child)
     {
         if (root == parent)
@@ -458,25 +460,25 @@ final class TangoTreeModel
         }
     }
 
-    /** @see TreeModel */
+    /** {@inheritDoc} */
     public Object getRoot()
     {
         return root;
     }
 
-    /** @see TreeModel */
+    /** {@inheritDoc} */
     public boolean isLeaf(final Object node)
     {
         return (getChildCount(node) == 0);
     }
 
-    /** @see TreeModel */
+    /** {@inheritDoc} */
     public void removeTreeModelListener(final TreeModelListener l)
     {
         // ignore
     }
 
-    /** @see TreeModel */
+    /** {@inheritDoc} */
     public void valueForPathChanged(final TreePath path, final Object value)
     {
         // ignore
@@ -504,13 +506,13 @@ final class TangoTreeModel
         }
 
 
-        /** @see Identifiable */
+        /** {@inheritDoc} */
         public String getName()
         {
             return name;
         }
 
-        /** @see Identifiable */
+        /** {@inheritDoc} */
         public IconBundle getIconBundle()
         {
             return TangoProject.FOLDER;
@@ -578,13 +580,13 @@ final class TangoTreeModel
         }
 
 
-        /** @see Identifiable */
+        /** {@inheritDoc} */
         public String getName()
         {
             return name;
         }
 
-        /** @see Identifiable */
+        /** {@inheritDoc} */
         public IconBundle getIconBundle()
         {
             return iconBundle;
