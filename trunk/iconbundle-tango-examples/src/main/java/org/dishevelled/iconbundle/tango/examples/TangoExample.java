@@ -278,6 +278,19 @@ public final class TangoExample
                 }
             });
 
+        final IdLabel medium = new IdLabel(selection);
+        medium.setIconSize(TangoProject.MEDIUM);
+
+        addPropertyChangeListener("selection", new PropertyChangeListener()
+            {
+                /** {@inheritDoc} */
+                public void propertyChange(final PropertyChangeEvent e)
+                {
+                    medium.setValue(selection);
+                    medium.repaint();
+                }
+            });
+
         final IdLabel large = new IdLabel(selection);
         large.setIconSize(TangoProject.LARGE);
         large.setHorizontalTextPosition(IdLabel.CENTER);
@@ -317,6 +330,12 @@ public final class TangoExample
         panel.add(new JLabel("Tango Small (22x22)"), l.wideField());
         l.nextLine();
         panel.add(small, l.wideField());
+        l.nextLine();
+        panel.add(Box.createVerticalStrut(20), l.spacing());
+        l.nextLine();
+        panel.add(new JLabel("Tango Medium (32x32)"), l.wideField());
+        l.nextLine();
+        panel.add(medium, l.wideField());
         l.nextLine();
         panel.add(Box.createVerticalStrut(20), l.spacing());
         l.nextLine();
@@ -418,7 +437,7 @@ public final class TangoExample
         f.setContentPane(this);
         f.setJMenuBar(createMenuBar());
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        f.setBounds(100, 100, 750, 550);
+        f.setBounds(100, 100, 750, 650);
 
         SwingUtilities.invokeLater(new Runnable()
             {
