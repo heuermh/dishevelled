@@ -28,6 +28,8 @@ import junit.framework.TestCase;
 import org.dishevelled.functor.BinaryFunction;
 import org.dishevelled.functor.BinaryPredicate;
 import org.dishevelled.functor.BinaryProcedure;
+import org.dishevelled.functor.TertiaryPredicate;
+import org.dishevelled.functor.TertiaryProcedure;
 import org.dishevelled.functor.UnaryFunction;
 import org.dishevelled.functor.UnaryPredicate;
 import org.dishevelled.functor.UnaryProcedure;
@@ -71,6 +73,26 @@ public abstract class AbstractObjectMatrixUtilsTest
         }
     };
 
+    /** Tertiary predicate. */
+    TertiaryPredicate<Long, Long, String> tertiaryPredicate = new TertiaryPredicate<Long, Long, String>()
+    {
+        /** {@inheritDoc} */
+        public boolean test(final Long row, final Long column, final String string)
+        {
+            return true;
+        }
+    };
+
+    /** Tertiary procedure. */
+    TertiaryProcedure<Long, Long, String> tertiaryProcedure = new TertiaryProcedure<Long, Long, String>()
+    {
+        /** {@inheritDoc} */
+        public void run(final Long row, final Long column, final String string)
+        {
+            // empty
+        }
+    };
+
     /** Unary function. */
     UnaryFunction<String, String> unaryFunction = new UnaryFunction<String, String>()
     {
@@ -109,6 +131,14 @@ public abstract class AbstractObjectMatrixUtilsTest
      * @return a new instance of an implementation of ObjectMatrix1D<T> to test
      */
     protected abstract <T> ObjectMatrix1D<T> createObjectMatrix1D();
+
+    /**
+     * Create and return a new instance of an implementation of ObjectMatrix2D<T> to test.
+     *
+     * @param T 2D object matrix type
+     * @return a new instance of an implementation of ObjectMatrix2D<T> to test
+     */
+    protected abstract <T> ObjectMatrix2D<T> createObjectMatrix2D();
 
 
     public void testUnmodifiableObjectMatrix1D()
@@ -214,6 +244,123 @@ public abstract class AbstractObjectMatrixUtilsTest
         try
         {
             ObjectMatrixUtils.unmodifiableObjectMatrix((ObjectMatrix1D<String>) null);
+            fail("unmodifiableObjectMatrix(null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+    }
+
+    public void testUnmodifiableObjectMatrix2D()
+    {
+        ObjectMatrix2D<String> matrix = createObjectMatrix2D();
+        ObjectMatrix2D<String> other = createObjectMatrix2D();
+        ObjectMatrix2D<String> unmodifiableView = ObjectMatrixUtils.unmodifiableObjectMatrix(matrix);
+        assertNotNull("unmodifiableView not null", unmodifiableView);
+
+        assertNotNull("aggregate(BinaryFunction, UnaryFunction) not null",
+                      unmodifiableView.aggregate(binaryFunction, unaryFunction));
+
+        assertNotNull("aggregate(ObjectMatrix2D, BinaryFunction, BinaryFunction) not null",
+                      unmodifiableView.aggregate(other, binaryFunction, binaryFunction));
+
+        assertEquals(matrix.cardinality(), unmodifiableView.cardinality());
+
+        unmodifiableView.forEach(tertiaryPredicate, tertiaryProcedure);
+        unmodifiableView.forEach(tertiaryProcedure);
+        unmodifiableView.forEach(unaryPredicate, unaryProcedure);
+        unmodifiableView.forEach(unaryProcedure);
+
+        assertEquals(matrix.get(0L, 0L), unmodifiableView.get(0L, 0L));
+        assertEquals(matrix.getQuick(0L, 0L), unmodifiableView.getQuick(0L, 0L));
+        assertEquals(matrix.isEmpty(), unmodifiableView.isEmpty());
+
+        assertNotNull("iterator not null", unmodifiableView.iterator());
+        // todo:  assert iterator.delete() throws UnsupportedOperationException
+
+        assertEquals(matrix.size(), unmodifiableView.size());
+        assertEquals(matrix.rows(), unmodifiableView.rows());
+        assertEquals(matrix.columns(), unmodifiableView.columns());
+
+        assertNotNull("viewColumn not null", unmodifiableView.viewColumn(0L));
+        assertNotNull("viewColumnFlip not null", unmodifiableView.viewColumnFlip());
+        assertNotNull("viewDice not null", unmodifiableView.viewDice());
+        assertNotNull("viewPart not null", unmodifiableView.viewPart(0L, 1L, 2L, 3L));
+        assertNotNull("viewRow not null", unmodifiableView.viewRow(0L));
+        assertNotNull("viewRowFlip not null", unmodifiableView.viewRowFlip());
+        //assertNotNull("viewSelection(long[]) not null", unmodifiableView.viewSelection(new long[] { 0L }));
+        //assertNotNull("viewSelection(UnaryPredicate) not null", unmodifiableView.viewSelection(unaryPredicate));
+        assertNotNull("viewStrides not null", unmodifiableView.viewStrides(1L, 2L));
+        // todo:  assert views are unmodifiable
+
+        try
+        {
+            unmodifiableView.assign("foo");
+            fail("assign(E) expected UnsupportedOperationException");
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
+        try
+        {
+            unmodifiableView.assign(other);
+            fail("assign(ObjectMatrix2D) expected UnsupportedOperationException");
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
+        try
+        {
+            unmodifiableView.assign(other, binaryFunction);
+            fail("assign(ObjectMatrix2D, BinaryFunction) expected UnsupportedOperationException");
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
+        try
+        {
+            unmodifiableView.assign(unaryFunction);
+            fail("assign(UnaryFunction) expected UnsupportedOperationException");
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
+        try
+        {
+            unmodifiableView.clear();
+            fail("clear() expected UnsupportedOperationException");
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
+        try
+        {
+            unmodifiableView.set(0L, 0L, "foo");
+            fail("set(Long, Long, E) expected UnsupportedOperationException");
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
+        try
+        {
+            unmodifiableView.setQuick(0L, 0L, "foo");
+            fail("setQuick(Long, Long, E) expected UnsupportedOperationException");
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
+
+        try
+        {
+            ObjectMatrixUtils.unmodifiableObjectMatrix((ObjectMatrix2D<String>) null);
             fail("unmodifiableObjectMatrix(null) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)

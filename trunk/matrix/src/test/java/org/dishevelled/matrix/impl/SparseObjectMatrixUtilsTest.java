@@ -25,6 +25,7 @@ package org.dishevelled.matrix.impl;
 
 import org.dishevelled.matrix.AbstractObjectMatrixUtilsTest;
 import org.dishevelled.matrix.ObjectMatrix1D;
+import org.dishevelled.matrix.ObjectMatrix2D;
 
 
 /**
@@ -40,6 +41,12 @@ public final class SparseObjectMatrixUtilsTest
     /** {@inheritDoc} */
     protected <T> ObjectMatrix1D<T> createObjectMatrix1D()
     {
-        return new SparseObjectMatrix1D<T>(1L);
+        return new SparseObjectMatrix1D<T>(100L);
+    }
+
+    /** {@inheritDoc} */
+    protected <T> ObjectMatrix2D<T> createObjectMatrix2D()
+    {
+        return new SparseObjectMatrix2D<T>(100L, 100L);
     }
 }
