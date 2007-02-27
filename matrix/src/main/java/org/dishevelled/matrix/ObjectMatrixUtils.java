@@ -28,6 +28,8 @@ import java.util.Iterator;
 import org.dishevelled.functor.BinaryFunction;
 import org.dishevelled.functor.BinaryPredicate;
 import org.dishevelled.functor.BinaryProcedure;
+import org.dishevelled.functor.TertiaryPredicate;
+import org.dishevelled.functor.TertiaryProcedure;
 import org.dishevelled.functor.UnaryFunction;
 import org.dishevelled.functor.UnaryPredicate;
 import org.dishevelled.functor.UnaryProcedure;
@@ -77,8 +79,7 @@ public final class ObjectMatrixUtils
      */
     public static <T> ObjectMatrix2D<T> unmodifiableObjectMatrix(final ObjectMatrix2D<T> matrix)
     {
-        return null;
-        //return new UnmodifiableObjectMatrix2D<T>(matrix);
+        return new UnmodifiableObjectMatrix2D<T>(matrix);
     }
 
     /**
@@ -277,6 +278,233 @@ public final class ObjectMatrixUtils
         public ObjectMatrix1D<E> viewStrides(final long stride)
         {
             ObjectMatrix1D<E> strides = matrix.viewStrides(stride);
+            return ObjectMatrixUtils.unmodifiableObjectMatrix(strides);
+        }
+    }
+
+    /**
+     * Unmodifiable 2D object matrix view.
+     */
+    private static class UnmodifiableObjectMatrix2D<E>
+        implements ObjectMatrix2D<E>
+    {
+        /** Wrapped 2D object matrix. */
+        private final ObjectMatrix2D<E> matrix;
+
+
+        /**
+         * Create a new unmodifiable 2D object matrix view for the
+         * specified 2D object matrix.
+         *
+         * @param matrix 2D object matrix to view, must not be null
+         */
+        UnmodifiableObjectMatrix2D(final ObjectMatrix2D<E> matrix)
+        {
+            if (matrix == null)
+            {
+                throw new IllegalArgumentException("matrix must not be null");
+            }
+            this.matrix = matrix;
+        }
+
+
+        /** {@inheritDoc} */
+        public E aggregate(final BinaryFunction<E, E, E> aggr,
+                           final UnaryFunction<E, E> function)
+        {
+            return matrix.aggregate(aggr, function);
+        }
+
+        /** {@inheritDoc} */
+        public E aggregate(final ObjectMatrix2D<? extends E> other,
+                           final BinaryFunction<E, E, E> aggr,
+                           final BinaryFunction<E, E, E> function)
+        {
+            return matrix.aggregate(other, aggr, function);
+        }
+
+        /** {@inheritDoc} */
+        public ObjectMatrix2D<E> assign(final E e)
+        {
+            throw new UnsupportedOperationException("assign operation not supported by this 2D object matrix");
+        }
+
+        /** {@inheritDoc} */
+        public ObjectMatrix2D<E> assign(final ObjectMatrix2D<? extends E> other)
+        {
+            throw new UnsupportedOperationException("assign operation not supported by this 2D object matrix");
+        }
+
+        /** {@inheritDoc} */
+        public ObjectMatrix2D<E> assign(final ObjectMatrix2D<? extends E> other,
+                                        final BinaryFunction<E, E, E> function)
+        {
+            throw new UnsupportedOperationException("assign operation not supported by this 2D object matrix");
+        }
+
+        /** {@inheritDoc} */
+        public ObjectMatrix2D<E> assign(final UnaryFunction<E, E> function)
+        {
+            throw new UnsupportedOperationException("assign operation not supported by this 2D object matrix");
+        }
+
+        /** {@inheritDoc} */
+        public long cardinality()
+        {
+            return matrix.cardinality();
+        }
+
+        /** {@inheritDoc} */
+        public void clear()
+        {
+            throw new UnsupportedOperationException("clear operation not supported by this 2D object matrix");
+        }
+
+        /** {@inheritDoc} */
+        public long columns()
+        {
+            return matrix.columns();
+        }
+
+        /** {@inheritDoc} */
+        public void forEach(final TertiaryPredicate<Long, Long, E> predicate,
+                            final TertiaryProcedure<Long, Long, E> procedure)
+        {
+            matrix.forEach(predicate, procedure);
+        }
+
+        /** {@inheritDoc} */
+        public void forEach(final TertiaryProcedure<Long, Long, E> procedure)
+        {
+            matrix.forEach(procedure);
+        }
+
+        /** {@inheritDoc} */
+        public void forEach(final UnaryPredicate<E> predicate,
+                            final UnaryProcedure<E> procedure)
+        {
+            matrix.forEach(predicate, procedure);
+        }
+
+        /** {@inheritDoc} */
+        public void forEach(final UnaryProcedure<E> procedure)
+        {
+            matrix.forEach(procedure);
+        }
+
+        /** {@inheritDoc} */
+        public E get(final long row, final long column)
+        {
+            return matrix.get(row, column);
+        }
+
+        /** {@inheritDoc} */
+        public E getQuick(final long row, final long column)
+        {
+            return matrix.getQuick(row, column);
+        }
+
+        /** {@inheritDoc} */
+        public boolean isEmpty()
+        {
+            return matrix.isEmpty();
+        }
+
+        /** {@inheritDoc} */
+        public Iterator<E> iterator()
+        {
+            // todo:  wrap iterator and block remove()
+            return matrix.iterator();
+        }
+
+        /** {@inheritDoc} */
+        public long rows()
+        {
+            return matrix.rows();
+        }
+
+        /** {@inheritDoc} */
+        public void set(final long row, final long column, final E e)
+        {
+            throw new UnsupportedOperationException("set operation not supported by this 2D object matrix");
+        }
+
+        /** {@inheritDoc} */
+        public void setQuick(final long row, final long column, final E e)
+        {
+            throw new UnsupportedOperationException("setQuick operation not supported by this 2D object matrix");
+        }
+
+        /** {@inheritDoc} */
+        public long size()
+        {
+            return matrix.size();
+        }
+
+        /** {@inheritDoc} */
+        public ObjectMatrix1D<E> viewColumn(final long column)
+        {
+            ObjectMatrix1D<E> columnView = matrix.viewColumn(column);
+            return ObjectMatrixUtils.unmodifiableObjectMatrix(columnView);
+        }
+
+        /** {@inheritDoc} */
+        public ObjectMatrix2D<E> viewColumnFlip()
+        {
+            ObjectMatrix2D<E> columnFlip = matrix.viewColumnFlip();
+            return ObjectMatrixUtils.unmodifiableObjectMatrix(columnFlip);
+        }
+
+        /** {@inheritDoc} */
+        public ObjectMatrix2D<E> viewDice()
+        {
+            ObjectMatrix2D<E> dice = matrix.viewDice();
+            return ObjectMatrixUtils.unmodifiableObjectMatrix(dice);
+        }
+
+        /** {@inheritDoc} */
+        public ObjectMatrix2D<E> viewPart(final long row,
+                                          final long column,
+                                          final long height,
+                                          final long width)
+        {
+            ObjectMatrix2D<E> part = matrix.viewPart(row, column, height, width);
+            return ObjectMatrixUtils.unmodifiableObjectMatrix(part);
+        }
+
+        /** {@inheritDoc} */
+        public ObjectMatrix1D<E> viewRow(final long row)
+        {
+            ObjectMatrix1D<E> rowView = matrix.viewRow(row);
+            return ObjectMatrixUtils.unmodifiableObjectMatrix(rowView);
+        }
+
+        /** {@inheritDoc} */
+        public ObjectMatrix2D<E> viewRowFlip()
+        {
+            ObjectMatrix2D<E> rowFlip = matrix.viewRowFlip();
+            return ObjectMatrixUtils.unmodifiableObjectMatrix(rowFlip);
+        }
+
+        /** {@inheritDoc} */
+        public ObjectMatrix2D<E> viewSelection(final long[] rowIndices,
+                                               final long[] columnIndices)
+        {
+            ObjectMatrix2D<E> selection = matrix.viewSelection(rowIndices, columnIndices);
+            return ObjectMatrixUtils.unmodifiableObjectMatrix(selection);
+        }
+
+        /** {@inheritDoc} */
+        public ObjectMatrix2D<E> viewSelection(final UnaryPredicate<ObjectMatrix1D<E>> predicate)
+        {
+            ObjectMatrix2D<E> selection = matrix.viewSelection(predicate);
+            return ObjectMatrixUtils.unmodifiableObjectMatrix(selection);
+        }
+
+        /** {@inheritDoc} */
+        public ObjectMatrix2D<E> viewStrides(final long rowStride, final long columnStride)
+        {
+            ObjectMatrix2D<E> strides = matrix.viewStrides(rowStride, columnStride);
             return ObjectMatrixUtils.unmodifiableObjectMatrix(strides);
         }
     }
