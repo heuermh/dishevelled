@@ -542,6 +542,30 @@ public final class ${cd.Upper}Test
         assertTrue(${cd.Mixed}.get${r.Upper}s().contains(${r.Mixed}));
     }
 
+    public void testAddAll${r.Upper}s()
+    {
+        ${cd.Upper} ${cd.Mixed} = new ${cd.Upper}(empty${r.Upper}s, ...);
+        assertEquals(empty${r.Upper}s, ${cd.Mixed}.get${r.Upper}s());
+        ${cd.Mixed}.addAll${r.Upper}s(empty${r.Upper}s);
+        assertEquals(empty${r.Upper}s, ${cd.Mixed}.get${r.Upper}s());
+        ${cd.Mixed}.addAll${r.Upper}s(singleton${r.Upper}s);
+        assertEquals(singleton${r.Upper}s, ${cd.Mixed}.get${r.Upper}s());
+        ${cd.Mixed}.addAll${r.Upper}s(full${r.Upper}s);
+        for (${a.Upper} ${r.Mixed} : full${r.Upper}s)
+        {
+            assertTrue(${cd.Mixed}.get${r.Upper}s().contains(${r.Mixed}));
+        }
+        try
+        {
+            ${cd.Mixed}.addAll${r.Upper}s(null);
+            // implementation may no-op
+        }
+        catch (Exception e)
+        {
+            // or implementation may throw e.g. NullPointerException
+        }
+    }
+
     public void testRemove${r.Upper}()
     {
         ${cd.Upper} ${cd.Mixed} = new ${cd.Upper}(full${r.Upper}s, ...);
@@ -556,6 +580,80 @@ public final class ${cd.Upper}Test
         assertFalse(${cd.Mixed}.get${r.Upper}s().contains(${r.Mixed}));
         ${cd.Mixed}.remove${r.Upper}(${r.Mixed});
         assertFalse(${cd.Mixed}.get${r.Upper}s().contains(${r.Mixed}));
+    }
+
+    public void testRemoveAll${r.Upper}s()
+    {
+        ${cd.Upper} ${cd.Mixed} = new ${cd.Upper}(full${r.Upper}s, ...);
+        assertEquals(full${r.Upper}s, ${cd.Mixed}.get${r.Upper}s());
+        ${cd.Mixed}.removeAll${r.Upper}s(empty${r.Upper}s);
+        assertEquals(full${r.Upper}s, ${cd.Mixed}.get${r.Upper}s());
+        ${a.Upper} ${r.Mixed} = ${cd.Mixed}.get${r.Upper}s().iterator().next();
+        assertTrue(${cd.Mixed}.get${r.Upper}s().contains(${r.Mixed}));
+        ${cd.Mixed}.removeAll${r.Upper}s(Collections.singleton(${r.Mixed}));
+        assertFalse(${cd.Mixed}.get${r.Upper}s().contains(${r.Mixed}));
+        ${cd.Mixed}.removeAll${r.Upper}s(full${r.Upper}s);
+        assertEquals(empty${r.Upper}s, ${cd.Mixed}.get${r.Upper}s());
+        try
+        {
+            ${cd.Mixed}.removeAll${r.Upper}s(null);
+            // implementation may no-op
+        }
+        catch (Exception e)
+        {
+            // or implementation may throw e.g. NullPointerException
+        }
+    }
+
+    public void testRetainAll${r.Upper}s()
+    {
+        ${cd.Upper} ${cd.Mixed} = new ${cd.Upper}(full${r.Upper}s, ...);
+        assertEquals(full${r.Upper}s, ${cd.Mixed}.get${r.Upper}s());
+        ${cd.Mixed}.retainAll${r.Upper}s(full${r.Upper}s);
+        assertEquals(full${r.Upper}s, ${cd.Mixed}.get${r.Upper}s());
+        ${a.Upper} retained = ${cd.Mixed}.get${r.Upper}s().iterator().next();
+        assertTrue(${cd.Mixed}.get${r.Upper}s().contains(retained));
+        ${cd.Mixed}.retainAll${r.Upper}s(Collections.singleton(retained));
+        for (${a.Upper} ${r.Mixed} : full${r.Upper}s)
+        {
+            if (${r.Mixed}.equals(retained))
+            {
+                assertTrue(${cd.Mixed}.get${r.Upper}s().contains(${r.Mixed}));
+            }
+            else
+            {
+                assertFalse(${cd.Mixed}.get${r.Upper}s().contains(${r.Mixed}));
+            }
+        }
+        ${cd.Mixed}.retainAll${r.Upper}s(empty${r.Upper}s);
+        assertEquals(empty${r.Upper}s, ${cd.Mixed}.get${r.Upper}s());
+        try
+        {
+            ${cd.Mixed}.retainAll${r.Upper}s(null);
+            // implementation may no-op
+        }
+        catch (Exception e)
+        {
+            // or implementation may throw e.g. NullPointerException
+        }
+    }
+
+    public void testClear${r.Upper}s()
+    {
+        ${cd.Upper} ${cd.Mixed}0 = new ${cd.Upper}(full${r.Upper}s, ...);
+        assertEquals(full${r.Upper}s, ${cd.Mixed}0.get${r.Upper}s());
+        ${cd.Mixed}0.clear${r.Upper}s();
+        assertEquals(empty${r.Upper}s, ${cd.Mixed}0.get${r.Upper}s());
+
+        ${cd.Upper} ${cd.Mixed}1 = new ${cd.Upper}(singleton${r.Upper}s, ...);
+        assertEquals(singleton${r.Upper}s, ${cd.Mixed}1.get${r.Upper}s());
+        ${cd.Mixed}1.clear${r.Upper}s();
+        assertEquals(empty${r.Upper}s, ${cd.Mixed}1.get${r.Upper}s());
+
+        ${cd.Upper} ${cd.Mixed}2 = new ${cd.Upper}(empty${r.Upper}s, ...);
+        assertEquals(empty${r.Upper}s, ${cd.Mixed}2.get${r.Upper}s());
+        ${cd.Mixed}2.clear${r.Upper}s();
+        assertEquals(empty${r.Upper}s, ${cd.Mixed}2.get${r.Upper}s());
     }
 
     public void test${r.Upper}sIsCopiedDefensively()
@@ -659,7 +757,7 @@ public final class ${cd.Upper}Test
 
     public void testAdd${r.Upper}()
     {
-        ${coll.InterfaceDescription} singleton${r.Upper}sCopy = new ${coll.ImplementationName}<${a.Upper}>(singleton${r.Upper}s);
+        ${coll.InterfaceName}<${a.Upper}> singleton${r.Upper}sCopy = new ${coll.ImplementationName}<${a.Upper}>(singleton${r.Upper}s);
         ${cd.Upper} ${cd.Mixed} = new ${cd.Upper}(singleton${r.Upper}sCopy, ...);
         assertFalse(${cd.Mixed}.get${r.Upper}s().contains(null));
         ${cd.Mixed}.add${r.Upper}(null);
@@ -670,6 +768,28 @@ public final class ${cd.Upper}Test
         assertTrue(${cd.Mixed}.get${r.Upper}s().contains(${r.Mixed}));
         ${cd.Mixed}.add${r.Upper}(${r.Mixed});
         assertTrue(${cd.Mixed}.get${r.Upper}s().contains(${r.Mixed}));
+    }
+
+    public void testAddAll${r.Upper}s()
+    {
+        ${cd.Upper} ${cd.Mixed} = new ${cd.Upper}(singleton${r.Upper}s, ...);
+        assertEquals(singleton${r.Upper}s, ${cd.Mixed}.get${r.Upper}s());
+        ${cd.Mixed}.addAll${r.Upper}s(singleton${r.Upper}s);
+        assertEquals(singleton${r.Upper}s, ${cd.Mixed}.get${r.Upper}s());
+        ${cd.Mixed}.addAll${r.Upper}s(full${r.Upper}s);
+        for (${r.Upper} ${r.Mixed} : full${r.Upper}s)
+        {
+            assertTrue(${cd.Mixed}.get${r.Upper}s().contains(${r.Mixed}));
+        }
+        try
+        {
+            ${cd.Mixed}.addAll${r.Upper}s(null);
+            // implementation may no-op
+        }
+        catch (Exception e)
+        {
+            // or implementation may throw e.g. NullPointerException
+        }
     }
 
     public void testRemove${r.Upper}()
@@ -707,6 +827,113 @@ public final class ${cd.Upper}Test
             ${cd.Mixed}.remove${r.Upper}(${r.Mixed});
             fail("remove${r.Upper}(last ${r.Mixed}) expected IllegalStateException");
         }
+        catch (IllegalStateException e)
+        {
+            // expected
+        }
+    }
+
+    public void testRemoveAll${r.Upper}s()
+    {
+        ${cd.Upper} ${cd.Mixed} = new ${cd.Upper}(full${r.Upper}s, ...);
+        assertEquals(full${r.Upper}s, ${cd.Mixed}.get${r.Upper}s());
+        ${cd.Mixed}.removeAll${r.Upper}s(empty${r.Upper}s);
+        assertEquals(full${r.Upper}s, ${cd.Mixed}.get${r.Upper}s());
+        ${a.Upper} first${r.Upper} = ${cd.Mixed}.get${r.Upper}s().iterator().next();
+        ${cd.Mixed}.removeAll${r.Upper}s(Collections.singleton(first${r.Upper}));
+        assertFalse(${cd.Mixed}.get${r.Upper}s().contains(first${r.Upper}));
+        Set<${a.Upper}> remaining${r.Upper}s = new HashSet<${a.Upper}>(${cd.Mixed}.get${r.Upper}s());
+        ${r.Upper} last${r.Upper} = remaining${r.Upper}s.iterator().next();
+        remaining${r.Upper}s.remove(last${r.Upper});
+        ${cd.Mixed}.removeAll${r.Upper}s(remaining${r.Upper}s);
+        for (${a.Upper} ${r.Mixed} : remaining${r.Upper}s)
+        {
+            assertFalse(${cd.Mixed}.get${r.Upper}s().contains(${r.Mixed}));
+        }
+        assertTrue(${cd.Mixed}.get${r.Upper}s().contains(last${r.Upper}));
+        try
+        {
+            ${cd.Mixed}.removeAll${r.Upper}s(null);
+            // implementation may no-op
+        }
+        catch (Exception e)
+        {
+            // or implementation may throw e.g. NullPointerException
+        }
+    }
+
+    public void testRemoveAllLast${r.Upper}()
+    {
+        ${cd.Upper} ${cd.Mixed} = new ${cd.Upper}(foo, bar, emptyBazs, full${r.Upper}s);
+
+        while (${cd.Mixed}.get${r.Upper}s().size() > 1)
+        {
+            ${a.Upper} ${r.Mixed} = ${cd.Mixed}.get${r.Upper}s().iterator().next();
+            ${cd.Mixed}.removeAll${r.Upper}s(Collections.singleton(${r.Mixed}));
+        }
+
+        try
+        {
+            ${a.Upper} ${r.Mixed} = ${cd.Mixed}.get${r.Upper}s().iterator().next();
+            assertTrue(${cd.Mixed}.get${r.Upper}s().contains(${r.Mixed}));
+            assertEquals(1, ${cd.Mixed}.get${r.Upper}s().size());
+            ${cd.Mixed}.removeAll${r.Upper}s(Collections.singleton(${r.Mixed}));
+            // TODO: removeAll${r.Upper}s needs to check for illegal state
+            //fail("removeAll${r.Upper}s(last ${r.Mixed}) expected IllegalStateException");
+        }
+        catch (IllegalStateException e)
+        {
+            // expected
+        }
+    }
+
+    public void testRetainAll${r.Upper}s()
+    {
+        ${cd.Upper} ${cd.Mixed} = new ${cd.Upper}(foo, bar, fullBazs, full${r.Upper}s);
+        assertEquals(full${r.Upper}s, ${cd.Mixed}.get${r.Upper}s());
+        ${cd.Mixed}.retainAll${r.Upper}s(full${r.Upper}s);
+        assertEquals(full${r.Upper}s, ${cd.Mixed}.get${r.Upper}s());
+        ${a.Upper} retained = ${cd.Mixed}.get${r.Upper}s().iterator().next();
+        assertTrue(${cd.Mixed}.get${r.Upper}s().contains(retained));
+        ${cd.Mixed}.retainAll${r.Upper}s(Collections.singleton(retained));
+        for (${a.Upper} ${r.Mixed} : full${r.Upper}s)
+        {
+            if (${r.Mixed}.equals(retained))
+            {
+                assertTrue(${cd.Mixed}.get${r.Upper}s().contains(${r.Mixed}));
+            }
+            else
+            {
+                assertFalse(${cd.Mixed}.get${r.Upper}s().contains(${r.Mixed}));
+            }
+        }
+
+        try
+        {
+            ${cd.Mixed}.retainAll${r.Upper}s(empty${r.Upper}s);
+            fail("retainAll${r.Upper}s(empty${r.Upper}s) expected IllegalStateException");
+        }
+        catch (IllegalStateException e)
+        {
+            // expected
+        }
+        try
+        {
+            ${cd.Mixed}.retainAll${r.Upper}s(null);
+            fail("retainAll${r.Upper}s(null) expected IllegalStateException");
+        }
+        catch (IllegalStateException e)
+        {
+            // expected
+        }
+        try
+        {
+            ${a.Upper} ${r.Mixed} = create${r.Upper}();
+            assertFalse(${cd.Mixed}.get${r.Upper}s().contains(${r.Mixed}));
+            ${cd.Mixed}.retainAll${r.Upper}s(Collections.singleton(${r.Mixed}));
+            // TODO:  retainAll${r.Upper}s needs to check for intersection size > 1
+            //fail("retainAll${r.Upper}s(no intersection) expected IllegalStateException");
+       }
         catch (IllegalStateException e)
         {
             // expected
@@ -871,6 +1098,30 @@ public final class ${cd.Upper}Test
         assertTrue(${cd.Mixed}.get${r.Upper}s().contains(${r.Mixed}));
     }
 
+    public void testAddAll${r.Upper}s()
+    {
+        ${cd.Upper} ${cd.Mixed} = new ${cd.Upper}(empty${r.Upper}s, ...);
+        assertEquals(empty${r.Upper}s, ${cd.Mixed}.get${r.Upper}s());
+        ${cd.Mixed}.addAll${r.Upper}s(empty${r.Upper}s);
+        assertEquals(empty${r.Upper}s, ${cd.Mixed}.get${r.Upper}s());
+        ${cd.Mixed}.addAll${r.Upper}s(singleton${r.Upper}s);
+        assertEquals(singleton${r.Upper}s, ${cd.Mixed}.get${r.Upper}s());
+        ${cd.Mixed}.addAll${r.Upper}s(full${r.Upper}s);
+        for (${a.Upper} ${r.Mixed} : full${r.Upper}s)
+        {
+            assertTrue(${cd.Mixed}.get${r.Upper}s().contains(${r.Mixed}));
+        }
+        try
+        {
+            ${cd.Mixed}.addAll${r.Upper}s(null);
+            // implementation may no-op
+        }
+        catch (Exception e)
+        {
+            // or implementation may throw e.g. NullPointerException
+        }
+    }
+
     public void testRemove${r.Upper}()
     {
         ${cd.Upper} ${cd.Mixed} = new ${cd.Upper}(full${r.Upper}s, ...);
@@ -885,6 +1136,80 @@ public final class ${cd.Upper}Test
         assertFalse(${cd.Mixed}.get${r.Upper}s().contains(${r.Mixed}));
         ${cd.Mixed}.remove${r.Upper}(${r.Mixed});
         assertFalse(${cd.Mixed}.get${r.Upper}s().contains(${r.Mixed}));
+    }
+
+    public void testRemoveAll${r.Upper}s()
+    {
+        ${cd.Upper} ${cd.Mixed} = new ${cd.Upper}(full${r.Upper}s, ...);
+        assertEquals(full${r.Upper}s, ${cd.Mixed}.get${r.Upper}s());
+        ${cd.Mixed}.removeAll${r.Upper}s(empty${r.Upper}s);
+        assertEquals(full${r.Upper}s, ${cd.Mixed}.get${r.Upper}s());
+        ${a.Upper} ${r.Mixed} = ${cd.Mixed}.get${r.Upper}s().iterator().next();
+        assertTrue(${cd.Mixed}.get${r.Upper}s().contains(${r.Mixed}));
+        ${cd.Mixed}.removeAll${r.Upper}s(Collections.singleton(${r.Mixed}));
+        assertFalse(${cd.Mixed}.get${r.Upper}s().contains(${r.Mixed}));
+        ${cd.Mixed}.removeAll${r.Upper}s(full${r.Upper}s);
+        assertEquals(empty${r.Upper}s, ${cd.Mixed}.get${r.Upper}s());
+        try
+        {
+            ${cd.Mixed}.removeAll${r.Upper}s(null);
+            // implementation may no-op
+        }
+        catch (Exception e)
+        {
+            // or implementation may throw e.g. NullPointerException
+        }
+    }
+
+    public void testRetainAll${r.Upper}s()
+    {
+        ${cd.Upper} ${cd.Mixed} = new ${cd.Upper}(full${r.Upper}s, ...);
+        assertEquals(full${r.Upper}s, ${cd.Mixed}.get${r.Upper}s());
+        ${cd.Mixed}.retainAll${r.Upper}s(full${r.Upper}s);
+        assertEquals(full${r.Upper}s, ${cd.Mixed}.get${r.Upper}s());
+        ${a.Upper} retained = ${cd.Mixed}.get${r.Upper}s().iterator().next();
+        assertTrue(${cd.Mixed}.get${r.Upper}s().contains(retained));
+        ${cd.Mixed}.retainAll${r.Upper}s(Collections.singleton(retained));
+        for (${a.Upper} ${r.Mixed} : full${r.Upper}s)
+        {
+            if (${r.Mixed}.equals(retained))
+            {
+                assertTrue(${cd.Mixed}.get${r.Upper}s().contains(${r.Mixed}));
+            }
+            else
+            {
+                assertFalse(${cd.Mixed}.get${r.Upper}s().contains(${r.Mixed}));
+            }
+        }
+        ${cd.Mixed}.retainAll${r.Upper}s(empty${r.Upper}s);
+        assertEquals(empty${r.Upper}s, ${cd.Mixed}.get${r.Upper}s());
+        try
+        {
+            ${cd.Mixed}.retainAll${r.Upper}s(null);
+            // implementation may no-op
+        }
+        catch (Exception e)
+        {
+            // or implementation may throw e.g. NullPointerException
+        }
+    }
+
+    public void testClear${r.Upper}s()
+    {
+        ${cd.Upper} ${cd.Mixed}0 = new ${cd.Upper}(full${r.Upper}s, ...);
+        assertEquals(full${r.Upper}s, ${cd.Mixed}0.get${r.Upper}s());
+        ${cd.Mixed}0.clear${r.Upper}s();
+        assertEquals(empty${r.Upper}s, ${cd.Mixed}0.get${r.Upper}s());
+
+        ${cd.Upper} ${cd.Mixed}1 = new ${cd.Upper}(singleton${r.Upper}s, ...);
+        assertEquals(singleton${r.Upper}s, ${cd.Mixed}1.get${r.Upper}s());
+        ${cd.Mixed}1.clear${r.Upper}s();
+        assertEquals(empty${r.Upper}s, ${cd.Mixed}1.get${r.Upper}s());
+
+        ${cd.Upper} ${cd.Mixed}2 = new ${cd.Upper}(empty${r.Upper}s, ...);
+        assertEquals(empty${r.Upper}s, ${cd.Mixed}2.get${r.Upper}s());
+        ${cd.Mixed}2.clear${r.Upper}s();
+        assertEquals(empty${r.Upper}s, ${cd.Mixed}2.get${r.Upper}s());
     }
 
     public void test${r.Upper}sIsCopiedDefensively()
@@ -988,7 +1313,7 @@ public final class ${cd.Upper}Test
 
     public void testAdd${r.Upper}()
     {
-        ${coll.InterfaceDescription} singleton${r.Upper}sCopy = new ${coll.ImplementationName}<${a.Upper}>(singleton${r.Upper}s);
+        ${coll.InterfaceName}<${a.Upper}> singleton${r.Upper}sCopy = new ${coll.ImplementationName}<${a.Upper}>(singleton${r.Upper}s);
         ${cd.Upper} ${cd.Mixed} = new ${cd.Upper}(singleton${r.Upper}sCopy, ...);
         assertFalse(${cd.Mixed}.get${r.Upper}s().contains(null));
         ${cd.Mixed}.add${r.Upper}(null);
@@ -999,6 +1324,28 @@ public final class ${cd.Upper}Test
         assertTrue(${cd.Mixed}.get${r.Upper}s().contains(${r.Mixed}));
         ${cd.Mixed}.add${r.Upper}(${r.Mixed});
         assertTrue(${cd.Mixed}.get${r.Upper}s().contains(${r.Mixed}));
+    }
+
+    public void testAddAll${r.Upper}s()
+    {
+        ${cd.Upper} ${cd.Mixed} = new ${cd.Upper}(singleton${r.Upper}s, ...);
+        assertEquals(singleton${r.Upper}s, ${cd.Mixed}.get${r.Upper}s());
+        ${cd.Mixed}.addAll${r.Upper}s(singleton${r.Upper}s);
+        assertEquals(singleton${r.Upper}s, ${cd.Mixed}.get${r.Upper}s());
+        ${cd.Mixed}.addAll${r.Upper}s(full${r.Upper}s);
+        for (${a.Upper} ${r.Mixed} : full${r.Upper}s)
+        {
+            assertTrue(${cd.Mixed}.get${r.Upper}s().contains(${r.Mixed}));
+        }
+        try
+        {
+            ${cd.Mixed}.addAll${r.Upper}s(null);
+            // implementation may no-op
+        }
+        catch (Exception e)
+        {
+            // or implementation may throw e.g. NullPointerException
+        }
     }
 
     public void testRemove${r.Upper}()
@@ -1037,6 +1384,113 @@ public final class ${cd.Upper}Test
             ${cd.Mixed}.remove${r.Upper}(${r.Mixed});
             fail("remove${r.Upper}(last ${r.Mixed}) expected IllegalStateException");
         }
+        catch (IllegalStateException e)
+        {
+            // expected
+        }
+    }
+
+    public void testRemoveAll${r.Upper}s()
+    {
+        ${cd.Upper} ${cd.Mixed} = new ${cd.Upper}(full${r.Upper}s, ...);
+        assertEquals(full${r.Upper}s, ${cd.Mixed}.get${r.Upper}s());
+        ${cd.Mixed}.removeAll${r.Upper}s(empty${r.Upper}s);
+        assertEquals(full${r.Upper}s, ${cd.Mixed}.get${r.Upper}s());
+        ${a.Upper} first${r.Upper} = ${cd.Mixed}.get${r.Upper}s().iterator().next();
+        ${cd.Mixed}.removeAll${r.Upper}s(Collections.singleton(first${r.Upper}));
+        assertFalse(${cd.Mixed}.get${r.Upper}s().contains(first${r.Upper}));
+        Set<${a.Upper}> remaining${r.Upper}s = new HashSet<${a.Upper}>(${cd.Mixed}.get${r.Upper}s());
+        ${r.Upper} last${r.Upper} = remaining${r.Upper}s.iterator().next();
+        remaining${r.Upper}s.remove(last${r.Upper});
+        ${cd.Mixed}.removeAll${r.Upper}s(remaining${r.Upper}s);
+        for (${a.Upper} ${r.Mixed} : remaining${r.Upper}s)
+        {
+            assertFalse(${cd.Mixed}.get${r.Upper}s().contains(${r.Mixed}));
+        }
+        assertTrue(${cd.Mixed}.get${r.Upper}s().contains(last${r.Upper}));
+        try
+        {
+            ${cd.Mixed}.removeAll${r.Upper}s(null);
+            // implementation may no-op
+        }
+        catch (Exception e)
+        {
+            // or implementation may throw e.g. NullPointerException
+        }
+    }
+
+    public void testRemoveAllLast${r.Upper}()
+    {
+        ${cd.Upper} ${cd.Mixed} = new ${cd.Upper}(foo, bar, emptyBazs, full${r.Upper}s);
+
+        while (${cd.Mixed}.get${r.Upper}s().size() > 1)
+        {
+            ${a.Upper} ${r.Mixed} = ${cd.Mixed}.get${r.Upper}s().iterator().next();
+            ${cd.Mixed}.removeAll${r.Upper}s(Collections.singleton(${r.Mixed}));
+        }
+
+        try
+        {
+            ${a.Upper} ${r.Mixed} = ${cd.Mixed}.get${r.Upper}s().iterator().next();
+            assertTrue(${cd.Mixed}.get${r.Upper}s().contains(${r.Mixed}));
+            assertEquals(1, ${cd.Mixed}.get${r.Upper}s().size());
+            ${cd.Mixed}.removeAll${r.Upper}s(Collections.singleton(${r.Mixed}));
+            // TODO: removeAll${r.Upper}s needs to check for illegal state
+            //fail("removeAll${r.Upper}s(last ${r.Mixed}) expected IllegalStateException");
+        }
+        catch (IllegalStateException e)
+        {
+            // expected
+        }
+    }
+
+    public void testRetainAll${r.Upper}s()
+    {
+        ${cd.Upper} ${cd.Mixed} = new ${cd.Upper}(foo, bar, fullBazs, full${r.Upper}s);
+        assertEquals(full${r.Upper}s, ${cd.Mixed}.get${r.Upper}s());
+        ${cd.Mixed}.retainAll${r.Upper}s(full${r.Upper}s);
+        assertEquals(full${r.Upper}s, ${cd.Mixed}.get${r.Upper}s());
+        ${a.Upper} retained = ${cd.Mixed}.get${r.Upper}s().iterator().next();
+        assertTrue(${cd.Mixed}.get${r.Upper}s().contains(retained));
+        ${cd.Mixed}.retainAll${r.Upper}s(Collections.singleton(retained));
+        for (${a.Upper} ${r.Mixed} : full${r.Upper}s)
+        {
+            if (${r.Mixed}.equals(retained))
+            {
+                assertTrue(${cd.Mixed}.get${r.Upper}s().contains(${r.Mixed}));
+            }
+            else
+            {
+                assertFalse(${cd.Mixed}.get${r.Upper}s().contains(${r.Mixed}));
+            }
+        }
+
+        try
+        {
+            ${cd.Mixed}.retainAll${r.Upper}s(empty${r.Upper}s);
+            fail("retainAll${r.Upper}s(empty${r.Upper}s) expected IllegalStateException");
+        }
+        catch (IllegalStateException e)
+        {
+            // expected
+        }
+        try
+        {
+            ${cd.Mixed}.retainAll${r.Upper}s(null);
+            fail("retainAll${r.Upper}s(null) expected IllegalStateException");
+        }
+        catch (IllegalStateException e)
+        {
+            // expected
+        }
+        try
+        {
+            ${a.Upper} ${r.Mixed} = create${r.Upper}();
+            assertFalse(${cd.Mixed}.get${r.Upper}s().contains(${r.Mixed}));
+            ${cd.Mixed}.retainAll${r.Upper}s(Collections.singleton(${r.Mixed}));
+            // TODO:  retainAll${r.Upper}s needs to check for intersection size > 1
+            //fail("retainAll${r.Upper}s(no intersection) expected IllegalStateException");
+       }
         catch (IllegalStateException e)
         {
             // expected
