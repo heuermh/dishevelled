@@ -440,7 +440,7 @@ public abstract class AbstractObjectMatrixUtilsTest
         //assertNotNull("viewSelection(UnaryPredicate) not null", unmodifiableView.viewSelection(unaryPredicate));
         assertNotNull("viewSlice not null", unmodifiableView.viewSlice(0L));
         assertNotNull("viewSliceFlip not null", unmodifiableView.viewSliceFlip());
-        //assertNotNull("viewStrides not null", unmodifiableView.viewStrides(1L, 2L, 3L));
+        assertNotNull("viewStrides not null", unmodifiableView.viewStrides(1L, 2L, 3L));
         // todo:  assert views are unmodifiable
 
         try
