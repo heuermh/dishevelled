@@ -669,7 +669,15 @@ public class ${cd.Upper}
      */
     public final void retainAll${r.Upper}s(final Collection<? extends ${a.Upper}> ${r.Mixed}s)
     {
-        // TODO:  check for illegal state
+        if (${r.Mixed}s == null)
+        {
+            throw new IllegalStateException("must retain at least one ${r.Lower} in ${r.Mixed}s");
+        }
+        if (${r.Mixed}s.isEmpty())
+        {
+            throw new IllegalStateException("must retain at least one ${r.Lower} in ${r.Mixed}s");
+        }
+        // TODO:  check for intersection size > 1
         this.${r.Mixed}s.retainAll(${r.Mixed}s);
     }
 #end
@@ -907,7 +915,15 @@ public class ${cd.Upper}
      */
     public final void retainAll${r.Upper}s(final Collection<? extends ${a.Upper}> ${r.Mixed}s)
     {
-        // TODO:  check for illegal state
+        if (${r.Mixed}s == null)
+        {
+            throw new IllegalStateException("must retain at least one ${r.Lower} in ${r.Mixed}s");
+        }
+        if (${r.Mixed}s.isEmpty())
+        {
+            throw new IllegalStateException("must retain at least one ${r.Lower} in ${r.Mixed}s");
+        }
+        // TODO:  check for intersection size > 1
         this.${r.Mixed}s.retainAll(${r.Mixed}s);
     }
 #end
