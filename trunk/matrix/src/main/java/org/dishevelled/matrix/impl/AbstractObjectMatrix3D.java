@@ -638,7 +638,7 @@ public abstract class AbstractObjectMatrix3D<E>
                                          final long rowStride,
                                          final long columnStride)
     {
-        return view().viewStrides(sliceStride, rowStride, columnStride);
+        return view().vStrides(sliceStride, rowStride, columnStride);
     }
 
     /** @see ObjectMatrix3D */
