@@ -28,6 +28,8 @@ import java.util.Iterator;
 import org.dishevelled.functor.BinaryFunction;
 import org.dishevelled.functor.BinaryPredicate;
 import org.dishevelled.functor.BinaryProcedure;
+import org.dishevelled.functor.QuaternaryPredicate;
+import org.dishevelled.functor.QuaternaryProcedure;
 import org.dishevelled.functor.TertiaryPredicate;
 import org.dishevelled.functor.TertiaryProcedure;
 import org.dishevelled.functor.UnaryFunction;
@@ -94,8 +96,7 @@ public final class ObjectMatrixUtils
      */
     public static <T> ObjectMatrix3D<T> unmodifiableObjectMatrix(final ObjectMatrix3D<T> matrix)
     {
-        return null;
-        //return new UnmodifiableObjectMatrix3D<T>(matrix);
+        return new UnmodifiableObjectMatrix3D<T>(matrix);
     }
 
 
@@ -505,6 +506,258 @@ public final class ObjectMatrixUtils
         public ObjectMatrix2D<E> viewStrides(final long rowStride, final long columnStride)
         {
             ObjectMatrix2D<E> strides = matrix.viewStrides(rowStride, columnStride);
+            return ObjectMatrixUtils.unmodifiableObjectMatrix(strides);
+        }
+    }
+
+    /**
+     * Unmodifiable 3D object matrix view.
+     */
+    private static class UnmodifiableObjectMatrix3D<E>
+        implements ObjectMatrix3D<E>
+    {
+        /** Wrapped 3D object matrix. */
+        private final ObjectMatrix3D<E> matrix;
+
+
+        /**
+         * Create a new unmodifiable 3D object matrix view for the
+         * specified 3D object matrix.
+         *
+         * @param matrix 3D object matrix to view, must not be null
+         */
+        UnmodifiableObjectMatrix3D(final ObjectMatrix3D<E> matrix)
+        {
+            if (matrix == null)
+            {
+                throw new IllegalArgumentException("matrix must not be null");
+            }
+            this.matrix = matrix;
+        }
+
+
+        /** {@inheritDoc} */
+        public E aggregate(final BinaryFunction<E, E, E> aggr,
+                           final UnaryFunction<E, E> function)
+        {
+            return matrix.aggregate(aggr, function);
+        }
+
+        /** {@inheritDoc} */
+        public E aggregate(final ObjectMatrix3D<? extends E> other,
+                           final BinaryFunction<E, E, E> aggr,
+                           final BinaryFunction<E, E, E> function)
+        {
+            return matrix.aggregate(other, aggr, function);
+        }
+
+        /** {@inheritDoc} */
+        public ObjectMatrix3D<E> assign(final E e)
+        {
+            throw new UnsupportedOperationException("assign operation not supported by this 3D object matrix");
+        }
+
+        /** {@inheritDoc} */
+        public ObjectMatrix3D<E> assign(final ObjectMatrix3D<? extends E> other)
+        {
+            throw new UnsupportedOperationException("assign operation not supported by this 3D object matrix");
+        }
+
+        /** {@inheritDoc} */
+        public ObjectMatrix3D<E> assign(final ObjectMatrix3D<? extends E> other,
+                                        final BinaryFunction<E, E, E> function)
+        {
+            throw new UnsupportedOperationException("assign operation not supported by this 3D object matrix");
+        }
+
+        /** {@inheritDoc} */
+        public ObjectMatrix3D<E> assign(final UnaryFunction<E, E> function)
+        {
+            throw new UnsupportedOperationException("assign operation not supported by this 3D object matrix");
+        }
+
+        /** {@inheritDoc} */
+        public long cardinality()
+        {
+            return matrix.cardinality();
+        }
+
+        /** {@inheritDoc} */
+        public void clear()
+        {
+            throw new UnsupportedOperationException("clear operation not supported by this 3D object matrix");
+        }
+
+        /** {@inheritDoc} */
+        public long columns()
+        {
+            return matrix.columns();
+        }
+
+        /** {@inheritDoc} */
+        public void forEach(final QuaternaryPredicate<Long, Long, Long, E> predicate,
+                            final QuaternaryProcedure<Long, Long, Long, E> procedure)
+        {
+            matrix.forEach(predicate, procedure);
+        }
+
+        /** {@inheritDoc} */
+        public void forEach(final QuaternaryProcedure<Long, Long, Long, E> procedure)
+        {
+            matrix.forEach(procedure);
+        }
+
+        /** {@inheritDoc} */
+        public void forEach(final UnaryPredicate<E> predicate,
+                            final UnaryProcedure<E> procedure)
+        {
+            matrix.forEach(predicate, procedure);
+        }
+
+        /** {@inheritDoc} */
+        public void forEach(final UnaryProcedure<E> procedure)
+        {
+            matrix.forEach(procedure);
+        }
+
+        /** {@inheritDoc} */
+        public E get(final long slice, final long row, final long column)
+        {
+            return matrix.get(slice, row, column);
+        }
+
+        /** {@inheritDoc} */
+        public E getQuick(final long slice, final long row, final long column)
+        {
+            return matrix.getQuick(slice, row, column);
+        }
+
+        /** {@inheritDoc} */
+        public boolean isEmpty()
+        {
+            return matrix.isEmpty();
+        }
+
+        /** {@inheritDoc} */
+        public Iterator<E> iterator()
+        {
+            // todo:  wrap iterator and block remove()
+            return matrix.iterator();
+        }
+
+        /** {@inheritDoc} */
+        public long rows()
+        {
+            return matrix.rows();
+        }
+
+        /** {@inheritDoc} */
+        public void set(final long slice, final long row, final long column, final E e)
+        {
+            throw new UnsupportedOperationException("set operation not supported by this 3D object matrix");
+        }
+
+        /** {@inheritDoc} */
+        public void setQuick(final long slice, final long row, final long column, final E e)
+        {
+            throw new UnsupportedOperationException("setQuick operation not supported by this 3D object matrix");
+        }
+
+        /** {@inheritDoc} */
+        public long size()
+        {
+            return matrix.size();
+        }
+
+        /** {@inheritDoc} */
+        public long slices()
+        {
+            return matrix.slices();
+        }
+
+        /** {@inheritDoc} */
+        public ObjectMatrix2D<E> viewColumn(final long column)
+        {
+            ObjectMatrix2D<E> columnView = matrix.viewColumn(column);
+            return ObjectMatrixUtils.unmodifiableObjectMatrix(columnView);
+        }
+
+        /** {@inheritDoc} */
+        public ObjectMatrix3D<E> viewColumnFlip()
+        {
+            ObjectMatrix3D<E> columnFlip = matrix.viewColumnFlip();
+            return ObjectMatrixUtils.unmodifiableObjectMatrix(columnFlip);
+        }
+
+        /** {@inheritDoc} */
+        public ObjectMatrix3D<E> viewDice(final int axis0, final int axis1, final int axis2)
+        {
+            ObjectMatrix3D<E> dice = matrix.viewDice(axis0, axis1, axis2);
+            return ObjectMatrixUtils.unmodifiableObjectMatrix(dice);
+        }
+
+        /** {@inheritDoc} */
+        public ObjectMatrix3D<E> viewPart(final long slice,
+                                          final long row,
+                                          final long column,
+                                          final long depth,
+                                          final long height,
+                                          final long width)
+        {
+            ObjectMatrix3D<E> part = matrix.viewPart(slice, row, column, depth, height, width);
+            return ObjectMatrixUtils.unmodifiableObjectMatrix(part);
+        }
+
+        /** {@inheritDoc} */
+        public ObjectMatrix2D<E> viewRow(final long row)
+        {
+            ObjectMatrix2D<E> rowView = matrix.viewColumn(row);
+            return ObjectMatrixUtils.unmodifiableObjectMatrix(rowView);
+        }
+
+        /** {@inheritDoc} */
+        public ObjectMatrix3D<E> viewRowFlip()
+        {
+            ObjectMatrix3D<E> rowFlip = matrix.viewRowFlip();
+            return ObjectMatrixUtils.unmodifiableObjectMatrix(rowFlip);
+        }
+
+        /** {@inheritDoc} */
+        public ObjectMatrix3D<E> viewSelection(final long[] sliceIndices,
+                                               final long[] rowIndices,
+                                               final long[] columnIndices)
+        {
+            ObjectMatrix3D<E> selection = matrix.viewSelection(sliceIndices, rowIndices, columnIndices);
+            return ObjectMatrixUtils.unmodifiableObjectMatrix(selection);
+        }
+
+        /** {@inheritDoc} */
+        public ObjectMatrix3D<E> viewSelection(final UnaryPredicate<ObjectMatrix2D<E>> predicate)
+        {
+            ObjectMatrix3D<E> selection = matrix.viewSelection(predicate);
+            return ObjectMatrixUtils.unmodifiableObjectMatrix(selection);
+        }
+
+        /** {@inheritDoc} */
+        public ObjectMatrix2D<E> viewSlice(final long slice)
+        {
+            ObjectMatrix2D<E> sliceView = matrix.viewColumn(slice);
+            return ObjectMatrixUtils.unmodifiableObjectMatrix(sliceView);
+        }
+
+        /** {@inheritDoc} */
+        public ObjectMatrix3D<E> viewSliceFlip()
+        {
+            ObjectMatrix3D<E> sliceFlip = matrix.viewSliceFlip();
+            return ObjectMatrixUtils.unmodifiableObjectMatrix(sliceFlip);
+        }
+
+        /** {@inheritDoc} */
+        public ObjectMatrix3D<E> viewStrides(final long sliceStride,
+                                             final long rowStride,
+                                             final long columnStride)
+        {
+            ObjectMatrix3D<E> strides = matrix.viewStrides(sliceStride, rowStride, columnStride);
             return ObjectMatrixUtils.unmodifiableObjectMatrix(strides);
         }
     }
