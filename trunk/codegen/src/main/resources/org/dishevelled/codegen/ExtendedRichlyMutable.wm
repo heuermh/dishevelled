@@ -531,7 +531,8 @@ public class ${cd.Upper}
 
     /**
      * Return true if this ${cd.Lower} has at least one ${r.Lower},
-     * specifically, if ${r.Lower}s is not empty.
+     * specifically, if the ${coll.InterfaceDescription} of ${r.Lower}s for
+     * this ${cd.Lower} is not empty.
      *
      * @return true if this ${cd.Lower} has at least one ${r.Lower}
      */
@@ -938,7 +939,8 @@ public class ${cd.Upper}
 
     /**
      * Return true if this ${cd.Lower} has at least one ${r.Lower},
-     * specifically, if ${r.Lower}s is not empty.
+     * specifically, if the ${coll.InterfaceDescription} of ${r.Lower}s for
+     * this ${cd.Lower} is not empty.
      *
      * @return true if this ${cd.Lower} has at least one ${r.Lower}
      */
