@@ -28,6 +28,8 @@ import junit.framework.TestCase;
 import org.dishevelled.functor.BinaryFunction;
 import org.dishevelled.functor.BinaryPredicate;
 import org.dishevelled.functor.BinaryProcedure;
+import org.dishevelled.functor.QuaternaryPredicate;
+import org.dishevelled.functor.QuaternaryProcedure;
 import org.dishevelled.functor.TertiaryPredicate;
 import org.dishevelled.functor.TertiaryProcedure;
 import org.dishevelled.functor.UnaryFunction;
@@ -68,6 +70,26 @@ public abstract class AbstractObjectMatrixUtilsTest
     {
         /** {@inheritDoc} */
         public void run(final Long index, final String string)
+        {
+            // empty
+        }
+    };
+
+    /** Quaternary predicate. */
+    QuaternaryPredicate<Long, Long, Long, String> quaternaryPredicate = new QuaternaryPredicate<Long, Long, Long, String>()
+    {
+        /** {@inheritDoc} */
+        public boolean test(final Long slice, final Long row, final Long column, final String string)
+        {
+            return true;
+        }
+    };
+
+    /** Quaternary procedure. */
+    QuaternaryProcedure<Long, Long, Long, String> quaternaryProcedure = new QuaternaryProcedure<Long, Long, Long, String>()
+    {
+        /** {@inheritDoc} */
+        public void run(final Long slice, final Long row, final Long column, final String string)
         {
             // empty
         }
@@ -127,7 +149,7 @@ public abstract class AbstractObjectMatrixUtilsTest
     /**
      * Create and return a new instance of an implementation of ObjectMatrix1D<T> to test.
      *
-     * @param T 1D object matrix type
+     * @param <T> 1D object matrix type
      * @return a new instance of an implementation of ObjectMatrix1D<T> to test
      */
     protected abstract <T> ObjectMatrix1D<T> createObjectMatrix1D();
@@ -135,10 +157,18 @@ public abstract class AbstractObjectMatrixUtilsTest
     /**
      * Create and return a new instance of an implementation of ObjectMatrix2D<T> to test.
      *
-     * @param T 2D object matrix type
+     * @param <T> 2D object matrix type
      * @return a new instance of an implementation of ObjectMatrix2D<T> to test
      */
     protected abstract <T> ObjectMatrix2D<T> createObjectMatrix2D();
+
+    /**
+     * Create and return a new instance of an implementation of ObjectMatrix3D<T> to test.
+     *
+     * @param <T> 3D object matrix type
+     * @return a new instance of an implementation of ObjectMatrix3D<T> to test
+     */
+    protected abstract <T> ObjectMatrix3D<T> createObjectMatrix3D();
 
 
     public void testUnmodifiableObjectMatrix1D()
@@ -361,6 +391,125 @@ public abstract class AbstractObjectMatrixUtilsTest
         try
         {
             ObjectMatrixUtils.unmodifiableObjectMatrix((ObjectMatrix2D<String>) null);
+            fail("unmodifiableObjectMatrix(null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+    }
+
+    public void testUnmodifiableObjectMatrix3D()
+    {
+        ObjectMatrix3D<String> matrix = createObjectMatrix3D();
+        ObjectMatrix3D<String> other = createObjectMatrix3D();
+        ObjectMatrix3D<String> unmodifiableView = ObjectMatrixUtils.unmodifiableObjectMatrix(matrix);
+        assertNotNull("unmodifiableView not null", unmodifiableView);
+
+        assertNotNull("aggregate(BinaryFunction, UnaryFunction) not null",
+                      unmodifiableView.aggregate(binaryFunction, unaryFunction));
+
+        assertNotNull("aggregate(ObjectMatrix3D, BinaryFunction, BinaryFunction) not null",
+                      unmodifiableView.aggregate(other, binaryFunction, binaryFunction));
+
+        assertEquals(matrix.cardinality(), unmodifiableView.cardinality());
+
+        unmodifiableView.forEach(quaternaryPredicate, quaternaryProcedure);
+        unmodifiableView.forEach(quaternaryProcedure);
+        unmodifiableView.forEach(unaryPredicate, unaryProcedure);
+        unmodifiableView.forEach(unaryProcedure);
+
+        assertEquals(matrix.get(0L, 0L, 0L), unmodifiableView.get(0L, 0L, 0L));
+        assertEquals(matrix.getQuick(0L, 0L, 0L), unmodifiableView.getQuick(0L, 0L, 0L));
+        assertEquals(matrix.isEmpty(), unmodifiableView.isEmpty());
+
+        assertNotNull("iterator not null", unmodifiableView.iterator());
+        // todo:  assert iterator.delete() throws UnsupportedOperationException
+
+        assertEquals(matrix.size(), unmodifiableView.size());
+        assertEquals(matrix.rows(), unmodifiableView.rows());
+        assertEquals(matrix.columns(), unmodifiableView.columns());
+
+        assertNotNull("viewColumn not null", unmodifiableView.viewColumn(0L));
+        assertNotNull("viewColumnFlip not null", unmodifiableView.viewColumnFlip());
+        assertNotNull("viewDice not null", unmodifiableView.viewDice(0, 1, 2));
+        assertNotNull("viewPart not null", unmodifiableView.viewPart(0L, 1L, 2L, 3L, 4L, 5L));
+        assertNotNull("viewRow not null", unmodifiableView.viewRow(0L));
+        assertNotNull("viewRowFlip not null", unmodifiableView.viewRowFlip());
+        //assertNotNull("viewSelection(long[]) not null", unmodifiableView.viewSelection(new long[] { 0L }));
+        //assertNotNull("viewSelection(UnaryPredicate) not null", unmodifiableView.viewSelection(unaryPredicate));
+        assertNotNull("viewSlice not null", unmodifiableView.viewSlice(0L));
+        assertNotNull("viewSliceFlip not null", unmodifiableView.viewSliceFlip());
+        //assertNotNull("viewStrides not null", unmodifiableView.viewStrides(1L, 2L, 3L));
+        // todo:  assert views are unmodifiable
+
+        try
+        {
+            unmodifiableView.assign("foo");
+            fail("assign(E) expected UnsupportedOperationException");
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
+        try
+        {
+            unmodifiableView.assign(other);
+            fail("assign(ObjectMatrix3D) expected UnsupportedOperationException");
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
+        try
+        {
+            unmodifiableView.assign(other, binaryFunction);
+            fail("assign(ObjectMatrix3D, BinaryFunction) expected UnsupportedOperationException");
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
+        try
+        {
+            unmodifiableView.assign(unaryFunction);
+            fail("assign(UnaryFunction) expected UnsupportedOperationException");
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
+        try
+        {
+            unmodifiableView.clear();
+            fail("clear() expected UnsupportedOperationException");
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
+        try
+        {
+            unmodifiableView.set(0L, 0L, 0L, "foo");
+            fail("set(Long, Long, Long, E) expected UnsupportedOperationException");
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
+        try
+        {
+            unmodifiableView.setQuick(0L, 0L, 0L, "foo");
+            fail("setQuick(Long, Long, Long, E) expected UnsupportedOperationException");
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
+
+        try
+        {
+            ObjectMatrixUtils.unmodifiableObjectMatrix((ObjectMatrix3D<String>) null);
             fail("unmodifiableObjectMatrix(null) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
