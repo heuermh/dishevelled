@@ -104,6 +104,9 @@ public final class LabelFieldLayout
     /** Default inset size. */
     private static final int DEFAULT_INSET_SIZE = 6;
 
+    /** Mac inset size. */
+    private static final int MAC_INSET_SIZE = 8;
+
     /** Default label width, <code>33%</code>. */
     private static final float DEFAULT_LABEL_WIDTH = 0.33f;
 
@@ -113,8 +116,14 @@ public final class LabelFieldLayout
     /** Empty insets. */
     private static final Insets EMPTY_INSETS = new Insets(0, 0, 0, 0);
 
+    /** Mac empty insets. */
+    private static final Insets MAC_EMPTY_INSETS = new Insets(0, 0, 0, MAC_INSET_SIZE);
+
     /** Label insets. */
     private static final Insets LABEL_INSETS = new Insets(0, 0, DEFAULT_INSET_SIZE, 0);
+
+    /** Mac label insets. */
+    private static final Insets MAC_LABEL_INSETS = new Insets(0, 0, DEFAULT_INSET_SIZE, MAC_INSET_SIZE);
 
     /** Field insets. */
     private static final Insets FIELD_INSETS = new Insets(0, 0, DEFAULT_INSET_SIZE, 0);
@@ -295,6 +304,27 @@ public final class LabelFieldLayout
     }
 
     /**
+     * Return constraints suitable for a mac label, a label
+     * for a field that is not a JLabel.
+     *
+     * @return constraints suitable for a mac label
+     */
+    Constraints macLabel()
+    {
+        c.anchor = GridBagConstraints.WEST;
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.gridheight = 1;
+        c.gridwidth = GridBagConstraints.RELATIVE;
+        c.insets = MAC_LABEL_INSETS;
+
+        c.gridx = 0;
+        c.weighty = 0;
+        c.weightx = labelPercent;
+
+        return c;
+    }
+
+    /**
      * Return constraints suitable for a label label, a label
      * for a field that is a JLabel.
      *
@@ -307,6 +337,27 @@ public final class LabelFieldLayout
         c.gridheight = 1;
         c.gridwidth = GridBagConstraints.RELATIVE;
         c.insets = EMPTY_INSETS;
+
+        c.gridx = 0;
+        c.weighty = 0;
+        c.weightx = labelPercent;
+
+        return c;
+    }
+
+    /**
+     * Return constraints suitable for a mac label label, a label
+     * for a field that is a JLabel.
+     *
+     * @return constraints suitable for a mac label label
+     */
+    Constraints macLabelLabel()
+    {
+        c.anchor = GridBagConstraints.WEST;
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.gridheight = 1;
+        c.gridwidth = GridBagConstraints.RELATIVE;
+        c.insets = MAC_EMPTY_INSETS;
 
         c.gridx = 0;
         c.weighty = 0;
