@@ -59,7 +59,7 @@ public final class BitMatrix2D
     private final long size;
 
     /** Maximum number of rows and columns. */
-    public final long MAX_SIZE = ((long) Integer.MAX_VALUE) * ((long) Integer.MAX_VALUE) - 1L;
+    public static final long MAX_SIZE = ((long) Integer.MAX_VALUE) * ((long) Integer.MAX_VALUE) - 1L;
 
 
     /**
@@ -236,7 +236,7 @@ public final class BitMatrix2D
         }
         if (column >= columns)
         {
-            throw new IndexOutOfBoundsException(column + " >= " + columns);            
+            throw new IndexOutOfBoundsException(column + " >= " + columns);
         }
 
         long index = (columns * row) + column;
@@ -276,7 +276,7 @@ public final class BitMatrix2D
         }
         if (column0 >= columns)
         {
-            throw new IndexOutOfBoundsException(column0 + " >= " + columns);            
+            throw new IndexOutOfBoundsException(column0 + " >= " + columns);
         }
         if (row1 > rows)
         {
@@ -284,7 +284,7 @@ public final class BitMatrix2D
         }
         if (column1 > columns)
         {
-            throw new IndexOutOfBoundsException(column1 + " > " + columns);            
+            throw new IndexOutOfBoundsException(column1 + " > " + columns);
         }
 
         for (long row = row0; row < row1; row++)
@@ -314,7 +314,7 @@ public final class BitMatrix2D
         }
         if (column >= columns)
         {
-            throw new IndexOutOfBoundsException(column + " >= " + columns);            
+            throw new IndexOutOfBoundsException(column + " >= " + columns);
         }
 
         long index = (columns * row) + column;
@@ -354,7 +354,7 @@ public final class BitMatrix2D
         }
         if (column0 >= columns)
         {
-            throw new IndexOutOfBoundsException(column0 + " >= " + columns);            
+            throw new IndexOutOfBoundsException(column0 + " >= " + columns);
         }
         if (row1 > rows)
         {
@@ -362,7 +362,7 @@ public final class BitMatrix2D
         }
         if (column1 > columns)
         {
-            throw new IndexOutOfBoundsException(column1 + " > " + columns);            
+            throw new IndexOutOfBoundsException(column1 + " > " + columns);
         }
 
         for (long row = row0; row < row1; row++)
@@ -549,7 +549,7 @@ public final class BitMatrix2D
         }
     }
 
-    /** @see Object */
+    /** {@inheritDoc} */
     public boolean equals(final Object o)
     {
         if (o == null)
@@ -570,7 +570,7 @@ public final class BitMatrix2D
 
         for (int i = 0, j = bitSets.size(); i < j; i++)
         {
-            if (bitSets.get(i).equals(bm.getBitSets().get(i)) == false)
+            if (!bitSets.get(i).equals(bm.getBitSets().get(i)))
             {
                 return false;
             }
@@ -578,7 +578,7 @@ public final class BitMatrix2D
         return true;
     }
 
-    /** @see Object */
+    /** {@inheritDoc} */
     public int hashCode()
     {
         // TODO

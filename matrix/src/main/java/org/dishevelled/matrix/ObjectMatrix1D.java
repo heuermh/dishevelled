@@ -36,6 +36,7 @@ import org.dishevelled.functor.BinaryProcedure;
  * Typed fixed size matrix of objects in one dimension, indexed
  * by <code>long</code>s.
  *
+ * @param <E> type of this 1D matrix
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
@@ -215,7 +216,7 @@ public interface ObjectMatrix1D<E>
      * view are reflected in this matrix, and vice-versa.
      *
      * @param index index, must be <code>&gt;= 0</code> and <code>&lt; size()</code>
-     * @param width
+     * @param width width
      * @return a new 1D matrix <i>sub-range view</i> that contains only those values
      *    from index <code>index</code> to <code>index + width - 1</code>
      */

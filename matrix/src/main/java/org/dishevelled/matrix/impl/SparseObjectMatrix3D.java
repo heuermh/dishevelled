@@ -30,7 +30,6 @@ import java.io.ObjectOutputStream;
 
 import java.util.Map;
 import java.util.HashMap;
-import java.util.Iterator;
 
 import org.dishevelled.matrix.ObjectMatrix2D;
 
@@ -44,6 +43,7 @@ import org.dishevelled.matrix.ObjectMatrix2D;
  * addressable size, on the other hand, is limited to
  * <code>(slices * rows * columns) &lt; Long.MAX_VALUE</code>.</p>
  *
+ * @param <E> type for this sparse 3D matrix
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
@@ -53,6 +53,9 @@ public class SparseObjectMatrix3D<E>
 {
     /** Map of elements keyed by a <code>Long</code> index. */
     private Map<Long, E> elements;
+
+    /** Default load factor. */
+    private static final float DEFAULT_LOAD_FACTOR = 0.75f;
 
 
     /**
@@ -76,7 +79,8 @@ public class SparseObjectMatrix3D<E>
     public SparseObjectMatrix3D(final long slices, final long rows, final long columns)
     {
         this(slices, rows, columns,
-             (int) Math.min(Integer.MAX_VALUE, ((slices * rows * columns) / 0.75)), 0.75f);
+             (int) Math.min(Integer.MAX_VALUE, ((slices * rows * columns) / DEFAULT_LOAD_FACTOR)),
+             DEFAULT_LOAD_FACTOR);
     }
 
     /**
@@ -135,7 +139,7 @@ public class SparseObjectMatrix3D<E>
     }
 
 
-    /** @see Object */
+    /** {@inheritDoc} */
     public Object clone()
     {
         return new SparseObjectMatrix3D<E>(slices, rows, columns,
@@ -144,7 +148,7 @@ public class SparseObjectMatrix3D<E>
                                            isView, elements);
     }
 
-    /** @see org.dishevelled.matrix.ObjectMatrix3D */
+    /** {@inheritDoc} */
     public E getQuick(final long slice, final long row, final long column)
     {
         long index = sliceZero + (slice * sliceStride)
@@ -153,7 +157,7 @@ public class SparseObjectMatrix3D<E>
         return elements.get(index);
     }
 
-    /** @see org.dishevelled.matrix.ObjectMatrix3D */
+    /** {@inheritDoc} */
     public void setQuick(final long slice, final long row, final long column, final E e)
     {
         long index = sliceZero + (slice * sliceStride)
@@ -169,19 +173,19 @@ public class SparseObjectMatrix3D<E>
         }
     }
 
-    /** @see org.dishevelled.matrix.ObjectMatrix3D */
+    /** {@inheritDoc} */
     public ObjectMatrix2D<E> viewSlice(final long slice)
     {
         return new SliceView(slice);
     }
 
-    /** @see org.dishevelled.matrix.ObjectMatrix3D */
+    /** {@inheritDoc} */
     public ObjectMatrix2D<E> viewRow(final long row)
     {
         return new RowView(row);
     }
 
-    /** @see org.dishevelled.matrix.ObjectMatrix3D */
+    /** {@inheritDoc} */
     public ObjectMatrix2D<E> viewColumn(final long column)
     {
         return new ColumnView(column);
@@ -192,6 +196,7 @@ public class SparseObjectMatrix3D<E>
      *
      * @see java.io.ObjectOutputStream
      * @param out object output stream
+     * @throws IOException if an IO error occurs
      */
     private void writeObject(final ObjectOutputStream out)
         throws IOException
@@ -214,6 +219,8 @@ public class SparseObjectMatrix3D<E>
      *
      * @see java.io.ObjectInputStream
      * @param in object input stream
+     * @throws IOException if an IO error occurs
+     * @throws ClassNotFoundException if a classloading error occurs
      */
     private void readObject(final ObjectInputStream in)
         throws IOException, ClassNotFoundException
@@ -231,7 +238,7 @@ public class SparseObjectMatrix3D<E>
         this.elements = (Map<Long, E>) in.readObject();
     }
 
-    /** @see Object */
+    /** {@inheritDoc} */
     public String toString()
     {
         StringBuffer sb = new StringBuffer(super.toString());
@@ -271,12 +278,14 @@ public class SparseObjectMatrix3D<E>
          *
          * @param slice slice to view
          */
-        public SliceView(final long slice)
+        SliceView(final long slice)
         {
             super(SparseObjectMatrix3D.this.rows,
                   SparseObjectMatrix3D.this.columns,
                   SparseObjectMatrix3D.this.rowZero,
-                  SparseObjectMatrix3D.this.columnZero + (slice * SparseObjectMatrix3D.this.sliceStride) + SparseObjectMatrix3D.this.sliceZero,
+                  SparseObjectMatrix3D.this.columnZero
+                      + (slice * SparseObjectMatrix3D.this.sliceStride)
+                      + SparseObjectMatrix3D.this.sliceZero,
                   SparseObjectMatrix3D.this.rowStride,
                   SparseObjectMatrix3D.this.columnStride,
                   true,
@@ -296,12 +305,14 @@ public class SparseObjectMatrix3D<E>
          *
          * @param row row to view
          */
-        public RowView(final long row)
+        RowView(final long row)
         {
             super(SparseObjectMatrix3D.this.slices,
                   SparseObjectMatrix3D.this.columns,
                   SparseObjectMatrix3D.this.sliceZero,
-                  SparseObjectMatrix3D.this.columnZero + (row * SparseObjectMatrix3D.this.rowStride) + SparseObjectMatrix3D.this.rowZero,
+                  SparseObjectMatrix3D.this.columnZero
+                      + (row * SparseObjectMatrix3D.this.rowStride)
+                      + SparseObjectMatrix3D.this.rowZero,
                   SparseObjectMatrix3D.this.sliceStride,
                   SparseObjectMatrix3D.this.columnStride,
                   true,
@@ -321,12 +332,14 @@ public class SparseObjectMatrix3D<E>
          *
          * @param column column to view
          */
-        public ColumnView(final long column)
+        ColumnView(final long column)
         {
             super(SparseObjectMatrix3D.this.slices,
                   SparseObjectMatrix3D.this.rows,
                   SparseObjectMatrix3D.this.sliceZero,
-                  SparseObjectMatrix3D.this.rowZero + (column * SparseObjectMatrix3D.this.columnStride) + SparseObjectMatrix3D.this.columnZero,
+                  SparseObjectMatrix3D.this.rowZero
+                      + (column * SparseObjectMatrix3D.this.columnStride)
+                      + SparseObjectMatrix3D.this.columnZero,
                   SparseObjectMatrix3D.this.sliceStride,
                   SparseObjectMatrix3D.this.rowStride,
                   true,

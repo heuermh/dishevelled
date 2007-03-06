@@ -53,7 +53,7 @@ public final class BitMatrix1D
     private final long size;
 
     /** Maximum size. */
-    public final long MAX_SIZE = ((long) Integer.MAX_VALUE) * ((long) Integer.MAX_VALUE) - 1L;
+    public static final long MAX_SIZE = ((long) Integer.MAX_VALUE) * ((long) Integer.MAX_VALUE) - 1L;
 
 
     /**
@@ -183,7 +183,7 @@ public final class BitMatrix1D
      *    or if <code>index</code> is greater than or equal to <code>size()</code>
      */
     public void set(final long index, final boolean value)
-    { 
+    {
         if (index >= size)
         {
             throw new IndexOutOfBoundsException(index + " >= " + size);
@@ -324,7 +324,7 @@ public final class BitMatrix1D
                 return true;
             }
         }
-        return false;        
+        return false;
     }
 
     /**
@@ -462,7 +462,7 @@ public final class BitMatrix1D
         }
     }
 
-    /** @see Object */
+    /** {@inheritDoc} */
     public boolean equals(final Object o)
     {
         if (o == null)
@@ -483,7 +483,7 @@ public final class BitMatrix1D
 
         for (int i = 0, j = bitSets.size(); i < j; i++)
         {
-            if (bitSets.get(i).equals(bm.getBitSets().get(i)) == false)
+            if (!bitSets.get(i).equals(bm.getBitSets().get(i)))
             {
                 return false;
             }
@@ -491,7 +491,7 @@ public final class BitMatrix1D
         return true;
     }
 
-    /** @see Object */
+    /** {@inheritDoc} */
     public int hashCode()
     {
         // TODO

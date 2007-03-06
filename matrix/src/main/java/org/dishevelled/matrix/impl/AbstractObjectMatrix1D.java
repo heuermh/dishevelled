@@ -38,6 +38,7 @@ import org.dishevelled.functor.BinaryPredicate;
 /**
  * Abstract implementation of ObjectMatrix1D.
  *
+ * @param <E> type of this abstract 1D matrix
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
@@ -105,17 +106,17 @@ public abstract class AbstractObjectMatrix1D<E>
         this.size = size;
         this.zero = zero;
         this.stride = stride;
-        this.isView = isView;        
+        this.isView = isView;
     }
 
 
-    /** @see ObjectMatrix1D */
+    /** {@inheritDoc} */
     public long size()
     {
         return size;
     }
 
-    /** @see ObjectMatrix1D */
+    /** {@inheritDoc} */
     public long cardinality()
     {
         long cardinality = 0;
@@ -129,13 +130,13 @@ public abstract class AbstractObjectMatrix1D<E>
         return cardinality;
     }
 
-    /** @see ObjectMatrix1D */
+    /** {@inheritDoc} */
     public boolean isEmpty()
     {
         return (0 == cardinality());
     }
 
-    /** @see ObjectMatrix1D */
+    /** {@inheritDoc} */
     public void clear()
     {
         forEach(new BinaryProcedure<Long, E>()
@@ -150,13 +151,13 @@ public abstract class AbstractObjectMatrix1D<E>
             });
     }
 
-    /** @see ObjectMatrix1D */
+    /** {@inheritDoc} */
     public Iterator<E> iterator()
     {
         return new ObjectMatrix1DIterator();
     }
 
-    /** @see ObjectMatrix1D */
+    /** {@inheritDoc} */
     public E get(final long index)
     {
         if (index < 0)
@@ -171,7 +172,7 @@ public abstract class AbstractObjectMatrix1D<E>
         return getQuick(index);
     }
 
-    /** @see ObjectMatrix1D */
+    /** {@inheritDoc} */
     public void set(final long index, final E e)
     {
         if (index < 0)
@@ -186,13 +187,13 @@ public abstract class AbstractObjectMatrix1D<E>
         setQuick(index, e);
     }
 
-    /** @see ObjectMatrix1D */
+    /** {@inheritDoc} */
     public void setQuick(final long index, final E e)
     {
         throw new UnsupportedOperationException();
     }
 
-    /** @see ObjectMatrix1D */
+    /** {@inheritDoc} */
     public ObjectMatrix1D<E> assign(final E e)
     {
         forEach(new BinaryProcedure<Long, E>()
@@ -206,7 +207,7 @@ public abstract class AbstractObjectMatrix1D<E>
         return this;
     }
 
-    /** @see ObjectMatrix1D */
+    /** {@inheritDoc} */
     public ObjectMatrix1D<E> assign(final UnaryFunction<E, E> function)
     {
         if (function == null)
@@ -225,7 +226,7 @@ public abstract class AbstractObjectMatrix1D<E>
         return this;
     }
 
-    /** @see ObjectMatrix1D */
+    /** {@inheritDoc} */
     public ObjectMatrix1D<E> assign(final ObjectMatrix1D<? extends E> other)
     {
         if (other == null)
@@ -249,7 +250,7 @@ public abstract class AbstractObjectMatrix1D<E>
         return this;
     }
 
-    /** @see ObjectMatrix1D */
+    /** {@inheritDoc} */
     public ObjectMatrix1D<E> assign(final ObjectMatrix1D<? extends E> other,
                                     final BinaryFunction<E, E, E> function)
     {
@@ -278,7 +279,7 @@ public abstract class AbstractObjectMatrix1D<E>
         return this;
     }
 
-    /** @see ObjectMatrix1D */
+    /** {@inheritDoc} */
     public E aggregate(final BinaryFunction<E, E, E> aggr, final UnaryFunction<E, E> function)
     {
         if (aggr == null)
@@ -297,14 +298,14 @@ public abstract class AbstractObjectMatrix1D<E>
 
         long last = (size - 1L);
         E a = function.evaluate(getQuick(last));
-        for (long index = last; --index >= 0; )
+        for (long index = last; --index >= 0;)
         {
             a = aggr.evaluate(a, function.evaluate(getQuick(index)));
         }
         return a;
     }
 
-    /** @see ObjectMatrix1D */
+    /** {@inheritDoc} */
     public E aggregate(final ObjectMatrix1D<? extends E> other,
                        final BinaryFunction<E, E, E> aggr,
                        final BinaryFunction<E, E, E> function)
@@ -333,7 +334,7 @@ public abstract class AbstractObjectMatrix1D<E>
 
         long last = (size - 1L);
         E a = function.evaluate(getQuick(last), other.getQuick(last));
-        for (long index = last; --index >= 0; )
+        for (long index = last; --index >= 0;)
         {
             a = aggr.evaluate(a, function.evaluate(getQuick(index), other.getQuick(index)));
         }
@@ -342,6 +343,8 @@ public abstract class AbstractObjectMatrix1D<E>
 
     /**
      * Create a new view.
+     *
+     * @return a new view
      */
     protected AbstractObjectMatrix1D<E> view()
     {
@@ -358,6 +361,8 @@ public abstract class AbstractObjectMatrix1D<E>
 
     /**
      * Self-modifying version of <code>viewFlip()</code>.
+     *
+     * @return modified version of <code>this</code>
      */
     protected AbstractObjectMatrix1D<E> vFlip()
     {
@@ -371,7 +376,7 @@ public abstract class AbstractObjectMatrix1D<E>
         return this;
     }
 
-    /** @see ObjectMatrix1D */
+    /** {@inheritDoc} */
     public ObjectMatrix1D<E> viewFlip()
     {
         return view().vFlip();
@@ -379,6 +384,10 @@ public abstract class AbstractObjectMatrix1D<E>
 
     /**
      * Self-modifying version of <code>viewPart(long, long)</code>.
+     *
+     * @param index index
+     * @param width width
+     * @return modified version of <code>this</code>
      */
     protected AbstractObjectMatrix1D<E> vPart(final long index, final long width)
     {
@@ -392,19 +401,19 @@ public abstract class AbstractObjectMatrix1D<E>
         return this;
     }
 
-    /** @see ObjectMatrix1D */
+    /** {@inheritDoc} */
     public ObjectMatrix1D<E> viewPart(final long index, final long width)
     {
         return view().vPart(index, width);
     }
 
-    /** @see ObjectMatrix1D */
+    /** {@inheritDoc} */
     public ObjectMatrix1D<E> viewSelection(final long[] indices)
     {
         return null;
     }
 
-    /** @see ObjectMatrix1D */
+    /** {@inheritDoc} */
     public ObjectMatrix1D<E> viewSelection(final UnaryPredicate<E> predicate)
     {
         return null;
@@ -412,6 +421,9 @@ public abstract class AbstractObjectMatrix1D<E>
 
     /**
      * Self-modifying version of <code>viewStrides(long)</code>.
+     *
+     * @param stride stride
+     * @return modified version of <code>this</code>
      */
     protected AbstractObjectMatrix1D<E> vStrides(final long stride)
     {
@@ -423,16 +435,16 @@ public abstract class AbstractObjectMatrix1D<E>
         }
         isView = true;
 
-        return this;        
+        return this;
     }
 
-    /** @see ObjectMatrix1D */
+    /** {@inheritDoc} */
     public ObjectMatrix1D<E> viewStrides(final long stride)
     {
         return view().vStrides(stride);
     }
 
-    /** @see ObjectMatrix1D */
+    /** {@inheritDoc} */
     public void forEach(final UnaryProcedure<E> procedure)
     {
         if (procedure == null)
@@ -447,7 +459,7 @@ public abstract class AbstractObjectMatrix1D<E>
         }
     }
 
-    /** @see ObjectMatrix1D */
+    /** {@inheritDoc} */
     public void forEach(final UnaryPredicate<E> predicate,
                         final UnaryProcedure<E> procedure)
     {
@@ -470,7 +482,7 @@ public abstract class AbstractObjectMatrix1D<E>
         }
     }
 
-    /** @see ObjectMatrix1D */
+    /** {@inheritDoc} */
     public void forEach(final BinaryProcedure<Long, E> procedure)
     {
         if (procedure == null)
@@ -485,7 +497,7 @@ public abstract class AbstractObjectMatrix1D<E>
         }
     }
 
-    /** @see ObjectMatrix1D */
+    /** {@inheritDoc} */
     public void forEach(final BinaryPredicate<Long, E> predicate,
                         final BinaryProcedure<Long, E> procedure)
     {
@@ -508,6 +520,7 @@ public abstract class AbstractObjectMatrix1D<E>
         }
     }
 
+    /** {@inheritDoc} */
     public String toString()
     {
         final StringBuffer sb = new StringBuffer();
@@ -539,13 +552,13 @@ public abstract class AbstractObjectMatrix1D<E>
         private long index = 0L;
 
 
-        /** @see Iterator */
+        /** {@inheritDoc} */
         public boolean hasNext()
         {
             return (index < size);
         }
 
-        /** @see Iterator */
+        /** {@inheritDoc} */
         public E next()
         {
             if (index < size)
@@ -560,7 +573,7 @@ public abstract class AbstractObjectMatrix1D<E>
             }
         }
 
-        /** @see Iterator */
+        /** {@inheritDoc} */
         public void remove()
         {
             throw new UnsupportedOperationException();

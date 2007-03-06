@@ -30,7 +30,6 @@ import java.io.ObjectOutputStream;
 
 import java.util.Map;
 import java.util.HashMap;
-import java.util.Iterator;
 
 import org.dishevelled.matrix.ObjectMatrix1D;
 
@@ -44,6 +43,7 @@ import org.dishevelled.matrix.ObjectMatrix1D;
  * addressable size, on the other hand, is limited to
  * <code>(rows * columns) &lt; Long.MAX_VALUE</code>.</p>
  *
+ * @param <E> type of this sparse 2D matrix
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
@@ -53,6 +53,9 @@ public class SparseObjectMatrix2D<E>
 {
     /** Map of elements keyed by a <code>Long</code> index. */
     private Map<Long, E> elements;
+
+    /** Default load factor. */
+    private static final float DEFAULT_LOAD_FACTOR = 0.75f;
 
 
     /**
@@ -74,7 +77,10 @@ public class SparseObjectMatrix2D<E>
      */
     public SparseObjectMatrix2D(final long rows, final long columns)
     {
-        this(rows, columns, (int) Math.min(Integer.MAX_VALUE, ((rows * columns) * 0.75)), 0.75f);
+        this(rows,
+             columns,
+             (int) Math.min(Integer.MAX_VALUE, ((rows * columns) * DEFAULT_LOAD_FACTOR)),
+             DEFAULT_LOAD_FACTOR);
     }
 
     /**
@@ -122,7 +128,7 @@ public class SparseObjectMatrix2D<E>
     }
 
 
-    /** @see Object */
+    /** {@inheritDoc} */
     public Object clone()
     {
         return new SparseObjectMatrix2D<E>(rows, columns,
@@ -131,14 +137,14 @@ public class SparseObjectMatrix2D<E>
                                            isView, elements);
     }
 
-    /** @see org.dishevelled.matrix.ObjectMatrix2D */
+    /** {@inheritDoc} */
     public E getQuick(final long row, final long column)
     {
         long index = rowZero + (row * rowStride) + columnZero + (column * columnStride);
         return elements.get(index);
     }
 
-    /** @see org.dishevelled.matrix.ObjectMatrix2D */
+    /** {@inheritDoc} */
     public void setQuick(final long row, final long column, final E e)
     {
         long index = rowZero + (row * rowStride) + columnZero + (column * columnStride);
@@ -152,7 +158,7 @@ public class SparseObjectMatrix2D<E>
         }
     }
 
-    /** @see org.dishevelled.matrix.ObjectMatrix2D */
+    /** {@inheritDoc} */
     public ObjectMatrix1D<E> viewRow(final long row)
     {
         if (row < 0)
@@ -166,7 +172,7 @@ public class SparseObjectMatrix2D<E>
         return new RowView(row);
     }
 
-    /** @see org.dishevelled.matrix.ObjectMatrix2D */
+    /** {@inheritDoc} */
     public ObjectMatrix1D<E> viewColumn(final long column)
     {
         if (column < 0)
@@ -185,6 +191,7 @@ public class SparseObjectMatrix2D<E>
      *
      * @see java.io.ObjectOutputStream
      * @param out object output stream
+     * @throws IOException if an IO error occurs
      */
     private void writeObject(final ObjectOutputStream out)
         throws IOException
@@ -204,6 +211,8 @@ public class SparseObjectMatrix2D<E>
      *
      * @see java.io.ObjectInputStream
      * @param in object input stream
+     * @throws IOException if an IO error occurs
+     * @throws ClassNotFoundException if a classloading error occurs
      */
     private void readObject(final ObjectInputStream in)
         throws IOException, ClassNotFoundException
@@ -218,7 +227,7 @@ public class SparseObjectMatrix2D<E>
         this.elements = (Map<Long, E>) in.readObject();
     }
 
-    /** @see Object */
+    /** {@inheritDoc} */
     public String toString()
     {
         StringBuffer sb = new StringBuffer(super.toString());
@@ -246,10 +255,18 @@ public class SparseObjectMatrix2D<E>
     private class RowView
         extends SparseObjectMatrix1D<E>
     {
-        public RowView(final long row)
+
+        /**
+         * Create a new row view for the specified row.
+         *
+         * @param row row
+         */
+        RowView(final long row)
         {
             super(SparseObjectMatrix2D.this.columns,
-                  SparseObjectMatrix2D.this.rowZero + (row * SparseObjectMatrix2D.this.rowStride) + SparseObjectMatrix2D.this.columnZero,
+                  SparseObjectMatrix2D.this.rowZero
+                      + (row * SparseObjectMatrix2D.this.rowStride)
+                      + SparseObjectMatrix2D.this.columnZero,
                   SparseObjectMatrix2D.this.columnStride,
                   true,
                   elements);
@@ -262,10 +279,18 @@ public class SparseObjectMatrix2D<E>
     private class ColumnView
         extends SparseObjectMatrix1D<E>
     {
-        public ColumnView(final long column)
+
+        /**
+         * Create a new column view for the specified column.
+         *
+         * @param column column
+         */
+        ColumnView(final long column)
         {
             super(SparseObjectMatrix2D.this.rows,
-                  SparseObjectMatrix2D.this.rowZero + (column * SparseObjectMatrix2D.this.columnStride) + SparseObjectMatrix2D.this.columnZero,
+                  SparseObjectMatrix2D.this.rowZero
+                      + (column * SparseObjectMatrix2D.this.columnStride)
+                      + SparseObjectMatrix2D.this.columnZero,
                   SparseObjectMatrix2D.this.rowStride,
                   true,
                   elements);

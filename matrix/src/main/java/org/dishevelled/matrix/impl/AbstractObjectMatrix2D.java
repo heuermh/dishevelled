@@ -39,6 +39,7 @@ import org.dishevelled.functor.TertiaryProcedure;
 /**
  * Abstract implementation of ObjectMatrix2D.
  *
+ * @param <E> type of this abstract 2D matrix
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
@@ -142,25 +143,25 @@ public abstract class AbstractObjectMatrix2D<E>
     }
 
 
-    /** @see ObjectMatrix2D */
+    /** {@inheritDoc} */
     public long size()
     {
         return (rows * columns);
     }
 
-    /** @see ObjectMatrix2D */
+    /** {@inheritDoc} */
     public long rows()
     {
         return rows;
     }
 
-    /** @see ObjectMatrix2D */
+    /** {@inheritDoc} */
     public long columns()
     {
         return columns;
     }
 
-    /** @see ObjectMatrix2D */
+    /** {@inheritDoc} */
     public long cardinality()
     {
         long cardinality = 0;
@@ -174,13 +175,13 @@ public abstract class AbstractObjectMatrix2D<E>
         return cardinality;
     }
 
-    /** @see ObjectMatrix2D */
+    /** {@inheritDoc} */
     public boolean isEmpty()
     {
         return (0 == cardinality());
     }
 
-    /** @see ObjectMatrix2D */
+    /** {@inheritDoc} */
     public void clear()
     {
         forEach(new TertiaryProcedure<Long, Long, E>()
@@ -195,13 +196,13 @@ public abstract class AbstractObjectMatrix2D<E>
             });
     }
 
-    /** @see ObjectMatrix2D */
+    /** {@inheritDoc} */
     public Iterator<E> iterator()
     {
         return new ObjectMatrix2DIterator();
     }
 
-    /** @see ObjectMatrix2D */
+    /** {@inheritDoc} */
     public E get(final long row, final long column)
     {
         if (row < 0)
@@ -224,7 +225,7 @@ public abstract class AbstractObjectMatrix2D<E>
         return getQuick(row, column);
     }
 
-    /** @see ObjectMatrix2D */
+    /** {@inheritDoc} */
     public void set(final long row, final long column, final E e)
     {
         if (row < 0)
@@ -247,13 +248,13 @@ public abstract class AbstractObjectMatrix2D<E>
         setQuick(row, column, e);
     }
 
-    /** @see ObjectMatrix2D */
+    /** {@inheritDoc} */
     public void setQuick(final long row, final long column, final E e)
     {
         throw new UnsupportedOperationException();
     }
 
-    /** @see ObjectMatrix2D */
+    /** {@inheritDoc} */
     public ObjectMatrix2D<E> assign(final E e)
     {
         forEach(new TertiaryProcedure<Long, Long, E>()
@@ -267,7 +268,7 @@ public abstract class AbstractObjectMatrix2D<E>
         return this;
     }
 
-    /** @see ObjectMatrix2D */
+    /** {@inheritDoc} */
     public ObjectMatrix2D<E> assign(final UnaryFunction<E, E> function)
     {
         if (function == null)
@@ -286,7 +287,7 @@ public abstract class AbstractObjectMatrix2D<E>
         return this;
     }
 
-    /** @see ObjectMatrix2D */
+    /** {@inheritDoc} */
     public ObjectMatrix2D<E> assign(final ObjectMatrix2D<? extends E> other)
     {
         if (other == null)
@@ -305,11 +306,10 @@ public abstract class AbstractObjectMatrix2D<E>
                     setQuick(row, column, other.getQuick(row, column));
                 }
             });
-        
         return this;
     }
 
-    /** @see ObjectMatrix2D */
+    /** {@inheritDoc} */
     public ObjectMatrix2D<E> assign(final ObjectMatrix2D<? extends E> other,
                                     final BinaryFunction<E, E, E> function)
     {
@@ -338,7 +338,7 @@ public abstract class AbstractObjectMatrix2D<E>
         return this;
     }
 
-    /** @see ObjectMatrix2D */
+    /** {@inheritDoc} */
     public E aggregate(final BinaryFunction<E, E, E> aggr, final UnaryFunction<E, E> function)
     {
         if (aggr == null)
@@ -359,9 +359,9 @@ public abstract class AbstractObjectMatrix2D<E>
         long lastColumn = (columns - 1L);
         E a = function.evaluate(getQuick(lastRow, lastColumn));
         long skip = 1L;
-        for (long row = rows; --row >= 0; )
+        for (long row = rows; --row >= 0;)
         {
-            for (long column = (columns - skip); --column >= 0; )
+            for (long column = (columns - skip); --column >= 0;)
             {
                 a = aggr.evaluate(a, function.evaluate(getQuick(row, column)));
             }
@@ -370,7 +370,7 @@ public abstract class AbstractObjectMatrix2D<E>
         return a;
     }
 
-    /** @see ObjectMatrix2D */
+    /** {@inheritDoc} */
     public E aggregate(final ObjectMatrix2D<? extends E> other,
                        final BinaryFunction<E, E, E> aggr,
                        final BinaryFunction<E, E, E> function)
@@ -401,9 +401,9 @@ public abstract class AbstractObjectMatrix2D<E>
         long lastColumn = (columns - 1L);
         E a = function.evaluate(getQuick(lastRow, lastColumn), other.getQuick(lastRow, lastColumn));
         long skip = 1L;
-        for (long row = rows; --row >= 0; )
+        for (long row = rows; --row >= 0;)
         {
-            for (long column = (columns - skip); --column >= 0; )
+            for (long column = (columns - skip); --column >= 0;)
             {
                 a = aggr.evaluate(a, function.evaluate(getQuick(row, column), other.getQuick(row, column)));
             }
@@ -414,6 +414,8 @@ public abstract class AbstractObjectMatrix2D<E>
 
     /**
      * Create a new view.
+     *
+     * @return a new view
      */
     protected AbstractObjectMatrix2D<E> view()
     {
@@ -430,6 +432,8 @@ public abstract class AbstractObjectMatrix2D<E>
 
     /**
      * Self-modifying version of <code>viewDice()</code>.
+     *
+     * @return modified version of <code>this</cod>
      */
     protected AbstractObjectMatrix2D<E> vDice()
     {
@@ -451,7 +455,7 @@ public abstract class AbstractObjectMatrix2D<E>
         return this;
     }
 
-    /** @see ObjectMatrix2D */
+    /** {@inheritDoc} */
     public ObjectMatrix2D<E> viewDice()
     {
         return view().vDice();
@@ -459,6 +463,8 @@ public abstract class AbstractObjectMatrix2D<E>
 
     /**
      * Self-modifying version of <code>viewRowFlip()</code>.
+     *
+     * @return modified version of <code>this</code>
      */
     protected AbstractObjectMatrix2D<E> vRowFlip()
     {
@@ -472,7 +478,7 @@ public abstract class AbstractObjectMatrix2D<E>
         return this;
     }
 
-    /** @see ObjectMatrix2D */
+    /** {@inheritDoc} */
     public ObjectMatrix2D<E> viewRowFlip()
     {
         return view().vRowFlip();
@@ -480,6 +486,8 @@ public abstract class AbstractObjectMatrix2D<E>
 
     /**
      * Self-modifying version of <code>viewColumnFlip()</code>.
+     *
+     * @return modified version of <code>this</code>
      */
     protected AbstractObjectMatrix2D<E> vColumnFlip()
     {
@@ -493,7 +501,7 @@ public abstract class AbstractObjectMatrix2D<E>
         return this;
     }
 
-    /** @see ObjectMatrix2D */
+    /** {@inheritDoc} */
     public ObjectMatrix2D<E> viewColumnFlip()
     {
         return view().vColumnFlip();
@@ -501,6 +509,12 @@ public abstract class AbstractObjectMatrix2D<E>
 
     /**
      * Self-modifying version of <code>viewPart(long, long, long, long)</code>.
+     *
+     * @param row row
+     * @param column column
+     * @param height height
+     * @param width width
+     * @return modified version of <code>this</code>
      */
     protected AbstractObjectMatrix2D<E> vPart(final long row, final long column,
                                               final long height, final long width)
@@ -514,7 +528,7 @@ public abstract class AbstractObjectMatrix2D<E>
         return this;
     }
 
-    /** @see ObjectMatrix2D */
+    /** {@inheritDoc} */
     public ObjectMatrix2D<E> viewPart(final long row, final long column,
                                       final long height, final long width)
     {
@@ -545,13 +559,13 @@ public abstract class AbstractObjectMatrix2D<E>
         return view().vPart(row, column, height, width);
     }
 
-    /** @see ObjectMatrix2D */
+    /** {@inheritDoc} */
     public ObjectMatrix2D<E> viewSelection(final long[] rows, final long[] columns)
     {
         return null;
     }
 
-    /** @see ObjectMatrix2D */
+    /** {@inheritDoc} */
     public ObjectMatrix2D<E> viewSelection(final UnaryPredicate<ObjectMatrix1D<E>> predicate)
     {
         return null;
@@ -559,6 +573,10 @@ public abstract class AbstractObjectMatrix2D<E>
 
     /**
      * Self-modifying version of <code>viewStrides(long, long)</code>.
+     *
+     * @param rowStride row stride
+     * @param columnStride column stride
+     * @return modified version of <code>this</code>
      */
     protected AbstractObjectMatrix2D<E> vStrides(final long rowStride, final long columnStride)
     {
@@ -578,13 +596,13 @@ public abstract class AbstractObjectMatrix2D<E>
         return this;
     }
 
-    /** @see ObjectMatrix2D */
+    /** {@inheritDoc} */
     public ObjectMatrix2D<E> viewStrides(final long rowStride, final long columnStride)
     {
         return view().vStrides(rowStride, columnStride);
     }
 
-    /** @see ObjectMatrix2D */
+    /** {@inheritDoc} */
     public void forEach(final UnaryProcedure<E> procedure)
     {
         if (procedure == null)
@@ -602,7 +620,7 @@ public abstract class AbstractObjectMatrix2D<E>
         }
     }
 
-    /** @see ObjectMatrix2D */
+    /** {@inheritDoc} */
     public void forEach(final UnaryPredicate<E> predicate,
                         final UnaryProcedure<E> procedure)
     {
@@ -628,7 +646,7 @@ public abstract class AbstractObjectMatrix2D<E>
         }
     }
 
-    /** @see ObjectMatrix2D */
+    /** {@inheritDoc} */
     public void forEach(final TertiaryProcedure<Long, Long, E> procedure)
     {
         if (procedure == null)
@@ -646,7 +664,7 @@ public abstract class AbstractObjectMatrix2D<E>
         }
     }
 
-    /** @see ObjectMatrix2D */
+    /** {@inheritDoc} */
     public void forEach(final TertiaryPredicate<Long, Long, E> predicate,
                         final TertiaryProcedure<Long, Long, E> procedure)
     {
@@ -672,6 +690,7 @@ public abstract class AbstractObjectMatrix2D<E>
         }
     }
 
+    /** {@inheritDoc} */
     public String toString()
     {
         final StringBuffer sb = new StringBuffer();
@@ -711,13 +730,13 @@ public abstract class AbstractObjectMatrix2D<E>
         private long column = 0L;
 
 
-        /** @see Iterator */
+        /** {@inheritDoc} */
         public boolean hasNext()
         {
             return ((row < rows) && (column < columns));
         }
 
-        /** @see Iterator */
+        /** {@inheritDoc} */
         public E next()
         {
             if ((row < rows) && (column < columns))
@@ -739,7 +758,7 @@ public abstract class AbstractObjectMatrix2D<E>
             }
         }
 
-        /** @see Iterator */
+        /** {@inheritDoc} */
         public void remove()
         {
             throw new UnsupportedOperationException();

@@ -30,7 +30,6 @@ import java.io.ObjectOutputStream;
 
 import java.util.Map;
 import java.util.HashMap;
-import java.util.Iterator;
 
 /**
  * Sparse implementation of ObjectMatrix1D based on
@@ -42,6 +41,7 @@ import java.util.Iterator;
  * addressable size, on the other hand, is limited to
  * <code>size &lt; Long.MAX_VALUE</code>.
  *
+ * @param <E> type for this sparse 1D matrix
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
@@ -51,6 +51,9 @@ public class SparseObjectMatrix1D<E>
 {
     /** Map of elements keyed by a <code>Long</code> index. */
     private Map<Long, E> elements;
+
+    /** Default load factor. */
+    private static final float DEFAULT_LOAD_FACTOR = 0.75f;
 
 
     /**
@@ -69,7 +72,7 @@ public class SparseObjectMatrix1D<E>
      */
     public SparseObjectMatrix1D(final long size)
     {
-        this(size, (int) Math.min(Integer.MAX_VALUE, (size * 0.75)), 0.75f);
+        this(size, (int) Math.min(Integer.MAX_VALUE, (size * DEFAULT_LOAD_FACTOR)), DEFAULT_LOAD_FACTOR);
     }
 
     /**
@@ -108,20 +111,20 @@ public class SparseObjectMatrix1D<E>
     }
 
 
-    /** @see Object */
+    /** {@inheritDoc} */
     public Object clone()
     {
         return new SparseObjectMatrix1D<E>(size, zero, stride, isView, elements);
     }
 
-    /** @see org.dishevelled.matrix.ObjectMatrix1D */
+    /** {@inheritDoc} */
     public E getQuick(final long index)
     {
         long i = zero + index * stride;
         return elements.get(i);
     }
 
-    /** @see org.dishevelled.matrix.ObjectMatrix1D */
+    /** {@inheritDoc} */
     public void setQuick(final long index, final E e)
     {
         long i = zero + index * stride;
@@ -140,6 +143,7 @@ public class SparseObjectMatrix1D<E>
      *
      * @see java.io.ObjectOutputStream
      * @param out object output stream
+     * @throws IOException if an IO error occurs
      */
     private void writeObject(final ObjectOutputStream out)
         throws IOException
@@ -156,6 +160,8 @@ public class SparseObjectMatrix1D<E>
      *
      * @see java.io.ObjectInputStream
      * @param in object input stream
+     * @throws IOException if an IO error occurs
+     * @throws ClassNotFoundException if a classloading error occurs
      */
     private void readObject(final ObjectInputStream in)
         throws IOException, ClassNotFoundException
@@ -164,10 +170,10 @@ public class SparseObjectMatrix1D<E>
         super.zero = in.readLong();
         super.stride = in.readLong();
         super.isView = in.readBoolean();
-        this.elements = (Map<Long, E>) in.readObject();        
+        this.elements = (Map<Long, E>) in.readObject();
     }
 
-    /** @see Object */
+    /** {@inheritDoc} */
     public String toString()
     {
         StringBuffer sb = new StringBuffer(super.toString());
