@@ -36,6 +36,7 @@ import org.dishevelled.functor.TertiaryProcedure;
  * Typed fixed size matrix of objects in two dimensions, indexed
  * by <code>long</code>s.
  *
+ * @param <E> type of this 2D matrix
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
@@ -289,8 +290,8 @@ public interface ObjectMatrix2D<E>
      *
      * @param row row index, must be <code>&gt;= 0</code> and <code>&lt; rows()</code>
      * @param column column index, must be <code>&gt;= 0</code> and <code>&lt; columns()</code>
-     * @param height
-     * @param width
+     * @param height height
+     * @param width width
      * @return a new 2D matrix that contains only those values
      *    from <code>(row, column)</code> to
      *    <code>(row + height - 1, column + width - 1)</code>.

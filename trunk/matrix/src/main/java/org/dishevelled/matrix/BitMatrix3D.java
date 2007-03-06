@@ -62,7 +62,7 @@ public final class BitMatrix3D
     private final long size;
 
     /** Maximum number of slices, rows and columns. */
-    public final long MAX_SIZE = ((long) Integer.MAX_VALUE) * ((long) Integer.MAX_VALUE) - 1L;
+    public static final long MAX_SIZE = ((long) Integer.MAX_VALUE) * ((long) Integer.MAX_VALUE) - 1L;
 
 
     /**
@@ -233,7 +233,7 @@ public final class BitMatrix3D
         }
         if (column >= columns)
         {
-            throw new IndexOutOfBoundsException(column + " >= " + columns);            
+            throw new IndexOutOfBoundsException(column + " >= " + columns);
         }
 
         long index = (rows * columns * slice) + (columns * row) + column;
@@ -268,7 +268,7 @@ public final class BitMatrix3D
         }
         if (column >= columns)
         {
-            throw new IndexOutOfBoundsException(column + " >= " + columns);            
+            throw new IndexOutOfBoundsException(column + " >= " + columns);
         }
 
         long index = (rows * columns * slice) + (columns * row) + column;
@@ -317,7 +317,7 @@ public final class BitMatrix3D
         }
         if (column0 >= columns)
         {
-            throw new IndexOutOfBoundsException(column0 + " >= " + columns);            
+            throw new IndexOutOfBoundsException(column0 + " >= " + columns);
         }
         if (slice1 > slices)
         {
@@ -329,7 +329,7 @@ public final class BitMatrix3D
         }
         if (column1 > columns)
         {
-            throw new IndexOutOfBoundsException(column1 + " > " + columns);            
+            throw new IndexOutOfBoundsException(column1 + " > " + columns);
         }
 
         for (long slice = slice0; slice < slice1; slice++)
@@ -368,7 +368,7 @@ public final class BitMatrix3D
         }
         if (column >= columns)
         {
-            throw new IndexOutOfBoundsException(column + " >= " + columns);            
+            throw new IndexOutOfBoundsException(column + " >= " + columns);
         }
 
         long index = (rows * columns * slice) + (columns * row) + column;
@@ -417,7 +417,7 @@ public final class BitMatrix3D
         }
         if (column0 >= columns)
         {
-            throw new IndexOutOfBoundsException(column0 + " >= " + columns);            
+            throw new IndexOutOfBoundsException(column0 + " >= " + columns);
         }
         if (slice1 > slices)
         {
@@ -429,7 +429,7 @@ public final class BitMatrix3D
         }
         if (column1 > columns)
         {
-            throw new IndexOutOfBoundsException(column1 + " > " + columns);            
+            throw new IndexOutOfBoundsException(column1 + " > " + columns);
         }
 
         for (long slice = slice0; slice < slice1; slice++)
@@ -474,7 +474,8 @@ public final class BitMatrix3D
         {
             throw new IllegalArgumentException("other must not be null");
         }
-        if ((size != other.size()) || (slices != other.slices()) || (rows != other.rows()) || (columns != other.columns()))
+        if ((size != other.size()) || (slices != other.slices()) || (rows != other.rows())
+            || (columns != other.columns()))
         {
             throw new IllegalArgumentException("this and other must have the same dimensions");
         }
@@ -503,7 +504,8 @@ public final class BitMatrix3D
         {
             throw new IllegalArgumentException("other must not be null");
         }
-        if ((size != other.size()) || (slices != other.slices()) || (rows != other.rows()) || (columns != other.columns()))
+        if ((size != other.size()) || (slices != other.slices()) || (rows != other.rows())
+            || (columns != other.columns()))
         {
             throw new IllegalArgumentException("this and other must have the same dimensions");
         }
@@ -529,7 +531,8 @@ public final class BitMatrix3D
         {
             throw new IllegalArgumentException("other must not be null");
         }
-        if ((size != other.size()) || (slices != other.slices()) || (rows != other.rows()) || (columns != other.columns()))
+        if ((size != other.size()) || (slices != other.slices()) || (rows != other.rows())
+            || (columns != other.columns()))
         {
             throw new IllegalArgumentException("this and other must have the same dimensions");
         }
@@ -555,7 +558,8 @@ public final class BitMatrix3D
         {
             throw new IllegalArgumentException("other must not be null");
         }
-        if ((size != other.size()) || (slices != other.slices()) || (rows != other.rows()) || (columns != other.columns()))
+        if ((size != other.size()) || (slices != other.slices()) || (rows != other.rows())
+            || (columns != other.columns()))
         {
             throw new IllegalArgumentException("this and other must have the same dimensions");
         }
@@ -581,7 +585,8 @@ public final class BitMatrix3D
         {
             throw new IllegalArgumentException("other must not be null");
         }
-        if ((size != other.size()) || (slices != other.slices()) || (rows != other.rows()) || (columns != other.columns()))
+        if ((size != other.size()) || (slices != other.slices()) || (rows != other.rows())
+            || (columns != other.columns()))
         {
             throw new IllegalArgumentException("this and other must have the same dimensions");
         }
@@ -623,7 +628,7 @@ public final class BitMatrix3D
         }
     }
 
-    /** @see Object */
+    /** {@inheritDoc} */
     public boolean equals(final Object o)
     {
         if (o == null)
@@ -644,7 +649,7 @@ public final class BitMatrix3D
 
         for (int i = 0, j = bitSets.size(); i < j; i++)
         {
-            if (bitSets.get(i).equals(bm.getBitSets().get(i)) == false)
+            if (!bitSets.get(i).equals(bm.getBitSets().get(i)))
             {
                 return false;
             }
@@ -652,7 +657,7 @@ public final class BitMatrix3D
         return true;
     }
 
-    /** @see Object */
+    /** {@inheritDoc} */
     public int hashCode()
     {
         // TODO

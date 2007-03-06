@@ -39,6 +39,7 @@ import org.dishevelled.matrix.ObjectMatrix3D;
 /**
  * Abstract implementation of ObjectMatrix3D.
  *
+ * @param <E> type of this abstract 3D matrix
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
@@ -148,31 +149,32 @@ public abstract class AbstractObjectMatrix3D<E>
         this.isView = isView;
     }
 
-    /** @see ObjectMatrix3D */
+
+    /** {@inheritDoc} */
     public long size()
     {
         return (slices * rows * columns);
     }
 
-    /** @see ObjectMatrix3D */
+    /** {@inheritDoc} */
     public long slices()
     {
         return slices;
     }
 
-    /** @see ObjectMatrix3D */
+    /** {@inheritDoc} */
     public long rows()
     {
         return rows;
     }
 
-    /** @see ObjectMatrix3D */
+    /** {@inheritDoc} */
     public long columns()
     {
         return columns;
     }
 
-    /** @see ObjectMatrix3D */
+    /** {@inheritDoc} */
     public long cardinality()
     {
         long cardinality = 0;
@@ -186,13 +188,13 @@ public abstract class AbstractObjectMatrix3D<E>
         return cardinality;
     }
 
-    /** @see ObjectMatrix3D */
+    /** {@inheritDoc} */
     public boolean isEmpty()
     {
         return (0 == cardinality());
     }
 
-    /** @see ObjectMatrix3D */
+    /** {@inheritDoc} */
     public void clear()
     {
         forEach(new QuaternaryProcedure<Long, Long, Long, E>()
@@ -207,13 +209,13 @@ public abstract class AbstractObjectMatrix3D<E>
             });
     }
 
-    /** @see ObjectMatrix3D */
+    /** {@inheritDoc} */
     public Iterator<E> iterator()
     {
         return new ObjectMatrix3DIterator();
     }
 
-    /** @see ObjectMatrix3D */
+    /** {@inheritDoc} */
     public E get(final long slice, final long row, final long column)
     {
         if (slice < 0)
@@ -244,7 +246,7 @@ public abstract class AbstractObjectMatrix3D<E>
         return getQuick(slice, row, column);
     }
 
-    /** @see ObjectMatrix3D */
+    /** {@inheritDoc} */
     public void set(final long slice, final long row, final long column, final E e)
     {
         if (slice < 0)
@@ -275,13 +277,13 @@ public abstract class AbstractObjectMatrix3D<E>
         setQuick(slice, row, column, e);
     }
 
-    /** @see ObjectMatrix3D */
+    /** {@inheritDoc} */
     public void setQuick(final long slice, final long row, final long column, final E e)
     {
         throw new UnsupportedOperationException();
     }
 
-    /** @see ObjectMatrix3D */
+    /** {@inheritDoc} */
     public ObjectMatrix3D<E> assign(final E e)
     {
         forEach(new QuaternaryProcedure<Long, Long, Long, E>()
@@ -295,7 +297,7 @@ public abstract class AbstractObjectMatrix3D<E>
         return this;
     }
 
-    /** @see ObjectMatrix3D */
+    /** {@inheritDoc} */
     public ObjectMatrix3D<E> assign(final UnaryFunction<E, E> function)
     {
         if (function == null)
@@ -314,7 +316,7 @@ public abstract class AbstractObjectMatrix3D<E>
         return this;
     }
 
-    /** @see ObjectMatrix3D */
+    /** {@inheritDoc} */
     public ObjectMatrix3D<E> assign(final ObjectMatrix3D<? extends E> other)
     {
         if (other == null)
@@ -340,7 +342,7 @@ public abstract class AbstractObjectMatrix3D<E>
         return this;
     }
 
-    /** @see ObjectMatrix3D */
+    /** {@inheritDoc} */
     public ObjectMatrix3D<E> assign(final ObjectMatrix3D<? extends E> other,
                                     final BinaryFunction<E, E, E> function)
     {
@@ -372,7 +374,7 @@ public abstract class AbstractObjectMatrix3D<E>
         return this;
     }
 
-    /** @see ObjectMatrix3D */
+    /** {@inheritDoc} */
     public E aggregate(final BinaryFunction<E, E, E> aggr, final UnaryFunction<E, E> function)
     {
         if (aggr == null)
@@ -393,11 +395,11 @@ public abstract class AbstractObjectMatrix3D<E>
         long lastRow = (rows - 1L);
         long lastColumn = (columns - 1L);
         E a = function.evaluate(getQuick(lastSlice, lastRow, lastColumn));
-        for (long slice = lastSlice; --slice >= 0; )
+        for (long slice = lastSlice; --slice >= 0;)
         {
-            for (long row = lastRow; --row >= 0; )
+            for (long row = lastRow; --row >= 0;)
             {
-                for (long column = lastColumn; --column >= 0; )
+                for (long column = lastColumn; --column >= 0;)
                 {
                     a = aggr.evaluate(a, function.evaluate(getQuick(slice, row, column)));
                 }
@@ -406,7 +408,7 @@ public abstract class AbstractObjectMatrix3D<E>
         return a;
     }
 
-    /** @see ObjectMatrix3D */
+    /** {@inheritDoc} */
     public E aggregate(final ObjectMatrix3D<? extends E> other,
                        final BinaryFunction<E, E, E> aggr,
                        final BinaryFunction<E, E, E> function)
@@ -439,14 +441,17 @@ public abstract class AbstractObjectMatrix3D<E>
         long lastSlice = (slices - 1L);
         long lastRow = (rows - 1L);
         long lastColumn = (columns - 1L);
-        E a = function.evaluate(getQuick(lastSlice, lastRow, lastColumn), other.getQuick(lastSlice, lastRow, lastColumn));
-        for (long slice = lastSlice; --slice >= 0; )
+        E a = function.evaluate(getQuick(lastSlice, lastRow, lastColumn),
+                                other.getQuick(lastSlice, lastRow, lastColumn));
+        for (long slice = lastSlice; --slice >= 0;)
         {
-            for (long row = lastRow; --row >= 0; )
+            for (long row = lastRow; --row >= 0;)
             {
-                for (long column = lastColumn; --column >= 0; )
+                for (long column = lastColumn; --column >= 0;)
                 {
-                    a = aggr.evaluate(a, function.evaluate(getQuick(slice, row, column), other.getQuick(slice, row, column)));
+                    a = aggr.evaluate(a,
+                                      function.evaluate(getQuick(slice, row, column),
+                                                        other.getQuick(slice, row, column)));
                 }
             }
         }
@@ -455,6 +460,8 @@ public abstract class AbstractObjectMatrix3D<E>
 
     /**
      * Create a new view.
+     *
+     * @return a new view
      */
     protected AbstractObjectMatrix3D<E> view()
     {
@@ -471,6 +478,11 @@ public abstract class AbstractObjectMatrix3D<E>
 
     /**
      * Self-modifying version of <code>viewDice(int, int, int)</code>.
+     *
+     * @param axis0 first axis
+     * @param axis1 second axis
+     * @param axis2 third axis
+     * @return modified version of <code>this</code>
      */
     protected AbstractObjectMatrix3D<E> vDice(final int axis0, final int axis1, final int axis2)
     {
@@ -496,7 +508,7 @@ public abstract class AbstractObjectMatrix3D<E>
         return this;
     }
 
-    /** @see ObjectMatrix3D */
+    /** {@inheritDoc} */
     public ObjectMatrix3D<E> viewDice(final int axis0, final int axis1, final int axis2)
     {
         return view().vDice(axis0, axis1, axis2);
@@ -504,6 +516,8 @@ public abstract class AbstractObjectMatrix3D<E>
 
     /**
      * Self-modifying version of <code>viewSliceFlip()</code>.
+     *
+     * @return modified version of <code>this</code>
      */
     protected AbstractObjectMatrix3D<E> vSliceFlip()
     {
@@ -513,11 +527,10 @@ public abstract class AbstractObjectMatrix3D<E>
             sliceStride = -sliceStride;
             isView = true;
         }
-        
         return this;
     }
 
-    /** @see ObjectMatrix3D */
+    /** {@inheritDoc} */
     public ObjectMatrix3D<E> viewSliceFlip()
     {
         return view().vSliceFlip();
@@ -525,6 +538,8 @@ public abstract class AbstractObjectMatrix3D<E>
 
     /**
      * Self-modifying version of <code>viewRowFlip()</code>.
+     *
+     * @return modified version of <code>this</code>
      */
     protected AbstractObjectMatrix3D<E> vRowFlip()
     {
@@ -538,7 +553,7 @@ public abstract class AbstractObjectMatrix3D<E>
         return this;
     }
 
-    /** @see ObjectMatrix3D */
+    /** {@inheritDoc} */
     public ObjectMatrix3D<E> viewRowFlip()
     {
         return view().vRowFlip();
@@ -546,6 +561,8 @@ public abstract class AbstractObjectMatrix3D<E>
 
     /**
      * Self-modifying version of <code>viewColumnFlip()</code>.
+     *
+     * @return modified version of <code>this</code>
      */
     protected AbstractObjectMatrix3D<E> vColumnFlip()
     {
@@ -559,7 +576,7 @@ public abstract class AbstractObjectMatrix3D<E>
         return this;
     }
 
-    /** @see ObjectMatrix3D */
+    /** {@inheritDoc} */
     public ObjectMatrix3D<E> viewColumnFlip()
     {
         return view().vColumnFlip();
@@ -567,6 +584,14 @@ public abstract class AbstractObjectMatrix3D<E>
 
     /**
      * Self-modifying version of <code>viewPart(long, long, long, long, long, long)</code>.
+     *
+     * @param slice slice
+     * @param row row
+     * @param column column
+     * @param depth depth
+     * @param height height
+     * @param width width
+     * @return modified version of <code>this</code>
      */
     protected AbstractObjectMatrix3D<E> vPart(final long slice, final long row, final long column,
                                               final long depth, final long height, final long width)
@@ -584,14 +609,14 @@ public abstract class AbstractObjectMatrix3D<E>
         return this;
     }
 
-    /** @see ObjectMatrix3D */
+    /** {@inheritDoc} */
     public ObjectMatrix3D<E> viewPart(final long slice, final long row, final long column,
                                       final long depth, final long height, final long width)
     {
         return view().vPart(slice, row, column, depth, height, width);
     }
 
-    /** @see ObjectMatrix3D */
+    /** {@inheritDoc} */
     public ObjectMatrix3D<E> viewSelection(final long[] sliceIndices,
                                            final long[] rowIndices,
                                            final long[] columnIndices)
@@ -599,7 +624,7 @@ public abstract class AbstractObjectMatrix3D<E>
         return null;
     }
 
-    /** @see ObjectMatrix3D */
+    /** {@inheritDoc} */
     public ObjectMatrix3D<E> viewSelection(final UnaryPredicate<ObjectMatrix2D<E>> predicate)
     {
         return null;
@@ -607,6 +632,11 @@ public abstract class AbstractObjectMatrix3D<E>
 
     /**
      * Self-modifying version of <code>viewStrides(long, long, long)</code>.
+     *
+     * @param sliceStride slice stride
+     * @param rowStride row stride
+     * @param columnStride column stride
+     * @return modified version of <code>this</code>
      */
     protected AbstractObjectMatrix3D<E> vStrides(final long sliceStride,
                                                  final long rowStride,
@@ -633,7 +663,7 @@ public abstract class AbstractObjectMatrix3D<E>
         return this;
     }
 
-    /** @see ObjectMatrix3D */
+    /** {@inheritDoc} */
     public ObjectMatrix3D<E> viewStrides(final long sliceStride,
                                          final long rowStride,
                                          final long columnStride)
@@ -641,7 +671,7 @@ public abstract class AbstractObjectMatrix3D<E>
         return view().vStrides(sliceStride, rowStride, columnStride);
     }
 
-    /** @see ObjectMatrix3D */
+    /** {@inheritDoc} */
     public void forEach(final UnaryProcedure<E> procedure)
     {
         for (long slice = 0; slice < slices; slice++)
@@ -657,7 +687,7 @@ public abstract class AbstractObjectMatrix3D<E>
         }
     }
 
-    /** @see ObjectMatrix3D */
+    /** {@inheritDoc} */
     public void forEach(final UnaryPredicate<E> predicate,
                         final UnaryProcedure<E> procedure)
     {
@@ -677,7 +707,7 @@ public abstract class AbstractObjectMatrix3D<E>
         }
     }
 
-    /** @see ObjectMatrix3D */
+    /** {@inheritDoc} */
     public void forEach(final QuaternaryProcedure<Long, Long, Long, E> procedure)
     {
         for (long slice = 0; slice < slices; slice++)
@@ -693,7 +723,7 @@ public abstract class AbstractObjectMatrix3D<E>
         }
     }
 
-    /** @see ObjectMatrix3D */
+    /** {@inheritDoc} */
     public void forEach(final QuaternaryPredicate<Long, Long, Long, E> predicate,
                         final QuaternaryProcedure<Long, Long, Long, E> procedure)
     {
@@ -729,13 +759,13 @@ public abstract class AbstractObjectMatrix3D<E>
         private long column = 0L;
 
 
-        /** @see Iterator */
+        /** {@inheritDoc} */
         public boolean hasNext()
         {
             return ((slice < slices) && (row < rows) && (column < columns));
         }
 
-        /** @see Iterator */
+        /** {@inheritDoc} */
         public E next()
         {
             if ((slice < slices) && (row < rows) && (column < columns))
@@ -762,7 +792,7 @@ public abstract class AbstractObjectMatrix3D<E>
             }
         }
 
-        /** @see Iterator */
+        /** {@inheritDoc} */
         public void remove()
         {
             throw new UnsupportedOperationException();

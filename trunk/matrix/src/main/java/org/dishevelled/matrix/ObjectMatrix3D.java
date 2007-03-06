@@ -36,6 +36,7 @@ import org.dishevelled.functor.QuaternaryProcedure;
  * Typed fixed size matrix of objects in three dimensions, indexed
  * by <code>long</code>s.
  *
+ * @param <E> type of this 3D matrix
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
@@ -326,14 +327,14 @@ public interface ObjectMatrix3D<E>
      * @param slice slice index, must be <code>&gt;= 0</code> and <code>&lt; slices()</code>
      * @param row row index, must be <code>&gt;= 0</code> and <code>&lt; rows()</code>
      * @param column column index, must be <code>&gt;= 0</code> and <code>&lt; columns()</code>
-     * @param depth
-     * @param height
-     * @param width
+     * @param depth depth
+     * @param height height
+     * @param width width
      * @return a new 3D matrix <i>sub-range view</i> that contains only those values
      *    from <code>(slice, row, column)</code> to
      *    <code>(slice + depth - 1, row + height - 1, column + width - 1)</code>.
      */
-    ObjectMatrix3D<E> viewPart(long slice, long row, long column, 
+    ObjectMatrix3D<E> viewPart(long slice, long row, long column,
                                long depth, long height, long width);
 
     /**
