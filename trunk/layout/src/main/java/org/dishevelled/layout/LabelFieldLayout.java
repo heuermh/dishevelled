@@ -108,10 +108,10 @@ public final class LabelFieldLayout
     private static final int MAC_INSET_SIZE = 8;
 
     /** Default label width, <code>33%</code>. */
-    private static final float DEFAULT_LABEL_WIDTH = 0.33f;
+    static final float DEFAULT_LABEL_WIDTH = 0.33f;
 
     /** Default field width, <code>66%</code>. */
-    private static final float DEFAULT_FIELD_WIDTH = 0.66f;
+    static final float DEFAULT_FIELD_WIDTH = 0.66f;
 
     /** Empty insets. */
     private static final Insets EMPTY_INSETS = new Insets(0, 0, 0, 0);
