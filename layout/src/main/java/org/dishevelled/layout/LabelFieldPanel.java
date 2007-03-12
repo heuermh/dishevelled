@@ -337,7 +337,7 @@ public final class LabelFieldPanel
 
     /**
      * Return true if the current look and feel is the MacOSX
-     * look and feel, specifically <code>com.sun.java....</code>.
+     * look and feel, specifically <code>apple.laf.AquaLookAndFeel</code>.
      *
      * @see #MAC_OSX_LOOK_AND_FEEL_CLASS_NAME
      * @return true if the current look and feel is the MacOSX look and feel
