@@ -49,7 +49,7 @@ public final class LabelFieldPanel
     private LabelFieldLayout layout;
 
     /** MacOSX look and feel class name. */
-    private static final String MAC_OSX_LOOK_AND_FEEL_CLASS_NAME = "com.sun.java.swing.plaf.mac.MacOSXLookAndFeel";
+    private static final String MAC_OSX_LOOK_AND_FEEL_CLASS_NAME = "apple.laf.AquaLookAndFeel";
 
 
     /**
@@ -303,12 +303,6 @@ public final class LabelFieldPanel
     }
 
     // override JPanel methods
-
-    /** {@inheritDoc} */
-    public void setLayout(final LayoutManager layout)
-    {
-        throw new UnsupportedOperationException("setLayout operation not supported by LabelFieldPanel");
-    }
 
     /** {@inheritDoc} */
     public Component add(final Component component)
