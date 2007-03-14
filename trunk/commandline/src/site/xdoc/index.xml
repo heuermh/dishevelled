@@ -37,6 +37,72 @@ The commandline project requires java version 1.5 or later.
 
 </section>
 
+<section name="Example">
+
+<p>
+For example, given a Runnable whose constructor requires a String, a Date,
+and a List of URLs
+<source>
+/**
+ * My runnable.
+ */
+public class MyRunnable
+  implements Runnable
+{
+
+  /**
+   * Create a new my runnable with the specified arguments.
+   *
+   * @param arg0 string argument
+   * @param arg1 date argument
+   * @param arg2 list of URLs argument
+   */
+  public MyRunnable(final String arg0, final Date arg1, final List&lt;URL&gt; arg2)
+  {
+    // ...
+  }
+}
+</source>
+</p>
+<p>
+its <code>static void main(final String[] args)</code> method might be implemented as
+<source>
+CommandLine commandLine = null;
+ArgumentList arguments = null;
+try
+{
+  // create typed command-line arguments to match runnable constructor arguments
+  StringArgument arg0 = new StringArgument(...);
+  DateArgument arg1 = new DateArgument(...);
+  URLListArgument arg2 = new URLListArgument(...);
+
+  // create an argument list
+  arguments = new ArgumentList(new Argument[] { arg0, arg1, arg2 });
+
+  // create a command line from String[] args
+  commandLine = new CommandLine(args);
+
+  // parse the command line with the argument list
+  CommandLineParser.parse(commandLine, arguments);
+
+  // instantiate the runnable with values returned by the typed arguments
+  Runnable r = new MyRunnable(arg0.getValue(), arg1.getValue(), arg2.getValue());
+  r.run();
+}
+catch (CommandLineParseException e)
+{
+  // thrown by CommandLineParser.parse(...)
+  Usage.usage("java MyRunnable [args]", e, commandLine, arguments, System.err);
+}
+catch (IllegalArgumentException e)
+{
+  // possibly thrown by MyRunnable(...) constructor
+  Usage.usage("java MyRunnable [args]", e, commandLine, arguments, System.err);
+}
+</source>
+</p>
+</section>
+
 <section name="Acknowledgements">
   <ul>
     <li>Powered by Apache <a href="http://maven.apache.org">Maven</a>.</li>
