@@ -1,0 +1,68 @@
+<html>
+<!--
+
+    dsh-observable  Observable decorators for collection and map interfaces.
+    Copyright (c) 2003-2007 held jointly by the individual authors.
+
+    This library is free software; you can redistribute it and/or modify it
+    under the terms of the GNU Lesser General Public License as published
+    by the Free Software Foundation; either version 2.1 of the License, or (at
+    your option) any later version.
+
+    This library is distributed in the hope that it will be useful, but WITHOUT
+    ANY WARRANTY; with out even the implied warranty of MERCHANTABILITY or
+    FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
+    License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with this library;  if not, write to the Free Software Foundation,
+    Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307  USA.
+
+    > http://www.gnu.org/copyleft/lesser.html
+    > http://www.opensource.org/licenses/lgpl-license.php
+
+-->
+  <body>
+<p>Simple observable decorators for collection and map interfaces.</p>
+
+<h4>Summary</h4>
+
+<p>
+The decorators in this package simply fire empty vetoable change events in
+<code>preXxx</code> methods and empty change events in <code>postXxx</code> methods.
+Listeners may query the source of the events to determine what may or may
+not have changed due to the event.
+</p>
+
+<h4>Example</h4>
+
+<p>
+For example, consider a listener interested in changes in size of an observable collection of strings:
+<pre>
+class SizeChangeListener&lt;String&gt;
+  implements CollectionChangeListener&lt;String&gt;, VetoableCollectionChangeListener&lt;String&gt;
+{
+  private int sizeBefore;
+  private int sizeAfter;
+
+  public void collectionWillChange(final VetoableCollectionChangeEvent&lt;String&gt; event)
+    throws CollectionChangeVetoException
+  {
+    ObservableCollection&lt;String&gt; source = event.getObservableCollection();
+    sizeBefore = source.size();
+  }
+
+  public void collectionChanged(final CollectionChangeEvent&lt;String&gt; event)
+  {
+    ObservableCollection&lt;String&gt; source = event.getObservableCollection();
+    sizeAfter = source.size();
+    if (sizeAfter != sizeBefore)
+    {
+      // collection size changed, do something...
+    }
+  }
+}
+</pre>
+</p>
+  </body>
+</html>
