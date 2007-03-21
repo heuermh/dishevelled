@@ -44,7 +44,7 @@ abstract class AbstractNavigableSetDecorator<E>
 
 
     /**
-     * Create a new abstract observable navigable set that
+     * Create a new abstract navigable set that
      * decorates the specified navigable set.
      *
      * @param navigableSet navigable set to decorate, must not be null

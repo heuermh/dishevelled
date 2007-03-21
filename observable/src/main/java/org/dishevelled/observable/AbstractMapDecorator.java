@@ -43,7 +43,7 @@ abstract class AbstractMapDecorator<K,V>
 
 
     /**
-     * Create a new abstract observable map that
+     * Create a new abstract map that
      * decorates the specified map.
      *
      * @param map map to decorate, must not be null

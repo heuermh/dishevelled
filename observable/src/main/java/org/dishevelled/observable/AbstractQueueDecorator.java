@@ -42,7 +42,7 @@ abstract class AbstractQueueDecorator<E>
 
 
     /**
-     * Create a new abstract observable queue that
+     * Create a new abstract queue that
      * decorates the specified queue.
      *
      * @param queue queue to decorate, must not be null

@@ -45,7 +45,7 @@ abstract class AbstractSortedMapDecorator<K,V>
 
 
     /**
-     * Create a new abstract observable sorted map that
+     * Create a new abstract sorted map that
      * decorates the specified sorted map.
      *
      * @param sortedMap sorted map to decorate, must not be null

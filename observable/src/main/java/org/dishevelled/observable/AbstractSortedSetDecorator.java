@@ -43,7 +43,7 @@ abstract class AbstractSortedSetDecorator<E>
 
 
     /**
-     * Create a new abstract observable sorted set that
+     * Create a new abstract sorted set that
      * decorates the specified sorted set.
      *
      * @param sortedSet sorted set to decorate, must not be null
