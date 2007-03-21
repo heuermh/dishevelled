@@ -40,8 +40,7 @@ abstract class AbstractIteratorDecorator<E>
 
 
     /**
-     * Create a new abstract observable iterator that
-     * decorates the specified iterator.
+     * Create a new abstract iterator that decorates the specified iterator.
      *
      * @param iterator iterator to decorate, must not be null
      */

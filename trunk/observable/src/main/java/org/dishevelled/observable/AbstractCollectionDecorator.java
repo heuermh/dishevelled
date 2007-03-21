@@ -41,7 +41,7 @@ abstract class AbstractCollectionDecorator<E>
 
 
     /**
-     * Create a new abstract observable collection that
+     * Create a new abstract collection that
      * decorates the specified collection.
      *
      * @param collection collection to decorate, must not be null

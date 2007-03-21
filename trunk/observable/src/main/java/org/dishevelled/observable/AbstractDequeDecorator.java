@@ -42,7 +42,7 @@ abstract class AbstractDequeDecorator<E>
 
 
     /**
-     * Create a new abstract observable deque that
+     * Create a new abstract deque that
      * decorates the specified deque.
      *
      * @param deque deque to decorate, must not be null

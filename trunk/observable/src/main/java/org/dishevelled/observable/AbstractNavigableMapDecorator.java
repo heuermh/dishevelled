@@ -47,7 +47,7 @@ abstract class AbstractNavigableMapDecorator<K,V>
 
 
     /**
-     * Create a new abstract observable navigable map that
+     * Create a new abstract navigable map that
      * decorates the specified navigable map.
      *
      * @param navigableMap navigable map to decorate, must not be null

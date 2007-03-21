@@ -42,7 +42,7 @@ abstract class AbstractSetDecorator<E>
 
 
     /**
-     * Create a new abstract observable set that
+     * Create a new abstract set that
      * decorates the specified set.
      *
      * @param set set to decorate, must not be null

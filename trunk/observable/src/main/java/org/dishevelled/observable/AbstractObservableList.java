@@ -23,7 +23,10 @@
 */
 package org.dishevelled.observable;
 
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
 import org.dishevelled.observable.event.ListChangeEvent;
 import org.dishevelled.observable.event.ListChangeListener;
@@ -122,35 +125,456 @@ public abstract class AbstractObservableList<E>
         return support.getVetoableListChangeListenerCount();
     }
 
-    /** {@inheritDoc} */
+    /**
+     * Fire a will change event to all registered
+     * <code>VetoableListChangeListener</code>s.
+     *
+     * @throws ListChangeVetoException if any of the listeners veto the change
+     */
     public void fireListWillChange()
         throws ListChangeVetoException
     {
         support.fireListWillChange();
     }
 
-    /** {@inheritDoc} */
+    /**
+     * Fire the specified will change event to all registered
+     * <code>VetoableListChangeListener</code>s.
+     *
+     * @param e will change event
+     * @throws ListChangeVetoException if any of the listeners veto the change
+     */
     public void fireListWillChange(final VetoableListChangeEvent<E> e)
         throws ListChangeVetoException
     {
         support.fireListWillChange(e);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * Fire a change event to all registered <code>ListChangeListener</code>s.
+     */
     public void fireListChanged()
     {
         support.fireListChanged();
     }
 
-    /** {@inheritDoc} */
+    /**
+     * Fire the specified change event to all registered
+     * <code>ListChangeListener</code>s.
+     *
+     * @param e change event
+     */
     public void fireListChanged(final ListChangeEvent<E> e)
     {
         support.fireListChanged(e);
     }
 
+    /**
+     * Notify subclasses the <code>add</code> method is about to
+     * be called on the wrapped list with the specified parameter.
+     * Return <code>true</code> to proceed with the change.
+     *
+     * @param e <code>add</code> method parameter
+     * @return true to proceed with the change
+     */
+    protected abstract boolean preAdd(E e);
 
-    // TODO:
-    // add abstract pre/post methods
-    // implement interface methods in terms of pre/post methods
+    /**
+     * Notify subclasses the <code>add</code> method has just been
+     * called on the wrapped list with the specified parameter.
+     *
+     * @param e <code>add</code> method parameter
+     */
+    protected abstract void postAdd(E e);
 
+    /**
+     * Notify subclasses the <code>add(int, E)</code> method is about to
+     * be called on the wrapped list with the specified parameters.
+     * Return <code>true</code> to proceed with the change.
+     *
+     * @param index <code>add(int, E)</code> method index parameter
+     * @param e <code>add(int, E)</code> method e parameter
+     * @return true to proceed with the change
+     */
+    protected abstract boolean preAddAtIndex(int index, E e);
+
+    /**
+     * Notify subclasses the <code>add(int, E)</code> method has just been
+     * called on the wrapped list with the specified parameters.
+     *
+     * @param index <code>add(int, E)</code> method index parameter
+     * @param e <code>add(int, E)</code> method e parameter
+     */
+    protected abstract void postAddAtIndex(int index, E e);
+
+    /**
+     * Notify subclasses the <code>addAll</code> method is about to
+     * be called on the wrapped list with the specified parameter.
+     * Return <code>true</code> to proceed with the change.
+     *
+     * @param coll <code>addAll</code> method parameter
+     * @return true to proceed with the change
+     */
+    protected abstract boolean preAddAll(Collection<? extends E> coll);
+
+    /**
+     * Notify subclasses the <code>addAll</code> method has just been
+     * called on the wrapped list with the specified parameter.
+     *
+     * @param coll <code>addAll</code> method parameter
+     */
+    protected abstract void postAddAll(Collection<? extends E> coll);
+
+    /**
+     * Notify subclasses the <code>addAll(int, Collection)</code> method is about to
+     * be called on the wrapped list with the specified parameters.
+     * Return <code>true</code> to proceed with the change.
+     *
+     * @param index <code>addAll(int, Collection)</code> method index parameter
+     * @param coll <code>addAll(int, Collection)</code> method coll parameter
+     * @return true to proceed with the change
+     */
+    protected abstract boolean preAddAllAtIndex(int index, Collection<? extends E> coll);
+
+    /**
+     * Notify subclasses the <code>addAll(int, Collection)</code> method has just been
+     * called on the wrapped list with the specified parameters.
+     *
+     * @param index <code>addAll(int, Collection)</code> method index parameter
+     * @param coll <code>addAll(int, Collection)</code> method coll parameter
+     */
+    protected abstract void postAddAllAtIndex(int index, Collection<? extends E> coll);
+
+    /**
+     * Notify subclasses the <code>set</code> method is about to
+     * be called on the wrapped list with the specified parameters.
+     * Return <code>true</code> to proceed with the change.
+     *
+     * @param index <code>set</code> method index parameter
+     * @param e <code>set</code> method e parameter
+     * @return true to proceed with the change
+     */
+    protected abstract boolean preSet(int index, E e);
+
+    /**
+     * Notify subclasses the <code>set</code> method has just been
+     * called on the wrapped list with the specified parameters.
+     *
+     * @param index <code>set</code> method index parameter
+     * @param e <code>set</code> method e parameter
+     */
+    protected abstract void postSet(int index, E e);
+
+    /**
+     * Notify subclasses the <code>clear</code> method is about to
+     * be called on the wrapped list.
+     * Return <code>true</code> to proceed with the change.
+     *
+     * @return true to proceed with the change
+     */
+    protected abstract boolean preClear();
+
+    /**
+     * Notify subclasses the <code>clear</code> method has just been
+     * called on the wrapped list.
+     */
+    protected abstract void postClear();
+
+    /**
+     * Notify subclasses the <code>remove</code> method is about to
+     * be called on the wrapped list with the specified parameter.
+     * Return <code>true</code> to proceed with the change.
+     *
+     * @param o <code>remove</code> method parameter
+     * @return true to proceed with the change
+     */
+    protected abstract boolean preRemove(Object o);
+
+    /**
+     * Notify subclasses the <code>remove</code> method has just been
+     * called on the wrapped list with the specified parameter.
+     *
+     * @param o <code>remove</code> method parameter
+     */
+    protected abstract void postRemove(Object o);
+
+    /**
+     * Notify subclasses the <code>remove(int)</code> method is about to
+     * be called on the wrapped list with the specified parameter.
+     * Return <code>true</code> to proceed with the change.
+     *
+     * @param index <code>remove(int)</code> method parameter
+     * @return true to proceed with the change
+     */
+    protected abstract boolean preRemoveIndex(int index);
+
+    /**
+     * Notify subclasses the <code>remove(int)</code> method has just been
+     * called on the wrapped list with the specified parameter.
+     *
+     * @param index <code>remove(int)</code> method parameter
+     */
+    protected abstract void postRemoveIndex(int index);
+
+    /**
+     * Notify subclasses the <code>removeAll</code> method is about to
+     * be called on the wrapped list with the specified parameter.
+     * Return <code>true</code> to proceed with the change.
+     *
+     * @param coll <code>removeAll</code> method parameter
+     * @return true to proceed with the change
+     */
+    protected abstract boolean preRemoveAll(Collection<?> coll);
+
+    /**
+     * Notify subclasses the <code>removeAll</code> method has just been
+     * called on the wrapped list with the specified parameter.
+     *
+     * @param coll <code>removeAll</code> method parameter
+     */
+    protected abstract void postRemoveAll(Collection<?> coll);
+
+    /**
+     * Notify subclasses the <code>retainAll</code> method is about to
+     * be called on the wrapped list with the specified parameter.
+     * Return <code>true</code> to proceed with the change.
+     *
+     * @param coll <code>retainAll</code> method parameter
+     * @return true to proceed with the change
+     */
+    protected abstract boolean preRetainAll(Collection<?> coll);
+
+    /**
+     * Notify subclasses the <code>retainAll</code> method has just been
+     * called on the wrapped list with the specified parameter.
+     *
+     * @param coll <code>retainAll</code> method parameter
+     */
+    protected abstract void postRetainAll(Collection<?> coll);
+
+    /**
+     * Notify subclasses the <code>remove</code> method is about to
+     * be called on the wrapped list's iterator.
+     * Return <code>true</code> to proceed with the change.
+     *
+     * @return true to proceed with the change
+     */
+    protected abstract boolean preIteratorRemove();
+
+    /**
+     * Notify subclasses the <code>remove</code> method has just been
+     * called on the wrapped list's iterator.
+     */
+    protected abstract void postIteratorRemove();
+
+    /**
+     * Notify subclasses the <code>remove</code> method is about to
+     * be called on the wrapped list's list iterator.
+     * Return <code>true</code> to proceed with the change.
+     *
+     * @return true to proceed with the change
+     */
+    protected abstract boolean preListIteratorRemove();
+
+    /**
+     * Notify subclasses the <code>remove</code> method has just been
+     * called on the wrapped list's list iterator.
+     */
+    protected abstract void postListIteratorRemove();
+
+
+    /** {@inheritDoc} */
+    public boolean add(final E e)
+    {
+        boolean result = false;
+        if (preAdd(e))
+        {
+            result = super.add(e);
+            postAdd(e);
+        }
+        return result;
+    }
+
+    /** {@inheritDoc} */
+    public void add(final int index, final E e)
+    {
+        if (preAddAtIndex(index, e))
+        {
+            super.add(index, e);
+            postAddAtIndex(index, e);
+        }
+    }
+
+    /** {@inheritDoc} */
+    public boolean addAll(final Collection<? extends E> coll)
+    {
+        boolean result = false;
+        if (preAddAll(coll))
+        {
+            result = super.addAll(coll);
+            postAddAll(coll);
+        }
+        return result;
+    }
+
+    /** {@inheritDoc} */
+    public boolean addAll(final int index, final Collection<? extends E> coll)
+    {
+        boolean result = false;
+        if (preAddAllAtIndex(index, coll))
+        {
+            result = super.addAll(index, coll);
+            postAddAllAtIndex(index, coll);
+        }
+        return result;
+    }
+
+    /** {@inheritDoc} */
+    public void clear()
+    {
+        if (preClear())
+        {
+            super.clear();
+            postClear();
+        }
+    }
+
+    /** {@inheritDoc} */
+    public E remove(final int index)
+    {
+        E result = null;
+        if (preRemoveIndex(index))
+        {
+            result = super.remove(index);
+            postRemoveIndex(index);
+        }
+        return result;
+    }
+
+    /** {@inheritDoc} */
+    public boolean remove(final Object o)
+    {
+        boolean result = false;
+        if (preRemove(o))
+        {
+            result = super.remove(o);
+            postRemove(o);
+        }
+        return result;
+    }
+
+    /** {@inheritDoc} */
+    public boolean removeAll(final Collection<?> coll)
+    {
+        boolean result = false;
+        if (preRemoveAll(coll))
+        {
+            result = super.removeAll(coll);
+            postRemoveAll(coll);
+        }
+        return result;
+    }
+
+    /** {@inheritDoc} */
+    public boolean retainAll(final Collection<?> coll)
+    {
+        boolean result = false;
+        if (preRetainAll(coll))
+        {
+            result = super.retainAll(coll);
+            postRetainAll(coll);
+        }
+        return result;
+    }
+
+    /** {@inheritDoc} */
+    public E set(final int index, final E e)
+    {
+        E result = null;
+        if (preSet(index, e))
+        {
+            result = super.set(index, e);
+            postSet(index, e);
+        }
+        return result;
+    }
+
+    /** {@inheritDoc} */
+    public Iterator<E> iterator()
+    {
+        return new ObservableListIterator<E>(super.iterator());
+    }
+
+    /** {@inheritDoc} */
+    public ListIterator<E> listIterator()
+    {
+        return new ObservableListListIterator<E>(super.listIterator());
+    }
+
+    /** {@inheritDoc} */
+    public ListIterator<E> listIterator(final int index)
+    {
+        return new ObservableListListIterator<E>(super.listIterator(index));
+    }
+
+
+    /**
+     * Observable list iterator.
+     */
+    private class ObservableListIterator<E>
+        extends AbstractIteratorDecorator<E>
+    {
+
+        /**
+         * Create a new observable list iterator that decorates
+         * the specified iterator.
+         *
+         * @param iterator iterator to decorate
+         */
+        protected ObservableListIterator(final Iterator<E> iterator)
+        {
+            super(iterator);
+        }
+
+
+        /** {@inheritDoc} */
+        public void remove()
+        {
+            if (preIteratorRemove())
+            {
+                super.remove();
+                postIteratorRemove();
+            }
+        }
+    }
+
+    /**
+     * Observable list list iterator.
+     */
+    private class ObservableListListIterator<E>
+        extends AbstractListIteratorDecorator<E>
+    {
+
+        /**
+         * Create a new observable list list iterator that decorates
+         * the specified list iterator.
+         *
+         * @param listIterator list iterator to decorate
+         */
+        protected ObservableListListIterator(final ListIterator<E> listIterator)
+        {
+            super(listIterator);
+        }
+
+
+        /** {@inheritDoc} */
+        public void remove()
+        {
+            if (preListIteratorRemove())
+            {
+                super.remove();
+                postListIteratorRemove();
+            }
+        }
+    }
 }

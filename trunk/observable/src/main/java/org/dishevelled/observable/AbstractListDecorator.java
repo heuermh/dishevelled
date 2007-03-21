@@ -43,7 +43,7 @@ abstract class AbstractListDecorator<E>
 
 
     /**
-     * Create a new abstract observable list that
+     * Create a new abstract list that
      * decorates the specified list.
      *
      * @param list list to decorate, must not be null
