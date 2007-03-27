@@ -27,6 +27,9 @@ import java.util.SortedMap;
 
 import org.dishevelled.observable.AbstractObservableSortedMap;
 
+import org.dishevelled.observable.event.SortedMapChangeEvent;
+import org.dishevelled.observable.event.VetoableSortedMapChangeEvent;
+
 /**
  * Observable sorted map decorator that simply fires empty
  * vetoable sorted map change events in <code>preXxx</code> methods and
@@ -42,16 +45,24 @@ import org.dishevelled.observable.AbstractObservableSortedMap;
 public class SimpleObservableSortedMap<K,V>
     extends AbstractObservableSortedMap<K,V>
 {
+    /** Cached sorted map change event. */
+    private final SortedMapChangeEvent<K,V> changeEvent;
+
+    /** Cached vetoable sorted map change event. */
+    private final VetoableSortedMapChangeEvent<K,V> vetoableChangeEvent;
+
 
     /**
      * Create a new observable decorator for the specified
      * sorted map.
      *
-     * @param sortedMap sorted map to decorate
+     * @param sortedMap sorted map to decorate, must not be null
      */
     public SimpleObservableSortedMap(final SortedMap<K,V> sortedMap)
     {
         super(sortedMap);
+        changeEvent = new SortedMapChangeEvent<K,V>(this);
+        vetoableChangeEvent = new VetoableSortedMapChangeEvent<K,V>(this);
     }
 
 

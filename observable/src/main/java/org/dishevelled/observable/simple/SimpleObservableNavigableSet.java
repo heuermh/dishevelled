@@ -27,6 +27,9 @@ import java.util.NavigableSet;
 
 import org.dishevelled.observable.AbstractObservableNavigableSet;
 
+import org.dishevelled.observable.event.NavigableSetChangeEvent;
+import org.dishevelled.observable.event.VetoableNavigableSetChangeEvent;
+
 /**
  * Observable navigable set decorator that simply fires empty
  * vetoable navigable set change events in <code>preXxx</code> methods and
@@ -41,16 +44,24 @@ import org.dishevelled.observable.AbstractObservableNavigableSet;
 public class SimpleObservableNavigableSet<E>
     extends AbstractObservableNavigableSet<E>
 {
+    /** Cached navigable set change event. */
+    private final NavigableSetChangeEvent<E> changeEvent;
+
+    /** Cached vetoable navigable set change event. */
+    private final VetoableNavigableSetChangeEvent<E> vetoableChangeEvent;
+
 
     /**
      * Create a new observable decorator for the specified
      * navigable set.
      *
-     * @param navigableSet navigable set to decorate
+     * @param navigableSet navigable set to decorate, must not be null
      */
     public SimpleObservableNavigableSet(final NavigableSet<E> navigableSet)
     {
         super(navigableSet);
+        changeEvent = new NavigableSetChangeEvent<E>(this);
+        vetoableChangeEvent = new VetoableNavigableSetChangeEvent<E>(this);
     }
 
 

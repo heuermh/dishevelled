@@ -57,7 +57,7 @@ public class SimpleObservableMap<K,V>
      * Create a new observable decorator for the specified
      * map.
      *
-     * @param map map to decorate
+     * @param map map to decorate, must not be null
      */
     public SimpleObservableMap(final Map<K,V> map)
     {

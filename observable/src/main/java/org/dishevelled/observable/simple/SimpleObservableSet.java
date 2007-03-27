@@ -57,7 +57,7 @@ public class SimpleObservableSet<E>
      * Create a new observable decorator for the specified
      * set.
      *
-     * @param set set to decorate
+     * @param set set to decorate, must not be null
      */
     public SimpleObservableSet(final Set<E> set)
     {

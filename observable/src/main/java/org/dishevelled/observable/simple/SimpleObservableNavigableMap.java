@@ -27,6 +27,9 @@ import java.util.NavigableMap;
 
 import org.dishevelled.observable.AbstractObservableNavigableMap;
 
+import org.dishevelled.observable.event.NavigableMapChangeEvent;
+import org.dishevelled.observable.event.VetoableNavigableMapChangeEvent;
+
 /**
  * Observable navigable map decorator that simply fires empty
  * vetoable navigable map change events in <code>preXxx</code> methods and
@@ -42,16 +45,24 @@ import org.dishevelled.observable.AbstractObservableNavigableMap;
 public class SimpleObservableNavigableMap<K,V>
     extends AbstractObservableNavigableMap<K,V>
 {
+    /** Cached navigable map change event. */
+    private final NavigableMapChangeEvent<K,V> changeEvent;
+
+    /** Cached vetoable navigable map change event. */
+    private final VetoableNavigableMapChangeEvent<K,V> vetoableChangeEvent;
+
 
     /**
      * Create a new observable decorator for the specified
      * navigable map.
      *
-     * @param navigableMap navigable map to decorate
+     * @param navigableMap navigable map to decorate, must not be null
      */
     public SimpleObservableNavigableMap(final NavigableMap<K,V> navigableMap)
     {
         super(navigableMap);
+        changeEvent = new NavigableMapChangeEvent<K,V>(this);
+        vetoableChangeEvent = new VetoableNavigableMapChangeEvent<K,V>(this);
     }
 
 

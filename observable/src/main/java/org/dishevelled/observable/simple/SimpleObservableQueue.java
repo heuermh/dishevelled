@@ -27,6 +27,9 @@ import java.util.Queue;
 
 import org.dishevelled.observable.AbstractObservableQueue;
 
+import org.dishevelled.observable.event.QueueChangeEvent;
+import org.dishevelled.observable.event.VetoableQueueChangeEvent;
+
 /**
  * Observable queue decorator that simply fires empty
  * vetoable queue change events in <code>preXxx</code> methods and
@@ -41,16 +44,24 @@ import org.dishevelled.observable.AbstractObservableQueue;
 public class SimpleObservableQueue<E>
     extends AbstractObservableQueue<E>
 {
+    /** Cached queue change event. */
+    private final QueueChangeEvent<E> changeEvent;
+
+    /** Cached vetoable queue change event. */
+    private final VetoableQueueChangeEvent<E> vetoableChangeEvent;
+
 
     /**
      * Create a new observable decorator for the specified
      * queue.
      *
-     * @param queue queue to decorate
+     * @param queue queue to decorate, must not be null
      */
     public SimpleObservableQueue(final Queue<E> queue)
     {
         super(queue);
+        changeEvent = new QueueChangeEvent<E>(this);
+        vetoableChangeEvent = new VetoableQueueChangeEvent<E>(this);
     }
 
 
