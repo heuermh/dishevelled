@@ -122,35 +122,162 @@ public abstract class AbstractObservableMap<K,V>
         return support.getVetoableMapChangeListenerCount();
     }
 
-    /** {@inheritDoc} */
+    /**
+     * Fire a will change event to all registered
+     * <code>VetoableMapChangeListener</code>s.
+     *
+     * @throws MapChangeVetoException if any of the listeners veto the change
+     */
     public void fireMapWillChange()
         throws MapChangeVetoException
     {
         support.fireMapWillChange();
     }
 
-    /** {@inheritDoc} */
+    /**
+     * Fire the specified will change event to all registered
+     * <code>VetoableMapChangeListener</code>s.
+     *
+     * @param e will change event
+     * @throws MapChangeVetoException if any of the listeners veto the change
+     */
     public void fireMapWillChange(final VetoableMapChangeEvent<K,V> e)
         throws MapChangeVetoException
     {
         support.fireMapWillChange(e);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * Fire a change event to all registered <code>MapChangeListener</code>s.
+     */
     public void fireMapChanged()
     {
         support.fireMapChanged();
     }
 
-    /** {@inheritDoc} */
+    /**
+     * Fire the specified change event to all registered
+     * <code>MapChangeListener</code>s.
+     *
+     * @param e change event
+     */
     public void fireMapChanged(final MapChangeEvent<K,V> e)
     {
         support.fireMapChanged(e);
     }
 
+    /**
+     * Notify subclasses the <code>clear</code> method is about to
+     * be called on the wrapped map.
+     * Return <code>true</code> to proceed with the change.
+     *
+     * @return true to proceed with the change
+     */
+    protected abstract boolean preClear();
 
-    // TODO:
-    // add abstract pre/post methods
-    // implement interface methods in terms of pre/post methods
+    /**
+     * Notify subclasses the <code>clear</code> method has just been
+     * called on the wrapped map.
+     */
+    protected abstract void postClear();
 
+    /**
+     * Notify subclasses the <code>put</code> method is about to
+     * be called on the wrapped map with the specified parameters.
+     * Return <code>true</code> to proceed with the change.
+     *
+     * @param key <code>put</code> method key parameter
+     * @param value <code>put</code> method value parameter
+     * @return true to proceed with the change
+     */
+    protected abstract boolean prePut(K key, V value);
+
+    /**
+     * Notify subclasses the <code>put</code> method has just been
+     * called on the wrapped map with the specified parameters.
+     *
+     * @param key <code>put</code> method key parameter
+     * @param value <code>put</code> method value parameter
+     */
+    protected abstract void postPut(K key, V value);
+
+    /**
+     * Notify subclasses the <code>putAll</code> method is about to
+     * be called on the wrapped map with the specified parameter.
+     * Return <code>true</code> to proceed with the change.
+     *
+     * @param map <code>putAll</code> method parameter
+     * @return true to proceed with the change
+     */
+    protected abstract boolean prePutAll(Map<? extends K,? extends V> map);
+
+    /**
+     * Notify subclasses the <code>putAll</code> method has just been
+     * called on the wrapped map with the specified parameter.
+     *
+     * @param map <code>putAll</code> method parameter
+     */
+    protected abstract void postPutAll(Map<? extends K,? extends V> map);
+
+    /**
+     * Notify subclasses the <code>remove</code> method is about to
+     * be called on the wrapped map with the specified parameter.
+     * Return <code>true</code> to proceed with the change.
+     *
+     * @param key <code>remove</code> method parameter
+     * @return true to proceed with the change
+     */
+    protected abstract boolean preRemove(Object key);
+
+    /**
+     * Notify subclasses the <code>remove</code> method has just been
+     * called on the wrapped map with the specified parameter.
+     *
+     * @param key <code>remove</code> method parameter
+     */
+    protected abstract void postRemove(Object key);
+
+    /** {@inheritDoc} */
+    public void clear()
+    {
+        if (preClear())
+        {
+            super.clear();
+            postClear();
+        }
+    }
+
+    /** {@inheritDoc} */
+    public V put(final K key, final V value)
+    {
+        V result = null;
+        if (prePut(key, value))
+        {
+            result = super.put(key, value);
+            postPut(key, value);
+        }
+        return result;
+    }
+
+    /** {@inheritDoc} */
+    public void putAll(final Map<? extends K,? extends V> map)
+    {
+        if (prePutAll(map))
+        {
+            super.putAll(map);
+            postPutAll(map);
+        }
+    }
+
+    /** {@inheritDoc} */
+    public V remove(final Object key)
+    {
+        V result = null;
+        if (preRemove(key))
+        {
+            result = super.remove(key);
+            postRemove(key);
+        }
+        return result;
+    }
 }
