@@ -204,5 +204,5 @@ public class SimpleObservableCollection<E>
     protected void postIteratorRemove()
     {
         fireCollectionChanged(changeEvent);
-    }    
+    }
 }

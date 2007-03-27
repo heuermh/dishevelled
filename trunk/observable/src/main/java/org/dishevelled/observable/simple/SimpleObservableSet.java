@@ -24,7 +24,6 @@
 package org.dishevelled.observable.simple;
 
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.Set;
 
 import org.dishevelled.observable.AbstractObservableSet;

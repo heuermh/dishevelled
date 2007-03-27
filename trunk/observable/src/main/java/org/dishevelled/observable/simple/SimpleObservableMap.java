@@ -27,6 +27,10 @@ import java.util.Map;
 
 import org.dishevelled.observable.AbstractObservableMap;
 
+import org.dishevelled.observable.event.MapChangeEvent;
+import org.dishevelled.observable.event.MapChangeVetoException;
+import org.dishevelled.observable.event.VetoableMapChangeEvent;
+
 /**
  * Observable map decorator that simply fires empty
  * vetoable map change events in <code>preXxx</code> methods and
@@ -42,6 +46,12 @@ import org.dishevelled.observable.AbstractObservableMap;
 public class SimpleObservableMap<K,V>
     extends AbstractObservableMap<K,V>
 {
+    /** Cached map change event. */
+    private final MapChangeEvent<K,V> changeEvent;
+
+    /** Cached vetoable map change event. */
+    private final VetoableMapChangeEvent<K,V> vetoableChangeEvent;
+
 
     /**
      * Create a new observable decorator for the specified
@@ -52,11 +62,88 @@ public class SimpleObservableMap<K,V>
     public SimpleObservableMap(final Map<K,V> map)
     {
         super(map);
+        changeEvent = new MapChangeEvent<K,V>(this);
+        vetoableChangeEvent = new VetoableMapChangeEvent<K,V>(this);
     }
 
 
-    // TODO:
-    // implement pre/post methods
+    /** {@inheritDoc} */
+    protected boolean preClear()
+    {
+        try
+        {
+            fireMapWillChange(vetoableChangeEvent);
+            return true;
+        }
+        catch (MapChangeVetoException e)
+        {
+            return false;
+        }
+    }
 
+    /** {@inheritDoc} */
+    protected void postClear()
+    {
+        fireMapChanged(changeEvent);
+    }
 
+    /** {@inheritDoc} */
+    protected boolean prePut(final K key, final V value)
+    {
+        try
+        {
+            fireMapWillChange(vetoableChangeEvent);
+            return true;
+        }
+        catch (MapChangeVetoException e)
+        {
+            return false;
+        }
+    }
+
+    /** {@inheritDoc} */
+    protected void postPut(final K key, final V value)
+    {
+        fireMapChanged(changeEvent);
+    }
+
+    /** {@inheritDoc} */
+    protected boolean prePutAll(final Map<? extends K,? extends V> map)
+    {
+        try
+        {
+            fireMapWillChange(vetoableChangeEvent);
+            return true;
+        }
+        catch (MapChangeVetoException e)
+        {
+            return false;
+        }
+    }
+
+    /** {@inheritDoc} */
+    protected void postPutAll(final Map<? extends K,? extends V> map)
+    {
+        fireMapChanged(changeEvent);
+    }
+
+    /** {@inheritDoc} */
+    protected boolean preRemove(final Object key)
+    {
+        try
+        {
+            fireMapWillChange(vetoableChangeEvent);
+            return true;
+        }
+        catch (MapChangeVetoException e)
+        {
+            return false;
+        }
+    }
+
+    /** {@inheritDoc} */
+    protected void postRemove(final Object key)
+    {
+        fireMapChanged(changeEvent);
+    }
 }

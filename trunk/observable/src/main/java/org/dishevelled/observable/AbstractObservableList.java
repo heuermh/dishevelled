@@ -31,7 +31,6 @@ import java.util.ListIterator;
 import org.dishevelled.observable.event.ListChangeEvent;
 import org.dishevelled.observable.event.ListChangeListener;
 import org.dishevelled.observable.event.ListChangeVetoException;
-import org.dishevelled.observable.event.ListChangeEvent;
 import org.dishevelled.observable.event.ObservableListChangeSupport;
 import org.dishevelled.observable.event.VetoableListChangeEvent;
 import org.dishevelled.observable.event.VetoableListChangeListener;
@@ -381,7 +380,6 @@ public abstract class AbstractObservableList<E>
      * called on the wrapped list's list iterator.
      */
     protected abstract void postListIteratorRemove();
-
 
     /** {@inheritDoc} */
     public boolean add(final E e)
