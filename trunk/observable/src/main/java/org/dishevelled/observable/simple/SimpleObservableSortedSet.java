@@ -27,6 +27,9 @@ import java.util.SortedSet;
 
 import org.dishevelled.observable.AbstractObservableSortedSet;
 
+import org.dishevelled.observable.event.SortedSetChangeEvent;
+import org.dishevelled.observable.event.VetoableSortedSetChangeEvent;
+
 /**
  * Observable sorted set decorator that simply fires empty
  * vetoable sorted set change events in <code>preXxx</code> methods and
@@ -41,16 +44,24 @@ import org.dishevelled.observable.AbstractObservableSortedSet;
 public class SimpleObservableSortedSet<E>
     extends AbstractObservableSortedSet<E>
 {
+    /** Cached sorted set change event. */
+    private final SortedSetChangeEvent<E> changeEvent;
+
+    /** Cached vetoable sorted set change event. */
+    private final VetoableSortedSetChangeEvent<E> vetoableChangeEvent;
+
 
     /**
      * Create a new observable decorator for the specified
      * sorted set.
      *
-     * @param sortedSet sorted set to decorate
+     * @param sortedSet sorted set to decorate, must not be null
      */
     public SimpleObservableSortedSet(final SortedSet<E> sortedSet)
     {
         super(sortedSet);
+        changeEvent = new SortedSetChangeEvent<E>(this);
+        vetoableChangeEvent = new VetoableSortedSetChangeEvent<E>(this);
     }
 
 

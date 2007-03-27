@@ -57,7 +57,7 @@ public class SimpleObservableList<E>
      * Create a new observable decorator for the specified
      * list.
      *
-     * @param list list to decorate
+     * @param list list to decorate, must not be null
      */
     public SimpleObservableList(final List<E> list)
     {

@@ -56,7 +56,7 @@ public class SimpleObservableCollection<E>
      * Create a new observable decorator for the specified
      * collection.
      *
-     * @param collection collection to decorate
+     * @param collection collection to decorate, must not be null
      */
     public SimpleObservableCollection(final Collection<E> collection)
     {

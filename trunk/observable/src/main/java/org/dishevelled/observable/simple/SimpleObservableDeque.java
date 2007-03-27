@@ -27,6 +27,9 @@ import java.util.Deque;
 
 import org.dishevelled.observable.AbstractObservableDeque;
 
+import org.dishevelled.observable.event.DequeChangeEvent;
+import org.dishevelled.observable.event.VetoableDequeChangeEvent;
+
 /**
  * Observable deque decorator that simply fires empty
  * vetoable deque change events in <code>preXxx</code> methods and
@@ -41,16 +44,24 @@ import org.dishevelled.observable.AbstractObservableDeque;
 public class SimpleObservableDeque<E>
     extends AbstractObservableDeque<E>
 {
+    /** Cached deque change event. */
+    private final DequeChangeEvent<E> changeEvent;
+
+    /** Cached vetoable deque change event. */
+    private final VetoableDequeChangeEvent<E> vetoableChangeEvent;
+
 
     /**
      * Create a new observable decorator for the specified
      * deque.
      *
-     * @param deque deque to decorate
+     * @param deque deque to decorate, must not be null
      */
     public SimpleObservableDeque(final Deque<E> deque)
     {
         super(deque);
+        changeEvent = new DequeChangeEvent<E>(this);
+        vetoableChangeEvent = new VetoableDequeChangeEvent<E>(this);
     }
 
 
