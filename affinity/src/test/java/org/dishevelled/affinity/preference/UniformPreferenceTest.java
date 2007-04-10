@@ -1,0 +1,75 @@
+/*
+
+    dsh-affinity  Clustering by affinity propagation.
+    Copyright (c) 2007 held jointly by the individual authors.
+
+    This library is free software; you can redistribute it and/or modify it
+    under the terms of the GNU Lesser General Public License as published
+    by the Free Software Foundation; either version 2.1 of the License, or (at
+    your option) any later version.
+
+    This library is distributed in the hope that it will be useful, but WITHOUT
+    ANY WARRANTY; with out even the implied warranty of MERCHANTABILITY or
+    FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
+    License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with this library;  if not, write to the Free Software Foundation,
+    Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307  USA.
+
+    > http://www.gnu.org/copyleft/lesser.html
+    > http://www.opensource.org/licenses/lgpl-license.php
+
+*/
+package org.dishevelled.affinity.preference;
+
+import org.dishevelled.affinity.Preference;
+import org.dishevelled.affinity.AbstractPreferenceTest;
+
+/**
+ * Unit test for UniformPreference.
+ *
+ * @author  Michael Heuer
+ * @version $Revision$ $Date$
+ */
+public final class UniformPreferenceTest
+    extends AbstractPreferenceTest
+{
+
+    /** {@inheritDoc} */
+    protected <T> Preference<T> createPreference()
+    {
+        return new UniformPreference<T>();
+    }
+
+    public void testConstructor()
+    {
+        Preference preference0 = new UniformPreference();
+        Preference preference1 = new UniformPreference(0.0d);
+        Preference preference2 = new UniformPreference(1.0d);
+        Preference preference3 = new UniformPreference(-1.0d);
+        Preference preference4 = new UniformPreference(100.0d);
+        Preference preference5 = new UniformPreference(Double.MAX_VALUE);
+        Preference preference6 = new UniformPreference(Double.MIN_VALUE);
+        Preference preference7 = new UniformPreference(Double.POSITIVE_INFINITY);
+        Preference preference8 = new UniformPreference(Double.NEGATIVE_INFINITY);
+        Preference preference9 = new UniformPreference(Double.NaN);
+    }
+
+    public void testPreference()
+    {
+        Preference<String> preference0 = new UniformPreference<String>();
+        for (int i = 0; i < 100; i++)
+        {
+            double value = preference0.preference("foo");
+            assertEquals(1.0d, value, 0.1d);
+        }
+
+        Preference<String> preference1 = new UniformPreference<String>(1.0d);
+        for (int i = 0; i < 100; i++)
+        {
+            double value = preference1.preference("foo");
+            assertEquals(1.0d, value, 0.1d);
+        }
+    }
+}
