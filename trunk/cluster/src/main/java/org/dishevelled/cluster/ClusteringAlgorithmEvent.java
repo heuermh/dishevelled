@@ -1,6 +1,6 @@
 /*
 
-    dsh-cluster  Framework for cluster algorithms.
+    dsh-cluster  Framework for clustering algorithms.
     Copyright (c) 2007 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
@@ -26,35 +26,35 @@ package org.dishevelled.cluster;
 import java.util.EventObject;
 
 /**
- * An event representing progress during execution of a cluster algorithm.
+ * An event representing progress during execution of a clustering algorithm.
  *
  * @param <E> value type
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public class ClusterAlgorithmEvent<E>
+public class ClusteringAlgorithmEvent<E>
     extends EventObject
 {
 
     /**
-     * Create a new cluster algorithm event with the specified source.
+     * Create a new clustering algorithm event with the specified source.
      *
-     * @param clusterAlgorithm source of this event, must not be null
+     * @param clusteringAlgorithm source of this event, must not be null
      */
-    public ClusterAlgorithmEvent(final ClusterAlgorithm<E> clusterAlgorithm)
+    public ClusteringAlgorithmEvent(final ClusteringAlgorithm<E> clusteringAlgorithm)
     {
-        super(clusterAlgorithm);
+        super(clusteringAlgorithm);
     }
 
 
     /**
-     * Return the source of this event as a cluster algorithm.  The source
+     * Return the source of this event as a clustering algorithm.  The source
      * will not be null.
      *
-     * @return the source of this event as a cluster algorithm
+     * @return the source of this event as a clustering algorithm
      */
-    public final ClusterAlgorithm<E> getClusterAlgorithm()
+    public final ClusteringAlgorithm<E> getClusteringAlgorithm()
     {
-        return (ClusterAlgorithm<E>) super.getSource();
+        return (ClusteringAlgorithm<E>) super.getSource();
     }
 }

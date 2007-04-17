@@ -1,6 +1,6 @@
 /*
 
-    dsh-cluster  Framework for cluster algorithms.
+    dsh-cluster  Framework for clustering algorithms.
     Copyright (c) 2007 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
@@ -27,23 +27,23 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Cluster algorithm.
+ * Clustering algorithm.
  *
  * @param <E> value type
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public interface ClusterAlgorithm<E>
+public interface ClusteringAlgorithm<E>
 {
 
     /**
      * Cluster the specified list of values after applying the specified
      * similarity measure until the criteria of the specified exit strategy
-     * are met.  A cluster algorithm exception is thrown if an error occurs.
+     * are met.  A clustering algorithm exception is thrown if an error occurs.
      *
      * <p>
-     * Any additional parameters required to execute this cluster algorithm
-     * might be specified in this cluster algorithm's constructor or by setting
+     * Any additional parameters required to execute this clustering algorithm
+     * might be specified in this clustering algorithm's constructor or by setting
      * property values after construction.
      * </p>
      *
@@ -55,11 +55,11 @@ public interface ClusterAlgorithm<E>
      *
      * <p>
      * Clients interested in receiving notification of progress made during the
-     * execution of this cluster algorithm may register as cluster algorithm listeners.
+     * execution of this clustering algorithm may register as cluster algorithm listeners.
      * </p>
      *
      * <p>
-     * The result of this cluster algorithm is returned as an unmodifiable set of
+     * The result of this clustering algorithm is returned as an unmodifiable set of
      * clusters.  The set of clusters will not be null and will contain at least one cluster.
      * </p>
      *
@@ -68,21 +68,24 @@ public interface ClusterAlgorithm<E>
      * @param similarity similarity measure to apply, must not be null
      * @param exitStrategy exit strategy, must not be null
      * @return an unmodifiable set of clusters
-     * @throws ClusterAlgorithmException if an error occurs
+     * @throws ClusteringAlgorithmException if an error occurs
      */
-    Set<Cluster<E>> cluster(List<? extends E> values, Similarity<? super E> similarity, ExitStrategy<? super E> exitStrategy) throws ClusterAlgorithmException;
+    Set<Cluster<E>> cluster(List<? extends E> values,
+                            Similarity<? super E> similarity,
+                            ExitStrategy<? super E> exitStrategy)
+        throws ClusteringAlgorithmException;
 
     /**
-     * Add the specified cluster algorithm listener.
+     * Add the specified clustering algorithm listener.
      *
-     * @param listener cluster algorithm listener to add
+     * @param listener clustering algorithm listener to add
      */
-    void addClusterAlgorithmListener(ClusterAlgorithmListener<E> listener);
+    void addClusteringAlgorithmListener(ClusteringAlgorithmListener<E> listener);
 
     /**
-     * Remove the specified cluster algorithm listener.
+     * Remove the specified clustering algorithm listener.
      *
-     * @param listener cluster algorithm listener to remove
+     * @param listener clustering algorithm listener to remove
      */
-    void removeClusterAlgorithmListener(ClusterAlgorithmListener<E> listener);
+    void removeClusteringAlgorithmListener(ClusteringAlgorithmListener<E> listener);
 }

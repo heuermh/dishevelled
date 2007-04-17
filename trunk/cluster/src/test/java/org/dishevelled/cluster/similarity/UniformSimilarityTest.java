@@ -1,6 +1,6 @@
 /*
 
-    dsh-cluster  Framework for cluster algorithms.
+    dsh-cluster  Framework for clustering algorithms.
     Copyright (c) 2007 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
@@ -49,11 +49,13 @@ public final class UniformSimilarityTest
         Similarity similarity2 = new UniformSimilarity(1.0d);
         Similarity similarity3 = new UniformSimilarity(-1.0d);
         Similarity similarity4 = new UniformSimilarity(100.0d);
-        Similarity similarity5 = new UniformSimilarity(Double.MAX_VALUE);
+        Similarity similarity5 = new UniformSimilarity(-100.0d);
         Similarity similarity6 = new UniformSimilarity(Double.MIN_VALUE);
-        Similarity similarity7 = new UniformSimilarity(Double.POSITIVE_INFINITY);
-        Similarity similarity8 = new UniformSimilarity(Double.NEGATIVE_INFINITY);
-        Similarity similarity9 = new UniformSimilarity(Double.NaN);
+        Similarity similarity7 = new UniformSimilarity(Double.MAX_VALUE);
+        Similarity similarity8 = new UniformSimilarity(Double.POSITIVE_INFINITY);
+        Similarity similarity9 = new UniformSimilarity(Double.NEGATIVE_INFINITY);
+        Similarity similarity10 = new UniformSimilarity(Double.NaN);
+        Similarity similarity11 = new UniformSimilarity(UniformSimilarity.DEFAULT_SIMILARITY);
     }
 
     public void testSimilarity()
@@ -62,7 +64,7 @@ public final class UniformSimilarityTest
         for (int i = 0; i < 100; i++)
         {
             double value = similarity0.similarity("foo", "bar");
-            assertEquals(1.0d, value, 0.1d);
+            assertEquals(UniformSimilarity.DEFAULT_SIMILARITY, value, 0.1d);
         }
 
         Similarity<String> similarity1 = new UniformSimilarity<String>(1.0d);

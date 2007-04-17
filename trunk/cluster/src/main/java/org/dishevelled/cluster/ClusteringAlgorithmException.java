@@ -1,6 +1,6 @@
 /*
 
-    dsh-cluster  Framework for cluster algorithms.
+    dsh-cluster  Framework for clustering algorithms.
     Copyright (c) 2007 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
@@ -24,43 +24,43 @@
 package org.dishevelled.cluster;
 
 /**
- * Cluster algorithm exception.
+ * Clustering algorithm exception.
  *
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public final class ClusterAlgorithmException
+public final class ClusteringAlgorithmException
     extends Exception
 {
 
     /**
-     * Create a new cluster algorithm exception with the specified message.
+     * Create a new clustering algorithm exception with the specified message.
      *
      * @param message message
      */
-    public ClusterAlgorithmException(final String message)
+    public ClusteringAlgorithmException(final String message)
     {
         super(message);
     }
 
     /**
-     * Create a new cluster algorithm exception with the specified cause.
+     * Create a new clustering algorithm exception with the specified cause.
      *
      * @param cause cause
      */
-    public ClusterAlgorithmException(final Throwable cause)
+    public ClusteringAlgorithmException(final Throwable cause)
     {
         super(cause);
     }
 
     /**
-     * Create a new cluster algorithm exception with the specified message
+     * Create a new clustering algorithm exception with the specified message
      * and cause.
      *
      * @param message message
      * @param cause cause
      */
-    public ClusterAlgorithmException(final String message, final Throwable cause)
+    public ClusteringAlgorithmException(final String message, final Throwable cause)
     {
         super(message, cause);
     }

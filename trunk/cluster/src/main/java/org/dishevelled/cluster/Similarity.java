@@ -1,6 +1,6 @@
 /*
 
-    dsh-cluster  Framework for cluster algorithms.
+    dsh-cluster  Framework for clustering algorithms.
     Copyright (c) 2007 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
@@ -24,7 +24,7 @@
 package org.dishevelled.cluster;
 
 /**
- * A similarity function for cluster algorithms.
+ * A similarity function for clustering algorithms.
  *
  * @param <E> value type
  * @author  Michael Heuer
@@ -41,8 +41,4 @@ public interface Similarity<E>
      * @return a measure of similarity between the specified values
      */
     double similarity(E value1, E value2);
-
-    // ... might need to pass along the list of values, e.g. to calculate summary stats?
-    // ... I believe that values should be between Double.NEGATIVE and zero?
-    // ... return Double.NEGATIVE_INFINITY to indicate no similarity at all
 }

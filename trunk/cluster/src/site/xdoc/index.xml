@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!--
 
-    dsh-cluster  Framework for cluster algorithms.
+    dsh-cluster  Framework for clustering algorithms.
     Copyright (c) 2007 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
@@ -31,7 +31,7 @@
 <section name="Summary">
 
 <p>
-dishevelled.org <b>cluster</b> is a framework for cluster algorithms.
+dishevelled.org <b>cluster</b> is a framework for clustering algorithms.
 The cluster library requires java version 1.5 or later.
 </p>
 </section>

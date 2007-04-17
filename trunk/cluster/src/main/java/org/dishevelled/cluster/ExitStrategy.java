@@ -1,6 +1,6 @@
 /*
 
-    dsh-cluster  Framework for cluster algorithms.
+    dsh-cluster  Framework for clustering algorithms.
     Copyright (c) 2007 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
@@ -23,8 +23,11 @@
 */
 package org.dishevelled.cluster;
 
+import java.util.List;
+import java.util.Set;
+
 /**
- * An exit strategy function for cluster algorithms.
+ * An exit strategy function for clustering algorithms.
  *
  * @param <E> value type
  * @author  Michael Heuer
@@ -34,11 +37,15 @@ public interface ExitStrategy<E>
 {
 
     /**
-     * Return <code>true</code> if the specified ... has met the
-     * criteria of this exit strategy function.
+     * Return <code>true</code> if the specified set of clusters for the
+     * specified list of values has met the criteria of this exit strategy function.
      *
-     * @return true if the specified ... has met the criteria of
+     * @param values unmodifiable list of values, must not be null, must
+     *    contain at least one value, and must not contain any null values
+     * @param clusters unmodifiable set of clusters, must not be null and
+     *    must contain at least one cluster
+     * @return true if the specified set of clusters has met the criteria of
      *    this exit strategy function
      */
-    boolean evaluate();
+    boolean evaluate(List<? extends E> values, Set<Cluster<E>> clusters);
 }

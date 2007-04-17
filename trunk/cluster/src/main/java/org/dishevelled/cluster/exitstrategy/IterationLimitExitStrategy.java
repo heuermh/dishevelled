@@ -1,6 +1,6 @@
 /*
 
-    dsh-cluster  Framework for cluster algorithms.
+    dsh-cluster  Framework for clustering algorithms.
     Copyright (c) 2007 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
@@ -23,6 +23,10 @@
 */
 package org.dishevelled.cluster.exitstrategy;
 
+import java.util.List;
+import java.util.Set;
+
+import org.dishevelled.cluster.Cluster;
 import org.dishevelled.cluster.ExitStrategy;
 
 /**
@@ -61,7 +65,8 @@ public final class IterationLimitExitStrategy<E>
 
 
     /** {@inheritDoc} */
-    public boolean evaluate()
+    public boolean evaluate(final List<? extends E> values,
+                            final Set<Cluster<E>> clusters)
     {
         if (iteration >= iterationLimit)
         {

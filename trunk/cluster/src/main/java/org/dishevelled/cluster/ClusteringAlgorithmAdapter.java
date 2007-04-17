@@ -1,6 +1,6 @@
 /*
 
-    dsh-cluster  Framework for cluster algorithms.
+    dsh-cluster  Framework for clustering algorithms.
     Copyright (c) 2007 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
@@ -24,25 +24,25 @@
 package org.dishevelled.cluster;
 
 /**
- * Adapter for ClusterAlgorithmListener that provides empty
+ * Adapter for ClusteringAlgorithmListener that provides empty
  * implementation of all required methods.
  *
  * @param <E> value type
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public class ClusterAlgorithmAdapter<E>
-    implements ClusterAlgorithmListener<E>
+public class ClusteringAlgorithmAdapter<E>
+    implements ClusteringAlgorithmListener<E>
 {
 
     /** {@inheritDoc} */
-    public void exitFailed(final ClusterAlgorithmEvent<E> event)
+    public void exitFailed(final ClusteringAlgorithmEvent<E> event)
     {
         // empty
     }
 
     /** {@inheritDoc} */
-    public void exitSucceeded(final ClusterAlgorithmEvent<E> event)
+    public void exitSucceeded(final ClusteringAlgorithmEvent<E> event)
     {
         // empty
     }
