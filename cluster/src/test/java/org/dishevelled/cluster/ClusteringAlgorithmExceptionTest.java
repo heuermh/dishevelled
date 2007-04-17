@@ -1,6 +1,6 @@
 /*
 
-    dsh-cluster  Framework for cluster algorithms.
+    dsh-cluster  Framework for clustering algorithms.
     Copyright (c) 2007 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
@@ -26,12 +26,12 @@ package org.dishevelled.cluster;
 import junit.framework.TestCase;
 
 /**
- * Unit test for ClusterAlgorithmException.
+ * Unit test for ClusteringAlgorithmException.
  *
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public final class ClusterAlgorithmExceptionTest
+public final class ClusteringAlgorithmExceptionTest
     extends TestCase
 {
 
@@ -39,12 +39,12 @@ public final class ClusterAlgorithmExceptionTest
     {
         Throwable cause = new Exception("message");
 
-        ClusterAlgorithmException exception0 = new ClusterAlgorithmException((String) null);
-        ClusterAlgorithmException exception1 = new ClusterAlgorithmException("message");
-        ClusterAlgorithmException exception2 = new ClusterAlgorithmException((Throwable) null);
-        ClusterAlgorithmException exception3 = new ClusterAlgorithmException(cause);
-        ClusterAlgorithmException exception4 = new ClusterAlgorithmException(null, cause);
-        ClusterAlgorithmException exception5 = new ClusterAlgorithmException("message", null);
-        ClusterAlgorithmException exception6 = new ClusterAlgorithmException("message", cause);
+        ClusteringAlgorithmException exception0 = new ClusteringAlgorithmException((String) null);
+        ClusteringAlgorithmException exception1 = new ClusteringAlgorithmException("message");
+        ClusteringAlgorithmException exception2 = new ClusteringAlgorithmException((Throwable) null);
+        ClusteringAlgorithmException exception3 = new ClusteringAlgorithmException(cause);
+        ClusteringAlgorithmException exception4 = new ClusteringAlgorithmException(null, cause);
+        ClusteringAlgorithmException exception5 = new ClusteringAlgorithmException("message", null);
+        ClusteringAlgorithmException exception6 = new ClusteringAlgorithmException("message", cause);
     }
 }

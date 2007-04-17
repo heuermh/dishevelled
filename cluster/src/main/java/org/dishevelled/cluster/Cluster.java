@@ -1,6 +1,6 @@
 /*
 
-    dsh-cluster  Framework for cluster algorithms.
+    dsh-cluster  Framework for clustering algorithms.
     Copyright (c) 2007 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
@@ -23,7 +23,7 @@
 */
 package org.dishevelled.cluster;
 
-import java.util.Set;
+import java.util.List;
 
 /**
  * Cluster.
@@ -62,13 +62,13 @@ public interface Cluster<E>
     E exemplar();
 
     /**
-     * Return an unmodifiable set of member values for this cluster.  The set of
+     * Return an unmodifiable list of member values for this cluster.  The list of
      * member values will not be null and will contain at least one value, the
      * exemplar or cluster center value.
      *
-     * @return an unmodifiable set of member values for this cluster
+     * @return an unmodifiable list of member values for this cluster
      */
-    Set<E> members();
+    List<E> members();
 
     // ... stats, provenance, ?
     // ... not all clusterings have an exemplar

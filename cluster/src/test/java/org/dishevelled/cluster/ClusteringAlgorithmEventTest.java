@@ -1,6 +1,6 @@
 /*
 
-    dsh-cluster  Framework for cluster algorithms.
+    dsh-cluster  Framework for clustering algorithms.
     Copyright (c) 2007 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
@@ -23,28 +23,60 @@
 */
 package org.dishevelled.cluster;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
+
 import junit.framework.TestCase;
 
 /**
- * Unit test for ClusterAlgorithmEvent.
+ * Unit test for ClusteringAlgorithmEvent.
  *
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public class ClusterAlgorithmEventTest
+public final class ClusteringAlgorithmEventTest
     extends TestCase
 {
 
     public void testConstructor()
     {
+        TestClusteringAlgorithm<String> clusteringAlgorithm = new TestClusteringAlgorithm<String>();
+        ClusteringAlgorithmEvent<String> event0 = new ClusteringAlgorithmEvent<String>(clusteringAlgorithm);
+
         try
         {
-            ClusterAlgorithmEvent event = new ClusterAlgorithmEvent(null);
+            ClusteringAlgorithmEvent<String> event = new ClusteringAlgorithmEvent<String>(null);
             fail("ctr(null) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
         {
             // expected
+        }
+    }
+
+    public void testClusteringAlgorithm()
+    {
+        TestClusteringAlgorithm<String> clusteringAlgorithm = new TestClusteringAlgorithm<String>();
+        ClusteringAlgorithmEvent<String> event = new ClusteringAlgorithmEvent<String>(clusteringAlgorithm);
+        assertEquals(clusteringAlgorithm, event.getSource());
+        assertEquals(clusteringAlgorithm, event.getClusteringAlgorithm());
+    }
+
+    /**
+     * Test clustering algorithm.
+     */
+    private class TestClusteringAlgorithm<E>
+        extends AbstractClusteringAlgorithm<E>
+    {
+
+        /** {@inheritDoc} */
+        public Set<Cluster<E>> cluster(final List<? extends E> values,
+                                       final Similarity<? super E> similarity,
+                                       final ExitStrategy<? super E> exitStrategy)
+            throws ClusteringAlgorithmException
+        {
+            return Collections.<Cluster<E>>emptySet();
         }
     }
 }

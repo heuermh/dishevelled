@@ -1,6 +1,6 @@
 /*
 
-    dsh-cluster  Framework for cluster algorithms.
+    dsh-cluster  Framework for clustering algorithms.
     Copyright (c) 2007 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
@@ -25,37 +25,38 @@ package org.dishevelled.cluster;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 import junit.framework.TestCase;
 
 /**
- * Abstract unit test for implementations of ClusterAlgorithm.
+ * Abstract unit test for implementations of ClusteringAlgorithm.
  *
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public abstract class AbstractClusterAlgorithmTest
+public abstract class AbstractClusteringAlgorithmTest
     extends TestCase
 {
 
     /**
-     * Create and return a new instance of an implementation of ClusterAlgorithm to test.
+     * Create and return a new instance of an implementation of ClusteringAlgorithm to test.
      *
-     * @param <T> cluster algorithm value type
-     * @return a new instance of an implementation of ClusterAlgorithm to test
+     * @param <T> clustering algorithm value type
+     * @return a new instance of an implementation of ClusteringAlgorithm to test
      */
-    protected abstract <T> ClusterAlgorithm<T> createClusterAlgorithm();
+    protected abstract <T> ClusteringAlgorithm<T> createClusteringAlgorithm();
 
-    public void testClusterAlgorithm()
+    public void testClusteringAlgorithm()
     {
-        ClusterAlgorithm<String> clusterAlgorithm = createClusterAlgorithm();
-        assertNotNull("clusterAlgorithm not null", clusterAlgorithm);
+        ClusteringAlgorithm<String> clusteringAlgorithm = createClusteringAlgorithm();
+        assertNotNull("clusteringAlgorithm not null", clusteringAlgorithm);
     }
 
-    public void testCluster() throws ClusterAlgorithmException
+    public void testClustering() throws ClusteringAlgorithmException
     {
-        ClusterAlgorithm<String> clusterAlgorithm = createClusterAlgorithm();
-        assertNotNull("clusterAlgorithm not null", clusterAlgorithm);
+        ClusteringAlgorithm<String> clusteringAlgorithm = createClusteringAlgorithm();
+        assertNotNull("clusteringAlgorithm not null", clusteringAlgorithm);
 
         List<String> emptyValues = Arrays.asList(new String[0]);
         List<String> nullValue = Arrays.asList(new String[] { "foo", "bar", "baz", null });
@@ -72,14 +73,15 @@ public abstract class AbstractClusterAlgorithmTest
         ExitStrategy<String> exitStrategy = new ExitStrategy<String>()
             {
                 /** {@inheritDoc} */
-                public boolean evaluate()
+                public boolean evaluate(final List<? extends String> values,
+                                        final Set<Cluster<String>> clusters)
                 {
                     return true;
                 }
             };
         try
         {
-            clusterAlgorithm.cluster(null, similarity, exitStrategy);
+            clusteringAlgorithm.cluster(null, similarity, exitStrategy);
             fail("cluster(null,,) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
@@ -88,7 +90,7 @@ public abstract class AbstractClusterAlgorithmTest
         }
         try
         {
-            clusterAlgorithm.cluster(fullValues, null, exitStrategy);
+            clusteringAlgorithm.cluster(fullValues, null, exitStrategy);
             fail("cluster(,null,) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
@@ -97,7 +99,7 @@ public abstract class AbstractClusterAlgorithmTest
         }
         try
         {
-            clusterAlgorithm.cluster(fullValues, similarity, null);
+            clusteringAlgorithm.cluster(fullValues, similarity, null);
             fail("cluster(,,null) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
@@ -106,7 +108,7 @@ public abstract class AbstractClusterAlgorithmTest
         }
         try
         {
-            clusterAlgorithm.cluster(emptyValues, similarity, exitStrategy);
+            clusteringAlgorithm.cluster(emptyValues, similarity, exitStrategy);
             fail("cluster(emptyValues,,) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
@@ -115,7 +117,7 @@ public abstract class AbstractClusterAlgorithmTest
         }
         try
         {
-            clusterAlgorithm.cluster(nullValue, similarity, exitStrategy);
+            clusteringAlgorithm.cluster(nullValue, similarity, exitStrategy);
             fail("cluster(nullValue,,) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
@@ -124,13 +126,13 @@ public abstract class AbstractClusterAlgorithmTest
         }
     }
 
-    public void testClusterAlgorithmListeners()
+    public void testClusteringAlgorithmListeners()
     {
-        ClusterAlgorithm<String> clusterAlgorithm = createClusterAlgorithm();
-        assertNotNull("clusterAlgorithm not null", clusterAlgorithm);
+        ClusteringAlgorithm<String> clusteringAlgorithm = createClusteringAlgorithm();
+        assertNotNull("clusteringAlgorithm not null", clusteringAlgorithm);
 
-        ClusterAlgorithmListener<String> listener = new ClusterAlgorithmAdapter<String>();
-        clusterAlgorithm.addClusterAlgorithmListener(listener);
-        clusterAlgorithm.removeClusterAlgorithmListener(listener);
+        ClusteringAlgorithmListener<String> listener = new ClusteringAlgorithmAdapter<String>();
+        clusteringAlgorithm.addClusteringAlgorithmListener(listener);
+        clusteringAlgorithm.removeClusteringAlgorithmListener(listener);
     }
 }

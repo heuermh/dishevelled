@@ -1,6 +1,6 @@
 /*
 
-    dsh-cluster  Framework for cluster algorithms.
+    dsh-cluster  Framework for clustering algorithms.
     Copyright (c) 2007 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
@@ -27,13 +27,13 @@ import java.util.EventListener;
 
 /**
  * A listener that receives notification of progress during execution of a
- * cluster algorithm.
+ * clustering algorithm.
  *
  * @param <E> value type
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public interface ClusterAlgorithmListener<E>
+public interface ClusteringAlgorithmListener<E>
     extends EventListener
 {
 
@@ -42,12 +42,12 @@ public interface ClusterAlgorithmListener<E>
      *
      * @param event exit failed event
      */
-    void exitFailed(ClusterAlgorithmEvent<E> event);
+    void exitFailed(ClusteringAlgorithmEvent<E> event);
 
     /**
-     * Notify this listener of an exit failed event.
+     * Notify this listener of an exit succeeded event.
      *
-     * @param event exit failed event
+     * @param event exit succeeded event
      */
-    void exitSucceeded(ClusterAlgorithmEvent<E> event);
+    void exitSucceeded(ClusteringAlgorithmEvent<E> event);
 }

@@ -6,7 +6,7 @@
   <packaging>jar</packaging>
   <name>dishevelled.org cluster</name>
   <version>1.0-SNAPSHOT</version>
-  <description>Framework for cluster algorithms.</description>
+  <description>Framework for clustering algorithms.</description>
   <url>http://www.dishevelled.org/cluster</url>
   <inceptionYear>2007</inceptionYear>
   <mailingLists>

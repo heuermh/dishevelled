@@ -1,6 +1,6 @@
 /*
 
-    dsh-cluster  Framework for cluster algorithms.
+    dsh-cluster  Framework for clustering algorithms.
     Copyright (c) 2007 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
@@ -23,6 +23,12 @@
 */
 package org.dishevelled.cluster.exitstrategy;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
+
+import org.dishevelled.cluster.Cluster;
 import org.dishevelled.cluster.ExitStrategy;
 import org.dishevelled.cluster.AbstractExitStrategyTest;
 
@@ -71,31 +77,37 @@ public final class IterationLimitExitStrategyTest
 
     public void testEvaluateZeroIterationLimit()
     {
-        ExitStrategy exitStrategy = new IterationLimitExitStrategy(0);
+        List<String> values = Arrays.asList(new String[] { "foo", "bar", "baz", "qux" });
+        Set<Cluster<String>> clusters = Collections.<Cluster<String>>emptySet();
+        ExitStrategy<String> exitStrategy = new IterationLimitExitStrategy<String>(0);
         assertNotNull("exitStrategy not null", exitStrategy);
-        assertTrue(exitStrategy.evaluate());
-        assertTrue(exitStrategy.evaluate());
-        assertTrue(exitStrategy.evaluate());
+        assertTrue(exitStrategy.evaluate(values, clusters));
+        assertTrue(exitStrategy.evaluate(values, clusters));
+        assertTrue(exitStrategy.evaluate(values, clusters));
     }
 
     public void testEvaluateOneIterationLimit()
     {
+        List<String> values = Arrays.asList(new String[] { "foo", "bar", "baz", "qux" });
+        Set<Cluster<String>> clusters = Collections.<Cluster<String>>emptySet();
         ExitStrategy exitStrategy = new IterationLimitExitStrategy(1);
         assertNotNull("exitStrategy not null", exitStrategy);
-        assertFalse(exitStrategy.evaluate());
-        assertTrue(exitStrategy.evaluate());
-        assertTrue(exitStrategy.evaluate());
+        assertFalse(exitStrategy.evaluate(values, clusters));
+        assertTrue(exitStrategy.evaluate(values, clusters));
+        assertTrue(exitStrategy.evaluate(values, clusters));
     }
 
     public void testEvaluateOneHundredIterationLimit()
     {
+        List<String> values = Arrays.asList(new String[] { "foo", "bar", "baz", "qux" });
+        Set<Cluster<String>> clusters = Collections.<Cluster<String>>emptySet();
         ExitStrategy exitStrategy = new IterationLimitExitStrategy(100);
         assertNotNull("exitStrategy not null", exitStrategy);
         for (int i = 0; i < 100; i++)
         {
-            assertFalse(exitStrategy.evaluate());
+            assertFalse(exitStrategy.evaluate(values, clusters));
         }
-        assertTrue(exitStrategy.evaluate());
-        assertTrue(exitStrategy.evaluate());
+        assertTrue(exitStrategy.evaluate(values, clusters));
+        assertTrue(exitStrategy.evaluate(values, clusters));
     }
 }
