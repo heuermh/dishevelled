@@ -31,7 +31,7 @@
 <section name="Summary">
 
 <p>
-dishevelled.org <b>${artifactId.substring(4)}</b> ...${description.toLowerCase()};
+dishevelled.org <b>${artifactId.substring(4)}</b> provides a ${description.toLowerCase()}
 The ${artifactId.substring(4)} library requires java version 1.5 or later.
 </p>
 </section>
