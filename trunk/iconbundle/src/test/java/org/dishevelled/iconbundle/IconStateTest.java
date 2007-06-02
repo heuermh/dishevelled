@@ -58,6 +58,48 @@ public class IconStateTest
         assertEquals(IconState.DRAGGING.toString(), "dragging");
         assertEquals(IconState.DISABLED.toString(), "disabled");
 
+        assertTrue(IconState.NORMAL.isNormal());
+        assertFalse(IconState.NORMAL.isActive());
+        assertFalse(IconState.NORMAL.isMouseover());
+        assertFalse(IconState.NORMAL.isSelected());
+        assertFalse(IconState.NORMAL.isDragging());
+        assertFalse(IconState.NORMAL.isDisabled());
+
+        assertFalse(IconState.ACTIVE.isNormal());
+        assertTrue(IconState.ACTIVE.isActive());
+        assertFalse(IconState.ACTIVE.isMouseover());
+        assertFalse(IconState.ACTIVE.isSelected());
+        assertFalse(IconState.ACTIVE.isDragging());
+        assertFalse(IconState.ACTIVE.isDisabled());
+
+        assertFalse(IconState.MOUSEOVER.isNormal());
+        assertFalse(IconState.MOUSEOVER.isActive());
+        assertTrue(IconState.MOUSEOVER.isMouseover());
+        assertFalse(IconState.MOUSEOVER.isSelected());
+        assertFalse(IconState.MOUSEOVER.isDragging());
+        assertFalse(IconState.MOUSEOVER.isDisabled());
+
+        assertFalse(IconState.SELECTED.isNormal());
+        assertFalse(IconState.SELECTED.isActive());
+        assertFalse(IconState.SELECTED.isMouseover());
+        assertTrue(IconState.SELECTED.isSelected());
+        assertFalse(IconState.SELECTED.isDragging());
+        assertFalse(IconState.SELECTED.isDisabled());
+
+        assertFalse(IconState.DRAGGING.isNormal());
+        assertFalse(IconState.DRAGGING.isActive());
+        assertFalse(IconState.DRAGGING.isMouseover());
+        assertFalse(IconState.DRAGGING.isSelected());
+        assertTrue(IconState.DRAGGING.isDragging());
+        assertFalse(IconState.DRAGGING.isDisabled());
+
+        assertFalse(IconState.DISABLED.isNormal());
+        assertFalse(IconState.DISABLED.isActive());
+        assertFalse(IconState.DISABLED.isMouseover());
+        assertFalse(IconState.DISABLED.isSelected());
+        assertFalse(IconState.DISABLED.isDragging());
+        assertTrue(IconState.DISABLED.isDisabled());
+
         try
         {
             IconState.VALUES.add(new Object());
