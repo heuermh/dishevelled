@@ -63,6 +63,67 @@ public final class IconState
         return name;
     }
 
+    /**
+     * Return true if this icon state is <code>IconState.NORMAL</code>.
+     *
+     * @return true if this icon state is <code>IconState.NORMAL</code>
+     */
+    public boolean isNormal()
+    {
+        return (this == NORMAL);
+    }
+
+    /**
+     * Return true if this icon state is <code>IconState.ACTIVE</code>.
+     *
+     * @return true if this icon state is <code>IconState.ACTIVE</code>
+     */
+    public boolean isActive()
+    {
+        return (this == ACTIVE);
+    }
+
+    /**
+     * Return true if this icon state is <code>IconState.MOUSEOVER</code>.
+     *
+     * @return true if this icon state is <code>IconState.MOUSEOVER</code>
+     */
+    public boolean isMouseover()
+    {
+        return (this == MOUSEOVER);
+    }
+
+    /**
+     * Return true if this icon state is <code>IconState.SELECTED</code>.
+     *
+     * @return true if this icon state is <code>IconState.SELECTED</code>
+     */
+    public boolean isSelected()
+    {
+        return (this == SELECTED);
+    }
+
+    /**
+     * Return true if this icon state is <code>IconState.DRAGGING</code>.
+     *
+     * @return true if this icon state is <code>IconState.DRAGGING</code>
+     */
+    public boolean isDragging()
+    {
+        return (this == DRAGGING);
+    }
+
+    /**
+     * Return true if this icon state is <code>IconState.DISABLED</code>.
+     *
+     * @return true if this icon state is <code>IconState.DISABLED</code>
+     */
+    public boolean isDisabled()
+    {
+        return (this == DISABLED);
+    }
+
+
     /** Normal icon state. */
     public static final IconState NORMAL = new IconState("normal");
 
