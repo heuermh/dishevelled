@@ -23,9 +23,10 @@
 */
 package org.dishevelled.affinity;
 
-import junit.framework.TestCase;
+import org.dishevelled.cluster.ClusteringAlgorithm;
+import org.dishevelled.cluster.AbstractClusteringAlgorithmTest;
 
-import org.dishevelled.cluster.ClusterAlgorithm;
+import org.dishevelled.affinity.preference.UniformPreference;
 
 /**
  * Unit test for AffinityPropagation.
@@ -34,9 +35,14 @@ import org.dishevelled.cluster.ClusterAlgorithm;
  * @version $Revision$ $Date$
  */
 public final class AffinityPropagationTest
-//    extends AbstractClusterAlgorithmTest
-    extends TestCase
+    extends AbstractClusteringAlgorithmTest
 {
+
+    /** {@inheritDoc} */
+    protected <T> ClusteringAlgorithm<T> createClusteringAlgorithm()
+    {
+        return new AffinityPropagation<T>(new UniformPreference<T>());
+    }
 
     public void testAffinityPropagation()
     {
