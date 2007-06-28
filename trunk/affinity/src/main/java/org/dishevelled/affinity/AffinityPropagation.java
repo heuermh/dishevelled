@@ -28,9 +28,9 @@ import java.util.List;
 import java.util.Set;
 
 import org.dishevelled.cluster.Cluster;
-import org.dishevelled.cluster.ClusterAlgorithm;
-import org.dishevelled.cluster.ClusterAlgorithmException;
-import org.dishevelled.cluster.ClusterAlgorithmListener;
+import org.dishevelled.cluster.ClusteringAlgorithm;
+import org.dishevelled.cluster.ClusteringAlgorithmException;
+import org.dishevelled.cluster.ClusteringAlgorithmListener;
 import org.dishevelled.cluster.ExitStrategy;
 import org.dishevelled.cluster.Similarity;
 
@@ -42,15 +42,15 @@ import org.dishevelled.cluster.Similarity;
  * @version $Revision$ $Date$
  */
 public final class AffinityPropagation<E>
-// extends AbstractClusterAlgorithm<E>
-    implements ClusterAlgorithm<E>
+// extends AbstractClusteringAlgorithm<E>
+    implements ClusteringAlgorithm<E>
 {
     /** Preference function. */
     private Preference<? super E> preference;
 
 
     /**
-     * Create a new affinity propagation cluster algorithm with
+     * Create a new affinity propagation clustering algorithm with
      * the specified preference function.
      *
      * @param preference preference function, must not be null
@@ -69,7 +69,7 @@ public final class AffinityPropagation<E>
     public Set<Cluster<E>> cluster(final List<? extends E> values,
                                    final Similarity<? super E> similarity,
                                    final ExitStrategy<? super E> exitStrategy)
-        throws ClusterAlgorithmException
+        throws ClusteringAlgorithmException
     {
         if (values == null)
         {
@@ -96,19 +96,19 @@ public final class AffinityPropagation<E>
     }
 
     /** {@inheritDoc} */
-    public void addClusterAlgorithmListener(final ClusterAlgorithmListener<E> listener)
+    public void addClusteringAlgorithmListener(final ClusteringAlgorithmListener<E> listener)
     {
         // empty
     }
 
     /** {@inheritDoc} */
-    public void removeClusterAlgorithmListener(final ClusterAlgorithmListener<E> listener)
+    public void removeClusteringAlgorithmListener(final ClusteringAlgorithmListener<E> listener)
     {
         // empty
     }
 
     /**
-     * Set the preference function for this affinity propagation cluster
+     * Set the preference function for this affinity propagation clustering
      * algorithm to <code>preference</code>.
      *
      * @param preference preference function, must not be null
@@ -123,7 +123,7 @@ public final class AffinityPropagation<E>
     }
 
     /**
-     * Return the preference function for this affinity propagation cluster
+     * Return the preference function for this affinity propagation clustering
      * algorithm.  The preference function will not be null.
      *
      * @return the preference function for this affinity propagation
