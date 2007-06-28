@@ -125,5 +125,15 @@ public enum Style
     /**
      * Unsafe source code generation style.
      */
-    Unsafe
+    Unsafe,
+
+    /**
+     * Exception source code generation style.
+     */
+    Exception,
+
+    /**
+     * RuntimeException source code generation style.
+     */
+    RuntimeException
 };
