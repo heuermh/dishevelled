@@ -276,7 +276,7 @@ public final class Timer
      * @param codeBlocks list of code blocks to execute
      * @param n number of times to execute each code block
      */
-    public static void prime(final List<Runnable> codeBlocks, final int n)
+    public static void prime(final List<? extends Runnable> codeBlocks, final int n)
     {
         for (Runnable codeBlock : codeBlocks)
         {
@@ -322,7 +322,7 @@ public final class Timer
      * @param n number of times to execute each code block
      * @return map of code blocks to timers used to measure execution time
      */
-    public static Map<Runnable, Timer> loop(final List<Runnable> codeBlocks, final int n)
+    public static Map<Runnable, Timer> loop(final List<? extends Runnable> codeBlocks, final int n)
     {
         Map<Runnable, Timer> map = new HashMap<Runnable, Timer>(codeBlocks.size());
         for (Runnable codeBlock : codeBlocks)
@@ -341,7 +341,7 @@ public final class Timer
      * @param m number of times to execute each code block
      * @return map of code blocks to timers used to measure execution time
      */
-    public static Map<Runnable, Timer> loop(final List<Runnable> codeBlocks, final int n, final int m)
+    public static Map<Runnable, Timer> loop(final List<? extends Runnable> codeBlocks, final int n, final int m)
     {
         Map<Runnable, Timer> map = new HashMap<Runnable, Timer>(codeBlocks.size());
         for (int i = 0; i < n; i++)
@@ -371,7 +371,7 @@ public final class Timer
      * @param n number of times to execute each code block
      * @return map of code blocks to timers used to measure execution time
      */
-    public static Map<Runnable, Timer> shuffle(final List<Runnable> codeBlocks, final int n)
+    public static Map<Runnable, Timer> shuffle(final List<? extends Runnable> codeBlocks, final int n)
     {
         return shuffle(codeBlocks, n, new Random());
     }
@@ -386,7 +386,7 @@ public final class Timer
      * @param random source of randomness
      * @return map of code blocks to timers used to measure execution time
      */
-    public static Map<Runnable, Timer> shuffle(final List<Runnable> codeBlocks, final int n, final Random random)
+    public static Map<Runnable, Timer> shuffle(final List<? extends Runnable> codeBlocks, final int n, final Random random)
     {
         List<Runnable> codeBlocksCopy = new ArrayList<Runnable>(codeBlocks);
         Collections.shuffle(codeBlocksCopy, random);
@@ -403,7 +403,7 @@ public final class Timer
      * @param m number of times to execute each code block
      * @return map of code blocks to timers used to measure execution time
      */
-    public static Map<Runnable, Timer> shuffle(final List<Runnable> codeBlocks, final int n, final int m)
+    public static Map<Runnable, Timer> shuffle(final List<? extends Runnable> codeBlocks, final int n, final int m)
     {
         return shuffle(codeBlocks, n, m, new Random());
     }
@@ -419,7 +419,7 @@ public final class Timer
      * @param random source of randomness
      * @return map of code blocks to timers used to measure execution time
      */
-    public static Map<Runnable, Timer> shuffle(final List<Runnable> codeBlocks,
+    public static Map<Runnable, Timer> shuffle(final List<? extends Runnable> codeBlocks,
                                                final int n,
                                                final int m,
                                                final Random random)

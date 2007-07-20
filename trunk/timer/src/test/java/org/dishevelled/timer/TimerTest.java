@@ -264,6 +264,27 @@ public class TimerTest
             }
         };
 
+    private abstract class MyRunnable
+        implements Runnable
+    {
+        // empty
+    }
+
+    MyRunnable myRunnable = new MyRunnable()
+        {
+            public void run()
+            {
+                try
+                {
+                    Thread.sleep(100);
+                }
+                catch (InterruptedException e)
+                {
+                    // empty
+                }
+            }
+        };
+
     public void testTime()
     {
         Timer t0 = Timer.time(r0);
@@ -698,5 +719,17 @@ public class TimerTest
         assertEquals(r0, codeBlocks3.get(0));
         assertEquals(r1, codeBlocks3.get(1));
         assertEquals(r2, codeBlocks3.get(2));
+    }
+
+    public void testExtendedRunnableTypedLists()
+    {
+        List<MyRunnable> codeBlocks = Arrays.asList(new MyRunnable[] { myRunnable });
+        Timer.prime(codeBlocks, 1);
+        Timer.loop(codeBlocks, 1);
+        Timer.loop(codeBlocks, 1, 1);
+        Timer.shuffle(codeBlocks, 1);
+        Timer.shuffle(codeBlocks, 1, new Random());
+        Timer.shuffle(codeBlocks, 1, 1);
+        Timer.shuffle(codeBlocks, 1, 1, new Random());
     }
 }
