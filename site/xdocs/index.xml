@@ -91,6 +91,11 @@ Layout manager(s) for lightweight components.<br/>
 </p>
 
 <p>
+Observable decorators for collection and map interfaces.<br/>
+&gt; <a href="observable">http://www.dishevelled.org/observable</a>
+</p>
+
+<p>
 Piccolo ribbon nodes and supporting classes.<br/>
 &gt; <a href="piccolo-ribbon">http://www.dishevelled.org/piccolo-ribbon</a>
 </p>
