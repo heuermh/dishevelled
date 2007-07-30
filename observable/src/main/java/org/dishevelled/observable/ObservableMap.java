@@ -36,8 +36,8 @@ import org.dishevelled.observable.event.VetoableMapChangeListener;
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public interface ObservableMap<K,V>
-    extends Map<K,V>
+public interface ObservableMap<K, V>
+    extends Map<K, V>
 {
 
     /**
@@ -45,28 +45,28 @@ public interface ObservableMap<K,V>
      *
      * @param l map change listener to add
      */
-    void addMapChangeListener(MapChangeListener<K,V> l);
+    void addMapChangeListener(MapChangeListener<K, V> l);
 
     /**
      * Remove the specified map change listener.
      *
      * @param l map change listener to remove
      */
-    void removeMapChangeListener(MapChangeListener<K,V> l);
+    void removeMapChangeListener(MapChangeListener<K, V> l);
 
     /**
      * Add the specified vetoable map change listener.
      *
      * @param l vetoable map change listener to add
      */
-    void addVetoableMapChangeListener(VetoableMapChangeListener<K,V> l);
+    void addVetoableMapChangeListener(VetoableMapChangeListener<K, V> l);
 
     /**
      * Remove the specified vetoable map change listener.
      *
      * @param l vetoable map change listener to remove
      */
-    void removeVetoableMapChangeListener(VetoableMapChangeListener<K,V> l);
+    void removeVetoableMapChangeListener(VetoableMapChangeListener<K, V> l);
 
     /**
      * Return an array of all <code>MapChangeListener</code>s, or
@@ -75,7 +75,7 @@ public interface ObservableMap<K,V>
      * @return an array of all <code>MapChangeListener</code>s, or
      *    an empty array if none are registered
      */
-    MapChangeListener<K,V>[] getMapChangeListeners();
+    MapChangeListener<K, V>[] getMapChangeListeners();
 
     /**
      * Return the number of <code>MapChangeListener</code>s registered
@@ -93,7 +93,7 @@ public interface ObservableMap<K,V>
      * @return an array of all <code>VetoableMapChangeListener</code>s,
      *    or an empty array if none are registered
      */
-    VetoableMapChangeListener<K,V>[] getVetoableMapChangeListeners();
+    VetoableMapChangeListener<K, V>[] getVetoableMapChangeListeners();
 
     /**
      * Return the number of <code>VetoableMapChangeListener</code>s

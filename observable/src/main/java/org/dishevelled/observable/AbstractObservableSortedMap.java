@@ -23,6 +23,7 @@
 */
 package org.dishevelled.observable;
 
+import java.util.Map;
 import java.util.SortedMap;
 
 import org.dishevelled.observable.event.ObservableSortedMapChangeSupport;
@@ -41,12 +42,12 @@ import org.dishevelled.observable.event.VetoableSortedMapChangeListener;
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public abstract class AbstractObservableSortedMap<K,V>
-    extends AbstractSortedMapDecorator<K,V>
-    implements ObservableSortedMap<K,V>
+public abstract class AbstractObservableSortedMap<K, V>
+    extends AbstractSortedMapDecorator<K, V>
+    implements ObservableSortedMap<K, V>
 {
     /** Observable sorted map change support. */
-    private ObservableSortedMapChangeSupport<K,V> support;
+    private final ObservableSortedMapChangeSupport<K, V> support;
 
 
     /**
@@ -55,7 +56,7 @@ public abstract class AbstractObservableSortedMap<K,V>
      *
      * @param sortedMap sorted map to decorate
      */
-    protected AbstractObservableSortedMap(final SortedMap<K,V> sortedMap)
+    protected AbstractObservableSortedMap(final SortedMap<K, V> sortedMap)
     {
         super(sortedMap);
         support = new ObservableSortedMapChangeSupport(this);
@@ -69,37 +70,37 @@ public abstract class AbstractObservableSortedMap<K,V>
      * @return the <code>ObservableSortedMapChangeSupport</code>
      *    class backing this abstract observable sorted map
      */
-    protected final ObservableSortedMapChangeSupport<K,V> getObservableSortedMapChangeSupport()
+    protected final ObservableSortedMapChangeSupport<K, V> getObservableSortedMapChangeSupport()
     {
         return support;
     }
 
     /** {@inheritDoc} */
-    public final void addSortedMapChangeListener(final SortedMapChangeListener<K,V> l)
+    public final void addSortedMapChangeListener(final SortedMapChangeListener<K, V> l)
     {
         support.addSortedMapChangeListener(l);
     }
 
     /** {@inheritDoc} */
-    public final void removeSortedMapChangeListener(final SortedMapChangeListener<K,V> l)
+    public final void removeSortedMapChangeListener(final SortedMapChangeListener<K, V> l)
     {
         support.removeSortedMapChangeListener(l);
     }
 
     /** {@inheritDoc} */
-    public final void addVetoableSortedMapChangeListener(final VetoableSortedMapChangeListener<K,V> l)
+    public final void addVetoableSortedMapChangeListener(final VetoableSortedMapChangeListener<K, V> l)
     {
         support.addVetoableSortedMapChangeListener(l);
     }
 
     /** {@inheritDoc} */
-    public final void removeVetoableSortedMapChangeListener(final VetoableSortedMapChangeListener<K,V> l)
+    public final void removeVetoableSortedMapChangeListener(final VetoableSortedMapChangeListener<K, V> l)
     {
         support.removeVetoableSortedMapChangeListener(l);
     }
 
     /** {@inheritDoc} */
-    public final SortedMapChangeListener<K,V>[] getSortedMapChangeListeners()
+    public final SortedMapChangeListener<K, V>[] getSortedMapChangeListeners()
     {
         return support.getSortedMapChangeListeners();
     }
@@ -111,7 +112,7 @@ public abstract class AbstractObservableSortedMap<K,V>
     }
 
     /** {@inheritDoc} */
-    public final VetoableSortedMapChangeListener<K,V>[] getVetoableSortedMapChangeListeners()
+    public final VetoableSortedMapChangeListener<K, V>[] getVetoableSortedMapChangeListeners()
     {
         return support.getVetoableSortedMapChangeListeners();
     }
@@ -122,35 +123,162 @@ public abstract class AbstractObservableSortedMap<K,V>
         return support.getVetoableSortedMapChangeListenerCount();
     }
 
-    /** {@inheritDoc} */
+    /**
+     * Fire a will change event to all registered
+     * <code>VetoableSortedMapChangeListener</code>s.
+     *
+     * @throws SortedMapChangeVetoException if any of the listeners veto the change
+     */
     public void fireSortedMapWillChange()
         throws SortedMapChangeVetoException
     {
         support.fireSortedMapWillChange();
     }
 
-    /** {@inheritDoc} */
-    public void fireSortedMapWillChange(final VetoableSortedMapChangeEvent<K,V> e)
+   /**
+     * Fire the specified will change event to all registered
+     * <code>VetoableSortedMapChangeListener</code>s.
+     *
+     * @param e will change event
+     * @throws SortedMapChangeVetoException if any of the listeners veto the change
+     */
+    public void fireSortedMapWillChange(final VetoableSortedMapChangeEvent<K, V> e)
         throws SortedMapChangeVetoException
     {
         support.fireSortedMapWillChange(e);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * Fire a change event to all registered <code>SortedMapChangeListener</code>s.
+     */
     public void fireSortedMapChanged()
     {
         support.fireSortedMapChanged();
     }
 
-    /** {@inheritDoc} */
-    public void fireSortedMapChanged(final SortedMapChangeEvent<K,V> e)
+    /**
+     * Fire the specified change event to all registered
+     * <code>SortedMapChangeListener</code>s.
+     *
+     * @param e change event
+     */
+    public void fireSortedMapChanged(final SortedMapChangeEvent<K, V> e)
     {
         support.fireSortedMapChanged(e);
     }
 
+    /**
+     * Notify subclasses the <code>clear</code> method is about to
+     * be called on the wrapped sorted map.
+     * Return <code>true</code> to proceed with the change.
+     *
+     * @return true to proceed with the change
+     */
+    protected abstract boolean preClear();
 
-    // TODO:
-    // add abstract pre/post methods
-    // implement interface methods in terms of pre/post methods
+    /**
+     * Notify subclasses the <code>clear</code> method has just been
+     * called on the wrapped sorted map.
+     */
+    protected abstract void postClear();
 
+    /**
+     * Notify subclasses the <code>put</code> method is about to
+     * be called on the wrapped sorted map with the specified parameters.
+     * Return <code>true</code> to proceed with the change.
+     *
+     * @param key <code>put</code> method key parameter
+     * @param value <code>put</code> method value parameter
+     * @return true to proceed with the change
+     */
+    protected abstract boolean prePut(K key, V value);
+
+    /**
+     * Notify subclasses the <code>put</code> method has just been
+     * called on the wrapped sorted map with the specified parameters.
+     *
+     * @param key <code>put</code> method key parameter
+     * @param value <code>put</code> method value parameter
+     */
+    protected abstract void postPut(K key, V value);
+
+    /**
+     * Notify subclasses the <code>putAll</code> method is about to
+     * be called on the wrapped sorted map with the specified parameter.
+     * Return <code>true</code> to proceed with the change.
+     *
+     * @param map <code>putAll</code> method parameter
+     * @return true to proceed with the change
+     */
+    protected abstract boolean prePutAll(Map<? extends K, ? extends V> map);
+
+    /**
+     * Notify subclasses the <code>putAll</code> method has just been
+     * called on the wrapped sorted map with the specified parameter.
+     *
+     * @param map <code>putAll</code> method parameter
+     */
+    protected abstract void postPutAll(Map<? extends K, ? extends V> map);
+
+    /**
+     * Notify subclasses the <code>remove</code> method is about to
+     * be called on the wrapped sorted map with the specified parameter.
+     * Return <code>true</code> to proceed with the change.
+     *
+     * @param key <code>remove</code> method parameter
+     * @return true to proceed with the change
+     */
+    protected abstract boolean preRemove(Object key);
+
+    /**
+     * Notify subclasses the <code>remove</code> method has just been
+     * called on the wrapped sorted map with the specified parameter.
+     *
+     * @param key <code>remove</code> method parameter
+     */
+    protected abstract void postRemove(Object key);
+
+    /** {@inheritDoc} */
+    public void clear()
+    {
+        if (preClear())
+        {
+            super.clear();
+            postClear();
+        }
+    }
+
+    /** {@inheritDoc} */
+    public V put(final K key, final V value)
+    {
+        V result = null;
+        if (prePut(key, value))
+        {
+            result = super.put(key, value);
+            postPut(key, value);
+        }
+        return result;
+    }
+
+    /** {@inheritDoc} */
+    public void putAll(final Map<? extends K, ? extends V> map)
+    {
+        if (prePutAll(map))
+        {
+            super.putAll(map);
+            postPutAll(map);
+        }
+    }
+
+    /** {@inheritDoc} */
+    public V remove(final Object key)
+    {
+        V result = null;
+        if (preRemove(key))
+        {
+            result = super.remove(key);
+            postRemove(key);
+        }
+        return result;
+    }
 }

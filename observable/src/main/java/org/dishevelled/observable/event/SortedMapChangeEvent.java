@@ -36,7 +36,7 @@ import org.dishevelled.observable.ObservableSortedMap;
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public class SortedMapChangeEvent<K,V>
+public class SortedMapChangeEvent<K, V>
     extends EventObject
 {
 
@@ -46,7 +46,7 @@ public class SortedMapChangeEvent<K,V>
      *
      * @param source source of the event
      */
-    public SortedMapChangeEvent(final ObservableSortedMap<K,V> source)
+    public SortedMapChangeEvent(final ObservableSortedMap<K, V> source)
     {
         super(source);
     }
@@ -59,8 +59,8 @@ public class SortedMapChangeEvent<K,V>
      * @return the source of this sorted map change event as an
      *    <code>ObservableSortedMap</code>
      */
-    public final ObservableSortedMap<K,V> getObservableSortedMap()
+    public final ObservableSortedMap<K, V> getObservableSortedMap()
     {
-        return (ObservableSortedMap<K,V>) super.getSource();
+        return (ObservableSortedMap<K, V>) super.getSource();
     }
 }

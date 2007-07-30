@@ -47,7 +47,7 @@ public abstract class AbstractObservableSet<E>
     implements ObservableSet<E>
 {
     /** Observable set change support. */
-    private ObservableSetChangeSupport<E> support;
+    private final ObservableSetChangeSupport<E> support;
 
 
     /**
@@ -309,7 +309,6 @@ public abstract class AbstractObservableSet<E>
             result = super.addAll(coll);
             postAddAll(coll);
         }
-
         return result;
     }
 
@@ -338,7 +337,6 @@ public abstract class AbstractObservableSet<E>
             result = super.remove(o);
             postRemove(o);
         }
-
         return result;
     }
 
@@ -351,7 +349,6 @@ public abstract class AbstractObservableSet<E>
             result = super.removeAll(coll);
             postRemoveAll(coll);
         }
-
         return result;
     }
 
@@ -364,7 +361,6 @@ public abstract class AbstractObservableSet<E>
             result = super.retainAll(coll);
             postRetainAll(coll);
         }
-
         return result;
     }
 

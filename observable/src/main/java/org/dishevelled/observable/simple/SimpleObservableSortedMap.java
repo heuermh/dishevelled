@@ -23,11 +23,13 @@
 */
 package org.dishevelled.observable.simple;
 
+import java.util.Map;
 import java.util.SortedMap;
 
 import org.dishevelled.observable.AbstractObservableSortedMap;
 
 import org.dishevelled.observable.event.SortedMapChangeEvent;
+import org.dishevelled.observable.event.SortedMapChangeVetoException;
 import org.dishevelled.observable.event.VetoableSortedMapChangeEvent;
 
 /**
@@ -42,14 +44,14 @@ import org.dishevelled.observable.event.VetoableSortedMapChangeEvent;
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public class SimpleObservableSortedMap<K,V>
-    extends AbstractObservableSortedMap<K,V>
+public class SimpleObservableSortedMap<K, V>
+    extends AbstractObservableSortedMap<K, V>
 {
     /** Cached sorted map change event. */
-    private final SortedMapChangeEvent<K,V> changeEvent;
+    private final SortedMapChangeEvent<K, V> changeEvent;
 
     /** Cached vetoable sorted map change event. */
-    private final VetoableSortedMapChangeEvent<K,V> vetoableChangeEvent;
+    private final VetoableSortedMapChangeEvent<K, V> vetoableChangeEvent;
 
 
     /**
@@ -58,16 +60,91 @@ public class SimpleObservableSortedMap<K,V>
      *
      * @param sortedMap sorted map to decorate, must not be null
      */
-    public SimpleObservableSortedMap(final SortedMap<K,V> sortedMap)
+    public SimpleObservableSortedMap(final SortedMap<K, V> sortedMap)
     {
         super(sortedMap);
-        changeEvent = new SortedMapChangeEvent<K,V>(this);
-        vetoableChangeEvent = new VetoableSortedMapChangeEvent<K,V>(this);
+        changeEvent = new SortedMapChangeEvent<K, V>(this);
+        vetoableChangeEvent = new VetoableSortedMapChangeEvent<K, V>(this);
     }
 
 
-    // TODO:
-    // implement pre/post methods
+    /** {@inheritDoc} */
+    protected boolean preClear()
+    {
+        try
+        {
+            fireSortedMapWillChange(vetoableChangeEvent);
+            return true;
+        }
+        catch (SortedMapChangeVetoException e)
+        {
+            return false;
+        }
+    }
 
+    /** {@inheritDoc} */
+    protected void postClear()
+    {
+        fireSortedMapChanged(changeEvent);
+    }
 
+    /** {@inheritDoc} */
+    protected boolean prePut(final K key, final V value)
+    {
+        try
+        {
+            fireSortedMapWillChange(vetoableChangeEvent);
+            return true;
+        }
+        catch (SortedMapChangeVetoException e)
+        {
+            return false;
+        }
+    }
+
+    /** {@inheritDoc} */
+    protected void postPut(final K key, final V value)
+    {
+        fireSortedMapChanged(changeEvent);
+    }
+
+    /** {@inheritDoc} */
+    protected boolean prePutAll(final Map<? extends K, ? extends V> map)
+    {
+        try
+        {
+            fireSortedMapWillChange(vetoableChangeEvent);
+            return true;
+        }
+        catch (SortedMapChangeVetoException e)
+        {
+            return false;
+        }
+    }
+
+    /** {@inheritDoc} */
+    protected void postPutAll(final Map<? extends K, ? extends V> map)
+    {
+        fireSortedMapChanged(changeEvent);
+    }
+
+    /** {@inheritDoc} */
+    protected boolean preRemove(final Object key)
+    {
+        try
+        {
+            fireSortedMapWillChange(vetoableChangeEvent);
+            return true;
+        }
+        catch (SortedMapChangeVetoException e)
+        {
+            return false;
+        }
+    }
+
+    /** {@inheritDoc} */
+    protected void postRemove(final Object key)
+    {
+        fireSortedMapChanged(changeEvent);
+    }
 }

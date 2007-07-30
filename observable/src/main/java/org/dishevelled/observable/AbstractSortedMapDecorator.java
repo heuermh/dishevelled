@@ -37,11 +37,11 @@ import java.util.SortedMap;
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-abstract class AbstractSortedMapDecorator<K,V>
-    implements SortedMap<K,V>
+abstract class AbstractSortedMapDecorator<K, V>
+    implements SortedMap<K, V>
 {
     /** Sorted map this decorator decorates. */
-    private final SortedMap<K,V> sortedMap;
+    private final SortedMap<K, V> sortedMap;
 
 
     /**
@@ -50,7 +50,7 @@ abstract class AbstractSortedMapDecorator<K,V>
      *
      * @param sortedMap sorted map to decorate, must not be null
      */
-    protected AbstractSortedMapDecorator(final SortedMap<K,V> sortedMap)
+    protected AbstractSortedMapDecorator(final SortedMap<K, V> sortedMap)
     {
         if (sortedMap == null)
         {
@@ -65,7 +65,7 @@ abstract class AbstractSortedMapDecorator<K,V>
      *
      * @return a reference to the sorted map this decorator decorates
      */
-    protected final SortedMap<K,V> getSortedMap()
+    protected final SortedMap<K, V> getSortedMap()
     {
         return sortedMap;
     }
@@ -83,7 +83,7 @@ abstract class AbstractSortedMapDecorator<K,V>
     }
 
     /** {@inheritDoc} */
-    public SortedMap<K,V> headMap(final K toKey)
+    public SortedMap<K, V> headMap(final K toKey)
     {
         return sortedMap.headMap(toKey);
     }
@@ -95,13 +95,13 @@ abstract class AbstractSortedMapDecorator<K,V>
     }
 
     /** {@inheritDoc} */
-    public SortedMap<K,V> subMap(final K fromKey, final K toKey)
+    public SortedMap<K, V> subMap(final K fromKey, final K toKey)
     {
         return sortedMap.subMap(fromKey, toKey);
     }
 
     /** {@inheritDoc} */
-    public SortedMap<K,V> tailMap(final K fromKey)
+    public SortedMap<K, V> tailMap(final K fromKey)
     {
         return sortedMap.tailMap(fromKey);
     }
@@ -125,7 +125,7 @@ abstract class AbstractSortedMapDecorator<K,V>
     }
 
     /** {@inheritDoc} */
-    public Set<SortedMap.Entry<K,V>> entrySet()
+    public Set<SortedMap.Entry<K, V>> entrySet()
     {
         return sortedMap.entrySet();
     }
@@ -167,7 +167,7 @@ abstract class AbstractSortedMapDecorator<K,V>
     }
 
     /** {@inheritDoc} */
-    public void putAll(final Map<? extends K,? extends V> m)
+    public void putAll(final Map<? extends K, ? extends V> m)
     {
         sortedMap.putAll(m);
     }

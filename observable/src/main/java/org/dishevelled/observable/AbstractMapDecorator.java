@@ -35,11 +35,11 @@ import java.util.Set;
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-abstract class AbstractMapDecorator<K,V>
-    implements Map<K,V>
+abstract class AbstractMapDecorator<K, V>
+    implements Map<K, V>
 {
     /** Map this decorator decorates. */
-    private final Map<K,V> map;
+    private final Map<K, V> map;
 
 
     /**
@@ -48,7 +48,7 @@ abstract class AbstractMapDecorator<K,V>
      *
      * @param map map to decorate, must not be null
      */
-    protected AbstractMapDecorator(final Map<K,V> map)
+    protected AbstractMapDecorator(final Map<K, V> map)
     {
         if (map == null)
         {
@@ -63,7 +63,7 @@ abstract class AbstractMapDecorator<K,V>
      *
      * @return a reference to the map this decorator decorates
      */
-    protected final Map<K,V> getMap()
+    protected final Map<K, V> getMap()
     {
         return map;
     }
@@ -87,7 +87,7 @@ abstract class AbstractMapDecorator<K,V>
     }
 
     /** {@inheritDoc} */
-    public Set<Map.Entry<K,V>> entrySet()
+    public Set<Map.Entry<K, V>> entrySet()
     {
         return map.entrySet();
     }
@@ -129,7 +129,7 @@ abstract class AbstractMapDecorator<K,V>
     }
 
     /** {@inheritDoc} */
-    public void putAll(final Map<? extends K,? extends V> m)
+    public void putAll(final Map<? extends K, ? extends V> m)
     {
         map.putAll(m);
     }

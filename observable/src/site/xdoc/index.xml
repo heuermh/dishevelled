@@ -32,7 +32,7 @@
 
 <p>
 dishevelled.org <b>observable</b> provides observable decorators for collection
-and map interfaces.  The observable project requires java version 1.6 or later.
+and map interfaces.  The observable project requires java version 1.5 or later.
 </p>
 
 </section>

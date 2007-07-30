@@ -21,46 +21,26 @@
     > http://www.opensource.org/licenses/lgpl-license.php
 
 */
-package org.dishevelled.observable.event;
+package org.dishevelled.observable.simple;
 
-import java.util.EventObject;
+import java.util.TreeMap;
 
-import org.dishevelled.observable.ObservableMap;
+import org.dishevelled.observable.AbstractObservableSortedMapTest;
+import org.dishevelled.observable.ObservableSortedMap;
 
 /**
- * An event object representing a change made to
- * an observable map.
+ * Unit test for SimpleObservableSortedMap.
  *
- * @param <K> map key type
- * @param <V> map value type
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public class MapChangeEvent<K, V>
-    extends EventObject
+public class SimpleObservableSortedMapTest
+    extends AbstractObservableSortedMapTest
 {
 
-    /**
-     * Create a new map change event with the specified
-     * observable map as the event source.
-     *
-     * @param source source of the event
-     */
-    public MapChangeEvent(final ObservableMap<K, V> source)
+    /** {@inheritDoc} */
+    protected <K, V> ObservableSortedMap<K, V> createObservableSortedMap()
     {
-        super(source);
-    }
-
-
-    /**
-     * Return the source of this map change event as an
-     * <code>ObservableMap</code>.
-     *
-     * @return the source of this map change event as an
-     *    <code>ObservableMap</code>
-     */
-    public final ObservableMap<K, V> getObservableMap()
-    {
-        return (ObservableMap<K, V>) super.getSource();
+        return new SimpleObservableSortedMap(new TreeMap<K, V>());
     }
 }

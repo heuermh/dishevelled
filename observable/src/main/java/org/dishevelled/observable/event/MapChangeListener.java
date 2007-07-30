@@ -34,7 +34,7 @@ import java.util.EventListener;
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public interface MapChangeListener<K,V>
+public interface MapChangeListener<K, V>
     extends EventListener
 {
 
@@ -44,5 +44,5 @@ public interface MapChangeListener<K,V>
      *
      * @param e map change event
      */
-    void mapChanged(MapChangeEvent<K,V> e);
+    void mapChanged(MapChangeEvent<K, V> e);
 }

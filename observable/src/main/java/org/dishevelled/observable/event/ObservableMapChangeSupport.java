@@ -39,11 +39,11 @@ import org.dishevelled.observable.ObservableMap;
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public class ObservableMapChangeSupport<K,V>
+public class ObservableMapChangeSupport<K, V>
     implements Serializable
 {
     /** Event source. */
-    private ObservableMap<K,V> source;
+    private ObservableMap<K, V> source;
 
     /** Listener list. */
     private final EventListenerList listenerList;
@@ -64,7 +64,7 @@ public class ObservableMapChangeSupport<K,V>
      *
      * @param source the event source
      */
-    public ObservableMapChangeSupport(final ObservableMap<K,V> source)
+    public ObservableMapChangeSupport(final ObservableMap<K, V> source)
     {
         this();
         setSource(source);
@@ -78,7 +78,7 @@ public class ObservableMapChangeSupport<K,V>
      *
      * @param source the event source
      */
-    protected void setSource(final ObservableMap<K,V> source)
+    protected void setSource(final ObservableMap<K, V> source)
     {
         this.source = source;
     }
@@ -100,7 +100,7 @@ public class ObservableMapChangeSupport<K,V>
      *
      * @param l map change listener to add
      */
-    public final void addMapChangeListener(final MapChangeListener<K,V> l)
+    public final void addMapChangeListener(final MapChangeListener<K, V> l)
     {
         listenerList.add(MapChangeListener.class, l);
     }
@@ -110,7 +110,7 @@ public class ObservableMapChangeSupport<K,V>
      *
      * @param l map change listener to remove
      */
-    public final void removeMapChangeListener(final MapChangeListener<K,V> l)
+    public final void removeMapChangeListener(final MapChangeListener<K, V> l)
     {
         listenerList.remove(MapChangeListener.class, l);
     }
@@ -120,7 +120,7 @@ public class ObservableMapChangeSupport<K,V>
      *
      * @param l vetoable map change listener to add
      */
-    public final void addVetoableMapChangeListener(final VetoableMapChangeListener<K,V> l)
+    public final void addVetoableMapChangeListener(final VetoableMapChangeListener<K, V> l)
     {
         listenerList.add(VetoableMapChangeListener.class, l);
     }
@@ -130,7 +130,7 @@ public class ObservableMapChangeSupport<K,V>
      *
      * @param l vetoable map change listener to remove
      */
-    public final void removeVetoableMapChangeListener(final VetoableMapChangeListener<K,V> l)
+    public final void removeVetoableMapChangeListener(final VetoableMapChangeListener<K, V> l)
     {
         listenerList.remove(VetoableMapChangeListener.class, l);
     }
@@ -142,9 +142,9 @@ public class ObservableMapChangeSupport<K,V>
      * @return an array of all <code>MapChangeListener</code>s, or
      *    an empty array if none are registered
      */
-    public final MapChangeListener<K,V>[] getMapChangeListeners()
+    public final MapChangeListener<K, V>[] getMapChangeListeners()
     {
-        return (MapChangeListener<K,V>[]) listenerList.getListeners(MapChangeListener.class);
+        return (MapChangeListener<K, V>[]) listenerList.getListeners(MapChangeListener.class);
     }
 
     /**
@@ -166,9 +166,9 @@ public class ObservableMapChangeSupport<K,V>
      * @return an array of all <code>VetoableMapChangeListener</code>s,
      *    or an empty array if none are registered
      */
-    public final VetoableMapChangeListener<K,V>[] getVetoableMapChangeListeners()
+    public final VetoableMapChangeListener<K, V>[] getVetoableMapChangeListeners()
     {
-        return (VetoableMapChangeListener<K,V>[]) listenerList.getListeners(VetoableMapChangeListener.class);
+        return (VetoableMapChangeListener<K, V>[]) listenerList.getListeners(VetoableMapChangeListener.class);
     }
 
     /**
@@ -193,7 +193,7 @@ public class ObservableMapChangeSupport<K,V>
         throws MapChangeVetoException
     {
         Object[] listeners = listenerList.getListenerList();
-        VetoableMapChangeEvent<K,V> e = null;
+        VetoableMapChangeEvent<K, V> e = null;
 
         for (int i = listeners.length - 2; i >= 0; i -= 2)
         {
@@ -202,9 +202,9 @@ public class ObservableMapChangeSupport<K,V>
                 // lazily create the event
                 if (e == null)
                 {
-                    e = new VetoableMapChangeEvent<K,V>(source);
+                    e = new VetoableMapChangeEvent<K, V>(source);
                 }
-                ((VetoableMapChangeListener<K,V>) listeners[i + 1]).mapWillChange(e);
+                ((VetoableMapChangeListener<K, V>) listeners[i + 1]).mapWillChange(e);
             }
         }
     }
@@ -216,7 +216,7 @@ public class ObservableMapChangeSupport<K,V>
      * @param e will change event
      * @throws MapChangeVetoException if any of the listeners veto the change
      */
-    public void fireMapWillChange(final VetoableMapChangeEvent<K,V> e)
+    public void fireMapWillChange(final VetoableMapChangeEvent<K, V> e)
         throws MapChangeVetoException
     {
         Object[] listeners = listenerList.getListenerList();
@@ -225,7 +225,7 @@ public class ObservableMapChangeSupport<K,V>
         {
             if (listeners[i] == VetoableMapChangeListener.class)
             {
-                ((VetoableMapChangeListener<K,V>) listeners[i + 1]).mapWillChange(e);
+                ((VetoableMapChangeListener<K, V>) listeners[i + 1]).mapWillChange(e);
             }
         }
     }
@@ -236,7 +236,7 @@ public class ObservableMapChangeSupport<K,V>
     public void fireMapChanged()
     {
         Object[] listeners = listenerList.getListenerList();
-        MapChangeEvent<K,V> e = null;
+        MapChangeEvent<K, V> e = null;
 
         for (int i = listeners.length - 2; i >= 0; i -= 2)
         {
@@ -245,9 +245,9 @@ public class ObservableMapChangeSupport<K,V>
                 // lazily create the event
                 if (e == null)
                 {
-                    e = new MapChangeEvent<K,V>(source);
+                    e = new MapChangeEvent<K, V>(source);
                 }
-                ((MapChangeListener<K,V>) listeners[i + 1]).mapChanged(e);
+                ((MapChangeListener<K, V>) listeners[i + 1]).mapChanged(e);
             }
         }
     }
@@ -258,7 +258,7 @@ public class ObservableMapChangeSupport<K,V>
      *
      * @param e change event
      */
-    public void fireMapChanged(final MapChangeEvent<K,V> e)
+    public void fireMapChanged(final MapChangeEvent<K, V> e)
     {
         Object[] listeners = listenerList.getListenerList();
 
@@ -266,7 +266,7 @@ public class ObservableMapChangeSupport<K,V>
         {
             if (listeners[i] == MapChangeListener.class)
             {
-                ((MapChangeListener<K,V>) listeners[i + 1]).mapChanged(e);
+                ((MapChangeListener<K, V>) listeners[i + 1]).mapChanged(e);
             }
         }
     }

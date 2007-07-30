@@ -36,7 +36,7 @@ import java.util.Iterator;
  * @version $Revision$ $Date$
  */
 abstract class AbstractListDecorator<E>
-    implements List<E>
+    implements List<E>//, RandomAccess
 {
     /** List this decorator decorates. */
     private final List<E> list;

@@ -306,4 +306,24 @@ public class SimpleObservableList<E>
     {
         fireListChanged(changeEvent);
     }
+
+    /** {@inheritDoc} */
+    protected boolean preListIteratorSet()
+    {
+        try
+        {
+            fireListWillChange(vetoableChangeEvent);
+            return true;
+        }
+        catch (ListChangeVetoException e)
+        {
+            return false;
+        }
+    }
+
+    /** {@inheritDoc} */
+    protected void postListIteratorSet()
+    {
+        fireListChanged(changeEvent);
+    }
 }
