@@ -23,11 +23,13 @@
 */
 package org.dishevelled.observable.simple;
 
+import java.util.Collection;
 import java.util.SortedSet;
 
 import org.dishevelled.observable.AbstractObservableSortedSet;
 
 import org.dishevelled.observable.event.SortedSetChangeEvent;
+import org.dishevelled.observable.event.SortedSetChangeVetoException;
 import org.dishevelled.observable.event.VetoableSortedSetChangeEvent;
 
 /**
@@ -65,8 +67,143 @@ public class SimpleObservableSortedSet<E>
     }
 
 
-    // TODO:
-    // implement pre/post methods
+    /** {@inheritDoc} */
+    protected boolean preAdd(final E e)
+    {
+        try
+        {
+            fireSortedSetWillChange(vetoableChangeEvent);
+            return true;
+        }
+        catch (SortedSetChangeVetoException ex)
+        {
+            return false;
+        }
+    }
 
+    /** {@inheritDoc} */
+    protected void postAdd(final E e)
+    {
+        fireSortedSetChanged(changeEvent);
+    }
 
+    /** {@inheritDoc} */
+    protected boolean preAddAll(final Collection<? extends E> coll)
+    {
+        try
+        {
+            fireSortedSetWillChange(vetoableChangeEvent);
+            return true;
+        }
+        catch (SortedSetChangeVetoException e)
+        {
+            return false;
+        }
+    }
+
+    /** {@inheritDoc} */
+    protected void postAddAll(final Collection<? extends E> coll)
+    {
+        fireSortedSetChanged(changeEvent);
+    }
+
+    /** {@inheritDoc} */
+    protected boolean preClear()
+    {
+        try
+        {
+            fireSortedSetWillChange(vetoableChangeEvent);
+            return true;
+        }
+        catch (SortedSetChangeVetoException e)
+        {
+            return false;
+        }
+    }
+
+    /** {@inheritDoc} */
+    protected void postClear()
+    {
+        fireSortedSetChanged(changeEvent);
+    }
+
+    /** {@inheritDoc} */
+    protected boolean preRemove(final Object o)
+    {
+        try
+        {
+            fireSortedSetWillChange(vetoableChangeEvent);
+            return true;
+        }
+        catch (SortedSetChangeVetoException e)
+        {
+            return false;
+        }
+    }
+
+    /** {@inheritDoc} */
+    protected void postRemove(final Object o)
+    {
+        fireSortedSetChanged(changeEvent);
+    }
+
+    /** {@inheritDoc} */
+    protected boolean preRemoveAll(final Collection<?> coll)
+    {
+        try
+        {
+            fireSortedSetWillChange(vetoableChangeEvent);
+            return true;
+        }
+        catch (SortedSetChangeVetoException e)
+        {
+            return false;
+        }
+    }
+
+    /** {@inheritDoc} */
+    protected void postRemoveAll(final Collection<?> coll)
+    {
+        fireSortedSetChanged(changeEvent);
+    }
+
+    /** {@inheritDoc} */
+    protected boolean preRetainAll(final Collection<?> coll)
+    {
+        try
+        {
+            fireSortedSetWillChange(vetoableChangeEvent);
+            return true;
+        }
+        catch (SortedSetChangeVetoException e)
+        {
+            return false;
+        }
+    }
+
+    /** {@inheritDoc} */
+    protected void postRetainAll(final Collection<?> coll)
+    {
+        fireSortedSetChanged(changeEvent);
+    }
+
+    /** {@inheritDoc} */
+    protected boolean preIteratorRemove()
+    {
+        try
+        {
+            fireSortedSetWillChange(vetoableChangeEvent);
+            return true;
+        }
+        catch (SortedSetChangeVetoException e)
+        {
+            return false;
+        }
+    }
+
+    /** {@inheritDoc} */
+    protected void postIteratorRemove()
+    {
+        fireSortedSetChanged(changeEvent);
+    }
 }

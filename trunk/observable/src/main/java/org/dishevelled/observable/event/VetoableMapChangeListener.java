@@ -34,7 +34,7 @@ import java.util.EventListener;
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public interface VetoableMapChangeListener<K,V>
+public interface VetoableMapChangeListener<K, V>
     extends EventListener
 {
 
@@ -46,6 +46,6 @@ public interface VetoableMapChangeListener<K,V>
      * @throws MapChangeVetoException if this listener wishes
      *    the change about to be made to be rolled back
      */
-    void mapWillChange(VetoableMapChangeEvent<K,V> e)
+    void mapWillChange(VetoableMapChangeEvent<K, V> e)
         throws MapChangeVetoException;
 }

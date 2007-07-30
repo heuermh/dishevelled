@@ -23,44 +23,21 @@
 */
 package org.dishevelled.observable.event;
 
-import java.util.EventObject;
-
-import org.dishevelled.observable.ObservableMap;
+import junit.framework.TestCase;
 
 /**
- * An event object representing a change made to
- * an observable map.
+ * Unit test for SetChangeVetoException.
  *
- * @param <K> map key type
- * @param <V> map value type
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public class MapChangeEvent<K, V>
-    extends EventObject
+public class SetChangeVetoExceptionTest
+    extends TestCase
 {
 
-    /**
-     * Create a new map change event with the specified
-     * observable map as the event source.
-     *
-     * @param source source of the event
-     */
-    public MapChangeEvent(final ObservableMap<K, V> source)
+    public void testConstructor()
     {
-        super(source);
-    }
-
-
-    /**
-     * Return the source of this map change event as an
-     * <code>ObservableMap</code>.
-     *
-     * @return the source of this map change event as an
-     *    <code>ObservableMap</code>
-     */
-    public final ObservableMap<K, V> getObservableMap()
-    {
-        return (ObservableMap<K, V>) super.getSource();
+        SetChangeVetoException exception0 = new SetChangeVetoException();
+        SetChangeVetoException exception1 = new SetChangeVetoException("message");
     }
 }

@@ -33,36 +33,5 @@ The decorators in this package simply fire empty vetoable change events in
 Listeners may query the source of the events to determine what may or may
 not have changed due to the event.
 </p>
-
-<h4>Example</h4>
-
-<p>
-For example, consider a listener interested in changes in size of an observable collection of strings:
-<pre>
-class SizeChangeListener&lt;String&gt;
-  implements CollectionChangeListener&lt;String&gt;, VetoableCollectionChangeListener&lt;String&gt;
-{
-  private int sizeBefore;
-  private int sizeAfter;
-
-  public void collectionWillChange(final VetoableCollectionChangeEvent&lt;String&gt; event)
-    throws CollectionChangeVetoException
-  {
-    ObservableCollection&lt;String&gt; source = event.getObservableCollection();
-    sizeBefore = source.size();
-  }
-
-  public void collectionChanged(final CollectionChangeEvent&lt;String&gt; event)
-  {
-    ObservableCollection&lt;String&gt; source = event.getObservableCollection();
-    sizeAfter = source.size();
-    if (sizeAfter != sizeBefore)
-    {
-      // collection size changed, do something...
-    }
-  }
-}
-</pre>
-</p>
   </body>
 </html>

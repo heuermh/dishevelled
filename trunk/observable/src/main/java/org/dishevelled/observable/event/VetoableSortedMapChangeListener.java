@@ -34,7 +34,7 @@ import java.util.EventListener;
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public interface VetoableSortedMapChangeListener<K,V>
+public interface VetoableSortedMapChangeListener<K, V>
     extends EventListener
 {
 
@@ -46,6 +46,6 @@ public interface VetoableSortedMapChangeListener<K,V>
      * @throws SortedMapChangeVetoException if this listener wishes
      *    the change about to be made to be rolled back
      */
-    void sortedMapWillChange(VetoableSortedMapChangeEvent<K,V> e)
+    void sortedMapWillChange(VetoableSortedMapChangeEvent<K, V> e)
         throws SortedMapChangeVetoException;
 }

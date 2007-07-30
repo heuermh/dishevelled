@@ -48,7 +48,7 @@ public abstract class AbstractObservableList<E>
     implements ObservableList<E>
 {
     /** Observable list change support. */
-    private ObservableListChangeSupport<E> support;
+    private final ObservableListChangeSupport<E> support;
 
 
     /**
@@ -381,6 +381,22 @@ public abstract class AbstractObservableList<E>
      */
     protected abstract void postListIteratorRemove();
 
+    /**
+     * Notify subclasses the <code>set</code> method is about to
+     * be called on the wrapped list's list iterator.
+     * Return <code>true</code> to proceed with the change.
+     *
+     * @return true to proceed with the change
+     */
+    protected abstract boolean preListIteratorSet();
+
+    /**
+     * Notify subclasses the <code>set</code> method has just been
+     * called on the wrapped list's list iterator.
+     */
+    protected abstract void postListIteratorSet();
+
+
     /** {@inheritDoc} */
     public boolean add(final E e)
     {
@@ -515,6 +531,175 @@ public abstract class AbstractObservableList<E>
         return new ObservableListListIterator<E>(super.listIterator(index));
     }
 
+    /** {@inheritDoc} */
+    public List<E> subList(final int fromIndex, final int toIndex)
+    {
+        //return new ObservableSubList<E>(super.subList(fromIndex, toIndex));
+        return new ObservableSubList(super.subList(fromIndex, toIndex));
+    }
+
+
+    /**
+     * Observable subList decorator.
+     */
+    //protected class ObservableSubList<E>
+    protected class ObservableSubList
+        extends AbstractListDecorator<E>
+    {
+
+        /**
+         * Create a new observable subList that decorates
+         * the specified sublist.
+         *
+         * @param subList subList to decorate
+         */
+        protected ObservableSubList(final List<E> subList)
+        {
+            super(subList);
+        }
+
+
+        /** {@inheritDoc} */
+        public boolean add(final E e)
+        {
+            boolean result = false;
+            if (preAdd(e))
+            {
+                result = super.add(e);
+                postAdd(e);
+            }
+            return result;
+        }
+
+        /** {@inheritDoc} */
+        public void add(final int index, final E e)
+        {
+            if (preAddAtIndex(index, e))
+            {
+                super.add(index, e);
+                postAddAtIndex(index, e);
+            }
+        }
+
+        /** {@inheritDoc} */
+        public boolean addAll(final Collection<? extends E> coll)
+        {
+            boolean result = false;
+            if (preAddAll(coll))
+            {
+                result = super.addAll(coll);
+                postAddAll(coll);
+            }
+            return result;
+        }
+
+        /** {@inheritDoc} */
+        public boolean addAll(final int index, final Collection<? extends E> coll)
+        {
+            boolean result = false;
+            if (preAddAllAtIndex(index, coll))
+            {
+                result = super.addAll(index, coll);
+                postAddAllAtIndex(index, coll);
+            }
+            return result;
+        }
+
+        /** {@inheritDoc} */
+        public void clear()
+        {
+            if (preClear())
+            {
+                super.clear();
+                postClear();
+            }
+        }
+
+        /** {@inheritDoc} */
+        public E remove(final int index)
+        {
+            E result = null;
+            if (preRemoveIndex(index))
+            {
+                result = super.remove(index);
+                postRemoveIndex(index);
+            }
+            return result;
+        }
+
+        /** {@inheritDoc} */
+        public boolean remove(final Object o)
+        {
+            boolean result = false;
+            if (preRemove(o))
+            {
+                result = super.remove(o);
+                postRemove(o);
+            }
+            return result;
+        }
+
+        /** {@inheritDoc} */
+        public boolean removeAll(final Collection<?> coll)
+        {
+            boolean result = false;
+            if (preRemoveAll(coll))
+            {
+                result = super.removeAll(coll);
+                postRemoveAll(coll);
+            }
+            return result;
+        }
+
+        /** {@inheritDoc} */
+        public boolean retainAll(final Collection<?> coll)
+        {
+            boolean result = false;
+            if (preRetainAll(coll))
+            {
+                result = super.retainAll(coll);
+                postRetainAll(coll);
+            }
+            return result;
+        }
+
+        /** {@inheritDoc} */
+        public E set(final int index, final E e)
+        {
+            E result = null;
+            if (preSet(index, e))
+            {
+                result = super.set(index, e);
+                postSet(index, e);
+            }
+            return result;
+        }
+
+        /** {@inheritDoc} */
+        public Iterator<E> iterator()
+        {
+            return new ObservableListIterator<E>(super.iterator());
+        }
+
+        /** {@inheritDoc} */
+        public ListIterator<E> listIterator()
+        {
+            return new ObservableListListIterator<E>(super.listIterator());
+        }
+
+        /** {@inheritDoc} */
+        public ListIterator<E> listIterator(final int index)
+        {
+            return new ObservableListListIterator<E>(super.listIterator(index));
+        }
+
+        /** {@inheritDoc} */
+        public List<E> subList(final int fromIndex, final int toIndex)
+        {
+            //return new ObservableSubList<E>(super.subList(fromIndex, toIndex));
+            return new ObservableSubList(super.subList(fromIndex, toIndex));
+        }
+    }
 
     /**
      * Observable list iterator.
@@ -572,6 +757,16 @@ public abstract class AbstractObservableList<E>
             {
                 super.remove();
                 postListIteratorRemove();
+            }
+        }
+
+        /** {@inheritDoc} */
+        public void set(final E e)
+        {
+            if (preListIteratorSet())
+            {
+                super.set(e);
+                postListIteratorSet();
             }
         }
     }

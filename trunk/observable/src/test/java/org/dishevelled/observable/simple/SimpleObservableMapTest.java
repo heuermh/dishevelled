@@ -21,46 +21,26 @@
     > http://www.opensource.org/licenses/lgpl-license.php
 
 */
-package org.dishevelled.observable.event;
+package org.dishevelled.observable.simple;
 
-import java.util.EventObject;
+import java.util.HashMap;
 
+import org.dishevelled.observable.AbstractObservableMapTest;
 import org.dishevelled.observable.ObservableMap;
 
 /**
- * An event object representing a change made to
- * an observable map.
+ * Unit test for SimpleObservableMap.
  *
- * @param <K> map key type
- * @param <V> map value type
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public class MapChangeEvent<K, V>
-    extends EventObject
+public class SimpleObservableMapTest
+    extends AbstractObservableMapTest
 {
 
-    /**
-     * Create a new map change event with the specified
-     * observable map as the event source.
-     *
-     * @param source source of the event
-     */
-    public MapChangeEvent(final ObservableMap<K, V> source)
+    /** {@inheritDoc} */
+    protected <K, V> ObservableMap<K, V> createObservableMap()
     {
-        super(source);
-    }
-
-
-    /**
-     * Return the source of this map change event as an
-     * <code>ObservableMap</code>.
-     *
-     * @return the source of this map change event as an
-     *    <code>ObservableMap</code>
-     */
-    public final ObservableMap<K, V> getObservableMap()
-    {
-        return (ObservableMap<K, V>) super.getSource();
+        return new SimpleObservableMap(new HashMap<K, V>());
     }
 }

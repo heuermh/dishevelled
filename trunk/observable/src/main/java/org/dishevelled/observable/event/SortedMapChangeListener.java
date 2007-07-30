@@ -34,7 +34,7 @@ import java.util.EventListener;
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public interface SortedMapChangeListener<K,V>
+public interface SortedMapChangeListener<K, V>
     extends EventListener
 {
 
@@ -44,5 +44,5 @@ public interface SortedMapChangeListener<K,V>
      *
      * @param e sorted map change event
      */
-    void sortedMapChanged(SortedMapChangeEvent<K,V> e);
+    void sortedMapChanged(SortedMapChangeEvent<K, V> e);
 }

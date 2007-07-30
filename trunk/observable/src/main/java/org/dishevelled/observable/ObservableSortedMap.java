@@ -36,8 +36,8 @@ import org.dishevelled.observable.event.VetoableSortedMapChangeListener;
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public interface ObservableSortedMap<K,V>
-    extends SortedMap<K,V>
+public interface ObservableSortedMap<K, V>
+    extends SortedMap<K, V>
 {
 
     /**
@@ -45,28 +45,28 @@ public interface ObservableSortedMap<K,V>
      *
      * @param l sorted map change listener to add
      */
-    void addSortedMapChangeListener(SortedMapChangeListener<K,V> l);
+    void addSortedMapChangeListener(SortedMapChangeListener<K, V> l);
 
     /**
      * Remove the specified sorted map change listener.
      *
      * @param l sorted map change listener to remove
      */
-    void removeSortedMapChangeListener(SortedMapChangeListener<K,V> l);
+    void removeSortedMapChangeListener(SortedMapChangeListener<K, V> l);
 
     /**
      * Add the specified vetoable sorted map change listener.
      *
      * @param l vetoable sorted map change listener to add
      */
-    void addVetoableSortedMapChangeListener(VetoableSortedMapChangeListener<K,V> l);
+    void addVetoableSortedMapChangeListener(VetoableSortedMapChangeListener<K, V> l);
 
     /**
      * Remove the specified vetoable sorted map change listener.
      *
      * @param l vetoable sorted map change listener to remove
      */
-    void removeVetoableSortedMapChangeListener(VetoableSortedMapChangeListener<K,V> l);
+    void removeVetoableSortedMapChangeListener(VetoableSortedMapChangeListener<K, V> l);
 
     /**
      * Return an array of all <code>SortedMapChangeListener</code>s, or
@@ -75,7 +75,7 @@ public interface ObservableSortedMap<K,V>
      * @return an array of all <code>SortedMapChangeListener</code>s, or
      *    an empty array if none are registered
      */
-    SortedMapChangeListener<K,V>[] getSortedMapChangeListeners();
+    SortedMapChangeListener<K, V>[] getSortedMapChangeListeners();
 
     /**
      * Return the number of <code>SortedMapChangeListener</code>s registered
@@ -93,7 +93,7 @@ public interface ObservableSortedMap<K,V>
      * @return an array of all <code>VetoableSortedMapChangeListener</code>s,
      *    or an empty array if none are registered
      */
-    VetoableSortedMapChangeListener<K,V>[] getVetoableSortedMapChangeListeners();
+    VetoableSortedMapChangeListener<K, V>[] getVetoableSortedMapChangeListeners();
 
     /**
      * Return the number of <code>VetoableSortedMapChangeListener</code>s

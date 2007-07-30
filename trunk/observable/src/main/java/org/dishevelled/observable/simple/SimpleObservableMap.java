@@ -23,6 +23,7 @@
 */
 package org.dishevelled.observable.simple;
 
+import java.util.Collection;
 import java.util.Map;
 
 import org.dishevelled.observable.AbstractObservableMap;
@@ -43,14 +44,14 @@ import org.dishevelled.observable.event.VetoableMapChangeEvent;
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public class SimpleObservableMap<K,V>
-    extends AbstractObservableMap<K,V>
+public class SimpleObservableMap<K, V>
+    extends AbstractObservableMap<K, V>
 {
     /** Cached map change event. */
-    private final MapChangeEvent<K,V> changeEvent;
+    private final MapChangeEvent<K, V> changeEvent;
 
     /** Cached vetoable map change event. */
-    private final VetoableMapChangeEvent<K,V> vetoableChangeEvent;
+    private final VetoableMapChangeEvent<K, V> vetoableChangeEvent;
 
 
     /**
@@ -59,11 +60,11 @@ public class SimpleObservableMap<K,V>
      *
      * @param map map to decorate, must not be null
      */
-    public SimpleObservableMap(final Map<K,V> map)
+    public SimpleObservableMap(final Map<K, V> map)
     {
         super(map);
-        changeEvent = new MapChangeEvent<K,V>(this);
-        vetoableChangeEvent = new VetoableMapChangeEvent<K,V>(this);
+        changeEvent = new MapChangeEvent<K, V>(this);
+        vetoableChangeEvent = new VetoableMapChangeEvent<K, V>(this);
     }
 
 
@@ -108,7 +109,7 @@ public class SimpleObservableMap<K,V>
     }
 
     /** {@inheritDoc} */
-    protected boolean prePutAll(final Map<? extends K,? extends V> map)
+    protected boolean prePutAll(final Map<? extends K, ? extends V> map)
     {
         try
         {
@@ -122,7 +123,7 @@ public class SimpleObservableMap<K,V>
     }
 
     /** {@inheritDoc} */
-    protected void postPutAll(final Map<? extends K,? extends V> map)
+    protected void postPutAll(final Map<? extends K, ? extends V> map)
     {
         fireMapChanged(changeEvent);
     }
@@ -143,6 +144,326 @@ public class SimpleObservableMap<K,V>
 
     /** {@inheritDoc} */
     protected void postRemove(final Object key)
+    {
+        fireMapChanged(changeEvent);
+    }
+
+    /** {@inheritDoc} */
+    protected boolean preValuesClear()
+    {
+        try
+        {
+            fireMapWillChange(vetoableChangeEvent);
+            return true;
+        }
+        catch (MapChangeVetoException e)
+        {
+            return false;
+        }
+    }
+
+    /** {@inheritDoc} */
+    protected void postValuesClear()
+    {
+        fireMapChanged(changeEvent);
+    }
+
+    /** {@inheritDoc} */
+    protected boolean preValuesRemove(final Object value)
+    {
+        try
+        {
+            fireMapWillChange(vetoableChangeEvent);
+            return true;
+        }
+        catch (MapChangeVetoException e)
+        {
+            return false;
+        }
+    }
+
+    /** {@inheritDoc} */
+    protected void postValuesRemove(final Object value)
+    {
+        fireMapChanged(changeEvent);
+    }
+
+    /** {@inheritDoc} */
+    protected boolean preValuesRemoveAll(final Collection<?> values)
+    {
+        try
+        {
+            fireMapWillChange(vetoableChangeEvent);
+            return true;
+        }
+        catch (MapChangeVetoException e)
+        {
+            return false;
+        }
+    }
+
+    /** {@inheritDoc} */
+    protected void postValuesRemoveAll(final Collection<?> values)
+    {
+        fireMapChanged(changeEvent);
+    }
+
+    /** {@inheritDoc} */
+    protected boolean preValuesRetainAll(final Collection<?> values)
+    {
+        try
+        {
+            fireMapWillChange(vetoableChangeEvent);
+            return true;
+        }
+        catch (MapChangeVetoException e)
+        {
+            return false;
+        }
+    }
+
+    /** {@inheritDoc} */
+    protected void postValuesRetainAll(final Collection<?> values)
+    {
+        fireMapChanged(changeEvent);
+    }
+
+    /** {@inheritDoc} */
+    protected boolean preValuesIteratorRemove()
+    {
+        try
+        {
+            fireMapWillChange(vetoableChangeEvent);
+            return true;
+        }
+        catch (MapChangeVetoException e)
+        {
+            return false;
+        }
+    }
+
+    /** {@inheritDoc} */
+    protected void postValuesIteratorRemove()
+    {
+        fireMapChanged(changeEvent);
+    }
+
+    /** {@inheritDoc} */
+    protected boolean preKeySetClear()
+    {
+        try
+        {
+            fireMapWillChange(vetoableChangeEvent);
+            return true;
+        }
+        catch (MapChangeVetoException e)
+        {
+            return false;
+        }
+    }
+
+    /** {@inheritDoc} */
+    protected void postKeySetClear()
+    {
+        fireMapChanged(changeEvent);
+    }
+
+    /** {@inheritDoc} */
+    protected boolean preKeySetRemove(final Object value)
+    {
+        try
+        {
+            fireMapWillChange(vetoableChangeEvent);
+            return true;
+        }
+        catch (MapChangeVetoException e)
+        {
+            return false;
+        }
+    }
+
+    /** {@inheritDoc} */
+    protected void postKeySetRemove(final Object value)
+    {
+        fireMapChanged(changeEvent);
+    }
+
+    /** {@inheritDoc} */
+    protected boolean preKeySetRemoveAll(final Collection<?> keySet)
+    {
+        try
+        {
+            fireMapWillChange(vetoableChangeEvent);
+            return true;
+        }
+        catch (MapChangeVetoException e)
+        {
+            return false;
+        }
+    }
+
+    /** {@inheritDoc} */
+    protected void postKeySetRemoveAll(final Collection<?> keySet)
+    {
+        fireMapChanged(changeEvent);
+    }
+
+    /** {@inheritDoc} */
+    protected boolean preKeySetRetainAll(final Collection<?> keySet)
+    {
+        try
+        {
+            fireMapWillChange(vetoableChangeEvent);
+            return true;
+        }
+        catch (MapChangeVetoException e)
+        {
+            return false;
+        }
+    }
+
+    /** {@inheritDoc} */
+    protected void postKeySetRetainAll(final Collection<?> keySet)
+    {
+        fireMapChanged(changeEvent);
+    }
+
+    /** {@inheritDoc} */
+    protected boolean preKeySetIteratorRemove()
+    {
+        try
+        {
+            fireMapWillChange(vetoableChangeEvent);
+            return true;
+        }
+        catch (MapChangeVetoException e)
+        {
+            return false;
+        }
+    }
+
+    /** {@inheritDoc} */
+    protected void postKeySetIteratorRemove()
+    {
+        fireMapChanged(changeEvent);
+    }
+
+    /** {@inheritDoc} */
+    protected boolean preEntrySetClear()
+    {
+        try
+        {
+            fireMapWillChange(vetoableChangeEvent);
+            return true;
+        }
+        catch (MapChangeVetoException e)
+        {
+            return false;
+        }
+    }
+
+    /** {@inheritDoc} */
+    protected void postEntrySetClear()
+    {
+        fireMapChanged(changeEvent);
+    }
+
+    /** {@inheritDoc} */
+    protected boolean preEntrySetRemove(final Object value)
+    {
+        try
+        {
+            fireMapWillChange(vetoableChangeEvent);
+            return true;
+        }
+        catch (MapChangeVetoException e)
+        {
+            return false;
+        }
+    }
+
+    /** {@inheritDoc} */
+    protected void postEntrySetRemove(final Object value)
+    {
+        fireMapChanged(changeEvent);
+    }
+
+    /** {@inheritDoc} */
+    protected boolean preEntrySetRemoveAll(final Collection<?> entrySet)
+    {
+        try
+        {
+            fireMapWillChange(vetoableChangeEvent);
+            return true;
+        }
+        catch (MapChangeVetoException e)
+        {
+            return false;
+        }
+    }
+
+    /** {@inheritDoc} */
+    protected void postEntrySetRemoveAll(final Collection<?> entrySet)
+    {
+        fireMapChanged(changeEvent);
+    }
+
+    /** {@inheritDoc} */
+    protected boolean preEntrySetRetainAll(final Collection<?> entrySet)
+    {
+        try
+        {
+            fireMapWillChange(vetoableChangeEvent);
+            return true;
+        }
+        catch (MapChangeVetoException e)
+        {
+            return false;
+        }
+    }
+
+    /** {@inheritDoc} */
+    protected void postEntrySetRetainAll(final Collection<?> entrySet)
+    {
+        fireMapChanged(changeEvent);
+    }
+
+    /** {@inheritDoc} */
+    protected boolean preEntrySetIteratorRemove()
+    {
+        try
+        {
+            fireMapWillChange(vetoableChangeEvent);
+            return true;
+        }
+        catch (MapChangeVetoException e)
+        {
+            return false;
+        }
+    }
+
+    /** {@inheritDoc} */
+    protected void postEntrySetIteratorRemove()
+    {
+        fireMapChanged(changeEvent);
+    }
+
+    /** {@inheritDoc} */
+    protected boolean preMapEntrySetValue(final V value)
+    {
+        try
+        {
+            fireMapWillChange(vetoableChangeEvent);
+            return true;
+        }
+        catch (MapChangeVetoException e)
+        {
+            return false;
+        }
+    }
+
+    /** {@inheritDoc} */
+    protected void postMapEntrySetValue(final V value)
     {
         fireMapChanged(changeEvent);
     }

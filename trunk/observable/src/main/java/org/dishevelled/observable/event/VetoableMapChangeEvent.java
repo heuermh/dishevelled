@@ -36,7 +36,7 @@ import org.dishevelled.observable.ObservableMap;
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public class VetoableMapChangeEvent<K,V>
+public class VetoableMapChangeEvent<K, V>
     extends EventObject
 {
 
@@ -46,7 +46,7 @@ public class VetoableMapChangeEvent<K,V>
      *
      * @param source source of the event
      */
-    public VetoableMapChangeEvent(final ObservableMap<K,V> source)
+    public VetoableMapChangeEvent(final ObservableMap<K, V> source)
     {
         super(source);
     }
@@ -59,8 +59,8 @@ public class VetoableMapChangeEvent<K,V>
      * @return the source of this vetoable map change event as an
      *    <code>ObservableMap</code>
      */
-    public final ObservableMap<K,V> getObservableMap()
+    public final ObservableMap<K, V> getObservableMap()
     {
-        return (ObservableMap<K,V>) super.getSource();
+        return (ObservableMap<K, V>) super.getSource();
     }
 }

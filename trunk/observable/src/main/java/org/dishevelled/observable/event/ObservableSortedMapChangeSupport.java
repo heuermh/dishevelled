@@ -39,11 +39,11 @@ import org.dishevelled.observable.ObservableSortedMap;
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public class ObservableSortedMapChangeSupport<K,V>
+public class ObservableSortedMapChangeSupport<K, V>
     implements Serializable
 {
     /** Event source. */
-    private ObservableSortedMap<K,V> source;
+    private ObservableSortedMap<K, V> source;
 
     /** Listener list. */
     private final EventListenerList listenerList;
@@ -64,7 +64,7 @@ public class ObservableSortedMapChangeSupport<K,V>
      *
      * @param source the event source
      */
-    public ObservableSortedMapChangeSupport(final ObservableSortedMap<K,V> source)
+    public ObservableSortedMapChangeSupport(final ObservableSortedMap<K, V> source)
     {
         this();
         setSource(source);
@@ -78,7 +78,7 @@ public class ObservableSortedMapChangeSupport<K,V>
      *
      * @param source the event source
      */
-    protected void setSource(final ObservableSortedMap<K,V> source)
+    protected void setSource(final ObservableSortedMap<K, V> source)
     {
         this.source = source;
     }
@@ -100,7 +100,7 @@ public class ObservableSortedMapChangeSupport<K,V>
      *
      * @param l sorted map change listener to add
      */
-    public final void addSortedMapChangeListener(final SortedMapChangeListener<K,V> l)
+    public final void addSortedMapChangeListener(final SortedMapChangeListener<K, V> l)
     {
         listenerList.add(SortedMapChangeListener.class, l);
     }
@@ -110,7 +110,7 @@ public class ObservableSortedMapChangeSupport<K,V>
      *
      * @param l sorted map change listener to remove
      */
-    public final void removeSortedMapChangeListener(final SortedMapChangeListener<K,V> l)
+    public final void removeSortedMapChangeListener(final SortedMapChangeListener<K, V> l)
     {
         listenerList.remove(SortedMapChangeListener.class, l);
     }
@@ -120,7 +120,7 @@ public class ObservableSortedMapChangeSupport<K,V>
      *
      * @param l vetoable sorted map change listener to add
      */
-    public final void addVetoableSortedMapChangeListener(final VetoableSortedMapChangeListener<K,V> l)
+    public final void addVetoableSortedMapChangeListener(final VetoableSortedMapChangeListener<K, V> l)
     {
         listenerList.add(VetoableSortedMapChangeListener.class, l);
     }
@@ -130,7 +130,7 @@ public class ObservableSortedMapChangeSupport<K,V>
      *
      * @param l vetoable sorted map change listener to remove
      */
-    public final void removeVetoableSortedMapChangeListener(final VetoableSortedMapChangeListener<K,V> l)
+    public final void removeVetoableSortedMapChangeListener(final VetoableSortedMapChangeListener<K, V> l)
     {
         listenerList.remove(VetoableSortedMapChangeListener.class, l);
     }
@@ -142,9 +142,9 @@ public class ObservableSortedMapChangeSupport<K,V>
      * @return an array of all <code>SortedMapChangeListener</code>s, or
      *    an empty array if none are registered
      */
-    public final SortedMapChangeListener<K,V>[] getSortedMapChangeListeners()
+    public final SortedMapChangeListener<K, V>[] getSortedMapChangeListeners()
     {
-        return (SortedMapChangeListener<K,V>[]) listenerList.getListeners(SortedMapChangeListener.class);
+        return (SortedMapChangeListener<K, V>[]) listenerList.getListeners(SortedMapChangeListener.class);
     }
 
     /**
@@ -166,9 +166,9 @@ public class ObservableSortedMapChangeSupport<K,V>
      * @return an array of all <code>VetoableSortedMapChangeListener</code>s,
      *    or an empty array if none are registered
      */
-    public final VetoableSortedMapChangeListener<K,V>[] getVetoableSortedMapChangeListeners()
+    public final VetoableSortedMapChangeListener<K, V>[] getVetoableSortedMapChangeListeners()
     {
-        return (VetoableSortedMapChangeListener<K,V>[])
+        return (VetoableSortedMapChangeListener<K, V>[])
             listenerList.getListeners(VetoableSortedMapChangeListener.class);
     }
 
@@ -194,7 +194,7 @@ public class ObservableSortedMapChangeSupport<K,V>
         throws SortedMapChangeVetoException
     {
         Object[] listeners = listenerList.getListenerList();
-        VetoableSortedMapChangeEvent<K,V> e = null;
+        VetoableSortedMapChangeEvent<K, V> e = null;
 
         for (int i = listeners.length - 2; i >= 0; i -= 2)
         {
@@ -203,9 +203,9 @@ public class ObservableSortedMapChangeSupport<K,V>
                 // lazily create the event
                 if (e == null)
                 {
-                    e = new VetoableSortedMapChangeEvent<K,V>(source);
+                    e = new VetoableSortedMapChangeEvent<K, V>(source);
                 }
-                ((VetoableSortedMapChangeListener<K,V>) listeners[i + 1]).sortedMapWillChange(e);
+                ((VetoableSortedMapChangeListener<K, V>) listeners[i + 1]).sortedMapWillChange(e);
             }
         }
     }
@@ -217,7 +217,7 @@ public class ObservableSortedMapChangeSupport<K,V>
      * @param e will change event
      * @throws SortedMapChangeVetoException if any of the listeners veto the change
      */
-    public void fireSortedMapWillChange(final VetoableSortedMapChangeEvent<K,V> e)
+    public void fireSortedMapWillChange(final VetoableSortedMapChangeEvent<K, V> e)
         throws SortedMapChangeVetoException
     {
         Object[] listeners = listenerList.getListenerList();
@@ -226,7 +226,7 @@ public class ObservableSortedMapChangeSupport<K,V>
         {
             if (listeners[i] == VetoableSortedMapChangeListener.class)
             {
-                ((VetoableSortedMapChangeListener<K,V>) listeners[i + 1]).sortedMapWillChange(e);
+                ((VetoableSortedMapChangeListener<K, V>) listeners[i + 1]).sortedMapWillChange(e);
             }
         }
     }
@@ -237,7 +237,7 @@ public class ObservableSortedMapChangeSupport<K,V>
     public void fireSortedMapChanged()
     {
         Object[] listeners = listenerList.getListenerList();
-        SortedMapChangeEvent<K,V> e = null;
+        SortedMapChangeEvent<K, V> e = null;
 
         for (int i = listeners.length - 2; i >= 0; i -= 2)
         {
@@ -246,9 +246,9 @@ public class ObservableSortedMapChangeSupport<K,V>
                 // lazily create the event
                 if (e == null)
                 {
-                    e = new SortedMapChangeEvent<K,V>(source);
+                    e = new SortedMapChangeEvent<K, V>(source);
                 }
-                ((SortedMapChangeListener<K,V>) listeners[i + 1]).sortedMapChanged(e);
+                ((SortedMapChangeListener<K, V>) listeners[i + 1]).sortedMapChanged(e);
             }
         }
     }
@@ -259,7 +259,7 @@ public class ObservableSortedMapChangeSupport<K,V>
      *
      * @param e change event
      */
-    public void fireSortedMapChanged(final SortedMapChangeEvent<K,V> e)
+    public void fireSortedMapChanged(final SortedMapChangeEvent<K, V> e)
     {
         Object[] listeners = listenerList.getListenerList();
 
@@ -267,7 +267,7 @@ public class ObservableSortedMapChangeSupport<K,V>
         {
             if (listeners[i] == SortedMapChangeListener.class)
             {
-                ((SortedMapChangeListener<K,V>) listeners[i + 1]).sortedMapChanged(e);
+                ((SortedMapChangeListener<K, V>) listeners[i + 1]).sortedMapChanged(e);
             }
         }
     }

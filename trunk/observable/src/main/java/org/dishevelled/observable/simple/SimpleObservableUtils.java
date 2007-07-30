@@ -24,23 +24,15 @@
 package org.dishevelled.observable.simple;
 
 import java.util.Collection;
-import java.util.Deque;
 import java.util.List;
 import java.util.Map;
-import java.util.NavigableMap;
-import java.util.NavigableSet;
-import java.util.Queue;
 import java.util.Set;
 import java.util.SortedMap;
 import java.util.SortedSet;
 
 import org.dishevelled.observable.ObservableCollection;
-import org.dishevelled.observable.ObservableDeque;
 import org.dishevelled.observable.ObservableList;
 import org.dishevelled.observable.ObservableMap;
-import org.dishevelled.observable.ObservableNavigableMap;
-import org.dishevelled.observable.ObservableNavigableSet;
-import org.dishevelled.observable.ObservableQueue;
 import org.dishevelled.observable.ObservableSet;
 import org.dishevelled.observable.ObservableSortedMap;
 import org.dishevelled.observable.ObservableSortedSet;
@@ -77,18 +69,6 @@ public final class SimpleObservableUtils
     }
 
     /**
-     * Create and return a new simple observable decorator for the specified deque.
-     *
-     * @param <T> deque element type
-     * @param deque deque to decorate, must not be null
-     * @return a new simple observable decorator for the specified deque
-     */
-    public static <T> ObservableDeque<T> observableDeque(final Deque<T> deque)
-    {
-        return new SimpleObservableDeque<T>(deque);
-    }
-
-    /**
      * Create and return a new simple observable decorator for the specified list.
      *
      * @param <T> list element type
@@ -108,46 +88,9 @@ public final class SimpleObservableUtils
      * @param map map to decorate, must not be null
      * @return a new simple observable decorator for the specified map
      */
-    public static <K,V> ObservableMap<K,V> observableMap(final Map<K,V> map)
+    public static <K, V> ObservableMap<K, V> observableMap(final Map<K, V> map)
     {
-        return new SimpleObservableMap<K,V>(map);
-    }
-
-    /**
-     * Create and return a new simple observable decorator for the specified navigable map.
-     *
-     * @param <K> navigable map key type
-     * @param <V> navigable map value type
-     * @param navigableMap navigable map to decorate, must not be null
-     * @return a new simple observable decorator for the specified navigable map
-     */
-    public static <K,V> ObservableNavigableMap<K,V> observableNavigableMap(final NavigableMap<K,V> navigableMap)
-    {
-        return new SimpleObservableNavigableMap<K,V>(navigableMap);
-    }
-
-    /**
-     * Create and return a new simple observable decorator for the specified navigable set.
-     *
-     * @param <T> navigable set element type
-     * @param navigableSet navigable set to decorate, must not be null
-     * @return a new simple observable decorator for the specified navigable set
-     */
-    public static <T> ObservableNavigableSet<T> observableNavigableSet(final NavigableSet<T> navigableSet)
-    {
-        return new SimpleObservableNavigableSet<T>(navigableSet);
-    }
-
-    /**
-     * Create and return a new simple observable decorator for the specified queue.
-     *
-     * @param <T> queue element type
-     * @param queue queue to decorate, must not be null
-     * @return a new simple observable decorator for the specified queue
-     */
-    public static <T> ObservableQueue<T> observableQueue(final Queue<T> queue)
-    {
-        return new SimpleObservableQueue<T>(queue);
+        return new SimpleObservableMap<K, V>(map);
     }
 
     /**
@@ -170,9 +113,9 @@ public final class SimpleObservableUtils
      * @param sortedMap sorted map to decorate, must not be null
      * @return a new simple observable decorator for the specified sorted map
      */
-    public static <K,V> ObservableSortedMap<K,V> observableSortedMap(final SortedMap<K,V> sortedMap)
+    public static <K, V> ObservableSortedMap<K, V> observableSortedMap(final SortedMap<K, V> sortedMap)
     {
-        return new SimpleObservableSortedMap<K,V>(sortedMap);
+        return new SimpleObservableSortedMap<K, V>(sortedMap);
     }
 
     /**

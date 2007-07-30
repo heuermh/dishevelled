@@ -46,7 +46,7 @@ public abstract class AbstractObservableCollection<E>
     implements ObservableCollection<E>
 {
     /** Observable collection change support. */
-    private ObservableCollectionChangeSupport<E> support;
+    private final ObservableCollectionChangeSupport<E> support;
 
 
     /**
