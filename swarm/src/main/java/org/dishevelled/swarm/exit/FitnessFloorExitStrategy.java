@@ -28,27 +28,27 @@ import org.dishevelled.swarm.Particle;
 import org.dishevelled.swarm.ParticleSwarm;
 
 /**
- * Fitness threshold exit strategy.  Exits as soon as at least one particle has
- * a fitness score above a set threshold.
+ * Fitness floor exit strategy.  Exits as soon as every particle has
+ * a fitness score above a set lower bound.
  *
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public final class FitnessThresholdExitStrategy
+public final class FitnessFloorExitStrategy
     implements ExitStrategy
 {
-    /** Threshold for this fitness threshold exit strategy. */
-    private final double threshold;
+    /** Lower bound for this fitness floor exit strategy. */
+    private final double lowerBound;
 
 
     /**
-     * Create a new fitness threshold exit strategy with the specified threshold.
+     * Create a new fitness threshold exit strategy with the specified lower bound.
      *
-     * @param threshold threshold for this fitness threshold exit strategy
+     * @param lowerBound lower bound for this fitness floor exit strategy
      */
-    public FitnessThresholdExitStrategy(final double threshold)
+    public FitnessFloorExitStrategy(final double lowerBound)
     {
-        this.threshold = threshold;
+        this.lowerBound = lowerBound;
     }
 
 
@@ -57,11 +57,11 @@ public final class FitnessThresholdExitStrategy
     {
         for (Particle particle : swarm)
         {
-            if (particle.getFitness() > threshold)
+            if (particle.getFitness() <= lowerBound)
             {
-                return true;
+                return false;
             }
         }
-        return false;
+        return true;
     }
 }
