@@ -147,6 +147,7 @@ public final class ParticleSwarmOptimizationAlgorithm
             {
                 double r = (random.nextDouble() * range) + minimumPosition;
                 swarm.setPosition(particle, dimension, r);
+                swarm.setFitness(particle, -1 * Double.MAX_VALUE);
             }
         }
 
@@ -187,7 +188,7 @@ public final class ParticleSwarmOptimizationAlgorithm
                 }
                 double fx = fitness.score(swarm.getPosition(particle));
                 swarm.setFitness(particle, fx);
-                //fireFitnessCalculated(particle, dimension, x, fx);
+                fireFitnessCalculated(particle, fx);
 
                 double fp = fitness.score(swarm.getCognitiveMemory(particle));
                 double fs = fitness.score(swarm.getSocialMemory());
@@ -671,13 +672,9 @@ public final class ParticleSwarmOptimizationAlgorithm
      * Fire a fitness calculated event to all registered listeners.
      *
      * @param particle particle
-     * @param dimension dimension
-     * @param position position
      * @param fitness fitness
      */
     private void fireFitnessCalculated(final int particle,
-                                       final int dimension,
-                                       final double position,
                                        final double fitness)
     {
         Object[] listeners = listenerList.getListenerList();
@@ -689,7 +686,7 @@ public final class ParticleSwarmOptimizationAlgorithm
             {
                 if (e == null)
                 {
-                    e = new ParticleSwarmOptimizationAlgorithmEvent(this, particle, dimension, position, fitness);
+                    e = new ParticleSwarmOptimizationAlgorithmEvent(this, particle, 0, 0.0d, fitness);
                 }
                 ((ParticleSwarmOptimizationAlgorithmListener) listeners[i + 1]).fitnessCalculated(e);
             }

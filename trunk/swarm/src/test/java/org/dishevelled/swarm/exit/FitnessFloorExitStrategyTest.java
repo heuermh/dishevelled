@@ -30,51 +30,51 @@ import org.dishevelled.swarm.ParticleSwarm;
 import org.dishevelled.swarm.TestParticleSwarm;
 
 /**
- * Unit test for FitnessThresholdExitStrategy.
+ * Unit test for FitnessFloorExitStrategy.
  *
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public final class FitnessThresholdExitStrategyTest
+public final class FitnessFloorExitStrategyTest
     extends AbstractExitStrategyTest
 {
 
     /** {@inheritDoc} */
     protected ExitStrategy createExitStrategy()
     {
-        return new FitnessThresholdExitStrategy(0.9d);
+        return new FitnessFloorExitStrategy(0.9d);
     }
 
     public void testConstructor()
     {
-        FitnessThresholdExitStrategy fitnessThresholdExitStrategy0 = new FitnessThresholdExitStrategy(0.0d);
-        FitnessThresholdExitStrategy fitnessThresholdExitStrategy1 = new FitnessThresholdExitStrategy(1.0d);
-        FitnessThresholdExitStrategy fitnessThresholdExitStrategy2 = new FitnessThresholdExitStrategy(-1.0d);
-        FitnessThresholdExitStrategy fitnessThresholdExitStrategy3 = new FitnessThresholdExitStrategy(Double.MIN_VALUE);
-        FitnessThresholdExitStrategy fitnessThresholdExitStrategy4 = new FitnessThresholdExitStrategy(Double.MAX_VALUE);
+        FitnessFloorExitStrategy fitnessFloorExitStrategy0 = new FitnessFloorExitStrategy(0.0d);
+        FitnessFloorExitStrategy fitnessFloorExitStrategy1 = new FitnessFloorExitStrategy(1.0d);
+        FitnessFloorExitStrategy fitnessFloorExitStrategy2 = new FitnessFloorExitStrategy(-1.0d);
+        FitnessFloorExitStrategy fitnessFloorExitStrategy3 = new FitnessFloorExitStrategy(Double.MIN_VALUE);
+        FitnessFloorExitStrategy fitnessFloorExitStrategy4 = new FitnessFloorExitStrategy(Double.MAX_VALUE);
     }
 
-    public void testFitnessThresholdExitStrategy()
+    public void testFitnessFloorExitStrategy()
     {
         ParticleSwarm swarm = new TestParticleSwarm();
 
-        double maxFitness = -1 * Double.MAX_VALUE;
+        double minFitness = Double.MAX_VALUE;
         for (Particle p : swarm)
         {
             double fitness = p.getFitness();
-            if (fitness > maxFitness)
+            if (fitness < minFitness)
             {
-                maxFitness = fitness;
+                minFitness = fitness;
             }
         }
 
-        FitnessThresholdExitStrategy fitnessThresholdExitStrategy0 = new FitnessThresholdExitStrategy(maxFitness - 1.0d);
-        assertTrue(fitnessThresholdExitStrategy0.evaluate(swarm, 0));
+        FitnessFloorExitStrategy fitnessFloorExitStrategy0 = new FitnessFloorExitStrategy(minFitness - 1.0d);
+        assertTrue(fitnessFloorExitStrategy0.evaluate(swarm, 0));
 
-        FitnessThresholdExitStrategy fitnessThresholdExitStrategy1 = new FitnessThresholdExitStrategy(maxFitness);
-        assertFalse(fitnessThresholdExitStrategy1.evaluate(swarm, 0));
+        FitnessFloorExitStrategy fitnessFloorExitStrategy1 = new FitnessFloorExitStrategy(minFitness);
+        assertFalse(fitnessFloorExitStrategy1.evaluate(swarm, 0));
 
-        FitnessThresholdExitStrategy fitnessThresholdExitStrategy2 = new FitnessThresholdExitStrategy(maxFitness + 1.0d);
-        assertFalse(fitnessThresholdExitStrategy2.evaluate(swarm, 0));
+        FitnessFloorExitStrategy fitnessFloorExitStrategy2 = new FitnessFloorExitStrategy(minFitness + 1.0d);
+        assertFalse(fitnessFloorExitStrategy2.evaluate(swarm, 0));
     }
 }
