@@ -24,48 +24,55 @@
 package org.dishevelled.evolve.exit;
 
 import org.dishevelled.weighted.WeightedMap;
+import org.dishevelled.weighted.HashWeightedMap;
 
 import org.dishevelled.evolve.ExitStrategy;
+import org.dishevelled.evolve.AbstractExitStrategyTest;
 
 /**
- * Fitness threshold exit strategy.  Exits as soon as
- * at least one individual has a fitness score above a
- * set threshold.
+ * Unit test for FitnessFloorExitStrategy.
  *
- * @param <I> individual type
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public final class FitnessThresholdExitStrategy<I>
-    implements ExitStrategy<I>
+public final class FitnessFloorExitStrategyTest
+    extends AbstractExitStrategyTest
 {
-    /** Threshold for this fitness threshold exit strategy. */
-    private final double threshold;
-
-
-    /**
-     * Create a new fitness threshold exit strategy with the specified threshold.
-     *
-     * @param threshold threshold for this fitness threshold exit strategy
-     */
-    public FitnessThresholdExitStrategy(final double threshold)
-    {
-        this.threshold = threshold;
-    }
+    /** Fitness lower bound. */
+    private static final double LOWER_BOUND = 0.75d;
 
 
     /** {@inheritDoc} */
-    public boolean evaluate(final WeightedMap<I> population, final int time)
+    protected <T> ExitStrategy<T> createExitStrategy()
     {
-        for (I i : population.keySet())
-        {
-            double fitness = population.get(i);
+        return new FitnessFloorExitStrategy<T>(LOWER_BOUND);
+    }
 
-            if (fitness > threshold)
-            {
-                return true;
-            }
-        }
-        return false;
+    /** {@inheritDoc} */
+    protected <T> WeightedMap<T> getFailConditionPopulation(final T t)
+    {
+        WeightedMap<T> population = new HashWeightedMap<T>();
+        population.put(t, Double.valueOf(0.5d));
+        return population;
+    }
+
+    /** {@inheritDoc} */
+    protected int getFailConditionTime()
+    {
+        return 0;
+    }
+
+    /** {@inheritDoc} */
+    protected <T> WeightedMap<T> getSuccessConditionPopulation(final T t)
+    {
+        WeightedMap<T> population = new HashWeightedMap<T>();
+        population.put(t, Double.valueOf(0.8d));
+        return population;
+    }
+
+    /** {@inheritDoc} */
+    protected int getSuccessConditionTime()
+    {
+        return 0;
     }
 }

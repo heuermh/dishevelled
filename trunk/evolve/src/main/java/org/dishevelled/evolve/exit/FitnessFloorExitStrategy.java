@@ -28,29 +28,28 @@ import org.dishevelled.weighted.WeightedMap;
 import org.dishevelled.evolve.ExitStrategy;
 
 /**
- * Fitness threshold exit strategy.  Exits as soon as
- * at least one individual has a fitness score above a
- * set threshold.
+ * Fitness floor exit strategy.  Exits as soon as every individual has a fitness score
+ * above a set lower bound.
  *
  * @param <I> individual type
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public final class FitnessThresholdExitStrategy<I>
+public final class FitnessFloorExitStrategy<I>
     implements ExitStrategy<I>
 {
-    /** Threshold for this fitness threshold exit strategy. */
-    private final double threshold;
+    /** Lower bound for this fitness floor exit strategy. */
+    private final double lowerBound;
 
 
     /**
-     * Create a new fitness threshold exit strategy with the specified threshold.
+     * Create a new fitness floor exit strategy with the specified lower bound.
      *
-     * @param threshold threshold for this fitness threshold exit strategy
+     * @param lowerBound lower bound for this fitness floor exit strategy
      */
-    public FitnessThresholdExitStrategy(final double threshold)
+    public FitnessFloorExitStrategy(final double lowerBound)
     {
-        this.threshold = threshold;
+        this.lowerBound = lowerBound;
     }
 
 
@@ -61,11 +60,11 @@ public final class FitnessThresholdExitStrategy<I>
         {
             double fitness = population.get(i);
 
-            if (fitness > threshold)
+            if (fitness <= lowerBound)
             {
-                return true;
+                return false;
             }
         }
-        return false;
+        return true;
     }
 }
