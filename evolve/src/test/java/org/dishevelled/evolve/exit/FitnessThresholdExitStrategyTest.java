@@ -42,13 +42,13 @@ public final class FitnessThresholdExitStrategyTest
     private static final double THRESHOLD = 0.75d;
 
 
-    /** @see ExitStrategyTest */
+    /** {@inheritDoc} */
     protected <T> ExitStrategy<T> createExitStrategy()
     {
         return new FitnessThresholdExitStrategy<T>(THRESHOLD);
     }
 
-    /** @see ExitStrategyTest */
+    /** {@inheritDoc} */
     protected <T> WeightedMap<T> getFailConditionPopulation(final T t)
     {
         WeightedMap<T> population = new HashWeightedMap<T>();
@@ -57,22 +57,21 @@ public final class FitnessThresholdExitStrategyTest
         return population;
     }
 
-    /** @see ExitStrategyTest */
+    /** {@inheritDoc} */
     protected int getFailConditionTime()
     {
         return 0;
     }
 
-    /** @see ExitStrategyTest */
+    /** {@inheritDoc} */
     protected <T> WeightedMap<T> getSuccessConditionPopulation(final T t)
     {
         WeightedMap<T> population = new HashWeightedMap<T>();
         population.put(t, Double.valueOf(0.8d));
-
         return population;
     }
 
-    /** @see ExitStrategyTest */
+    /** {@inheritDoc} */
     protected int getSuccessConditionTime()
     {
         return 0;
