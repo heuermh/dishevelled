@@ -53,18 +53,16 @@ public interface Cluster<E>
     boolean isSingleton();
 
     /**
-     * Return the exemplar or cluster center value for this cluster.  The
-     * exemplar will not be null and will be contained in the set of member
-     * values for this cluster.
+     * Return the exemplar or cluster center value for this cluster, if any.
      *
-     * @return the exemplar or cluster center value for this cluster
+     * @return the exemplar or cluster center value for this cluster, or null
+     *    if this cluster does not have an exemplar or cluster center value
      */
     E exemplar();
 
     /**
      * Return an unmodifiable list of member values for this cluster.  The list of
-     * member values will not be null and will contain at least one value, the
-     * exemplar or cluster center value.
+     * member values will not be null and will contain at least one value.
      *
      * @return an unmodifiable list of member values for this cluster
      */

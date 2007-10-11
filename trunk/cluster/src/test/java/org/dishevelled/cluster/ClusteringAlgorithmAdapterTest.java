@@ -65,8 +65,8 @@ public final class ClusteringAlgorithmAdapterTest
 
         /** {@inheritDoc} */
         public Set<Cluster<E>> cluster(final List<? extends E> values,
-                                       final Similarity<? super E> similarity,
-                                       final ExitStrategy<? super E> exitStrategy)
+                                       final Similarity<E> similarity,
+                                       final ExitStrategy<E> exitStrategy)
             throws ClusteringAlgorithmException
         {
             return Collections.<Cluster<E>>emptySet();

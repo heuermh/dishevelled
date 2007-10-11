@@ -71,8 +71,8 @@ public interface ClusteringAlgorithm<E>
      * @throws ClusteringAlgorithmException if an error occurs
      */
     Set<Cluster<E>> cluster(List<? extends E> values,
-                            Similarity<? super E> similarity,
-                            ExitStrategy<? super E> exitStrategy)
+                            Similarity<E> similarity,
+                            ExitStrategy<E> exitStrategy)
         throws ClusteringAlgorithmException;
 
     /**
