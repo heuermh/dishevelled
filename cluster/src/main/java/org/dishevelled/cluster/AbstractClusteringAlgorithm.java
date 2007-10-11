@@ -56,8 +56,8 @@ public abstract class AbstractClusteringAlgorithm<E>
      * @param exitStrategy exit strategy, must not be null
      */
     protected final void checkClusterParameters(final List<? extends E> values,
-                                                final Similarity<? super E> similarity,
-                                                final ExitStrategy<? super E> exitStrategy)
+                                                final Similarity<E> similarity,
+                                                final ExitStrategy<E> exitStrategy)
     {
         if (values == null)
         {
