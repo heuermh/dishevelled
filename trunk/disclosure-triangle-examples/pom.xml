@@ -51,7 +51,7 @@
   <scm>
     <connection>scm|svn|http://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/disclosure-triangle-examples</connection>
     <developerConnection>scm|svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/disclosure-triangle-examples</developerConnection>
-    <url>http://svn.sourceforge.net/viewcvs.cgi/dishevelled/trunk/disclosure-triangle-examples</url>
+    <url>http://dishevelled.svn.sourceforge.net/viewcvs.cgi/dishevelled/trunk/disclosure-triangle-examples</url>
   </scm>
   <organization>
     <name>dishevelled.org</name>
@@ -120,6 +120,7 @@
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>cobertura-maven-plugin</artifactId>
+        <version>2.0</version>
       </plugin>
     </plugins>
   </reporting>
