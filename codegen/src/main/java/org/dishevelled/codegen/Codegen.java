@@ -202,6 +202,61 @@ public final class Codegen
     }
 
     /**
+     * Generate a java source file for a fluent builder API for the specified class
+     * description and style.
+     *
+     * @param cd class description, must not be null
+     * @param style style, must not be null
+     */
+    public static void generateBuilderSource(final ClassDescription cd, final Style style)
+    {
+        // TODO:  perhaps style doesn't matter here, if all the templates are the same
+        if (cd == null)
+        {
+            throw new IllegalArgumentException("cd must not be null");
+        }
+        if (style == null)
+        {
+            throw new IllegalArgumentException("style must not be null");
+        }
+
+        FileWriter fw = null;
+        try
+        {
+            Properties p = new Properties();
+            p.setProperty("resource.loader", "class");
+            p.setProperty("class.resource.loader.class",
+                          "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
+
+            Velocity.init(p);
+
+            fw = new FileWriter(cd.getUpper() + "Builder.java");
+
+            VelocityContext context = new VelocityContext();
+            context.put("cd", cd);
+
+            Template template = Velocity.getTemplate("org/dishevelled/codegen/" + style + "Builder.wm");
+            template.merge(context, fw);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            System.exit(1);
+        }
+        finally
+        {
+            try
+            {
+                fw.close();
+            }
+            catch (Exception e)
+            {
+                // empty
+            }
+        }
+    }
+
+    /**
      * Generate a unit test source file for the specified class
      * description and style.
      *
