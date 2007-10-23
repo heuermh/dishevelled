@@ -42,7 +42,7 @@ import org.dishevelled.functor.BinaryPredicate;
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public abstract class AbstractObjectMatrix1D<E>
+abstract class AbstractObjectMatrix1D<E>
     implements ObjectMatrix1D<E>
 {
     /** Size. */

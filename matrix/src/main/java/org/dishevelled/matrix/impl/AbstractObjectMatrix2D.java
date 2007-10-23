@@ -43,7 +43,7 @@ import org.dishevelled.functor.TertiaryProcedure;
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public abstract class AbstractObjectMatrix2D<E>
+abstract class AbstractObjectMatrix2D<E>
     implements ObjectMatrix2D<E>
 {
     /** Number of rows. */
