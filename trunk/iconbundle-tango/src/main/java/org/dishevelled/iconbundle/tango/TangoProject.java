@@ -26,6 +26,8 @@ package org.dishevelled.iconbundle.tango;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.dishevelled.iconbundle.IconSize;
 import org.dishevelled.iconbundle.IconBundle;
@@ -40,7 +42,6 @@ import org.dishevelled.iconbundle.impl.CachingIconBundle;
  */
 public final class TangoProject
 {
-
     //
     // Tango Project icon sizes
 
@@ -867,4 +868,301 @@ public final class TangoProject
 
     /** Icon bundle for <code>status/weather-storm</code>. */
     public static final IconBundle WEATHER_STORM = new CachingIconBundle(new TangoProjectIconBundle("status", "weather-storm"));
+
+    /** Map of Tango Project icon bundles keyed by name. */
+    //private final Map<String, IconBundle> iconBundles = new HashMap<String, IconBundle>(275);
+    private static final Map iconBundles = new HashMap(275);
+
+    static
+    {
+        iconBundles.put("address-book-new", ADDRESS_BOOK_NEW);
+        //iconBundles.put("application-exit", APPLICATION_EXIT);
+        iconBundles.put("appointment-new", APPOINTMENT_NEW);
+        iconBundles.put("contact-new", CONTACT_NEW);
+        //iconBundles.put("dialog-cancel", DIALOG_CANCEL);
+        //iconBundles.put("dialog-close", DIALOG_CLOSE);
+        //iconBundles.put("dialog-ok", DIALOG_OK);
+        iconBundles.put("document-new", DOCUMENT_NEW);
+        iconBundles.put("document-open", DOCUMENT_OPEN);
+        //iconBundles.put("document-open-recent", DOCUMENT_OPEN_RECENT);
+        //iconBundles.put("document-page-setup", DOCUMENT_PAGE_SETUP);
+        iconBundles.put("document-print", DOCUMENT_PRINT);
+        iconBundles.put("document-print-preview", DOCUMENT_PRINT_PREVIEW);
+        iconBundles.put("document-properties", DOCUMENT_PROPERTIES);
+        //iconBundles.put("document-revert", DOCUMENT_REVERT);
+        iconBundles.put("document-save", DOCUMENT_SAVE);
+        iconBundles.put("document-save-as", DOCUMENT_SAVE_AS);
+        iconBundles.put("edit-copy", EDIT_COPY);
+        iconBundles.put("edit-cut", EDIT_CUT);
+        iconBundles.put("edit-delete", EDIT_DELETE);
+        iconBundles.put("edit-find", EDIT_FIND);
+        iconBundles.put("edit-find-replace", EDIT_FIND_REPLACE);
+        iconBundles.put("edit-paste", EDIT_PASTE);
+        iconBundles.put("edit-redo", EDIT_REDO);
+        iconBundles.put("edit-select-all", EDIT_SELECT_ALL);
+        iconBundles.put("edit-undo", EDIT_UNDO);
+        iconBundles.put("format-indent-less", FORMAT_INDENT_LESS);
+        iconBundles.put("format-indent-more", FORMAT_INDENT_MORE);
+        iconBundles.put("format-justify-center", FORMAT_JUSTIFY_CENTER);
+        iconBundles.put("format-justify-fill", FORMAT_JUSTIFY_FILL);
+        iconBundles.put("format-justify-left", FORMAT_JUSTIFY_LEFT);
+        iconBundles.put("format-justify-right", FORMAT_JUSTIFY_RIGHT);
+        iconBundles.put("format-text-bold", FORMAT_TEXT_BOLD);
+        //iconBundles.put("format-text-direction-ltr", FORMAT_TEXT_DIRECTION_LTR);
+        //iconBundles.put("format-text-direction-rtl", FORMAT_TEXT_DIRECTION_RTL);
+        iconBundles.put("format-text-italic", FORMAT_TEXT_ITALIC);
+        iconBundles.put("format-text-strikethrough", FORMAT_TEXT_STRIKETHROUGH);
+        iconBundles.put("format-text-underline", FORMAT_TEXT_UNDERLINE);
+        iconBundles.put("go-bottom", GO_BOTTOM);
+        iconBundles.put("go-down", GO_DOWN);
+        iconBundles.put("go-first", GO_FIRST);
+        //iconBundles.put("go-home", GO_HOME);
+        iconBundles.put("go-jump", GO_JUMP);
+        iconBundles.put("go-last", GO_LAST);
+        iconBundles.put("go-next", GO_NEXT);
+        iconBundles.put("go-previous", GO_PREVIOUS);
+        iconBundles.put("go-top", GO_TOP);
+        iconBundles.put("go-up", GO_UP);
+        //iconBundles.put("help-about", HELP_ABOUT);
+        //iconBundles.put("help-contents", HELP_CONTENTS);
+        //iconBundles.put("help-faq", HELP_FAQ);
+        //iconBundles.put("insert-image", INSERT_IMAGE);
+        //iconBundles.put("insert-link", INSERT_LINK);
+        //iconBundles.put("insert-object", INSERT_OBJECT);
+        //iconBundles.put("insert-text", INSERT_TEXT);
+        iconBundles.put("list-add", LIST_ADD);
+        iconBundles.put("list-remove", LIST_REMOVE);
+        iconBundles.put("mail-forward", MAIL_FORWARD);
+        //iconBundles.put("mail-mark-important", MAIL_MARK_IMPORTANT);
+        iconBundles.put("mail-mark-junk", MAIL_MARK_JUNK);
+        //iconBundles.put("mail-mark-notjunk", MAIL_MARK_NOTJUNK);
+        //iconBundles.put("mail-mark-read", MAIL_MARK_READ);
+        //iconBundles.put("mail-mark-unread", MAIL_MARK_UNREAD);
+        iconBundles.put("mail-message-new", MAIL_MESSAGE_NEW);
+        iconBundles.put("mail-reply-all", MAIL_REPLY_ALL);
+        iconBundles.put("mail-reply-sender", MAIL_REPLY_SENDER);
+        //iconBundles.put("mail-send", MAIL_SEND);
+        iconBundles.put("mail-send-receive", MAIL_SEND_RECEIVE);
+        iconBundles.put("media-eject", MEDIA_EJECT);
+        iconBundles.put("media-playback-pause", MEDIA_PLAYBACK_PAUSE);
+        iconBundles.put("media-playback-start", MEDIA_PLAYBACK_START);
+        iconBundles.put("media-playback-stop", MEDIA_PLAYBACK_STOP);
+        iconBundles.put("media-record", MEDIA_RECORD);
+        iconBundles.put("media-seek-backward", MEDIA_SEEK_BACKWARD);
+        iconBundles.put("media-seek-forward", MEDIA_SEEK_FORWARD);
+        iconBundles.put("media-skip-backward", MEDIA_SKIP_BACKWARD);
+        iconBundles.put("media-skip-forward", MEDIA_SKIP_FORWARD);
+        //iconBundles.put("object-flip-horizontal", OBJECT_FLIP_HORIZONTAL);
+        //iconBundles.put("object-flip-vertical", OBJECT_FLIP_VERTICAL);
+        //iconBundles.put("object-rotate-left", OBJECT_ROTATE_LEFT);
+        //iconBundles.put("object-rotate-right", OBJECT_ROTATE_RIGHT);
+        iconBundles.put("system-lock-screen", SYSTEM_LOCK_SCREEN);
+        iconBundles.put("system-log-out", SYSTEM_LOG_OUT);
+        //iconBundles.put("system-run", SYSTEM_RUN);
+        iconBundles.put("system-search", SYSTEM_SEARCH);
+        //iconBundles.put("tools-check-spelling", TOOLS_CHECK_SPELLING);
+        iconBundles.put("view-fullscreen", VIEW_FULLSCREEN);
+        iconBundles.put("view-refresh", VIEW_REFRESH);
+        //iconBundles.put("view-sort-ascending", VIEW_SORT_ASCENDING);
+        //iconBundles.put("view-sort-descending", VIEW_SORT_DESCENDING);
+        //iconBundles.put("window-close", WINDOW_CLOSE);
+        iconBundles.put("window-new", WINDOW_NEW);
+        //iconBundles.put("zoom-best-fit", ZOOM_BEST_FIT);
+        //iconBundles.put("zoom-in", ZOOM_IN);
+        //iconBundles.put("zoom-original", ZOOM_ORIGINAL);
+        //iconBundles.put("zoom-out", ZOOM_OUT);
+
+        //iconBundles.put("process-working", PROCESS_WORKING);
+
+        iconBundles.put("accessories-calculator", ACCESSORIES_CALCULATOR);
+        iconBundles.put("accessories-character-map", ACCESSORIES_CHARACTER_MAP);
+        //iconBundles.put("accessories-dictionary", ACCESSORIES_DICTIONARY);
+        iconBundles.put("accessories-text-editor", ACCESSORIES_TEXT_EDITOR);
+        iconBundles.put("help-browser", HELP_BROWSER);
+        //iconBundles.put("multimedia-volume-control", MULTIMEDIA_VOLUME_CONTROL);
+        iconBundles.put("preferences-desktop-accessibility", PREFERENCES_DESKTOP_ACCESSIBILITY);
+        iconBundles.put("preferences-desktop-font", PREFERENCES_DESKTOP_FONT);
+        //iconBundles.put("preferences-desktop-keyboard", PREFERENCES_DESKTOP_KEYBOARD);
+        iconBundles.put("preferences-desktop-locale", PREFERENCES_DESKTOP_LOCALE);
+        //iconBundles.put("preferences-desktop-multimedia", PREFERENCES_DESKTOP_MULTIMEDIA);
+        iconBundles.put("preferences-desktop-screensaver", PREFERENCES_DESKTOP_SCREENSAVER);
+        iconBundles.put("preferences-desktop-theme", PREFERENCES_DESKTOP_THEME);
+        iconBundles.put("preferences-desktop-wallpaper", PREFERENCES_DESKTOP_WALLPAPER);
+        iconBundles.put("system-file-manager", SYSTEM_FILE_MANAGER);
+        //iconBundles.put("system-software-update", SYSTEM_SOFTWARE_UPDATE);
+        iconBundles.put("utilities-system-monitor", UTILITIES_SYSTEM_MONITOR);
+        iconBundles.put("utilities-terminal", UTILITIES_TERMINAL);
+
+        iconBundles.put("applications-accessories", APPLICATIONS_ACCESSORIES);
+        //iconBundles.put("applications-development", APPLICATIONS_DEVELOPMENT);
+        //iconBundles.put("applications-engineering", APPLICATIONS_ENGINEERING);
+        iconBundles.put("applications-games", APPLICATIONS_GAMES);
+        iconBundles.put("applications-graphics", APPLICATIONS_GRAPHICS);
+        iconBundles.put("applications-internet", APPLICATIONS_INTERNET);
+        iconBundles.put("applications-multimedia", APPLICATIONS_MULTIMEDIA);
+        iconBundles.put("applications-office", APPLICATIONS_OFFICE);
+        iconBundles.put("applications-other", APPLICATIONS_OTHER);
+        //iconBundles.put("applications-science", APPLICATIONS_SCIENCE);
+        iconBundles.put("applications-system", APPLICATIONS_SYSTEM);
+        //iconBundles.put("applications-utilities", APPLICATIONS_UTILITIES);
+        iconBundles.put("preferences-desktop", PREFERENCES_DESKTOP);
+        iconBundles.put("preferences-desktop-peripherals", PREFERENCES_DESKTOP_PERIPHERALS);
+        //iconBundles.put("preferences-desktop-personal", PREFERENCES_DESKTOP_PERSONAL);
+        //iconBundles.put("preferences-other", PREFERENCES_OTHER);
+        iconBundles.put("preferences-system", PREFERENCES_SYSTEM);
+        //iconBundles.put("preferences-system-network", PREFERENCES_SYSTEM_NETWORK);
+        //iconBundles.put("system-help", SYSTEM_HELP);
+
+        iconBundles.put("audio-card", AUDIO_CARD);
+        iconBundles.put("audio-input-microphone", AUDIO_INPUT_MICROPHONE);
+        iconBundles.put("battery", BATTERY);
+        iconBundles.put("camera-photo", CAMERA_PHOTO);
+        iconBundles.put("camera-video", CAMERA_VIDEO);
+        iconBundles.put("computer", COMPUTER);
+        iconBundles.put("drive-harddisk", DRIVE_HARDDISK);
+        iconBundles.put("drive-optical", DRIVE_OPTICAL);
+        iconBundles.put("drive-removable-media", DRIVE_REMOVABLE_MEDIA);
+        iconBundles.put("input-gaming", INPUT_GAMING);
+        iconBundles.put("input-keyboard", INPUT_KEYBOARD);
+        iconBundles.put("input-mouse", INPUT_MOUSE);
+        iconBundles.put("media-flash", MEDIA_FLASH);
+        iconBundles.put("media-floppy", MEDIA_FLOPPY);
+        iconBundles.put("media-optical", MEDIA_OPTICAL);
+        //iconBundles.put("media-tape", MEDIA_TAPE);
+        //iconBundles.put("modem", MODEM);
+        iconBundles.put("multimedia-player", MULTIMEDIA_PLAYER);
+        iconBundles.put("network-wired", NETWORK_WIRED);
+        iconBundles.put("network-wireless", NETWORK_WIRELESS);
+        iconBundles.put("printer", PRINTER);
+        iconBundles.put("video-display", VIDEO_DISPLAY);
+
+        //iconBundles.put("emblem-default", EMBLEM_DEFAULT);
+        //iconBundles.put("emblem-documents", EMBLEM_DOCUMENTS);
+        //iconBundles.put("emblem-downloads", EMBLEM_DOWNLOADS);
+        iconBundles.put("emblem-favorite", EMBLEM_FAVORITE);
+        iconBundles.put("emblem-important", EMBLEM_IMPORTANT);
+        //iconBundles.put("emblem-mail", EMBLEM_MAIL);
+        iconBundles.put("emblem-photos", EMBLEM_PHOTOS);
+        iconBundles.put("emblem-readonly", EMBLEM_READONLY);
+        //iconBundles.put("emblem-shared", EMBLEM_SHARED);
+        iconBundles.put("emblem-symbolic-link", EMBLEM_SYMBOLIC_LINK);
+        //iconBundles.put("emblem-synchronized", EMBLEM_SYNCHRONIZED);
+        iconBundles.put("emblem-system", EMBLEM_SYSTEM);
+        iconBundles.put("emblem-unreadable", EMBLEM_UNREADABLE);
+
+        iconBundles.put("face-angel", FACE_ANGEL);
+        iconBundles.put("face-crying", FACE_CRYING);
+        iconBundles.put("face-devil-grin", FACE_DEVIL_GRIN);
+        //iconBundles.put("face-devil-grin", FACE_DEVIL_SAD);
+        iconBundles.put("face-glasses", FACE_GLASSES);
+        iconBundles.put("face-kiss", FACE_KISS);
+        iconBundles.put("face-monkey", FACE_MONKEY);
+        iconBundles.put("face-plain", FACE_PLAIN);
+        iconBundles.put("face-sad", FACE_SAD);
+        iconBundles.put("face-smile", FACE_SMILE);
+        iconBundles.put("face-smile-big", FACE_SMILE_BIG);
+        //iconBundles.put("face-smirk", FACE_SMIRK);
+        iconBundles.put("face-surprise", FACE_SURPRISE);
+        iconBundles.put("face-wink", FACE_WINK);
+
+        //iconBundles.put("flag-..", FLAG_..);
+
+        iconBundles.put("application-x-executable", APPLICATION_X_EXECUTABLE);
+        iconBundles.put("audio-x-generic", AUDIO_X_GENERIC);
+        iconBundles.put("font-x-generic", FONT_X_GENERIC);
+        iconBundles.put("image-x-generic", IMAGE_X_GENERIC);
+        iconBundles.put("package-x-generic", PACKAGE_X_GENERIC);
+        iconBundles.put("text-html", TEXT_HTML);
+        iconBundles.put("text-x-generic", TEXT_X_GENERIC);
+        iconBundles.put("text-x-generic-template", TEXT_X_GENERIC_TEMPLATE);
+        iconBundles.put("text-x-script", TEXT_X_SCRIPT);
+        iconBundles.put("video-x-generic", VIDEO_X_GENERIC);
+        iconBundles.put("x-office-address-book", X_OFFICE_ADDRESS_BOOK);
+        iconBundles.put("x-office-calendar", X_OFFICE_CALENDAR);
+        iconBundles.put("x-office-document", X_OFFICE_DOCUMENT);
+        iconBundles.put("x-office-presentation", X_OFFICE_PRESENTATION);
+        iconBundles.put("x-office-spreadsheet", X_OFFICE_SPREADSHEET);
+
+        iconBundles.put("folder", FOLDER);
+        iconBundles.put("folder-remote", FOLDER_REMOTE);
+        iconBundles.put("network-server", NETWORK_SERVER);
+        iconBundles.put("network-workgroup", NETWORK_WORKGROUP);
+        iconBundles.put("start-here", START_HERE);
+        iconBundles.put("user-desktop", USER_DESKTOP);
+        iconBundles.put("user-home", USER_HOME);
+        iconBundles.put("user-trash", USER_TRASH);
+
+        //iconBundles.put("appointment-missed", APPOINTMENT_MISSED);
+        //iconBundles.put("appointment-soon", APPOINTMENT_SOON);
+        iconBundles.put("audio-volume-high", AUDIO_VOLUME_HIGH);
+        iconBundles.put("audio-volume-low", AUDIO_VOLUME_LOW);
+        iconBundles.put("audio-volume-medium", AUDIO_VOLUME_MEDIUM);
+        iconBundles.put("audio-volume-muted", AUDIO_VOLUME_MUTED);
+        iconBundles.put("battery-caution", BATTERY_CAUTION);
+        //iconBundles.put("battery-low", BATTERY_LOW);
+        iconBundles.put("dialog-error", DIALOG_ERROR);
+        iconBundles.put("dialog-information", DIALOG_INFORMATION);
+        //iconBundles.put("dialog-password", DIALOG_PASSWORD);
+        //iconBundles.put("dialog-question", DIALOG_QUESTION);
+        iconBundles.put("dialog-warning", DIALOG_WARNING);
+        iconBundles.put("folder-drag-accept", FOLDER_DRAG_ACCEPT);
+        iconBundles.put("folder-open", FOLDER_OPEN);
+        iconBundles.put("folder-visiting", FOLDER_VISITING);
+        iconBundles.put("image-loading", IMAGE_LOADING);
+        iconBundles.put("image-missing", IMAGE_MISSING);
+        iconBundles.put("mail-attachment", MAIL_ATTACHMENT);
+        //iconBundles.put("mail-unread", MAIL_UNREAD);
+        //iconBundles.put("mail-read", MAIL_READ);
+        //iconBundles.put("mail-replied", MAIL_REPLIED);
+        //iconBundles.put("mail-signed", MAIL_SIGNED);
+        //iconBundles.put("mail-signed-verified", MAIL_SIGNED_VERIFIED);
+        //iconBundles.put("media-playlist-repeat", MEDIA_PLAYLIST_REPEAT);
+        //iconBundles.put("media-playlist-shuffle", MEDIA_PLAYLIST_SHUFFLE);
+        iconBundles.put("network-error", NETWORK_ERROR);
+        iconBundles.put("network-idle", NETWORK_IDLE);
+        iconBundles.put("network-offline", NETWORK_OFFLINE);
+        iconBundles.put("network-receive", NETWORK_RECEIVE);
+        iconBundles.put("network-transmit", NETWORK_TRANSMIT);
+        iconBundles.put("network-transmit-receive", NETWORK_TRANSMIT_RECEIVE);
+        iconBundles.put("printer-error", PRINTER_ERROR);
+        //iconBundles.put("printer-printing", PRINTER_PRINTING);
+        //iconBundles.put("security-high", SECURITY_HIGH);
+        //iconBundles.put("security-medium", SECURITY_MEDIUM);
+        //iconBundles.put("security-low", SECURITY_LOW);
+        //iconBundles.put("software-update-available", SOFTWARE_UPDATE_AVAILABLE);
+        //iconBundles.put("software-update-urgent", SOFTWARE_UPDATE_URGENT);
+        //iconBundles.put("sync-error", SYNC_ERROR);
+        //iconBundles.put("sync-synchronizing", SYNC_SYNCHRONIZING);
+        //iconBundles.put("task-due", TASK_DUE);
+        //iconBundles.put("task-passed-due", TASK_PASSED_DUE);
+        //iconBundles.put("user-away", USER_AWAY);
+        //iconBundles.put("user-idle", USER_IDLE);
+        //iconBundles.put("user-offline", USER_OFFLINE);
+        //iconBundles.put("user-online", USER_ONLINE);
+        iconBundles.put("user-trash-full", USER_TRASH_FULL);
+        iconBundles.put("weather-clear", WEATHER_CLEAR);
+        iconBundles.put("weather-clear-night", WEATHER_CLEAR_NIGHT);
+        iconBundles.put("weather-few-clouds", WEATHER_FEW_CLOUDS);
+        iconBundles.put("weather-few-clouds-night", WEATHER_FEW_CLOUDS_NIGHT);
+        //iconBundles.put("weather-fog", WEATHER_FOG);
+        iconBundles.put("weather-overcast", WEATHER_OVERCAST);
+        iconBundles.put("weather-severe-alert", WEATHER_SEVERE_ALERT);
+        iconBundles.put("weather-showers", WEATHER_SHOWERS);
+        iconBundles.put("weather-showers-scattered", WEATHER_SHOWERS_SCATTERED);
+        iconBundles.put("weather-snow", WEATHER_SNOW);
+        iconBundles.put("weather-storm", WEATHER_STORM);
+    }
+
+    /**
+     * Return the Tango Project icon bundle with the specified name, if any.
+     *
+     * @param name Tango Project icon bundle name
+     * @return the Tango Project icon bundle with the specified name, or
+     *    <code>null</code> if no such icon bundle exists
+     */
+    public static IconBundle valueOf(final String name)
+    {
+        //return iconBundles.get(name);
+        return (IconBundle) iconBundles.get(name);
+    }
 }
