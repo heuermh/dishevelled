@@ -62,15 +62,13 @@ public final class ArgumentList
     }
 
     /**
-     * Create a new argument list with the arguments in the specified
-     * array of arguments.  The arguments will be copied defensively
-     * into this class.  The arguments in <code>arguments</code> must
+     * Create a new argument list with the specified arguments.  The arguments must
      * not contain any duplicate short or long names or an <code>IllegalArgumentException</code>
      * will be thrown.
      *
-     * @param arguments array of arguments to add, must not be null
+     * @param arguments variable number of arguments, must not be null
      */
-    public ArgumentList(final Argument[] arguments)
+    public ArgumentList(final Argument... arguments)
     {
         this();
         if (arguments == null)
