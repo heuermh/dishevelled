@@ -45,7 +45,18 @@ public final class ArgumentListTest
     {
         ArgumentList arguments0 = new ArgumentList();
         ArgumentList arguments1 = new ArgumentList(new Argument[0]);
-        ArgumentList arguments2 = new ArgumentList(Collections.<Argument>emptyList());
+        ArgumentList arguments2 = new ArgumentList(new StringArgument("f", "foo", "foo", true), new StringArgument("b", "bar", "bar", true));
+        ArgumentList arguments3 = new ArgumentList(Collections.<Argument>emptyList());
+
+        try
+        {
+            ArgumentList argument = new ArgumentList((Argument) null);
+            fail("ctr((Argument) null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
 
         try
         {
