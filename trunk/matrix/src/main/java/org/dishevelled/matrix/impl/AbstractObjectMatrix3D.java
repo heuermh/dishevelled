@@ -43,7 +43,7 @@ import org.dishevelled.matrix.ObjectMatrix3D;
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public abstract class AbstractObjectMatrix3D<E>
+abstract class AbstractObjectMatrix3D<E>
     implements ObjectMatrix3D<E>
 {
     /** Number of slices. */
