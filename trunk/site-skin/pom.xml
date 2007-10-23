@@ -44,7 +44,7 @@
   <licenses>
     <license>
       <name>GNU Lesser General Public License (LGPL)</name>
-      <url>http://www.gnu.org/copyleft/lesser.html</url>
+      <url>http://www.fsf.org/licensing/licenses/lgpl.html</url>
       <distribution>repo</distribution>
     </license>
   </licenses>

@@ -59,7 +59,7 @@ $bodyContent
 </div>
 
 <div id="footer">
-  <p>Copyright (c) #copyright() held jointly by the individual authors.  Licensed under the <a href="http://www.opensource.org/licenses/lgpl-license.php">GNU Lesser General Public License</a> (LGPL).</p>
+  <p>Copyright (c) #copyright() held jointly by the individual authors.  Licensed under the <a href="http://www.fsf.org/licensing/licenses/lgpl.html">GNU Lesser General Public License</a> (LGPL).</p>
 </div>
 </body>
 </html>
