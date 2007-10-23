@@ -23,11 +23,22 @@
 */
 package org.dishevelled.codegen.shell;
 
-import java.io.Reader;
+import java.io.File;
 import java.io.InputStreamReader;
+import java.io.IOException;
+import java.io.Reader;
 
 import bsh.EvalError;
 import bsh.Interpreter;
+
+import org.dishevelled.commandline.ArgumentList;
+import org.dishevelled.commandline.CommandLine;
+import org.dishevelled.commandline.CommandLineParser;
+import org.dishevelled.commandline.CommandLineParseException;
+import org.dishevelled.commandline.Switch;
+import org.dishevelled.commandline.Usage;
+
+import org.dishevelled.commandline.argument.FileArgument;
 
 /**
  * Runnable shell for the codegen library.
@@ -38,12 +49,42 @@ import bsh.Interpreter;
 public final class CodegenShell
     implements Runnable
 {
+    /** Input file to source. */
+    private final File inputFile;
 
-    /** @see Runnable */
+
+    /**
+     * Create a new codegen shell.
+     */
+    public CodegenShell()
+    {
+        inputFile = null;
+    }
+
+    /**
+     * Create a new codegen shell with the specified input file to source.
+     *
+     * @param inputFile input file to source, must not be null
+     */
+    public CodegenShell(final File inputFile)
+    {
+        if (inputFile == null)
+        {
+            throw new IllegalArgumentException("inputFile must not be null");
+        }
+        if (!inputFile.canRead())
+        {
+            throw new IllegalArgumentException("inputFile must exist and be readable");
+        }
+        this.inputFile = inputFile;
+    }
+
+
+    /** {@inheritDoc} */
     public void run()
     {
         Reader in = new InputStreamReader(System.in);
-        Interpreter bsh = new Interpreter(in, System.out, System.err, true);
+        Interpreter bsh = new Interpreter(in, System.out, System.err, (inputFile == null));
 
         bsh.setExitOnEOF(true);
 
@@ -51,47 +92,94 @@ public final class CodegenShell
         {
             bsh.eval("import org.dishevelled.codegen.*;");
             bsh.eval("static import org.dishevelled.codegen.Codegen.*;");
+            if (inputFile != null)
+            {
+                bsh.source(inputFile.getAbsolutePath());
+            }
         }
         catch (EvalError e)
         {
             // ignore
         }
+        catch (IOException e)
+        {
+            // ignore
+        }
 
-        System.out.println("Shell interface to org.dishevelled.codegen.Codegen");
-        bsh.run();
+        if (inputFile == null)
+        {
+            System.out.println("Shell interface to org.dishevelled.codegen.Codegen");
+            bsh.run();
+        }
     }
 
 
     /**
      * Main.
      *
-     * @param args command line arguments, ignored
+     * @param args command line arguments
      */
     public static void main(final String[] args)
     {
-        if (args.length > 0)
+        ArgumentList arguments = null;
+        CodegenShell shell = null;
+        CommandLine commandLine = null;
+        try
         {
-            if (("-h".equals(args[0])) || ("--help".equals(args[0])))
+            FileArgument input = new FileArgument("i", "input-file", "input file to source", false);
+            Switch help = new Switch("h", "help", "display help message");
+            arguments = new ArgumentList(input, help);
+            commandLine = new CommandLine(args);
+            CommandLineParser.parse(commandLine, arguments);
+
+            if (help.wasFound())
             {
-                System.out.println("Shell interface to org.biojava.codegen.Codegen");
-                System.out.println("  example:");
-                System.out.println("");
-                System.out.println("bsh % ClassDescription foo = new ClassDescription(\"example\", \"Foo\");");
-                System.out.println("bsh % ClassDescription bar = new ClassDescription(\"example\", \"Bar\");");
-                System.out.println("");
-                System.out.println("bsh % foo.attribute(\"String\", \"Name\", Cardinality.ZeroToOne);");
-                System.out.println("bsh % bar.attribute(\"Integer\", \"Value\", Cardinality.StrictlyOne);");
-                System.out.println("");
-                System.out.println("bsh % foo.associate(bar, Cardinality.ZeroToOne);");
-                System.out.println("bsh % bar.associate(foo, Cardinality.ZeroToMany, false, true, false, false);");
-                System.out.println("");
-                System.out.println("bsh % generateSource(foo, Style.Immutable);");
-                System.out.println("bsh % generateSource(bar, Style.RichlyMutable);");
-                System.out.println("");
+                help();
+            }
+            else
+            {
+                if (input.wasFound())
+                {
+                    shell = new CodegenShell(input.getValue());
+                }
+                else
+                {
+                    shell = new CodegenShell();
+                }
+                shell.run();
             }
         }
+        catch (CommandLineParseException e)
+        {
+            Usage.usage("java org.dishevelled.codegen.shell.CodegenShell [args]",
+                        e, commandLine, arguments, System.err);
+        }
+        catch (IllegalArgumentException e)
+        {
+            Usage.usage("java org.dishevelled.codegen.shell.CodegenShell [args]",
+                        e, commandLine, arguments, System.err);
+        }
+    }
 
-        CodegenShell cs = new CodegenShell();
-        cs.run();
+    /**
+     * Display help message.
+     */
+    private static void help()
+    {
+        System.out.println("Shell interface to org.biojava.codegen.Codegen");
+        System.out.println("  example:");
+        System.out.println("");
+        System.out.println("bsh % ClassDescription foo = new ClassDescription(\"example\", \"Foo\");");
+        System.out.println("bsh % ClassDescription bar = new ClassDescription(\"example\", \"Bar\");");
+        System.out.println("");
+        System.out.println("bsh % foo.attribute(\"String\", \"Name\", Cardinality.ZeroToOne);");
+        System.out.println("bsh % bar.attribute(\"Integer\", \"Value\", Cardinality.StrictlyOne);");
+        System.out.println("");
+        System.out.println("bsh % foo.associate(bar, Cardinality.ZeroToOne);");
+        System.out.println("bsh % bar.associate(foo, Cardinality.ZeroToMany, false, true, false, false);");
+        System.out.println("");
+        System.out.println("bsh % generateSource(foo, Style.Immutable);");
+        System.out.println("bsh % generateSource(bar, Style.RichlyMutable);");
+        System.out.println("");
     }
 }
