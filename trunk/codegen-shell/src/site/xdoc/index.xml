@@ -143,7 +143,6 @@ public class Bar
         {
             throw new IllegalArgumentException("value must not be null");
         }
-
         setValue(value);
         this.foos = new HashSet&lt;Foo&gt;();
     }
@@ -168,7 +167,6 @@ public class Bar
         {
             throw new IllegalArgumentException("foos must not be null");
         }
-
         setValue(value);
         this.foos = new HashSet&lt;Foo&gt;(foos);
     }
@@ -291,7 +289,7 @@ public class Bar
         foos.clear();
     }
 
-    /** @see Object */
+    /** {@inheritDoc} */
     public final boolean equals(final Object o)
     {
         if (o == this)
@@ -311,7 +309,7 @@ public class Bar
         );
     }
 
-    /** @see Object */
+    /** {@inheritDoc} */
     public final int hashCode()
     {
         int result = 17;
