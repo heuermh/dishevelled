@@ -77,7 +77,7 @@ try
   URLListArgument arg2 = new URLListArgument(...);
 
   // create an argument list
-  arguments = new ArgumentList(new Argument[] { arg0, arg1, arg2 });
+  arguments = new ArgumentList(arg0, arg1, arg2);
 
   // create a command line from String[] args
   commandLine = new CommandLine(args);
