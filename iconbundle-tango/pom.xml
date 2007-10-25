@@ -57,6 +57,19 @@
     <name>dishevelled.org</name>
     <url>http://www.dishevelled.org</url>
   </organization>
+  <build>
+    <resources>
+      <resource>
+        <targetPath>META-INF</targetPath>
+        <filtering>false</filtering>
+        <directory>${basedir}</directory>
+        <includes>
+          <include>COPYING</include>
+          <include>COPYING.LESSER</include>
+        </includes>
+      </resource>
+    </resources>
+  </build>
   <dependencies>
     <dependency>
       <groupId>org.dishevelled</groupId>
