@@ -67,8 +67,8 @@ public final class AffinityPropagation<E>
 
     /** {@inheritDoc} */
     public Set<Cluster<E>> cluster(final List<? extends E> values,
-                                   final Similarity<? super E> similarity,
-                                   final ExitStrategy<? super E> exitStrategy)
+                                   final Similarity<E> similarity,
+                                   final ExitStrategy<E> exitStrategy)
         throws ClusteringAlgorithmException
     {
         if (values == null)
