@@ -57,6 +57,19 @@
     <name>dishevelled.org</name>
     <url>http://www.dishevelled.org</url>
   </organization>
+  <build>
+    <resources>
+      <resource>
+        <targetPath>META-INF</targetPath>
+        <filtering>false</filtering>
+        <directory>${basedir}</directory>
+        <includes>
+          <include>COPYING</include>
+          <include>COPYING.LESSER</include>
+        </includes>
+      </resource>
+    </resources>
+  </build>
   <dependencies>
     <dependency>
       <groupId>batik</groupId>
@@ -73,7 +86,7 @@
     <dependency>
       <groupId>commons-lang</groupId>
       <artifactId>commons-lang</artifactId>
-      <version>2.2</version>
+      <version>2.3</version>
       <scope>test</scope>
     </dependency>
 
