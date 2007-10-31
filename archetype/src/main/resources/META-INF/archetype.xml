@@ -25,8 +25,9 @@
 <archetype>
   <id>dsh-archetype</id>
   <resources>
+    <resource>COPYING</resource>
+    <resource>COPYING.LESSER</resource>
     <resource>HEADER.txt</resource>
-    <resource>LICENSE.txt</resource>
     <resource>pom.xml</resource>
     <resource>src/build/conf/checkstyle.xml</resource>
   </resources>
