@@ -29,6 +29,8 @@ import java.util.Collection;
 
 import javax.swing.JPanel;
 
+import javax.swing.border.EmptyBorder;
+
 import org.dishevelled.curate.CullView;
 
 /**
@@ -55,8 +57,10 @@ public final class CullDialog<E>
 
         JPanel contentPane = (JPanel) getContentPane();
         contentPane.setLayout(new BorderLayout());
+        cullPanel.setBorder(new EmptyBorder(0, 0, 20, 0));
         contentPane.add("Center", cullPanel);
         contentPane.add("South", createButtonPanel());
+        contentPane.setBorder(new EmptyBorder(10, 10, 10, 10));
     }
 
 
@@ -78,15 +82,20 @@ public final class CullDialog<E>
         return cullPanel.getRemoved();
     }
 
+    /** {@inheritDoc} */
     protected void cancel()
     {
         // remaining == input, removed == empty
         setVisible(false);
     }
+
+    /** {@inheritDoc} */
     protected void help()
     {
         // empty
     }
+
+    /** {@inheritDoc} */
     protected void ok()
     {
         // notify clients that remaining and removed are ready to be read

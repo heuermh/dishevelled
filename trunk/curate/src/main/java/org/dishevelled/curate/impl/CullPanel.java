@@ -23,7 +23,7 @@
 */
 package org.dishevelled.curate.impl;
 
-import java.awt.BorderLayout;
+import java.awt.GridLayout;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -64,25 +64,25 @@ public final class CullPanel<E>
     private EventList<E> remaining;
 
     /** Swing list of remaining elements. */
-    private JList remainingList;
+    private final JList remainingList;
 
     /** Label for count of remaining elements. */
-    private JLabel remainingLabel;
+    private final JLabel remainingLabel;
 
     /** List event listener for updating remaining label. */
-    private ListEventListener<E> remainingLabelListener;
+    private final ListEventListener<E> remainingLabelListener;
 
     /** List of removed elements. */
     private EventList<E> removed;
 
     /** Swing list of removed elements. */
-    private JList removedList;
+    private final JList removedList;
 
     /** Label for number of removed elements. */
-    private JLabel removedLabel;
+    private final JLabel removedLabel;
 
     /** List event listener for updating removed label. */
-    private ListEventListener<E> removedLabelListener;
+    private final ListEventListener<E> removedLabelListener;
 
 
     /**
@@ -91,16 +91,11 @@ public final class CullPanel<E>
     public CullPanel()
     {
         super();
+
         input = Collections.emptyList();
         remaining = GlazedLists.eventList(input);
         removed = GlazedLists.eventList(input);
-    }
 
-    /**
-     * Initialize components.
-     */
-    private void initComponents()
-    {
         remainingLabel = new JLabel(" - ");
         remainingLabelListener = new ListEventListener<E>()
             {
@@ -130,7 +125,10 @@ public final class CullPanel<E>
                 }
             };
         removedList = new JList(new EventListModel(removed));
+
+        layoutComponents();
     }
+
 
     /**
      * Layout components.
@@ -138,17 +136,16 @@ public final class CullPanel<E>
     private void layoutComponents()
     {
         LabelFieldPanel west = new LabelFieldPanel();
-        west.addField("Remaining", remainingLabel);
+        west.addField("Remaining:", remainingLabel);
         west.addFinalField(new JScrollPane(remainingList));
 
         LabelFieldPanel east = new LabelFieldPanel();
-        east.addField("Removed", removedLabel);
+        east.addField("Removed:", removedLabel);
         east.addFinalField(new JScrollPane(removedList));
 
-        setLayout(new BorderLayout());
-        add("East", east);
-        //add("Center", new user supplied "selection details..." panel
-        add("West", west);
+        setLayout(new GridLayout(1, 2, 10, 0));
+        add(west);
+        add(east);
     }
 
     /** {@inheritDoc} */
@@ -160,8 +157,22 @@ public final class CullPanel<E>
         }
         this.input = input;
 
-        remaining.removeListEventListener(remainingLabelListener);
-        removed.removeListEventListener(removedLabelListener);
+        try
+        {
+            remaining.removeListEventListener(remainingLabelListener);
+        }
+        catch (IllegalArgumentException e)
+        {
+            // ignore
+        }
+        try
+        {
+            removed.removeListEventListener(removedLabelListener);
+        }
+        catch (IllegalArgumentException e)
+        {
+            // ignore
+        }
 
         remaining = GlazedLists.eventList(input);
         removed = GlazedLists.eventList(Collections.<E>emptyList());

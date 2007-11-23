@@ -23,8 +23,6 @@
 */
 package org.dishevelled.curate.impl;
 
-import java.awt.Dimension;
-
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
@@ -110,11 +108,8 @@ public abstract class AbstractCurateDialog
         //IdButton okButton = new IdButton(ok);
         JButton okButton = new JButton(ok);
 
-        Dimension d = new Dimension(Math.max(cancelButton.getPreferredSize().width, 70),
-                                    cancelButton.getPreferredSize().width);
-        cancelButton.setPreferredSize(d);
-        helpButton.setPreferredSize(d);
-        okButton.setPreferredSize(d);
+        // don't let ok button get too small
+        okButton.setPreferredSize(cancelButton.getPreferredSize());
         getRootPane().setDefaultButton(okButton);
 
         buttonPanel.add(okButton);
@@ -122,6 +117,7 @@ public abstract class AbstractCurateDialog
         buttonPanel.add(cancelButton);
         buttonPanel.add(Box.createHorizontalStrut(10));
         buttonPanel.add(helpButton);
+
         return buttonPanel;
     }
 
