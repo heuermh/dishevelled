@@ -25,14 +25,22 @@ package org.dishevelled.curate.impl;
 
 import java.awt.GridLayout;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 
+import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.KeyStroke;
+import javax.swing.Timer;
 
 import ca.odell.glazedlists.EventList;
 import ca.odell.glazedlists.GlazedLists;
@@ -41,8 +49,13 @@ import ca.odell.glazedlists.event.ListEvent;
 import ca.odell.glazedlists.event.ListEventListener;
 
 import ca.odell.glazedlists.swing.EventListModel;
+import ca.odell.glazedlists.swing.EventSelectionModel;
 
 import org.dishevelled.curate.CullView;
+
+import org.dishevelled.iconbundle.tango.TangoProject;
+
+import org.dishevelled.identify.IdentifiableAction;
 
 import org.dishevelled.layout.LabelFieldPanel;
 
@@ -57,11 +70,17 @@ public final class CullPanel<E>
     extends JPanel
     implements CullView<E>
 {
+    /** Default assist rate (in ms). */
+    private static final int DEFAULT_ASSIST_RATE = 1000;
+
     /** Input collection. */
     private Collection<E> input;
 
     /** List of remaining elements. */
     private EventList<E> remaining;
+
+    /** List of selected remaining elements. */
+    private EventList<E> selectedRemaining;
 
     /** Swing list of remaining elements. */
     private final JList remainingList;
@@ -83,6 +102,21 @@ public final class CullPanel<E>
 
     /** List event listener for updating removed label. */
     private final ListEventListener<E> removedLabelListener;
+
+    /** Assist. */
+    private final Assist assist;
+
+    /** Remove action. */
+    private final IdentifiableAction removeAction;
+
+    /** Start assist action. */
+    private final IdentifiableAction startAssistAction;
+
+    /** Stop assist action. */
+    private final IdentifiableAction stopAssistAction;
+
+    /** Toggle assist action. */
+    private final Action toggleAssistAction;
 
 
     /**
@@ -111,6 +145,11 @@ public final class CullPanel<E>
             };
         remainingList = new JList(new EventListModel(remaining));
 
+        EventSelectionModel remainingSelectionModel = new EventSelectionModel(remaining);
+        remainingSelectionModel.setSelectionMode(EventSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        remainingList.setSelectionModel(remainingSelectionModel);
+        selectedRemaining = remainingSelectionModel.getSelected();
+
         removedLabel = new JLabel(" - ");
         removedLabelListener = new ListEventListener<E>()
             {
@@ -125,6 +164,79 @@ public final class CullPanel<E>
                 }
             };
         removedList = new JList(new EventListModel(removed));
+
+        removeAction = new IdentifiableAction("Remove", TangoProject.LIST_REMOVE)
+            {
+                /** {@inheritDoc} */
+                public void actionPerformed(final ActionEvent event)
+                {
+                    EventSelectionModel remainingSelectionModel = (EventSelectionModel) remainingList.getSelectionModel();
+                    int maxSelectionIndex = Math.min(remainingSelectionModel.getMaxSelectionIndex() + 1, remaining.size() - 1);
+                    int selectionSize = selectedRemaining.size();
+                    int newSelectionIndex = maxSelectionIndex - selectionSize;
+                    removed.addAll(selectedRemaining);
+                    remaining.removeAll(selectedRemaining);
+                    remainingSelectionModel.setSelectionInterval(newSelectionIndex, newSelectionIndex);
+                    remainingList.ensureIndexIsVisible(newSelectionIndex);
+                    if (assist.isRunning())
+                    {
+                        assist.stop();
+                        assist.start();
+                    }
+                }
+            };
+
+        assist = new Assist(DEFAULT_ASSIST_RATE);
+
+        startAssistAction = new IdentifiableAction("Start assist", TangoProject.MEDIA_PLAYBACK_START)
+            {
+                /** {@inheritDoc} */
+                public void actionPerformed(final ActionEvent event)
+                {
+                    assist.start();
+                }
+            };
+
+        // ...or compound play+pause button?
+        stopAssistAction = new IdentifiableAction("Stop assist", TangoProject.MEDIA_PLAYBACK_STOP)
+            {
+                /** {@inheritDoc} */
+                public void actionPerformed(final ActionEvent event)
+                {
+                    assist.stop();
+                }
+            };
+        stopAssistAction.setEnabled(false);
+
+        toggleAssistAction = new AbstractAction("Toggle assist")
+            {
+                /** {@inheritDoc} */
+                public void actionPerformed(final ActionEvent event)
+                {
+                    if (assist.isRunning())
+                    {
+                        assist.stop();
+                    }
+                    else
+                    {
+                        assist.start();
+                    }
+                }
+            };
+
+        remainingList.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_BACK_SPACE, 0), "remove");
+        remainingList.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0), "remove");
+        remainingList.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_KP_RIGHT, 0), "remove");
+        remainingList.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0), "remove");
+        remainingList.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0), "toggleAssist");
+        remainingList.getActionMap().put("remove", removeAction);
+        remainingList.getActionMap().put("toggleAssist", toggleAssistAction);
+
+        // TODO:  down should restart assist
+        // TODO:  up, shift-up, shift-down should stop assist
+        // TODO:  adapt assist rate to combined delete + down keystroke rate
+        // TODO:  add actions to context menu
+        // TODO:  create assist display/toolbar
 
         layoutComponents();
     }
@@ -146,6 +258,7 @@ public final class CullPanel<E>
         setLayout(new GridLayout(1, 2, 10, 0));
         add(west);
         add(east);
+        // TODO:  add a user-definable "details..." panel center
     }
 
     /** {@inheritDoc} */
@@ -157,6 +270,7 @@ public final class CullPanel<E>
         }
         this.input = input;
 
+        // see http://glazedlists.dev.java.net/issues/show_bug.cgi?id=419
         try
         {
             remaining.removeListEventListener(remainingLabelListener);
@@ -179,6 +293,12 @@ public final class CullPanel<E>
 
         remainingList.setModel(new EventListModel(remaining));
         removedList.setModel(new EventListModel(removed));
+
+        EventSelectionModel remainingSelectionModel = new EventSelectionModel(remaining);
+        remainingList.setSelectionModel(remainingSelectionModel);
+        remainingSelectionModel.setSelectionMode(EventSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        selectedRemaining = remainingSelectionModel.getSelected();
+
         remaining.addListEventListener(remainingLabelListener);
         removed.addListEventListener(removedLabelListener);
 
@@ -197,5 +317,89 @@ public final class CullPanel<E>
     public Collection<E> getRemoved()
     {
         return Collections.unmodifiableList(removed);
+    }
+
+    /**
+     * Assist.
+     */
+    private class Assist<E>
+    {
+        /** Rate (in ms) at which new selection change events are triggered. */
+        private int rate;
+
+        /** True if assist is running. */
+        private boolean running;
+
+        /** Timer. */
+        private Timer timer;
+
+
+        /**
+         * Create a new assist with the specified rate.
+         *
+         * @param rate rate (in ms) at which new selection change events are triggered
+         */
+        Assist(final int rate)
+        {
+            this.rate = rate;
+            this.running = false;
+            timer = new Timer(0, new ActionListener()
+                {
+                    /** {@inheritDoc} */
+                    public void actionPerformed(final ActionEvent event)
+                    {
+                        EventSelectionModel remainingSelectionModel = (EventSelectionModel) remainingList.getSelectionModel();
+                        int maxSelectionIndex = Math.min(remaining.size() - 1, remainingSelectionModel.getMaxSelectionIndex() + 1);
+                        remainingSelectionModel.setSelectionInterval(maxSelectionIndex, maxSelectionIndex);
+                        remainingList.ensureIndexIsVisible(maxSelectionIndex);
+                    }
+                });
+            timer.setRepeats(true);
+        }
+
+
+        /**
+         * Set the rate (in ms) at which new selection change events are triggered to <code>rate</code>.
+         *
+         * @param rate rate (in ms) at which new seleciton change events are triggered
+         */
+        void setRate(final int rate)
+        {
+            this.rate = rate;
+        }
+
+        /**
+         * Return true if this assist is running.
+         *
+         * @return true if this assist is running
+         */
+        boolean isRunning()
+        {
+            return running;
+        }
+
+        /**
+         * Start generating new selection change events.
+         */
+        void start()
+        {
+            running = true;
+            timer.setDelay(rate);
+            timer.setInitialDelay(rate);
+            startAssistAction.setEnabled(false);
+            stopAssistAction.setEnabled(true);
+            timer.start();
+        }
+
+        /**
+         * Stop generating new selection change events.
+         */
+        void stop()
+        {
+            running = false;
+            startAssistAction.setEnabled(true);
+            stopAssistAction.setEnabled(false);
+            timer.stop();
+        }
     }
 }
