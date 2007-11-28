@@ -137,7 +137,7 @@ public final class IdMenuItem
      *
      * @return the icon text direction for this menu item
      */
-    IconTextDirection getIconTextDirection()
+    public IconTextDirection getIconTextDirection()
     {
         return iconTextDirection;
     }

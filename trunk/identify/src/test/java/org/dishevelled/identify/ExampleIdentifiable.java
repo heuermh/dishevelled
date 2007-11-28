@@ -31,13 +31,13 @@ import org.dishevelled.iconbundle.IconBundle;
  * @author  Michael Heuer
  * @version $Revision$ $Id$
  */
-final class ExampleIdentifiable
+public final class ExampleIdentifiable
     implements Identifiable
 {
-    /** The name for this example identifiable. */
+    /** Name for this example identifiable. */
     private final String name;
 
-    /** The icon bundle for this example identifiable. */
+    /** Icon bundle for this example identifiable. */
     private final IconBundle iconBundle;
 
 
@@ -47,7 +47,7 @@ final class ExampleIdentifiable
      * @param name name for this example identifiable, must not be null
      * @param iconBundle icon bundle for this example identifiable, must not be null
      */
-    ExampleIdentifiable(final String name, final IconBundle iconBundle)
+    public ExampleIdentifiable(final String name, final IconBundle iconBundle)
     {
         if (name == null)
         {
@@ -63,13 +63,13 @@ final class ExampleIdentifiable
     }
 
 
-    /** @see Identifiable */
+    /** {@inheritDoc} */
     public String getName()
     {
         return name;
     }
 
-    /** @see Identifiable */
+    /** {@inheritDoc} */
     public IconBundle getIconBundle()
     {
         return iconBundle;
