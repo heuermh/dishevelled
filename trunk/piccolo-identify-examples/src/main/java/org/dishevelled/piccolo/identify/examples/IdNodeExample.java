@@ -41,6 +41,7 @@ import org.dishevelled.iconbundle.tango.TangoProject;
 import org.dishevelled.identify.Identifiable;
 
 import org.dishevelled.piccolo.identify.GenericIdNode;
+import org.dishevelled.piccolo.identify.LeopardIdNode;
 
 /**
  * IdNode example.
@@ -83,6 +84,27 @@ public final class IdNodeExample
         GenericIdNode idNode4 = new GenericIdNode(new Mic(), CUSTOM_128X128);
         idNode4.offset(375, 375);
         canvas.getLayer().addChild(idNode4);
+
+        LeopardIdNode idNode5 = new LeopardIdNode(new Doc(), TangoProject.EXTRA_SMALL);
+        idNode5.offset(75, 475);
+        idNode5.normal();
+        canvas.getLayer().addChild(idNode5);
+        LeopardIdNode idNode6 = new LeopardIdNode(new Mic(), TangoProject.SMALL);
+        idNode6.offset(150, 550);
+        idNode6.selected();
+        canvas.getLayer().addChild(idNode6);
+        LeopardIdNode idNode7 = new LeopardIdNode(new Computer(), TangoProject.MEDIUM);
+        idNode7.offset(225, 625);
+        idNode7.normal();
+        canvas.getLayer().addChild(idNode7);
+        LeopardIdNode idNode8 = new LeopardIdNode(new Doc(), TangoProject.LARGE);
+        idNode8.offset(300, 700);
+        idNode8.selected();
+        canvas.getLayer().addChild(idNode8);
+        LeopardIdNode idNode9 = new LeopardIdNode(new Mic(), CUSTOM_128X128);
+        idNode9.offset(375, 775);
+        idNode9.normal();
+        canvas.getLayer().addChild(idNode9);
 
         setLayout(new BorderLayout());
         add("Center", canvas);
