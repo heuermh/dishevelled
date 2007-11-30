@@ -144,7 +144,6 @@ public final class LeopardIdNode
     // TODO:  state machine
     public void normal()
     {
-        setTransparency(1.0f);
         iconSelection.setVisible(false);
         textSelection.setPaint(TEXT_SELECTION_PAINT);
         textSelectionShadow.setVisible(false);
@@ -153,7 +152,6 @@ public final class LeopardIdNode
 
     public void selected()
     {
-        setTransparency(1.0f);
         iconSelection.setVisible(true);
         textSelection.setPaint(TEXT_SELECTION_SELECTED_PAINT);
         textSelectionShadow.setVisible(true);

@@ -50,9 +50,7 @@ public final class GenericIdNode
      */
     public GenericIdNode()
     {
-        super(null);
-        addChild(getIconBundleImageNode());
-        addChild(getNameTextNode());
+        this(null);
     }
 
     /**
