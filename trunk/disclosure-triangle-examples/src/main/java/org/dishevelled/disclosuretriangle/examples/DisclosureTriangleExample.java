@@ -33,8 +33,8 @@ import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.JWindow;
 import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 
 import javax.swing.border.EmptyBorder;
 
@@ -55,40 +55,37 @@ public final class DisclosureTriangleExample
     /** {@inheritDoc} */
     public void run()
     {
+        try
+        {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        }
+        catch (Exception e)
+        {
+            // ignore
+        }
+
         final JFrame f = new JFrame("JFrame example");
         f.setContentPane(createContentPane());
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        f.setBounds(100, 100, 400, 400);
+        f.setBounds(120, 120, 400, 200);
 
         final JDialog d = new JDialog(f, "JDialog example");
         d.setContentPane(createContentPane());
-        d.setBounds(120, 120, 400, 400);
-
-        final JWindow w = new JWindow(f);
-        w.setContentPane(createContentPane());
-        w.setBounds(140, 140, 400, 400);
+        d.setBounds(140, 140, 400, 200);
 
         final JDialog desktop = new JDialog(f, "JInternalFrame example");
         JDesktopPane desktopPane = new JDesktopPane();
         JInternalFrame internalFrame = new JInternalFrame("JInternalFrame example");
         internalFrame.setContentPane(createContentPane());
-        internalFrame.setBounds(50, 20, 400, 400);
+        internalFrame.setBounds(50, 20, 400, 200);
         internalFrame.setVisible(true);
         desktopPane.add(internalFrame);
         desktop.setContentPane(desktopPane);
-        desktop.setBounds(160, 160, 500, 500);
+        desktop.setBounds(160, 160, 500, 300);
 
-        SwingUtilities.invokeLater(new Runnable()
-            {
-                /** {@inheritDoc} */
-                public void run()
-                {
-                    f.setVisible(true);
-                    d.setVisible(true);
-                    w.setVisible(true);
-                    desktop.setVisible(true);
-                }
-            });
+        f.setVisible(true);
+        d.setVisible(true);
+        desktop.setVisible(true);
     }
 
     /**
@@ -129,7 +126,14 @@ public final class DisclosureTriangleExample
      */
     public static void main(final String[] args)
     {
-        Runnable r = new DisclosureTriangleExample();
-        r.run();
+        SwingUtilities.invokeLater(new Runnable()
+            {
+                /** {@inheritDoc} */
+                public void run()
+                {
+                    Runnable r = new DisclosureTriangleExample();
+                    r.run();
+                }
+            });
     }
 }
