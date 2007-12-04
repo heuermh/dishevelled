@@ -32,7 +32,6 @@
       <item name="Checkstyle" href="checkstyle.html"/>
       <item name="Test coverage" href="cobertura/index.html"/>
       <item name="Changes"/>
-      <item name="Changelog"/>
     </menu>
   </body>
   <skin>
