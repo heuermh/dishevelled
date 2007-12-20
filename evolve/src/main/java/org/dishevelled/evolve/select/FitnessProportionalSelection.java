@@ -23,10 +23,10 @@
 */
 package org.dishevelled.evolve.select;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.dishevelled.weighted.WeightedMap;
-import org.dishevelled.weighted.HashWeightedMap;
 
 import org.dishevelled.evolve.Selection;
 
@@ -40,34 +40,17 @@ import org.dishevelled.evolve.Selection;
 public final class FitnessProportionalSelection<I>
     implements Selection<I>
 {
-    /** Default hash map load factor. */
-    private static final float DEFAULT_LOAD_FACTOR = 0.75f;
-
 
     /** {@inheritDoc} */
     public Collection<I> select(final Collection<I> population,
                                 final WeightedMap<I> scores)
     {
-        /*
-        if (parents == null)
-        {
-            throw new IllegalArgumentException("parents must not be null");
-        }
-        if (children == null)
-        {
-            throw new IllegalArgumentException("children must not be null");
-        }
-
-        int size = children.size();
-        WeightedMap<I> result = new HashWeightedMap<I>(size, DEFAULT_LOAD_FACTOR);
+        int size = population.size();
+        Collection<I> selected = new ArrayList<I>(size);
         for (int i = 0; i < size; i++)
         {
-            I individual = children.sample();
-            // unsafe cast!
-            result.put((I) ((Individual) individual).shallowCopy(), children.get(individual));
+            selected.add(scores.sample());
         }
-        return result;
-        */
-        return population;
+        return selected;
     }
 }

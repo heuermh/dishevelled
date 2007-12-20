@@ -54,15 +54,20 @@ public final class RandomSelection<I>
      * Set the source of randomness for this random selection function
      * to <code>random</code>.
      *
-     * @param random source of randomness for this random selection function
+     * @param random source of randomness for this random selection function, must not be null
      */
     public void setRandom(final Random random)
     {
+        if (random == null)
+        {
+            throw new IllegalArgumentException("random must not be null");
+        }
         this.random = random;
     }
 
     /**
      * Return the source of randomness for this random selection function.
+     * The source of randomness will not be null.
      *
      * @return the source of randomness for this random selection function
      */
@@ -75,28 +80,15 @@ public final class RandomSelection<I>
     public Collection<I> select(final Collection<I> population,
                                 final WeightedMap<I> scores)
     {
-        /*
-        if (parents == null)
-        {
-            throw new IllegalArgumentException("parents must not be null");
-        }
-        if (children == null)
-        {
-            throw new IllegalArgumentException("children must not be null");
-        }
-
-        int size = children.size();
-        WeightedMap<I> result = new HashWeightedMap<I>(size, DEFAULT_LOAD_FACTOR);
-        List<I> childrenAsList = new ArrayList<I>(children.keySet());
+        int size = population.size();
+        List<I> populationAsList = new ArrayList<I>(population);
+        List<I> selected = new ArrayList<I>(size);
         for (int i = 0; i < size; i++)
         {
-            I individual = childrenAsList.get(random.nextInt(size));
-            // unsafe cast!
-            result.put((I) ((Individual) individual).shallowCopy(), children.get(individual));
+            I individual = populationAsList.get(random.nextInt(size));
+            selected.add(individual);
         }
-        childrenAsList = null;
-        return result;
-        */
-        return population;
+        populationAsList = null;
+        return selected;
     }
 }
