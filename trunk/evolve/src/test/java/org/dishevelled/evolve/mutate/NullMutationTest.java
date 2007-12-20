@@ -23,6 +23,9 @@
 */
 package org.dishevelled.evolve.mutate;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import org.dishevelled.evolve.Mutation;
 import org.dishevelled.evolve.AbstractMutationTest;
 
@@ -40,5 +43,21 @@ public final class NullMutationTest
     protected <T> Mutation<T> createMutation()
     {
         return new NullMutation<T>();
+    }
+
+    public void testNullUniformMutation()
+    {
+        Mutation<String> mutation = createMutation();
+        Collection<String> recombined = new ArrayList<String>();
+        recombined.add("foo");
+        recombined.add("bar");
+        recombined.add("baz");
+
+        Collection<String> mutated = mutation.mutate(recombined);
+        assertNotNull(mutated);
+        assertEquals(3, mutated.size());
+        assertTrue(mutated.contains("foo"));
+        assertTrue(mutated.contains("bar"));
+        assertTrue(mutated.contains("baz"));
     }
 }

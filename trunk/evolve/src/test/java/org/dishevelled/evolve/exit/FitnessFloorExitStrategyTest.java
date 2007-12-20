@@ -23,8 +23,14 @@
 */
 package org.dishevelled.evolve.exit;
 
-import org.dishevelled.evolve.ExitStrategy;
+import java.util.ArrayList;
+import java.util.Collection;
+
 import org.dishevelled.evolve.AbstractExitStrategyTest;
+import org.dishevelled.evolve.ExitStrategy;
+
+import org.dishevelled.weighted.HashWeightedMap;
+import org.dishevelled.weighted.WeightedMap;
 
 /**
  * Unit test for FitnessFloorExitStrategy.
@@ -43,5 +49,40 @@ public final class FitnessFloorExitStrategyTest
     protected <T> ExitStrategy<T> createExitStrategy()
     {
         return new FitnessFloorExitStrategy<T>(LOWER_BOUND);
+    }
+
+    public void testFitnessFloorExitStrategy()
+    {
+        ExitStrategy<String> exitStrategy = createExitStrategy();
+        Collection<String> population = new ArrayList<String>();
+        WeightedMap<String> scores = new HashWeightedMap<String>();
+        population.add("foo");
+        population.add("bar");
+        population.add("baz");
+
+        scores.put("foo", LOWER_BOUND - 0.1d);
+        scores.put("bar", LOWER_BOUND - 0.1d);
+        scores.put("baz", LOWER_BOUND - 0.1d);
+        assertFalse(exitStrategy.evaluate(population, scores, 0));
+
+        scores.put("foo", LOWER_BOUND);
+        scores.put("bar", LOWER_BOUND);
+        scores.put("baz", LOWER_BOUND);
+        assertFalse(exitStrategy.evaluate(population, scores, 0));
+
+        scores.put("foo", LOWER_BOUND);
+        scores.put("bar", LOWER_BOUND);
+        scores.put("baz", LOWER_BOUND + 0.1d);
+        assertFalse(exitStrategy.evaluate(population, scores, 0));
+
+        scores.put("foo", LOWER_BOUND);
+        scores.put("bar", LOWER_BOUND + 0.1d);
+        scores.put("baz", LOWER_BOUND + 0.1d);
+        assertFalse(exitStrategy.evaluate(population, scores, 0));
+
+        scores.put("foo", LOWER_BOUND + 0.1d);
+        scores.put("bar", LOWER_BOUND + 0.1d);
+        scores.put("baz", LOWER_BOUND + 0.1d);
+        assertTrue(exitStrategy.evaluate(population, scores, 0));
     }
 }

@@ -23,6 +23,9 @@
 */
 package org.dishevelled.evolve.mutate;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import org.dishevelled.evolve.Mutation;
 import org.dishevelled.evolve.AbstractMutationTest;
 
@@ -54,5 +57,50 @@ public final class UniformMutationTest
         {
             // expected
         }
+    }
+
+    public void testNullUniformMutation()
+    {
+        IndividualWiseMutation<String> nullMutation = new NullIndividualWiseMutation<String>();
+        Mutation<String> mutation = new UniformMutation<String>(nullMutation);
+        Collection<String> recombined = new ArrayList<String>();
+        recombined.add("foo");
+        recombined.add("bar");
+        recombined.add("baz");
+
+        Collection<String> mutated = mutation.mutate(recombined);
+        assertNotNull(mutated);
+        assertEquals(3, mutated.size());
+        assertTrue(mutated.contains("foo"));
+        assertTrue(mutated.contains("bar"));
+        assertTrue(mutated.contains("baz"));
+    }
+
+    public void testUniformMutation()
+    {
+        IndividualWiseMutation<String> upperCaseMutation = new IndividualWiseMutation<String>()
+            {
+                /** {@inheritDoc} */
+                public String mutate(String individual)
+                {
+                    return individual.toUpperCase();
+                }
+            };
+        Mutation<String> mutation = new UniformMutation(upperCaseMutation);
+
+        Collection<String> recombined = new ArrayList<String>();
+        recombined.add("foo");
+        recombined.add("bar");
+        recombined.add("baz");
+
+        Collection<String> mutated = mutation.mutate(recombined);
+        assertNotNull(mutated);
+        assertEquals(3, mutated.size());
+        assertFalse(mutated.contains("foo"));
+        assertFalse(mutated.contains("bar"));
+        assertFalse(mutated.contains("baz"));
+        assertTrue(mutated.contains("FOO"));
+        assertTrue(mutated.contains("BAR"));
+        assertTrue(mutated.contains("BAZ"));
     }
 }
