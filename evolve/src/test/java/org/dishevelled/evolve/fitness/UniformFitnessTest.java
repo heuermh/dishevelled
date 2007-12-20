@@ -23,9 +23,6 @@
 */
 package org.dishevelled.evolve.fitness;
 
-import org.dishevelled.weighted.WeightedMap;
-import org.dishevelled.weighted.HashWeightedMap;
-
 import org.dishevelled.evolve.Fitness;
 import org.dishevelled.evolve.AbstractFitnessTest;
 
@@ -44,16 +41,6 @@ public final class UniformFitnessTest
     {
         return new UniformFitness<T>();
     }
-
-    /** {@inheritDoc} */
-    protected <T> WeightedMap<T> getExpectedValues(final T t)
-    {
-        WeightedMap<T> expectedValues = new HashWeightedMap<T>();
-        expectedValues.put(t, Double.valueOf(1.0));
-
-        return expectedValues;
-    }
-
 
     public void testConstructor()
     {

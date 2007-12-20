@@ -23,11 +23,6 @@
 */
 package org.dishevelled.evolve.mutate;
 
-import java.util.Map;
-import java.util.Set;
-import java.util.HashMap;
-import java.util.Collections;
-
 import org.dishevelled.evolve.Mutation;
 import org.dishevelled.evolve.AbstractMutationTest;
 
@@ -41,21 +36,9 @@ public final class NullMutationTest
     extends AbstractMutationTest
 {
 
-    /** @see AbstractMutationTest */
+    /** {@inheritDoc} */
     protected <T> Mutation<T> createMutation()
     {
         return new NullMutation<T>();
-    }
-
-    /** @see AbstractMutationTest */
-    protected <T> Map<Set<T>, Set<T>> getExpectedValues(final T t)
-    {
-        Set<T> recombined = Collections.singleton(t);
-        Set<T> mutated = Collections.singleton(t);
-
-        Map<Set<T>, Set<T>> expectedValues = new HashMap<Set<T>, Set<T>>();
-        expectedValues.put(recombined, mutated);
-
-        return expectedValues;
     }
 }

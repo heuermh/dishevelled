@@ -23,7 +23,7 @@
 */
 package org.dishevelled.evolve.mutate;
 
-import java.util.Set;
+import java.util.Collection;
 
 import org.dishevelled.evolve.Mutation;
 
@@ -39,7 +39,7 @@ public final class NullMutation<I>
 {
 
     /** {@inheritDoc} */
-    public Set<I> mutate(final Set<I> recombined)
+    public Collection<I> mutate(final Collection<I> recombined)
     {
         return recombined;
     }

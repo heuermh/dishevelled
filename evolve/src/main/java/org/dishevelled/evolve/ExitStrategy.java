@@ -23,6 +23,8 @@
 */
 package org.dishevelled.evolve;
 
+import java.util.Collection;
+
 import org.dishevelled.weighted.WeightedMap;
 
 /**
@@ -40,9 +42,10 @@ public interface ExitStrategy<I>
      * the criteria of this exit strategy function.
      *
      * @param population population
+     * @param scores fitness scores
      * @param time time
      * @return true if the specified population has met the criteria
      *    of this exit strategy function
      */
-    boolean evaluate(WeightedMap<I> population, int time);
+    boolean evaluate(Collection<I> population, WeightedMap<I> scores, int time);
 }

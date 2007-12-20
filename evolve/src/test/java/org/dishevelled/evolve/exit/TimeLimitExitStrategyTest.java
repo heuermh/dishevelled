@@ -23,9 +23,6 @@
 */
 package org.dishevelled.evolve.exit;
 
-import org.dishevelled.weighted.WeightedMap;
-import org.dishevelled.weighted.HashWeightedMap;
-
 import org.dishevelled.evolve.ExitStrategy;
 import org.dishevelled.evolve.AbstractExitStrategyTest;
 
@@ -42,42 +39,11 @@ public final class TimeLimitExitStrategyTest
     private static final int TIME_LIMIT = 10;
 
 
-    /** @see ExitStrategyTest */
+    /** {@inheritDoc} */
     protected <T> ExitStrategy<T> createExitStrategy()
     {
         return new TimeLimitExitStrategy<T>(TIME_LIMIT);
     }
-
-    /** @see ExitStrategyTest */
-    protected <T> WeightedMap<T> getFailConditionPopulation(final T t)
-    {
-        WeightedMap<T> population = new HashWeightedMap<T>();
-        population.put(t, Double.valueOf(0.5d));
-
-        return population;
-    }
-
-    /** @see ExitStrategyTest */
-    protected int getFailConditionTime()
-    {
-        return 0;
-    }
-
-    /** @see ExitStrategyTest */
-    protected <T> WeightedMap<T> getSuccessConditionPopulation(final T t)
-    {
-        WeightedMap<T> population = new HashWeightedMap<T>();
-        population.put(t, Double.valueOf(0.8d));
-
-        return population;
-    }
-
-    /** @see ExitStrategyTest */
-    protected int getSuccessConditionTime()
-    {
-        return 10;
-    }
-
 
     public void testConstructor()
     {

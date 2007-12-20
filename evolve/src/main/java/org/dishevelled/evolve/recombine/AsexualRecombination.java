@@ -23,8 +23,8 @@
 */
 package org.dishevelled.evolve.recombine;
 
-import java.util.Set;
-import java.util.HashSet;
+import java.util.Collection;
+import java.util.ArrayList;
 
 import org.dishevelled.evolve.Recombination;
 
@@ -42,23 +42,23 @@ public abstract class AsexualRecombination<I>
 {
 
     /** {@inheritDoc} */
-    public final Set<I> recombine(final Set<I> parents)
+    public final Collection<I> recombine(final Collection<I> population)
     {
-        Set<I> recombined = new HashSet<I>(parents.size());
+        Collection<I> recombined = new ArrayList<I>(population.size());
 
-        for (I parent : parents)
+        for (I individual : population)
         {
-            recombined.add(recombine(parent));
+            recombined.add(recombine(individual));
         }
         return recombined;
     }
 
     /**
-     * Recombine the specified parent asexually, returning
+     * Recombine the specified individual asexually, returning
      * a new individual.
      *
-     * @param parent parent to recombine asexually
-     * @return a new individual recombined from the specified parent
+     * @param individual individual to recombine asexually
+     * @return a new individual recombined from the specified individual
      */
-    protected abstract I recombine(I parent);
+    protected abstract I recombine(I individual);
 }

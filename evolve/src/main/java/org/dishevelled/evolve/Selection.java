@@ -23,6 +23,8 @@
 */
 package org.dishevelled.evolve;
 
+import java.util.Collection;
+
 import org.dishevelled.weighted.WeightedMap;
 
 /**
@@ -36,15 +38,13 @@ public interface Selection<I>
 {
 
     /**
-     * Select individuals from the specified population of child individuals
-     * given the parent generation as a reference.  Each of the child and parent
-     * populations are provided in the form of a weighted map of individuals to
-     * fitness scores.
+     * Select individuals from the specified population of individuals based on
+     * the specified fitness scores.
      *
-     * @param parents parent generation, given as a reference, must not be null
-     * @param children population of child individuals, must not be null
-     * @return a weighted map of the individuals selected from the specified
-     *    population of child individuals to their fitness scores
+     * @param population population of individuals
+     * @param scores fitness scores
+     * @return a collection of individuals selected from the specified population
+     *    of individuals
      */
-    WeightedMap<I> select(WeightedMap<I> parents, WeightedMap<I> children);
+    Collection<I> select(Collection<I> population, WeightedMap<I> scores);
 }

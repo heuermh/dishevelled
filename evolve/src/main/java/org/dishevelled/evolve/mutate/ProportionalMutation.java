@@ -23,8 +23,8 @@
 */
 package org.dishevelled.evolve.mutate;
 
-import java.util.Set;
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.Collection;
 
 import org.dishevelled.weighted.WeightedMap;
 import org.dishevelled.weighted.HashWeightedMap;
@@ -41,9 +41,6 @@ import org.dishevelled.evolve.Mutation;
 public final class ProportionalMutation<I>
     implements Mutation<I>
 {
-    /** Default hash map load factor. */
-    private static final float DEFAULT_LOAD_FACTOR = 0.75f;
-
     /** Weighted map of individual-wise mutation functions. */
     private WeightedMap<IndividualWiseMutation<I>> mutations;
 
@@ -73,14 +70,13 @@ public final class ProportionalMutation<I>
         {
             throw new IllegalArgumentException("mutation must not be null");
         }
-
         mutations.put(mutation, Double.valueOf(weight));
     }
 
     /** {@inheritDoc} */
-    public Set<I> mutate(final Set<I> recombined)
+    public Collection<I> mutate(final Collection<I> recombined)
     {
-        Set<I> mutated = new HashSet<I>(recombined.size(), DEFAULT_LOAD_FACTOR);
+        Collection<I> mutated = new ArrayList<I>(recombined.size());
 
         for (I i : recombined)
         {

@@ -21,26 +21,25 @@
     > http://www.opensource.org/licenses/lgpl-license.php
 
 */
-package org.dishevelled.evolve.select;
+package org.dishevelled.evolve.impl;
 
-import junit.framework.TestCase;
+import org.dishevelled.evolve.AbstractEvolutionaryAlgorithmAdapterTest;
 
-import org.dishevelled.evolve.Selection;
-import org.dishevelled.evolve.AbstractSelectionTest;
+import org.dishevelled.evolve.EvolutionaryAlgorithm;
 
 /**
- * Unit test for RankBasedSelection.
+ * Unit test for EvolutionaryAlgorithmAdapter.
  *
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public final class RankBasedSelectionTest
-    extends AbstractSelectionTest
+public final class EvolutionaryAlgorithmAdapterTest
+    extends AbstractEvolutionaryAlgorithmAdapterTest
 {
 
     /** {@inheritDoc} */
-    protected <T> Selection<T> createSelection()
+    protected <T> EvolutionaryAlgorithm<T> createEvolutionaryAlgorithm()
     {
-        return new RankBasedSelection<T>(1);
+        return new EvolutionaryAlgorithmImpl<T>();
     }
 }

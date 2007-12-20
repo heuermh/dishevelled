@@ -23,7 +23,7 @@
 */
 package org.dishevelled.evolve;
 
-import java.util.Set;
+import java.util.Collection;
 
 /**
  * A mutation function.
@@ -36,10 +36,10 @@ public interface Mutation<I>
 {
 
     /**
-     * Mutate the individuals in the specified set of recombined individuals.
+     * Mutate the individuals in the specified collection of recombined individuals.
      *
-     * @param recombined set of recombined individuals
-     * @return a set of mutated individuals
+     * @param recombined collection of recombined individuals
+     * @return a collection of mutated individuals
      */
-    Set<I> mutate(Set<I> recombined);
+    Collection<I> mutate(Collection<I> recombined);
 }

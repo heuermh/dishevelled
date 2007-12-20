@@ -25,8 +25,6 @@ package org.dishevelled.evolve;
 
 import junit.framework.TestCase;
 
-import org.dishevelled.weighted.WeightedMap;
-
 /**
  * Abstract unit test for implementations of Fitness.
  *
@@ -44,48 +42,9 @@ public abstract class AbstractFitnessTest
      */
     protected abstract <T> Fitness<T> createFitness();
 
-    /**
-     * Return a weighted map of expected fitness values.
-     *
-     * @param t instance of generic type T
-     * @return a weighted map of expected fitness values
-     */
-    protected abstract <T> WeightedMap<T> getExpectedValues(T t);
-
-
-    public void testIntegerFitness()
-    {
-        Fitness<Integer> fitness = createFitness();
-        Integer individual = Integer.valueOf(0);
-        WeightedMap<Integer> expectedValues = getExpectedValues(individual);
-
-        for (Integer i : expectedValues.keySet())
-        {
-            assertEquals(expectedValues.get(i), fitness.score(i));
-        }
-    }
-
-    public void testDoubleFitness()
-    {
-        Fitness<Double> fitness = createFitness();
-        Double individual = Double.valueOf(0.0d);
-        WeightedMap<Double> expectedValues = getExpectedValues(individual);
-
-        for (Double d : expectedValues.keySet())
-        {
-            assertEquals(expectedValues.get(d), fitness.score(d));
-        }
-    }
-
-    public void testStringFitness()
+    public void testCreateFitness()
     {
         Fitness<String> fitness = createFitness();
-        String individual = new String("foo");
-        WeightedMap<String> expectedValues = getExpectedValues(individual);
-
-        for (String s : expectedValues.keySet())
-        {
-            assertEquals(expectedValues.get(s), fitness.score(s));
-        }
+        assertNotNull(fitness);
     }
 }

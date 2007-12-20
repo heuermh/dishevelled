@@ -23,9 +23,7 @@
 */
 package org.dishevelled.evolve.mutate;
 
-import java.util.Map;
-import java.util.Set;
-import java.util.HashMap;
+import java.util.Collection;
 import java.util.Collections;
 
 import org.dishevelled.evolve.Mutation;
@@ -41,22 +39,10 @@ public final class ProportionalMutationTest
     extends AbstractMutationTest
 {
 
-    /** @see AbstractMutationTest */
+    /** {@inheritDoc} */
     protected <T> Mutation<T> createMutation()
     {
         return new ProportionalMutation<T>();
-    }
-
-    /** @see AbstractMutationTest */
-    protected <T> Map<Set<T>, Set<T>> getExpectedValues(final T t)
-    {
-        Set<T> recombined = Collections.singleton(t);
-        Set<T> mutated = Collections.singleton(t);
-
-        Map<Set<T>, Set<T>> expectedValues = new HashMap<Set<T>, Set<T>>();
-        expectedValues.put(recombined, mutated);
-
-        return expectedValues;
     }
 
     public void testAdd()
@@ -66,8 +52,8 @@ public final class ProportionalMutationTest
 
         pm.add(mutation, 1.0d);
 
-        Set<Integer> recombined = Collections.singleton(Integer.valueOf(0));
-        Set<Integer> mutated = pm.mutate(recombined);
+        Collection<Integer> recombined = Collections.singleton(Integer.valueOf(0));
+        Collection<Integer> mutated = pm.mutate(recombined);
 
         try
         {

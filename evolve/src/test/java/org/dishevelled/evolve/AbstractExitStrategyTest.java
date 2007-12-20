@@ -25,8 +25,6 @@ package org.dishevelled.evolve;
 
 import junit.framework.TestCase;
 
-import org.dishevelled.weighted.WeightedMap;
-
 /**
  * Abstract unit test for implementations of ExitStrategy.
  *
@@ -44,48 +42,9 @@ public abstract class AbstractExitStrategyTest
      */
     protected abstract <T> ExitStrategy<T> createExitStrategy();
 
-    /**
-     * Return a time value for a fail condition.
-     *
-     * @return a time value for a fail condition
-     */
-    protected abstract int getFailConditionTime();
-
-    /**
-     * Return a population value for a fail condition.
-     *
-     * @param t instance of generic type T
-     * @return a population value for a fail condition
-     */
-    protected abstract <T> WeightedMap<T> getFailConditionPopulation(T t);
-
-    /**
-     * Return a time value for a success condition.
-     *
-     * @return a time value for a success condition
-     */
-    protected abstract int getSuccessConditionTime();
-
-    /**
-     * Return a population value for a success condition.
-     *
-     * @param t instance of generic type T
-     * @return a population value for a success condition
-     */
-    protected abstract <T> WeightedMap<T> getSuccessConditionPopulation(T t);
-
-
-    public void testExitStrategy()
+    public void testCreateExitStrategy()
     {
-        ExitStrategy<Integer> exit = createExitStrategy();
-
+        ExitStrategy<String> exit = createExitStrategy();
         assertNotNull(exit);
-
-        Integer individual = Integer.valueOf(0);
-        WeightedMap<Integer> failPopulation = getFailConditionPopulation(individual);
-        WeightedMap<Integer> successPopulation = getSuccessConditionPopulation(individual);
-
-        assertFalse(exit.evaluate(failPopulation, getFailConditionTime()));
-        assertTrue(exit.evaluate(successPopulation, getSuccessConditionTime()));
     }
 }

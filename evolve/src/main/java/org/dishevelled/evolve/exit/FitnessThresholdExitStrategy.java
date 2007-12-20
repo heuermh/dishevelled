@@ -23,6 +23,8 @@
 */
 package org.dishevelled.evolve.exit;
 
+import java.util.Collection;
+
 import org.dishevelled.weighted.WeightedMap;
 
 import org.dishevelled.evolve.ExitStrategy;
@@ -55,12 +57,10 @@ public final class FitnessThresholdExitStrategy<I>
 
 
     /** {@inheritDoc} */
-    public boolean evaluate(final WeightedMap<I> population, final int time)
+    public boolean evaluate(final Collection<I> population, final WeightedMap<I> scores, final int time)
     {
-        for (I i : population.keySet())
+        for (Double fitness : scores.values())
         {
-            double fitness = population.get(i);
-
             if (fitness > threshold)
             {
                 return true;

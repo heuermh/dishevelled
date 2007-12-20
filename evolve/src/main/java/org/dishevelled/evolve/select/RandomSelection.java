@@ -26,12 +26,12 @@ package org.dishevelled.evolve.select;
 import java.util.List;
 import java.util.Random;
 import java.util.ArrayList;
+import java.util.Collection;
 
 import org.dishevelled.weighted.WeightedMap;
 import org.dishevelled.weighted.HashWeightedMap;
 
 import org.dishevelled.evolve.Selection;
-import org.dishevelled.evolve.Individual;
 
 /**
  * Random selection function.
@@ -72,9 +72,10 @@ public final class RandomSelection<I>
     }
 
     /** {@inheritDoc} */
-    public WeightedMap<I> select(final WeightedMap<I> parents,
-                                 final WeightedMap<I> children)
+    public Collection<I> select(final Collection<I> population,
+                                final WeightedMap<I> scores)
     {
+        /*
         if (parents == null)
         {
             throw new IllegalArgumentException("parents must not be null");
@@ -95,5 +96,7 @@ public final class RandomSelection<I>
         }
         childrenAsList = null;
         return result;
+        */
+        return population;
     }
 }
