@@ -60,10 +60,14 @@ public final class ElitistSelection<I>
      * number of individuals.
      *
      * @param individuals number of individuals for this elitist
-     *    selection function
+     *    selection function, must be <code>&gt;= 0</code>
      */
     public ElitistSelection(final int individuals)
     {
+        if (individuals < 0)
+        {
+            throw new IllegalArgumentException("individuals must be greater than or equal to zero");
+        }
         this.individuals = individuals;
     }
 
@@ -73,10 +77,14 @@ public final class ElitistSelection<I>
      * function to <code>individuals</code>.
      *
      * @param individuals number of individuals for this elitist
-     *    selection function
+     *    selection function, must be <code>&gt;= 0</code>
      */
     public void setIndividuals(final int individuals)
     {
+        if (individuals < 0)
+        {
+            throw new IllegalArgumentException("individuals must be greater than or equal to zero");
+        }
         this.individuals = individuals;
     }
 
@@ -96,24 +104,15 @@ public final class ElitistSelection<I>
     public Collection<I> select(final Collection<I> population,
                                 final WeightedMap<I> scores)
     {
-        /*
-        if (parents == null)
-        {
-            throw new IllegalArgumentException("parents must not be null");
-        }
-        if (children == null)
-        {
-            throw new IllegalArgumentException("children must not be null");
-        }
-
-        int size = children.size();
+        int size = population.size();
+        List<I> selected = new ArrayList<I>(size);
 
         // sort keys by score
-        List<Map.Entry<I, Double>> sortedKeys = new ArrayList<Map.Entry<I, Double>>(children.entrySet());
+        List<Map.Entry<I, Double>> sortedKeys = new ArrayList<Map.Entry<I, Double>>(scores.entrySet());
         Collections.sort(sortedKeys, weightedMapEntryComparator);
 
         // take the top n individuals
-        List<Map.Entry<I, Double>> eliteKeys = sortedKeys.subList(0, individuals);
+        List<Map.Entry<I, Double>> eliteKeys = sortedKeys.subList(0, Math.min(individuals, size));
 
         // create intermediate map of the top n individuals
         WeightedMap<I> intermediate = new HashWeightedMap<I>(individuals, DEFAULT_LOAD_FACTOR);
@@ -129,21 +128,15 @@ public final class ElitistSelection<I>
         }
 
         // fitness proportional selection on intermediate map
-        HashWeightedMap<I> result = new HashWeightedMap<I>(size, DEFAULT_LOAD_FACTOR);
         for (int i = 0; i < size; i++)
         {
-            I individual = intermediate.sample();
-            // unsafe cast!
-            result.put((I) ((Individual) individual).shallowCopy(), children.get(individual));
+            selected.add(intermediate.sample());
         }
 
         sortedKeys = null;
         eliteKeys = null;
         intermediate = null;
-
-        return result;
-        */
-        return population;
+        return selected;
     }
 
 

@@ -23,7 +23,9 @@
 */
 package org.dishevelled.evolve.select;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.dishevelled.weighted.WeightedMap;
 import org.dishevelled.weighted.HashWeightedMap;
@@ -83,23 +85,14 @@ public final class RankBasedSelection<I>
     public Collection<I> select(final Collection<I> population,
                                 final WeightedMap<I> scores)
     {
-        /*
-        if (parents == null)
-        {
-            throw new IllegalArgumentException("parents must not be null");
-        }
-        if (children == null)
-        {
-            throw new IllegalArgumentException("children must not be null");
-        }
-
-        int size = children.size();
+        int size = population.size();
+        List<I> selected = new ArrayList<I>(size);
 
         // create intermediate map of those ranked at or above rank
         WeightedMap<I> intermediate = new HashWeightedMap<I>();
-        for (I i : children.keySet())
+        for (I i : scores.keySet())
         {
-            if (children.rank(i) <= rank)
+            if (scores.rank(i) <= rank)
             {
                 // temporarily set fitness score to 0.0d
                 intermediate.put(i, Double.valueOf(0.0d));
@@ -114,16 +107,11 @@ public final class RankBasedSelection<I>
         }
 
         // fitness proportional selection on intermediate map
-        HashWeightedMap<I> result = new HashWeightedMap<I>(size, DEFAULT_LOAD_FACTOR);
         for (int i = 0; i < size; i++)
         {
-            I individual = intermediate.sample();
-            // unsafe cast!
-            result.put((I) ((Individual) individual).shallowCopy(), children.get(individual));
+            selected.add(intermediate.sample());
         }
         intermediate = null;
-        return result;
-        */
         return population;
     }
 }
