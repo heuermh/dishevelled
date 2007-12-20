@@ -27,13 +27,13 @@ import java.util.Map;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Collection;
 import java.util.Collections;
 
 import org.dishevelled.weighted.WeightedMap;
 import org.dishevelled.weighted.HashWeightedMap;
 
 import org.dishevelled.evolve.Selection;
-import org.dishevelled.evolve.Individual;
 
 /**
  * Elitist selection function.
@@ -93,9 +93,10 @@ public final class ElitistSelection<I>
     }
 
     /** {@inheritDoc} */
-    public WeightedMap<I> select(final WeightedMap<I> parents,
-                                 final WeightedMap<I> children)
+    public Collection<I> select(final Collection<I> population,
+                                final WeightedMap<I> scores)
     {
+        /*
         if (parents == null)
         {
             throw new IllegalArgumentException("parents must not be null");
@@ -141,6 +142,8 @@ public final class ElitistSelection<I>
         intermediate = null;
 
         return result;
+        */
+        return population;
     }
 
 

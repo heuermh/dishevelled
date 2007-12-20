@@ -23,11 +23,6 @@
 */
 package org.dishevelled.evolve.recombine;
 
-import java.util.Map;
-import java.util.Set;
-import java.util.HashMap;
-import java.util.Collections;
-
 import org.dishevelled.evolve.Recombination;
 import org.dishevelled.evolve.AbstractRecombinationTest;
 
@@ -41,22 +36,10 @@ public final class AsexualRecombinationTest
     extends AbstractRecombinationTest
 {
 
-    /** @see AbstractRecombinationTest */
+    /** {@inheritDoc} */
     protected <T> Recombination<T> createRecombination()
     {
         return new TestAsexualRecombination<T>();
-    }
-
-    /** @see AbstractRecombinationTest */
-    protected <T> Map<Set<T>, Set<T>> getExpectedValues(final T t)
-    {
-        Set<T> parents = Collections.singleton(t);
-        Set<T> recombined = Collections.singleton(t);
-
-        Map<Set<T>, Set<T>> expectedValues = new HashMap<Set<T>, Set<T>>();
-        expectedValues.put(parents, recombined);
-
-        return expectedValues;
     }
 
     /**
@@ -65,10 +48,10 @@ public final class AsexualRecombinationTest
     private class TestAsexualRecombination<T>
         extends AsexualRecombination<T>
     {
-        /** @see AsexualRecombination */
-        protected T recombine(T parent)
+        /** {@inheritDoc} */
+        protected T recombine(T individual)
         {
-            return parent;
+            return individual;
         }
     }
 }

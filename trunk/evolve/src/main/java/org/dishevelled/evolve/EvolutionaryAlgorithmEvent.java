@@ -23,7 +23,7 @@
 */
 package org.dishevelled.evolve;
 
-import java.util.Set;
+import java.util.Collection;
 import java.util.EventObject;
 
 import org.dishevelled.weighted.WeightedMap;
@@ -38,32 +38,29 @@ import org.dishevelled.weighted.WeightedMap;
 public final class EvolutionaryAlgorithmEvent<I>
     extends EventObject
 {
-    /** Population, for exit or selected events. */
-    private WeightedMap<I> population;
+    /** Population of individuals. */
+    private Collection<I> population;
+
+    /** Fitness scores. */
+    private WeightedMap<I> scores;
 
     /** Time (in number of generations), for exit events. */
     private int time;
 
-    /** Parents, for recombined events. */
-    private Set<I> parents;
+    /** Collection of recombined individuals, for recombined or mutated events. */
+    private Collection<I> recombined;
 
-    /** Recombined, for recombined or mutated events. */
-    private Set<I> recombined;
+    /** Collection of mutated individuals, for mutated events. */
+    private Collection<I> mutated;
 
-    /** Mutated, for mutated events. */
-    private Set<I> mutated;
+    /** Collection of selected individuals, for selected events. */
+    private Collection<I> selected;
 
     /** Individual, for fitness calculated events. */
     private I individual;
 
     /** Score, for fitness calculated events. */
     private Double score;
-
-    /** Parent population, for selected events. */
-    private WeightedMap<I> parentPopulation;
-
-    /** Child population, for selected events. */
-    private WeightedMap<I> childPopulation;
 
 
     /**
@@ -81,15 +78,18 @@ public final class EvolutionaryAlgorithmEvent<I>
      * Create a new evolutionary algorithm event with the specified parameters.
      *
      * @param source source of this event
-     * @param population population, for exit events
+     * @param population population of individuals, for exit events
+     * @param scores fitness scores, for exit events
      * @param time time (in number of generations), for exit events
      */
     public EvolutionaryAlgorithmEvent(final EvolutionaryAlgorithm<I> source,
-                                      final WeightedMap<I> population,
+                                      final Collection<I> population,
+                                      final WeightedMap<I> scores,
                                       final int time)
     {
         this(source);
         this.population = population;
+        this.scores = scores;
         this.time = time;
     }
 
@@ -97,17 +97,17 @@ public final class EvolutionaryAlgorithmEvent<I>
      * Create a new evolutionary algorithm event with the specified parameters.
      *
      * @param source source of this event
-     * @param parents parents, for recombined events
-     * @param recombined recombined, for recombined or mutated events
-     * @param mutated mutated, for mutated events
+     * @param population population of individuals, for recombined events
+     * @param recombined collection of recombined individuals, for recombined or mutated events
+     * @param mutated collection of mutated individuals, for mutated events
      */
     public EvolutionaryAlgorithmEvent(final EvolutionaryAlgorithm<I> source,
-                                      final Set<I> parents,
-                                      final Set<I> recombined,
-                                      final Set<I> mutated)
+                                      final Collection<I> population,
+                                      final Collection<I> recombined,
+                                      final Collection<I> mutated)
     {
         this(source);
-        this.parents = parents;
+        this.population = population;
         this.recombined = recombined;
         this.mutated = mutated;
     }
@@ -132,19 +132,19 @@ public final class EvolutionaryAlgorithmEvent<I>
      * Create a new evolutionary algorithm event with the specified parameters.
      *
      * @param source source of this event
-     * @param parentPopulation parent population, for selected events
-     * @param childPopulation child population, for selected events
-     * @param population population, for selected events
+     * @param population population of individuals, for selected events
+     * @param selected collection of selected individuals, for selected events
+     * @param scores fitness scores, for selected events
      */
     public EvolutionaryAlgorithmEvent(final EvolutionaryAlgorithm<I> source,
-                                      final WeightedMap<I> parentPopulation,
-                                      final WeightedMap<I> childPopulation,
-                                      final WeightedMap<I> population)
+                                      final Collection<I> population,
+                                      final Collection<I> selected,
+                                      final WeightedMap<I> scores)
     {
         this(source);
-        this.parentPopulation = parentPopulation;
-        this.childPopulation = childPopulation;
         this.population = population;
+        this.selected = selected;
+        this.scores = scores;
     }
 
 
@@ -159,13 +159,23 @@ public final class EvolutionaryAlgorithmEvent<I>
     }
 
     /**
-     * Return the population, for exit or selected events.  May be null.
+     * Return the population of individuals.  May be null.
      *
-     * @return the population, for exit or selected events
+     * @return the population of individuals
      */
-    public WeightedMap<I> getPopulation()
+    public Collection<I> getPopulation()
     {
         return population;
+    }
+
+    /**
+     * Return the fitness scores.  May be null.
+     *
+     * @return the fitness scores
+     */
+    public WeightedMap<I> getScores()
+    {
+        return scores;
     }
 
     /**
@@ -179,31 +189,21 @@ public final class EvolutionaryAlgorithmEvent<I>
     }
 
     /**
-     * Return parents, for recombined events.  May be null.
+     * Return the collection of recombined individuals, for recombined or mutated events.  May be null.
      *
-     * @return parents, for recombined events
+     * @return the collection of recombined individuals, for recombined or mutated events
      */
-    public Set<I> getParents()
-    {
-        return parents;
-    }
-
-    /**
-     * Return recombined, for recombined or mutated events.  May be null.
-     *
-     * @return recombined, for recombined or mutated events
-     */
-    public Set<I> getRecombined()
+    public Collection<I> getRecombined()
     {
         return recombined;
     }
 
     /**
-     * Return mutated, for mutated events.  May be null.
+     * Return the collection of mutated individuals, for mutated events.  May be null.
      *
-     * @return mutated, for mutated events
+     * @return the collection of mutated individuals, for mutated events
      */
-    public Set<I> getMutated()
+    public Collection<I> getMutated()
     {
         return mutated;
     }
@@ -229,22 +229,12 @@ public final class EvolutionaryAlgorithmEvent<I>
     }
 
     /**
-     * Return the parent population, for selected events.  May be null.
+     * Return the collection of selected individuals, for selected events.  May be null.
      *
-     * @return the parent population, for selected events
+     * @return the collection of selected individuals, for selected events
      */
-    public WeightedMap<I> getParentPopulation()
+    public Collection<I> getSelected()
     {
-        return parentPopulation;
-    }
-
-    /**
-     * Return the child population, for selected events.  May be null.
-     *
-     * @return the child population, for selected events
-     */
-    public WeightedMap<I> getChildPopulation()
-    {
-        return childPopulation;
+        return selected;
     }
 }

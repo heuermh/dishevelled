@@ -25,9 +25,6 @@ package org.dishevelled.evolve.select;
 
 import junit.framework.TestCase;
 
-import org.dishevelled.weighted.WeightedMap;
-import org.dishevelled.weighted.HashWeightedMap;
-
 import org.dishevelled.evolve.Selection;
 import org.dishevelled.evolve.AbstractSelectionTest;
 
@@ -41,31 +38,9 @@ public final class ElitistSelectionTest
     extends AbstractSelectionTest
 {
 
-    /** @see AbstractSelectionTest */
+    /** {@inheritDoc} */
     protected <T> Selection<T> createSelection()
     {
         return new ElitistSelection<T>(1);
-    }
-
-    public void testElitistSelection()
-    {
-        ElitistSelection<TestIndividual> selection = new ElitistSelection<TestIndividual>(1);
-        assertNotNull(selection);
-        assertEquals(1, selection.getIndividuals());
-        selection.setIndividuals(2);
-        assertEquals(2, selection.getIndividuals());
-
-        WeightedMap<TestIndividual> parents = new HashWeightedMap<TestIndividual>();
-        WeightedMap<TestIndividual> children = new HashWeightedMap<TestIndividual>();
-        for (int i = 0; i < 10; i++)
-        {
-            parents.put(new TestIndividual(i), Double.valueOf((double) (i / 10.0d)));
-            children.put(new TestIndividual(i), Double.valueOf((double) (i / 10.0d)));
-        }
-
-        WeightedMap<TestIndividual> result = selection.select(parents, children);
-
-        assertNotNull(result);
-        assertEquals(10, result.size());
     }
 }

@@ -23,11 +23,12 @@
 */
 package org.dishevelled.evolve.select;
 
+import java.util.Collection;
+
 import org.dishevelled.weighted.WeightedMap;
 import org.dishevelled.weighted.HashWeightedMap;
 
 import org.dishevelled.evolve.Selection;
-import org.dishevelled.evolve.Individual;
 
 /**
  * Rank-based selection function.
@@ -79,9 +80,10 @@ public final class RankBasedSelection<I>
     }
 
     /** {@inheritDoc} */
-    public WeightedMap<I> select(final WeightedMap<I> parents,
-                                 final WeightedMap<I> children)
+    public Collection<I> select(final Collection<I> population,
+                                final WeightedMap<I> scores)
     {
+        /*
         if (parents == null)
         {
             throw new IllegalArgumentException("parents must not be null");
@@ -121,5 +123,7 @@ public final class RankBasedSelection<I>
         }
         intermediate = null;
         return result;
+        */
+        return population;
     }
 }

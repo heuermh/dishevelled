@@ -23,12 +23,6 @@
 */
 package org.dishevelled.evolve.recombine;
 
-import java.util.Map;
-import java.util.Set;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Collections;
-
 import org.dishevelled.evolve.Recombination;
 import org.dishevelled.evolve.AbstractRecombinationTest;
 
@@ -42,24 +36,13 @@ public final class SexualRecombinationTest
     extends AbstractRecombinationTest
 {
 
-    /** @see AbstractRecombinationTest */
+    /** {@inheritDoc} */
     protected <T> Recombination<T> createRecombination()
     {
         return new TestSexualRecombination<T>();
     }
 
-    /** @see AbstractRecombinationTest */
-    protected <T> Map<Set<T>, Set<T>> getExpectedValues(final T t)
-    {
-        Set<T> parents = Collections.singleton(t);
-        Set<T> recombined = Collections.singleton(t);
-
-        Map<Set<T>, Set<T>> expectedValues = new HashMap<Set<T>, Set<T>>();
-        expectedValues.put(parents, recombined);
-
-        return expectedValues;
-    }
-
+    /*
     public void testTwoParents()
     {
         Recombination<Integer> recombination = new TestSexualRecombination<Integer>();
@@ -113,7 +96,7 @@ public final class SexualRecombinationTest
         assertTrue(recombined.contains(Integer.valueOf(2)));
         assertTrue(recombined.contains(Integer.valueOf(3)));
     }
-
+    */
 
     /**
      * Text sexual recombination.
@@ -121,10 +104,10 @@ public final class SexualRecombinationTest
     private class TestSexualRecombination<T>
         extends SexualRecombination<T>
     {
-        /** @see SexualRecombination */
-        protected T recombine(final T parent0, final T parent1)
+        /** {@inheritDoc} */
+        protected T recombine(final T individual0, final T individual1)
         {
-            return parent0;
+            return individual0;
         }
     }
 }

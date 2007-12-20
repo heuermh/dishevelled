@@ -23,7 +23,7 @@
 */
 package org.dishevelled.evolve.recombine;
 
-import java.util.Set;
+import java.util.Collection;
 
 import org.dishevelled.evolve.Recombination;
 
@@ -39,8 +39,8 @@ public final class NullRecombination<I>
 {
 
     /** {@inheritDoc} */
-    public Set<I> recombine(final Set<I> parents)
+    public Collection<I> recombine(final Collection<I> population)
     {
-        return parents;
+        return population;
     }
 }

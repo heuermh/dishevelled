@@ -23,8 +23,8 @@
 */
 package org.dishevelled.evolve.mutate;
 
-import java.util.Set;
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.Collection;
 
 import org.dishevelled.evolve.Mutation;
 
@@ -40,14 +40,11 @@ import org.dishevelled.evolve.Mutation;
 public abstract class AbstractUniformMutation<I>
     implements Mutation<I>
 {
-    /** Default hash map load factor. */
-    private static final float DEFAULT_LOAD_FACTOR = 0.75f;
-
 
     /** {@inheritDoc} */
-    public final Set<I> mutate(final Set<I> recombined)
+    public final Collection<I> mutate(final Collection<I> recombined)
     {
-        Set<I> mutated = new HashSet<I>(recombined.size(), DEFAULT_LOAD_FACTOR);
+        Collection<I> mutated = new ArrayList<I>(recombined.size());
 
         for (I i : recombined)
         {

@@ -23,9 +23,6 @@
 */
 package org.dishevelled.evolve;
 
-import java.util.Map;
-import java.util.Set;
-
 import junit.framework.TestCase;
 
 /**
@@ -45,50 +42,9 @@ public abstract class AbstractMutationTest
      */
     protected abstract <T> Mutation<T> createMutation();
 
-    /**
-     * Return a map of expected values, where the keys are sets
-     * of recombined individuals and the values are sets of mutated
-     * individuals.
-     *
-     * @param t instance of generic type T
-     * @return a map of expected values
-     */
-    protected abstract <T> Map<Set<T>, Set<T>> getExpectedValues(T t);
-
-
-    public void testIntegerMutation()
-    {
-        Mutation<Integer> mutation = createMutation();
-        Integer individual = Integer.valueOf(0);
-        Map<Set<Integer>, Set<Integer>> expectedValues = getExpectedValues(individual);
-
-        for (Set<Integer> recombined : expectedValues.keySet())
-        {
-            assertEquals(expectedValues.get(recombined), mutation.mutate(recombined));
-        }
-    }
-
-    public void testDoubleMutation()
-    {
-        Mutation<Double> mutation = createMutation();
-        Double individual = Double.valueOf(0.0d);
-        Map<Set<Double>, Set<Double>> expectedValues = getExpectedValues(individual);
-
-        for (Set<Double> recombined : expectedValues.keySet())
-        {
-            assertEquals(expectedValues.get(recombined), mutation.mutate(recombined));
-        }
-    }
-
-    public void testStringMutation()
+    public void testCreateMutation()
     {
         Mutation<String> mutation = createMutation();
-        String individual = new String("foo");
-        Map<Set<String>, Set<String>> expectedValues = getExpectedValues(individual);
-
-        for (Set<String> recombined : expectedValues.keySet())
-        {
-            assertEquals(expectedValues.get(recombined), mutation.mutate(recombined));
-        }
+        assertNotNull(mutation);
     }
 }

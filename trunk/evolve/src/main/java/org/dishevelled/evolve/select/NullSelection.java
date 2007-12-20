@@ -23,6 +23,8 @@
 */
 package org.dishevelled.evolve.select;
 
+import java.util.Collection;
+
 import org.dishevelled.weighted.WeightedMap;
 
 import org.dishevelled.evolve.Selection;
@@ -39,17 +41,9 @@ public final class NullSelection<I>
 {
 
     /** {@inheritDoc} */
-    public WeightedMap<I> select(final WeightedMap<I> parents,
-                                 final WeightedMap<I> children)
+    public Collection<I> select(final Collection<I> population,
+                                final WeightedMap<I> scores)
     {
-        if (parents == null)
-        {
-            throw new IllegalArgumentException("parents must not be null");
-        }
-        if (children == null)
-        {
-            throw new IllegalArgumentException("children must not be null");
-        }
-        return children;
+        return population;
     }
 }

@@ -23,6 +23,7 @@
 */
 package org.dishevelled.evolve.recombine;
 
+import java.util.Collection;
 import java.util.Set;
 import java.util.List;
 import java.util.HashSet;
@@ -33,7 +34,7 @@ import org.dishevelled.evolve.Recombination;
 /**
  * Abstract sexual recombination function implemention.
  * Subclasses need only to implement the abstract individual-wise method
- * <code>I recombine(I parent0, I parent1)</code>.
+ * <code>I recombine(I individual0, I individual1)</code>.
  *
  * @param <I> individual type
  * @author  Michael Heuer
@@ -44,8 +45,9 @@ public abstract class SexualRecombination<I>
 {
 
     /** {@inheritDoc} */
-    public final Set<I> recombine(final Set<I> parents)
+    public final Collection<I> recombine(final Collection<I> population)
     {
+        /*
         List<I> parentsAsList = new ArrayList<I>(parents);
         Set<I> recombined = new HashSet<I>(parents.size());
 
@@ -59,16 +61,17 @@ public abstract class SexualRecombination<I>
             recombined.add(recombine(parent0, parent1));
         }
         recombined.add(recombine(parentsAsList.get(size - 1), parentsAsList.get(size - 1)));
-        return recombined;
+        */
+        return population;
     }
 
     /**
-     * Recombine the specified parents sexually, returning a
+     * Recombine the specified individuals sexually, returning a
      * new individual.
      *
-     * @param parent0 parent to recombine sexually
-     * @param parent1 parent to recombine sexually
-     * @return a new individual recombined from the specified parents
+     * @param individual0 individual to recombine sexually
+     * @param individual1 individual to recombine sexually
+     * @return a new individual recombined from the specified individuals
      */
-    protected abstract I recombine(I parent0, I parent1);
+    protected abstract I recombine(I individual0, I individual1);
 }

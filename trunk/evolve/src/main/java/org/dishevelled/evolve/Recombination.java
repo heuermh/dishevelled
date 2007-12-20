@@ -23,7 +23,7 @@
 */
 package org.dishevelled.evolve;
 
-import java.util.Set;
+import java.util.Collection;
 
 /**
  * A recombination function.
@@ -36,10 +36,10 @@ public interface Recombination<I>
 {
 
     /**
-     * Recombine the individuals in the specified set of parent individuals.
+     * Recombine the individuals in the specified population of individuals.
      *
-     * @param parents set of parent individuals
-     * @return a set of recombined individuals
+     * @param population population of individuals
+     * @return a collection of recombined individuals
      */
-    Set<I> recombine(Set<I> parents);
+    Collection<I> recombine(Collection<I> population);
 }

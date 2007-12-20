@@ -25,9 +25,6 @@ package org.dishevelled.evolve;
 
 import junit.framework.TestCase;
 
-import org.dishevelled.weighted.WeightedMap;
-import org.dishevelled.weighted.HashWeightedMap;
-
 /**
  * Abstract unit test for implementations of Selection.
  *
@@ -45,75 +42,9 @@ public abstract class AbstractSelectionTest
      */
     protected abstract <T> Selection<T> createSelection();
 
-    public void testSelection()
+    public void testCreateSelection()
     {
-        Selection<Integer> selection = createSelection();
-
-        WeightedMap<Integer> parents = new HashWeightedMap<Integer>();
-        WeightedMap<Integer> children = new HashWeightedMap<Integer>();
-
-        Integer individual = Integer.valueOf(0);
-        parents.put(individual, Double.valueOf(1.0d));
-        children.put(individual, Double.valueOf(1.0d));
-
-        try
-        {
-            selection.select(null, parents);
-            fail("select(null,) expected IllegalArgumentException");
-        }
-        catch (IllegalArgumentException e)
-        {
-            // expected
-        }
-
-        try
-        {
-            selection.select(parents, null);
-            fail("select(,null) expected IllegalArgumentException");
-        }
-        catch (IllegalArgumentException e)
-        {
-            // expected
-        }
-    }
-
-    /**
-     * Test individual.
-     */
-    protected class TestIndividual
-        implements Individual
-    {
-        /** Value. */
-        private int value;
-
-        /**
-         * Create a new test individual.
-         *
-         * @param value value
-         */
-        public TestIndividual(final int value)
-        {
-            this.value = value;
-        }
-
-
-        /** @see Individual */
-        public boolean equals(Object o)
-        {
-            return super.equals(o);
-        }
-
-        /** @see Individual */
-        public int hashCode()
-        {
-            return super.hashCode();
-        }
-
-        /** @see Individual */
-        public Individual shallowCopy()
-        {
-            TestIndividual copy = new TestIndividual(value);
-            return copy;
-        }
+        Selection<String> selection = createSelection();
+        assertNotNull(selection);
     }
 }

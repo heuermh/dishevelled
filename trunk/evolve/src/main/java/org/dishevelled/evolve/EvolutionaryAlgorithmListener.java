@@ -40,9 +40,10 @@ public interface EvolutionaryAlgorithmListener<I>
     /**
      * Notify this listener of an exit failed event.
      * The specified event object will provide a reference
-     * to the population and the time (in number of generations).
+     * to the population, fitness scores, and the time (in number of generations).
      *
      * @see EvolutionaryAlgorithmEvent#getPopulation
+     * @see EvolutionaryAlgorithmEvent#getScores
      * @see EvolutionaryAlgorithmEvent#getTime
      * @param e exit failed event
      */
@@ -51,9 +52,10 @@ public interface EvolutionaryAlgorithmListener<I>
     /**
      * Notify this listener of an exit succeeded event.
      * The specified event object will provide a reference
-     * to the population and the time (in number of generations).
+     * to the population, fitness scores, and the time (in number of generations).
      *
      * @see EvolutionaryAlgorithmEvent#getPopulation
+     * @see EvolutionaryAlgorithmEvent#getScores
      * @see EvolutionaryAlgorithmEvent#getTime
      * @param e exit succeeded event
      */
@@ -62,9 +64,10 @@ public interface EvolutionaryAlgorithmListener<I>
     /**
      * Notify this listener of a recombined event.
      * The specified event object will provide a reference
-     * to parents and recombined.
+     * to the population of individuals and collection of recombined
+     * individuals.
      *
-     * @see EvolutionaryAlgorithmEvent#getParents
+     * @see EvolutionaryAlgorithmEvent#getPopulation
      * @see EvolutionaryAlgorithmEvent#getRecombined
      * @param e recombined event
      */
@@ -73,7 +76,8 @@ public interface EvolutionaryAlgorithmListener<I>
     /**
      * Notify this listener of a mutated event.
      * The specified event object will provide a reference
-     * to recombined and mutated.
+     * to the collection recombined individuals and collection
+     * of mutated individuals.
      *
      * @see EvolutionaryAlgorithmEvent#getRecombined
      * @see EvolutionaryAlgorithmEvent#getMutated
@@ -95,12 +99,13 @@ public interface EvolutionaryAlgorithmListener<I>
     /**
      * Notify this listener of a selected event.
      * The specified event object will provide a reference
-     * to the parent population, the child population, and
-     * the selected population.
+     * to the original population of individuals, the collection of
+     * selected individuals, and the fitness scores for the collection
+     * of selected individuals.
      *
-     * @see EvolutionaryAlgorithmEvent#getParentPopulation
-     * @see EvolutionaryAlgorithmEvent#getChildPopulation
      * @see EvolutionaryAlgorithmEvent#getPopulation
+     * @see EvolutionaryAlgorithmEvent#getSelected
+     * @see EvolutionaryAlgorithmEvent#getScores
      * @param e selected event
      */
     void selected(EvolutionaryAlgorithmEvent<I> e);

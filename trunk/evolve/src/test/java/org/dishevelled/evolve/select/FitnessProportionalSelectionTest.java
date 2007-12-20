@@ -25,9 +25,6 @@ package org.dishevelled.evolve.select;
 
 import junit.framework.TestCase;
 
-import org.dishevelled.weighted.WeightedMap;
-import org.dishevelled.weighted.HashWeightedMap;
-
 import org.dishevelled.evolve.Selection;
 import org.dishevelled.evolve.AbstractSelectionTest;
 
@@ -41,27 +38,9 @@ public final class FitnessProportionalSelectionTest
     extends AbstractSelectionTest
 {
 
-    /** @see AbstractSelectionTest */
+    /** {@inheritDoc} */
     protected <T> Selection<T> createSelection()
     {
         return new FitnessProportionalSelection<T>();
-    }
-
-    public void testFitnessProportionalSelection()
-    {
-        FitnessProportionalSelection<TestIndividual> selection = new FitnessProportionalSelection<TestIndividual>();
-
-        WeightedMap<TestIndividual> parents = new HashWeightedMap<TestIndividual>();
-        parents.put(new TestIndividual(0), Double.valueOf(0.10d));
-        parents.put(new TestIndividual(1), Double.valueOf(0.90d));
-
-        WeightedMap<TestIndividual> children = new HashWeightedMap<TestIndividual>();
-        children.put(new TestIndividual(0), Double.valueOf(0.10d));
-        children.put(new TestIndividual(1), Double.valueOf(0.90d));
-
-        WeightedMap<TestIndividual> result = selection.select(parents, children);
-
-        assertNotNull(result);
-        assertEquals(2, result.size());
     }
 }

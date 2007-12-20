@@ -38,7 +38,7 @@ public final class NullSelectionTest
     extends AbstractSelectionTest
 {
 
-    /** @see AbstractSelectionTest */
+    /** {@inheritDoc} */
     protected <T> Selection<T> createSelection()
     {
         return new NullSelection<T>();
