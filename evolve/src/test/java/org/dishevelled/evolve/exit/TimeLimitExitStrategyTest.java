@@ -23,8 +23,14 @@
 */
 package org.dishevelled.evolve.exit;
 
-import org.dishevelled.evolve.ExitStrategy;
+import java.util.Collection;
+import java.util.Collections;
+
 import org.dishevelled.evolve.AbstractExitStrategyTest;
+import org.dishevelled.evolve.ExitStrategy;
+
+import org.dishevelled.weighted.HashWeightedMap;
+import org.dishevelled.weighted.WeightedMap;
 
 /**
  * Unit test for TimeLimitExitStrategy.
@@ -55,7 +61,6 @@ public final class TimeLimitExitStrategyTest
         {
             // expected
         }
-
         try
         {
             ExitStrategy<Integer> exit = new TimeLimitExitStrategy<Integer>(-1);
@@ -64,5 +69,17 @@ public final class TimeLimitExitStrategyTest
         {
             // expected
         }
+    }
+
+    public void testTimeLimitExitStrategy()
+    {
+        ExitStrategy<String> exitStrategy = createExitStrategy();
+        Collection<String> population = Collections.singleton("foo");
+        WeightedMap<String> scores = new HashWeightedMap<String>();
+        scores.put("foo", 0.0d);
+
+        assertFalse(exitStrategy.evaluate(population, scores, TIME_LIMIT - 1));
+        assertTrue(exitStrategy.evaluate(population, scores, TIME_LIMIT));
+        assertTrue(exitStrategy.evaluate(population, scores, TIME_LIMIT + 1));
     }
 }

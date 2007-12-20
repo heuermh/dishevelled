@@ -23,6 +23,9 @@
 */
 package org.dishevelled.evolve.recombine;
 
+import java.util.Collection;
+import java.util.Collections;
+
 import org.dishevelled.evolve.Recombination;
 import org.dishevelled.evolve.AbstractRecombinationTest;
 
@@ -40,5 +43,15 @@ public final class NullRecombinationTest
     protected <T> Recombination<T> createRecombination()
     {
         return new NullRecombination<T>();
+    }
+
+    public void testNullRecombination()
+    {
+        Recombination<String> recombination = createRecombination();
+        Collection<String> population = Collections.singleton("foo");
+        Collection<String> recombined = recombination.recombine(population);
+        assertNotNull(recombined);
+        assertEquals(1, recombined.size());
+        assertTrue(recombined.contains("foo"));
     }
 }

@@ -49,7 +49,6 @@ public final class UniformMutation<I>
         {
             throw new IllegalArgumentException("mutation must not be null");
         }
-
         this.mutation = mutation;
     }
 

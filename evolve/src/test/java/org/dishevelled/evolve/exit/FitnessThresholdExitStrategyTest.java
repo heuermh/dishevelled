@@ -23,8 +23,14 @@
 */
 package org.dishevelled.evolve.exit;
 
-import org.dishevelled.evolve.ExitStrategy;
+import java.util.Collection;
+import java.util.Collections;
+
 import org.dishevelled.evolve.AbstractExitStrategyTest;
+import org.dishevelled.evolve.ExitStrategy;
+
+import org.dishevelled.weighted.HashWeightedMap;
+import org.dishevelled.weighted.WeightedMap;
 
 /**
  * Unit test for FitnessThresholdExitStrategy.
@@ -43,5 +49,21 @@ public final class FitnessThresholdExitStrategyTest
     protected <T> ExitStrategy<T> createExitStrategy()
     {
         return new FitnessThresholdExitStrategy<T>(THRESHOLD);
+    }
+
+    public void testFitnessThresholdExitStrategy()
+    {
+        ExitStrategy<String> exitStrategy = createExitStrategy();
+        Collection<String> population = Collections.singleton("foo");
+        WeightedMap<String> scores = new HashWeightedMap<String>();
+
+        scores.put("foo", THRESHOLD - 0.1d);
+        assertFalse(exitStrategy.evaluate(population, scores, 0));
+
+        scores.put("foo", THRESHOLD);
+        assertFalse(exitStrategy.evaluate(population, scores, 0));
+
+        scores.put("foo", THRESHOLD + 0.1d);
+        assertTrue(exitStrategy.evaluate(population, scores, 0));
     }
 }
