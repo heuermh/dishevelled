@@ -38,6 +38,9 @@ public final class UniformFitness<I>
     /** Uniform fitness score. */
     private final double score;
 
+    /** Default score, <code>1.0d</code>. */
+    static final double DEFAULT_SCORE = 1.0d;
+
 
     /**
      * Create a new uniform fitness function with
@@ -45,7 +48,7 @@ public final class UniformFitness<I>
      */
     public UniformFitness()
     {
-        this(1.0d);
+        this(DEFAULT_SCORE);
     }
 
     /**

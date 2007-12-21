@@ -23,12 +23,18 @@
 */
 package org.dishevelled.evolve.impl;
 
-import java.util.Set;
+import java.util.Collection;
 import java.util.Collections;
 
-import junit.framework.TestCase;
-
-import org.dishevelled.weighted.WeightedMap;
+import org.dishevelled.evolve.AbstractEvolutionaryAlgorithmTest;
+import org.dishevelled.evolve.EvolutionaryAlgorithm;
+import org.dishevelled.evolve.EvolutionaryAlgorithmAdapter;
+import org.dishevelled.evolve.EvolutionaryAlgorithmListener;
+import org.dishevelled.evolve.ExitStrategy;
+import org.dishevelled.evolve.Fitness;
+import org.dishevelled.evolve.Mutation;
+import org.dishevelled.evolve.Recombination;
+import org.dishevelled.evolve.Selection;
 
 import org.dishevelled.evolve.exit.TimeLimitExitStrategy;
 
@@ -41,74 +47,31 @@ import org.dishevelled.evolve.recombine.NullRecombination;
 import org.dishevelled.evolve.select.NullSelection;
 
 /**
- * Unit test for EvolutionaryAlgorithm.
+ * Unit test for EvolutionaryAlgorithmImpl.
  *
  * @author  Michael Heuer
  * @version $Revision: 320 $ $Date: 2007-10-23 14:06:38 -0500 (Tue, 23 Oct 2007) $
  */
 public final class EvolutionaryAlgorithmImplTest
-    extends TestCase
+    extends AbstractEvolutionaryAlgorithmTest
 {
 
-    public void testEvolutionaryAlgorithm()
+    /** {@inheritDoc} */
+    protected <I> EvolutionaryAlgorithm<I> createEvolutionaryAlgorithm()
     {
-        /*
-        EvolutionaryAlgorithm<Integer> ea = new EvolutionaryAlgorithm<Integer>();
+        return new EvolutionaryAlgorithmImpl<I>();
+    }
 
-        assertNotNull(ea);
-
-        EvolutionaryAlgorithmListener<Integer> listener0 = new EvolutionaryAlgorithmAdapter<Integer>();
-        EvolutionaryAlgorithmListener<Integer> listener1 = new EvolutionaryAlgorithmAdapter<Integer>();
-
-        assertNotNull(listener0);
-        assertNotNull(listener1);
-
-        assertNotNull(ea.getEvolutionaryAlgorithmListeners());
-        assertEquals(0, ea.getEvolutionaryAlgorithmListeners().length);
-        assertEquals(0, ea.getEvolutionaryAlgorithmListenerCount());
-
-        ea.addEvolutionaryAlgorithmListener(listener0);
-        ea.addEvolutionaryAlgorithmListener(listener1);
-
-        assertNotNull(ea.getEvolutionaryAlgorithmListeners());
-        assertEquals(2, ea.getEvolutionaryAlgorithmListeners().length);
-        assertEquals(2, ea.getEvolutionaryAlgorithmListenerCount());
-        assertEquals(listener1, ea.getEvolutionaryAlgorithmListeners()[0]);
-        assertEquals(listener0, ea.getEvolutionaryAlgorithmListeners()[1]);
-
-        ea.removeEvolutionaryAlgorithmListener(listener1);
-
-        assertNotNull(ea.getEvolutionaryAlgorithmListeners());
-        assertEquals(1, ea.getEvolutionaryAlgorithmListeners().length);
-        assertEquals(1, ea.getEvolutionaryAlgorithmListenerCount());
-        assertEquals(listener0, ea.getEvolutionaryAlgorithmListeners()[0]);
-
-        ea.removeEvolutionaryAlgorithmListener(listener0);
-
-        assertNotNull(ea.getEvolutionaryAlgorithmListeners());
-        assertEquals(0, ea.getEvolutionaryAlgorithmListeners().length);
-        assertEquals(0, ea.getEvolutionaryAlgorithmListenerCount());
-
-        ea.removeEvolutionaryAlgorithmListener(listener0);
-
-        assertNotNull(ea.getEvolutionaryAlgorithmListeners());
-        assertEquals(0, ea.getEvolutionaryAlgorithmListeners().length);
-        assertEquals(0, ea.getEvolutionaryAlgorithmListenerCount());
-
-        Set<Integer> emptySet = Collections.<Integer>emptySet();
-        Set<Integer> individuals = Collections.<Integer>singleton(Integer.valueOf(0));
-        ExitStrategy<Integer> exitStrategy = new TimeLimitExitStrategy<Integer>(1);
-        Recombination<Integer> recombination = new NullRecombination<Integer>();
-        Mutation<Integer> mutation = new NullMutation<Integer>();
-        Fitness<Integer> fitness = new UniformFitness<Integer>();
-        Selection<Integer> selection = new NullSelection<Integer>();
-
-        ea.addEvolutionaryAlgorithmListener(listener0);
-        ea.addEvolutionaryAlgorithmListener(listener1);
-
-        WeightedMap<Integer> result = ea.evolve(individuals, exitStrategy, recombination, mutation, fitness, selection);
-
-        assertNotNull(result);
+    public void testEvolveParameters()
+    {
+        EvolutionaryAlgorithm<String> ea = createEvolutionaryAlgorithm();
+        Collection<String> empty = Collections.emptyList();
+        Collection<String> individuals = Collections.singleton("foo");
+        ExitStrategy<String> exitStrategy = new TimeLimitExitStrategy<String>(1);
+        Recombination<String> recombination = new NullRecombination<String>();
+        Mutation<String> mutation = new NullMutation<String>();
+        Fitness<String> fitness = new UniformFitness<String>();
+        Selection<String> selection = new NullSelection<String>();
 
         try
         {
@@ -172,13 +135,32 @@ public final class EvolutionaryAlgorithmImplTest
 
         try
         {
-            ea.evolve(emptySet, exitStrategy, recombination, mutation, fitness, selection);
-            fail("evolve(emptySet,,,,,) expected IllegalArgumentException");
+            ea.evolve(empty, exitStrategy, recombination, mutation, fitness, selection);
+            fail("evolve(empty,,,,,) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
         {
             // expected
         }
-        */
+    }
+
+    public void testOneIndividualNoEvolution()
+    {
+        EvolutionaryAlgorithm<String> ea = createEvolutionaryAlgorithm();
+        Collection<String> individuals = Collections.singleton("foo");
+        ExitStrategy<String> exitStrategy = new TimeLimitExitStrategy<String>(1);
+        Recombination<String> recombination = new NullRecombination<String>();
+        Mutation<String> mutation = new NullMutation<String>();
+        Fitness<String> fitness = new UniformFitness<String>();
+        Selection<String> selection = new NullSelection<String>();
+        EvolutionaryAlgorithmListener<String> listener = new EvolutionaryAlgorithmAdapter<String>();
+
+        ea.addEvolutionaryAlgorithmListener(listener);
+        Collection<String> evolved = ea.evolve(individuals, exitStrategy, recombination, mutation, fitness, selection);
+        ea.removeEvolutionaryAlgorithmListener(listener);
+
+        assertNotNull(evolved);
+        assertEquals(1, evolved.size());
+        assertTrue(evolved.contains("foo"));
     }
 }
