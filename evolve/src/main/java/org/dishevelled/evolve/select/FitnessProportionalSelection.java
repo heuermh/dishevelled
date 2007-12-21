@@ -45,6 +45,10 @@ public final class FitnessProportionalSelection<I>
     public Collection<I> select(final Collection<I> population,
                                 final WeightedMap<I> scores)
     {
+        if (scores.totalWeight() == 0.0d)
+        {
+            throw new IllegalStateException("scores total weight must be greater than zero");
+        }
         int size = population.size();
         Collection<I> selected = new ArrayList<I>(size);
         for (int i = 0; i < size; i++)

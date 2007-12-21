@@ -23,10 +23,16 @@
 */
 package org.dishevelled.evolve.select;
 
+import java.util.Collection;
+import java.util.Collections;
+
 import junit.framework.TestCase;
 
 import org.dishevelled.evolve.Selection;
 import org.dishevelled.evolve.AbstractSelectionTest;
+
+import org.dishevelled.weighted.WeightedMap;
+import org.dishevelled.weighted.HashWeightedMap;
 
 /**
  * Unit test for NullSelection.
@@ -42,5 +48,18 @@ public final class NullSelectionTest
     protected <T> Selection<T> createSelection()
     {
         return new NullSelection<T>();
+    }
+
+    public void testNullSelection()
+    {
+        Selection<String> selection = createSelection();
+        Collection<String> population = Collections.singleton("foo");
+        WeightedMap<String> scores = new HashWeightedMap<String>();
+        scores.put("foo", 1.0d);
+
+        Collection<String> selected = selection.select(population, scores);
+        assertNotNull(selected);
+        assertEquals(1, selected.size());
+        assertTrue(selected.contains("foo"));
     }
 }

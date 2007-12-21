@@ -45,6 +45,7 @@ public interface Selection<I>
      * @param scores fitness scores
      * @return a collection of individuals selected from the specified population
      *    of individuals
+     * @throws IllegalStateException if the total weight of the scores is zero
      */
     Collection<I> select(Collection<I> population, WeightedMap<I> scores);
 }

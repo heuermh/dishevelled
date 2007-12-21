@@ -23,7 +23,13 @@
 */
 package org.dishevelled.evolve;
 
+import java.util.Collection;
+import java.util.Collections;
+
 import junit.framework.TestCase;
+
+import org.dishevelled.weighted.WeightedMap;
+import org.dishevelled.weighted.HashWeightedMap;
 
 /**
  * Abstract unit test for implementations of Selection.
@@ -46,5 +52,22 @@ public abstract class AbstractSelectionTest
     {
         Selection<String> selection = createSelection();
         assertNotNull(selection);
+    }
+
+    public void testZeroTotalWeightScores()
+    {
+        Selection<String> selection = createSelection();
+        Collection<String> population = Collections.singleton("foo");
+        WeightedMap<String> scores = new HashWeightedMap<String>();
+        scores.put("foo", 0.0d);
+        try
+        {
+            Collection<String> selected = selection.select(population, scores);
+            fail("scores with zero total weighted expected IllegalStateException");
+        }
+        catch (IllegalStateException e)
+        {
+            // expected
+        }
     }
 }
