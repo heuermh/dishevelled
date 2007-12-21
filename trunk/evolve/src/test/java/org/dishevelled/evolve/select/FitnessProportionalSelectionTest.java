@@ -23,10 +23,18 @@
 */
 package org.dishevelled.evolve.select;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Random;
+
 import junit.framework.TestCase;
 
 import org.dishevelled.evolve.Selection;
 import org.dishevelled.evolve.AbstractSelectionTest;
+
+import org.dishevelled.weighted.WeightedMap;
+import org.dishevelled.weighted.HashWeightedMap;
 
 /**
  * Unit test for FitnessProportionalSelection.
@@ -42,5 +50,53 @@ public final class FitnessProportionalSelectionTest
     protected <T> Selection<T> createSelection()
     {
         return new FitnessProportionalSelection<T>();
+    }
+
+    public void testOneIndividual()
+    {
+        Selection<String> selection = createSelection();
+        Collection<String> population = Collections.singleton("foo");
+        WeightedMap<String> scores = new HashWeightedMap<String>();
+        scores.put("foo", 1.0d);
+
+        Collection<String> selected = selection.select(population, scores);
+        assertNotNull(selected);
+        assertEquals(1, selected.size());
+        assertTrue(selected.contains("foo"));
+    }
+
+    public void testTwoIndividuals()
+    {
+        Selection<String> selection = createSelection();
+        Collection<String> population = new ArrayList<String>();
+        WeightedMap<String> scores = new HashWeightedMap<String>();
+        population.add("foo");
+        population.add("bar");
+        scores.put("foo", 0.0d);
+        scores.put("bar", 1.0d);
+
+        Collection<String> selected = selection.select(population, scores);
+        assertNotNull(selected);
+        assertEquals(2, selected.size());
+        assertFalse(selected.contains("foo"));
+        assertTrue(selected.contains("bar"));
+    }
+
+    public void testManyIndividuals()
+    {
+        Selection<String> selection = createSelection();
+        Collection<String> population = new ArrayList<String>();
+        WeightedMap<String> scores = new HashWeightedMap<String>();
+        Random random = new Random();
+        for (int i = 0; i < 1000; i++)
+        {
+            String individual = "individual" + i;
+            population.add(individual);
+            scores.put(individual, random.nextDouble());
+        }
+
+        Collection<String> selected = selection.select(population, scores);
+        assertNotNull(selected);
+        assertEquals(population.size(), selected.size());
     }
 }

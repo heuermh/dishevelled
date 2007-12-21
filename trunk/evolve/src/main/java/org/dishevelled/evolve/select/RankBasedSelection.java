@@ -43,33 +43,25 @@ public final class RankBasedSelection<I>
     implements Selection<I>
 {
     /** Rank. */
-    private int rank;
-
-    /** Default hash map load factor. */
-    private static final float DEFAULT_LOAD_FACTOR = 0.75f;
+    private final int rank;
 
 
     /**
      * Create a new rank based selection function with
      * the specified rank.
      *
-     * @param rank rank
+     * @param rank rank for this rank based selection function,
+     *    must be <code>&gt;= 1</code>
      */
     public RankBasedSelection(final int rank)
     {
+        if (rank < 1)
+        {
+            throw new IllegalArgumentException("rank must be greater than or equal to one");
+        }
         this.rank = rank;
     }
 
-
-    /**
-     * Set the rank for this rank based selection function to <code>rank</code>.
-     *
-     * @param rank the rank for this rank based selection function
-     */
-    public void setRank(final int rank)
-    {
-        this.rank = rank;
-    }
 
     /**
      * Return the rank for this rank based selection function.
@@ -85,6 +77,10 @@ public final class RankBasedSelection<I>
     public Collection<I> select(final Collection<I> population,
                                 final WeightedMap<I> scores)
     {
+        if (scores.totalWeight() == 0.0d)
+        {
+            throw new IllegalStateException("scores total weight must be greater than zero");
+        }
         int size = population.size();
         List<I> selected = new ArrayList<I>(size);
 
@@ -112,6 +108,6 @@ public final class RankBasedSelection<I>
             selected.add(intermediate.sample());
         }
         intermediate = null;
-        return population;
+        return selected;
     }
 }

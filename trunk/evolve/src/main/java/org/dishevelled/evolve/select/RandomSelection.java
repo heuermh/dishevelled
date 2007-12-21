@@ -44,19 +44,28 @@ public final class RandomSelection<I>
     implements Selection<I>
 {
     /** Source of randomness. */
-    private Random random = new Random();
+    private final Random random;
 
     /** Default hash map load factor. */
     private static final float DEFAULT_LOAD_FACTOR = 0.75f;
 
 
     /**
-     * Set the source of randomness for this random selection function
-     * to <code>random</code>.
-     *
-     * @param random source of randomness for this random selection function, must not be null
+     * Create a new random selection function with the default
+     * source of randomness.
      */
-    public void setRandom(final Random random)
+    public RandomSelection()
+    {
+        random = new Random();
+    }
+
+    /**
+     * Create a new random selection function with the specified
+     * source of randomness.
+     *
+     * @param random source of randomness, must not be null
+     */
+    public RandomSelection(final Random random)
     {
         if (random == null)
         {
@@ -64,6 +73,7 @@ public final class RandomSelection<I>
         }
         this.random = random;
     }
+
 
     /**
      * Return the source of randomness for this random selection function.
@@ -80,6 +90,10 @@ public final class RandomSelection<I>
     public Collection<I> select(final Collection<I> population,
                                 final WeightedMap<I> scores)
     {
+        if (scores.totalWeight() == 0.0d)
+        {
+            throw new IllegalStateException("scores total weight must be greater than zero");
+        }
         int size = population.size();
         List<I> populationAsList = new ArrayList<I>(population);
         List<I> selected = new ArrayList<I>(size);

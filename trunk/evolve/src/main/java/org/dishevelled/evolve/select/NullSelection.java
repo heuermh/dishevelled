@@ -44,6 +44,10 @@ public final class NullSelection<I>
     public Collection<I> select(final Collection<I> population,
                                 final WeightedMap<I> scores)
     {
+        if (scores.totalWeight() == 0.0d)
+        {
+            throw new IllegalStateException("scores total weight must be greater than zero");
+        }
         return population;
     }
 }

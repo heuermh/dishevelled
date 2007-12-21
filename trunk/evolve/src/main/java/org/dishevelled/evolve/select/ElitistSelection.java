@@ -46,7 +46,7 @@ public final class ElitistSelection<I>
     implements Selection<I>
 {
     /** Number of individuals. */
-    private int individuals;
+    private final int individuals;
 
     /** Default hash map load factor. */
     private static final float DEFAULT_LOAD_FACTOR = 0.75f;
@@ -73,27 +73,9 @@ public final class ElitistSelection<I>
 
 
     /**
-     * Set the number of individuals for this elitist selection
-     * function to <code>individuals</code>.
+     * Return the number of individuals for this elitist selection function.
      *
-     * @param individuals number of individuals for this elitist
-     *    selection function, must be <code>&gt;= 0</code>
-     */
-    public void setIndividuals(final int individuals)
-    {
-        if (individuals < 0)
-        {
-            throw new IllegalArgumentException("individuals must be greater than or equal to zero");
-        }
-        this.individuals = individuals;
-    }
-
-    /**
-     * Return the number of individuals for this elitist selection
-     * function.
-     *
-     * @return the number of individuals for this elitist selection
-     *    function
+     * @return the number of individuals for this elitist selection function
      */
     public int getIndividuals()
     {
@@ -104,6 +86,10 @@ public final class ElitistSelection<I>
     public Collection<I> select(final Collection<I> population,
                                 final WeightedMap<I> scores)
     {
+        if (scores.totalWeight() == 0.0d)
+        {
+            throw new IllegalStateException("scores total weight must be greater than zero");
+        }
         int size = population.size();
         List<I> selected = new ArrayList<I>(size);
 
@@ -150,7 +136,8 @@ public final class ElitistSelection<I>
         /** {@inheritDoc} */
         public int compare(final Map.Entry<I, Double> e1, final Map.Entry<I, Double> e2)
         {
-            return e1.getValue().compareTo(e2.getValue());
+            // reverse order of comparison to get decreasing sort
+            return e2.getValue().compareTo(e1.getValue());
         }
     }
 }
