@@ -24,9 +24,7 @@
 package org.dishevelled.evolve.recombine;
 
 import java.util.Collection;
-import java.util.Set;
 import java.util.List;
-import java.util.HashSet;
 import java.util.ArrayList;
 
 import org.dishevelled.evolve.Recombination;
@@ -47,22 +45,18 @@ public abstract class SexualRecombination<I>
     /** {@inheritDoc} */
     public final Collection<I> recombine(final Collection<I> population)
     {
-        /*
-        List<I> parentsAsList = new ArrayList<I>(parents);
-        Set<I> recombined = new HashSet<I>(parents.size());
-
-        int size = parentsAsList.size();
+        int size = population.size();
+        List<I> populationAsList = new ArrayList<I>(population);
+        Collection<I> recombined = new ArrayList<I>(population.size());
 
         for (int i = 1; i < size; i++)
         {
-            I parent0 = parentsAsList.get(i - 1);
-            I parent1 = parentsAsList.get(i);
-
+            I parent0 = populationAsList.get(i - 1);
+            I parent1 = populationAsList.get(i);
             recombined.add(recombine(parent0, parent1));
         }
-        recombined.add(recombine(parentsAsList.get(size - 1), parentsAsList.get(size - 1)));
-        */
-        return population;
+        recombined.add(recombine(populationAsList.get(size - 1), populationAsList.get(size - 1)));
+        return recombined;
     }
 
     /**

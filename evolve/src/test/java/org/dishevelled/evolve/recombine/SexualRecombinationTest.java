@@ -23,6 +23,9 @@
 */
 package org.dishevelled.evolve.recombine;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import org.dishevelled.evolve.Recombination;
 import org.dishevelled.evolve.AbstractRecombinationTest;
 
@@ -42,16 +45,27 @@ public final class SexualRecombinationTest
         return new TestSexualRecombination<T>();
     }
 
-    /*
+    public void testOneParent()
+    {
+        Collection<Integer> population = new ArrayList<Integer>();
+        population.add(Integer.valueOf(0));
+
+        Recombination<Integer> recombination = new TestSexualRecombination<Integer>();
+        Collection<Integer> recombined = recombination.recombine(population);
+
+        assertNotNull(recombined);
+        assertEquals(1, recombined.size());
+        assertTrue(recombined.contains(Integer.valueOf(0)));
+    }
+
     public void testTwoParents()
     {
+        Collection<Integer> population = new ArrayList<Integer>();
+        population.add(Integer.valueOf(0));
+        population.add(Integer.valueOf(1));
+
         Recombination<Integer> recombination = new TestSexualRecombination<Integer>();
-        Set<Integer> parents = new HashSet<Integer>();
-
-        parents.add(Integer.valueOf(0));
-        parents.add(Integer.valueOf(1));
-
-        Set<Integer> recombined = recombination.recombine(parents);
+        Collection<Integer> recombined = recombination.recombine(population);
 
         assertNotNull(recombined);
         assertEquals(2, recombined.size());
@@ -61,14 +75,13 @@ public final class SexualRecombinationTest
 
     public void testOddParentListSize()
     {
+        Collection<Integer> population = new ArrayList<Integer>();
+        population.add(Integer.valueOf(0));
+        population.add(Integer.valueOf(1));
+        population.add(Integer.valueOf(2));
+
         Recombination<Integer> recombination = new TestSexualRecombination<Integer>();
-        Set<Integer> parents = new HashSet<Integer>();
-
-        parents.add(Integer.valueOf(0));
-        parents.add(Integer.valueOf(1));
-        parents.add(Integer.valueOf(2));
-
-        Set<Integer> recombined = recombination.recombine(parents);
+        Collection<Integer> recombined = recombination.recombine(population);
 
         assertNotNull(recombined);
         assertEquals(3, recombined.size());
@@ -79,15 +92,14 @@ public final class SexualRecombinationTest
 
     public void testEvenParentListSize()
     {
+        Collection<Integer> population = new ArrayList<Integer>();
+        population.add(Integer.valueOf(0));
+        population.add(Integer.valueOf(1));
+        population.add(Integer.valueOf(2));
+        population.add(Integer.valueOf(3));
+
         Recombination<Integer> recombination = new TestSexualRecombination<Integer>();
-        Set<Integer> parents = new HashSet<Integer>();
-
-        parents.add(Integer.valueOf(0));
-        parents.add(Integer.valueOf(1));
-        parents.add(Integer.valueOf(2));
-        parents.add(Integer.valueOf(3));
-
-        Set<Integer> recombined = recombination.recombine(parents);
+        Collection<Integer> recombined = recombination.recombine(population);
 
         assertNotNull(recombined);
         assertEquals(4, recombined.size());
@@ -96,7 +108,6 @@ public final class SexualRecombinationTest
         assertTrue(recombined.contains(Integer.valueOf(2)));
         assertTrue(recombined.contains(Integer.valueOf(3)));
     }
-    */
 
     /**
      * Text sexual recombination.

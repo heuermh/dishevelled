@@ -29,7 +29,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import org.dishevelled.weighted.WeightedMap;
-import org.dishevelled.weighted.HashWeightedMap;
 
 import org.dishevelled.evolve.Selection;
 

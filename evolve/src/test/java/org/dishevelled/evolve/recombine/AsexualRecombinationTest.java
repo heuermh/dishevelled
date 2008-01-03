@@ -23,6 +23,9 @@
 */
 package org.dishevelled.evolve.recombine;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import org.dishevelled.evolve.Recombination;
 import org.dishevelled.evolve.AbstractRecombinationTest;
 
@@ -40,6 +43,24 @@ public final class AsexualRecombinationTest
     protected <T> Recombination<T> createRecombination()
     {
         return new TestAsexualRecombination<T>();
+    }
+
+
+    public void testAsexualRecombination()
+    {
+        Collection<String> population = new ArrayList<String>();
+        population.add("foo");
+        population.add("bar");
+        population.add("baz");
+
+        Recombination<String> recombination = new TestAsexualRecombination<String>();
+        Collection<String> recombined = recombination.recombine(population);
+
+        assertNotNull(recombined);
+        assertEquals(3, recombined.size());
+        assertTrue(recombined.contains("foo"));
+        assertTrue(recombined.contains("bar"));
+        assertTrue(recombined.contains("baz"));
     }
 
     /**
