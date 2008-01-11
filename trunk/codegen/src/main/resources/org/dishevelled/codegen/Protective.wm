@@ -74,21 +74,21 @@ public class ${cd.Upper}
 #foreach ($a in $cd.Attributes)
 #set ($r = $a.Role)
 #if ($a.Cardinality.toString() == "ZeroToOne")
-    /** The ${r.Lower} for this ${cd.Lower}. */
+    /** ${StringUtils.capitalize($r.Lower)} for this ${cd.Lower}. */
     private final ${a.Upper} ${r.Mixed};
 
 #elseif ($a.Cardinality.toString() == "StrictlyOne")
-    /** The ${r.Lower} for this ${cd.Lower}. */
+    /** ${StringUtils.capitalize($r.Lower)} for this ${cd.Lower}. */
     private final ${a.Upper} ${r.Mixed};
 
 #elseif ($a.Cardinality.toString() == "ZeroToMany")
 #set ($coll = $a.CollectionDescription)
-    /** The ${coll.InterfaceDescription} of ${r.Lower}s for this ${cd.Lower}. */
+    /** ${StringUtils.capitalize($coll.InterfaceDescription)} of ${r.Lower}s for this ${cd.Lower}. */
     private final ${coll.InterfaceName}<${a.Upper}> ${r.Mixed}s;
 
 #elseif ($a.Cardinality.toString() == "OneToMany")
 #set ($coll = $a.CollectionDescription)
-    /** The ${coll.InterfaceDescription} of ${r.Lower}s for this ${cd.Lower}. */
+    /** ${StringUtils.capitalize($coll.InterfaceDescription)} of ${r.Lower}s for this ${cd.Lower}. */
     private final ${coll.InterfaceName}<${a.Upper}> ${r.Mixed}s;
 
 #end
@@ -96,21 +96,21 @@ public class ${cd.Upper}
 #foreach ($a in $cd.Associations)
 #set ($r = $a.Role)
 #if ($a.Cardinality.toString() == "ZeroToOne")
-    /** The ${r.Lower} for this ${cd.Lower}. */
+    /** ${StringUtils.capitalize($r.Lower)} for this ${cd.Lower}. */
     private final ${a.Upper} ${r.Mixed};
 
 #elseif ($a.Cardinality.toString() == "StrictlyOne")
-    /** The ${r.Lower} for this ${cd.Lower}. */
+    /** ${StringUtils.capitalize($r.Lower)} for this ${cd.Lower}. */
     private final ${a.Upper} ${r.Mixed};
 
 #elseif ($a.Cardinality.toString() == "ZeroToMany")
 #set ($coll = $a.CollectionDescription)
-    /** The ${coll.InterfaceDescription} of ${r.Lower}s for this ${cd.Lower}. */
+    /** ${StringUtils.capitalize($coll.InterfaceDescription)} of ${r.Lower}s for this ${cd.Lower}. */
     private final ${coll.InterfaceName}<${a.Upper}> ${r.Mixed}s;
 
 #elseif ($a.Cardinality.toString() == "OneToMany")
 #set ($coll = $a.CollectionDescription)
-    /** The ${coll.InterfaceDescription} of ${r.Lower}s for this ${cd.Lower}. */
+    /** ${StringUtils.capitalize($coll.InterfaceDescription)} of ${r.Lower}s for this ${cd.Lower}. */
     private final ${coll.InterfaceName}<${a.Upper}> ${r.Mixed}s;
 
 #end
