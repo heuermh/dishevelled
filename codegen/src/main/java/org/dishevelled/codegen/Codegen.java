@@ -27,6 +27,8 @@ import java.io.FileWriter;
 
 import java.util.Properties;
 
+import org.apache.commons.lang.StringUtils;
+
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
@@ -76,6 +78,7 @@ public final class Codegen
 
             VelocityContext context = new VelocityContext();
             context.put("id", id);
+            context.put("StringUtils", new StringUtils());
 
             Template template = Velocity.getTemplate("org/dishevelled/codegen/Interface.wm");
             template.merge(context, fw);
@@ -125,6 +128,7 @@ public final class Codegen
 
             VelocityContext context = new VelocityContext();
             context.put("id", id);
+            context.put("StringUtils", new StringUtils());
 
             Template template = Velocity.getTemplate("org/dishevelled/codegen/AbstractInterfaceTest.wm");
             template.merge(context, fw);
@@ -179,6 +183,7 @@ public final class Codegen
 
             VelocityContext context = new VelocityContext();
             context.put("cd", cd);
+            context.put("StringUtils", new StringUtils());
 
             Template template = Velocity.getTemplate("org/dishevelled/codegen/" + style + ".wm");
             template.merge(context, fw);
@@ -234,6 +239,7 @@ public final class Codegen
 
             VelocityContext context = new VelocityContext();
             context.put("cd", cd);
+            context.put("StringUtils", new StringUtils());
 
             Template template = Velocity.getTemplate("org/dishevelled/codegen/" + style + "Builder.wm");
             template.merge(context, fw);
@@ -288,6 +294,7 @@ public final class Codegen
 
             VelocityContext context = new VelocityContext();
             context.put("cd", cd);
+            context.put("StringUtils", new StringUtils());
 
             Template template = Velocity.getTemplate("org/dishevelled/codegen/" + style + "Test.wm");
             template.merge(context, fw);

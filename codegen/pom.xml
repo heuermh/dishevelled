@@ -60,6 +60,10 @@
   <build>
     <resources>
       <resource>
+        <directory>src/main/resources</directory>
+        <filtering>false</filtering>
+      </resource>
+      <resource>
         <targetPath>META-INF</targetPath>
         <filtering>false</filtering>
         <directory>${basedir}</directory>
@@ -85,7 +89,13 @@
     <dependency>
       <groupId>velocity</groupId>
       <artifactId>velocity</artifactId>
-      <version>1.4</version>
+      <version>1.5</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>commons-lang</groupId>
+      <artifactId>commons-lang</artifactId>
+      <version>2.3</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
