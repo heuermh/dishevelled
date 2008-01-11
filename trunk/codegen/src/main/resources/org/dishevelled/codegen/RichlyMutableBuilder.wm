@@ -138,9 +138,10 @@ public final class ${cd.Upper}Builder
 #if ($a.Cardinality.toString() == "ZeroToOne")
 
     /**
-     * Return a new ${cd.Lower} builder with the specified ${r.Lower}.
+     * Return this ${cd.Lower} builder configured with the specified ${r.Lower}.
      *
      * @param ${r.Mixed} ${r.Lower} for this ${cd.Lower} builder
+     * @return this ${cd.Lower} builder configured with the specified ${r.Lower}
      */
     public ${cd.Upper}Builder with${r.Upper}(final ${a.Upper} ${r.Mixed})
     {
@@ -150,9 +151,10 @@ public final class ${cd.Upper}Builder
 #elseif ($a.Cardinality.toString() == "StrictlyOne")
 
     /**
-     * Return a new ${cd.Lower} builder with the specified ${r.Lower}.
+     * Return this ${cd.Lower} builder configured with the specified ${r.Lower}.
      *
      * @param ${r.Mixed} ${r.Lower} for this ${cd.Lower} builder, must not be null
+     * @return this ${cd.Lower} builder configured with the specified ${r.Lower}
      */
     public ${cd.Upper}Builder with${r.Upper}(final ${a.Upper} ${r.Mixed})
     {
@@ -167,10 +169,11 @@ public final class ${cd.Upper}Builder
 #set ($coll = $a.CollectionDescription)
 
     /**
-     * Return a new ${cd.Lower} builder with the specified ${r.Lower}(s).  Multiple calls to
+     * Return this ${cd.Lower} builder configured with the specified ${r.Lower}(s).  Multiple calls to
      * this method add to the ${coll.InterfaceDescription} of ${r.Lower}s for this ${cd.Lower} builder.
      *
      * @param ${r.Mixed} variable number of ${r.Lower}s for this ${cd.Lower} builder, must not be null
+     * @return this ${cd.Lower} builder configured with the specified ${r.Lower}(s)
      */
     public ${cd.Upper}Builder with${r.Upper}s(final ${a.Upper}... ${r.Mixed}s)
     {
@@ -188,10 +191,11 @@ public final class ${cd.Upper}Builder
 #set ($coll = $a.CollectionDescription)
 
     /**
-     * Return a new ${cd.Lower} builder with the specified ${r.Lower}(s).  Multiple calls to
+     * Return this ${cd.Lower} builder configured with the specified ${r.Lower}(s).  Multiple calls to
      * this method add to the ${coll.InterfaceDescription} of ${r.Lower}s for this ${cd.Lower} builder.
      *
      * @param ${r.Mixed} variable number of ${r.Lower}s for this ${cd.Lower} builder, must not be null
+     * @return this ${cd.Lower} builder configured with the specified ${r.Lower}(s)
      */
     public ${cd.Upper}Builder with${r.Upper}s(final ${a.Upper}... ${r.Mixed}s)
     {
@@ -212,9 +216,10 @@ public final class ${cd.Upper}Builder
 #if ($a.Cardinality.toString() == "ZeroToOne")
 
     /**
-     * Return a new ${cd.Lower} builder with the specified ${r.Lower}.
+     * Return this ${cd.Lower} builder configured with the specified ${r.Lower}.
      *
      * @param ${r.Mixed} ${r.Lower} for this ${cd.Lower} builder
+     * @return this ${cd.Lower} builder configured with the specified ${r.Lower}
      */
     public ${cd.Upper}Builder with${r.Upper}(final ${a.Upper} ${r.Mixed})
     {
@@ -224,9 +229,10 @@ public final class ${cd.Upper}Builder
 #elseif ($a.Cardinality.toString() == "StrictlyOne")
 
     /**
-     * Return a new ${cd.Lower} builder with the specified ${r.Lower}.
+     * Return this ${cd.Lower} builder configured with the specified ${r.Lower}.
      *
      * @param ${r.Mixed} ${r.Lower} for this ${cd.Lower} builder, must not be null
+     * @return this ${cd.Lower} builder configured with the specified ${r.Lower}
      */
     public ${cd.Upper}Builder with${r.Upper}(final ${a.Upper} ${r.Mixed})
     {
@@ -241,10 +247,11 @@ public final class ${cd.Upper}Builder
 #set ($coll = $a.CollectionDescription)
 
     /**
-     * Return a new ${cd.Lower} builder with the specified ${r.Lower}(s).  Multiple calls to
+     * Return this ${cd.Lower} builder configured with the specified ${r.Lower}(s).  Multiple calls to
      * this method add to the ${coll.InterfaceDescription} of ${r.Lower}s for this ${cd.Lower} builder.
      *
      * @param ${r.Mixed} variable number of ${r.Lower}s for this ${cd.Lower} builder, must not be null
+     * @return this ${cd.Lower} builder configured with the specified ${r.Lower}(s)
      */
     public ${cd.Upper}Builder with${r.Upper}s(final ${a.Upper}... ${r.Mixed}s)
     {
@@ -262,10 +269,11 @@ public final class ${cd.Upper}Builder
 #set ($coll = $a.CollectionDescription)
 
     /**
-     * Return a new ${cd.Lower} builder with the specified ${r.Lower}(s).  Multiple calls to
+     * Return this ${cd.Lower} builder configured with the specified ${r.Lower}(s).  Multiple calls to
      * this method add to the ${coll.InterfaceDescription} of ${r.Lower}s for this ${cd.Lower} builder.
      *
      * @param ${r.Mixed} variable number of ${r.Lower}s for this ${cd.Lower} builder, must not be null
+     * @return this ${cd.Lower} builder configured with the specified ${r.Lower}(s)
      */
     public ${cd.Upper}Builder with${r.Upper}s(final ${a.Upper}... ${r.Mixed}s)
     {
