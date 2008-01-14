@@ -23,6 +23,13 @@
 */
 package org.dishevelled.graph.impl;
 
+import java.util.Map;
+import java.util.Queue;
+
+import java.util.concurrent.ArrayBlockingQueue;
+
+import org.dishevelled.functor.UnaryProcedure;
+
 import org.dishevelled.graph.Edge;
 import org.dishevelled.graph.Graph;
 import org.dishevelled.graph.Node;
@@ -44,6 +51,121 @@ public final class GraphUtils
         // empty
     }
 
+
+    /**
+     * Depth-first search.
+     *
+     * @param <N> node value type
+     * @param <E> edge value type
+     * @param graph graph to search, must not be null
+     * @param node node to start from, must not be null and must be contained in
+     *    the specified graph
+     * @param procedure procedure to run when visiting each node, must not be null
+     */
+    public static <N, E> void dfs(final Graph<N, E> graph,
+                                  final Node<N, E> node,
+                                  final UnaryProcedure<Node<N, E>> procedure)
+    {
+        if (graph == null)
+        {
+            throw new IllegalArgumentException("graph must not be null");
+        }
+        if (node == null)
+        {
+            throw new IllegalArgumentException("node must not be null");
+        }
+        if (!graph.nodes().contains(node))
+        {
+            throw new IllegalArgumentException("node must be contained in the specified graph");
+        }
+        if (procedure == null)
+        {
+            throw new IllegalArgumentException("procedure must not be null");
+        }
+        Map<Node<N, E>, Boolean> visited = graph.nodeMap();
+        for (Node<N, E> key : visited.keySet())
+        {
+            visited.put(key, false);
+        }
+        recursiveDfs(node, visited, procedure);
+    }
+
+    /**
+     * Recursive depth-first search implementation.
+     *
+     * @param <N> node value type
+     * @param <E> edge value type
+     * @param node node
+     * @param visited map of visited state keyed by node
+     * @param procedure procedure
+     */
+    private static <N, E> void recursiveDfs(final Node<N, E> node,
+                                    final Map<Node<N, E>, Boolean> visited,
+                                    final UnaryProcedure<Node<N, E>> procedure)
+    {
+        if (visited.get(node))
+        {
+            return;
+        }
+        for (Edge<N, E> edge : node.outEdges())
+        {
+            recursiveDfs(edge.target(), visited, procedure);
+        }
+        procedure.run(node);
+        visited.put(node, true);
+    }
+
+    /**
+     * Breadth-first search.
+     *
+     * @param <N> node value type
+     * @param <E> edge value type
+     * @param graph graph to search, must not be null
+     * @param node node to start from, must not be null and must be contained in
+     *    the specified graph
+     * @param procedure procedure to run when visiting each node, must not be null
+     */
+    public static <N, E> void bfs(final Graph<N, E> graph,
+                                  final Node<N, E> node,
+                                  final UnaryProcedure<Node<N, E>> procedure)
+    {
+        if (graph == null)
+        {
+            throw new IllegalArgumentException("graph must not be null");
+        }
+        if (node == null)
+        {
+            throw new IllegalArgumentException("node must not be null");
+        }
+        if (!graph.nodes().contains(node))
+        {
+            throw new IllegalArgumentException("node must be contained in the specified graph");
+        }
+        if (procedure == null)
+        {
+            throw new IllegalArgumentException("procedure must not be null");
+        }
+        Map<Node<N, E>, Boolean> visited = graph.nodeMap();
+        for (Node<N, E> key : visited.keySet())
+        {
+            visited.put(key, false);
+        }
+        Queue<Node<N, E>> queue = new ArrayBlockingQueue<Node<N, E>>(graph.nodeCount());
+        queue.offer(node);
+        while (!queue.isEmpty())
+        {
+            Node<N, E> next = queue.poll();
+            if (!visited.get(next))
+            {
+                procedure.run(next);
+                visited.put(next, true);
+            }
+            for (Edge<N, E> out : next.outEdges())
+            {
+                queue.offer(out.target());
+            }
+        }
+    }
 
     /**
      * Create and return an unmodifiable graph decorator that decorates the specified graph.

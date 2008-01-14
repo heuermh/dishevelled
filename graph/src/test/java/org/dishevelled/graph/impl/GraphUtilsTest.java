@@ -25,6 +25,8 @@ package org.dishevelled.graph.impl;
 
 import junit.framework.TestCase;
 
+import org.dishevelled.functor.UnaryProcedure;
+
 import org.dishevelled.graph.Edge;
 import org.dishevelled.graph.Graph;
 import org.dishevelled.graph.Node;
@@ -38,6 +40,98 @@ import org.dishevelled.graph.Node;
 public final class GraphUtilsTest
     extends TestCase
 {
+
+    public void testDfs()
+    {
+        Graph<String, Integer> graph = new GraphImpl<String, Integer>();
+        Node<String, Integer> node0 = graph.createNode("node0");
+        Node<String, Integer> node1 = graph.createNode("node1");
+        Edge<String, Integer> edge = graph.createEdge(node0, node1, 0);
+        UnaryProcedure<Node<String, Integer>> procedure = new UnaryProcedure<Node<String, Integer>>()
+            {
+                /** {@inheritDoc} */
+                public void run(final Node<String, Integer> node)
+                {
+                    // empty
+                }
+            };
+
+        GraphUtils.dfs(graph, node0, procedure);
+
+        try
+        {
+            GraphUtils.dfs(null, node0, procedure);
+            fail("dfs(null,,) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+        try
+        {
+            GraphUtils.dfs(graph, null, procedure);
+            fail("dfs(,null,) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+        try
+        {
+            GraphUtils.dfs(graph, node0, null);
+            fail("dfs(,,null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+    }
+
+    public void testBfs()
+    {
+        Graph<String, Integer> graph = new GraphImpl<String, Integer>();
+        Node<String, Integer> node0 = graph.createNode("node0");
+        Node<String, Integer> node1 = graph.createNode("node1");
+        Edge<String, Integer> edge = graph.createEdge(node0, node1, 0);
+        UnaryProcedure<Node<String, Integer>> procedure = new UnaryProcedure<Node<String, Integer>>()
+            {
+                /** {@inheritDoc} */
+                public void run(final Node<String, Integer> node)
+                {
+                    // empty
+                }
+            };
+
+        GraphUtils.bfs(graph, node0, procedure);
+
+        try
+        {
+            GraphUtils.bfs(null, node0, procedure);
+            fail("bfs(null,,) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+        try
+        {
+            GraphUtils.bfs(graph, null, procedure);
+            fail("bfs(,null,) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+        try
+        {
+            GraphUtils.bfs(graph, node0, null);
+            fail("bfs(,,null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+    }
 
     public void testUnmodifiableGraph()
     {
