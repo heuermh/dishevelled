@@ -61,7 +61,7 @@ public final class GraphUtils
     /**
      * Unmodifiable graph decorator.
      */
-    private static class UnmodifiableGraph<N, E>
+    private static final class UnmodifiableGraph<N, E>
         extends AbstractGraphDecorator<N, E>
     {
 
