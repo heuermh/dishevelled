@@ -71,6 +71,11 @@ Typed functor object interfaces.<br/>
 </p>
 
 <p>
+Directed graph interface and implementation.<br/>
+&gt; <a href="graph">http://www.dishevelled.org/graph</a>
+</p>
+
+<p>
 Bundles of variants for icon images.<br/>
 &gt; <a href="iconbundle">http://www.dishevelled.org/iconbundle</a>
 </p>
