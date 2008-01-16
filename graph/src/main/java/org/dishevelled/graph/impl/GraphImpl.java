@@ -51,10 +51,33 @@ public final class GraphImpl<N, E>
     implements Graph<N, E>
 {
     /** Set of nodes. */
-    private final Set<Node<N, E>> nodes = new HashSet<Node<N, E>>();
+    private final Set<Node<N, E>> nodes;
 
     /** Set of edges. */
-    private final Set<Edge<N, E>> edges = new HashSet<Edge<N, E>>();
+    private final Set<Edge<N, E>> edges;
+
+
+    /**
+     * Create a new directed graph.
+     */
+    public GraphImpl()
+    {
+        nodes = new HashSet<Node<N, E>>();
+        edges = new HashSet<Edge<N, E>>();
+    }
+
+    /**
+     * Create a new directed graph with the specified initial node
+     * and edge capacities.
+     *
+     * @param nodeCapacity initial node capacity, must be <code>&gt;= 0</code>
+     * @param edgeCapacity initial edge capacity, must be <code>&gt;= 0</code>
+     */
+    public GraphImpl(final int nodeCapacity, final int edgeCapacity)
+    {
+        nodes = new HashSet<Node<N, E>>(nodeCapacity);
+        edges = new HashSet<Edge<N, E>>(edgeCapacity);
+    }
 
 
     /** {@inheritDoc} */

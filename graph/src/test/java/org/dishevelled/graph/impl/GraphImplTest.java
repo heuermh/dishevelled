@@ -54,4 +54,41 @@ public final class GraphImplTest
         Edge edge = graph.createEdge(node0, node1, edgeValue);
         return graph;
     }
+
+    public void testConstructor()
+    {
+        Graph<String, Integer> graph0 = new GraphImpl<String, Integer>();
+        assertNotNull(graph0);
+
+        Graph<String, Integer> graph1 = new GraphImpl<String, Integer>(16, 16);
+        assertNotNull(graph1);
+
+        try
+        {
+            Graph<String, Integer> graph = new GraphImpl<String, Integer>(-1, 16);
+            fail("ctr(-1,) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+        try
+        {
+            Graph<String, Integer> graph = new GraphImpl<String, Integer>(16, -1);
+            fail("ctr(,-1) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+        try
+        {
+            Graph<String, Integer> graph = new GraphImpl<String, Integer>(-1, -1);
+            fail("ctr(-1,-1) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+    }
 }
