@@ -53,6 +53,33 @@ public final class GraphUtils
 
 
     /**
+     * Create and return a new directed graph.  The graph will not be null.
+     *
+     * @param <N> node value type
+     * @param <E> edge value type
+     * @return a new directed graph
+     */
+    public static <N, E> Graph<N, E> createGraph()
+    {
+        return new GraphImpl<N, E>();
+    }
+
+    /**
+     * Create and return a new directed graph with the specified initial node
+     * and edge capacities.  The graph will not be null.
+     *
+     * @param <N> node value type
+     * @param <E> edge value type
+     * @param nodeCapacity initial node capacity, must be <code>&gt;= 0</code>
+     * @param edgeCapacity initial edge capacity, must be <code>&gt;= 0</code>
+     * @return a new directed graph with the specified initial node and edge capacities
+     */
+    public static <N, E> Graph<N, E> createGraph(final int nodeCapacity, final int edgeCapacity)
+    {
+        return new GraphImpl<N, E>(nodeCapacity, edgeCapacity);
+    }
+
+    /**
      * Depth-first search.
      *
      * @param <N> node value type
