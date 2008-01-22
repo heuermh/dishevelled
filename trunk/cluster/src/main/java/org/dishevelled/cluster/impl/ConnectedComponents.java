@@ -24,6 +24,7 @@
 package org.dishevelled.cluster.impl;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -87,8 +88,15 @@ public final class ConnectedComponents<E>
     {
         checkClusterParameters(values, similarity, exitStrategy);
 
-        // initialize graph and node list
         int size = values.size();
+        // special case singleton values
+        if (size == 1)
+        {
+            Cluster<E> cluster = new ClusterImpl<E>(values);
+            return Collections.singleton(cluster);
+        }
+
+        // initialize graph and node list
         Graph<E, Double> graph = GraphUtils.createGraph(size, size*size);
         List<Node<E, Double>> nodes = new ArrayList<Node<E, Double>>(size);
         for (E value : values)
@@ -117,7 +125,7 @@ public final class ConnectedComponents<E>
         while (!remain.isEmpty())
         {
             Collect<E, Double> collect = new Collect<E, Double>(remain);
-            GraphUtils.bfs(graph, nodes.get(0), collect);
+            GraphUtils.undirectedBfs(graph, remain.get(0), collect);
             clusters.add(collect.getCluster());
         }
 
