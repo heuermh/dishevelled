@@ -36,6 +36,7 @@ import org.dishevelled.cluster.Similarity;
 
 import org.dishevelled.cluster.exitstrategy.IterationLimitExitStrategy;
 
+import org.dishevelled.cluster.similarity.EqualitySimilarity;
 import org.dishevelled.cluster.similarity.UniformSimilarity;
 
 /**
@@ -96,4 +97,69 @@ public final class ConnectedComponentsTest
         assertNotNull(clusters);
         assertEquals(2, clusters.size());
     }
+
+    public void testSeveralSimilarValues()
+        throws ClusteringAlgorithmException
+    {
+        List<String> values = Arrays.asList(new String[] { "foo", "bar", "baz", "qux" });
+        ClusteringAlgorithm<String> algo = new ConnectedComponents<String>();
+        Similarity<String> similarity = new UniformSimilarity(1.0d);
+        ExitStrategy<String> exitStrategy = new IterationLimitExitStrategy(99);
+
+        Set<Cluster<String>> clusters = algo.cluster(values, similarity, exitStrategy);
+        assertNotNull(clusters);
+        assertEquals(1, clusters.size());
+        Cluster<String> cluster = clusters.iterator().next();
+        assertTrue(cluster.members().contains("foo"));
+        assertTrue(cluster.members().contains("bar"));
+        assertTrue(cluster.members().contains("baz"));
+        assertTrue(cluster.members().contains("qux"));
+    }
+
+    public void testSeveralDissimilarValues()
+        throws ClusteringAlgorithmException
+    {
+        List<String> values = Arrays.asList(new String[] { "foo", "bar", "baz", "qux" });
+        ClusteringAlgorithm<String> algo = new ConnectedComponents<String>();
+        Similarity<String> similarity = new UniformSimilarity(0.0d);
+        ExitStrategy<String> exitStrategy = new IterationLimitExitStrategy(99);
+
+        Set<Cluster<String>> clusters = algo.cluster(values, similarity, exitStrategy);
+        assertNotNull(clusters);
+        assertEquals(4, clusters.size());
+    }
+
+    public void testSeveralValuesTwoClusters()
+        throws ClusteringAlgorithmException
+    {
+        List<String> values = Arrays.asList(new String[] { "foo", "bar", "baz", "fux" });
+        ClusteringAlgorithm<String> algo = new ConnectedComponents<String>();
+        Similarity<String> similarity = new Similarity<String>()
+            {
+                /** {@inheritDoc} */
+                public double similarity(final String source, final String target)
+                {
+                    return (source.charAt(0) == target.charAt(0)) ? 1.0d : 0.0d;
+                }
+            };
+        ExitStrategy<String> exitStrategy = new IterationLimitExitStrategy(99);
+
+        Set<Cluster<String>> clusters = algo.cluster(values, similarity, exitStrategy);
+        assertNotNull(clusters);
+        assertEquals(2, clusters.size());
+    }
+
+    public void testSeveralValuesThreeClusters()
+        throws ClusteringAlgorithmException
+    {
+        List<String> values = Arrays.asList(new String[] { "foo", "bar", "baz", "foo", "bar", "baz", "foo", "bar", "baz" });
+        ClusteringAlgorithm<String> algo = new ConnectedComponents<String>();
+        Similarity<String> similarity = new EqualitySimilarity<String>();
+        ExitStrategy<String> exitStrategy = new IterationLimitExitStrategy(99);
+
+        Set<Cluster<String>> clusters = algo.cluster(values, similarity, exitStrategy);
+        assertNotNull(clusters);
+        assertEquals(3, clusters.size());
+    }
+
 }
