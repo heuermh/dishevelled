@@ -195,6 +195,70 @@ public final class GraphUtils
     }
 
     /**
+     * Undirected breadth-first search.
+     *
+     * @param <N> node value type
+     * @param <E> edge value type
+     * @param graph graph to search, must not be null
+     * @param node node to start from, must not be null and must be contained in
+     *    the specified graph
+     * @param procedure procedure to run when visiting each node, must not be null
+     */
+    public static <N, E> void undirectedBfs(final Graph<N, E> graph,
+                                            final Node<N, E> node,
+                                            final UnaryProcedure<Node<N, E>> procedure)
+    {
+        if (graph == null)
+        {
+            throw new IllegalArgumentException("graph must not be null");
+        }
+        if (node == null)
+        {
+            throw new IllegalArgumentException("node must not be null");
+        }
+        if (!graph.nodes().contains(node))
+        {
+            throw new IllegalArgumentException("node must be contained in the specified graph");
+        }
+        if (procedure == null)
+        {
+            throw new IllegalArgumentException("procedure must not be null");
+        }
+        Map<Node<N, E>, Boolean> visited = graph.nodeMap();
+        for (Node<N, E> key : visited.keySet())
+        {
+            visited.put(key, false);
+        }
+        Queue<Node<N, E>> queue = new ArrayBlockingQueue<Node<N, E>>(graph.nodeCount());
+        queue.offer(node);
+        while (!queue.isEmpty())
+        {
+            Node<N, E> next = queue.poll();
+            if (!visited.get(next))
+            {
+                procedure.run(next);
+                visited.put(next, true);
+            }
+            for (Edge<N, E> in : next.inEdges())
+            {
+                Node<N, E> source = in.source();
+                if (!visited.get(source))
+                {
+                    queue.offer(source);
+                }
+            }
+            for (Edge<N, E> out : next.outEdges())
+            {
+                Node<N, E> target = out.target();
+                if (!visited.get(target))
+                {
+                    queue.offer(target);
+                }
+            }
+        }
+    }
+
+    /**
      * Create and return an unmodifiable graph decorator that decorates the specified graph.
      *
      * @param <N> node value type
