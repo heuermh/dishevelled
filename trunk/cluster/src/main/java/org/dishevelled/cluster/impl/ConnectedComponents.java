@@ -44,6 +44,7 @@ import org.dishevelled.graph.impl.GraphUtils;
 /**
  * Connected components clustering algorithm.
  *
+ * @param <E> value type
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
@@ -59,10 +60,9 @@ public final class ConnectedComponents<E>
 
     /**
      * Create a new connected components clustering algorithm with the
-     * specified cutoff similarity score.  Values with a similarity score greater than or
-     * equal to this cutoff will be clustered together.
+     * default cutoff similarity score of <code>0.5d</code>.
      *
-     * @param cutoff cutoff similarity score
+     * @see #DEFAULT_CUTOFF
      */
     public ConnectedComponents()
     {
@@ -71,9 +71,10 @@ public final class ConnectedComponents<E>
 
     /**
      * Create a new connected components clustering algorithm with the
-     * default cutoff similarity score.
+     * specified cutoff similarity score.  Values with a similarity score greater than or
+     * equal to this cutoff will be clustered together.
      *
-     * @see #DEFAULT_CUTOFF
+     * @param cutoff cutoff similarity score
      */
     public ConnectedComponents(final double cutoff)
     {
@@ -97,7 +98,7 @@ public final class ConnectedComponents<E>
         }
 
         // initialize graph and node list
-        Graph<E, Double> graph = GraphUtils.createGraph(size, size*size);
+        Graph<E, Double> graph = GraphUtils.createGraph(size, size * size);
         List<Node<E, Double>> nodes = new ArrayList<Node<E, Double>>(size);
         for (E value : values)
         {

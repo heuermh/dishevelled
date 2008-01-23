@@ -55,20 +55,17 @@ final class ClusterImpl<E>
      */
     ClusterImpl(final List<? extends E> members)
     {
-        if (members == null)
-        {
-            throw new IllegalArgumentException("members must not be null");
-        }
-        this.members = Collections.unmodifiableList(new ArrayList<E>(members));
-        this.exemplar = null;
+        this(members, null);
     }
 
     /**
-     * Create a new cluster implementation with the specified list of members
-     * and specified exemplar.
+     * Create a new cluster implementation with the specified list of member
+     * values and specified exemplar.
      *
-     * @param members list of members, must not be null
-     * @param exemplar exemplar
+     * @param members list of member values, must not be null and must contain
+     *    at least one value
+     * @param exemplar exemplar, if not null must be contained in specified list
+     *    of member values
      */
     ClusterImpl(final List<? extends E> members,
                 final E exemplar)
@@ -76,6 +73,14 @@ final class ClusterImpl<E>
         if (members == null)
         {
             throw new IllegalArgumentException("members must not be null");
+        }
+        if (members.size() < 1)
+        {
+            throw new IllegalArgumentException("members must contain at least one value");
+        }
+        if ((exemplar != null) && (!members.contains(exemplar)))
+        {
+            throw new IllegalArgumentException("exemplar must be contained in members");
         }
         this.members = Collections.unmodifiableList(new ArrayList<E>(members));
         this.exemplar = exemplar;
