@@ -23,8 +23,20 @@
 */
 package org.dishevelled.cluster.impl;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Set;
+
 import org.dishevelled.cluster.AbstractClusteringAlgorithmTest;
 import org.dishevelled.cluster.ClusteringAlgorithm;
+import org.dishevelled.cluster.ClusteringAlgorithmException;
+import org.dishevelled.cluster.Cluster;
+import org.dishevelled.cluster.ExitStrategy;
+import org.dishevelled.cluster.Similarity;
+
+import org.dishevelled.cluster.exitstrategy.IterationLimitExitStrategy;
+
+import org.dishevelled.cluster.similarity.UniformSimilarity;
 
 /**
  * Unit test for NullClusteringAlgorithm.
@@ -40,5 +52,87 @@ public final class NullClusteringAlgorithmTest
     protected <T> ClusteringAlgorithm<T> createClusteringAlgorithm()
     {
         return new NullClusteringAlgorithm<T>();
+    }
+
+    public void testSingleValue()
+        throws ClusteringAlgorithmException
+    {
+        List<String> values = Arrays.asList(new String[] { "foo" });
+        ClusteringAlgorithm<String> algo = new NullClusteringAlgorithm<String>();
+        Similarity<String> similarity = new UniformSimilarity(1.0d);
+        ExitStrategy<String> exitStrategy = new IterationLimitExitStrategy(99);
+
+        Set<Cluster<String>> clusters = algo.cluster(values, similarity, exitStrategy);
+        assertNotNull(clusters);
+        assertEquals(1, clusters.size());
+        assertTrue(clusters.iterator().next().members().contains("foo"));
+    }
+
+    public void testTwoSimilarValues()
+        throws ClusteringAlgorithmException
+    {
+        List<String> values = Arrays.asList(new String[] { "foo", "bar" });
+        ClusteringAlgorithm<String> algo = new NullClusteringAlgorithm<String>();
+        Similarity<String> similarity = new UniformSimilarity(1.0d);
+        ExitStrategy<String> exitStrategy = new IterationLimitExitStrategy(99);
+
+        Set<Cluster<String>> clusters = algo.cluster(values, similarity, exitStrategy);
+        assertNotNull(clusters);
+        assertEquals(1, clusters.size());
+        Cluster<String> cluster = clusters.iterator().next();
+        assertTrue(cluster.members().contains("foo"));
+        assertTrue(cluster.members().contains("bar"));
+    }
+
+    public void testTwoDissimilarValues()
+        throws ClusteringAlgorithmException
+    {
+        List<String> values = Arrays.asList(new String[] { "foo", "bar" });
+        ClusteringAlgorithm<String> algo = new NullClusteringAlgorithm<String>();
+        Similarity<String> similarity = new UniformSimilarity(0.0d);
+        ExitStrategy<String> exitStrategy = new IterationLimitExitStrategy(99);
+
+        Set<Cluster<String>> clusters = algo.cluster(values, similarity, exitStrategy);
+        assertNotNull(clusters);
+        assertEquals(1, clusters.size());
+        Cluster<String> cluster = clusters.iterator().next();
+        assertTrue(cluster.members().contains("foo"));
+        assertTrue(cluster.members().contains("bar"));
+    }
+
+    public void testSeveralSimilarValues()
+        throws ClusteringAlgorithmException
+    {
+        List<String> values = Arrays.asList(new String[] { "foo", "bar", "baz", "qux" });
+        ClusteringAlgorithm<String> algo = new NullClusteringAlgorithm<String>();
+        Similarity<String> similarity = new UniformSimilarity(1.0d);
+        ExitStrategy<String> exitStrategy = new IterationLimitExitStrategy(99);
+
+        Set<Cluster<String>> clusters = algo.cluster(values, similarity, exitStrategy);
+        assertNotNull(clusters);
+        assertEquals(1, clusters.size());
+        Cluster<String> cluster = clusters.iterator().next();
+        assertTrue(cluster.members().contains("foo"));
+        assertTrue(cluster.members().contains("bar"));
+        assertTrue(cluster.members().contains("baz"));
+        assertTrue(cluster.members().contains("qux"));
+    }
+
+    public void testSeveralDissimilarValues()
+        throws ClusteringAlgorithmException
+    {
+        List<String> values = Arrays.asList(new String[] { "foo", "bar", "baz", "qux" });
+        ClusteringAlgorithm<String> algo = new NullClusteringAlgorithm<String>();
+        Similarity<String> similarity = new UniformSimilarity(0.0d);
+        ExitStrategy<String> exitStrategy = new IterationLimitExitStrategy(99);
+
+        Set<Cluster<String>> clusters = algo.cluster(values, similarity, exitStrategy);
+        assertNotNull(clusters);
+        assertEquals(1, clusters.size());
+        Cluster<String> cluster = clusters.iterator().next();
+        assertTrue(cluster.members().contains("foo"));
+        assertTrue(cluster.members().contains("bar"));
+        assertTrue(cluster.members().contains("baz"));
+        assertTrue(cluster.members().contains("qux"));
     }
 }
