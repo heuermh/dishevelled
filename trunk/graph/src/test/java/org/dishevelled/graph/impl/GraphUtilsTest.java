@@ -41,6 +41,43 @@ public final class GraphUtilsTest
     extends TestCase
 {
 
+    public void testCreateGraph()
+    {
+        Graph<String, Integer> graph0 = GraphUtils.createGraph();
+        assertNotNull(graph0);
+
+        Graph<String, Integer> graph1 = GraphUtils.createGraph(16, 16);
+        assertNotNull(graph1);
+
+        try
+        {
+            Graph<String, Integer> graph = GraphUtils.createGraph(-1, 16);
+            fail("createGraph(-1,) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+        try
+        {
+            Graph<String, Integer> graph = GraphUtils.createGraph(16, -1);
+            fail("createGraph(,-1) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+        try
+        {
+            Graph<String, Integer> graph = GraphUtils.createGraph(-1, -1);
+            fail("createGraph(-1,-1) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+    }
+
     public void testDfs()
     {
         Graph<String, Integer> graph = new GraphImpl<String, Integer>();
@@ -126,6 +163,52 @@ public final class GraphUtilsTest
         {
             GraphUtils.bfs(graph, node0, null);
             fail("bfs(,,null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+    }
+
+    public void testUndirectedBfs()
+    {
+        Graph<String, Integer> graph = new GraphImpl<String, Integer>();
+        Node<String, Integer> node0 = graph.createNode("node0");
+        Node<String, Integer> node1 = graph.createNode("node1");
+        Edge<String, Integer> edge = graph.createEdge(node0, node1, 0);
+        UnaryProcedure<Node<String, Integer>> procedure = new UnaryProcedure<Node<String, Integer>>()
+            {
+                /** {@inheritDoc} */
+                public void run(final Node<String, Integer> node)
+                {
+                    // empty
+                }
+            };
+
+        GraphUtils.undirectedBfs(graph, node0, procedure);
+
+        try
+        {
+            GraphUtils.undirectedBfs(null, node0, procedure);
+            fail("undirectedBfs(null,,) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+        try
+        {
+            GraphUtils.undirectedBfs(graph, null, procedure);
+            fail("undirectedBfs(,null,) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+        try
+        {
+            GraphUtils.undirectedBfs(graph, node0, null);
+            fail("undirectedBfs(,,null) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
         {
