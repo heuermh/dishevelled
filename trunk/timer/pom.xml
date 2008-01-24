@@ -83,9 +83,9 @@
   </build>
   <dependencies>
     <dependency>
-      <groupId>colt</groupId>
-      <artifactId>colt</artifactId>
-      <version>1.2.0</version>
+      <groupId>commons-math</groupId>
+      <artifactId>commons-math</artifactId>
+      <version>1.1</version>
       <scope>compile</scope>
     </dependency>
     <dependency>

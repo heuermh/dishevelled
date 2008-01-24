@@ -31,7 +31,8 @@ import java.util.Random;
 import java.util.HashMap;
 import java.util.Collections;
 
-import hep.aida.bin.StaticBin1D;
+import org.apache.commons.math.stat.descriptive.SummaryStatistics;
+import org.apache.commons.math.stat.descriptive.SummaryStatisticsImpl;
 
 /**
  * Timer class with nanosecond resolution and summary
@@ -46,15 +47,15 @@ import hep.aida.bin.StaticBin1D;
  * <h4>Special cases</h4>
  * <p>When <code>size() == 0</code>,
  * <pre>
- * min() == Double.POSITIVE_INFINITY
- * max() == Double.POSITIVE_INFINITY
+ * min() == Double.NaN
+ * max() == Double.NaN
  * mean() == Double.NaN
  * standardDeviation() == Double.NaN
  * </pre>
  * </p>
  * <p>When <code>size() == 1</code>,
  * <pre>
- * standardDeviation() == Double.NaN
+ * standardDeviation() == 0.0d
  * </pre>
  * </p>
  *
@@ -96,8 +97,8 @@ import hep.aida.bin.StaticBin1D;
  */
 public final class Timer
 {
-    /** Static bin for computing statistics. */
-    private final StaticBin1D bin;
+    /** Summary statistics. */
+    private final SummaryStatistics summaryStatistics;
 
     /** Last start time, in nanoseconds. */
     private double startTime;
@@ -111,7 +112,7 @@ public final class Timer
      */
     public Timer()
     {
-        bin = new StaticBin1D();
+        summaryStatistics = new SummaryStatisticsImpl();
         started = false;
     }
 
@@ -123,7 +124,7 @@ public final class Timer
      */
     public void reset()
     {
-        bin.clear();
+        summaryStatistics.clear();
         started = false;
     }
 
@@ -150,7 +151,7 @@ public final class Timer
         {
             double currentTime = (double) System.nanoTime();
             double elapsedTime = currentTime - startTime;
-            bin.add(elapsedTime);
+            summaryStatistics.addValue(elapsedTime);
         }
         else
         {
@@ -167,19 +168,19 @@ public final class Timer
      */
     public double min()
     {
-        return bin.min();
+        return summaryStatistics.getMin();
     }
 
     /**
-     * Return the minimum elapsed time recorded by this timer
+     * Return the maximum elapsed time recorded by this timer
      * in nanoseconds.
      *
-     * @return the minimum elapsed time recorded by this timer
+     * @return the maximum elapsed time recorded by this timer
      *    in nanoseconds
      */
     public double max()
     {
-        return bin.max();
+        return summaryStatistics.getMax();
     }
 
     /**
@@ -187,9 +188,9 @@ public final class Timer
      *
      * @return the number of elapsed times recorded by this timer
      */
-    public int size()
+    public long size()
     {
-        return bin.size();
+        return summaryStatistics.getN();
     }
 
     /**
@@ -200,7 +201,7 @@ public final class Timer
      */
     public double sum()
     {
-        return bin.sum();
+        return summaryStatistics.getSum();
     }
 
     /**
@@ -212,7 +213,7 @@ public final class Timer
      */
     public double mean()
     {
-        return bin.mean();
+        return summaryStatistics.getMean();
     }
 
     /**
@@ -224,7 +225,7 @@ public final class Timer
      */
     public double standardDeviation()
     {
-        return bin.standardDeviation();
+        return summaryStatistics.getStandardDeviation();
     }
 
 
