@@ -95,6 +95,11 @@ public abstract class AbstractCurateDialog
             };
     }
 
+    /**
+     * Create and return the button panel.
+     *
+     * @return the button panel
+     */
     protected final JPanel createButtonPanel()
     {
         JPanel buttonPanel = new JPanel();
@@ -121,20 +126,60 @@ public abstract class AbstractCurateDialog
         return buttonPanel;
     }
 
+    /**
+     * Return the cancel action.  The cancel action calls the
+     * abstract <code>cancel()</code> method of this class.
+     *
+     * @see #cancel
+     * @return the cancel action
+     */
     protected final Action getCancelAction()
     {
         return cancel;
     }
+
+    /**
+     * Return the help action.  The help action calls the
+     * abstract <code>help()</code> method of this class.
+     *
+     * @see #help
+     * @return the help action
+     */
     protected final Action getHelpAction()
     {
         return help;
     }
+
+    /**
+     * Return the OK action.  The OK action calls the
+     * abstract <code>ok()</code> method of this class.
+     *
+     * @see #ok
+     * @return the OK action
+     */
     protected final Action getOKAction()
     {
         return ok;
     }
 
+    /**
+     * Abstract method called by the cancel action.
+     *
+     * @see #getCancelAction
+     */
     protected abstract void cancel();
+
+    /**
+     * Abstract method called by the help action.
+     *
+     * @see #getHelpAction
+     */
     protected abstract void help();
+
+    /**
+     * Abstract method called by the OK action.
+     *
+     * @see #getOKAction
+     */
     protected abstract void ok();
 }
