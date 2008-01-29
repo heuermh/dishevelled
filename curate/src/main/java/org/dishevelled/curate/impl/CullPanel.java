@@ -27,7 +27,9 @@ import java.awt.GridLayout;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -41,6 +43,9 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.KeyStroke;
 import javax.swing.Timer;
+
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import ca.odell.glazedlists.EventList;
 import ca.odell.glazedlists.GlazedLists;
@@ -232,12 +237,42 @@ public final class CullPanel<E>
         remainingList.getActionMap().put("remove", removeAction);
         remainingList.getActionMap().put("toggleAssist", toggleAssistAction);
 
-        // TODO:  down should restart assist
-        // TODO:  up, shift-up, shift-down should stop assist
+        // up key should stop assist
+        remainingList.addKeyListener(new KeyAdapter()
+            {
+                /** {@inheritDoc} */
+                public void keyPressed(final KeyEvent event)
+                {
+                    if (assist.isRunning())
+                    {
+                        if (KeyEvent.VK_UP == event.getKeyCode())
+                        {
+                            assist.stop();
+                        }
+                    }
+                }
+            });
+
+        // multiple value selections should stop assist
+        remainingList.addListSelectionListener(new ListSelectionListener()
+            {
+                /** {@inheritDoc} */
+                public void valueChanged(final ListSelectionEvent event)
+                {
+                    if (assist.isRunning())
+                    {
+                        if (remainingList.getSelectedIndices().length > 1)
+                        {
+                            assist.stop();
+                        }
+                    }
+                }
+            });
+
+        // TODO:  down should restart assist?
         // TODO:  adapt assist rate to combined delete + down keystroke rate
         // TODO:  add actions to context menu
         // TODO:  create assist display/toolbar
-
         layoutComponents();
     }
 

@@ -101,9 +101,9 @@
       <scope>compile</scope>
     </dependency>
     <dependency>
-      <groupId>ca.odell.glazedlists</groupId>
-      <artifactId>glazedlists</artifactId>
-      <version>1.7.0_java15</version>
+      <groupId>net.java.dev.glazedlists</groupId>
+      <artifactId>glazedlists_java15</artifactId>
+      <version>1.7.0</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
