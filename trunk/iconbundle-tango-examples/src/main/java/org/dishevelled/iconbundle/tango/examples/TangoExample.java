@@ -35,6 +35,8 @@ import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+import java.util.Iterator;
+
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.Box;
@@ -48,7 +50,6 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
-import javax.swing.JToolBar;
 import javax.swing.JTree;
 import javax.swing.SwingUtilities;
 
@@ -72,6 +73,7 @@ import org.dishevelled.identify.Identifiable;
 import org.dishevelled.identify.IdentifiableAction;
 import org.dishevelled.identify.IdLabel;
 import org.dishevelled.identify.IdMenuItem;
+import org.dishevelled.identify.IdToolBar;
 import org.dishevelled.identify.IdTreeCellRenderer;
 
 import org.dishevelled.layout.LabelFieldLayout;
@@ -361,24 +363,56 @@ public final class TangoExample
      */
     private JComponent createToolBar()
     {
-        IdButton copyButton = new IdButton(copy, TangoProject.SMALL);
-        IdButton cutButton = new IdButton(cut, TangoProject.SMALL);
-        IdButton pasteButton = new IdButton(paste, TangoProject.SMALL);
+        final IdToolBar toolBar = new IdToolBar();
+        toolBar.add(copy);
+        toolBar.add(cut);
+        toolBar.add(paste);
 
-        // in 1.6+
-        //copyButton.setHideActionText(true);
-        //cutButton.setHideActionText(true);
-        //pasteButton.setHideActionText(true);
+        toolBar.setIconSize(TangoProject.EXTRA_SMALL);
+        toolBar.displayIconsAndText();
 
-        // in 1.5 or earlier
-        copyButton.setText(null);
-        cutButton.setText(null);
-        pasteButton.setText(null);
+        final JPopupMenu toolBarContextMenu = new JPopupMenu();
+        for (Iterator i = toolBar.getDisplayActions().iterator(); i.hasNext(); )
+        {
+            toolBarContextMenu.add((Action) i.next());
+        }
+        toolBarContextMenu.addSeparator();
+        toolBarContextMenu.add(toolBar.createIconSizeAction(TangoProject.EXTRA_SMALL));
+        toolBarContextMenu.add(toolBar.createIconSizeAction(TangoProject.SMALL));
+        toolBarContextMenu.add(toolBar.createIconSizeAction(TangoProject.MEDIUM));
+        toolBarContextMenu.add(toolBar.createIconSizeAction(TangoProject.LARGE));
 
-        JToolBar toolBar = new JToolBar();
-        toolBar.add(cutButton);
-        toolBar.add(copyButton);
-        toolBar.add(pasteButton);
+        toolBar.addMouseListener(new MouseAdapter()
+            {
+                /** {@inheritDoc} */
+                public void mousePressed(final MouseEvent event)
+                {
+                    if (event.isPopupTrigger())
+                    {
+                        showContextMenu(event);
+                    }
+                }
+
+                /** {@inheritDoc} */
+                public void mouseReleased(final MouseEvent event)
+                {
+                    if (event.isPopupTrigger())
+                    {
+                        showContextMenu(event);
+                    }
+                }
+
+                /**
+                 * Show the context menu.
+                 *
+                 * @param event mouse event
+                 */
+                private void showContextMenu(final MouseEvent event)
+                {
+                    toolBarContextMenu.show(toolBar, event.getX(), event.getY());
+                }
+            });
+
         return toolBar;
     }
 
