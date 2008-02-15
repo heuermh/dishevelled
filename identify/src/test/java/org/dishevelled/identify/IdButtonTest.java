@@ -246,5 +246,54 @@ public final class IdButtonTest
         assertNotNull("button1 disabledIcon not null", button1.getDisabledIcon());
     }
 
+    public void testDisplayIcon()
+    {
+        IdButton button = new IdButton(action);
+        assertNotNull(button.getIcon());
+        assertEquals(action.getName(), button.getText());
+
+        button.displayIcon();
+        assertNotNull(button.getIcon());
+        assertEquals(null, button.getText());
+    }
+
+    public void testDisplayText()
+    {
+        IdButton button = new IdButton(action);
+        assertNotNull(button.getIcon());
+        assertEquals(action.getName(), button.getText());
+
+        button.displayText();
+        assertNull(button.getIcon());
+        assertEquals(action.getName(), button.getText());
+    }
+
+    public void testDisplayIconAndText()
+    {
+        IdButton button = new IdButton(action);
+        assertNotNull(button.getIcon());
+        assertEquals(action.getName(), button.getText());
+
+        button.displayIconAndText();
+        assertNotNull(button.getIcon());
+        assertEquals(action.getName(), button.getText());
+
+        button.displayIcon();
+        assertNotNull(button.getIcon());
+        assertEquals(null, button.getText());
+
+        button.displayIconAndText();
+        assertNotNull(button.getIcon());
+        assertEquals(action.getName(), button.getText());
+
+        button.displayText();
+        assertNull(button.getIcon());
+        assertEquals(action.getName(), button.getText());
+
+        button.displayIconAndText();
+        assertNotNull(button.getIcon());
+        assertEquals(action.getName(), button.getText());
+    }
+
     // todo:  bounds tests
 }

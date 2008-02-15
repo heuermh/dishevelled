@@ -24,6 +24,9 @@
 package org.dishevelled.identify;
 
 import java.awt.ComponentOrientation;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Rectangle;
 
 import javax.swing.Action;
 import javax.swing.ImageIcon;
@@ -58,9 +61,6 @@ public final class IdButton
 
     /** Icon text direction. */
     private IconTextDirection iconTextDirection = DEFAULT_ICON_TEXT_DIRECTION;
-
-    /** Dirty flag. */
-    private transient boolean dirty = true;
 
 
     /**
@@ -128,7 +128,7 @@ public final class IdButton
         if (!this.iconSize.equals(oldIconSize))
         {
             firePropertyChange("iconSize", oldIconSize, this.iconSize);
-            setDirty(true);
+            rebuild();
         }
     }
 
@@ -140,6 +140,51 @@ public final class IdButton
     IconTextDirection getIconTextDirection()
     {
         return iconTextDirection;
+    }
+
+    /**
+     * Display icons only.
+     */
+    public void displayIcon()
+    {
+        //setHideActionText(true);
+        setText(null);
+        rebuild();
+    }
+
+    /**
+     * Display text only.
+     */
+    public void displayText()
+    {
+        //setHideActionText(false);
+        Action action = getAction();
+        if ((action != null) && (action instanceof IdentifiableAction))
+        {
+            IdentifiableAction identifiableAction = (IdentifiableAction) action;
+            setText(identifiableAction.getName());
+        }
+        setIcon(null);
+        setPressedIcon(null);
+        setSelectedIcon(null);
+        setRolloverIcon(null);
+        setRolloverSelectedIcon(null);
+        setDisabledIcon(null);
+    }
+
+    /**
+     * Display icon and text.
+     */
+    public void displayIconAndText()
+    {
+        //setHideActionText(false);
+        Action action = getAction();
+        if ((action != null) && (action instanceof IdentifiableAction))
+        {
+            IdentifiableAction identifiableAction = (IdentifiableAction) action;
+            setText(identifiableAction.getName());
+        }
+        rebuild();
     }
 
     /** {@inheritDoc} */
@@ -154,7 +199,7 @@ public final class IdButton
                 iconTextDirection = orientation.isLeftToRight() ?
                     IconTextDirection.LEFT_TO_RIGHT : IconTextDirection.RIGHT_TO_LEFT;
 
-                setDirty(true);
+                rebuild();
             }
         }
 
@@ -173,7 +218,7 @@ public final class IdButton
                 iconTextDirection = orientation.isLeftToRight() ?
                     IconTextDirection.LEFT_TO_RIGHT : IconTextDirection.RIGHT_TO_LEFT;
 
-                setDirty(true);
+                rebuild();
             }
         }
 
@@ -184,32 +229,7 @@ public final class IdButton
     protected void configurePropertiesFromAction(final Action action)
     {
         super.configurePropertiesFromAction(action);
-
-        if (isDirty())
-        {
-            rebuild();
-        }
-    }
-
-    /**
-     * Set the dirty flag to the logical OR of <code>dirty</code>
-     * and the previous dirty state.
-     *
-     * @param dirty dirty flag
-     */
-    private void setDirty(final boolean dirty)
-    {
-        this.dirty = (this.dirty || dirty);
-    }
-
-    /**
-     * Return true if a rebuild of the icons for this button is necessary.
-     *
-     * @return true if a rebuild of the icons for this button is necessary
-     */
-    private boolean isDirty()
-    {
-        return dirty;
+        rebuild();
     }
 
     /**
@@ -230,6 +250,5 @@ public final class IdButton
             setRolloverSelectedIcon(new ImageIcon(bndl.getImage(this, iconTextDirection, IconState.SELECTED, iconSize)));
             setDisabledIcon(new ImageIcon(bndl.getImage(this, iconTextDirection, IconState.DISABLED, iconSize)));
         }
-        dirty = false;
     }
 }
