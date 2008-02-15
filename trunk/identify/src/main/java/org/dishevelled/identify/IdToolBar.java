@@ -33,7 +33,6 @@ import java.util.List;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
-import javax.swing.JButton;
 import javax.swing.JToolBar;
 
 import org.dishevelled.iconbundle.IconSize;
@@ -245,6 +244,7 @@ public final class IdToolBar
      * The new icon size action will not be null.
      *
      * @param iconSize icon size for the new icon size action, must not be null
+     * @return a new icon size action for the specified icon size
      */
     public Action createIconSizeAction(final IconSize iconSize)
     {

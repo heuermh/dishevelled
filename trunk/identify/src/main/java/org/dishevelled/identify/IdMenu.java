@@ -25,9 +25,8 @@ package org.dishevelled.identify;
 
 import java.awt.ComponentOrientation;
 
-import javax.swing.Action;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
+import javax.swing.JMenu;
 
 import org.dishevelled.iconbundle.IconBundle;
 import org.dishevelled.iconbundle.IconSize;
@@ -35,17 +34,14 @@ import org.dishevelled.iconbundle.IconState;
 import org.dishevelled.iconbundle.IconTextDirection;
 
 /**
- * An extension of JButton that displays the name property value
- * and appropriate icon from an icon bundle for an identifiable
- * action.
- *
- * @see IdentifiableAction
+ * An extension of JMenu that displays the name property value
+ * and appropriate icon from an icon bundle for a given bean.
  *
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public final class IdButton
-    extends JButton
+public final class IdMenu
+    extends JMenu
 {
     /** Default icon size. */
     public static final IconSize DEFAULT_ICON_SIZE = IconSize.DEFAULT_16X16;
@@ -59,47 +55,73 @@ public final class IdButton
     /** Icon text direction. */
     private IconTextDirection iconTextDirection = DEFAULT_ICON_TEXT_DIRECTION;
 
+    /** Bound value property. */
+    private Object value;
+
 
     /**
-     * Create a new button with the specified identifiable action.
-     *
-     * @param action identifiable action, must not be null
+     * Create a new menu.
      */
-    public IdButton(final IdentifiableAction action)
+    public IdMenu()
     {
-        super();
-
-        if (action == null)
-        {
-            throw new IllegalArgumentException("action must not be null");
-        }
-        setAction(action);
+        this(null);
     }
 
     /**
-     * Create a new button with the specified identifiable action
-     * and icon size.
+     * Create a new menu with the specified value.
      *
-     * @param action identifiable action, must not be null
+     * @param value value
+     */
+    public IdMenu(final Object value)
+    {
+        super();
+        setValue(value);
+    }
+
+    /**
+     * Create a new menu item with the specified value and icon size.
+     *
+     * @param value value
      * @param iconSize icon size, must not be null
      */
-    public IdButton(final IdentifiableAction action, final IconSize iconSize)
+    public IdMenu(final Object value, final IconSize iconSize)
     {
         super();
-
-        if (action == null)
-        {
-            throw new IllegalArgumentException("action must not be null");
-        }
+        setValue(value);
+        // rebuilds again
         setIconSize(iconSize);
-        setAction(action);
     }
 
 
     /**
-     * Return the icon size for this button.
+     * Return the value for this menu.
      *
-     * @return the icon size for this button
+     * @return the value for this menu
+     */
+    public Object getValue()
+    {
+        return value;
+    }
+
+    /**
+     * Set the value for this menu to <code>value</code>.
+     *
+     * <p>This is a bound property.</p>
+     *
+     * @param value value for this menu
+     */
+    public void setValue(final Object value)
+    {
+        Object oldValue = this.value;
+        this.value = value;
+        firePropertyChange("value", oldValue, this.value);
+        rebuild();
+    }
+
+    /**
+     * Return the icon size for this menu.
+     *
+     * @return the icon size for this menu
      */
     public IconSize getIconSize()
     {
@@ -107,7 +129,7 @@ public final class IdButton
     }
 
     /**
-     * Set the icon size for this button to <code>iconSize</code>.
+     * Set the icon size for this menu to <code>iconSize</code>.
      *
      * <p>This is a bound property.</p>
      *
@@ -130,58 +152,13 @@ public final class IdButton
     }
 
     /**
-     * Return the icon text direction for this button.
+     * Return the icon text direction for this menu.
      *
-     * @return the icon text direction for this button
+     * @return the icon text direction for this menu
      */
-    IconTextDirection getIconTextDirection()
+    public IconTextDirection getIconTextDirection()
     {
         return iconTextDirection;
-    }
-
-    /**
-     * Display icons only.
-     */
-    public void displayIcon()
-    {
-        //setHideActionText(true);
-        setText(null);
-        rebuild();
-    }
-
-    /**
-     * Display text only.
-     */
-    public void displayText()
-    {
-        //setHideActionText(false);
-        Action action = getAction();
-        if ((action != null) && (action instanceof IdentifiableAction))
-        {
-            IdentifiableAction identifiableAction = (IdentifiableAction) action;
-            setText(identifiableAction.getName());
-        }
-        setIcon(null);
-        setPressedIcon(null);
-        setSelectedIcon(null);
-        setRolloverIcon(null);
-        setRolloverSelectedIcon(null);
-        setDisabledIcon(null);
-    }
-
-    /**
-     * Display icon and text.
-     */
-    public void displayIconAndText()
-    {
-        //setHideActionText(false);
-        Action action = getAction();
-        if ((action != null) && (action instanceof IdentifiableAction))
-        {
-            IdentifiableAction identifiableAction = (IdentifiableAction) action;
-            setText(identifiableAction.getName());
-        }
-        rebuild();
     }
 
     /** {@inheritDoc} */
@@ -222,24 +199,23 @@ public final class IdButton
         super.applyComponentOrientation(orientation);
     }
 
-    /** {@inheritDoc} */
-    protected void configurePropertiesFromAction(final Action action)
-    {
-        super.configurePropertiesFromAction(action);
-        rebuild();
-    }
-
     /**
-     * Rebuild the icons for this button from the icon bundle
-     * provided by the identifiable action for this button.
+     * Rebuild the text and icon properties of this menu
+     * with the name property and icon bundle image of
+     * <code>getValue()</code>, respectively.
      */
     private void rebuild()
     {
-        Action action = getAction();
-        if ((action != null) && (action instanceof IdentifiableAction))
+        String name = IdentifyUtils.getNameFor(value);
+        setText(name);
+        IconBundle bndl = IdentifyUtils.getIconBundleFor(value);
+
+        if (bndl == null)
         {
-            IdentifiableAction identifiableAction = (IdentifiableAction) action;
-            IconBundle bndl = identifiableAction.getIconBundle();
+            setIcon(null);
+        }
+        else
+        {
             setIcon(new ImageIcon(bndl.getImage(this, iconTextDirection, IconState.NORMAL, iconSize)));
             setPressedIcon(new ImageIcon(bndl.getImage(this, iconTextDirection, IconState.ACTIVE, iconSize)));
             setSelectedIcon(new ImageIcon(bndl.getImage(this, iconTextDirection, IconState.SELECTED, iconSize)));
