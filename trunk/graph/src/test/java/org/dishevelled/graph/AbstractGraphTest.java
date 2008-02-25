@@ -23,6 +23,12 @@
 */
 package org.dishevelled.graph;
 
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
+
 import junit.framework.TestCase;
 
 import org.dishevelled.functor.UnaryPredicate;
@@ -99,7 +105,77 @@ public abstract class AbstractGraphTest
 
     public void testNodesIsImmutable()
     {
-        // TODO
+        Graph<String, String> graph = createFullGraph("node", "edge");
+        Node<String, String> node = graph.nodes().iterator().next();
+        Collection<Node<String, String>> fullNodes = Collections.singleton(node);
+        try
+        {
+            graph.nodes().clear();
+            fail("graph nodes clear() expected UnsupportedOperationException");
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
+        try
+        {
+            graph.nodes().add(node);
+            fail("graph nodes add(node) expected UnsupportedOperationException");
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
+        try
+        {
+            graph.nodes().remove(node);
+            fail("graph nodes remove(node) expected UnsupportedOperationException");
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
+        try
+        {
+            graph.nodes().addAll(fullNodes);
+            fail("graph nodes addAll(fullNodes) expected UnsupportedOperationException");
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
+        try
+        {
+            graph.nodes().removeAll(fullNodes);
+            fail("graph nodes removeAll(fullNodes) expected UnsupportedOperationException");
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
+        try
+        {
+            graph.nodes().retainAll(fullNodes);
+            fail("graph nodes retainAll(fullNodes) expected UnsupportedOperationException");
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
+        try
+        {
+            Iterator<Node<String, String>> nodes = graph.nodes().iterator();
+            if (nodes.hasNext())
+            {
+                nodes.next();
+                nodes.remove();
+                fail("graph nodes iterator remove() expected UnsupportedOperationException");
+            }
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
     }
 
     public void testNodeValues()
@@ -122,7 +198,77 @@ public abstract class AbstractGraphTest
 
     public void testNodeValuesIsImmutable()
     {
-        // TODO
+        Graph<String, String> graph = createFullGraph("node", "edge");
+        String nodeValue = "node";
+        Collection<String> fullNodeValues = Collections.singleton(nodeValue);
+        try
+        {
+            graph.nodeValues().clear();
+            fail("graph nodeValues clear() expected UnsupportedOperationException");
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
+        try
+        {
+            graph.nodeValues().add(nodeValue);
+            fail("graph nodeValues add(nodeValue) expected UnsupportedOperationException");
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
+        try
+        {
+            graph.nodeValues().remove(nodeValue);
+            fail("graph nodeValues remove(nodeValue) expected UnsupportedOperationException");
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
+        try
+        {
+            graph.nodeValues().addAll(fullNodeValues);
+            fail("graph nodeValues addAll(fullNodeValues) expected UnsupportedOperationException");
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
+        try
+        {
+            graph.nodeValues().removeAll(fullNodeValues);
+            fail("graph nodeValues removeAll(fullNodeValues) expected UnsupportedOperationException");
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
+        try
+        {
+            graph.nodeValues().retainAll(fullNodeValues);
+            fail("graph nodeValues retainAll(fullNodeValues) expected UnsupportedOperationException");
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
+        try
+        {
+            Iterator<String> nodeValues = graph.nodeValues().iterator();
+            if (nodeValues.hasNext())
+            {
+                nodeValues.next();
+                nodeValues.remove();
+                fail("graph nodeValues iterator remove() expected UnsupportedOperationException");
+            }
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
     }
 
     public void testNodeMap()
@@ -149,7 +295,49 @@ public abstract class AbstractGraphTest
         }
     }
 
-    // TODO: addl keyMap test methods:  is immutable, keySet is immutable, etc.
+    public void testEmptyNodeMapKeysAreImmutable()
+    {
+        Graph<String, String> emptyGraph = createEmptyGraph();
+        Map<Node<String, String>, Integer> nodeMap = emptyGraph.nodeMap();
+        Set<Node<String, String>> nodeKeys = nodeMap.keySet();        
+        assertNotNull(nodeKeys);
+        assertTrue(nodeKeys.isEmpty());
+
+        // TODO:  add assertions
+    }
+
+    public void testFullNodeMapKeysAreImmutable()
+    {
+        Graph<String, String> fullGraph = createFullGraph("node", "edge");
+        Map<Node<String, String>, Integer> nodeMap = fullGraph.nodeMap();
+        Set<Node<String, String>> nodeKeys = nodeMap.keySet();        
+        assertNotNull(nodeKeys);
+        assertFalse(nodeKeys.isEmpty());
+        assertEquals(fullGraph.nodes().size(), nodeKeys.size());
+
+        // TODO:  add assertions
+    }
+
+    public void testNodeMapPut()
+    {
+        Graph<String, String> fullGraph = createFullGraph("node", "edge");
+        Map<Node<String, String>, Integer> nodeMap = fullGraph.nodeMap();
+        Node<String, String> node = fullGraph.nodes().iterator().next();
+        assertEquals((Integer) null, nodeMap.get(node));
+        nodeMap.put(node, 1);
+        assertEquals(Integer.valueOf(1), nodeMap.get(node));
+
+        // TODO:  put(not a node) throws ??
+    }
+
+    public void testNodeMapRemove()
+    {
+        Graph<String, String> fullGraph = createFullGraph("node", "edge");
+        Map<Node<String, String>, Double> nodeMap = fullGraph.nodeMap();
+
+        // TODO:  remove(node) throws ??
+        // TODO:  remove(not a node) ok ?
+    }
 
     public void testForEachNode()
     {
@@ -412,7 +600,77 @@ public abstract class AbstractGraphTest
 
     public void testEdgesIsImmutable()
     {
-        // TODO
+        Graph<String, String> graph = createFullGraph("node", "edge");
+        Edge<String, String> edge = graph.edges().iterator().next();
+        Collection<Edge<String, String>> fullEdges = Collections.singleton(edge);
+        try
+        {
+            graph.edges().clear();
+            fail("graph edges clear() expected UnsupportedOperationException");
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
+        try
+        {
+            graph.edges().add(edge);
+            fail("graph edges add(edge) expected UnsupportedOperationException");
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
+        try
+        {
+            graph.edges().remove(edge);
+            fail("graph edges remove(edge) expected UnsupportedOperationException");
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
+        try
+        {
+            graph.edges().addAll(fullEdges);
+            fail("graph edges addAll(fullEdges) expected UnsupportedOperationException");
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
+        try
+        {
+            graph.edges().removeAll(fullEdges);
+            fail("graph edges removeAll(fullEdges) expected UnsupportedOperationException");
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
+        try
+        {
+            graph.edges().retainAll(fullEdges);
+            fail("graph edges retainAll(fullEdges) expected UnsupportedOperationException");
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
+        try
+        {
+            Iterator<Edge<String, String>> edges = graph.edges().iterator();
+            if (edges.hasNext())
+            {
+                edges.next();
+                edges.remove();
+                fail("graph edges iterator remove() expected UnsupportedOperationException");
+            }
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
     }
 
     public void testEdgeValues()
@@ -435,7 +693,77 @@ public abstract class AbstractGraphTest
 
     public void testEdgeValuesIsImmutable()
     {
-        // TODO
+        Graph<String, String> graph = createFullGraph("node", "edge");
+        String edgeValue = "edge";
+        Collection<String> fullEdgeValues = Collections.singleton(edgeValue);
+        try
+        {
+            graph.edgeValues().clear();
+            fail("graph edgeValues clear() expected UnsupportedOperationException");
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
+        try
+        {
+            graph.edgeValues().add(edgeValue);
+            fail("graph edgeValues add(edgeValue) expected UnsupportedOperationException");
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
+        try
+        {
+            graph.edgeValues().remove(edgeValue);
+            fail("graph edgeValues remove(edgeValue) expected UnsupportedOperationException");
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
+        try
+        {
+            graph.edgeValues().addAll(fullEdgeValues);
+            fail("graph edgeValues addAll(fullEdgeValues) expected UnsupportedOperationException");
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
+        try
+        {
+            graph.edgeValues().removeAll(fullEdgeValues);
+            fail("graph edgeValues removeAll(fullEdgeValues) expected UnsupportedOperationException");
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
+        try
+        {
+            graph.edgeValues().retainAll(fullEdgeValues);
+            fail("graph edgeValues retainAll(fullEdgeValues) expected UnsupportedOperationException");
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
+        try
+        {
+            Iterator<String> edgeValues = graph.edgeValues().iterator();
+            if (edgeValues.hasNext())
+            {
+                edgeValues.next();
+                edgeValues.remove();
+                fail("graph edgeValues iterator remove() expected UnsupportedOperationException");
+            }
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
     }
 
     public void testEdgeMap()
@@ -462,7 +790,49 @@ public abstract class AbstractGraphTest
         }
     }
 
-    // TODO: addl keyMap test methods:  is immutable, keySet is immutable, etc.
+    public void testEmptyEdgeMapKeysAreImmutable()
+    {
+        Graph<String, String> emptyGraph = createEmptyGraph();
+        Map<Edge<String, String>, Integer> edgeMap = emptyGraph.edgeMap();
+        Set<Edge<String, String>> edgeKeys = edgeMap.keySet();        
+        assertNotNull(edgeKeys);
+        assertTrue(edgeKeys.isEmpty());
+
+        // TODO:  add assertions
+    }
+
+    public void testFullEdgeMapKeysAreImmutable()
+    {
+        Graph<String, String> fullGraph = createFullGraph("node", "edge");
+        Map<Edge<String, String>, Integer> edgeMap = fullGraph.edgeMap();
+        Set<Edge<String, String>> edgeKeys = edgeMap.keySet();        
+        assertNotNull(edgeKeys);
+        assertFalse(edgeKeys.isEmpty());
+        assertEquals(fullGraph.edges().size(), edgeKeys.size());
+
+        // TODO:  add assertions
+    }
+
+    public void testEdgeMapPut()
+    {
+        Graph<String, String> fullGraph = createFullGraph("node", "edge");
+        Map<Edge<String, String>, Integer> edgeMap = fullGraph.edgeMap();
+        Edge<String, String> edge = fullGraph.edges().iterator().next();
+        assertEquals((Integer) null, edgeMap.get(edge));
+        edgeMap.put(edge, 1);
+        assertEquals(Integer.valueOf(1), edgeMap.get(edge));
+
+        // TODO:  put(not a edge) throws ??
+    }
+
+    public void testEdgeMapRemove()
+    {
+        Graph<String, String> fullGraph = createFullGraph("node", "edge");
+        Map<Edge<String, String>, Double> edgeMap = fullGraph.edgeMap();
+
+        // TODO:  remove(edge) throws ??
+        // TODO:  remove(not an edge) ok ?
+    }
 
     public void testForEachEdge()
     {
@@ -787,7 +1157,21 @@ public abstract class AbstractGraphTest
             // expected
         }
 
-        // TODO:  test node not in graph
+        Graph<String, String> otherGraph = createFullGraph("node", "edge");
+        Node<String, String> otherNode = otherGraph.nodes().iterator().next();
+        try
+        {
+            fullGraph.remove(otherNode);
+            fail("remove(otherNode) expected IllegalArgumentException");
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // ok, implementations may not support operation
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
     }
 
     public void testCreateEdge()
@@ -836,7 +1220,7 @@ public abstract class AbstractGraphTest
         try
         {
             emptyGraph.createEdge(null, null, "edge");
-            fail("create(null, null,) expected IllegalArgumentException");
+            fail("createEdge(null, null,) expected IllegalArgumentException");
         }
         catch (UnsupportedOperationException e)
         {
@@ -850,7 +1234,7 @@ public abstract class AbstractGraphTest
         {
             Node<String, String> node = emptyGraph.createNode("node");
             emptyGraph.createEdge(null, node, "edge");
-            fail("create(,null,) expected IllegalArgumentException");
+            fail("createEdge(,null,) expected IllegalArgumentException");
         }
         catch (UnsupportedOperationException e)
         {
@@ -864,7 +1248,7 @@ public abstract class AbstractGraphTest
         {
             Node<String, String> node = emptyGraph.createNode("node");
             emptyGraph.createEdge(node, null, "edge");
-            fail("create(null,,) expected IllegalArgumentException");
+            fail("createEdge(null,,) expected IllegalArgumentException");
         }
         catch (UnsupportedOperationException e)
         {
@@ -875,7 +1259,49 @@ public abstract class AbstractGraphTest
             // expected
         }
 
-        // TODO:  test nodes not in graph
+        Graph<String, String> otherGraph = createFullGraph("node", "edge");
+        Node<String, String> otherNode = otherGraph.nodes().iterator().next();
+        try
+        {
+            Node<String, String> node = emptyGraph.createNode("node");
+            emptyGraph.createEdge(node, otherNode, "edge");
+            fail("createEdge(,otherNode) expected IllegalArgumentException");
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // ok, implementations may not support operation
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+        try
+        {
+            Node<String, String> node = emptyGraph.createNode("node");
+            emptyGraph.createEdge(otherNode, node, "edge");
+            fail("createEdge(otherNode,) expected IllegalArgumentException");
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // ok, implementations may not support operation
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+        try
+        {
+            emptyGraph.createEdge(otherNode, otherNode, "edge");
+            fail("createEdge(otherNode, otherNode) expected IllegalArgumentException");
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // ok, implementations may not support operation
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
     }
 
     public void testRemoveEdge()
@@ -909,6 +1335,20 @@ public abstract class AbstractGraphTest
             // expected
         }
 
-        // TODO:  test edge not in graph
+        Graph<String, String> otherGraph = createFullGraph("node", "edge");
+        Edge<String, String> otherEdge = otherGraph.edges().iterator().next();
+        try
+        {
+            fullGraph.remove(otherEdge);
+            fail("remove(otherEdge) expected IllegalArgumentException");
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // ok, implementations may not support operation
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
     }
 }
