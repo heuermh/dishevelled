@@ -491,6 +491,14 @@ public final class GraphImpl<N, E>
             {
                 throw new IllegalArgumentException("target must not be null");
             }
+            if (!nodes.contains(source))
+            {
+                throw new IllegalArgumentException("source must be contained in this graph");
+            }
+            if (!nodes.contains(target))
+            {
+                throw new IllegalArgumentException("target must be contained in this graph");
+            }
             this.value = value;
             this.source = source;
             this.target = target;
