@@ -1,7 +1,7 @@
-<!--
+/*
 
     ${artifactId}  ${description}
-    Copyright (c) 2007-2008 held jointly by the individual authors.
+    Copyright (c) 2008 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
@@ -20,9 +20,9 @@
     > http://www.fsf.org/licensing/licenses/lgpl.html
     > http://www.opensource.org/licenses/lgpl-license.php
 
--->
-<html>
-  <body>
-<p>${description}</p>
-  </body>
-</html>
+*/
+
+/**
+ * ${description}
+ */
+package ${packageName};

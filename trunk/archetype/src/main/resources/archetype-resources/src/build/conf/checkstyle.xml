@@ -7,7 +7,9 @@
 
     <!-- Checks that a package.html file exists for each package.     -->
     <!-- See http://checkstyle.sf.net/config_javadoc.html#PackageHtml -->
-    <module name="PackageHtml"/>
+    <!-- TODO:  would be nice to have a similar package-info.java check -->
+    <!-- http://sourceforge.net/tracker/index.php?func=detail&aid=1902541&group_id=29721&atid=397078 -->
+    <!-- <module name="PackageHtml"/> -->
 
     <!-- Checks whether files end with a new line.                        -->
     <!-- See http://checkstyle.sf.net/config_misc.html#NewlineAtEndOfFile -->
