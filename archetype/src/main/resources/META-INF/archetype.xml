@@ -33,7 +33,7 @@
   </resources>
   <sources>
     <source>src/main/java/Foo.java</source>
-<!--    <source>src/main/java/package.html</source> -->
+    <source>src/main/java/package-info.java</source>
   </sources>
   <testSources>
     <source>src/test/java/FooTest.java</source>
