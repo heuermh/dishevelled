@@ -111,8 +111,7 @@ public final class GraphImpl<N, E>
         {
             map.put(node, (T) null);
         }
-        // TODO: wrap in an unmodifable key map
-        return map;
+        return new MapDecorator(map);
     }
 
     // TODO:  consider nodeMap(T defaultValue);
@@ -215,8 +214,7 @@ public final class GraphImpl<N, E>
         {
             map.put(edge, (T) null);
         }
-        // TODO: wrap in an unmodifiable key map
-        return map;
+        return new MapDecorator(map);
     }
 
     // TODO: consider edgeMap(T defaultValue);
@@ -527,6 +525,31 @@ public final class GraphImpl<N, E>
         public Node<N, E> target()
         {
             return target;
+        }
+    }
+
+    /**
+     * Map decorator.
+     */
+    private static class MapDecorator<K, V>
+        extends AbstractMapDecorator<K, V>
+    {
+
+        /**
+         * Create a new map that decorates the specified map.
+         *
+         * @param map map to decorate, must not be null
+         */
+        MapDecorator(final Map<K, V> map)
+        {
+            super(map);
+        }
+
+
+        /** {@inheritDoc} */
+        public Set<K> keySet()
+        {
+            return Collections.unmodifiableSet(super.keySet());
         }
     }
 }
