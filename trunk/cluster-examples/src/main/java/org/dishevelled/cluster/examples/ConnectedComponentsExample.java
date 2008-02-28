@@ -23,6 +23,10 @@
 */
 package org.dishevelled.cluster.examples;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -40,6 +44,15 @@ import org.dishevelled.cluster.exitstrategy.IterationLimitExitStrategy;
 
 import org.dishevelled.cluster.impl.ConnectedComponents;
 
+import org.dishevelled.commandline.ArgumentList;
+import org.dishevelled.commandline.CommandLine;
+import org.dishevelled.commandline.CommandLineParseException;
+import org.dishevelled.commandline.CommandLineParser;
+import org.dishevelled.commandline.Switch;
+import org.dishevelled.commandline.Usage;
+
+import org.dishevelled.commandline.argument.DoubleArgument;
+
 /**
  * Connected components clustering algorithm example.
  *
@@ -49,12 +62,36 @@ import org.dishevelled.cluster.impl.ConnectedComponents;
 public final class ConnectedComponentsExample
     implements Runnable
 {
+    /** Cutoff similarity score. */
+    private final double cutoff;
+
+    /** Usage string. */
+    private static final String USAGE = "java ConnectedComponentsExample [args]\n\n   Connected components"
+        + " clustering algorithm example.\n   Values are read from standard in and clusters are printed to standard out.";
+
+
+    /**
+     * Create a new connected components clustering algorithm example
+     * with the specified cutoff similarity score.
+     *
+     * @param cutoff cutoff similarity score, must be between <code>0.0d</code>
+     *    and <code>1.0d</code>
+     */
+    public ConnectedComponentsExample(double cutoff)
+    {
+        if ((cutoff < 0.0) || (cutoff > 1.0d))
+        {
+            throw new IllegalArgumentException("cutoff must be between 0.0d and 1.0d, was " + cutoff);
+        }
+        this.cutoff = cutoff;
+    }
+
 
     /** {@inheritDoc} */
     public void run()
     {
-        List<String> values = generateStrings();
-        ClusteringAlgorithm<String> algo = new ConnectedComponents<String>(0.125d);
+        List<String> values = readValues();        
+        ClusteringAlgorithm<String> algo = new ConnectedComponents<String>(cutoff);
         Similarity<String> similarity = new LevenshteinDistanceSimilarity();
         // TODO:  should create a NullExitStrategy or something similar
         ExitStrategy<String> exitStrategy = new IterationLimitExitStrategy(99);
@@ -82,26 +119,42 @@ public final class ConnectedComponentsExample
     }
 
     /**
-     * Generate and return a list of random strings.
+     * Read values one per line from standard in.
      *
-     * @return a list of random strings
+     * @return values read from standard in
      */
-    private List<String> generateStrings()
+    private List<String> readValues()
     {
-        Random random = new Random();
-        List<String> strings = new ArrayList<String>();
-        for (int i = 0; i < 10000; i ++)
+        List<String> values = new ArrayList<String>(10000);
+        BufferedReader reader = null;
+        try
         {
-            StringBuffer sb = new StringBuffer(10);
-            for (int j = 0; j < 10; j++)
+            reader = new BufferedReader(new InputStreamReader(System.in));
+            while (reader.ready())
             {
-                int ascii = random.nextInt(26) + 97;
-                char c = (char) ascii;
-                sb.append(c);
+                String line = reader.readLine();
+                values.add(line);
             }
-            strings.add(sb.toString());
         }
-        return strings;
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        finally
+        {
+            try
+            {
+                if (reader != null)
+                {
+                    reader.close();
+                }
+            }
+            catch (Exception e)
+            {
+                // ignore
+            }
+        }
+        return values;
     }
 
     /**
@@ -117,6 +170,7 @@ public final class ConnectedComponentsExample
         }
     }
 
+
     /**
      * Main.
      *
@@ -124,6 +178,34 @@ public final class ConnectedComponentsExample
      */
     public static void main(final String[] args)
     {
-        new ConnectedComponentsExample().run();
+        CommandLine commandLine = null;
+        ArgumentList arguments = null;
+        try
+        {
+            Switch help = new Switch("h", "help", "display help message");
+            DoubleArgument cutoff = new DoubleArgument("c", "cutoff", "cutoff similarity score, must be between 0.0d and 1.0d", false);
+
+            arguments = new ArgumentList(help, cutoff);
+            commandLine = new CommandLine(args);
+            CommandLineParser.parse(commandLine, arguments);
+
+            if (help.wasFound())
+            {
+                Usage.usage(USAGE, null, commandLine, arguments, System.out);
+            }
+            else
+            {
+                Runnable r = new ConnectedComponentsExample(cutoff.wasFound() ? cutoff.getValue() : ConnectedComponents.DEFAULT_CUTOFF);
+                r.run();
+            }
+        }
+        catch (CommandLineParseException e)
+        {
+            Usage.usage(USAGE, e, commandLine, arguments, System.err);
+        }
+        catch (IllegalArgumentException e)
+        {
+            Usage.usage(USAGE, e, commandLine, arguments, System.err);
+        }
     }
 }
