@@ -113,6 +113,7 @@ public final class ConnectedComponents<E>
                 Node<E, Double> source = nodes.get(i);
                 Node<E, Double> target = nodes.get(j);
                 double score = similarity.similarity(source.getValue(), target.getValue());
+                fireSimilarityCalculated(source.getValue(), target.getValue(), score);
                 if (score >= cutoff)
                 {
                     graph.createEdge(source, target, score);

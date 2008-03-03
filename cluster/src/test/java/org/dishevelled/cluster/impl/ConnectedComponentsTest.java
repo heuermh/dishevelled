@@ -85,12 +85,41 @@ public final class ConnectedComponentsTest
         assertTrue(cluster.members().contains("bar"));
     }
 
+    public void testTwoSimilarValues2()
+        throws ClusteringAlgorithmException
+    {
+        List<String> values = Arrays.asList(new String[] { "foo", "bar" });
+        ClusteringAlgorithm<String> algo = new ConnectedComponents<String>();
+        Similarity<String> similarity = new UniformSimilarity(0.75d);
+        ExitStrategy<String> exitStrategy = new IterationLimitExitStrategy(99);
+
+        Set<Cluster<String>> clusters = algo.cluster(values, similarity, exitStrategy);
+        assertNotNull(clusters);
+        assertEquals(1, clusters.size());
+        Cluster<String> cluster = clusters.iterator().next();
+        assertTrue(cluster.members().contains("foo"));
+        assertTrue(cluster.members().contains("bar"));
+    }
+
     public void testTwoDissimilarValues()
         throws ClusteringAlgorithmException
     {
         List<String> values = Arrays.asList(new String[] { "foo", "bar" });
         ClusteringAlgorithm<String> algo = new ConnectedComponents<String>();
         Similarity<String> similarity = new UniformSimilarity(0.0d);
+        ExitStrategy<String> exitStrategy = new IterationLimitExitStrategy(99);
+
+        Set<Cluster<String>> clusters = algo.cluster(values, similarity, exitStrategy);
+        assertNotNull(clusters);
+        assertEquals(2, clusters.size());
+    }
+
+    public void testTwoDissimilarValues2()
+        throws ClusteringAlgorithmException
+    {
+        List<String> values = Arrays.asList(new String[] { "foo", "bar" });
+        ClusteringAlgorithm<String> algo = new ConnectedComponents<String>();
+        Similarity<String> similarity = new UniformSimilarity(0.25d);
         ExitStrategy<String> exitStrategy = new IterationLimitExitStrategy(99);
 
         Set<Cluster<String>> clusters = algo.cluster(values, similarity, exitStrategy);

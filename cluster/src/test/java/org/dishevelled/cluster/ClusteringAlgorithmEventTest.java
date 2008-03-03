@@ -63,6 +63,28 @@ public final class ClusteringAlgorithmEventTest
         assertEquals(clusteringAlgorithm, event.getClusteringAlgorithm());
     }
 
+    public void testSimilarityCalculatedValues()
+    {
+        TestClusteringAlgorithm<String> clusteringAlgorithm = new TestClusteringAlgorithm<String>();
+        ClusteringAlgorithmEvent<String> event0 = new ClusteringAlgorithmEvent<String>(clusteringAlgorithm);
+        assertEquals(null, event0.getValue1());
+        assertEquals(null, event0.getValue2());
+        assertTrue(Double.isNaN(event0.getSimilarity()));
+
+        ClusteringAlgorithmEvent<String> event1 = new ClusteringAlgorithmEvent<String>(clusteringAlgorithm, null, null, Double.NaN);
+        assertEquals(null, event1.getValue1());
+        assertEquals(null, event1.getValue2());
+        assertTrue(Double.isNaN(event1.getSimilarity()));
+
+        String value1 = "value1";
+        String value2 = "value2";
+        double similarity = Double.valueOf(0.5d);
+        ClusteringAlgorithmEvent<String> event2 = new ClusteringAlgorithmEvent<String>(clusteringAlgorithm, value1, value2, similarity);
+        assertEquals(value1, event2.getValue1());
+        assertEquals(value2, event2.getValue2());
+        assertEquals(similarity, event2.getSimilarity());
+    }
+
     /**
      * Test clustering algorithm.
      */

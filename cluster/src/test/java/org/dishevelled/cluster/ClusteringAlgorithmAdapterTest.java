@@ -56,6 +56,12 @@ public final class ClusteringAlgorithmAdapterTest
         adapter.exitSucceeded(new ClusteringAlgorithmEvent<String>(new TestClusteringAlgorithm<String>()));
     }
 
+    public void testSimilarityCalculated()
+    {
+        ClusteringAlgorithmAdapter<String> adapter = new ClusteringAlgorithmAdapter<String>();
+        adapter.similarityCalculated(new ClusteringAlgorithmEvent<String>(new TestClusteringAlgorithm<String>()));
+    }
+
     /**
      * Test clustering algorithm.
      */

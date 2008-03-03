@@ -186,4 +186,48 @@ public class ClusteringAlgorithmListenerSupport<E>
             }
         }
     }
+
+    /**
+     * Fire a similarity calculated event to all registered <code>ClusteringAlgorithmListener</code>s.
+     *
+     * @param value1 first value
+     * @param value2 second value
+     * @param similarity similarity
+     */
+    public void fireSimilarityCalculated(final E value1, final E value2, final double similarity)
+    {
+        Object[] listeners = listenerList.getListenerList();
+        ClusteringAlgorithmEvent<E> e = null;
+
+        for (int i = listeners.length - 2; i >= 0; i -= 2)
+        {
+            if (listeners[i] == ClusteringAlgorithmListener.class)
+            {
+                // lazily create the event
+                if (e == null)
+                {
+                    e = new ClusteringAlgorithmEvent<E>(source, value1, value2, similarity);
+                }
+                ((ClusteringAlgorithmListener<E>) listeners[i + 1]).similarityCalculated(e);
+            }
+        }
+    }
+
+    /**
+     * Fire the specified similarity calculated event to all registered <code>ClusteringAlgorithmListener</code>s.
+     *
+     * @param e similarity calculated event
+     */
+    public void fireSimilarityCalculated(final ClusteringAlgorithmEvent<E> e)
+    {
+        Object[] listeners = listenerList.getListenerList();
+
+        for (int i = listeners.length - 2; i >= 0; i -= 2)
+        {
+            if (listeners[i] == ClusteringAlgorithmListener.class)
+            {
+                ((ClusteringAlgorithmListener<E>) listeners[i + 1]).similarityCalculated(e);
+            }
+        }
+    }
 }
