@@ -165,8 +165,10 @@ public final class ConnectedComponentsExample
         /** {@inheritDoc} */
         public double similarity(final String value1, final String value2)
         {
-            // TODO:  make the spread wider
-            return (1.0d / (1.0 + StringUtils.getLevenshteinDistance(value1, value2)));
+            double distance = (double) StringUtils.getLevenshteinDistance(value1, value2);
+            double maxDistance = (double) Math.max(value1.length(), value2.length());
+            double similarity = 1.0d - (distance / maxDistance);
+            return similarity;
         }
     }
 
