@@ -50,4 +50,15 @@ public interface ClusteringAlgorithmListener<E>
      * @param event exit succeeded event
      */
     void exitSucceeded(ClusteringAlgorithmEvent<E> event);
+
+    /**
+     * Notify this listener of a similarity calculated event.  The specified event
+     * object will provide a reference to the two values and their similarity.
+     *
+     * @see ClusteringAlgorithmEvent#getValue1
+     * @see ClusteringAlgorithmEvent#getValue2
+     * @see ClusteringAlgorithmEvent#getSimilarity
+     * @param event similarity calculated event
+     */
+    void similarityCalculated(ClusteringAlgorithmEvent<E> event);
 }

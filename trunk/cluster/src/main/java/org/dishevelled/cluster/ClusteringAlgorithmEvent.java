@@ -35,6 +35,15 @@ import java.util.EventObject;
 public class ClusteringAlgorithmEvent<E>
     extends EventObject
 {
+    /** First value, for similarity calculated events. */
+    private final E value1;
+
+    /** Second value, for similarity calculated events. */
+    private final E value2;
+
+    /** Similarity, for similarity calculated events. */
+    private final double similarity;
+
 
     /**
      * Create a new clustering algorithm event with the specified source.
@@ -44,8 +53,29 @@ public class ClusteringAlgorithmEvent<E>
     public ClusteringAlgorithmEvent(final ClusteringAlgorithm<E> clusteringAlgorithm)
     {
         super(clusteringAlgorithm);
+        value1 = null;
+        value2 = null;
+        similarity = Double.NaN;
     }
 
+    /**
+     * Create a new clustering algorithm event with the specified source.
+     *
+     * @param clusteringAlgorithm source of this event, must not be null
+     * @param value1 first value, for similarity calculated events
+     * @param value2 second value, for similarity calculated events
+     * @param similarity similarity, for similarity calculated events
+     */
+    public ClusteringAlgorithmEvent(final ClusteringAlgorithm<E> clusteringAlgorithm,
+                                    final E value1,
+                                    final E value2,
+                                    final double similarity)
+    {
+        super(clusteringAlgorithm);
+        this.value1 = value1;
+        this.value2 = value2;
+        this.similarity = similarity;
+    }
 
     /**
      * Return the source of this event as a clustering algorithm.  The source
@@ -56,5 +86,35 @@ public class ClusteringAlgorithmEvent<E>
     public final ClusteringAlgorithm<E> getClusteringAlgorithm()
     {
         return (ClusteringAlgorithm<E>) super.getSource();
+    }
+
+    /**
+     * Return the first value, for similarity calculated events.  May be null.
+     *
+     * @return the first value, for similarity calculated events
+     */
+    public final E getValue1()
+    {
+        return value1;
+    }
+
+    /**
+     * Return the second value, for similarity calculated events.  May be null.
+     *
+     * @return the second value, for similarity calculated events
+     */
+    public final E getValue2()
+    {
+        return value2;
+    }
+
+    /**
+     * Return the similarity, for similarity calculated events.  Defaults to <code>Double.NaN</code>.
+     *
+     * @return the similarity, for similarity calculated events
+     */
+    public final double getSimilarity()
+    {
+        return similarity;
     }
 }

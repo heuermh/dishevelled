@@ -46,4 +46,10 @@ public class ClusteringAlgorithmAdapter<E>
     {
         // empty
     }
+
+    /** {@inheritDoc} */
+    public void similarityCalculated(final ClusteringAlgorithmEvent<E> event)
+    {
+        // empty
+    }
 }
