@@ -23,43 +23,23 @@
 */
 package org.dishevelled.observable.graph.event;
 
-import java.util.EventObject;
-
-import org.dishevelled.observable.graph.ObservableGraph;
+import junit.framework.TestCase;
 
 /**
- * An event object representing a vetoable change about to be made to an observable graph.
+ * Unit test for GraphChangeVetoException.
  *
- * @param <N> node value type
- * @param <E> edge value type
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public class VetoableGraphChangeEvent<N, E>
-    extends EventObject
+public class GraphChangeVetoExceptionTest
+    extends TestCase
 {
 
-    /**
-     * Create a new vetoable graph change event with the
-     * specified observable graph as the event source.
-     *
-     * @param source source of the event, must not be null
-     */
-    public VetoableGraphChangeEvent(final ObservableGraph<N, E> source)
+    public void testConstructor()
     {
-        super(source);
-    }
-
-
-    /**
-     * Return the source of this vetoable graph change event as an
-     * <code>ObservableGraph</code>.
-     *
-     * @return the source of this vetoable graph change event as an
-     *    <code>ObservableGraph</code>
-     */
-    public final ObservableGraph<N, E> getObservableGraph()
-    {
-        return (ObservableGraph<N, E>) super.getSource();
+        GraphChangeVetoException exception0 = new GraphChangeVetoException();
+        assertNotNull(exception0);
+        GraphChangeVetoException exception1 = new GraphChangeVetoException("message");
+        assertNotNull(exception1);
     }
 }

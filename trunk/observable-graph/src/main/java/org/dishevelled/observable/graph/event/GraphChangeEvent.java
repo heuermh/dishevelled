@@ -43,7 +43,7 @@ public class GraphChangeEvent<N, E>
      * Create a new graph change event with the specified
      * observable graph as the event source.
      *
-     * @param source source of the event
+     * @param source source of the event, must not be null
      */
     public GraphChangeEvent(final ObservableGraph<N, E> source)
     {

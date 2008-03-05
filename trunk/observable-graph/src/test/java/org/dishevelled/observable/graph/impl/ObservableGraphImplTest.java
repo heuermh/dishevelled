@@ -21,45 +21,40 @@
     > http://www.opensource.org/licenses/lgpl-license.php
 
 */
-package org.dishevelled.observable.graph.event;
+package org.dishevelled.observable.graph.impl;
 
-import java.util.EventObject;
+import org.dishevelled.graph.Graph;
+import org.dishevelled.graph.Node;
 
+import org.dishevelled.graph.impl.GraphImpl;
+import org.dishevelled.graph.impl.GraphUtils;
+
+import org.dishevelled.observable.graph.AbstractObservableGraphTest;
 import org.dishevelled.observable.graph.ObservableGraph;
 
 /**
- * An event object representing a vetoable change about to be made to an observable graph.
+ * Unit test for ObservableGraphImpl.
  *
- * @param <N> node value type
- * @param <E> edge value type
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public class VetoableGraphChangeEvent<N, E>
-    extends EventObject
+public final class ObservableGraphImplTest
+    extends AbstractObservableGraphTest
 {
 
-    /**
-     * Create a new vetoable graph change event with the
-     * specified observable graph as the event source.
-     *
-     * @param source source of the event, must not be null
-     */
-    public VetoableGraphChangeEvent(final ObservableGraph<N, E> source)
+    /** {@inheritDoc} */
+    protected <N, E> ObservableGraph<N, E> createEmptyObservableGraph()
     {
-        super(source);
+        return new ObservableGraphImpl<N, E>(new GraphImpl<N, E>());
     }
 
-
-    /**
-     * Return the source of this vetoable graph change event as an
-     * <code>ObservableGraph</code>.
-     *
-     * @return the source of this vetoable graph change event as an
-     *    <code>ObservableGraph</code>
-     */
-    public final ObservableGraph<N, E> getObservableGraph()
+    /** {@inheritDoc} */
+    protected <N, E> ObservableGraph<N, E> createFullObservableGraph(final N nodeValue, final E edgeValue)
     {
-        return (ObservableGraph<N, E>) super.getSource();
+        Graph<N, E> fullGraph = GraphUtils.createGraph();
+        Node<N, E> source = fullGraph.createNode(nodeValue);
+        Node<N, E> target = fullGraph.createNode(nodeValue);
+        fullGraph.createEdge(source, target, edgeValue);
+        return new ObservableGraphImpl<N, E>(fullGraph);
     }
 }
