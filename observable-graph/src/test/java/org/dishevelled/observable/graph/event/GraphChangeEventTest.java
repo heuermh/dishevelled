@@ -23,43 +23,42 @@
 */
 package org.dishevelled.observable.graph.event;
 
-import java.util.EventObject;
+import junit.framework.TestCase;
+
+import org.dishevelled.graph.Graph;
+
+import org.dishevelled.graph.impl.GraphUtils;
 
 import org.dishevelled.observable.graph.ObservableGraph;
 
+import org.dishevelled.observable.graph.impl.ObservableGraphUtils;
+
 /**
- * An event object representing a vetoable change about to be made to an observable graph.
+ * Unit test for GraphChangeEvent.
  *
- * @param <N> node value type
- * @param <E> edge value type
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public class VetoableGraphChangeEvent<N, E>
-    extends EventObject
+public class GraphChangeEventTest
+    extends TestCase
 {
 
-    /**
-     * Create a new vetoable graph change event with the
-     * specified observable graph as the event source.
-     *
-     * @param source source of the event, must not be null
-     */
-    public VetoableGraphChangeEvent(final ObservableGraph<N, E> source)
+    public void testConstructor()
     {
-        super(source);
-    }
+        Graph<String, String> graph = GraphUtils.createGraph();
+        // another circular package dependency
+        ObservableGraph<String, String> observableGraph = ObservableGraphUtils.observableGraph(graph);
+        GraphChangeEvent<String, String> event0 = new GraphChangeEvent<String, String>(observableGraph);
+        assertNotNull(event0);
+        assertEquals(observableGraph, event0.getObservableGraph());
 
-
-    /**
-     * Return the source of this vetoable graph change event as an
-     * <code>ObservableGraph</code>.
-     *
-     * @return the source of this vetoable graph change event as an
-     *    <code>ObservableGraph</code>
-     */
-    public final ObservableGraph<N, E> getObservableGraph()
-    {
-        return (ObservableGraph<N, E>) super.getSource();
+        try
+        {
+            GraphChangeEvent<String, String> event = new GraphChangeEvent<String, String>(null);
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
     }
 }
