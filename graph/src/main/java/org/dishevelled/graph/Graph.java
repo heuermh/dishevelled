@@ -42,6 +42,13 @@ public interface Graph<N, E>
 {
 
     /**
+     * Return true if this graph is empty.
+     *
+     * @return true if this graph is empty
+     */
+    boolean isEmpty();
+
+    /**
      * Return the number of nodes in this graph.
      *
      * @return the number of nodes in this graph

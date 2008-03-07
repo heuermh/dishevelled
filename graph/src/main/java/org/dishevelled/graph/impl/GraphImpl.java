@@ -81,6 +81,12 @@ public final class GraphImpl<N, E>
 
 
     /** {@inheritDoc} */
+    public boolean isEmpty()
+    {
+        return (nodes.isEmpty() && edges.isEmpty());
+    }
+
+    /** {@inheritDoc} */
     public int nodeCount()
     {
         return nodes.size();
