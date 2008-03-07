@@ -24,7 +24,15 @@
 package org.dishevelled.observable.graph;
 
 import org.dishevelled.graph.AbstractGraphTest;
+import org.dishevelled.graph.Edge;
 import org.dishevelled.graph.Graph;
+import org.dishevelled.graph.Node;
+
+import org.dishevelled.observable.graph.event.GraphChangeEvent;
+import org.dishevelled.observable.graph.event.GraphChangeListener;
+import org.dishevelled.observable.graph.event.GraphChangeVetoException;
+import org.dishevelled.observable.graph.event.VetoableGraphChangeEvent;
+import org.dishevelled.observable.graph.event.VetoableGraphChangeListener;
 
 /**
  * Abstract unit test for implementations of ObservableGraph.
@@ -80,5 +88,420 @@ public abstract class AbstractObservableGraphTest
     {
         ObservableGraph<String, String> fullGraph = createFullObservableGraph("node", "edge");
         assertNotNull(fullGraph);
+    }
+
+    public void testListeners()
+    {
+        ObservableGraph<String, String> graph = createEmptyObservableGraph();
+        Listener<String, String> listener = new Listener<String, String>();
+        graph.addGraphChangeListener(listener);
+
+        assertEquals(1, graph.getGraphChangeListenerCount());
+        assertNotNull(graph.getGraphChangeListeners());
+        assertEquals(1, graph.getGraphChangeListeners().length);
+        assertEquals(listener, graph.getGraphChangeListeners()[0]);
+
+        graph.removeGraphChangeListener(listener);
+        assertEquals(0, graph.getGraphChangeListenerCount());
+        assertNotNull(graph.getGraphChangeListeners());
+        assertEquals(0, graph.getGraphChangeListeners().length);
+
+        NeverVetoListener<String, String> neverVetoListener = new NeverVetoListener<String, String>();
+        graph.addVetoableGraphChangeListener(neverVetoListener);
+
+        assertEquals(1, graph.getVetoableGraphChangeListenerCount());
+        assertNotNull(graph.getVetoableGraphChangeListeners());
+        assertEquals(1, graph.getVetoableGraphChangeListeners().length);
+        assertEquals(neverVetoListener, graph.getVetoableGraphChangeListeners()[0]);
+
+        graph.removeVetoableGraphChangeListener(neverVetoListener);
+        assertEquals(0, graph.getVetoableGraphChangeListenerCount());
+        assertNotNull(graph.getVetoableGraphChangeListeners());
+        assertEquals(0, graph.getVetoableGraphChangeListeners().length);
+    }
+
+    public void testFireGraphWillChange()
+        throws Exception
+    {
+        ObservableGraph<String, String> graph = createEmptyObservableGraph();
+        NeverVetoListener<String, String> neverVetoListener = new NeverVetoListener<String, String>();
+        graph.addVetoableGraphChangeListener(neverVetoListener);
+
+        if (graph instanceof AbstractObservableGraph)
+        {
+            ((AbstractObservableGraph) graph).fireGraphWillChange();
+
+            assertNotNull(neverVetoListener.getEvent());
+            assertSame(graph, neverVetoListener.getEvent().getObservableGraph());
+        }
+    }
+
+    public void testFireGraphChanged()
+    {
+        ObservableGraph<String, String> graph = createEmptyObservableGraph();
+        Listener<String, String> listener = new Listener<String, String>();
+        graph.addGraphChangeListener(listener);
+
+        if (graph instanceof AbstractObservableGraph)
+        {
+            ((AbstractObservableGraph) graph).fireGraphChanged();
+
+            assertNotNull(listener.getEvent());
+            assertSame(graph, listener.getEvent().getObservableGraph());
+        }
+    }
+
+    public void testClear()
+    {
+        ObservableGraph<String, String> fullGraph = createFullObservableGraph("node", "edge");
+        Listener<String, String> listener = new Listener<String, String>();
+        NeverVetoListener<String, String> neverVetoListener = new NeverVetoListener<String, String>();
+        fullGraph.addGraphChangeListener(listener);
+        fullGraph.addVetoableGraphChangeListener(neverVetoListener);
+
+        try
+        {
+            assertFalse(fullGraph.isEmpty());
+            fullGraph.clear();
+            assertTrue(fullGraph.isEmpty());
+
+            assertNotNull(listener.getEvent());
+            assertSame(fullGraph, listener.getEvent().getObservableGraph());
+
+            assertNotNull(neverVetoListener.getEvent());
+            assertSame(fullGraph, neverVetoListener.getEvent().getObservableGraph());
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // ok
+        }
+        finally
+        {
+            fullGraph.removeGraphChangeListener(listener);
+            fullGraph.removeVetoableGraphChangeListener(neverVetoListener);
+        }
+    }
+
+    public void testClearVeto()
+    {
+        ObservableGraph<String, String> fullGraph = createFullObservableGraph("node", "edge");
+        AlwaysVetoListener<String, String> alwaysVetoListener = new AlwaysVetoListener<String, String>();
+        fullGraph.addVetoableGraphChangeListener(alwaysVetoListener);
+
+        try
+        {
+            assertFalse(fullGraph.isEmpty());
+            fullGraph.clear();
+            assertFalse(fullGraph.isEmpty());
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // ok
+        }
+        finally
+        {
+            fullGraph.removeVetoableGraphChangeListener(alwaysVetoListener);
+        }
+    }
+
+    public void testCreateNode()
+    {
+        ObservableGraph<String, String> emptyGraph = createEmptyObservableGraph();
+        Listener<String, String> listener = new Listener<String, String>();
+        NeverVetoListener<String, String> neverVetoListener = new NeverVetoListener<String, String>();
+        emptyGraph.addGraphChangeListener(listener);
+        emptyGraph.addVetoableGraphChangeListener(neverVetoListener);
+
+        try
+        {
+            assertTrue(emptyGraph.isEmpty());
+            Node<String, String> node = emptyGraph.createNode("node");
+            assertNotNull(node);
+            assertFalse(emptyGraph.isEmpty());
+
+            assertNotNull(listener.getEvent());
+            assertSame(emptyGraph, listener.getEvent().getObservableGraph());
+
+            assertNotNull(neverVetoListener.getEvent());
+            assertSame(emptyGraph, neverVetoListener.getEvent().getObservableGraph());
+
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // ok
+        }
+        finally
+        {
+            emptyGraph.removeGraphChangeListener(listener);
+            emptyGraph.removeVetoableGraphChangeListener(neverVetoListener);
+        }
+    }
+
+    public void testCreateNodeVeto()
+    {
+        ObservableGraph<String, String> emptyGraph = createEmptyObservableGraph();
+        AlwaysVetoListener<String, String> alwaysVetoListener = new AlwaysVetoListener<String, String>();
+        emptyGraph.addVetoableGraphChangeListener(alwaysVetoListener);
+
+        try
+        {
+            assertTrue(emptyGraph.isEmpty());
+            Node<String, String> node = emptyGraph.createNode("node");
+            // TODO:  explicitly document this behaviour
+            assertEquals(null, node);
+            assertTrue(emptyGraph.isEmpty());
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // ok
+        }
+        finally
+        {
+            emptyGraph.removeVetoableGraphChangeListener(alwaysVetoListener);
+        }
+    }
+
+    public void testRemoveNode()
+    {
+        ObservableGraph<String, String> fullGraph = createFullObservableGraph("node", "edge");
+        Listener<String, String> listener = new Listener<String, String>();
+        NeverVetoListener<String, String> neverVetoListener = new NeverVetoListener<String, String>();
+        fullGraph.addGraphChangeListener(listener);
+        fullGraph.addVetoableGraphChangeListener(neverVetoListener);
+
+        try
+        {
+            assertFalse(fullGraph.nodes().isEmpty());
+            Node<String, String> node = fullGraph.nodes().iterator().next();
+            fullGraph.remove(node);
+            assertFalse(fullGraph.nodes().contains(node));
+
+            assertNotNull(listener.getEvent());
+            assertSame(fullGraph, listener.getEvent().getObservableGraph());
+
+            assertNotNull(neverVetoListener.getEvent());
+            assertSame(fullGraph, neverVetoListener.getEvent().getObservableGraph());
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // ok
+        }
+        finally
+        {
+            fullGraph.removeGraphChangeListener(listener);
+            fullGraph.removeVetoableGraphChangeListener(neverVetoListener);
+        }
+    }
+
+    public void testRemoveNodeVeto()
+    {
+        ObservableGraph<String, String> fullGraph = createFullObservableGraph("node", "edge");
+        AlwaysVetoListener<String, String> alwaysVetoListener = new AlwaysVetoListener<String, String>();
+        fullGraph.addVetoableGraphChangeListener(alwaysVetoListener);
+
+        try
+        {
+            assertFalse(fullGraph.nodes().isEmpty());
+            Node<String, String> node = fullGraph.nodes().iterator().next();
+            fullGraph.remove(node);
+            assertTrue(fullGraph.nodes().contains(node));
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // ok
+        }
+        finally
+        {
+            fullGraph.removeVetoableGraphChangeListener(alwaysVetoListener);
+        }
+    }
+
+    public void testCreateEdge()
+    {
+        ObservableGraph<String, String> emptyGraph = createEmptyObservableGraph();
+        Listener<String, String> listener = new Listener<String, String>();
+        NeverVetoListener<String, String> neverVetoListener = new NeverVetoListener<String, String>();
+        emptyGraph.addGraphChangeListener(listener);
+        emptyGraph.addVetoableGraphChangeListener(neverVetoListener);
+
+        try
+        {
+            assertTrue(emptyGraph.isEmpty());
+            Node<String, String> source = emptyGraph.createNode("source");
+            Node<String, String> target = emptyGraph.createNode("target");
+            assertTrue(emptyGraph.edges().isEmpty());
+            Edge<String, String> edge = emptyGraph.createEdge(source, target, "edge");
+            assertNotNull(edge);
+            assertFalse(emptyGraph.isEmpty());
+            assertFalse(emptyGraph.edges().isEmpty());
+
+            assertNotNull(listener.getEvent());
+            assertSame(emptyGraph, listener.getEvent().getObservableGraph());
+
+            assertNotNull(neverVetoListener.getEvent());
+            assertSame(emptyGraph, neverVetoListener.getEvent().getObservableGraph());
+
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // ok
+        }
+        finally
+        {
+            emptyGraph.removeGraphChangeListener(listener);
+            emptyGraph.removeVetoableGraphChangeListener(neverVetoListener);
+        }
+    }
+
+    public void testCreateEdgeVeto()
+    {
+        ObservableGraph<String, String> emptyGraph = createEmptyObservableGraph();
+        AlwaysVetoListener<String, String> alwaysVetoListener = new AlwaysVetoListener<String, String>();
+        emptyGraph.addVetoableGraphChangeListener(alwaysVetoListener);
+
+        try
+        {
+            assertTrue(emptyGraph.isEmpty());
+            Node<String, String> source = emptyGraph.createNode("source");
+            Node<String, String> target = emptyGraph.createNode("target");
+            assertTrue(emptyGraph.edges().isEmpty());
+            Edge<String, String> edge = emptyGraph.createEdge(source, target, "edge");
+            // TODO:  explicitly document this behaviour
+            assertEquals(null, edge);
+            assertTrue(emptyGraph.edges().isEmpty());
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // ok
+        }
+        finally
+        {
+            emptyGraph.removeVetoableGraphChangeListener(alwaysVetoListener);
+        }
+    }
+
+    public void testRemoveEdge()
+    {
+        ObservableGraph<String, String> fullGraph = createFullObservableGraph("node", "edge");
+        Listener<String, String> listener = new Listener<String, String>();
+        NeverVetoListener<String, String> neverVetoListener = new NeverVetoListener<String, String>();
+        fullGraph.addGraphChangeListener(listener);
+        fullGraph.addVetoableGraphChangeListener(neverVetoListener);
+
+        try
+        {
+            assertFalse(fullGraph.edges().isEmpty());
+            Edge<String, String> edge = fullGraph.edges().iterator().next();
+            fullGraph.remove(edge);
+            assertFalse(fullGraph.edges().contains(edge));
+
+            assertNotNull(listener.getEvent());
+            assertSame(fullGraph, listener.getEvent().getObservableGraph());
+
+            assertNotNull(neverVetoListener.getEvent());
+            assertSame(fullGraph, neverVetoListener.getEvent().getObservableGraph());
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // ok
+        }
+        finally
+        {
+            fullGraph.removeGraphChangeListener(listener);
+            fullGraph.removeVetoableGraphChangeListener(neverVetoListener);
+        }
+    }
+
+    public void testRemoveEdgeVeto()
+    {
+        ObservableGraph<String, String> fullGraph = createFullObservableGraph("node", "edge");
+        AlwaysVetoListener<String, String> alwaysVetoListener = new AlwaysVetoListener<String, String>();
+        fullGraph.addVetoableGraphChangeListener(alwaysVetoListener);
+
+        try
+        {
+            assertFalse(fullGraph.edges().isEmpty());
+            Edge<String, String> edge = fullGraph.edges().iterator().next();
+            fullGraph.remove(edge);
+            assertTrue(fullGraph.edges().contains(edge));
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // ok
+        }
+        finally
+        {
+            fullGraph.removeVetoableGraphChangeListener(alwaysVetoListener);
+        }
+    }
+
+    /**
+     * Listener.
+     */
+    protected class Listener<N, E>
+        implements GraphChangeListener<N, E> {
+
+        /** Last event heard, if any. */
+        private GraphChangeEvent<N, E> event;
+
+
+        /** {@inheritDoc} */
+        public void graphChanged(final GraphChangeEvent<N, E> event)
+        {
+            this.event = event;
+        }
+
+        /**
+         * Return the last heard event, if any.
+         *
+         * @return the last heard event, if any
+         */
+        GraphChangeEvent<N, E> getEvent()
+        {
+            return event;
+        }
+    }
+
+    /**
+     * Always veto listener.
+     */
+    protected class AlwaysVetoListener<N, E>
+        implements VetoableGraphChangeListener<N, E>
+    {
+
+        /** {@inheritDoc} */
+        public void graphWillChange(final VetoableGraphChangeEvent<N, E> event)
+            throws GraphChangeVetoException
+        {
+            throw new GraphChangeVetoException();
+        }
+    }
+
+    /**
+     * Never veto listener.
+     */
+    protected class NeverVetoListener<N, E>
+        implements VetoableGraphChangeListener<N, E>
+    {
+        /** Last event heard, if any. */
+        private VetoableGraphChangeEvent<N, E> event;
+
+
+        /** {@inheritDoc} */
+        public void graphWillChange(final VetoableGraphChangeEvent<N, E> event)
+            throws GraphChangeVetoException
+        {
+            this.event = event;
+        }
+
+        /**
+         * Return the last heard event, if any.
+         *
+         * @return the last heard event, if any
+         */
+        VetoableGraphChangeEvent<N, E> getEvent()
+        {
+            return event;
+        }
     }
 }

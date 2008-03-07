@@ -103,7 +103,7 @@ public final class ObservableGraphImpl<N, E>
     }
 
     /** {@inheritDoc} */
-    protected void postCreateNode(final N value)
+    protected void postCreateNode(final N value, final Node<N, E> node)
     {
         fireGraphChanged(changeEvent);
     }
@@ -129,7 +129,9 @@ public final class ObservableGraphImpl<N, E>
     }
 
     /** {@inheritDoc} */
-    protected boolean preCreateEdge(final Node<N, E> source, final Node<N, E> target, final E value)
+    protected boolean preCreateEdge(final Node<N, E> source,
+                                    final Node<N, E> target,
+                                    final E value)
     {
         try
         {
@@ -143,7 +145,10 @@ public final class ObservableGraphImpl<N, E>
     }
 
     /** {@inheritDoc} */
-    protected void postCreateEdge(final Node<N, E> source, final Node<N, E> target, final E value)
+    protected void postCreateEdge(final Node<N, E> source,
+                                  final Node<N, E> target,
+                                  final E value,
+                                  final Edge<N, E> edge)
     {
         fireGraphChanged(changeEvent);
     }
