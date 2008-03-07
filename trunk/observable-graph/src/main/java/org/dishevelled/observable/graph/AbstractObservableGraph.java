@@ -200,8 +200,9 @@ public abstract class AbstractObservableGraph<N, E>
      * called on the wrapped graph with the specified parameter.
      *
      * @param value <code>createNode</code> method parameter
+     * @param node newly created node
      */
-    protected abstract void postCreateNode(N value);
+    protected abstract void postCreateNode(N value, Node<N, E> node);
 
     /**
      * Notify subclasses the <code>remove(Node&lt;N, E&gt;)</code> method is about to
@@ -240,8 +241,9 @@ public abstract class AbstractObservableGraph<N, E>
      * @param source <code>createEdge</code> method parameter
      * @param target <code>createEdge</code> method parameter
      * @param value <code>createEdge</code> method parameter
+     * @param edge newly created edge
      */
-    protected abstract void postCreateEdge(Node<N, E> source, Node<N, E> target, E value);
+    protected abstract void postCreateEdge(Node<N, E> source, Node<N, E> target, E value, Edge<N, E> edge);
 
     /**
      * Notify subclasses the <code>remove(Edge&lt;N, E&gt;)</code> method is about to
@@ -260,4 +262,60 @@ public abstract class AbstractObservableGraph<N, E>
      * @param edge <code>remove(Edge&lt;N, E&gt;)</code> method parameter
      */
     protected abstract void postRemove(Edge<N, E> edge);
+
+    /** {@inheritDoc} */
+    public void clear()
+    {
+        if (preClear())
+        {
+            super.clear();
+            postClear();
+        }
+    }
+
+    /** {@inheritDoc} */
+    public Node<N, E> createNode(N value)
+    {
+        if (preCreateNode(value))
+        {
+            Node<N, E> node = super.createNode(value);
+            postCreateNode(value, node);
+            return node;
+        }
+        // TODO:  explicitly document this behaviour
+        return null;
+    }
+
+    /** {@inheritDoc} */
+    public void remove(Node<N, E> node)
+    {
+        if (preRemove(node))
+        {
+            super.remove(node);
+            postRemove(node);
+        }
+    }
+
+    /** {@inheritDoc} */
+    public Edge<N, E> createEdge(Node<N, E> source, Node<N, E> target, E value)
+    {
+        if (preCreateEdge(source, target, value))
+        {
+            Edge<N, E> edge = super.createEdge(source, target, value);
+            postCreateEdge(source, target, value, edge);
+            return edge;
+        }
+        // TODO:  explicitly document this behaviour
+        return null;
+    }
+
+    /** {@inheritDoc} */
+    public void remove(Edge<N, E> edge)
+    {
+        if (preRemove(edge))
+        {
+            super.remove(edge);
+            postRemove(edge);
+        }
+    }
 }
