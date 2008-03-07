@@ -200,7 +200,7 @@ public interface Graph<N, E>
      * @throws UnsupportedOperationException if the <code>createNode</code>
      *    operation is not supported by this graph
      */
-    Node createNode(N value);
+    Node<N, E> createNode(N value);
 
     /**
      * Remove the specified node and any edges connecting the
