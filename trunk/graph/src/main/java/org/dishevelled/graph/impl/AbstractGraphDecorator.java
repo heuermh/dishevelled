@@ -75,6 +75,12 @@ public abstract class AbstractGraphDecorator<N, E>
     }
 
     /** {@inheritDoc} */
+    public boolean isEmpty()
+    {
+        return graph.isEmpty();
+    }
+
+    /** {@inheritDoc} */
     public int nodeCount()
     {
         return graph.nodeCount();
