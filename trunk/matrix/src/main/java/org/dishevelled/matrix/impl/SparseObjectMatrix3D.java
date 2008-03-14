@@ -175,7 +175,11 @@ public class SparseObjectMatrix3D<E>
         }
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     *
+     * Overridden for performance.
+     */
     public void clear()
     {
         if (isView)
@@ -188,7 +192,11 @@ public class SparseObjectMatrix3D<E>
         }
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     *
+     * Overridden for performance.
+     */
     public void forEachNonNull(final UnaryProcedure<E> procedure)
     {
         if (isView)
