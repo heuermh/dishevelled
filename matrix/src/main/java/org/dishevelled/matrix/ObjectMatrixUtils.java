@@ -56,8 +56,8 @@ public final class ObjectMatrixUtils
 
     /**
      * Return an unmodifiable view of the specified 1D object matrix.  Query operations
-     * on the returned 1D object matrix read through to the specified matrix, and attempts
-     * to modify the returned 1D object matrix, whether directly or via its iterator, result
+     * on the returned 1D object matrix read through to the specified matrix, and any attempt
+     * to modify the returned 1D object matrix, whether directly or via its iterator, will result
      * in an <code>UnsupportedOperationException</code>.
      *
      * @param <T> 1D object matrix type
@@ -71,8 +71,8 @@ public final class ObjectMatrixUtils
 
     /**
      * Return an unmodifiable view of the specified 2D object matrix.  Query operations
-     * on the returned 2D object matrix read through to the specified matrix, and attempts
-     * to modify the returned 2D object matrix, whether directly or via its iterator, result
+     * on the returned 2D object matrix read through to the specified matrix, and any attempt
+     * to modify the returned 2D object matrix, whether directly or via its iterator, will result
      * in an <code>UnsupportedOperationException</code>.
      *
      * @param <T> 2D object matrix type
@@ -86,8 +86,8 @@ public final class ObjectMatrixUtils
 
     /**
      * Return an unmodifiable view of the specified 3D object matrix.  Query operations
-     * on the returned 3D object matrix read through to the specified matrix, and attempts
-     * to modify the returned 3D object matrix, whether directly or via its iterator, result
+     * on the returned 3D object matrix read through to the specified matrix, and any attempt
+     * to modify the returned 3D object matrix, whether directly or via its iterator, will result
      * in an <code>UnsupportedOperationException</code>.
      *
      * @param <T> 3D object matrix type
@@ -205,6 +205,12 @@ public final class ObjectMatrixUtils
         }
 
         /** {@inheritDoc} */
+        public void forEachNonNull(final UnaryProcedure<E> procedure)
+        {
+            matrix.forEach(procedure);
+        }
+
+        /** {@inheritDoc} */
         public E get(final long index)
         {
             return matrix.get(index);
@@ -272,6 +278,13 @@ public final class ObjectMatrixUtils
         public ObjectMatrix1D<E> viewSelection(final UnaryPredicate<E> predicate)
         {
             ObjectMatrix1D<E> selection = matrix.viewSelection(predicate);
+            return ObjectMatrixUtils.unmodifiableObjectMatrix(selection);
+        }
+
+        /** {@inheritDoc} */
+        public ObjectMatrix1D<E> viewSelection(final BitMatrix1D mask)
+        {
+            ObjectMatrix1D<E> selection = matrix.viewSelection(mask);
             return ObjectMatrixUtils.unmodifiableObjectMatrix(selection);
         }
 

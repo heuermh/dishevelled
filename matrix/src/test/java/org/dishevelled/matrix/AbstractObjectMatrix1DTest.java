@@ -25,6 +25,8 @@ package org.dishevelled.matrix;
 
 import junit.framework.TestCase;
 
+import org.apache.commons.lang.mutable.MutableInt;
+
 import org.dishevelled.functor.UnaryFunction;
 import org.dishevelled.functor.UnaryPredicate;
 import org.dishevelled.functor.UnaryProcedure;
@@ -226,12 +228,12 @@ public abstract class AbstractObjectMatrix1DTest
         assertEquals("m2 == m", m, m2);
 
         ObjectMatrix1D<String> m3 = m.assign(new UnaryFunction<String,String>()
-                                             {
-                                                 public String evaluate(final String s)
-                                                 {
-                                                     return null;
-                                                 }
-                                             });
+            {
+                public String evaluate(final String s)
+                {
+                    return null;
+                }
+            });
         assertNotNull("m3 not null", m3);
         assertEquals("m3.get(0) == null", null, m3.get(0));
         assertEquals("m3.get(1) == null", null, m3.get(1));
@@ -240,12 +242,12 @@ public abstract class AbstractObjectMatrix1DTest
         assertEquals("m3 == m", m, m3);
 
         ObjectMatrix1D<String> m4 = m.assign(new UnaryFunction<String,String>()
-                                             {
-                                                 public String evaluate(final String s)
-                                                 {
-                                                     return "foo";
-                                                 }
-                                             });
+            {
+                public String evaluate(final String s)
+                {
+                    return "foo";
+                }
+            });
         assertNotNull("m4 not null", m4);
         assertEquals("m4.get(0) == foo", "foo", m4.get(0));
         assertEquals("m4.get(1) == foo", "foo", m4.get(1));
@@ -606,6 +608,54 @@ public abstract class AbstractObjectMatrix1DTest
 
         // TODO:
         // test iterator.remove();
+    }
+
+    public void testForEachNonNull()
+    {
+        ObjectMatrix1D<String> m = createObjectMatrix1D(100);
+        final MutableInt count = new MutableInt();
+
+        count.setValue(0);
+        m.forEachNonNull(new UnaryProcedure<String>()
+             {
+                 public void run(final String s)
+                 {
+                     count.increment();
+                 }
+             });
+        assertEquals("count == 0", 0, count.intValue());
+
+        count.setValue(0);
+        m.setQuick(0L, "foo");
+        m.forEachNonNull(new UnaryProcedure<String>()
+             {
+                 public void run(final String s)
+                 {
+                     count.increment();
+                 }
+             });
+        assertEquals("count == 1", 1, count.intValue());
+
+        count.setValue(0);
+        m.assign("foo");
+        m.forEachNonNull(new UnaryProcedure<String>()
+             {
+                 public void run(final String s)
+                 {
+                     count.increment();
+                 }
+             });
+        assertEquals("count == 100", 100, count.intValue());
+
+        try
+        {
+            m.forEachNonNull(null);
+            fail("forEachNonNull(null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
     }
 
     public void testForEach()

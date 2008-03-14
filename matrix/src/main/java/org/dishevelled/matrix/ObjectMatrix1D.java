@@ -247,6 +247,17 @@ public interface ObjectMatrix1D<E>
     ObjectMatrix1D<E> viewSelection(UnaryPredicate<E> predicate);
 
     /**
+     * Return a new 1D matrix <i>selection view</i> that contains only those values
+     * at the indices present in the specified bit mask.  The view is backed by this matrix, so
+     * changes made to the returned view are reflected in this matrix, and vice-versa.
+     *
+     * @param mask 1D bit mask, must not be null
+     * @return a new 1D matrix <i>selection view</i> that contains only those values
+     *    at the indices present in the specified mask
+     */
+    ObjectMatrix1D<E> viewSelection(BitMatrix1D mask);
+
+    /**
      * Return a new 1D matrix <i>stride view</i> which is a sub matrix
      * consisting of every i-th value in this matrix.  The view is backed
      * by this matrix, so changes made to the returned view are reflected in
@@ -306,6 +317,25 @@ public interface ObjectMatrix1D<E>
      */
     void forEach(UnaryPredicate<E> predicate,
                  UnaryProcedure<E> procedure);
+
+    /**
+     * Apply the specified procedure to each non-null value in this 1D matrix.
+     *
+     * <p>For example:
+     * <pre>
+     * ObjectMatrix1D&lt;String&gt; m;
+     * m.forEachNonNull(new UnaryProcedure&lt;String&gt;()
+     *     {
+     *         public void run(final String value)
+     *         {
+     *             System.out.println(value);
+     *         }
+     *     });
+     * </pre></p>
+     *
+     * @param procedure procedure, must not be null
+     */
+    void forEachNonNull(UnaryProcedure<E> procedure);
 
     /**
      * Apply the specified procedures to each index and value in this
