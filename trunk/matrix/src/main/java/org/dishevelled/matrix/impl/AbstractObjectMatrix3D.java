@@ -33,6 +33,7 @@ import org.dishevelled.functor.BinaryFunction;
 import org.dishevelled.functor.QuaternaryPredicate;
 import org.dishevelled.functor.QuaternaryProcedure;
 
+import org.dishevelled.matrix.BitMatrix3D;
 import org.dishevelled.matrix.ObjectMatrix2D;
 import org.dishevelled.matrix.ObjectMatrix3D;
 
@@ -630,6 +631,12 @@ abstract class AbstractObjectMatrix3D<E>
         return null;
     }
 
+    /** {@inheritDoc} */
+    public ObjectMatrix3D<E> viewSelection(final BitMatrix3D mask)
+    {
+        return null;
+    }
+
     /**
      * Self-modifying version of <code>viewStrides(long, long, long)</code>.
      *
@@ -705,6 +712,18 @@ abstract class AbstractObjectMatrix3D<E>
                 }
             }
         }
+    }
+
+    /** {@inheritDoc} */
+    public void forEachNonNull(final UnaryProcedure<E> procedure)
+    {
+        forEach(new UnaryPredicate<E>()
+            {
+                public boolean test(final E e)
+                {
+                    return (e != null);
+                }
+            }, procedure);
     }
 
     /** {@inheritDoc} */
