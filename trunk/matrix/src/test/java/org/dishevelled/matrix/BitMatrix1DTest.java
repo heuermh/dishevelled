@@ -1289,12 +1289,49 @@ public class BitMatrix1DTest
         assertFalse("bm4 not equals modified bm5", bm4.equals(bm5));
     }
 
-    public void testLargeSizes()
+    /*
+    public void testLargeSizes0()
     {
-        // TODO
-        //BitMatrix1D bm0 = new BitMatrix1D((long) (Integer.MAX_VALUE));
-        //BitMatrix1D bm1 = new BitMatrix1D((long) (Integer.MAX_VALUE + 1l));
-        //BitMatrix1D bm2 = new BitMatrix1D((long) (((long) Integer.MAX_VALUE) * 2l));
-        //BitMatrix1D bm3 = new BitMatrix1D((long) (((long) Integer.MAX_VALUE) * 2l + 1l));
+        long size = (long) (Integer.MAX_VALUE);
+        BitMatrix1D bm = new BitMatrix1D(size);
+        long trueIndex = (size - 1L);
+        long falseIndex = (size - 2L);
+        bm.set(trueIndex, true);
+        assertFalse(bm.get(falseIndex));
+        assertTrue(bm.get(trueIndex));
     }
+
+    public void testLargeSizes1()
+    {
+        long size = (long) (Integer.MAX_VALUE + 1L);
+        BitMatrix1D bm = new BitMatrix1D(size);
+        long trueIndex = (size - 1L);
+        long falseIndex = (size - 2L);
+        bm.set(trueIndex, true);
+        assertFalse(bm.get(falseIndex));
+        assertTrue(bm.get(trueIndex));
+    }
+
+    public void testLargeSizes2()
+    {
+        long size = (long) (Integer.MAX_VALUE * 2L);
+        BitMatrix1D bm = new BitMatrix1D(size);
+        long trueIndex = (size - 1L);
+        long falseIndex = (size - 2L);
+        bm.set(trueIndex, true);
+        assertFalse(bm.get(falseIndex));
+        assertTrue(bm.get(trueIndex));
+    }
+
+    public void testLargeSizes3()
+    {
+        long size = (long) (Integer.MAX_VALUE * 2L + 1L);
+        BitMatrix1D bm = new BitMatrix1D(size);
+        long trueIndex = (size - 1L);
+        long falseIndex = (size - 2L);
+        bm.set(trueIndex, true);
+        assertFalse(bm.get(falseIndex));
+        assertTrue(bm.get(trueIndex));
+    }
+    */
 }

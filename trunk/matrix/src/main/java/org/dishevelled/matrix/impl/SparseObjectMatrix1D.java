@@ -31,6 +31,8 @@ import java.io.ObjectOutputStream;
 import java.util.Map;
 import java.util.HashMap;
 
+import org.dishevelled.functor.UnaryProcedure;
+
 /**
  * Sparse implementation of ObjectMatrix1D based on
  * a hash map whose keys are <code>Long</code>s.
@@ -135,6 +137,48 @@ public class SparseObjectMatrix1D<E>
         else
         {
             elements.put(i, e);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * Overridden for performance.
+     */
+    public void clear()
+    {
+        if (isView)
+        {
+            super.clear();
+        }
+        else
+        {
+            elements.clear();
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * Overridden for performance.
+     */
+    public void forEachNonNull(final UnaryProcedure<E> procedure)
+    {
+        if (isView)
+        {
+            super.forEachNonNull(procedure);
+        }
+        else
+        {
+            if (procedure == null)
+            {
+                throw new IllegalArgumentException("procedure must not be null");
+            }
+
+            for (E e : elements.values())
+            {
+                procedure.run(e);
+            }
         }
     }
 
