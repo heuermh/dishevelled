@@ -323,6 +323,17 @@ public interface ObjectMatrix2D<E>
     ObjectMatrix2D<E> viewSelection(UnaryPredicate<ObjectMatrix1D<E>> predicate);
 
     /**
+     * Return a new 2D matrix <i>selection view</i> that contains only those values
+     * at the indices present in the specified bit mask.  The view is backed by this matrix, so
+     * changes made to the returned view are reflected in this matrix, and vice-versa.
+     *
+     * @param mask 2D bit mask, must not be null
+     * @return a new 2D matrix <i>selection view</i> that contains only those values
+     *    at the indices present in the specified mask
+     */
+    ObjectMatrix2D<E> viewSelection(BitMatrix2D mask);
+
+    /**
      * Return a new 2D matrix <i>stride view</i> which is a sub matrix consisting
      * of every <code>rowStride</code>-th row and every <code>columnStride</code>-th
      * column.  The view is backed by this matrix, so changes made to the returned view
@@ -384,6 +395,25 @@ public interface ObjectMatrix2D<E>
      */
     void forEach(UnaryPredicate<E> predicate,
                  UnaryProcedure<E> procedure);
+
+    /**
+     * Apply the specified procedure to each non-null value in this 2D matrix.
+     *
+     * <p>For example:
+     * <pre>
+     * ObjectMatrix2D&lt;String&gt; m;
+     * m.forEachNonNull(new UnaryProcedure&lt;String&gt;()
+     *     {
+     *         public void run(final String value)
+     *         {
+     *             System.out.println(value);
+     *         }
+     *     });
+     * </pre></p>
+     *
+     * @param procedure procedure, must not be null
+     */
+    void forEachNonNull(UnaryProcedure<E> procedure);
 
     /**
      * Apply the specified procedures to each row and column and

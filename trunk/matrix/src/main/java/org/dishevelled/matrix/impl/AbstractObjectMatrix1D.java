@@ -494,7 +494,7 @@ abstract class AbstractObjectMatrix1D<E>
     {
         forEach(new UnaryPredicate<E>()
                 {
-                    public boolean test(E e)
+                    public boolean test(final E e)
                     {
                         return (e != null);
                     }

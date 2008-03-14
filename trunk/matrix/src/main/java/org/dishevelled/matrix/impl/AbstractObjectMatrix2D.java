@@ -26,6 +26,7 @@ package org.dishevelled.matrix.impl;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+import org.dishevelled.matrix.BitMatrix2D;
 import org.dishevelled.matrix.ObjectMatrix1D;
 import org.dishevelled.matrix.ObjectMatrix2D;
 
@@ -571,6 +572,12 @@ abstract class AbstractObjectMatrix2D<E>
         return null;
     }
 
+    /** {@inheritDoc} */
+    public ObjectMatrix2D<E> viewSelection(final BitMatrix2D mask)
+    {
+        return null;
+    }
+
     /**
      * Self-modifying version of <code>viewStrides(long, long)</code>.
      *
@@ -644,6 +651,18 @@ abstract class AbstractObjectMatrix2D<E>
                 }
             }
         }
+    }
+
+    /** {@inheritDoc} */
+    public void forEachNonNull(final UnaryProcedure<E> procedure)
+    {
+        forEach(new UnaryPredicate<E>()
+            {
+                public boolean test(final E e)
+                {
+                    return (e != null);
+                }
+            }, procedure);
     }
 
     /** {@inheritDoc} */

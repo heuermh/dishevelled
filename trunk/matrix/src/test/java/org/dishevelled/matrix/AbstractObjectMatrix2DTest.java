@@ -25,6 +25,8 @@ package org.dishevelled.matrix;
 
 import junit.framework.TestCase;
 
+import org.apache.commons.lang.mutable.MutableInt;
+
 import org.dishevelled.functor.UnaryFunction;
 import org.dishevelled.functor.UnaryPredicate;
 import org.dishevelled.functor.UnaryProcedure;
@@ -661,6 +663,54 @@ public abstract class AbstractObjectMatrix2DTest
         assertEquals("count == size", m.size(), count);
         assertEquals("nulls == (size - cardinality)", (m.size() - m.cardinality()), nulls);
         assertEquals("foos == cardinality", m.cardinality(), foos);
+    }
+
+    public void testForEachNonNull()
+    {
+        ObjectMatrix2D<String> m = createObjectMatrix2D(10, 10);
+        final MutableInt count = new MutableInt();
+
+        count.setValue(0);
+        m.forEachNonNull(new UnaryProcedure<String>()
+             {
+                 public void run(final String s)
+                 {
+                     count.increment();
+                 }
+             });
+        assertEquals("count == 0", 0, count.intValue());
+
+        count.setValue(0);
+        m.setQuick(0L, 0L, "foo");
+        m.forEachNonNull(new UnaryProcedure<String>()
+             {
+                 public void run(final String s)
+                 {
+                     count.increment();
+                 }
+             });
+        assertEquals("count == 1", 1, count.intValue());
+
+        count.setValue(0);
+        m.assign("foo");
+        m.forEachNonNull(new UnaryProcedure<String>()
+             {
+                 public void run(final String s)
+                 {
+                     count.increment();
+                 }
+             });
+        assertEquals("count == 100", 100, count.intValue());
+
+        try
+        {
+            m.forEachNonNull(null);
+            fail("forEachNonNull(null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
     }
 
     public void testForEach()
