@@ -702,6 +702,17 @@ public abstract class AbstractObjectMatrix2DTest
              });
         assertEquals("count == 100", 100, count.intValue());
 
+        ObjectMatrix1D<String> row = m.viewRow(0);
+        count.setValue(0);
+        row.forEachNonNull(new UnaryProcedure<String>()
+             {
+                 public void run(final String s)
+                 {
+                     count.increment();
+                 }
+             });
+        assertEquals("count == 10", 10, count.intValue());
+
         try
         {
             m.forEachNonNull(null);
