@@ -31,6 +31,8 @@ import java.io.ObjectOutputStream;
 import java.util.Map;
 import java.util.HashMap;
 
+import org.dishevelled.functor.UnaryProcedure;
+
 import org.dishevelled.matrix.ObjectMatrix1D;
 
 /**
@@ -155,6 +157,48 @@ public class SparseObjectMatrix2D<E>
         else
         {
             elements.put(index, e);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * Overridden for performance.
+     */
+    public void clear()
+    {
+        if (isView)
+        {
+            super.clear();
+        }
+        else
+        {
+            elements.clear();
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * Overridden for performance.
+     */
+    public void forEachNonNull(final UnaryProcedure<E> procedure)
+    {
+        if (isView)
+        {
+            super.forEachNonNull(procedure);
+        }
+        else
+        {
+            if (procedure == null)
+            {
+                throw new IllegalArgumentException("procedure must not be null");
+            }
+
+            for (E e : elements.values())
+            {
+                procedure.run(e);
+            }
         }
     }
 
