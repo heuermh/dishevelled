@@ -636,6 +636,28 @@ public abstract class AbstractObjectMatrix3DTest
              });
         assertEquals("count == 1000", 1000, count.intValue());
 
+        ObjectMatrix2D<String> slice = m.viewSlice(0);
+        count.setValue(0);
+        slice.forEachNonNull(new UnaryProcedure<String>()
+             {
+                 public void run(final String s)
+                 {
+                     count.increment();
+                 }
+             });
+        assertEquals("count == 100", 100, count.intValue());
+
+        ObjectMatrix1D<String> firstRowOfSlice = slice.viewRow(0);
+        count.setValue(0);
+        firstRowOfSlice.forEachNonNull(new UnaryProcedure<String>()
+             {
+                 public void run(final String s)
+                 {
+                     count.increment();
+                 }
+             });
+        assertEquals("count == 10", 10, count.intValue());
+
         try
         {
             m.forEachNonNull(null);
