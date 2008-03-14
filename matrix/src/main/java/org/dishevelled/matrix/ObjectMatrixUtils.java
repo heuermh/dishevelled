@@ -634,6 +634,12 @@ public final class ObjectMatrixUtils
         }
 
         /** {@inheritDoc} */
+        public void forEachNonNull(final UnaryProcedure<E> procedure)
+        {
+            matrix.forEachNonNull(procedure);
+        }
+
+        /** {@inheritDoc} */
         public void forEach(final UnaryPredicate<E> predicate,
                             final UnaryProcedure<E> procedure)
         {
@@ -761,6 +767,13 @@ public final class ObjectMatrixUtils
         public ObjectMatrix3D<E> viewSelection(final UnaryPredicate<ObjectMatrix2D<E>> predicate)
         {
             ObjectMatrix3D<E> selection = matrix.viewSelection(predicate);
+            return ObjectMatrixUtils.unmodifiableObjectMatrix(selection);
+        }
+
+        /** {@inheritDoc} */
+        public ObjectMatrix3D<E> viewSelection(final BitMatrix3D mask)
+        {
+            ObjectMatrix3D<E> selection = matrix.viewSelection(mask);
             return ObjectMatrixUtils.unmodifiableObjectMatrix(selection);
         }
 
