@@ -31,8 +31,15 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import net.sf.stax.SAX2StAXAdaptor;
 import net.sf.stax.StAXContentHandlerBase;
+import net.sf.stax.StAXContext;
+import net.sf.stax.StAXDelegationContext;
 
 import org.xml.sax.XMLReader;
 import org.xml.sax.Attributes;
@@ -42,6 +49,9 @@ import org.xml.sax.ContentHandler;
 import org.xml.sax.SAXParseException;
 
 import org.dishevelled.graph.Graph;
+import org.dishevelled.graph.Node;
+
+import org.dishevelled.graph.impl.GraphUtils;
 
 import org.dishevelled.graph.io.GraphReader;
 
@@ -172,6 +182,74 @@ public final class GraphMLReader<N, E>
     private class GraphHandler
         extends StAXContentHandlerBase
     {
+        /** Graph. */
+        private final Graph<N, E> graph = GraphUtils.createGraph();
+
+        /** Nodes mapped by id. */
+        private final Map<String, Node<N, E>> nodes = new HashMap<String, Node<N, E>>();
+
+        /** List of deferred edges. */
+        private final List<EdgePlaceholder> deferredEdges = new ArrayList<EdgePlaceholder>();
+
+
+        /** {@inheritDoc} */
+        public void startElement(final String nsURI,
+                                 final String localName,
+                                 final String qName,
+                                 final Attributes attrs,
+                                 final StAXDelegationContext dctx)
+            throws SAXException
+        {
+            if ("node".equals(qName))
+            {
+                String id = attrs.getValue("id");
+                if (!nodes.containsKey(id))
+                {
+                    nodes.put(id, graph.createNode((N) null));
+                    //nodes.put(id, graph.createNode(id));
+                }
+            }
+            else if ("edge".equals(qName))
+            {
+                String edgeId = attrs.getValue("id");
+                String sourceId = attrs.getValue("source");
+                String targetId = attrs.getValue("target");
+
+                Node<N, E> source = nodes.get(sourceId);
+                Node<N, E> target = nodes.get(targetId);
+                if (source != null && target != null)
+                {
+                    graph.createEdge(source, target, (E) null);
+                    //graph.createEdge(source, target, edgeId);
+                }
+                else
+                {
+                    deferredEdges.add(new EdgePlaceholder(edgeId, sourceId, targetId));
+                }
+            }
+        }
+
+        /** {@inheritDoc} */
+        public Object endTree(final StAXContext context)
+            throws SAXException
+        {
+            for (EdgePlaceholder edge : deferredEdges)
+            {
+                Node<N, E> source = nodes.get(edge.getSourceId());
+                Node<N, E> target = nodes.get(edge.getTargetId());
+                if (source != null && target != null)
+                {
+                    graph.createEdge(source, target, (E) null);
+                    //graph.createEdge(source, target, edge.getEdgeId());
+                }
+                else
+                {
+                    throw new SAXException("could not resolve deferred edge, id=" + edge.getEdgeId()
+                                           + " source=" + edge.getSourceId() + " target=" + edge.getTargetId());
+                }
+            }
+            return graph;
+        }
 
         /**
          * Return the graph for this graph element handler.
@@ -180,7 +258,67 @@ public final class GraphMLReader<N, E>
          */
         Graph<N, E> getGraph()
         {
-            return null;
+            return graph;
+        }
+
+        /**
+         * Edge placeholder.
+         */
+        private class EdgePlaceholder
+        {
+            /** Edge id. */
+            private final String edgeId;
+
+            /** Source id. */
+            private final String sourceId;
+
+            /** Target id. */
+            private final String targetId;
+
+
+            /**
+             * Create a new edge placeholder.
+             *
+             * @param edgeId edge id
+             * @param sourceId source id
+             * @param targetId target id
+             */
+            EdgePlaceholder(final String edgeId, final String sourceId, final String targetId)
+            {
+                this.edgeId = edgeId;
+                this.sourceId = sourceId;
+                this.targetId = targetId;
+            }
+
+            /**
+             * Return the edge id.
+             *
+             * @return the edge id
+             */
+            String getEdgeId()
+            {
+                return edgeId;
+            }
+
+            /**
+             * Return the source id.
+             *
+             * @return the source id
+             */
+            String getSourceId()
+            {
+                return sourceId;
+            }
+
+            /**
+             * Return the target id.
+             *
+             * @return the target id
+             */
+            String getTargetId()
+            {
+                return targetId;
+            }
         }
     }
 }
