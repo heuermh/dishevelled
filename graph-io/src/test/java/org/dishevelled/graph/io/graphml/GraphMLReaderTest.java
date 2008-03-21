@@ -89,7 +89,7 @@ public final class GraphMLReaderTest
         }
     }
 
-    public void testEmptyInputStream() throws IOException
+    public void testEmpty()
     {
         InputStream inputStream = null;
         try
@@ -97,8 +97,104 @@ public final class GraphMLReaderTest
             inputStream = getClass().getResourceAsStream("empty.xml");
             GraphMLReader<String, Integer> graphReader = new GraphMLReader<String, Integer>(xmlReader);            
             Graph<String, Integer> graph = graphReader.read(inputStream);
+            fail("read(empty.xml) expected IOException");
+        }
+        catch (IOException e)
+        {
+            // expected
+        }
+        finally
+        {
+            try
+            {
+                if (inputStream != null)
+                {
+                    inputStream.close();
+                }
+            }
+            catch (IOException e)
+            {
+                // ignore
+            }
+        }
+    }
+
+    public void testEmptyGraph()
+    {
+        InputStream inputStream = null;
+        try
+        {
+            inputStream = getClass().getResourceAsStream("emptyGraph.xml");
+            GraphMLReader<String, Integer> graphReader = new GraphMLReader<String, Integer>(xmlReader);            
+            Graph<String, Integer> graph = graphReader.read(inputStream);
             assertNotNull(graph);
             assertTrue(graph.isEmpty());
+        }
+        catch (IOException e)
+        {
+            fail(e.getMessage());
+        }
+        finally
+        {
+            try
+            {
+                if (inputStream != null)
+                {
+                    inputStream.close();
+                }
+            }
+            catch (IOException e)
+            {
+                // ignore
+            }
+        }
+    }
+
+    public void testGraph0()
+    {
+        InputStream inputStream = null;
+        try
+        {
+            inputStream = getClass().getResourceAsStream("graph0.xml");
+            GraphMLReader<String, Integer> graphReader = new GraphMLReader<String, Integer>(xmlReader);            
+            Graph<String, Integer> graph = graphReader.read(inputStream);
+            assertNotNull(graph);
+            assertFalse(graph.isEmpty());
+            assertEquals(5, graph.nodeCount());
+            assertEquals(20, graph.edgeCount());
+        }
+        catch (IOException e)
+        {
+            fail(e.getMessage());
+        }
+        finally
+        {
+            try
+            {
+                if (inputStream != null)
+                {
+                    inputStream.close();
+                }
+            }
+            catch (IOException e)
+            {
+                // ignore
+            }
+        }
+    }
+
+    public void testGraph1()
+    {
+        InputStream inputStream = null;
+        try
+        {
+            inputStream = getClass().getResourceAsStream("graph1.xml");
+            GraphMLReader<String, Integer> graphReader = new GraphMLReader<String, Integer>(xmlReader);            
+            Graph<String, Integer> graph = graphReader.read(inputStream);
+            assertNotNull(graph);
+            assertFalse(graph.isEmpty());
+            assertEquals(5, graph.nodeCount());
+            assertEquals(20, graph.edgeCount());
         }
         catch (IOException e)
         {
