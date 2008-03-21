@@ -1,32 +1,33 @@
 <?xml version="1.0"?>
-<graphml
-    xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns/graphml"
-    xmlns="http://graphml.graphdrawing.org/xmlns/graphml"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-<graph id="G" edgedefault="directed" />
-  <node id="n0"/>
-  <node id="n1"/>
-  <node id="n2"/>
-  <node id="n3"/>
-  <node id="n4"/>
-  <edge id="e0" source="n0" target="n1"/>
-  <edge id="e1" source="n0" target="n2"/>
-  <edge id="e2" source="n0" target="n3"/>
-  <edge id="e3" source="n0" target="n4"/>
-  <edge id="e4" source="n1" target="n0"/>
-  <edge id="e5" source="n1" target="n2"/>
-  <edge id="e6" source="n1" target="n3"/>
-  <edge id="e7" source="n1" target="n4"/>
-  <edge id="e8" source="n2" target="n1"/>
-  <edge id="e9" source="n2" target="n0"/>
-  <edge id="e10" source="n2" target="n3"/>
-  <edge id="e11" source="n2" target="n4"/>
-  <edge id="e12" source="n3" target="n1"/>
-  <edge id="e13" source="n3" target="n2"/>
-  <edge id="e14" source="n3" target="n0"/>
-  <edge id="e15" source="n3" target="n4"/>
-  <edge id="e16" source="n4" target="n1"/>
-  <edge id="e17" source="n4" target="n2"/>
-  <edge id="e18" source="n4" target="n3"/>
-  <edge id="e19" source="n4" target="n0"/>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns"  
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">
+
+  <graph id="G" edgedefault="directed">
+    <node id="n0"/>
+    <node id="n1"/>
+    <node id="n2"/>
+    <node id="n3"/>
+    <node id="n4"/>
+    <edge id="e0" source="n0" target="n1"/>
+    <edge id="e1" source="n0" target="n2"/>
+    <edge id="e2" source="n0" target="n3"/>
+    <edge id="e3" source="n0" target="n4"/>
+    <edge id="e4" source="n1" target="n0"/>
+    <edge id="e5" source="n1" target="n2"/>
+    <edge id="e6" source="n1" target="n3"/>
+    <edge id="e7" source="n1" target="n4"/>
+    <edge id="e8" source="n2" target="n1"/>
+    <edge id="e9" source="n2" target="n0"/>
+    <edge id="e10" source="n2" target="n3"/>
+    <edge id="e11" source="n2" target="n4"/>
+    <edge id="e12" source="n3" target="n1"/>
+    <edge id="e13" source="n3" target="n2"/>
+    <edge id="e14" source="n3" target="n0"/>
+    <edge id="e15" source="n3" target="n4"/>
+    <edge id="e16" source="n4" target="n1"/>
+    <edge id="e17" source="n4" target="n2"/>
+    <edge id="e18" source="n4" target="n3"/>
+    <edge id="e19" source="n4" target="n0"/>
+  </graph>
 </graphml>

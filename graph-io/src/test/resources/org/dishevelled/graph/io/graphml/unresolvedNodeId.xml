@@ -28,7 +28,6 @@
     <edge id="e17" source="n4" target="n2"/>
     <edge id="e18" source="n4" target="n3"/>
     <edge id="e19" source="n4" target="n0"/>
-    <!-- node encountered after edges, will cause them to defer -->
-    <node id="n4"/>
+    <!-- node id n4 unresolved -->
   </graph>
 </graphml>

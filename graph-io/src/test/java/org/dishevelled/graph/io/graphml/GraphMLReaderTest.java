@@ -29,6 +29,9 @@ import java.io.IOException;
 import javax.xml.parsers.SAXParserFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import net.sf.stax.DoubleElementHandler;
+import net.sf.stax.StringElementHandler;
+
 import org.dishevelled.graph.Graph;
 
 import org.dishevelled.graph.io.AbstractGraphReaderTest;
@@ -75,12 +78,12 @@ public final class GraphMLReaderTest
 
     public void testConstructor()
     {
-        GraphMLReader<String, Integer> graphReader0 = new GraphMLReader<String, Integer>(xmlReader);
+        GraphMLReader<String, Double> graphReader0 = new GraphMLReader<String, Double>(xmlReader);
         assertNotNull(graphReader0);
 
         try
         {
-            GraphMLReader<String, Integer> graphReader = new GraphMLReader<String, Integer>(null);
+            GraphMLReader<String, Double> graphReader = new GraphMLReader<String, Double>(null);
             fail("ctr(null) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
@@ -95,13 +98,44 @@ public final class GraphMLReaderTest
         try
         {
             inputStream = getClass().getResourceAsStream("empty.xml");
-            GraphMLReader<String, Integer> graphReader = new GraphMLReader<String, Integer>(xmlReader);            
-            Graph<String, Integer> graph = graphReader.read(inputStream);
+            GraphMLReader<String, Double> graphReader = new GraphMLReader<String, Double>(xmlReader);            
+            Graph<String, Double> graph = graphReader.read(inputStream);
             fail("read(empty.xml) expected IOException");
         }
         catch (IOException e)
         {
             // expected
+        }
+        finally
+        {
+            try
+            {
+                if (inputStream != null)
+                {
+                    inputStream.close();
+                }
+            }
+            catch (IOException e)
+            {
+                // ignore
+            }
+        }
+    }
+
+    public void testEmptyGraphml()
+    {
+        InputStream inputStream = null;
+        try
+        {
+            inputStream = getClass().getResourceAsStream("emptyGraphml.xml");
+            GraphMLReader<String, Double> graphReader = new GraphMLReader<String, Double>(xmlReader);            
+            Graph<String, Double> graph = graphReader.read(inputStream);
+            assertNotNull(graph);
+            assertTrue(graph.isEmpty());
+        }
+        catch (IOException e)
+        {
+            fail(e.getMessage());
         }
         finally
         {
@@ -125,8 +159,8 @@ public final class GraphMLReaderTest
         try
         {
             inputStream = getClass().getResourceAsStream("emptyGraph.xml");
-            GraphMLReader<String, Integer> graphReader = new GraphMLReader<String, Integer>(xmlReader);            
-            Graph<String, Integer> graph = graphReader.read(inputStream);
+            GraphMLReader<String, Double> graphReader = new GraphMLReader<String, Double>(xmlReader);            
+            Graph<String, Double> graph = graphReader.read(inputStream);
             assertNotNull(graph);
             assertTrue(graph.isEmpty());
         }
@@ -156,8 +190,8 @@ public final class GraphMLReaderTest
         try
         {
             inputStream = getClass().getResourceAsStream("graph0.xml");
-            GraphMLReader<String, Integer> graphReader = new GraphMLReader<String, Integer>(xmlReader);            
-            Graph<String, Integer> graph = graphReader.read(inputStream);
+            GraphMLReader<String, Double> graphReader = new GraphMLReader<String, Double>(xmlReader);            
+            Graph<String, Double> graph = graphReader.read(inputStream);
             assertNotNull(graph);
             assertFalse(graph.isEmpty());
             assertEquals(5, graph.nodeCount());
@@ -189,12 +223,120 @@ public final class GraphMLReaderTest
         try
         {
             inputStream = getClass().getResourceAsStream("graph1.xml");
-            GraphMLReader<String, Integer> graphReader = new GraphMLReader<String, Integer>(xmlReader);            
-            Graph<String, Integer> graph = graphReader.read(inputStream);
+            GraphMLReader<String, Double> graphReader = new GraphMLReader<String, Double>(xmlReader);            
+            Graph<String, Double> graph = graphReader.read(inputStream);
             assertNotNull(graph);
             assertFalse(graph.isEmpty());
             assertEquals(5, graph.nodeCount());
             assertEquals(20, graph.edgeCount());
+        }
+        catch (IOException e)
+        {
+            fail(e.getMessage());
+        }
+        finally
+        {
+            try
+            {
+                if (inputStream != null)
+                {
+                    inputStream.close();
+                }
+            }
+            catch (IOException e)
+            {
+                // ignore
+            }
+        }
+    }
+
+    public void testUnresolvedNodeId()
+    {
+        InputStream inputStream = null;
+        try
+        {
+            inputStream = getClass().getResourceAsStream("unresolvedNodeId.xml");
+            GraphMLReader<String, Double> graphReader = new GraphMLReader<String, Double>(xmlReader);            
+            Graph<String, Double> graph = graphReader.read(inputStream);
+            fail("read(unresolvedNodeId.xml) expected IOException");
+        }
+        catch (IOException e)
+        {
+            // expected
+        }
+        finally
+        {
+            try
+            {
+                if (inputStream != null)
+                {
+                    inputStream.close();
+                }
+            }
+            catch (IOException e)
+            {
+                // ignore
+            }
+        }
+    }
+
+    public void testIgnorableValues()
+    {
+        InputStream inputStream = null;
+        try
+        {
+            inputStream = getClass().getResourceAsStream("ignorableValues.xml");
+            GraphMLReader<String, Double> graphReader = new GraphMLReader<String, Double>(xmlReader);            
+            Graph<String, Double> graph = graphReader.read(inputStream);
+            assertNotNull(graph);
+            assertFalse(graph.isEmpty());
+            assertEquals(5, graph.nodeCount());
+            assertEquals(20, graph.edgeCount());
+        }
+        catch (IOException e)
+        {
+            fail(e.getMessage());
+        }
+        finally
+        {
+            try
+            {
+                if (inputStream != null)
+                {
+                    inputStream.close();
+                }
+            }
+            catch (IOException e)
+            {
+                // ignore
+            }
+        }
+    }
+
+    public void testDataElementValues()
+    {
+        InputStream inputStream = null;
+        try
+        {
+            inputStream = getClass().getResourceAsStream("dataElementValues.xml");
+            GraphMLReader<String, Double> graphReader = new GraphMLReader<String, Double>(xmlReader);            
+            graphReader.setNodeValueHandler(new StringElementHandler());
+            graphReader.setEdgeValueHandler(new DoubleElementHandler());
+
+            Graph<String, Double> graph = graphReader.read(inputStream);
+            assertNotNull(graph);
+            assertFalse(graph.isEmpty());
+            assertEquals(5, graph.nodeCount());
+            assertEquals(20, graph.edgeCount());
+
+            for (String nodeValue : graph.nodeValues())
+            {
+                assertTrue(nodeValue.startsWith("Node"));
+            }
+            for (Double edgeValue : graph.edgeValues())
+            {
+                assertTrue(edgeValue >= 1.0d);
+            }
         }
         catch (IOException e)
         {
