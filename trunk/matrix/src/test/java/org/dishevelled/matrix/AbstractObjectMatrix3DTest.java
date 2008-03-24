@@ -636,6 +636,17 @@ public abstract class AbstractObjectMatrix3DTest
              });
         assertEquals("count == 1000", 1000, count.intValue());
 
+        ObjectMatrix3D<String> rowFlip = m.viewRowFlip();
+        count.setValue(0);
+        rowFlip.forEachNonNull(new UnaryProcedure<String>()
+             {
+                 public void run(final String s)
+                 {
+                     count.increment();
+                 }
+             });
+        assertEquals("count == 1000", 1000, count.intValue());
+
         ObjectMatrix2D<String> slice = m.viewSlice(0);
         count.setValue(0);
         slice.forEachNonNull(new UnaryProcedure<String>()
@@ -798,5 +809,22 @@ public abstract class AbstractObjectMatrix3DTest
         assertEquals("lastColumn.get(0, 1) == 0x1x9", "0x1x9", lastColumn.get(0, 1));
         assertEquals("lastColumn.get(1, 1) == 1x1x9", "1x1x9", lastColumn.get(1, 1));
         assertEquals("lastColumn.get(9, 9) == 9x9x9", "9x9x9", lastColumn.get(9, 9));
+    }
+
+    public void testRowFlip()
+    {
+        ObjectMatrix3D<String> m = createObjectMatrix3D(10, 10, 10);
+        ObjectMatrix3D<String> rowFlip = m.viewRowFlip();
+        assertNotNull("rowFlip not null", rowFlip);
+        assertEquals("rowFlip size == m size", m.size(), rowFlip.size());
+        assertEquals("rowFlip cardinality == m cardinality", m.cardinality(), rowFlip.cardinality());
+
+        rowFlip.assign("foo");
+        assertEquals("rowFlip size == m size", m.size(), rowFlip.size());
+        assertEquals("rowFlip cardinality == m cardinality", m.cardinality(), rowFlip.cardinality());
+
+        rowFlip.clear();
+        assertEquals("rowFlip size == m size", m.size(), rowFlip.size());
+        assertEquals("rowFlip cardinality == m cardinality", m.cardinality(), rowFlip.cardinality());
     }
 }
