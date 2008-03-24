@@ -52,6 +52,7 @@ public final class GraphMLReaderTest
     /** XML Reader. */
     private XMLReader xmlReader;
 
+
     /** {@inheritDoc} */
     protected void setUp()
         throws Exception
@@ -74,6 +75,26 @@ public final class GraphMLReaderTest
     protected <N, E> GraphReader<N, E> createGraphReader()
     {
         return new GraphMLReader(xmlReader);
+    }
+
+    /**
+     * Close the specified input stream quietly.
+     *
+     * @param inputStream input stream to close
+     */
+    private void closeQuietly(final InputStream inputStream)
+    {
+        try
+        {
+            if (inputStream != null)
+            {
+                inputStream.close();
+            }
+        }
+        catch (IOException e)
+        {
+            // ignore
+        }
     }
 
     public void testConstructor()
@@ -108,17 +129,7 @@ public final class GraphMLReaderTest
         }
         finally
         {
-            try
-            {
-                if (inputStream != null)
-                {
-                    inputStream.close();
-                }
-            }
-            catch (IOException e)
-            {
-                // ignore
-            }
+            closeQuietly(inputStream);
         }
     }
 
@@ -139,17 +150,7 @@ public final class GraphMLReaderTest
         }
         finally
         {
-            try
-            {
-                if (inputStream != null)
-                {
-                    inputStream.close();
-                }
-            }
-            catch (IOException e)
-            {
-                // ignore
-            }
+            closeQuietly(inputStream);
         }
     }
 
@@ -170,17 +171,7 @@ public final class GraphMLReaderTest
         }
         finally
         {
-            try
-            {
-                if (inputStream != null)
-                {
-                    inputStream.close();
-                }
-            }
-            catch (IOException e)
-            {
-                // ignore
-            }
+            closeQuietly(inputStream);
         }
     }
 
@@ -203,17 +194,7 @@ public final class GraphMLReaderTest
         }
         finally
         {
-            try
-            {
-                if (inputStream != null)
-                {
-                    inputStream.close();
-                }
-            }
-            catch (IOException e)
-            {
-                // ignore
-            }
+            closeQuietly(inputStream);
         }
     }
 
@@ -236,17 +217,7 @@ public final class GraphMLReaderTest
         }
         finally
         {
-            try
-            {
-                if (inputStream != null)
-                {
-                    inputStream.close();
-                }
-            }
-            catch (IOException e)
-            {
-                // ignore
-            }
+            closeQuietly(inputStream);
         }
     }
 
@@ -266,17 +237,7 @@ public final class GraphMLReaderTest
         }
         finally
         {
-            try
-            {
-                if (inputStream != null)
-                {
-                    inputStream.close();
-                }
-            }
-            catch (IOException e)
-            {
-                // ignore
-            }
+            closeQuietly(inputStream);
         }
     }
 
@@ -299,17 +260,7 @@ public final class GraphMLReaderTest
         }
         finally
         {
-            try
-            {
-                if (inputStream != null)
-                {
-                    inputStream.close();
-                }
-            }
-            catch (IOException e)
-            {
-                // ignore
-            }
+            closeQuietly(inputStream);
         }
     }
 
@@ -344,17 +295,75 @@ public final class GraphMLReaderTest
         }
         finally
         {
-            try
+            closeQuietly(inputStream);
+        }
+    }
+
+    public void testDataElementValuesNoValueHandlers()
+    {
+        InputStream inputStream = null;
+        try
+        {
+            inputStream = getClass().getResourceAsStream("dataElementValues.xml");
+            GraphMLReader<String, Double> graphReader = new GraphMLReader<String, Double>(xmlReader);
+
+            Graph<String, Double> graph = graphReader.read(inputStream);
+            assertNotNull(graph);
+            assertFalse(graph.isEmpty());
+            assertEquals(5, graph.nodeCount());
+            assertEquals(20, graph.edgeCount());
+
+            for (String nodeValue : graph.nodeValues())
             {
-                if (inputStream != null)
-                {
-                    inputStream.close();
-                }
+                assertEquals(null, nodeValue);
             }
-            catch (IOException e)
+            for (Double edgeValue : graph.edgeValues())
             {
-                // ignore
+                assertEquals(null, edgeValue);
             }
+        }
+        catch (IOException e)
+        {
+            fail(e.getMessage());
+        }
+        finally
+        {
+            closeQuietly(inputStream);
+        }
+    }
+
+    public void testDataElementValuesNullValueHandlers()
+    {
+        InputStream inputStream = null;
+        try
+        {
+            inputStream = getClass().getResourceAsStream("dataElementValues.xml");
+            GraphMLReader<String, Double> graphReader = new GraphMLReader<String, Double>(xmlReader);
+            graphReader.setNodeValueHandler(null);
+            graphReader.setEdgeValueHandler(null);
+
+            Graph<String, Double> graph = graphReader.read(inputStream);
+            assertNotNull(graph);
+            assertFalse(graph.isEmpty());
+            assertEquals(5, graph.nodeCount());
+            assertEquals(20, graph.edgeCount());
+
+            for (String nodeValue : graph.nodeValues())
+            {
+                assertEquals(null, nodeValue);
+            }
+            for (Double edgeValue : graph.edgeValues())
+            {
+                assertEquals(null, edgeValue);
+            }
+        }
+        catch (IOException e)
+        {
+            fail(e.getMessage());
+        }
+        finally
+        {
+            closeQuietly(inputStream);
         }
     }
 }

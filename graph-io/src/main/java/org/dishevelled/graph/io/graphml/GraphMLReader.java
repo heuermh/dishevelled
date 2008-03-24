@@ -93,9 +93,11 @@ public final class GraphMLReader<N, E>
 
     /**
      * Set the node value handler for this GraphML handler to <code>nodeValueHandler</code>.
+     * <p>
      * The specified node value handler will be delegated to with the XML subtree within the
      * <code>&lt;node&gt;</code> element, typically with one or more <code>&lt;data&gt;</code>
      * elements.
+     * </p>
      *
      * @param nodeValueHandler node value handler
      */
@@ -106,9 +108,11 @@ public final class GraphMLReader<N, E>
 
     /**
      * Set the edge value handler for this GraphML handler to <code>edgeValueHandler</code>.
+     * <p>
      * The specified edge value handler will be delegated to with the XML subtree within the
      * <code>&lt;edge&gt;</code> element, typically with one or more <code>&lt;data&gt;</code>
      * elements.
+     * </p>
      *
      * @param edgeValueHandler edge value handler
      */
