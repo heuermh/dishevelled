@@ -34,8 +34,12 @@ import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
 
+import org.apache.commons.math.stat.descriptive.SummaryStatistics;
+
 import org.dishevelled.cluster.Cluster;
 import org.dishevelled.cluster.ClusteringAlgorithm;
+import org.dishevelled.cluster.ClusteringAlgorithmAdapter;
+import org.dishevelled.cluster.ClusteringAlgorithmEvent;
 import org.dishevelled.cluster.ClusteringAlgorithmException;
 import org.dishevelled.cluster.ExitStrategy;
 import org.dishevelled.cluster.Similarity;
@@ -93,6 +97,8 @@ public final class ConnectedComponentsExample
         List<String> values = readValues();        
         ClusteringAlgorithm<String> algo = new ConnectedComponents<String>(cutoff);
         Similarity<String> similarity = new LevenshteinDistanceSimilarity();
+        SimilarityStats stats = new SimilarityStats();
+        algo.addClusteringAlgorithmListener(stats);
         // TODO:  should create a NullExitStrategy or something similar
         ExitStrategy<String> exitStrategy = new IterationLimitExitStrategy(99);
         try
@@ -110,11 +116,16 @@ public final class ConnectedComponentsExample
             }
             System.out.println("Total values: " + values.size());
             System.out.println("Total clusters: " + i);
+            System.out.println("Similarity stats: " + stats);
         }
         catch (ClusteringAlgorithmException e)
         {
             e.printStackTrace();
             System.exit(-1);
+        }
+        finally
+        {
+            algo.removeClusteringAlgorithmListener(stats);
         }
     }
 
@@ -169,6 +180,28 @@ public final class ConnectedComponentsExample
             double maxDistance = (double) Math.max(value1.length(), value2.length());
             double similarity = 1.0d - (distance / maxDistance);
             return similarity;
+        }
+    }
+
+    /**
+     * Similarity stats.
+     */
+    private static class SimilarityStats extends ClusteringAlgorithmAdapter<String>
+    {
+        /** Summary statistics. */
+        final SummaryStatistics stats = new SummaryStatistics();
+
+
+        /** {@inheritDoc} */
+        public void similarityCalculated(final ClusteringAlgorithmEvent<String> event)
+        {
+            stats.addValue(event.getSimilarity());
+        }
+
+        /** {@inheritDoc} */
+        public String toString()
+        {
+            return "min=" + stats.getMin() + " max=" + stats.getMax() + " mean=" + stats.getMean() + " stdev=" + stats.getStandardDeviation();
         }
     }
 
