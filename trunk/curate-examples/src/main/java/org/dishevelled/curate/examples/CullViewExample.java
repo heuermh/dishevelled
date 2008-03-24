@@ -67,6 +67,7 @@ public final class CullViewExample
         }
 
         cullDialog = new CullDialog<String>();
+        cullDialog.setTitle("Cull view example dialog");
         cullPanel = new CullPanel<String>();
 
         cullDialog.setInput(strings);
