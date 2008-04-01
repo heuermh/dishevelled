@@ -3,35 +3,35 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">
 
-  <key id="d0" for="node" attr.name="name" attr.type="string">
+  <key id="k0" for="node" attr.name="name" attr.type="string">
     <default>Untitled</default>
   </key>
-  <key id="d1" for="edge" attr.name="weight" attr.type="double"/>
+  <key id="k1" for="edge" attr.name="weight" attr.type="double"/>
   <graph id="G" edgedefault="directed">
-    <node id="n0"><data key="d0">Node n0</data></node>
-    <node id="n1"><data key="d0">Node n1</data></node>
-    <node id="n2"><data key="d0">Node n2</data></node>
-    <node id="n3"><data key="d0">Node n3</data></node>
-    <node id="n4"><data key="d0">Node n4</data></node>
-    <edge id="e0" source="n0" target="n1"><data key="d1">1.0d</data></edge>
-    <edge id="e1" source="n0" target="n2"><data key="d1">1.1d</data></edge>
-    <edge id="e2" source="n0" target="n3"><data key="d1">1.2d</data></edge>
-    <edge id="e3" source="n0" target="n4"><data key="d1">1.3d</data></edge>
-    <edge id="e4" source="n1" target="n0"><data key="d1">1.4d</data></edge>
-    <edge id="e5" source="n1" target="n2"><data key="d1">1.5d</data></edge>
-    <edge id="e6" source="n1" target="n3"><data key="d1">1.6d</data></edge>
-    <edge id="e7" source="n1" target="n4"><data key="d1">1.7d</data></edge>
-    <edge id="e8" source="n2" target="n1"><data key="d1">1.8d</data></edge>
-    <edge id="e9" source="n2" target="n0"><data key="d1">1.9d</data></edge>
-    <edge id="e10" source="n2" target="n3"><data key="d1">2.0d</data></edge>
-    <edge id="e11" source="n2" target="n4"><data key="d1">2.1d</data></edge>
-    <edge id="e12" source="n3" target="n1"><data key="d1">2.2d</data></edge>
-    <edge id="e13" source="n3" target="n2"><data key="d1">2.3d</data></edge>
-    <edge id="e14" source="n3" target="n0"><data key="d1">2.4d</data></edge>
-    <edge id="e15" source="n3" target="n4"><data key="d1">2.5d</data></edge>
-    <edge id="e16" source="n4" target="n1"><data key="d1">2.6d</data></edge>
-    <edge id="e17" source="n4" target="n2"><data key="d1">2.7d</data></edge>
-    <edge id="e18" source="n4" target="n3"><data key="d1">2.8d</data></edge>
-    <edge id="e19" source="n4" target="n0"><data key="d1">2.9d</data></edge>
+    <node id="n0"><data key="k0">Node n0</data></node>
+    <node id="n1"><data key="k0">Node n1</data></node>
+    <node id="n2"><data key="k0">Node n2</data></node>
+    <node id="n3"><data key="k0">Node n3</data></node>
+    <node id="n4"><data key="k0">Node n4</data></node>
+    <edge id="e0" source="n0" target="n1"><data key="k1">1.0d</data></edge>
+    <edge id="e1" source="n0" target="n2"><data key="k1">1.1d</data></edge>
+    <edge id="e2" source="n0" target="n3"><data key="k1">1.2d</data></edge>
+    <edge id="e3" source="n0" target="n4"><data key="k1">1.3d</data></edge>
+    <edge id="e4" source="n1" target="n0"><data key="k1">1.4d</data></edge>
+    <edge id="e5" source="n1" target="n2"><data key="k1">1.5d</data></edge>
+    <edge id="e6" source="n1" target="n3"><data key="k1">1.6d</data></edge>
+    <edge id="e7" source="n1" target="n4"><data key="k1">1.7d</data></edge>
+    <edge id="e8" source="n2" target="n1"><data key="k1">1.8d</data></edge>
+    <edge id="e9" source="n2" target="n0"><data key="k1">1.9d</data></edge>
+    <edge id="e10" source="n2" target="n3"><data key="k1">2.0d</data></edge>
+    <edge id="e11" source="n2" target="n4"><data key="k1">2.1d</data></edge>
+    <edge id="e12" source="n3" target="n1"><data key="k1">2.2d</data></edge>
+    <edge id="e13" source="n3" target="n2"><data key="k1">2.3d</data></edge>
+    <edge id="e14" source="n3" target="n0"><data key="k1">2.4d</data></edge>
+    <edge id="e15" source="n3" target="n4"><data key="k1">2.5d</data></edge>
+    <edge id="e16" source="n4" target="n1"><data key="k1">2.6d</data></edge>
+    <edge id="e17" source="n4" target="n2"><data key="k1">2.7d</data></edge>
+    <edge id="e18" source="n4" target="n3"><data key="k1">2.8d</data></edge>
+    <edge id="e19" source="n4" target="n0"><data key="k1">2.9d</data></edge>
   </graph>
 </graphml>
