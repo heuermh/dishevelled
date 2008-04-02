@@ -115,14 +115,30 @@ public final class YGraphMLReader
     private class ShapeNodeHandler
         extends StAXContentHandlerBase
     {
+        /** Fill. */
         private Fill fill;
+
+        /** Node label. */
         private NodeLabel nodeLabel;
+
+        /** Border style. */
         private BorderStyle borderStyle;
+
+        /** Shape. */
         private Shape shape;
+
+        /** Fill handler. */
         private final FillHandler fillHandler = new FillHandler();
+
+        /** Node label handler. */
         private final NodeLabelHandler nodeLabelHandler = new NodeLabelHandler();
+
+        /** Border style handler. */
         private final BorderStyleHandler borderStyleHandler = new BorderStyleHandler();
+
+        /** Shape handler. */
         private final ShapeHandler shapeHandler = new ShapeHandler();
+
 
         /** {@inheritDoc} */
         public void startElement(final String nsURI,
@@ -191,8 +207,12 @@ public final class YGraphMLReader
         private class FillHandler
             extends StAXContentHandlerBase
         {
+            /** Color attribute. */
             private String color;
-            private Boolean transparent;
+
+            /** Transparent attribute. */
+            private boolean transparent;
+
 
             /** {@inheritDoc} */
             public void startElement(final String nsURI,
@@ -205,7 +225,7 @@ public final class YGraphMLReader
                 if ("y:Fill".equals(qName))
                 {
                     color = attrs.getValue("color");
-                    transparent = ("true".equals(attrs.getValue("transparent"))) ? Boolean.TRUE : Boolean.FALSE;
+                    transparent = "true".equals(attrs.getValue("transparent"));
                 }
             }
 
@@ -223,17 +243,39 @@ public final class YGraphMLReader
         private class NodeLabelHandler
             extends StAXContentHandlerBase
         {
-            private Boolean visible;
+            /** Visible attribute. */
+            private boolean visible;
+
+            /** Alignment attribute. */
             private String alignment;
+
+            /** Font family attribute. */
             private String fontFamily;
-            private String fontSize;
+
+            /** Font size attribute. */
+            private int fontSize;
+
+            /** Font style attribute. */
             private String fontStyle;
+
+            /** Text color attribute. */
             private String textColor;
+
+            /** Model name attribute. */
             private String modelName;
+
+            /** Model position attribute. */
             private String modelPosition;
+
+            /** Auto size policy attribute. */
             private String autoSizePolicy;
+
+            /** Nested text element. */
             private String text;
+
+            /** Text handler. */
             private StringElementHandler textHandler = new StringElementHandler();
+
 
             /** {@inheritDoc} */
             public void startElement(final String nsURI,
@@ -245,10 +287,10 @@ public final class YGraphMLReader
             {
                 if ("y:NodeLabel".equals(qName))
                 {
-                    visible = ("true".equals(attrs.getValue("visible"))) ? Boolean.TRUE : Boolean.FALSE;
+                    visible = "true".equals(attrs.getValue("visible"));
                     alignment = attrs.getValue("alignment");
                     fontFamily = attrs.getValue("fontFamily");
-                    fontSize = attrs.getValue("fontSize");
+                    fontSize = Integer.valueOf(attrs.getValue("fontSize"));
                     fontStyle = attrs.getValue("fontStyle");
                     textColor = attrs.getValue("textColor");
                     modelName = attrs.getValue("modelName");
@@ -287,9 +329,15 @@ public final class YGraphMLReader
         private class BorderStyleHandler
             extends StAXContentHandlerBase
         {
+            /** Type attribute. */
             private String type;
-            private Double width;
+
+            /** Width attribute. */
+            private double width;
+
+            /** Color attribute. */
             private String color;
+
 
             /** {@inheritDoc} */
             public void startElement(final String nsURI,
@@ -321,7 +369,9 @@ public final class YGraphMLReader
         private class ShapeHandler
             extends StAXContentHandlerBase
         {
+            /** Type attribute. */
             private String type;
+
 
             /** {@inheritDoc} */
             public void startElement(final String nsURI,

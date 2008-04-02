@@ -37,21 +37,12 @@ public final class FillTest
 
     public void testConstructor()
     {
-        Fill fill0 = new Fill("color", Boolean.TRUE);
+        Fill fill0 = new Fill("color", true);
 
         try
         {
-            Fill fill = new Fill(null, Boolean.TRUE);
+            Fill fill = new Fill(null, true);
             fail("ctr(null color) expected IllegalArgumentException");
-        }
-        catch (IllegalArgumentException e)
-        {
-            // expected
-        }
-        try
-        {
-            Fill fill = new Fill("color", null);
-            fail("ctr(null transparent) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
         {
@@ -61,22 +52,21 @@ public final class FillTest
 
     public void testColor()
     {
-        Fill fill = new Fill("color", Boolean.TRUE);
+        Fill fill = new Fill("color", true);
         assertTrue(fill.getColor() != null);
         assertEquals("color", fill.getColor());
     }
 
     public void testTransparent()
     {
-        Fill fill = new Fill("color", Boolean.TRUE);
-        assertTrue(fill.getTransparent() != null);
-        assertEquals(Boolean.TRUE, fill.getTransparent());
+        Fill fill = new Fill("color", true);
+        assertEquals(true, fill.isTransparent());
     }
 
     public void testEquals()
     {
-        Fill fill0 = new Fill("color", Boolean.TRUE);
-        Fill fill1 = new Fill("color", Boolean.TRUE);
+        Fill fill0 = new Fill("color", true);
+        Fill fill1 = new Fill("color", true);
 
         assertFalse(fill0.equals(null));
         assertFalse(fill1.equals(null));
@@ -91,8 +81,8 @@ public final class FillTest
 
     public void testHashCode()
     {
-        Fill fill0 = new Fill("color", Boolean.TRUE);
-        Fill fill1 = new Fill("color", Boolean.TRUE);
+        Fill fill0 = new Fill("color", true);
+        Fill fill1 = new Fill("color", true);
 
         assertEquals(fill0.hashCode(), fill0.hashCode());
         assertEquals(fill1.hashCode(), fill1.hashCode());

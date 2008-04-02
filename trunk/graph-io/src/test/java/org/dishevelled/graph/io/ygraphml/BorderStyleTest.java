@@ -37,21 +37,18 @@ public final class BorderStyleTest
 
     public void testConstructor()
     {
-        BorderStyle borderStyle0 = new BorderStyle("type", 1.0d, "color");
+        BorderStyle borderStyle0 = new BorderStyle("type", 0.0d, "color");
+        BorderStyle borderStyle1 = new BorderStyle("type", 1.0d, "color");
+        BorderStyle borderStyle2 = new BorderStyle("type", -1.0d, "color");
+        BorderStyle borderStyle3 = new BorderStyle("type", Double.NaN, "color");
+        BorderStyle borderStyle4 = new BorderStyle("type", Double.MIN_VALUE, "color");
+        BorderStyle borderStyle5 = new BorderStyle("type", Double.MAX_VALUE, "color");
+        BorderStyle borderStyle6 = new BorderStyle("type", Double.MAX_VALUE * -1.0d, "color");
 
         try
         {
             BorderStyle borderStyle = new BorderStyle(null, 1.0d, "color");
             fail("ctr(null type) expected IllegalArgumentException");
-        }
-        catch (IllegalArgumentException e)
-        {
-            // expected
-        }
-        try
-        {
-            BorderStyle borderStyle = new BorderStyle("type", null, "color");
-            fail("ctr(null width) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
         {
@@ -78,7 +75,6 @@ public final class BorderStyleTest
     public void testWidth()
     {
         BorderStyle borderStyle = new BorderStyle("type", 1.0d, "color");
-        assertTrue(borderStyle.getWidth() != null);
         assertEquals(1.0d, borderStyle.getWidth());
     }
 

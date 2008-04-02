@@ -55,7 +55,7 @@ public final class ShapeNodeTest
      */
     private Fill createFill()
     {
-        return new Fill("color", Boolean.TRUE);
+        return new Fill("color", true);
     }
 
     /**
@@ -66,7 +66,7 @@ public final class ShapeNodeTest
      */
     private NodeLabel createNodeLabel()
     {
-        return new NodeLabel(Boolean.TRUE, "alignment", "fontFamily", "fontSize", "fontStyle",
+        return new NodeLabel(true, "alignment", "fontFamily", 10, "fontStyle",
                              "textColor", "modelName", "modelPosition", "autoSizePolicy", "text");
     }
 

@@ -31,8 +31,8 @@ package org.dishevelled.graph.io.ygraphml;
  */
 public final class NodeLabel
 {
-    /** Visible for this node label. */
-    private final Boolean visible;
+    /** True if this node label is visible. */
+    private final boolean visible;
 
     /** Alignment for this node label. */
     private final String alignment;
@@ -41,7 +41,7 @@ public final class NodeLabel
     private final String fontFamily;
 
     /** Font size for this node label. */
-    private final String fontSize;
+    private final int fontSize;
 
     /** Font style for this node label. */
     private final String fontStyle;
@@ -65,10 +65,10 @@ public final class NodeLabel
     /**
      * Create a new node label from the specified parameters.
      *
-     * @param visible visible for this node label, must not be null
+     * @param visible true if this node label is visible
      * @param alignment alignment for this node label, must not be null
      * @param fontFamily font family for this node label, must not be null
-     * @param fontSize font size for this node label, must not be null
+     * @param fontSize font size for this node label
      * @param fontStyle font style for this node label, must not be null
      * @param textColor text color for this node label, must not be null
      * @param modelName model name for this node label, must not be null
@@ -76,10 +76,10 @@ public final class NodeLabel
      * @param autoSizePolicy auto size policy for this node label, must not be null
      * @param text text for this node label, must not be null
      */
-    public NodeLabel(final Boolean visible,
+    public NodeLabel(final boolean visible,
                      final String alignment,
                      final String fontFamily,
-                     final String fontSize,
+                     final int fontSize,
                      final String fontStyle,
                      final String textColor,
                      final String modelName,
@@ -87,10 +87,6 @@ public final class NodeLabel
                      final String autoSizePolicy,
                      final String text)
     {
-        if (visible == null)
-        {
-            throw new IllegalArgumentException("visible must not be null");
-        }
         if (alignment == null)
         {
             throw new IllegalArgumentException("alignment must not be null");
@@ -98,10 +94,6 @@ public final class NodeLabel
         if (fontFamily == null)
         {
             throw new IllegalArgumentException("fontFamily must not be null");
-        }
-        if (fontSize == null)
-        {
-            throw new IllegalArgumentException("fontSize must not be null");
         }
         if (fontStyle == null)
         {
@@ -141,12 +133,11 @@ public final class NodeLabel
 
 
     /**
-     * Return the visible for this node label.
-     * The visible will not be null.
+     * Return true if this node label is visible.
      *
-     * @return the visible for this node label
+     * @return true if this node label is visible
      */
-    public Boolean getVisible()
+    public boolean isVisible()
     {
         return visible;
     }
@@ -175,11 +166,10 @@ public final class NodeLabel
 
     /**
      * Return the font size for this node label.
-     * The font size will not be null.
      *
      * @return the font size for this node label
      */
-    public String getFontSize()
+    public int getFontSize()
     {
         return fontSize;
     }

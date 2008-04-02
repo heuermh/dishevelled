@@ -34,25 +34,21 @@ public final class Fill
     /** Color for this fill. */
     private final String color;
 
-    /** Transparent for this fill. */
-    private final Boolean transparent;
+    /** True if this fill is transparent. */
+    private final boolean transparent;
 
 
     /**
      * Create a new fill from the specified parameters.
      *
      * @param color color for this fill, must not be null
-     * @param transparent transparent for this fill, must not be null
+     * @param transparent true if this fill is transparent
      */
-    public Fill(final String color, final Boolean transparent)
+    public Fill(final String color, final boolean transparent)
     {
         if (color == null)
         {
             throw new IllegalArgumentException("color must not be null");
-        }
-        if (transparent == null)
-        {
-            throw new IllegalArgumentException("transparent must not be null");
         }
         this.color = color;
         this.transparent = transparent;
@@ -71,12 +67,11 @@ public final class Fill
     }
 
     /**
-     * Return the transparent for this fill.
-     * The transparent will not be null.
+     * Return true if this fill is transparent.
      *
-     * @return the transparent for this fill
+     * @return true if this fill is transparent
      */
-    public Boolean getTransparent()
+    public boolean isTransparent()
     {
         return transparent;
     }
