@@ -35,7 +35,7 @@ public final class BorderStyle
     private final String type;
 
     /** Width for this border style. */
-    private final Double width;
+    private final double width;
 
     /** Color for this border style. */
     private final String color;
@@ -45,18 +45,14 @@ public final class BorderStyle
      * Create a new border style from the specified parameters.
      *
      * @param type type for this border style, must not be null
-     * @param width width for this border style, must not be null
+     * @param width width for this border style
      * @param color color for this border style, must not be null
      */
-    public BorderStyle(final String type, final Double width, final String color)
+    public BorderStyle(final String type, final double width, final String color)
     {
         if (type == null)
         {
             throw new IllegalArgumentException("type must not be null");
-        }
-        if (width == null)
-        {
-            throw new IllegalArgumentException("width must not be null");
         }
         if (color == null)
         {
@@ -81,11 +77,10 @@ public final class BorderStyle
 
     /**
      * Return the width for this border style.
-     * The width will not be null.
      *
      * @return the width for this border style
      */
-    public Double getWidth()
+    public double getWidth()
     {
         return width;
     }

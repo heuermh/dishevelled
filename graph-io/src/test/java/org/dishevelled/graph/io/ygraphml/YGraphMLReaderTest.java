@@ -125,14 +125,14 @@ public final class YGraphMLReaderTest
             ShapeNode shapeNode = graph.nodeValues().iterator().next();
             assertNotNull(shapeNode);
             assertEquals("#FFFFCC", shapeNode.getFill().getColor());
-            assertEquals(Boolean.FALSE, shapeNode.getFill().getTransparent());
+            assertFalse(shapeNode.getFill().isTransparent());
             assertEquals("line", shapeNode.getBorderStyle().getType());
             assertEquals(1.0d, shapeNode.getBorderStyle().getWidth());
             assertEquals("#000000", shapeNode.getBorderStyle().getColor());
-            assertEquals(Boolean.TRUE, shapeNode.getNodeLabel().getVisible());
+            assertTrue(shapeNode.getNodeLabel().isVisible());
             assertEquals("center", shapeNode.getNodeLabel().getAlignment());
             assertEquals("Dialog", shapeNode.getNodeLabel().getFontFamily());
-            assertEquals("12", shapeNode.getNodeLabel().getFontSize());
+            assertEquals(12, shapeNode.getNodeLabel().getFontSize());
             assertEquals("plain", shapeNode.getNodeLabel().getFontStyle());
             assertEquals("#000000", shapeNode.getNodeLabel().getTextColor());
             assertEquals("internal", shapeNode.getNodeLabel().getModelName());
