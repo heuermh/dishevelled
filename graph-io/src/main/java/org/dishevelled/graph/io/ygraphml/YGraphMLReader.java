@@ -402,6 +402,290 @@ public final class YGraphMLReader
     private class PolyLineEdgeHandler
         extends StAXContentHandlerBase
     {
-        // empty
+        /** Line style. */
+        private LineStyle lineStyle;
+
+        /** Arrows. */
+        private Arrows arrows;
+
+        /** Edge label. */
+        private EdgeLabel edgeLabel;
+
+        /** Bend style. */
+        private BendStyle bendStyle;
+
+        /** Line style handler. */
+        private final LineStyleHandler lineStyleHandler = new LineStyleHandler();
+
+        /** Arrows handler. */
+        private final ArrowsHandler arrowsHandler = new ArrowsHandler();
+
+        /** Edge label handler. */
+        private final EdgeLabelHandler edgeLabelHandler = new EdgeLabelHandler();
+
+        /** Bend style handler. */
+        private final BendStyleHandler bendStyleHandler = new BendStyleHandler();
+
+
+        /** {@inheritDoc} */
+        public void startElement(final String nsURI,
+                                 final String localName,
+                                 final String qName,
+                                 final Attributes attrs,
+                                 final StAXDelegationContext dctx)
+            throws SAXException
+        {
+            if ("y:LineStyle".equals(qName))
+            {
+                dctx.delegate(lineStyleHandler);
+            }
+            else if ("y:Arrows".equals(qName))
+            {
+                dctx.delegate(arrowsHandler);
+            }
+            else if ("y:EdgeLabel".equals(qName))
+            {
+                dctx.delegate(edgeLabelHandler);
+            }
+            else if ("y:BendStyle".equals(qName))
+            {
+                dctx.delegate(bendStyleHandler);
+            }
+        }
+
+        /** {@inheritDoc} */
+        public void endElement(final String nsURI,
+                               final String localName,
+                               final String qName,
+                               final Object result,
+                               final StAXContext context)
+            throws SAXException
+        {
+            if ("y:LineStyle".equals(qName))
+            {
+                lineStyle = (LineStyle) result;
+            }
+            else if ("y:Arrows".equals(qName))
+            {
+                arrows = (Arrows) result;
+            }
+            else if ("y:EdgeLabel".equals(qName))
+            {
+                edgeLabel = (EdgeLabel) result;
+            }
+            else if ("y:BendStyle".equals(qName))
+            {
+                bendStyle = (BendStyle) result;
+            }
+        }
+
+        /** {@inheritDoc} */
+        public Object endTree(final StAXContext context)
+            throws SAXException
+        {
+            return new PolyLineEdge(lineStyle, arrows, edgeLabel, bendStyle);
+        }
+
+        /**
+         * <code>&lt;y:LineStyle&gt;</code> element handler.
+         */
+        private class LineStyleHandler
+            extends StAXContentHandlerBase
+        {
+            /** Type attribute. */
+            private String type;
+
+            /** Width attribute. */
+            private double width;
+
+            /** Color attribute. */
+            private String color;
+
+
+            /** {@inheritDoc} */
+            public void startElement(final String nsURI,
+                                     final String localName,
+                                     final String qName,
+                                     final Attributes attrs,
+                                     final StAXDelegationContext dctx)
+                throws SAXException
+            {
+                if ("y:LineStyle".equals(qName))
+                {
+                    type = attrs.getValue("type");
+                    width = Double.valueOf(attrs.getValue("width"));
+                    color = attrs.getValue("color");
+                }
+            }
+
+            /** {@inheritDoc} */
+            public Object endTree(final StAXContext context)
+                throws SAXException
+            {
+                return new LineStyle(type, width, color);
+            }
+        }
+
+        /**
+         * <code>&lt;y:Arrows&gt;</code> element handler.
+         */
+        private class ArrowsHandler
+            extends StAXContentHandlerBase
+        {
+            /** Source attribute. */
+            private String source;
+
+            /** Target attribute. */
+            private String target;
+
+
+            /** {@inheritDoc} */
+            public void startElement(final String nsURI,
+                                     final String localName,
+                                     final String qName,
+                                     final Attributes attrs,
+                                     final StAXDelegationContext dctx)
+                throws SAXException
+            {
+                if ("y:Arrows".equals(qName))
+                {
+                    source = attrs.getValue("source");
+                    target = attrs.getValue("target");
+                }
+            }
+
+            /** {@inheritDoc} */
+            public Object endTree(final StAXContext context)
+                throws SAXException
+            {
+                return new Arrows(source, target);
+            }
+        }
+
+        /**
+         * <code>&lt;y:EdgeLabel&gt;</code> element handler.
+         */
+        private class EdgeLabelHandler
+            extends StAXContentHandlerBase
+        {
+            /** Visible attribute. */
+            private boolean visible;
+
+            /** Alignment attribute. */
+            private String alignment;
+
+            /** Font family attribute. */
+            private String fontFamily;
+
+            /** Font size attribute. */
+            private int fontSize;
+
+            /** Font style attribute. */
+            private String fontStyle;
+
+            /** Text color attribute. */
+            private String textColor;
+
+            /** Model name attribute. */
+            private String modelName;
+
+            /** Model position attribute. */
+            private String modelPosition;
+
+            /** Preferred placement attribute. */
+            private String preferredPlacement;
+
+            /** Distance attribute. */
+            private double distance;
+
+            /** Ratio attribute. */
+            private double ratio;
+
+            /** Nested text element. */
+            private String text;
+
+            /** Text handler. */
+            private StringElementHandler textHandler = new StringElementHandler();
+
+
+            /** {@inheritDoc} */
+            public void startElement(final String nsURI,
+                                     final String localName,
+                                     final String qName,
+                                     final Attributes attrs,
+                                     final StAXDelegationContext dctx)
+                throws SAXException
+            {
+                if ("y:EdgeLabel".equals(qName))
+                {
+                    visible = "true".equals(attrs.getValue("visible"));
+                    alignment = attrs.getValue("alignment");
+                    fontFamily = attrs.getValue("fontFamily");
+                    fontSize = Integer.valueOf(attrs.getValue("fontSize"));
+                    fontStyle = attrs.getValue("fontStyle");
+                    textColor = attrs.getValue("textColor");
+                    modelName = attrs.getValue("modelName");
+                    modelPosition = attrs.getValue("modelPosition");
+                    preferredPlacement = attrs.getValue("preferredPlacement");
+                    distance = Double.valueOf(attrs.getValue("distance"));
+                    ratio = Double.valueOf(attrs.getValue("ratio"));
+                    dctx.delegate(textHandler);
+                }
+            }
+
+            /** {@inheritDoc} */
+            public void endElement(final String nsURI,
+                                   final String localName,
+                                   final String qName,
+                                   final Object result,
+                                   final StAXContext context)
+                throws SAXException
+            {
+                if ("y:EdgeLabel".equals(qName))
+                {
+                    text = (String) result;
+                }
+            }
+
+            /** {@inheritDoc} */
+            public Object endTree(final StAXContext context)
+                throws SAXException
+            {
+                return new EdgeLabel(visible, alignment, fontFamily, fontSize, fontStyle, textColor,
+                                     modelName, modelPosition, preferredPlacement, distance, ratio, text);
+            }
+        }
+
+        /**
+         * <code>&lt;y:BendStyle&gt;</code> element handler.
+         */
+        private class BendStyleHandler
+            extends StAXContentHandlerBase
+        {
+            /** Smoothed attribute. */
+            private boolean smoothed;
+
+
+            /** {@inheritDoc} */
+            public void startElement(final String nsURI,
+                                     final String localName,
+                                     final String qName,
+                                     final Attributes attrs,
+                                     final StAXDelegationContext dctx)
+                throws SAXException
+            {
+                if ("y:BendStyle".equals(qName))
+                {
+                    smoothed = "true".equals(attrs.getValue("smoothed"));
+                }
+            }
+
+            /** {@inheritDoc} */
+            public Object endTree(final StAXContext context)
+                throws SAXException
+            {
+                return new BendStyle(smoothed);
+            }
+        }
     }
 }

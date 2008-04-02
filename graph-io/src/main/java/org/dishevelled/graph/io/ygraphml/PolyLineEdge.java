@@ -23,7 +23,104 @@
 */
 package org.dishevelled.graph.io.ygraphml;
 
+/**
+ * Poly line edge.
+ *
+ * @author  Michael Heuer
+ * @version $Revision$ $Date$
+ */
 public final class PolyLineEdge
 {
-    // empty
+    /** Line style for this poly line edge. */
+    private final LineStyle lineStyle;
+
+    /** Arrows for this poly line edge. */
+    private final Arrows arrows;
+
+    /** Edge label for this poly line edge. */
+    private final EdgeLabel edgeLabel;
+
+    /** Bend style for this poly line edge. */
+    private final BendStyle bendStyle;
+
+
+    /**
+     * Create a new poly line edge from the specified parameters.
+     *
+     * @param lineStyle line style for this poly line edge, must not be null
+     * @param arrows arrows for this poly line edge, must not be null
+     * @param edgeLabel edge label for this poly line edge, must not be null
+     * @param bendStyle bend style for this poly line edge, must not be null
+     */
+    public PolyLineEdge(final LineStyle lineStyle,
+                        final Arrows arrows,
+                        final EdgeLabel edgeLabel,
+                        final BendStyle bendStyle)
+    {
+        if (lineStyle == null)
+        {
+            throw new IllegalArgumentException("lineStyle must not be null");
+        }
+        if (arrows == null)
+        {
+            throw new IllegalArgumentException("arrows must not be null");
+        }
+        if (edgeLabel == null)
+        {
+            throw new IllegalArgumentException("edgeLabel must not be null");
+        }
+        if (bendStyle == null)
+        {
+            throw new IllegalArgumentException("bendStyle must not be null");
+        }
+        this.lineStyle = lineStyle;
+        this.arrows = arrows;
+        this.edgeLabel = edgeLabel;
+        this.bendStyle = bendStyle;
+    }
+
+
+    /**
+     * Return the line style for this poly line edge.
+     * The line style will not be null.
+     *
+     * @return the line style for this poly line edge
+     */
+    public LineStyle getLineStyle()
+    {
+        return lineStyle;
+    }
+
+    /**
+     * Return the arrows for this poly line edge.
+     * The arrows will not be null.
+     *
+     * @return the arrows for this poly line edge
+     */
+    public Arrows getArrows()
+    {
+        return arrows;
+    }
+
+    /**
+     * Return the edge label for this poly line edge.
+     * The edge label will not be null.
+     *
+     * @return the edge label for this poly line edge
+     */
+    public EdgeLabel getEdgeLabel()
+    {
+        return edgeLabel;
+    }
+
+    /**
+     * Return the bend style for this poly line edge.
+     * The bend style will not be null.
+     *
+     * @return the bend style for this poly line edge
+     */
+    public BendStyle getBendStyle()
+    {
+        return bendStyle;
+    }
 }

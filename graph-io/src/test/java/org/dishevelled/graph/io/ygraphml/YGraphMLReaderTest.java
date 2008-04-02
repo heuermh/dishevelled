@@ -150,4 +150,64 @@ public final class YGraphMLReaderTest
             closeQuietly(inputStream);
         }
     }
+
+    public void testGraphTwoNodesOneEdge()
+    {
+        InputStream inputStream = null;
+        try
+        {
+            inputStream = getClass().getResourceAsStream("graph2.xml");
+            YGraphMLReader reader = new YGraphMLReader();
+            Graph<ShapeNode, PolyLineEdge> graph = reader.read(inputStream);
+            assertNotNull(graph);
+            assertEquals(2, graph.nodeCount());
+            ShapeNode shapeNode = graph.nodeValues().iterator().next();
+            assertNotNull(shapeNode);
+            assertEquals("#FFFFCC", shapeNode.getFill().getColor());
+            assertFalse(shapeNode.getFill().isTransparent());
+            assertEquals("line", shapeNode.getBorderStyle().getType());
+            assertEquals(1.0d, shapeNode.getBorderStyle().getWidth());
+            assertEquals("#000000", shapeNode.getBorderStyle().getColor());
+            assertTrue(shapeNode.getNodeLabel().isVisible());
+            assertEquals("center", shapeNode.getNodeLabel().getAlignment());
+            assertEquals("Dialog", shapeNode.getNodeLabel().getFontFamily());
+            assertEquals(12, shapeNode.getNodeLabel().getFontSize());
+            assertEquals("plain", shapeNode.getNodeLabel().getFontStyle());
+            assertEquals("#000000", shapeNode.getNodeLabel().getTextColor());
+            assertEquals("internal", shapeNode.getNodeLabel().getModelName());
+            assertEquals("c", shapeNode.getNodeLabel().getModelPosition());
+            assertEquals("center", shapeNode.getNodeLabel().getAutoSizePolicy());
+            assertTrue("node0".equals(shapeNode.getNodeLabel().getText())
+                       || "node1".equals(shapeNode.getNodeLabel().getText()));
+            assertEquals("roundrectangle", shapeNode.getShape().getType());
+
+            PolyLineEdge polyLineEdge = graph.edgeValues().iterator().next();
+            assertNotNull(polyLineEdge);
+            assertEquals("line", polyLineEdge.getLineStyle().getType());
+            assertEquals(1.0d, polyLineEdge.getLineStyle().getWidth());
+            assertEquals("#000000", polyLineEdge.getLineStyle().getColor());
+            assertEquals("none", polyLineEdge.getArrows().getSource());
+            assertEquals("standard", polyLineEdge.getArrows().getTarget());
+            assertTrue(polyLineEdge.getEdgeLabel().isVisible());
+            assertEquals("center", polyLineEdge.getEdgeLabel().getAlignment());
+            assertEquals("Dialog", polyLineEdge.getEdgeLabel().getFontFamily());
+            assertEquals(12, polyLineEdge.getEdgeLabel().getFontSize());
+            assertEquals("plain", polyLineEdge.getEdgeLabel().getFontStyle());
+            assertEquals("#000000", polyLineEdge.getEdgeLabel().getTextColor());
+            assertEquals("free", polyLineEdge.getEdgeLabel().getModelName());
+            assertEquals("anywhere", polyLineEdge.getEdgeLabel().getModelPosition());
+            assertEquals("target", polyLineEdge.getEdgeLabel().getPreferredPlacement());
+            assertEquals(2.0d, polyLineEdge.getEdgeLabel().getDistance());
+            assertEquals(0.5d, polyLineEdge.getEdgeLabel().getRatio());
+            assertFalse(polyLineEdge.getBendStyle().isSmoothed());
+        }
+        catch (IOException e)
+        {
+            fail(e.getMessage());
+        }
+        finally
+        {
+            closeQuietly(inputStream);
+        }
+    }
 }
