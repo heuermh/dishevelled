@@ -51,7 +51,7 @@
   <scm>
     <connection>scm|svn|http://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/commandline</connection>
     <developerConnection>scm|svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/commandline</developerConnection>
-    <url>http://svn.sourceforge.net/viewcvs.cgi/dishevelled/trunk/commandline</url>
+    <url>http://svn.sourceforge.net/viewvc/dishevelled/trunk/commandline</url>
   </scm>
   <organization>
     <name>dishevelled.org</name>

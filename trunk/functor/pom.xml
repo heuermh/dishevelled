@@ -51,7 +51,7 @@
   <scm>
     <connection>scm|svn|http://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/functor</connection>
     <developerConnection>scm|svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/functor</developerConnection>
-    <url>http://dishevelled.svn.sourceforge.net/viewcvs.cgi/dishevelled/trunk/functor</url>
+    <url>http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/trunk/functor</url>
   </scm>
   <organization>
     <name>dishevelled.org</name>

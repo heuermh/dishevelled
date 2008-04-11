@@ -51,7 +51,7 @@
   <scm>
     <connection>scm|svn|http://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/iconbundle-tango</connection>
     <developerConnection>scm|svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/iconbundle-tango</developerConnection>
-    <url>http://dishevelled.svn.sourceforge.net/viewcvs.cgi/dishevelled/trunk/iconbundle-tango</url>
+    <url>http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/trunk/iconbundle-tango</url>
   </scm>
   <organization>
     <name>dishevelled.org</name>

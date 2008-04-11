@@ -51,7 +51,7 @@
   <scm>
     <connection>scm|svn|http://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/piccolo-transition</connection>
     <developerConnection>scm|svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/piccolo-transition</developerConnection>
-    <url>http://dishevelled.svn.sourceforge.net/viewcvs.cgi/dishevelled/trunk/piccolo-transition</url>
+    <url>http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/trunk/piccolo-transition</url>
   </scm>
   <organization>
     <name>dishevelled.org</name>
