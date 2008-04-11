@@ -44,7 +44,7 @@ public final class FitnessTransformTest
     protected Fitness createFitness()
     {
         Fitness fitness = new UniformFitness();
-        UnaryFunction<Double, Double> transform = new UnaryFunction<Double, Double>(
+        UnaryFunction<Double, Double> transform = new UnaryFunction<Double, Double>()
         {
                 /** {@inheritDoc} */
                 public Double evaluate(final Double value)
