@@ -51,7 +51,7 @@
   <scm>
     <connection>scm|svn|http://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/observable</connection>
     <developerConnection>scm|svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/observable</developerConnection>
-    <url>http://dishevelled.svn.sourceforge.net/viewcvs.cgi/dishevelled/trunk/observable</url>
+    <url>http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/trunk/observable</url>
   </scm>
   <organization>
     <name>dishevelled.org</name>

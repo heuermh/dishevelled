@@ -51,7 +51,7 @@
   <scm>
     <connection>scm|svn|http://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/layout</connection>
     <developerConnection>scm|svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/layout</developerConnection>
-    <url>http://dishevelled.svn.sourceforge.net/viewcvs.cgi/dishevelled/trunk/layout</url>
+    <url>http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/trunk/layout</url>
   </scm>
   <organization>
     <name>dishevelled.org</name>

@@ -51,7 +51,7 @@
   <scm>
     <connection>scm|svn|http://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/iconbundle</connection>
     <developerConnection>scm|svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/iconbundle</developerConnection>
-    <url>http://dishevelled.svn.sourceforge.net/viewcvs.cgi/dishevelled/trunk/iconbundle</url>
+    <url>http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/trunk/iconbundle</url>
   </scm>
   <organization>
     <name>dishevelled.org</name>

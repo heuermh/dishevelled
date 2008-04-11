@@ -51,7 +51,7 @@
   <scm>
     <connection>scm|svn|http://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/identify</connection>
     <developerConnection>scm|svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/identify</developerConnection>
-    <url>http://dishevelled.svn.sourceforge.net/viewcvs.cgi/dishevelled/trunk/identify</url>
+    <url>http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/trunk/identify</url>
   </scm>
   <organization>
     <name>dishevelled.org</name>

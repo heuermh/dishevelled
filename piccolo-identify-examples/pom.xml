@@ -51,7 +51,7 @@
   <scm>
     <connection>scm|svn|http://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/piccolo-identify-examples</connection>
     <developerConnection>scm|svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/piccolo-identify-examples</developerConnection>
-    <url>http://dishevelled.svn.sourceforge.net/viewcvs.cgi/dishevelled/trunk/piccolo-identify-examples</url>
+    <url>http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/trunk/piccolo-identify-examples</url>
   </scm>
   <organization>
     <name>dishevelled.org</name>

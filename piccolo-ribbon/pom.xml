@@ -51,7 +51,7 @@
   <scm>
     <connection>scm|svn|http://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/piccolo-ribbon</connection>
     <developerConnection>scm|svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/piccolo-ribbon</developerConnection>
-    <url>http://dishevelled.svn.sourceforge.net/viewcvs.cgi/dishevelled/trunk/piccolo-ribbon</url>
+    <url>http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/trunk/piccolo-ribbon</url>
   </scm>
   <organization>
     <name>dishevelled.org</name>

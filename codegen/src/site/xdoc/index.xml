@@ -320,7 +320,7 @@ For further details on source code styles, please see the javadoc for<br/>
 &gt; <a href="apidocs/org/dishevelled/codegen/Style.html">Style</a><br/>
 <br/>
 or the Velocity templates themselves<br/>
-&gt; <a href="http://dishevelled.svn.sourceforge.net/viewcvs.cgi/dishevelled/trunk/codegen/src/main/resources/org/dishevelled/codegen/">src/main/resources/org/dishevelled/codegen</a>
+&gt; <a href="http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/trunk/codegen/src/main/resources/org/dishevelled/codegen/">src/main/resources/org/dishevelled/codegen</a>
 </p>
 </section>
 

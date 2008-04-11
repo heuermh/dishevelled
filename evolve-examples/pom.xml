@@ -51,7 +51,7 @@
   <scm>
     <connection>scm|svn|http://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/evolve-examples</connection>
     <developerConnection>scm|svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/evolve-examples</developerConnection>
-    <url>http://dishevelled.svn.sourceforge.net/viewcvs.cgi/dishevelled/trunk/evolve-examples</url>
+    <url>http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/trunk/evolve-examples</url>
   </scm>
   <organization>
     <name>dishevelled.org</name>

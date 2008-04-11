@@ -51,7 +51,7 @@
   <scm>
     <connection>scm|svn|http://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/curate-examples</connection>
     <developerConnection>scm|svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/curate-examples</developerConnection>
-    <url>http://dishevelled.svn.sourceforge.net/viewcvs.cgi/dishevelled/trunk/curate-examples</url>
+    <url>http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/trunk/curate-examples</url>
   </scm>
   <organization>
     <name>dishevelled.org</name>
