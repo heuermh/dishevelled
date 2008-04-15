@@ -24,7 +24,6 @@
 package org.dishevelled.graph.impl;
 
 import org.dishevelled.graph.AbstractGraphTest;
-import org.dishevelled.graph.Edge;
 import org.dishevelled.graph.Graph;
 import org.dishevelled.graph.Node;
 
@@ -41,22 +40,25 @@ public final class GraphDecoratorTest
     /** @{inheritDoc} */
     protected <N, E> Graph<N, E> createEmptyGraph()
     {
-        return new Decorator(new GraphImpl<N, E>());
+        return new Decorator<N, E>(new GraphImpl<N, E>());
     }
 
     /** @{inheritDoc} */
     protected <N, E> Graph<N, E> createFullGraph(final N nodeValue, final E edgeValue)
     {
         Graph<N, E> graph = new GraphImpl<N, E>();
-        Node node0 = graph.createNode(nodeValue);
-        Node node1 = graph.createNode(nodeValue);
-        Edge edge = graph.createEdge(node0, node1, edgeValue);
-        return new Decorator(graph);
+        Node<N, E> node0 = graph.createNode(nodeValue);
+        Node<N, E> node1 = graph.createNode(nodeValue);
+        graph.createEdge(node0, node1, edgeValue);
+        return new Decorator<N, E>(graph);
     }
 
 
     /**
      * Decorator.
+     *
+     * @param <N> node value type
+     * @param <E> edge value type
      */
     private class Decorator<N, E>
         extends AbstractGraphDecorator<N, E>

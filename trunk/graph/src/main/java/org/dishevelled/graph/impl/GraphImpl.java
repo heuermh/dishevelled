@@ -117,7 +117,7 @@ public final class GraphImpl<N, E>
         {
             map.put(node, (T) null);
         }
-        return new MapDecorator(map);
+        return new MapDecorator<Node<N, E>, T>(map);
     }
 
     // TODO:  consider nodeMap(T defaultValue);
@@ -220,7 +220,7 @@ public final class GraphImpl<N, E>
         {
             map.put(edge, (T) null);
         }
-        return new MapDecorator(map);
+        return new MapDecorator<Edge<N, E>, T>(map);
     }
 
     // TODO: consider edgeMap(T defaultValue);
