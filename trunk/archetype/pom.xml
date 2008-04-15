@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<model>
+<project>
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.dishevelled</groupId>
   <artifactId>dsh-archetype</artifactId>
@@ -73,4 +73,4 @@
       </resource>
     </resources>
   </build>
-</model>
+</project>
