@@ -27,7 +27,6 @@ import junit.framework.TestCase;
 
 import org.dishevelled.functor.UnaryProcedure;
 
-import org.dishevelled.graph.Edge;
 import org.dishevelled.graph.Graph;
 import org.dishevelled.graph.Node;
 
@@ -83,7 +82,7 @@ public final class GraphUtilsTest
         Graph<String, Integer> graph = new GraphImpl<String, Integer>();
         Node<String, Integer> node0 = graph.createNode("node0");
         Node<String, Integer> node1 = graph.createNode("node1");
-        Edge<String, Integer> edge = graph.createEdge(node0, node1, 0);
+        graph.createEdge(node0, node1, 0);
         UnaryProcedure<Node<String, Integer>> procedure = new UnaryProcedure<Node<String, Integer>>()
             {
                 /** {@inheritDoc} */
@@ -129,7 +128,7 @@ public final class GraphUtilsTest
         Graph<String, Integer> graph = new GraphImpl<String, Integer>();
         Node<String, Integer> node0 = graph.createNode("node0");
         Node<String, Integer> node1 = graph.createNode("node1");
-        Edge<String, Integer> edge = graph.createEdge(node0, node1, 0);
+        graph.createEdge(node0, node1, 0);
         UnaryProcedure<Node<String, Integer>> procedure = new UnaryProcedure<Node<String, Integer>>()
             {
                 /** {@inheritDoc} */
@@ -175,7 +174,7 @@ public final class GraphUtilsTest
         Graph<String, Integer> graph = new GraphImpl<String, Integer>();
         Node<String, Integer> node0 = graph.createNode("node0");
         Node<String, Integer> node1 = graph.createNode("node1");
-        Edge<String, Integer> edge = graph.createEdge(node0, node1, 0);
+        graph.createEdge(node0, node1, 0);
         UnaryProcedure<Node<String, Integer>> procedure = new UnaryProcedure<Node<String, Integer>>()
             {
                 /** {@inheritDoc} */
