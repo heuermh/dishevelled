@@ -110,7 +110,8 @@ public final class GraphMLWriter<N, E>
         }
         catch (XMLStreamException e)
         {
-            throw new IOException(e);
+            //throw new IOException(e); jdk1.6+
+            throw new IOException(e.getMessage());
         }
     }
 
@@ -133,7 +134,8 @@ public final class GraphMLWriter<N, E>
         }
         catch (XMLStreamException e)
         {
-            throw new IOException(e);
+            //throw new IOException(e);
+            throw new IOException(e.getMessage());
         }
     }
 
