@@ -174,7 +174,8 @@ public final class GraphMLReader<N, E>
         }
         catch (SAXException e)
         {
-            throw new IOException(e);
+            //throw new IOException(e); jdk 1.6+
+            throw new IOException(e.getMessage());
         }
     }
 
