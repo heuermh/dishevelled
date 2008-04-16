@@ -59,7 +59,7 @@ public abstract class AbstractObservableSet<E>
     protected AbstractObservableSet(final Set<E> set)
     {
         super(set);
-        support = new ObservableSetChangeSupport(this);
+        support = new ObservableSetChangeSupport<E>(this);
     }
 
 

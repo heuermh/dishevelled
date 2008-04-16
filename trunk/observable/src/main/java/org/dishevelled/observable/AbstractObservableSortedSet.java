@@ -59,7 +59,7 @@ public abstract class AbstractObservableSortedSet<E>
     protected AbstractObservableSortedSet(final SortedSet<E> sortedSet)
     {
         super(sortedSet);
-        support = new ObservableSortedSetChangeSupport(this);
+        support = new ObservableSortedSetChangeSupport<E>(this);
     }
 
 

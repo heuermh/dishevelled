@@ -61,7 +61,7 @@ public abstract class AbstractObservableMap<K, V>
     protected AbstractObservableMap(final Map<K, V> map)
     {
         super(map);
-        support = new ObservableMapChangeSupport(this);
+        support = new ObservableMapChangeSupport<K, V>(this);
     }
 
 

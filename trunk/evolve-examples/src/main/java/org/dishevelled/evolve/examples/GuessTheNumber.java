@@ -97,7 +97,7 @@ public final class GuessTheNumber
         number = random.nextInt(maxNumber);
         individuals = 10;
 
-        exitStrategy = new FitnessThresholdExitStrategy(0.99d);
+        exitStrategy = new FitnessThresholdExitStrategy<Integer>(0.99d);
 
         recombination = new NullRecombination<Integer>();
 

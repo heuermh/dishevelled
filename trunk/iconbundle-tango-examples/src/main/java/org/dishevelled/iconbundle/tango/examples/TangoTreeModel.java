@@ -35,7 +35,7 @@ import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeModel;
 
 import org.apache.commons.collections.MultiMap;
-import org.apache.commons.collections.MultiHashMap;
+import org.apache.commons.collections.map.MultiValueMap;
 
 import org.dishevelled.iconbundle.IconBundle;
 
@@ -94,7 +94,7 @@ final class TangoTreeModel
                 }
             };
 
-        multiMap = new MultiHashMap();
+        multiMap = new MultiValueMap();
         initializeMultiMap();
 
         contexts = new ArrayList(multiMap.size());

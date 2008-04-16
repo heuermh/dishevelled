@@ -26,7 +26,6 @@ package org.dishevelled.observable.graph.impl;
 import org.dishevelled.graph.Graph;
 import org.dishevelled.graph.Node;
 
-import org.dishevelled.graph.impl.GraphImpl;
 import org.dishevelled.graph.impl.GraphUtils;
 
 import org.dishevelled.observable.graph.AbstractObservableGraphTest;

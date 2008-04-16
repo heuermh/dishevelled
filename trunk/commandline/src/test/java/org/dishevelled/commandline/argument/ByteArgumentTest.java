@@ -23,7 +23,6 @@
 */
 package org.dishevelled.commandline.argument;
 
-import java.util.List;
 import java.util.Arrays;
 
 import junit.framework.TestCase;

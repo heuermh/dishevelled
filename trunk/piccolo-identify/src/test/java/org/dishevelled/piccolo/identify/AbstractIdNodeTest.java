@@ -36,7 +36,6 @@ import org.dishevelled.iconbundle.tango.TangoProject;
 
 import org.dishevelled.identify.ExampleIdentifiable;
 import org.dishevelled.identify.ExampleWithNameProperty;
-import org.dishevelled.identify.Identifiable;
 
 /**
  * Abstract unit test for subclasses of AbstractIdNode.

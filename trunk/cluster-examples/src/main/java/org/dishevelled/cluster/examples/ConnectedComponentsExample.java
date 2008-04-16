@@ -29,7 +29,6 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
@@ -100,7 +99,7 @@ public final class ConnectedComponentsExample
         SimilarityStats stats = new SimilarityStats();
         algo.addClusteringAlgorithmListener(stats);
         // TODO:  should create a NullExitStrategy or something similar
-        ExitStrategy<String> exitStrategy = new IterationLimitExitStrategy(99);
+        ExitStrategy<String> exitStrategy = new IterationLimitExitStrategy<String>(99);
         try
         {
             Set<Cluster<String>> clusters = algo.cluster(values, similarity, exitStrategy);

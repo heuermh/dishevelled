@@ -32,7 +32,6 @@ import java.util.HashMap;
 import java.util.Collections;
 
 import org.apache.commons.math.stat.descriptive.SummaryStatistics;
-import org.apache.commons.math.stat.descriptive.SummaryStatisticsImpl;
 
 /**
  * Timer class with nanosecond resolution and summary
@@ -112,7 +111,7 @@ public final class Timer
      */
     public Timer()
     {
-        summaryStatistics = new SummaryStatisticsImpl();
+        summaryStatistics = new SummaryStatistics();
         started = false;
     }
 

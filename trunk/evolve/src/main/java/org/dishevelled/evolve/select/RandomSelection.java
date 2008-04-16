@@ -45,9 +45,6 @@ public final class RandomSelection<I>
     /** Source of randomness. */
     private final Random random;
 
-    /** Default hash map load factor. */
-    private static final float DEFAULT_LOAD_FACTOR = 0.75f;
-
 
     /**
      * Create a new random selection function with the default

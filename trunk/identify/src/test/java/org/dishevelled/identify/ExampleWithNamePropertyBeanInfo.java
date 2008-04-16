@@ -26,7 +26,6 @@ package org.dishevelled.identify;
 import java.beans.BeanInfo;
 import java.beans.BeanDescriptor;
 import java.beans.SimpleBeanInfo;
-import java.beans.IntrospectionException;
 
 import org.dishevelled.iconbundle.IconBundle;
 

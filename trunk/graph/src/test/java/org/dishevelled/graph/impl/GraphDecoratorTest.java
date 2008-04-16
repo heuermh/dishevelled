@@ -60,7 +60,7 @@ public final class GraphDecoratorTest
      * @param <N> node value type
      * @param <E> edge value type
      */
-    private class Decorator<N, E>
+    private static class Decorator<N, E>
         extends AbstractGraphDecorator<N, E>
     {
 

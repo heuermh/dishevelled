@@ -25,9 +25,6 @@ package org.dishevelled.iconbundle.tools;
 
 import java.io.File;
 
-import java.util.List;
-import java.util.Arrays;
-
 import org.dishevelled.commandline.Usage;
 import org.dishevelled.commandline.Switch;
 import org.dishevelled.commandline.Argument;

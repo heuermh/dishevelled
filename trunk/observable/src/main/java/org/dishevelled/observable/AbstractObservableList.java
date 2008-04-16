@@ -60,7 +60,7 @@ public abstract class AbstractObservableList<E>
     protected AbstractObservableList(final List<E> list)
     {
         super(list);
-        support = new ObservableListChangeSupport(this);
+        support = new ObservableListChangeSupport<E>(this);
     }
 
 

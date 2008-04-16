@@ -62,7 +62,7 @@ public abstract class AbstractObservableGraph<N, E>
     protected AbstractObservableGraph(final Graph<N, E> graph)
     {
         super(graph);
-        support = new ObservableGraphChangeSupport(this);
+        support = new ObservableGraphChangeSupport<N, E>(this);
     }
 
 

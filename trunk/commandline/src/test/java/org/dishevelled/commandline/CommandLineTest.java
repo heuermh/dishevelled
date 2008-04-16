@@ -24,7 +24,6 @@
 package org.dishevelled.commandline;
 
 import java.util.Collections;
-import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
 import junit.framework.TestCase;

@@ -58,7 +58,7 @@ public abstract class AbstractObservableCollection<E>
     protected AbstractObservableCollection(final Collection<E> collection)
     {
         super(collection);
-        support = new ObservableCollectionChangeSupport(this);
+        support = new ObservableCollectionChangeSupport<E>(this);
     }
 
 

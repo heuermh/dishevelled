@@ -23,8 +23,6 @@
 */
 package org.dishevelled.matrix;
 
-import java.util.Iterator;
-
 import junit.framework.TestCase;
 
 import org.apache.commons.lang.mutable.MutableInt;
