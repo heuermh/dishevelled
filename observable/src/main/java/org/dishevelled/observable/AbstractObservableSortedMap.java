@@ -59,7 +59,7 @@ public abstract class AbstractObservableSortedMap<K, V>
     protected AbstractObservableSortedMap(final SortedMap<K, V> sortedMap)
     {
         super(sortedMap);
-        support = new ObservableSortedMapChangeSupport(this);
+        support = new ObservableSortedMapChangeSupport<K, V>(this);
     }
 
 

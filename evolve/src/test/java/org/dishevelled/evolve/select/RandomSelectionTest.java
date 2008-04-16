@@ -28,8 +28,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Random;
 
-import junit.framework.TestCase;
-
 import org.dishevelled.evolve.Selection;
 import org.dishevelled.evolve.AbstractSelectionTest;
 

@@ -29,7 +29,6 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 
 import java.util.Set;
-import java.util.HashSet;
 import java.util.Collections;
 
 import edu.umd.cs.piccolo.util.PPaintContext;

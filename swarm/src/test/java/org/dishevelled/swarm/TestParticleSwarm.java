@@ -24,7 +24,6 @@
 package org.dishevelled.swarm;
 
 import java.util.Iterator;
-import java.util.Random;
 
 import org.dishevelled.swarm.exit.EpochLimitExitStrategy;
 

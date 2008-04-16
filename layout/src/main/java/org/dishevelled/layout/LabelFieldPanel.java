@@ -24,7 +24,6 @@
 package org.dishevelled.layout;
 
 import java.awt.Component;
-import java.awt.LayoutManager;
 
 import javax.swing.Box;
 import javax.swing.JComponent;

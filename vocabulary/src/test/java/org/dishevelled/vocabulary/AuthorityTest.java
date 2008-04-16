@@ -23,7 +23,6 @@
 */
 package org.dishevelled.vocabulary;
 
-import java.util.Set;
 import java.util.Arrays;
 import java.util.TreeSet;
 import java.util.Collections;

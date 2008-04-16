@@ -130,10 +130,7 @@ public final class RibbonExample
         {
             e.printStackTrace();
         }
-        finally
-        {
-            return image;
-        }
+        return image;
     }
 
 

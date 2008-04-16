@@ -28,26 +28,18 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import java.awt.geom.Rectangle2D;
-
 import java.io.IOException;
 
 import java.util.Arrays;
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.imageio.ImageIO;
 
 import javax.swing.Timer;
 
-import edu.umd.cs.piccolo.PCamera;
 import edu.umd.cs.piccolo.PCanvas;
 import edu.umd.cs.piccolo.PLayer;
-
-import edu.umd.cs.piccolo.nodes.PImage;
 
 import edu.umd.cs.piccolo.util.PPaintContext;
 
@@ -126,10 +118,7 @@ public class SpriteExample
         {
             e.printStackTrace();
         }
-        finally
-        {
-            return image;
-        }
+        return image;
     }
 
 

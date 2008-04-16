@@ -24,9 +24,7 @@
 package org.dishevelled.iconbundle.tango.examples;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.Image;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
@@ -40,7 +38,6 @@ import java.util.Iterator;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.Box;
-import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -58,17 +55,12 @@ import javax.swing.event.TreeSelectionListener;
 
 import javax.swing.border.EmptyBorder;
 
-import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.TreeSelectionModel;
 
-import org.dishevelled.iconbundle.IconBundle;
 import org.dishevelled.iconbundle.IconSize;
-import org.dishevelled.iconbundle.IconState;
-import org.dishevelled.iconbundle.IconTextDirection;
 
 import org.dishevelled.iconbundle.tango.TangoProject;
 
-import org.dishevelled.identify.IdButton;
 import org.dishevelled.identify.Identifiable;
 import org.dishevelled.identify.IdentifiableAction;
 import org.dishevelled.identify.IdLabel;

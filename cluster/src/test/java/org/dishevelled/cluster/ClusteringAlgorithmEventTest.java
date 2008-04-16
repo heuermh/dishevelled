@@ -88,7 +88,7 @@ public final class ClusteringAlgorithmEventTest
     /**
      * Test clustering algorithm.
      */
-    private class TestClusteringAlgorithm<E>
+    private static class TestClusteringAlgorithm<E>
         extends AbstractClusteringAlgorithm<E>
     {
 

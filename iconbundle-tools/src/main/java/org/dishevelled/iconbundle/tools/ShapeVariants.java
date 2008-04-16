@@ -32,7 +32,6 @@ import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 
 import java.util.List;
-import java.util.Arrays;
 
 import org.dishevelled.commandline.Usage;
 import org.dishevelled.commandline.Switch;

@@ -131,10 +131,7 @@ public final class TileMapExample
         {
             e.printStackTrace();
         }
-        finally
-        {
-            return image;
-        }
+        return image;
     }
 
 

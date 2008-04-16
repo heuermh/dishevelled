@@ -25,7 +25,6 @@ package org.dishevelled.graph.io;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.OutputStream;
 
 import junit.framework.TestCase;
 

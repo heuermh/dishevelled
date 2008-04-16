@@ -27,16 +27,11 @@ import java.awt.ComponentOrientation;
 
 import java.awt.event.ActionEvent;
 
-import java.awt.image.BufferedImage;
-
 import java.util.Locale;
-
-import javax.swing.Action;
 
 import junit.framework.TestCase;
 
 import org.dishevelled.iconbundle.IconSize;
-import org.dishevelled.iconbundle.IconState;
 import org.dishevelled.iconbundle.IconTextDirection;
 
 import org.dishevelled.iconbundle.tango.TangoProject;
