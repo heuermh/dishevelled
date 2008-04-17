@@ -32,7 +32,6 @@ import java.net.URL;
 import javax.xml.parsers.SAXParserFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-import net.sf.stax.StAXContentHandler;
 import net.sf.stax.StAXContentHandlerBase;
 import net.sf.stax.StAXContext;
 import net.sf.stax.StAXDelegationContext;
@@ -48,11 +47,10 @@ import org.dishevelled.graph.io.GraphReader;
 
 import org.dishevelled.graph.io.graphml.GraphMLReader;
 
-import org.xml.sax.SAXException;
-import org.xml.sax.XMLReader;
-
 /**
- *
+ * Graph reader for the yFiles extension to GraphML.  The XML schema is
+ * <a href="http://www.yworks.com/xml/schema/graphml/1.0/ygraphml.xsd">
+ * http://www.yworks.com/xml/schema/graphml/1.0/ygraphml.xsd</a>.
  *
  * @author  Michael Heuer
  * @version $Revision$ $Date$
@@ -65,7 +63,7 @@ public final class YGraphMLReader
 
 
     /**
-     * Create a new...
+     * Create a new YGraphML reader.
      */
     public YGraphMLReader()
     {
