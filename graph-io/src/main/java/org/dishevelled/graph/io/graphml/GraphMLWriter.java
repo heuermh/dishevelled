@@ -153,7 +153,7 @@ public final class GraphMLWriter<N, E>
         writer.writeStartDocument("1.0");
         //writer.writeStartDocument("UTF-8", "1.0");
         writer.writeStartElement("graphml");
-        writer.writeNamespace("graphml", "http://graphml.graphdrawing.org/xmlns");
+        writer.writeDefaultNamespace("http://graphml.graphdrawing.org/xmlns");
         writer.writeNamespace("xsi", "http://www.w3.org/2001/XMLSchema-instance");
         writer.writeAttribute("xsi:schemaLocation", "http://graphml.graphdrawing.org/xmlns http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd");
         if (nodeValueHandler != null)
