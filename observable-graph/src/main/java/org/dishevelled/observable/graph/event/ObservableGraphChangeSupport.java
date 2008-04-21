@@ -27,6 +27,8 @@ import java.io.Serializable;
 
 import javax.swing.event.EventListenerList;
 
+import org.dishevelled.graph.Edge;
+import org.dishevelled.graph.Node;
 import org.dishevelled.observable.graph.ObservableGraph;
 
 /**
@@ -266,6 +268,102 @@ public class ObservableGraphChangeSupport<N, E>
         {
             if (listeners[i] == GraphChangeListener.class)
             {
+                ((GraphChangeListener<N, E>) listeners[i + 1]).graphChanged(e);
+            }
+        }
+    }
+
+    /**
+     * Fire a node created change event to all registered <code>GraphChangeListener</code>s.
+     *
+     * @param node newly created node
+     */
+    public void fireNodeCreated(final Node<N, E> node)
+    {
+        Object[] listeners = listenerList.getListenerList();
+        GraphChangeEvent<N, E> e = null;
+
+        for (int i = listeners.length - 2; i >= 0; i -= 2)
+        {
+            if (listeners[i] == GraphChangeListener.class)
+            {
+                // lazily create the event
+                if (e == null)
+                {
+                    e = new GraphChangeEvent<N, E>(source, node);
+                }
+                ((GraphChangeListener<N, E>) listeners[i + 1]).graphChanged(e);
+            }
+        }
+    }
+
+    /**
+     * Fire a node removed change event to all registered <code>GraphChangeListener</code>s.
+     *
+     * @param node removed node
+     */
+    public void fireNodeRemoved(final Node<N, E> node)
+    {
+        Object[] listeners = listenerList.getListenerList();
+        GraphChangeEvent<N, E> e = null;
+
+        for (int i = listeners.length - 2; i >= 0; i -= 2)
+        {
+            if (listeners[i] == GraphChangeListener.class)
+            {
+                // lazily create the event
+                if (e == null)
+                {
+                    e = new GraphChangeEvent<N, E>(source, node);
+                }
+                ((GraphChangeListener<N, E>) listeners[i + 1]).graphChanged(e);
+            }
+        }
+    }
+
+    /**
+     * Fire an edge created change event to all registered <code>GraphChangeListener</code>s.
+     *
+     * @param edge newly created edge
+     */
+    public void fireEdgeCreated(final Edge<N, E> edge)
+    {
+        Object[] listeners = listenerList.getListenerList();
+        GraphChangeEvent<N, E> e = null;
+
+        for (int i = listeners.length - 2; i >= 0; i -= 2)
+        {
+            if (listeners[i] == GraphChangeListener.class)
+            {
+                // lazily create the event
+                if (e == null)
+                {
+                    e = new GraphChangeEvent<N, E>(source, edge);
+                }
+                ((GraphChangeListener<N, E>) listeners[i + 1]).graphChanged(e);
+            }
+        }
+    }
+
+    /**
+     * Fire an edge removed change event to all registered <code>GraphChangeListener</code>s.
+     *
+     * @param edge removed edge
+     */
+    public void fireEdgeRemoved(final Edge<N, E> edge)
+    {
+        Object[] listeners = listenerList.getListenerList();
+        GraphChangeEvent<N, E> e = null;
+
+        for (int i = listeners.length - 2; i >= 0; i -= 2)
+        {
+            if (listeners[i] == GraphChangeListener.class)
+            {
+                // lazily create the event
+                if (e == null)
+                {
+                    e = new GraphChangeEvent<N, E>(source, edge);
+                }
                 ((GraphChangeListener<N, E>) listeners[i + 1]).graphChanged(e);
             }
         }

@@ -25,7 +25,9 @@ package org.dishevelled.observable.graph.event;
 
 import junit.framework.TestCase;
 
+import org.dishevelled.graph.Edge;
 import org.dishevelled.graph.Graph;
+import org.dishevelled.graph.Node;
 
 import org.dishevelled.graph.impl.GraphUtils;
 
@@ -52,6 +54,12 @@ public class GraphChangeEventTest
         assertNotNull(event0);
         assertEquals(observableGraph, event0.getObservableGraph());
 
+        GraphChangeEvent<String, String> event1 = new GraphChangeEvent<String, String>(observableGraph, (Node<String, String>) null);
+        assertNotNull(event1);
+
+        GraphChangeEvent<String, String> event2 = new GraphChangeEvent<String, String>(observableGraph, (Edge<String, String>) null);
+        assertNotNull(event2);
+
         try
         {
             GraphChangeEvent<String, String> event = new GraphChangeEvent<String, String>(null);
@@ -60,5 +68,29 @@ public class GraphChangeEventTest
         {
             // expected
         }
+    }
+
+    public void testNode()
+    {
+        Graph<String, String> graph = GraphUtils.createGraph();
+        ObservableGraph<String, String> observableGraph = ObservableGraphUtils.observableGraph(graph);
+        GraphChangeEvent<String, String> event0 = new GraphChangeEvent<String, String>(observableGraph);
+        assertEquals(null, event0.getNode());
+        Node<String, String> node = observableGraph.createNode("foo");
+        GraphChangeEvent<String, String> event1 = new GraphChangeEvent<String, String>(observableGraph, node);
+        assertEquals(node, event1.getNode());
+    }
+
+    public void testEdge()
+    {
+        Graph<String, String> graph = GraphUtils.createGraph();
+        ObservableGraph<String, String> observableGraph = ObservableGraphUtils.observableGraph(graph);
+        GraphChangeEvent<String, String> event0 = new GraphChangeEvent<String, String>(observableGraph);
+        assertEquals(null, event0.getNode());
+        Node<String, String> node0 = observableGraph.createNode("foo");
+        Node<String, String> node1 = observableGraph.createNode("bar");
+        Edge<String, String> edge = observableGraph.createEdge(node0, node1, "baz");
+        GraphChangeEvent<String, String> event1 = new GraphChangeEvent<String, String>(observableGraph, edge);
+        assertEquals(edge, event1.getEdge());
     }
 }
