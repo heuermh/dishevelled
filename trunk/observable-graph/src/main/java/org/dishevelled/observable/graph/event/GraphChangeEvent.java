@@ -25,6 +25,9 @@ package org.dishevelled.observable.graph.event;
 
 import java.util.EventObject;
 
+import org.dishevelled.graph.Edge;
+import org.dishevelled.graph.Node;
+
 import org.dishevelled.observable.graph.ObservableGraph;
 
 /**
@@ -38,6 +41,12 @@ import org.dishevelled.observable.graph.ObservableGraph;
 public class GraphChangeEvent<N, E>
     extends EventObject
 {
+    /** Newly created or removed node, if any. */
+    private final Node<N, E> node;
+
+    /** Newly created or removed edge, if any. */
+    private final Edge<N, E> edge;
+
 
     /**
      * Create a new graph change event with the specified
@@ -48,6 +57,38 @@ public class GraphChangeEvent<N, E>
     public GraphChangeEvent(final ObservableGraph<N, E> source)
     {
         super(source);
+        this.node = null;
+        this.edge = null;
+    }
+
+    /**
+     * Create a new graph change event with the specified
+     * observable graph as the event source and the specified
+     * newly created or removed node.
+     *
+     * @param source source of the event, must not be null
+     * @param node newly created or removed node, if any
+     */
+    public GraphChangeEvent(final ObservableGraph<N, E> source, final Node<N, E> node)
+    {
+        super(source);
+        this.node = node;
+        this.edge = null;
+    }
+
+    /**
+     * Create a new graph change event with the specified
+     * observable graph as the event source and the specified
+     * newly created or removed edge.
+     *
+     * @param source source of the event, must not be null
+     * @param edge newly created or removed edge, if any
+     */
+    public GraphChangeEvent(final ObservableGraph<N, E> source, final Edge<N, E> edge)
+    {
+        super(source);
+        this.node = null;
+        this.edge = edge;
     }
 
 
@@ -61,5 +102,29 @@ public class GraphChangeEvent<N, E>
     public final ObservableGraph<N, E> getObservableGraph()
     {
         return (ObservableGraph<N, E>) super.getSource();
+    }
+
+    /**
+     * Return the newly created or removed node for this graph change
+     * event, if any.
+     *
+     * @return the newly created or removed node for this graph change
+     *    event, if any
+     */
+    public final Node<N, E> getNode()
+    {
+        return node;
+    }
+
+    /**
+     * Return the newly created or removed edge for this graph change
+     * event, if any.
+     *
+     * @return the newly created or removed edge for this graph change
+     *    event, if any
+     */
+    public final Edge<N, E> getEdge()
+    {
+        return edge;
     }
 }

@@ -29,7 +29,6 @@ import org.dishevelled.graph.Node;
 
 import org.dishevelled.observable.graph.AbstractObservableGraph;
 
-import org.dishevelled.observable.graph.event.GraphChangeEvent;
 import org.dishevelled.observable.graph.event.GraphChangeVetoException;
 import org.dishevelled.observable.graph.event.VetoableGraphChangeEvent;
 
@@ -48,9 +47,6 @@ import org.dishevelled.observable.graph.event.VetoableGraphChangeEvent;
 public final class ObservableGraphImpl<N, E>
     extends AbstractObservableGraph<N, E>
 {
-    /** Cached graph change event. */
-    private final GraphChangeEvent<N, E> changeEvent;
-
     /** Cached vetoable graph change event. */
     private final VetoableGraphChangeEvent<N, E> vetoableChangeEvent;
 
@@ -63,7 +59,6 @@ public final class ObservableGraphImpl<N, E>
     public ObservableGraphImpl(final Graph<N, E> graph)
     {
         super(graph);
-        changeEvent = new GraphChangeEvent<N, E>(this);
         vetoableChangeEvent = new VetoableGraphChangeEvent<N, E>(this);
     }
 
@@ -85,7 +80,7 @@ public final class ObservableGraphImpl<N, E>
     /** {@inheritDoc} */
     protected void postClear()
     {
-        fireGraphChanged(changeEvent);
+        fireGraphChanged();
     }
 
     /** {@inheritDoc} */
@@ -105,7 +100,7 @@ public final class ObservableGraphImpl<N, E>
     /** {@inheritDoc} */
     protected void postCreateNode(final N value, final Node<N, E> node)
     {
-        fireGraphChanged(changeEvent);
+        fireNodeCreated(node);
     }
 
     /** {@inheritDoc} */
@@ -125,7 +120,7 @@ public final class ObservableGraphImpl<N, E>
     /** {@inheritDoc} */
     protected void postRemove(final Node<N, E> node)
     {
-        fireGraphChanged(changeEvent);
+        fireNodeRemoved(node);
     }
 
     /** {@inheritDoc} */
@@ -150,7 +145,7 @@ public final class ObservableGraphImpl<N, E>
                                   final E value,
                                   final Edge<N, E> edge)
     {
-        fireGraphChanged(changeEvent);
+        fireEdgeCreated(edge);
     }
 
     /** {@inheritDoc} */
@@ -170,6 +165,6 @@ public final class ObservableGraphImpl<N, E>
     /** {@inheritDoc} */
     protected void postRemove(final Edge<N, E> edge)
     {
-        fireGraphChanged(changeEvent);
+        fireEdgeRemoved(edge);
     }
 }

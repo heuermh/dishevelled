@@ -171,6 +171,46 @@ public abstract class AbstractObservableGraph<N, E>
     }
 
     /**
+     * Fire a node created change event to all registered <code>GraphChangeListener</code>s.
+     *
+     * @param node newly created node
+     */
+    protected void fireNodeCreated(final Node<N, E> node)
+    {
+        support.fireNodeCreated(node);
+    }
+
+    /**
+     * Fire a node removed change event to all registered <code>GraphChangeListener</code>s.
+     *
+     * @param node removed node
+     */
+    protected void fireNodeRemoved(final Node<N, E> node)
+    {
+        support.fireNodeRemoved(node);
+    }
+
+    /**
+     * Fire an edge created change event to all registered <code>GraphChangeListener</code>s.
+     *
+     * @param edge newly created edge
+     */
+    protected void fireEdgeCreated(final Edge<N, E> edge)
+    {
+        support.fireEdgeCreated(edge);
+    }
+
+    /**
+     * Fire an edge removed change event to all registered <code>GraphChangeListener</code>s.
+     *
+     * @param edge removed edge
+     */
+    protected void fireEdgeRemoved(final Edge<N, E> edge)
+    {
+        support.fireEdgeRemoved(edge);
+    }
+
+    /**
      * Notify subclasses the <code>clear</code> method is about to
      * be called on the wrapped graph.
      * Return <code>true</code> to proceed with the change.
