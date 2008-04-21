@@ -38,9 +38,37 @@ public interface GraphChangeListener<N, E>
 {
 
     /**
-     * Notify this listener that a change has been made to the observable graph.
+     * Notify this listener that the observable graph has been cleared.
      *
      * @param e graph change event
      */
-    void graphChanged(GraphChangeEvent<N, E> e);
+    void graphCleared(GraphChangeEvent<N, E> e);
+
+    /**
+     * Notify this listener that a node has been created in the observable graph.
+     *
+     * @param e graph change event
+     */
+    void nodeCreated(GraphChangeEvent<N, E> e);
+
+    /**
+     * Notify this listener that an edge has been created in the observable graph.
+     *
+     * @param e graph change event
+     */
+    void edgeCreated(GraphChangeEvent<N, E> e);
+
+    /**
+     * Notify this listener than a node has been removed from the observable graph.
+     *
+     * @param e graph change event
+     */
+    void nodeRemoved(GraphChangeEvent<N, E> e);
+
+    /**
+     * Notify this listener that an edge has been removed from the observable graph.
+     *
+     * @param e graph change event
+     */
+    void edgeRemoved(GraphChangeEvent<N, E> e);
 }

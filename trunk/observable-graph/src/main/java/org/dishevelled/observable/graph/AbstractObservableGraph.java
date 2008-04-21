@@ -152,22 +152,22 @@ public abstract class AbstractObservableGraph<N, E>
     }
 
     /**
-     * Fire a change event to all registered <code>GraphChangeListener</code>s.
+     * Fire a graph cleared change event to all registered <code>GraphChangeListener</code>s.
      */
-    public void fireGraphChanged()
+    protected void fireGraphCleared()
     {
-        support.fireGraphChanged();
+        support.fireGraphCleared();
     }
 
     /**
-     * Fire the specified change event to all registered
+     * Fire the specified graph cleared change event to all registered
      * <code>GraphChangeListener</code>s.
      *
      * @param e change event
      */
-    public void fireGraphChanged(final GraphChangeEvent<N, E> e)
+    protected void fireGraphCleared(final GraphChangeEvent<N, E> e)
     {
-        support.fireGraphChanged(e);
+        support.fireGraphCleared(e);
     }
 
     /**
