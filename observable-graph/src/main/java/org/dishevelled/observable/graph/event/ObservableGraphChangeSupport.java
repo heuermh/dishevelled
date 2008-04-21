@@ -186,12 +186,12 @@ public class ObservableGraphChangeSupport<N, E>
     }
 
     /**
-     * Fire a will change event to all registered
+     * Fire a will clear change event to all registered
      * <code>VetoableGraphChangeListener</code>s.
      *
      * @throws GraphChangeVetoException if any of the listeners veto the change
      */
-    public void fireGraphWillChange()
+    public void fireWillClear()
         throws GraphChangeVetoException
     {
         Object[] listeners = listenerList.getListenerList();
@@ -206,19 +206,19 @@ public class ObservableGraphChangeSupport<N, E>
                 {
                     e = new VetoableGraphChangeEvent<N, E>(source);
                 }
-                ((VetoableGraphChangeListener<N, E>) listeners[i + 1]).graphWillChange(e);
+                ((VetoableGraphChangeListener<N, E>) listeners[i + 1]).willClear(e);
             }
         }
     }
 
     /**
-     * Fire the specified will change event to all registered
+     * Fire the specified will clear event to all registered
      * <code>VetoableGraphChangeListener</code>s.
      *
      * @param e will change event
      * @throws GraphChangeVetoException if any of the listeners veto the change
      */
-    public void fireGraphWillChange(final VetoableGraphChangeEvent<N, E> e)
+    public void fireWillClear(final VetoableGraphChangeEvent<N, E> e)
         throws GraphChangeVetoException
     {
         Object[] listeners = listenerList.getListenerList();
@@ -227,15 +227,15 @@ public class ObservableGraphChangeSupport<N, E>
         {
             if (listeners[i] == VetoableGraphChangeListener.class)
             {
-                ((VetoableGraphChangeListener<N, E>) listeners[i + 1]).graphWillChange(e);
+                ((VetoableGraphChangeListener<N, E>) listeners[i + 1]).willClear(e);
             }
         }
     }
 
     /**
-     * Fire a graph cleared change event to all registered <code>GraphChangeListener</code>s.
+     * Fire a cleared change event to all registered <code>GraphChangeListener</code>s.
      */
-    public void fireGraphCleared()
+    public void fireCleared()
     {
         Object[] listeners = listenerList.getListenerList();
         GraphChangeEvent<N, E> e = null;
@@ -249,7 +249,7 @@ public class ObservableGraphChangeSupport<N, E>
                 {
                     e = new GraphChangeEvent<N, E>(source);
                 }
-                ((GraphChangeListener<N, E>) listeners[i + 1]).graphCleared(e);
+                ((GraphChangeListener<N, E>) listeners[i + 1]).cleared(e);
             }
         }
     }
@@ -260,7 +260,7 @@ public class ObservableGraphChangeSupport<N, E>
      *
      * @param e change event
      */
-    public void fireGraphCleared(final GraphChangeEvent<N, E> e)
+    public void fireCleared(final GraphChangeEvent<N, E> e)
     {
         Object[] listeners = listenerList.getListenerList();
 
@@ -268,7 +268,7 @@ public class ObservableGraphChangeSupport<N, E>
         {
             if (listeners[i] == GraphChangeListener.class)
             {
-                ((GraphChangeListener<N, E>) listeners[i + 1]).graphCleared(e);
+                ((GraphChangeListener<N, E>) listeners[i + 1]).cleared(e);
             }
         }
     }
@@ -391,7 +391,7 @@ public class ObservableGraphChangeSupport<N, E>
                 {
                     e = new VetoableGraphChangeEvent<N, E>(source, nodeValue);
                 }
-                ((VetoableGraphChangeListener<N, E>) listeners[i + 1]).graphWillChange(e);
+                ((VetoableGraphChangeListener<N, E>) listeners[i + 1]).willCreateNode(e);
             }
         }
     }
@@ -422,7 +422,7 @@ public class ObservableGraphChangeSupport<N, E>
                 {
                     e = new VetoableGraphChangeEvent<N, E>(source, sourceNode, targetNode, edgeValue);
                 }
-                ((VetoableGraphChangeListener<N, E>) listeners[i + 1]).graphWillChange(e);
+                ((VetoableGraphChangeListener<N, E>) listeners[i + 1]).willCreateEdge(e);
             }
         }
     }
@@ -449,7 +449,7 @@ public class ObservableGraphChangeSupport<N, E>
                 {
                     e = new VetoableGraphChangeEvent<N, E>(source, node);
                 }
-                ((VetoableGraphChangeListener<N, E>) listeners[i + 1]).graphWillChange(e);
+                ((VetoableGraphChangeListener<N, E>) listeners[i + 1]).willRemoveNode(e);
             }
         }
     }
@@ -476,7 +476,7 @@ public class ObservableGraphChangeSupport<N, E>
                 {
                     e = new VetoableGraphChangeEvent<N, E>(source, edge);
                 }
-                ((VetoableGraphChangeListener<N, E>) listeners[i + 1]).graphWillChange(e);
+                ((VetoableGraphChangeListener<N, E>) listeners[i + 1]).willRemoveEdge(e);
             }
         }
     }

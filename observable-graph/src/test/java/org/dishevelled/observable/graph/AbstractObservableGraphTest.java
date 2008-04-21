@@ -120,22 +120,6 @@ public abstract class AbstractObservableGraphTest
         assertEquals(0, graph.getVetoableGraphChangeListeners().length);
     }
 
-    public void testFireGraphWillChange()
-        throws Exception
-    {
-        ObservableGraph<String, String> graph = createEmptyObservableGraph();
-        NeverVetoListener<String, String> neverVetoListener = new NeverVetoListener<String, String>();
-        graph.addVetoableGraphChangeListener(neverVetoListener);
-
-        if (graph instanceof AbstractObservableGraph)
-        {
-            ((AbstractObservableGraph) graph).fireGraphWillChange();
-
-            assertNotNull(neverVetoListener.getEvent());
-            assertSame(graph, neverVetoListener.getEvent().getObservableGraph());
-        }
-    }
-
     public void testClear()
     {
         ObservableGraph<String, String> fullGraph = createFullObservableGraph("node", "edge");
@@ -459,7 +443,7 @@ public abstract class AbstractObservableGraphTest
         }
 
         /** {@inheritDoc} */
-        public void graphCleared(GraphChangeEvent<N, E> event) {
+        public void cleared(GraphChangeEvent<N, E> event) {
             this.event = event;
         }
 
@@ -482,7 +466,35 @@ public abstract class AbstractObservableGraphTest
     {
 
         /** {@inheritDoc} */
-        public void graphWillChange(final VetoableGraphChangeEvent<N, E> event)
+        public void willClear(VetoableGraphChangeEvent<N, E> e)
+            throws GraphChangeVetoException
+        {
+            throw new GraphChangeVetoException();
+        }
+
+        /** {@inheritDoc} */
+        public void willCreateEdge(VetoableGraphChangeEvent<N, E> e)
+            throws GraphChangeVetoException
+        {
+            throw new GraphChangeVetoException();
+        }
+
+        /** {@inheritDoc} */
+        public void willCreateNode(VetoableGraphChangeEvent<N, E> e)
+            throws GraphChangeVetoException
+        {
+            throw new GraphChangeVetoException();
+        }
+
+        /** {@inheritDoc} */
+        public void willRemoveEdge(VetoableGraphChangeEvent<N, E> e)
+            throws GraphChangeVetoException
+        {
+            throw new GraphChangeVetoException();
+        }
+
+        /** {@inheritDoc} */
+        public void willRemoveNode(VetoableGraphChangeEvent<N, E> e)
             throws GraphChangeVetoException
         {
             throw new GraphChangeVetoException();
@@ -500,7 +512,35 @@ public abstract class AbstractObservableGraphTest
 
 
         /** {@inheritDoc} */
-        public void graphWillChange(final VetoableGraphChangeEvent<N, E> event)
+        public void willClear(VetoableGraphChangeEvent<N, E> event)
+            throws GraphChangeVetoException
+        {
+            this.event = event;
+        }
+
+        /** {@inheritDoc} */
+        public void willCreateEdge(VetoableGraphChangeEvent<N, E> event)
+            throws GraphChangeVetoException
+        {
+            this.event = event;
+        }
+
+        /** {@inheritDoc} */
+        public void willCreateNode(VetoableGraphChangeEvent<N, E> event)
+            throws GraphChangeVetoException
+        {
+            this.event = event;
+        }
+
+        /** {@inheritDoc} */
+        public void willRemoveEdge(VetoableGraphChangeEvent<N, E> event)
+            throws GraphChangeVetoException
+        {
+            this.event = event;
+        }
+
+        /** {@inheritDoc} */
+        public void willRemoveNode(VetoableGraphChangeEvent<N, E> event)
             throws GraphChangeVetoException
         {
             this.event = event;
