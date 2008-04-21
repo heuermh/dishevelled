@@ -37,26 +37,26 @@ import org.dishevelled.observable.ObservableMap;
 import org.dishevelled.observable.ObservableSet;
 import org.dishevelled.observable.ObservableSortedMap;
 import org.dishevelled.observable.ObservableSortedSet;
-import org.dishevelled.observable.impl.SimpleObservableUtils;
+import org.dishevelled.observable.impl.ObservableUtils;
 
 /**
- * Unit test for SimpleObservableUtils.
+ * Unit test for ObservableUtils.
  *
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public class SimpleObservableUtilsTest
+public class ObservableUtilsTest
     extends TestCase
 {
 
     public void testObservableCollection()
     {
-        ObservableCollection<String> collection0 = SimpleObservableUtils.observableCollection(new ArrayList<String>());
+        ObservableCollection<String> collection0 = ObservableUtils.observableCollection(new ArrayList<String>());
         assertNotNull(collection0);
 
         try
         {
-            ObservableCollection<String> collection = SimpleObservableUtils.observableCollection(null);
+            ObservableCollection<String> collection = ObservableUtils.observableCollection(null);
             fail("observableCollection(null) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
@@ -67,12 +67,12 @@ public class SimpleObservableUtilsTest
 
     public void testObservableList()
     {
-        ObservableList<String> list0 = SimpleObservableUtils.observableList(new ArrayList<String>());
+        ObservableList<String> list0 = ObservableUtils.observableList(new ArrayList<String>());
         assertNotNull(list0);
 
         try
         {
-            ObservableList<String> list = SimpleObservableUtils.observableList(null);
+            ObservableList<String> list = ObservableUtils.observableList(null);
             fail("observableList(null) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
@@ -83,12 +83,12 @@ public class SimpleObservableUtilsTest
 
     public void testObservableMap()
     {
-        ObservableMap<String, Double> map0 = SimpleObservableUtils.observableMap(new HashMap<String, Double>());
+        ObservableMap<String, Double> map0 = ObservableUtils.observableMap(new HashMap<String, Double>());
         assertNotNull(map0);
 
         try
         {
-            ObservableMap<String, Double> map = SimpleObservableUtils.observableMap(null);
+            ObservableMap<String, Double> map = ObservableUtils.observableMap(null);
             fail("observableMap(null) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
@@ -99,12 +99,12 @@ public class SimpleObservableUtilsTest
 
     public void testObservableSet()
     {
-        ObservableSet<String> set0 = SimpleObservableUtils.observableSet(new HashSet<String>());
+        ObservableSet<String> set0 = ObservableUtils.observableSet(new HashSet<String>());
         assertNotNull(set0);
 
         try
         {
-            ObservableSet<String> set = SimpleObservableUtils.observableSet(null);
+            ObservableSet<String> set = ObservableUtils.observableSet(null);
             fail("observableSet(null) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
@@ -115,12 +115,12 @@ public class SimpleObservableUtilsTest
 
     public void testObservableSortedMap()
     {
-        ObservableSortedMap<String, Double> sortedMap0 = SimpleObservableUtils.observableSortedMap(new TreeMap<String, Double>());
+        ObservableSortedMap<String, Double> sortedMap0 = ObservableUtils.observableSortedMap(new TreeMap<String, Double>());
         assertNotNull(sortedMap0);
 
         try
         {
-            ObservableSortedMap<String, Double> sortedMap = SimpleObservableUtils.observableSortedMap(null);
+            ObservableSortedMap<String, Double> sortedMap = ObservableUtils.observableSortedMap(null);
             fail("observableSortedMap(null) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
@@ -131,12 +131,12 @@ public class SimpleObservableUtilsTest
 
     public void testObservableSortedSet()
     {
-        ObservableSortedSet<String> sortedSet0 = SimpleObservableUtils.observableSortedSet(new TreeSet<String>());
+        ObservableSortedSet<String> sortedSet0 = ObservableUtils.observableSortedSet(new TreeSet<String>());
         assertNotNull(sortedSet0);
 
         try
         {
-            ObservableSortedSet<String> sortedSet = SimpleObservableUtils.observableSortedSet(null);
+            ObservableSortedSet<String> sortedSet = ObservableUtils.observableSortedSet(null);
             fail("observableSortedSet(null) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)

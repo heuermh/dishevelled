@@ -43,7 +43,7 @@ import org.dishevelled.observable.event.VetoableListChangeEvent;
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public class SimpleObservableList<E>
+public class ObservableListImpl<E>
     extends AbstractObservableList<E>
 {
     /** Cached list change event. */
@@ -59,7 +59,7 @@ public class SimpleObservableList<E>
      *
      * @param list list to decorate, must not be null
      */
-    public SimpleObservableList(final List<E> list)
+    public ObservableListImpl(final List<E> list)
     {
         super(list);
         changeEvent = new ListChangeEvent<E>(this);

@@ -25,23 +25,23 @@ package org.dishevelled.observable.impl;
 
 import java.util.ArrayList;
 
-import org.dishevelled.observable.AbstractObservableListTest;
-import org.dishevelled.observable.ObservableList;
-import org.dishevelled.observable.impl.SimpleObservableList;
+import org.dishevelled.observable.AbstractObservableCollectionTest;
+import org.dishevelled.observable.ObservableCollection;
+import org.dishevelled.observable.impl.ObservableCollectionImpl;
 
 /**
- * Unit test for SimpleObservableList.
+ * Unit test for ObservableCollectionImpl.
  *
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public class SimpleObservableListTest
-    extends AbstractObservableListTest
+public class ObservableCollectionImplTest
+    extends AbstractObservableCollectionTest
 {
 
     /** {@inheritDoc} */
-    protected <T> ObservableList<T> createObservableList()
+    protected <T> ObservableCollection<T> createObservableCollection()
     {
-        return new SimpleObservableList(new ArrayList<T>());
+        return new ObservableCollectionImpl(new ArrayList<T>());
     }
 }

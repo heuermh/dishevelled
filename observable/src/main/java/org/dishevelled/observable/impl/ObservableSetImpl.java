@@ -24,46 +24,46 @@
 package org.dishevelled.observable.impl;
 
 import java.util.Collection;
-import java.util.SortedSet;
+import java.util.Set;
 
-import org.dishevelled.observable.AbstractObservableSortedSet;
+import org.dishevelled.observable.AbstractObservableSet;
 
-import org.dishevelled.observable.event.SortedSetChangeEvent;
-import org.dishevelled.observable.event.SortedSetChangeVetoException;
-import org.dishevelled.observable.event.VetoableSortedSetChangeEvent;
+import org.dishevelled.observable.event.SetChangeEvent;
+import org.dishevelled.observable.event.SetChangeVetoException;
+import org.dishevelled.observable.event.VetoableSetChangeEvent;
 
 /**
- * Observable sorted set decorator that simply fires empty
- * vetoable sorted set change events in <code>preXxx</code> methods and
- * empty sorted set change events in <code>postXxx</code> methods.
- * Observable sorted set listeners may query the source of the events to determine
+ * Observable set decorator that simply fires empty
+ * vetoable set change events in <code>preXxx</code> methods and
+ * empty set change events in <code>postXxx</code> methods.
+ * Observable set listeners may query the source of the events to determine
  * what may or may not have changed due to the event.
  *
- * @param <E> sorted set element type
+ * @param <E> set element type
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public class SimpleObservableSortedSet<E>
-    extends AbstractObservableSortedSet<E>
+public class ObservableSetImpl<E>
+    extends AbstractObservableSet<E>
 {
-    /** Cached sorted set change event. */
-    private final SortedSetChangeEvent<E> changeEvent;
+    /** Cached set change event. */
+    private final SetChangeEvent<E> changeEvent;
 
-    /** Cached vetoable sorted set change event. */
-    private final VetoableSortedSetChangeEvent<E> vetoableChangeEvent;
+    /** Cached vetoable set change event. */
+    private final VetoableSetChangeEvent<E> vetoableChangeEvent;
 
 
     /**
      * Create a new observable decorator for the specified
-     * sorted set.
+     * set.
      *
-     * @param sortedSet sorted set to decorate, must not be null
+     * @param set set to decorate, must not be null
      */
-    public SimpleObservableSortedSet(final SortedSet<E> sortedSet)
+    public ObservableSetImpl(final Set<E> set)
     {
-        super(sortedSet);
-        changeEvent = new SortedSetChangeEvent<E>(this);
-        vetoableChangeEvent = new VetoableSortedSetChangeEvent<E>(this);
+        super(set);
+        changeEvent = new SetChangeEvent<E>(this);
+        vetoableChangeEvent = new VetoableSetChangeEvent<E>(this);
     }
 
 
@@ -72,10 +72,10 @@ public class SimpleObservableSortedSet<E>
     {
         try
         {
-            fireSortedSetWillChange(vetoableChangeEvent);
+            fireSetWillChange(vetoableChangeEvent);
             return true;
         }
-        catch (SortedSetChangeVetoException ex)
+        catch (SetChangeVetoException ex)
         {
             return false;
         }
@@ -84,7 +84,7 @@ public class SimpleObservableSortedSet<E>
     /** {@inheritDoc} */
     protected void postAdd(final E e)
     {
-        fireSortedSetChanged(changeEvent);
+        fireSetChanged(changeEvent);
     }
 
     /** {@inheritDoc} */
@@ -92,10 +92,10 @@ public class SimpleObservableSortedSet<E>
     {
         try
         {
-            fireSortedSetWillChange(vetoableChangeEvent);
+            fireSetWillChange(vetoableChangeEvent);
             return true;
         }
-        catch (SortedSetChangeVetoException e)
+        catch (SetChangeVetoException e)
         {
             return false;
         }
@@ -104,7 +104,7 @@ public class SimpleObservableSortedSet<E>
     /** {@inheritDoc} */
     protected void postAddAll(final Collection<? extends E> coll)
     {
-        fireSortedSetChanged(changeEvent);
+        fireSetChanged(changeEvent);
     }
 
     /** {@inheritDoc} */
@@ -112,10 +112,10 @@ public class SimpleObservableSortedSet<E>
     {
         try
         {
-            fireSortedSetWillChange(vetoableChangeEvent);
+            fireSetWillChange(vetoableChangeEvent);
             return true;
         }
-        catch (SortedSetChangeVetoException e)
+        catch (SetChangeVetoException e)
         {
             return false;
         }
@@ -124,7 +124,7 @@ public class SimpleObservableSortedSet<E>
     /** {@inheritDoc} */
     protected void postClear()
     {
-        fireSortedSetChanged(changeEvent);
+        fireSetChanged(changeEvent);
     }
 
     /** {@inheritDoc} */
@@ -132,10 +132,10 @@ public class SimpleObservableSortedSet<E>
     {
         try
         {
-            fireSortedSetWillChange(vetoableChangeEvent);
+            fireSetWillChange(vetoableChangeEvent);
             return true;
         }
-        catch (SortedSetChangeVetoException e)
+        catch (SetChangeVetoException e)
         {
             return false;
         }
@@ -144,7 +144,7 @@ public class SimpleObservableSortedSet<E>
     /** {@inheritDoc} */
     protected void postRemove(final Object o)
     {
-        fireSortedSetChanged(changeEvent);
+        fireSetChanged(changeEvent);
     }
 
     /** {@inheritDoc} */
@@ -152,10 +152,10 @@ public class SimpleObservableSortedSet<E>
     {
         try
         {
-            fireSortedSetWillChange(vetoableChangeEvent);
+            fireSetWillChange(vetoableChangeEvent);
             return true;
         }
-        catch (SortedSetChangeVetoException e)
+        catch (SetChangeVetoException e)
         {
             return false;
         }
@@ -164,7 +164,7 @@ public class SimpleObservableSortedSet<E>
     /** {@inheritDoc} */
     protected void postRemoveAll(final Collection<?> coll)
     {
-        fireSortedSetChanged(changeEvent);
+        fireSetChanged(changeEvent);
     }
 
     /** {@inheritDoc} */
@@ -172,10 +172,10 @@ public class SimpleObservableSortedSet<E>
     {
         try
         {
-            fireSortedSetWillChange(vetoableChangeEvent);
+            fireSetWillChange(vetoableChangeEvent);
             return true;
         }
-        catch (SortedSetChangeVetoException e)
+        catch (SetChangeVetoException e)
         {
             return false;
         }
@@ -184,7 +184,7 @@ public class SimpleObservableSortedSet<E>
     /** {@inheritDoc} */
     protected void postRetainAll(final Collection<?> coll)
     {
-        fireSortedSetChanged(changeEvent);
+        fireSetChanged(changeEvent);
     }
 
     /** {@inheritDoc} */
@@ -192,10 +192,10 @@ public class SimpleObservableSortedSet<E>
     {
         try
         {
-            fireSortedSetWillChange(vetoableChangeEvent);
+            fireSetWillChange(vetoableChangeEvent);
             return true;
         }
-        catch (SortedSetChangeVetoException e)
+        catch (SetChangeVetoException e)
         {
             return false;
         }
@@ -204,6 +204,6 @@ public class SimpleObservableSortedSet<E>
     /** {@inheritDoc} */
     protected void postIteratorRemove()
     {
-        fireSortedSetChanged(changeEvent);
+        fireSetChanged(changeEvent);
     }
 }
