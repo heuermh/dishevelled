@@ -132,7 +132,7 @@ public abstract class AbstractObservableGraph<N, E>
      *
      * @throws GraphChangeVetoException if any of the listeners veto the change
      */
-    public void fireWillClear()
+    protected void fireWillClear()
         throws GraphChangeVetoException
     {
         support.fireWillClear();
