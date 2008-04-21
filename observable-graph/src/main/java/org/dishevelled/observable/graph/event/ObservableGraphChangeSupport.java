@@ -233,9 +233,9 @@ public class ObservableGraphChangeSupport<N, E>
     }
 
     /**
-     * Fire a change event to all registered <code>GraphChangeListener</code>s.
+     * Fire a graph cleared change event to all registered <code>GraphChangeListener</code>s.
      */
-    public void fireGraphChanged()
+    public void fireGraphCleared()
     {
         Object[] listeners = listenerList.getListenerList();
         GraphChangeEvent<N, E> e = null;
@@ -249,7 +249,7 @@ public class ObservableGraphChangeSupport<N, E>
                 {
                     e = new GraphChangeEvent<N, E>(source);
                 }
-                ((GraphChangeListener<N, E>) listeners[i + 1]).graphChanged(e);
+                ((GraphChangeListener<N, E>) listeners[i + 1]).graphCleared(e);
             }
         }
     }
@@ -260,7 +260,7 @@ public class ObservableGraphChangeSupport<N, E>
      *
      * @param e change event
      */
-    public void fireGraphChanged(final GraphChangeEvent<N, E> e)
+    public void fireGraphCleared(final GraphChangeEvent<N, E> e)
     {
         Object[] listeners = listenerList.getListenerList();
 
@@ -268,7 +268,7 @@ public class ObservableGraphChangeSupport<N, E>
         {
             if (listeners[i] == GraphChangeListener.class)
             {
-                ((GraphChangeListener<N, E>) listeners[i + 1]).graphChanged(e);
+                ((GraphChangeListener<N, E>) listeners[i + 1]).graphCleared(e);
             }
         }
     }
@@ -292,7 +292,7 @@ public class ObservableGraphChangeSupport<N, E>
                 {
                     e = new GraphChangeEvent<N, E>(source, node);
                 }
-                ((GraphChangeListener<N, E>) listeners[i + 1]).graphChanged(e);
+                ((GraphChangeListener<N, E>) listeners[i + 1]).nodeCreated(e);
             }
         }
     }
@@ -316,7 +316,7 @@ public class ObservableGraphChangeSupport<N, E>
                 {
                     e = new GraphChangeEvent<N, E>(source, node);
                 }
-                ((GraphChangeListener<N, E>) listeners[i + 1]).graphChanged(e);
+                ((GraphChangeListener<N, E>) listeners[i + 1]).nodeRemoved(e);
             }
         }
     }
@@ -340,7 +340,7 @@ public class ObservableGraphChangeSupport<N, E>
                 {
                     e = new GraphChangeEvent<N, E>(source, edge);
                 }
-                ((GraphChangeListener<N, E>) listeners[i + 1]).graphChanged(e);
+                ((GraphChangeListener<N, E>) listeners[i + 1]).edgeCreated(e);
             }
         }
     }
@@ -364,7 +364,7 @@ public class ObservableGraphChangeSupport<N, E>
                 {
                     e = new GraphChangeEvent<N, E>(source, edge);
                 }
-                ((GraphChangeListener<N, E>) listeners[i + 1]).graphChanged(e);
+                ((GraphChangeListener<N, E>) listeners[i + 1]).edgeRemoved(e);
             }
         }
     }

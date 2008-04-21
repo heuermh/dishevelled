@@ -136,21 +136,6 @@ public abstract class AbstractObservableGraphTest
         }
     }
 
-    public void testFireGraphChanged()
-    {
-        ObservableGraph<String, String> graph = createEmptyObservableGraph();
-        Listener<String, String> listener = new Listener<String, String>();
-        graph.addGraphChangeListener(listener);
-
-        if (graph instanceof AbstractObservableGraph)
-        {
-            ((AbstractObservableGraph) graph).fireGraphChanged();
-
-            assertNotNull(listener.getEvent());
-            assertSame(graph, listener.getEvent().getObservableGraph());
-        }
-    }
-
     public void testClear()
     {
         ObservableGraph<String, String> fullGraph = createFullObservableGraph("node", "edge");
@@ -453,12 +438,6 @@ public abstract class AbstractObservableGraphTest
         private GraphChangeEvent<N, E> event;
 
 
-        /** {@inheritDoc} */
-        public void graphChanged(final GraphChangeEvent<N, E> event)
-        {
-            this.event = event;
-        }
-
         /**
          * Return the last heard event, if any.
          *
@@ -467,6 +446,31 @@ public abstract class AbstractObservableGraphTest
         GraphChangeEvent<N, E> getEvent()
         {
             return event;
+        }
+
+        /** {@inheritDoc} */
+        public void edgeCreated(GraphChangeEvent<N, E> event) {
+            this.event = event;
+        }
+
+        /** {@inheritDoc} */
+        public void edgeRemoved(GraphChangeEvent<N, E> event) {
+            this.event = event;
+        }
+
+        /** {@inheritDoc} */
+        public void graphCleared(GraphChangeEvent<N, E> event) {
+            this.event = event;
+        }
+
+        /** {@inheritDoc} */
+        public void nodeCreated(GraphChangeEvent<N, E> event) {
+            this.event = event;
+        }
+
+        /** {@inheritDoc} */
+        public void nodeRemoved(GraphChangeEvent<N, E> event) {
+            this.event = event;
         }
     }
 

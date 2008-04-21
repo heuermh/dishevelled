@@ -74,7 +74,7 @@ public final class ObservableGraphImpl<N, E>
     /** {@inheritDoc} */
     protected void postClear()
     {
-        fireGraphChanged();
+        fireGraphCleared();
     }
 
     /** {@inheritDoc} */
