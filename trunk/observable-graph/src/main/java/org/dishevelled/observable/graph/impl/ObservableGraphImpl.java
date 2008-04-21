@@ -30,7 +30,6 @@ import org.dishevelled.graph.Node;
 import org.dishevelled.observable.graph.AbstractObservableGraph;
 
 import org.dishevelled.observable.graph.event.GraphChangeVetoException;
-import org.dishevelled.observable.graph.event.VetoableGraphChangeEvent;
 
 /**
  * Observable graph decorator that fires vetoable graph change events
