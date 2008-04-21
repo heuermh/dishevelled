@@ -27,7 +27,6 @@ import java.util.TreeMap;
 
 import org.dishevelled.observable.AbstractObservableSortedMapTest;
 import org.dishevelled.observable.ObservableSortedMap;
-import org.dishevelled.observable.impl.ObservableSortedMapImpl;
 
 /**
  * Unit test for ObservableSortedMapImpl.
@@ -42,6 +41,6 @@ public class ObservableSortedMapImplTest
     /** {@inheritDoc} */
     protected <K, V> ObservableSortedMap<K, V> createObservableSortedMap()
     {
-        return new ObservableSortedMapImpl(new TreeMap<K, V>());
+        return new ObservableSortedMapImpl<K, V>(new TreeMap<K, V>());
     }
 }

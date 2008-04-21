@@ -27,7 +27,6 @@ import java.util.TreeSet;
 
 import org.dishevelled.observable.AbstractObservableSortedSetTest;
 import org.dishevelled.observable.ObservableSortedSet;
-import org.dishevelled.observable.impl.ObservableSortedSetImpl;
 
 /**
  * Unit test for ObservableSortedSetImpl.
@@ -42,6 +41,6 @@ public class ObservableSortedSetImplTest
     /** {@inheritDoc} */
     protected <T> ObservableSortedSet<T> createObservableSortedSet()
     {
-        return new ObservableSortedSetImpl(new TreeSet<T>());
+        return new ObservableSortedSetImpl<T>(new TreeSet<T>());
     }
 }

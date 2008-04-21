@@ -33,7 +33,7 @@ import org.dishevelled.observable.event.ListChangeVetoException;
 import org.dishevelled.observable.event.VetoableListChangeEvent;
 
 /**
- * Observable list decorator that simply fires empty
+ * Observable list decorator that fires empty
  * vetoable list change events in <code>preXxx</code> methods and
  * empty list change events in <code>postXxx</code> methods.
  * Observable list listeners may query the source of the events to determine

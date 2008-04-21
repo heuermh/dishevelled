@@ -33,7 +33,7 @@ import org.dishevelled.observable.event.MapChangeVetoException;
 import org.dishevelled.observable.event.VetoableMapChangeEvent;
 
 /**
- * Observable map decorator that simply fires empty
+ * Observable map decorator that fires empty
  * vetoable map change events in <code>preXxx</code> methods and
  * empty map change events in <code>postXxx</code> methods.
  * Observable map listeners may query the source of the events to determine

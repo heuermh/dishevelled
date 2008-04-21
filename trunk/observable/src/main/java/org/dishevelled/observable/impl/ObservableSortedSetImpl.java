@@ -33,7 +33,7 @@ import org.dishevelled.observable.event.SortedSetChangeVetoException;
 import org.dishevelled.observable.event.VetoableSortedSetChangeEvent;
 
 /**
- * Observable sorted set decorator that simply fires empty
+ * Observable sorted set decorator that fires empty
  * vetoable sorted set change events in <code>preXxx</code> methods and
  * empty sorted set change events in <code>postXxx</code> methods.
  * Observable sorted set listeners may query the source of the events to determine

@@ -32,7 +32,7 @@ import org.dishevelled.observable.event.CollectionChangeVetoException;
 import org.dishevelled.observable.event.VetoableCollectionChangeEvent;
 
 /**
- * Observable collection decorator that simply fires empty
+ * Observable collection decorator that fires empty
  * vetoable collection change events in <code>preXxx</code> methods and
  * empty collection change events in <code>postXxx</code> methods.
  * Observable collection listeners may query the source of events to determine

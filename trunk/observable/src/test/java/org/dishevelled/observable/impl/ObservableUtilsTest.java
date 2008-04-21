@@ -37,7 +37,6 @@ import org.dishevelled.observable.ObservableMap;
 import org.dishevelled.observable.ObservableSet;
 import org.dishevelled.observable.ObservableSortedMap;
 import org.dishevelled.observable.ObservableSortedSet;
-import org.dishevelled.observable.impl.ObservableUtils;
 
 /**
  * Unit test for ObservableUtils.
