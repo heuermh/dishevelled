@@ -25,7 +25,9 @@ package org.dishevelled.observable.graph.event;
 
 import junit.framework.TestCase;
 
+import org.dishevelled.graph.Edge;
 import org.dishevelled.graph.Graph;
+import org.dishevelled.graph.Node;
 
 import org.dishevelled.graph.impl.GraphUtils;
 
@@ -51,6 +53,21 @@ public class VetoableGraphChangeEventTest
         VetoableGraphChangeEvent<String, String> event0 = new VetoableGraphChangeEvent<String, String>(observableGraph);
         assertNotNull(event0);
         assertEquals(observableGraph, event0.getObservableGraph());
+        assertEquals(null, event0.getNode());
+        assertEquals(null, event0.getEdge());
+        assertEquals(null, event0.getNodeValue());
+        assertEquals(null, event0.getSourceNode());
+        assertEquals(null, event0.getTargetNode());
+        assertEquals(null, event0.getEdgeValue());
+
+        VetoableGraphChangeEvent<String, String> event1 = new VetoableGraphChangeEvent<String, String>(observableGraph, (Node<String, String>) null);
+        assertNotNull(event1);
+        VetoableGraphChangeEvent<String, String> event2 = new VetoableGraphChangeEvent<String, String>(observableGraph, (Edge<String, String>) null);
+        assertNotNull(event2);
+        VetoableGraphChangeEvent<String, String> event3 = new VetoableGraphChangeEvent<String, String>(observableGraph, (String) null);
+        assertNotNull(event3);
+        VetoableGraphChangeEvent<String, String> event4 = new VetoableGraphChangeEvent<String, String>(observableGraph, null, null, null);
+        assertNotNull(event4);
 
         try
         {
@@ -60,5 +77,63 @@ public class VetoableGraphChangeEventTest
         {
             // expected
         }
+    }
+
+    public void testNode()
+    {
+        Graph<String, String> graph = GraphUtils.createGraph();
+        ObservableGraph<String, String> observableGraph = ObservableGraphUtils.observableGraph(graph);
+        Node<String, String> node = observableGraph.createNode("foo");
+        VetoableGraphChangeEvent<String, String> event = new VetoableGraphChangeEvent<String, String>(observableGraph, node);
+        assertEquals(node, event.getNode());
+    }
+
+    public void testEdge()
+    {
+        Graph<String, String> graph = GraphUtils.createGraph();
+        ObservableGraph<String, String> observableGraph = ObservableGraphUtils.observableGraph(graph);
+        Node<String, String> node0 = observableGraph.createNode("foo");
+        Node<String, String> node1 = observableGraph.createNode("bar");
+        Edge<String, String> edge = observableGraph.createEdge(node0, node1, "baz");
+        VetoableGraphChangeEvent<String, String> event = new VetoableGraphChangeEvent<String, String>(observableGraph, edge);
+        assertEquals(edge, event.getEdge());
+    }
+
+    public void testNodeValue()
+    {
+        Graph<String, String> graph = GraphUtils.createGraph();
+        ObservableGraph<String, String> observableGraph = ObservableGraphUtils.observableGraph(graph);
+        VetoableGraphChangeEvent<String, String> event = new VetoableGraphChangeEvent<String, String>(observableGraph, "foo");
+        assertEquals("foo", event.getNodeValue());
+    }
+
+    public void testSourceNode()
+    {
+        Graph<String, String> graph = GraphUtils.createGraph();
+        ObservableGraph<String, String> observableGraph = ObservableGraphUtils.observableGraph(graph);
+        Node<String, String> node0 = observableGraph.createNode("foo");
+        Node<String, String> node1 = observableGraph.createNode("bar");
+        VetoableGraphChangeEvent<String, String> event = new VetoableGraphChangeEvent<String, String>(observableGraph, node0, node1, "baz");
+        assertEquals(node0, event.getSourceNode());
+    }
+
+    public void testTargetNode()
+    {
+        Graph<String, String> graph = GraphUtils.createGraph();
+        ObservableGraph<String, String> observableGraph = ObservableGraphUtils.observableGraph(graph);
+        Node<String, String> node0 = observableGraph.createNode("foo");
+        Node<String, String> node1 = observableGraph.createNode("bar");
+        VetoableGraphChangeEvent<String, String> event = new VetoableGraphChangeEvent<String, String>(observableGraph, node0, node1, "baz");
+        assertEquals(node1, event.getTargetNode());
+    }
+
+    public void testEdgeValue()
+    {
+        Graph<String, String> graph = GraphUtils.createGraph();
+        ObservableGraph<String, String> observableGraph = ObservableGraphUtils.observableGraph(graph);
+        Node<String, String> node0 = observableGraph.createNode("foo");
+        Node<String, String> node1 = observableGraph.createNode("bar");
+        VetoableGraphChangeEvent<String, String> event = new VetoableGraphChangeEvent<String, String>(observableGraph, node0, node1, "baz");
+        assertEquals("baz", event.getEdgeValue());
     }
 }

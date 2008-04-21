@@ -33,11 +33,9 @@ import org.dishevelled.observable.graph.event.GraphChangeVetoException;
 import org.dishevelled.observable.graph.event.VetoableGraphChangeEvent;
 
 /**
- * Observable graph decorator that fires empty vetoable graph change events
- * in <code>preXxx</code> methods and empty graph change events in
- * <code>postXxx</code> methods.  Observable graph listeners may query
- * the source of events to determine what may or may not have changed due to
- * the event.
+ * Observable graph decorator that fires vetoable graph change events
+ * in <code>preXxx</code> methods and graph change events in
+ * <code>postXxx</code> methods.
  *
  * @param <N> node value type
  * @param <E> edge value type
@@ -47,9 +45,6 @@ import org.dishevelled.observable.graph.event.VetoableGraphChangeEvent;
 public final class ObservableGraphImpl<N, E>
     extends AbstractObservableGraph<N, E>
 {
-    /** Cached vetoable graph change event. */
-    private final VetoableGraphChangeEvent<N, E> vetoableChangeEvent;
-
 
     /**
      * Create a new observable decorator for the specified graph.
@@ -59,7 +54,6 @@ public final class ObservableGraphImpl<N, E>
     public ObservableGraphImpl(final Graph<N, E> graph)
     {
         super(graph);
-        vetoableChangeEvent = new VetoableGraphChangeEvent<N, E>(this);
     }
 
 
@@ -68,7 +62,7 @@ public final class ObservableGraphImpl<N, E>
     {
         try
         {
-            fireGraphWillChange(vetoableChangeEvent);
+            fireGraphWillChange();
             return true;
         }
         catch (GraphChangeVetoException e)
@@ -88,7 +82,7 @@ public final class ObservableGraphImpl<N, E>
     {
         try
         {
-            fireGraphWillChange(vetoableChangeEvent);
+            fireWillCreateNode(value);
             return true;
         }
         catch (GraphChangeVetoException e)
@@ -108,7 +102,7 @@ public final class ObservableGraphImpl<N, E>
     {
         try
         {
-            fireGraphWillChange(vetoableChangeEvent);
+            fireWillRemoveNode(node);
             return true;
         }
         catch (GraphChangeVetoException e)
@@ -130,7 +124,7 @@ public final class ObservableGraphImpl<N, E>
     {
         try
         {
-            fireGraphWillChange(vetoableChangeEvent);
+            fireWillCreateEdge(source, target, value);
             return true;
         }
         catch (GraphChangeVetoException e)
@@ -153,7 +147,7 @@ public final class ObservableGraphImpl<N, E>
     {
         try
         {
-            fireGraphWillChange(vetoableChangeEvent);
+            fireWillRemoveEdge(edge);
             return true;
         }
         catch (GraphChangeVetoException e)

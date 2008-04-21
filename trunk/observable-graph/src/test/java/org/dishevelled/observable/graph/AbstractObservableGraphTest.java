@@ -225,6 +225,7 @@ public abstract class AbstractObservableGraphTest
 
             assertNotNull(neverVetoListener.getEvent());
             assertSame(emptyGraph, neverVetoListener.getEvent().getObservableGraph());
+            assertEquals(node.getValue(), neverVetoListener.getEvent().getNodeValue());
         }
         catch (UnsupportedOperationException e)
         {
@@ -282,6 +283,7 @@ public abstract class AbstractObservableGraphTest
 
             assertNotNull(neverVetoListener.getEvent());
             assertSame(fullGraph, neverVetoListener.getEvent().getObservableGraph());
+            assertSame(node, neverVetoListener.getEvent().getNode());
         }
         catch (UnsupportedOperationException e)
         {
@@ -342,6 +344,9 @@ public abstract class AbstractObservableGraphTest
 
             assertNotNull(neverVetoListener.getEvent());
             assertSame(emptyGraph, neverVetoListener.getEvent().getObservableGraph());
+            assertEquals(source, neverVetoListener.getEvent().getSourceNode());
+            assertEquals(target, neverVetoListener.getEvent().getTargetNode());
+            assertEquals(edge.getValue(), neverVetoListener.getEvent().getEdgeValue());
         }
         catch (UnsupportedOperationException e)
         {
@@ -402,6 +407,7 @@ public abstract class AbstractObservableGraphTest
 
             assertNotNull(neverVetoListener.getEvent());
             assertSame(fullGraph, neverVetoListener.getEvent().getObservableGraph());
+            assertSame(edge, neverVetoListener.getEvent().getEdge());
         }
         catch (UnsupportedOperationException e)
         {

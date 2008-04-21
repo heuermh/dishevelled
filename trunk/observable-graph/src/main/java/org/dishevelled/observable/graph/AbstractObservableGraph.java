@@ -171,6 +171,62 @@ public abstract class AbstractObservableGraph<N, E>
     }
 
     /**
+     * Fire a will create node change event to all registered
+     * <code>VetoableGraphChangeListener</code>s.
+     *
+     * @param nodeValue node value for an about to be created node
+     * @throws GraphChangeVetoException if any of the listeners veto the change
+     */
+    protected void fireWillCreateNode(final N nodeValue)
+        throws GraphChangeVetoException
+    {
+        support.fireWillCreateNode(nodeValue);
+    }
+
+    /**
+     * Fire a will create edge change event to all registered
+     * <code>VetoableGraphChangeListener</code>s.
+     *
+     * @param sourceNode source node for an about to be created edge
+     * @param targetNode target node for an about to be created edge
+     * @param edgeValue edge value for an about to be created edge
+     * @throws GraphChangeVetoException if any of the listeners veto the change
+     */
+    protected void fireWillCreateEdge(final Node<N, E> sourceNode,
+           final Node<N, E> targetNode,
+           final E edgeValue)
+        throws GraphChangeVetoException
+    {
+        support.fireWillCreateEdge(sourceNode, targetNode, edgeValue);
+    }
+
+    /**
+     * Fire a will remove node change event to all registered
+     * <code>VetoableGraphChangeListener</code>s.
+     *
+     * @param node node about to be removed
+     * @throws GraphChangeVetoException if any of the listeners veto the change
+     */
+    protected void fireWillRemoveNode(final Node<N, E> node)
+        throws GraphChangeVetoException
+    {
+        support.fireWillRemoveNode(node);
+    }
+
+    /**
+     * Fire a will remove edge change event to all registered
+     * <code>VetoableGraphChangeListener</code>s.
+     *
+     * @param edge edge about to be removed
+     * @throws GraphChangeVetoException if any of the listeners veto the change
+     */
+    protected void fireWillRemoveEdge(final Edge<N, E> edge)
+        throws GraphChangeVetoException
+    {
+        support.fireWillRemoveEdge(edge);
+    }
+
+    /**
      * Fire a node created change event to all registered <code>GraphChangeListener</code>s.
      *
      * @param node newly created node
