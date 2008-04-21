@@ -21,7 +21,7 @@
     > http://www.opensource.org/licenses/lgpl-license.php
 
 */
-package org.dishevelled.observable.simple;
+package org.dishevelled.observable.impl;
 
 import java.util.Collection;
 import java.util.List;

@@ -21,26 +21,27 @@
     > http://www.opensource.org/licenses/lgpl-license.php
 
 */
-package org.dishevelled.observable.simple;
+package org.dishevelled.observable.impl;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 
-import org.dishevelled.observable.AbstractObservableSetTest;
-import org.dishevelled.observable.ObservableSet;
+import org.dishevelled.observable.AbstractObservableListTest;
+import org.dishevelled.observable.ObservableList;
+import org.dishevelled.observable.impl.SimpleObservableList;
 
 /**
- * Unit test for SimpleObservableSet.
+ * Unit test for SimpleObservableList.
  *
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public class SimpleObservableSetTest
-    extends AbstractObservableSetTest
+public class SimpleObservableListTest
+    extends AbstractObservableListTest
 {
 
     /** {@inheritDoc} */
-    protected <T> ObservableSet<T> createObservableSet()
+    protected <T> ObservableList<T> createObservableList()
     {
-        return new SimpleObservableSet(new HashSet<T>());
+        return new SimpleObservableList(new ArrayList<T>());
     }
 }

@@ -1,4 +1,5 @@
-/*
+<html>
+<!--
 
     dsh-observable  Observable decorators for collection and map interfaces.
     Copyright (c) 2003-2008 held jointly by the individual authors.
@@ -20,27 +21,17 @@
     > http://www.fsf.org/licensing/licenses/lgpl.html
     > http://www.opensource.org/licenses/lgpl-license.php
 
-*/
-package org.dishevelled.observable.simple;
+-->
+  <body>
+<p>Observable decorator implementations for collection and map interfaces.</p>
 
-import java.util.TreeSet;
+<h4>Summary</h4>
 
-import org.dishevelled.observable.AbstractObservableSortedSetTest;
-import org.dishevelled.observable.ObservableSortedSet;
-
-/**
- * Unit test for SimpleObservableSortedSet.
- *
- * @author  Michael Heuer
- * @version $Revision$ $Date$
- */
-public class SimpleObservableSortedSetTest
-    extends AbstractObservableSortedSetTest
-{
-
-    /** {@inheritDoc} */
-    protected <T> ObservableSortedSet<T> createObservableSortedSet()
-    {
-        return new SimpleObservableSortedSet(new TreeSet<T>());
-    }
-}
+<p>
+The decorators in this package simply fire empty vetoable change events in
+<code>preXxx</code> methods and empty change events in <code>postXxx</code> methods.
+Listeners may query the source of the events to determine what may or may
+not have changed due to the event.
+</p>
+  </body>
+</html>

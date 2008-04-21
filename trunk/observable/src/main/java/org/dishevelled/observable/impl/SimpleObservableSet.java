@@ -21,48 +21,49 @@
     > http://www.opensource.org/licenses/lgpl-license.php
 
 */
-package org.dishevelled.observable.simple;
+package org.dishevelled.observable.impl;
 
 import java.util.Collection;
+import java.util.Set;
 
-import org.dishevelled.observable.AbstractObservableCollection;
+import org.dishevelled.observable.AbstractObservableSet;
 
-import org.dishevelled.observable.event.CollectionChangeEvent;
-import org.dishevelled.observable.event.CollectionChangeVetoException;
-import org.dishevelled.observable.event.VetoableCollectionChangeEvent;
+import org.dishevelled.observable.event.SetChangeEvent;
+import org.dishevelled.observable.event.SetChangeVetoException;
+import org.dishevelled.observable.event.VetoableSetChangeEvent;
 
 /**
- * Observable collection decorator that simply fires empty
- * vetoable collection change events in <code>preXxx</code> methods and
- * empty collection change events in <code>postXxx</code> methods.
- * Observable collection listeners may query the source of events to determine
+ * Observable set decorator that simply fires empty
+ * vetoable set change events in <code>preXxx</code> methods and
+ * empty set change events in <code>postXxx</code> methods.
+ * Observable set listeners may query the source of the events to determine
  * what may or may not have changed due to the event.
  *
- * @param <E> collection element type
+ * @param <E> set element type
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public class SimpleObservableCollection<E>
-    extends AbstractObservableCollection<E>
+public class SimpleObservableSet<E>
+    extends AbstractObservableSet<E>
 {
-    /** Cached collection change event. */
-    private final CollectionChangeEvent<E> changeEvent;
+    /** Cached set change event. */
+    private final SetChangeEvent<E> changeEvent;
 
-    /** Cached vetoable collection change event. */
-    private final VetoableCollectionChangeEvent<E> vetoableChangeEvent;
+    /** Cached vetoable set change event. */
+    private final VetoableSetChangeEvent<E> vetoableChangeEvent;
 
 
     /**
      * Create a new observable decorator for the specified
-     * collection.
+     * set.
      *
-     * @param collection collection to decorate, must not be null
+     * @param set set to decorate, must not be null
      */
-    public SimpleObservableCollection(final Collection<E> collection)
+    public SimpleObservableSet(final Set<E> set)
     {
-        super(collection);
-        changeEvent = new CollectionChangeEvent<E>(this);
-        vetoableChangeEvent = new VetoableCollectionChangeEvent<E>(this);
+        super(set);
+        changeEvent = new SetChangeEvent<E>(this);
+        vetoableChangeEvent = new VetoableSetChangeEvent<E>(this);
     }
 
 
@@ -71,10 +72,10 @@ public class SimpleObservableCollection<E>
     {
         try
         {
-            fireCollectionWillChange(vetoableChangeEvent);
+            fireSetWillChange(vetoableChangeEvent);
             return true;
         }
-        catch (CollectionChangeVetoException ex)
+        catch (SetChangeVetoException ex)
         {
             return false;
         }
@@ -83,7 +84,7 @@ public class SimpleObservableCollection<E>
     /** {@inheritDoc} */
     protected void postAdd(final E e)
     {
-        fireCollectionChanged(changeEvent);
+        fireSetChanged(changeEvent);
     }
 
     /** {@inheritDoc} */
@@ -91,10 +92,10 @@ public class SimpleObservableCollection<E>
     {
         try
         {
-            fireCollectionWillChange(vetoableChangeEvent);
+            fireSetWillChange(vetoableChangeEvent);
             return true;
         }
-        catch (CollectionChangeVetoException e)
+        catch (SetChangeVetoException e)
         {
             return false;
         }
@@ -103,7 +104,7 @@ public class SimpleObservableCollection<E>
     /** {@inheritDoc} */
     protected void postAddAll(final Collection<? extends E> coll)
     {
-        fireCollectionChanged(changeEvent);
+        fireSetChanged(changeEvent);
     }
 
     /** {@inheritDoc} */
@@ -111,10 +112,10 @@ public class SimpleObservableCollection<E>
     {
         try
         {
-            fireCollectionWillChange(vetoableChangeEvent);
+            fireSetWillChange(vetoableChangeEvent);
             return true;
         }
-        catch (CollectionChangeVetoException e)
+        catch (SetChangeVetoException e)
         {
             return false;
         }
@@ -123,7 +124,7 @@ public class SimpleObservableCollection<E>
     /** {@inheritDoc} */
     protected void postClear()
     {
-        fireCollectionChanged(changeEvent);
+        fireSetChanged(changeEvent);
     }
 
     /** {@inheritDoc} */
@@ -131,10 +132,10 @@ public class SimpleObservableCollection<E>
     {
         try
         {
-            fireCollectionWillChange(vetoableChangeEvent);
+            fireSetWillChange(vetoableChangeEvent);
             return true;
         }
-        catch (CollectionChangeVetoException e)
+        catch (SetChangeVetoException e)
         {
             return false;
         }
@@ -143,7 +144,7 @@ public class SimpleObservableCollection<E>
     /** {@inheritDoc} */
     protected void postRemove(final Object o)
     {
-        fireCollectionChanged(changeEvent);
+        fireSetChanged(changeEvent);
     }
 
     /** {@inheritDoc} */
@@ -151,10 +152,10 @@ public class SimpleObservableCollection<E>
     {
         try
         {
-            fireCollectionWillChange(vetoableChangeEvent);
+            fireSetWillChange(vetoableChangeEvent);
             return true;
         }
-        catch (CollectionChangeVetoException e)
+        catch (SetChangeVetoException e)
         {
             return false;
         }
@@ -163,7 +164,7 @@ public class SimpleObservableCollection<E>
     /** {@inheritDoc} */
     protected void postRemoveAll(final Collection<?> coll)
     {
-        fireCollectionChanged(changeEvent);
+        fireSetChanged(changeEvent);
     }
 
     /** {@inheritDoc} */
@@ -171,10 +172,10 @@ public class SimpleObservableCollection<E>
     {
         try
         {
-            fireCollectionWillChange(vetoableChangeEvent);
+            fireSetWillChange(vetoableChangeEvent);
             return true;
         }
-        catch (CollectionChangeVetoException e)
+        catch (SetChangeVetoException e)
         {
             return false;
         }
@@ -183,7 +184,7 @@ public class SimpleObservableCollection<E>
     /** {@inheritDoc} */
     protected void postRetainAll(final Collection<?> coll)
     {
-        fireCollectionChanged(changeEvent);
+        fireSetChanged(changeEvent);
     }
 
     /** {@inheritDoc} */
@@ -191,10 +192,10 @@ public class SimpleObservableCollection<E>
     {
         try
         {
-            fireCollectionWillChange(vetoableChangeEvent);
+            fireSetWillChange(vetoableChangeEvent);
             return true;
         }
-        catch (CollectionChangeVetoException e)
+        catch (SetChangeVetoException e)
         {
             return false;
         }
@@ -203,6 +204,6 @@ public class SimpleObservableCollection<E>
     /** {@inheritDoc} */
     protected void postIteratorRemove()
     {
-        fireCollectionChanged(changeEvent);
+        fireSetChanged(changeEvent);
     }
 }

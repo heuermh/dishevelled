@@ -21,7 +21,7 @@
     > http://www.opensource.org/licenses/lgpl-license.php
 
 */
-package org.dishevelled.observable.simple;
+package org.dishevelled.observable.impl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -37,6 +37,7 @@ import org.dishevelled.observable.ObservableMap;
 import org.dishevelled.observable.ObservableSet;
 import org.dishevelled.observable.ObservableSortedMap;
 import org.dishevelled.observable.ObservableSortedSet;
+import org.dishevelled.observable.impl.SimpleObservableUtils;
 
 /**
  * Unit test for SimpleObservableUtils.
