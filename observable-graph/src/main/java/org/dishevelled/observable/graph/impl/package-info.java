@@ -27,8 +27,7 @@
  *
  * <h4>Summary</h4>
  *
- * <p>The decorator(s) in this package fire empty vetoable change events in preXxx
- * methods and empty change events in postXxx methods. Listeners may query the source
- * of the events to determine what may or may not have changed due to the event.</p>
+ * <p>The decorator(s) in this package fire vetoable change events in preXxx
+ * methods and change events in postXxx methods.
  */
 package org.dishevelled.observable.graph.impl;

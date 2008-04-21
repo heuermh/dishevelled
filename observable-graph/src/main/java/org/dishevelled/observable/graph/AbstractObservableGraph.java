@@ -29,11 +29,9 @@ import org.dishevelled.graph.Node;
 
 import org.dishevelled.graph.impl.AbstractGraphDecorator;
 
-import org.dishevelled.observable.graph.event.GraphChangeEvent;
 import org.dishevelled.observable.graph.event.GraphChangeListener;
 import org.dishevelled.observable.graph.event.GraphChangeVetoException;
 import org.dishevelled.observable.graph.event.ObservableGraphChangeSupport;
-import org.dishevelled.observable.graph.event.VetoableGraphChangeEvent;
 import org.dishevelled.observable.graph.event.VetoableGraphChangeListener;
 
 /**
@@ -346,7 +344,7 @@ public abstract class AbstractObservableGraph<N, E>
     }
 
     /** {@inheritDoc} */
-    public Node<N, E> createNode(N value)
+    public Node<N, E> createNode(final N value)
     {
         if (preCreateNode(value))
         {
@@ -359,7 +357,7 @@ public abstract class AbstractObservableGraph<N, E>
     }
 
     /** {@inheritDoc} */
-    public void remove(Node<N, E> node)
+    public void remove(final Node<N, E> node)
     {
         if (preRemove(node))
         {
@@ -369,7 +367,7 @@ public abstract class AbstractObservableGraph<N, E>
     }
 
     /** {@inheritDoc} */
-    public Edge<N, E> createEdge(Node<N, E> source, Node<N, E> target, E value)
+    public Edge<N, E> createEdge(final Node<N, E> source, final Node<N, E> target, final E value)
     {
         if (preCreateEdge(source, target, value))
         {
@@ -382,7 +380,7 @@ public abstract class AbstractObservableGraph<N, E>
     }
 
     /** {@inheritDoc} */
-    public void remove(Edge<N, E> edge)
+    public void remove(final Edge<N, E> edge)
     {
         if (preRemove(edge))
         {
