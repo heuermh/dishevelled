@@ -368,4 +368,116 @@ public class ObservableGraphChangeSupport<N, E>
             }
         }
     }
+
+    /**
+     * Fire a will create node create event to all registered
+     * <code>VetoableGraphChangeListener</code>s.
+     *
+     * @param nodeValue node value for an about to be created node
+     * @throws GraphChangeVetoException if any of the listeners veto the change
+     */
+    public void fireWillCreateNode(final N nodeValue)
+        throws GraphChangeVetoException
+    {
+        Object[] listeners = listenerList.getListenerList();
+        VetoableGraphChangeEvent<N, E> e = null;
+
+        for (int i = listeners.length - 2; i >= 0; i -= 2)
+        {
+            if (listeners[i] == VetoableGraphChangeListener.class)
+            {
+                // lazily create the event
+                if (e == null)
+                {
+                    e = new VetoableGraphChangeEvent<N, E>(source, nodeValue);
+                }
+                ((VetoableGraphChangeListener<N, E>) listeners[i + 1]).graphWillChange(e);
+            }
+        }
+    }
+
+    /**
+     * Fire a will create edge change event to all registered
+     * <code>VetoableGraphChangeListener</code>s.
+     *
+     * @param sourceNode source node for an about to be created edge
+     * @param targetNode target node for an about to be created edge
+     * @param edgeValue edge value for an about to be created edge
+     * @throws GraphChangeVetoException if any of the listeners veto the change
+     */
+    public void fireWillCreateEdge(final Node<N, E> sourceNode,
+            final Node<N, E> targetNode,
+            final E edgeValue)
+        throws GraphChangeVetoException
+    {
+        Object[] listeners = listenerList.getListenerList();
+        VetoableGraphChangeEvent<N, E> e = null;
+
+        for (int i = listeners.length - 2; i >= 0; i -= 2)
+        {
+            if (listeners[i] == VetoableGraphChangeListener.class)
+            {
+                // lazily create the event
+                if (e == null)
+                {
+                    e = new VetoableGraphChangeEvent<N, E>(source, sourceNode, targetNode, edgeValue);
+                }
+                ((VetoableGraphChangeListener<N, E>) listeners[i + 1]).graphWillChange(e);
+            }
+        }
+    }
+
+    /**
+     * Fire a will remove node change event to all registered
+     * <code>VetoableGraphChangeListener</code>s.
+     *
+     * @param node node about to be removed
+     * @throws GraphChangeVetoException if any of the listeners veto the change
+     */
+    public void fireWillRemoveNode(final Node<N, E> node)
+        throws GraphChangeVetoException
+    {
+        Object[] listeners = listenerList.getListenerList();
+        VetoableGraphChangeEvent<N, E> e = null;
+
+        for (int i = listeners.length - 2; i >= 0; i -= 2)
+        {
+            if (listeners[i] == VetoableGraphChangeListener.class)
+            {
+                // lazily create the event
+                if (e == null)
+                {
+                    e = new VetoableGraphChangeEvent<N, E>(source, node);
+                }
+                ((VetoableGraphChangeListener<N, E>) listeners[i + 1]).graphWillChange(e);
+            }
+        }
+    }
+
+    /**
+     * Fire a will remove edge change event to all registered
+     * <code>VetoableGraphChangeListener</code>s.
+     *
+     * @param edge edge about to be removed
+     * @throws GraphChangeVetoException if any of the listeners veto the change
+     */
+    public void fireWillRemoveEdge(final Edge<N, E> edge)
+        throws GraphChangeVetoException
+    {
+        Object[] listeners = listenerList.getListenerList();
+        VetoableGraphChangeEvent<N, E> e = null;
+
+        for (int i = listeners.length - 2; i >= 0; i -= 2)
+        {
+            if (listeners[i] == VetoableGraphChangeListener.class)
+            {
+                // lazily create the event
+                if (e == null)
+                {
+                    e = new VetoableGraphChangeEvent<N, E>(source, edge);
+                }
+                ((VetoableGraphChangeListener<N, E>) listeners[i + 1]).graphWillChange(e);
+            }
+        }
+    }
 }
