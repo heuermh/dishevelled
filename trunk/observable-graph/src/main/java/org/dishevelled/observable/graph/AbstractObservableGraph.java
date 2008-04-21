@@ -139,35 +139,11 @@ public abstract class AbstractObservableGraph<N, E>
     }
 
     /**
-     * Fire the specified will clear change event to all registered
-     * <code>VetoableGraphChangeListener</code>s.
-     *
-     * @param e will change event
-     * @throws GraphChangeVetoException if any of the listeners veto the change
-     */
-    public void fireWillClear(final VetoableGraphChangeEvent<N, E> e)
-        throws GraphChangeVetoException
-    {
-        support.fireWillClear(e);
-    }
-
-    /**
      * Fire a cleared change event to all registered <code>GraphChangeListener</code>s.
      */
     protected void fireCleared()
     {
         support.fireCleared();
-    }
-
-    /**
-     * Fire the specified cleared change event to all registered
-     * <code>GraphChangeListener</code>s.
-     *
-     * @param e change event
-     */
-    protected void fireCleared(final GraphChangeEvent<N, E> e)
-    {
-        support.fireCleared(e);
     }
 
     /**

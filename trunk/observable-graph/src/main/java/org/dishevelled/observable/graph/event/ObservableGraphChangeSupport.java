@@ -212,27 +212,6 @@ public class ObservableGraphChangeSupport<N, E>
     }
 
     /**
-     * Fire the specified will clear event to all registered
-     * <code>VetoableGraphChangeListener</code>s.
-     *
-     * @param e will change event
-     * @throws GraphChangeVetoException if any of the listeners veto the change
-     */
-    public void fireWillClear(final VetoableGraphChangeEvent<N, E> e)
-        throws GraphChangeVetoException
-    {
-        Object[] listeners = listenerList.getListenerList();
-
-        for (int i = listeners.length - 2; i >= 0; i -= 2)
-        {
-            if (listeners[i] == VetoableGraphChangeListener.class)
-            {
-                ((VetoableGraphChangeListener<N, E>) listeners[i + 1]).willClear(e);
-            }
-        }
-    }
-
-    /**
      * Fire a cleared change event to all registered <code>GraphChangeListener</code>s.
      */
     public void fireCleared()
@@ -249,25 +228,6 @@ public class ObservableGraphChangeSupport<N, E>
                 {
                     e = new GraphChangeEvent<N, E>(source);
                 }
-                ((GraphChangeListener<N, E>) listeners[i + 1]).cleared(e);
-            }
-        }
-    }
-
-    /**
-     * Fire the specified change event to all registered
-     * <code>GraphChangeListener</code>s.
-     *
-     * @param e change event
-     */
-    public void fireCleared(final GraphChangeEvent<N, E> e)
-    {
-        Object[] listeners = listenerList.getListenerList();
-
-        for (int i = listeners.length - 2; i >= 0; i -= 2)
-        {
-            if (listeners[i] == GraphChangeListener.class)
-            {
                 ((GraphChangeListener<N, E>) listeners[i + 1]).cleared(e);
             }
         }
