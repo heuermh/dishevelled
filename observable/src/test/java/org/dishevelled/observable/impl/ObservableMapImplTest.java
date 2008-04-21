@@ -27,7 +27,6 @@ import java.util.HashMap;
 
 import org.dishevelled.observable.AbstractObservableMapTest;
 import org.dishevelled.observable.ObservableMap;
-import org.dishevelled.observable.impl.ObservableMapImpl;
 
 /**
  * Unit test for ObservableMapImpl.
@@ -42,6 +41,6 @@ public class ObservableMapImplTest
     /** {@inheritDoc} */
     protected <K, V> ObservableMap<K, V> createObservableMap()
     {
-        return new ObservableMapImpl(new HashMap<K, V>());
+        return new ObservableMapImpl<K, V>(new HashMap<K, V>());
     }
 }

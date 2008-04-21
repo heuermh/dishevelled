@@ -38,7 +38,7 @@ import org.dishevelled.observable.ObservableSortedMap;
 import org.dishevelled.observable.ObservableSortedSet;
 
 /**
- * Utility methods for creating simple observable collection and map
+ * Utility methods for creating observable collection and map
  * interface decorators.
  *
  * @author  Michael Heuer

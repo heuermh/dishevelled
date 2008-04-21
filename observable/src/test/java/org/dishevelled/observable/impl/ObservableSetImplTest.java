@@ -27,7 +27,6 @@ import java.util.HashSet;
 
 import org.dishevelled.observable.AbstractObservableSetTest;
 import org.dishevelled.observable.ObservableSet;
-import org.dishevelled.observable.impl.ObservableSetImpl;
 
 /**
  * Unit test for ObservableSetImpl.
@@ -42,6 +41,6 @@ public class ObservableSetImplTest
     /** {@inheritDoc} */
     protected <T> ObservableSet<T> createObservableSet()
     {
-        return new ObservableSetImpl(new HashSet<T>());
+        return new ObservableSetImpl<T>(new HashSet<T>());
     }
 }

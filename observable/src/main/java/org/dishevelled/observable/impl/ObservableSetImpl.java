@@ -33,7 +33,7 @@ import org.dishevelled.observable.event.SetChangeVetoException;
 import org.dishevelled.observable.event.VetoableSetChangeEvent;
 
 /**
- * Observable set decorator that simply fires empty
+ * Observable set decorator that fires empty
  * vetoable set change events in <code>preXxx</code> methods and
  * empty set change events in <code>postXxx</code> methods.
  * Observable set listeners may query the source of the events to determine

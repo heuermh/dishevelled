@@ -33,7 +33,7 @@ import org.dishevelled.observable.event.SortedMapChangeVetoException;
 import org.dishevelled.observable.event.VetoableSortedMapChangeEvent;
 
 /**
- * Observable sorted map decorator that simply fires empty
+ * Observable sorted map decorator that fires empty
  * vetoable sorted map change events in <code>preXxx</code> methods and
  * empty sorted map change events in <code>postXxx</code> methods.
  * Observable sorted map listeners may query the source of the events to determine

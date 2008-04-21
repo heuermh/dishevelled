@@ -27,7 +27,6 @@ import java.util.ArrayList;
 
 import org.dishevelled.observable.AbstractObservableListTest;
 import org.dishevelled.observable.ObservableList;
-import org.dishevelled.observable.impl.ObservableListImpl;
 
 /**
  * Unit test for ObservableListImpl.
@@ -42,6 +41,6 @@ public class ObservableListImplTest
     /** {@inheritDoc} */
     protected <T> ObservableList<T> createObservableList()
     {
-        return new ObservableListImpl(new ArrayList<T>());
+        return new ObservableListImpl<T>(new ArrayList<T>());
     }
 }
