@@ -1,5 +1,4 @@
-<html>
-<!--
+/*
 
     dsh-observable  Observable decorators for collection and map interfaces.
     Copyright (c) 2003-2008 held jointly by the individual authors.
@@ -21,17 +20,28 @@
     > http://www.fsf.org/licensing/licenses/lgpl.html
     > http://www.opensource.org/licenses/lgpl-license.php
 
--->
-  <body>
-<p>Simple observable decorators for collection and map interfaces.</p>
+*/
+package org.dishevelled.observable.impl;
 
-<h4>Summary</h4>
+import java.util.HashSet;
 
-<p>
-The decorators in this package simply fire empty vetoable change events in
-<code>preXxx</code> methods and empty change events in <code>postXxx</code> methods.
-Listeners may query the source of the events to determine what may or may
-not have changed due to the event.
-</p>
-  </body>
-</html>
+import org.dishevelled.observable.AbstractObservableSetTest;
+import org.dishevelled.observable.ObservableSet;
+import org.dishevelled.observable.impl.SimpleObservableSet;
+
+/**
+ * Unit test for SimpleObservableSet.
+ *
+ * @author  Michael Heuer
+ * @version $Revision$ $Date$
+ */
+public class SimpleObservableSetTest
+    extends AbstractObservableSetTest
+{
+
+    /** {@inheritDoc} */
+    protected <T> ObservableSet<T> createObservableSet()
+    {
+        return new SimpleObservableSet(new HashSet<T>());
+    }
+}

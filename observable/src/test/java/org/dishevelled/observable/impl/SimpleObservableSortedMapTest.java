@@ -21,26 +21,27 @@
     > http://www.opensource.org/licenses/lgpl-license.php
 
 */
-package org.dishevelled.observable.simple;
+package org.dishevelled.observable.impl;
 
-import java.util.HashMap;
+import java.util.TreeMap;
 
-import org.dishevelled.observable.AbstractObservableMapTest;
-import org.dishevelled.observable.ObservableMap;
+import org.dishevelled.observable.AbstractObservableSortedMapTest;
+import org.dishevelled.observable.ObservableSortedMap;
+import org.dishevelled.observable.impl.SimpleObservableSortedMap;
 
 /**
- * Unit test for SimpleObservableMap.
+ * Unit test for SimpleObservableSortedMap.
  *
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public class SimpleObservableMapTest
-    extends AbstractObservableMapTest
+public class SimpleObservableSortedMapTest
+    extends AbstractObservableSortedMapTest
 {
 
     /** {@inheritDoc} */
-    protected <K, V> ObservableMap<K, V> createObservableMap()
+    protected <K, V> ObservableSortedMap<K, V> createObservableSortedMap()
     {
-        return new SimpleObservableMap(new HashMap<K, V>());
+        return new SimpleObservableSortedMap(new TreeMap<K, V>());
     }
 }

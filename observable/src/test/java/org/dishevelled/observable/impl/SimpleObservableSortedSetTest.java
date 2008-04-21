@@ -21,26 +21,27 @@
     > http://www.opensource.org/licenses/lgpl-license.php
 
 */
-package org.dishevelled.observable.simple;
+package org.dishevelled.observable.impl;
 
-import java.util.ArrayList;
+import java.util.TreeSet;
 
-import org.dishevelled.observable.AbstractObservableCollectionTest;
-import org.dishevelled.observable.ObservableCollection;
+import org.dishevelled.observable.AbstractObservableSortedSetTest;
+import org.dishevelled.observable.ObservableSortedSet;
+import org.dishevelled.observable.impl.SimpleObservableSortedSet;
 
 /**
- * Unit test for SimpleObservableCollection.
+ * Unit test for SimpleObservableSortedSet.
  *
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public class SimpleObservableCollectionTest
-    extends AbstractObservableCollectionTest
+public class SimpleObservableSortedSetTest
+    extends AbstractObservableSortedSetTest
 {
 
     /** {@inheritDoc} */
-    protected <T> ObservableCollection<T> createObservableCollection()
+    protected <T> ObservableSortedSet<T> createObservableSortedSet()
     {
-        return new SimpleObservableCollection(new ArrayList<T>());
+        return new SimpleObservableSortedSet(new TreeSet<T>());
     }
 }

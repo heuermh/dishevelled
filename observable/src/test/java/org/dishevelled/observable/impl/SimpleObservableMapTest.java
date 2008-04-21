@@ -21,26 +21,27 @@
     > http://www.opensource.org/licenses/lgpl-license.php
 
 */
-package org.dishevelled.observable.simple;
+package org.dishevelled.observable.impl;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
-import org.dishevelled.observable.AbstractObservableListTest;
-import org.dishevelled.observable.ObservableList;
+import org.dishevelled.observable.AbstractObservableMapTest;
+import org.dishevelled.observable.ObservableMap;
+import org.dishevelled.observable.impl.SimpleObservableMap;
 
 /**
- * Unit test for SimpleObservableList.
+ * Unit test for SimpleObservableMap.
  *
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public class SimpleObservableListTest
-    extends AbstractObservableListTest
+public class SimpleObservableMapTest
+    extends AbstractObservableMapTest
 {
 
     /** {@inheritDoc} */
-    protected <T> ObservableList<T> createObservableList()
+    protected <K, V> ObservableMap<K, V> createObservableMap()
     {
-        return new SimpleObservableList(new ArrayList<T>());
+        return new SimpleObservableMap(new HashMap<K, V>());
     }
 }
