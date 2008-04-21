@@ -38,12 +38,52 @@ public interface VetoableGraphChangeListener<N, E>
 {
 
     /**
-     * Notify this listener that a vetoable change is about to be made to the observable graph.
+     * Notify this listener that a vetoable clear change is about to be made to the observable graph.
      *
      * @param e graph change event
      * @throws GraphChangeVetoException if this listener wishes the change about to be made
      *    to be rolled back
      */
-    void graphWillChange(VetoableGraphChangeEvent<N, E> e)
+    void willClear(VetoableGraphChangeEvent<N, E> e)
+        throws GraphChangeVetoException;
+
+    /**
+     * Notify this listener that a vetoable create node change is about to be made to the observable graph.
+     *
+     * @param e graph change event
+     * @throws GraphChangeVetoException if this listener wishes the change about to be made
+     *    to be rolled back
+     */
+    void willCreateNode(VetoableGraphChangeEvent<N, E> e)
+        throws GraphChangeVetoException;
+
+    /**
+     * Notify this listener that a vetoable create edge change is about to be made to the observable graph.
+     *
+     * @param e graph change event
+     * @throws GraphChangeVetoException if this listener wishes the change about to be made
+     *    to be rolled back
+     */
+    void willCreateEdge(VetoableGraphChangeEvent<N, E> e)
+        throws GraphChangeVetoException;
+
+    /**
+     * Notify this listener that a vetoable remove node change is about to be made to the observable graph.
+     *
+     * @param e graph change event
+     * @throws GraphChangeVetoException if this listener wishes the change about to be made
+     *    to be rolled back
+     */
+    void willRemoveNode(VetoableGraphChangeEvent<N, E> e)
+        throws GraphChangeVetoException;
+
+    /**
+     * Notify this listener that a vetoable remove edge change is about to be made to the observable graph.
+     *
+     * @param e graph change event
+     * @throws GraphChangeVetoException if this listener wishes the change about to be made
+     *    to be rolled back
+     */
+    void willRemoveEdge(VetoableGraphChangeEvent<N, E> e)
         throws GraphChangeVetoException;
 }

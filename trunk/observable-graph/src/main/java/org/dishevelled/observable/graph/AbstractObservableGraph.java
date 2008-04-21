@@ -127,47 +127,47 @@ public abstract class AbstractObservableGraph<N, E>
     }
 
     /**
-     * Fire a will change event to all registered
+     * Fire a will clear change event to all registered
      * <code>VetoableGraphChangeListener</code>s.
      *
      * @throws GraphChangeVetoException if any of the listeners veto the change
      */
-    public void fireGraphWillChange()
+    public void fireWillClear()
         throws GraphChangeVetoException
     {
-        support.fireGraphWillChange();
+        support.fireWillClear();
     }
 
     /**
-     * Fire the specified will change event to all registered
+     * Fire the specified will clear change event to all registered
      * <code>VetoableGraphChangeListener</code>s.
      *
      * @param e will change event
      * @throws GraphChangeVetoException if any of the listeners veto the change
      */
-    public void fireGraphWillChange(final VetoableGraphChangeEvent<N, E> e)
+    public void fireWillClear(final VetoableGraphChangeEvent<N, E> e)
         throws GraphChangeVetoException
     {
-        support.fireGraphWillChange(e);
+        support.fireWillClear(e);
     }
 
     /**
-     * Fire a graph cleared change event to all registered <code>GraphChangeListener</code>s.
+     * Fire a cleared change event to all registered <code>GraphChangeListener</code>s.
      */
-    protected void fireGraphCleared()
+    protected void fireCleared()
     {
-        support.fireGraphCleared();
+        support.fireCleared();
     }
 
     /**
-     * Fire the specified graph cleared change event to all registered
+     * Fire the specified cleared change event to all registered
      * <code>GraphChangeListener</code>s.
      *
      * @param e change event
      */
-    protected void fireGraphCleared(final GraphChangeEvent<N, E> e)
+    protected void fireCleared(final GraphChangeEvent<N, E> e)
     {
-        support.fireGraphCleared(e);
+        support.fireCleared(e);
     }
 
     /**

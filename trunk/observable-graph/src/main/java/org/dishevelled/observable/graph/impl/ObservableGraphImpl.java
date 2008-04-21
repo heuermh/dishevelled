@@ -62,7 +62,7 @@ public final class ObservableGraphImpl<N, E>
     {
         try
         {
-            fireGraphWillChange();
+            fireWillClear();
             return true;
         }
         catch (GraphChangeVetoException e)
@@ -74,7 +74,7 @@ public final class ObservableGraphImpl<N, E>
     /** {@inheritDoc} */
     protected void postClear()
     {
-        fireGraphCleared();
+        fireCleared();
     }
 
     /** {@inheritDoc} */

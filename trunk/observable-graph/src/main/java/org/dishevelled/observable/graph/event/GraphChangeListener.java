@@ -42,7 +42,7 @@ public interface GraphChangeListener<N, E>
      *
      * @param e graph change event
      */
-    void graphCleared(GraphChangeEvent<N, E> e);
+    void cleared(GraphChangeEvent<N, E> e);
 
     /**
      * Notify this listener that a node has been created in the observable graph.
