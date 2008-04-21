@@ -44,13 +44,13 @@ import org.dishevelled.observable.ObservableSortedSet;
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public final class SimpleObservableUtils
+public final class ObservableUtils
 {
 
     /**
      * Private constructor.
      */
-    private SimpleObservableUtils()
+    private ObservableUtils()
     {
         // empty
     }
@@ -65,7 +65,7 @@ public final class SimpleObservableUtils
      */
     public static <T> ObservableCollection<T> observableCollection(final Collection<T> collection)
     {
-        return new SimpleObservableCollection<T>(collection);
+        return new ObservableCollectionImpl<T>(collection);
     }
 
     /**
@@ -77,7 +77,7 @@ public final class SimpleObservableUtils
      */
     public static <T> ObservableList<T> observableList(final List<T> list)
     {
-        return new SimpleObservableList<T>(list);
+        return new ObservableListImpl<T>(list);
     }
 
     /**
@@ -90,7 +90,7 @@ public final class SimpleObservableUtils
      */
     public static <K, V> ObservableMap<K, V> observableMap(final Map<K, V> map)
     {
-        return new SimpleObservableMap<K, V>(map);
+        return new ObservableMapImpl<K, V>(map);
     }
 
     /**
@@ -102,7 +102,7 @@ public final class SimpleObservableUtils
      */
     public static <T> ObservableSet<T> observableSet(final Set<T> set)
     {
-        return new SimpleObservableSet<T>(set);
+        return new ObservableSetImpl<T>(set);
     }
 
     /**
@@ -115,7 +115,7 @@ public final class SimpleObservableUtils
      */
     public static <K, V> ObservableSortedMap<K, V> observableSortedMap(final SortedMap<K, V> sortedMap)
     {
-        return new SimpleObservableSortedMap<K, V>(sortedMap);
+        return new ObservableSortedMapImpl<K, V>(sortedMap);
     }
 
     /**
@@ -127,6 +127,6 @@ public final class SimpleObservableUtils
      */
     public static <T> ObservableSortedSet<T> observableSortedSet(final SortedSet<T> sortedSet)
     {
-        return new SimpleObservableSortedSet<T>(sortedSet);
+        return new ObservableSortedSetImpl<T>(sortedSet);
     }
 }

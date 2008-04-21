@@ -23,25 +23,25 @@
 */
 package org.dishevelled.observable.impl;
 
-import java.util.HashMap;
+import java.util.TreeMap;
 
-import org.dishevelled.observable.AbstractObservableMapTest;
-import org.dishevelled.observable.ObservableMap;
-import org.dishevelled.observable.impl.SimpleObservableMap;
+import org.dishevelled.observable.AbstractObservableSortedMapTest;
+import org.dishevelled.observable.ObservableSortedMap;
+import org.dishevelled.observable.impl.ObservableSortedMapImpl;
 
 /**
- * Unit test for SimpleObservableMap.
+ * Unit test for ObservableSortedMapImpl.
  *
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public class SimpleObservableMapTest
-    extends AbstractObservableMapTest
+public class ObservableSortedMapImplTest
+    extends AbstractObservableSortedMapTest
 {
 
     /** {@inheritDoc} */
-    protected <K, V> ObservableMap<K, V> createObservableMap()
+    protected <K, V> ObservableSortedMap<K, V> createObservableSortedMap()
     {
-        return new SimpleObservableMap(new HashMap<K, V>());
+        return new ObservableSortedMapImpl(new TreeMap<K, V>());
     }
 }

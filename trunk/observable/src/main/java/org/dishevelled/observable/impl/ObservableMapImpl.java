@@ -44,7 +44,7 @@ import org.dishevelled.observable.event.VetoableMapChangeEvent;
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public class SimpleObservableMap<K, V>
+public class ObservableMapImpl<K, V>
     extends AbstractObservableMap<K, V>
 {
     /** Cached map change event. */
@@ -60,7 +60,7 @@ public class SimpleObservableMap<K, V>
      *
      * @param map map to decorate, must not be null
      */
-    public SimpleObservableMap(final Map<K, V> map)
+    public ObservableMapImpl(final Map<K, V> map)
     {
         super(map);
         changeEvent = new MapChangeEvent<K, V>(this);

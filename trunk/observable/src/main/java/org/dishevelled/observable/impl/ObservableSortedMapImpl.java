@@ -44,7 +44,7 @@ import org.dishevelled.observable.event.VetoableSortedMapChangeEvent;
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public class SimpleObservableSortedMap<K, V>
+public class ObservableSortedMapImpl<K, V>
     extends AbstractObservableSortedMap<K, V>
 {
     /** Cached sorted map change event. */
@@ -60,7 +60,7 @@ public class SimpleObservableSortedMap<K, V>
      *
      * @param sortedMap sorted map to decorate, must not be null
      */
-    public SimpleObservableSortedMap(final SortedMap<K, V> sortedMap)
+    public ObservableSortedMapImpl(final SortedMap<K, V> sortedMap)
     {
         super(sortedMap);
         changeEvent = new SortedMapChangeEvent<K, V>(this);

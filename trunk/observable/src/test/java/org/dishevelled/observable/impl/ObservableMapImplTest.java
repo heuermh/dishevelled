@@ -23,25 +23,25 @@
 */
 package org.dishevelled.observable.impl;
 
-import java.util.HashSet;
+import java.util.HashMap;
 
-import org.dishevelled.observable.AbstractObservableSetTest;
-import org.dishevelled.observable.ObservableSet;
-import org.dishevelled.observable.impl.SimpleObservableSet;
+import org.dishevelled.observable.AbstractObservableMapTest;
+import org.dishevelled.observable.ObservableMap;
+import org.dishevelled.observable.impl.ObservableMapImpl;
 
 /**
- * Unit test for SimpleObservableSet.
+ * Unit test for ObservableMapImpl.
  *
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public class SimpleObservableSetTest
-    extends AbstractObservableSetTest
+public class ObservableMapImplTest
+    extends AbstractObservableMapTest
 {
 
     /** {@inheritDoc} */
-    protected <T> ObservableSet<T> createObservableSet()
+    protected <K, V> ObservableMap<K, V> createObservableMap()
     {
-        return new SimpleObservableSet(new HashSet<T>());
+        return new ObservableMapImpl(new HashMap<K, V>());
     }
 }

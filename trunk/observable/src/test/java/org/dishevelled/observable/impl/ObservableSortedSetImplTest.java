@@ -23,25 +23,25 @@
 */
 package org.dishevelled.observable.impl;
 
-import java.util.ArrayList;
+import java.util.TreeSet;
 
-import org.dishevelled.observable.AbstractObservableCollectionTest;
-import org.dishevelled.observable.ObservableCollection;
-import org.dishevelled.observable.impl.SimpleObservableCollection;
+import org.dishevelled.observable.AbstractObservableSortedSetTest;
+import org.dishevelled.observable.ObservableSortedSet;
+import org.dishevelled.observable.impl.ObservableSortedSetImpl;
 
 /**
- * Unit test for SimpleObservableCollection.
+ * Unit test for ObservableSortedSetImpl.
  *
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public class SimpleObservableCollectionTest
-    extends AbstractObservableCollectionTest
+public class ObservableSortedSetImplTest
+    extends AbstractObservableSortedSetTest
 {
 
     /** {@inheritDoc} */
-    protected <T> ObservableCollection<T> createObservableCollection()
+    protected <T> ObservableSortedSet<T> createObservableSortedSet()
     {
-        return new SimpleObservableCollection(new ArrayList<T>());
+        return new ObservableSortedSetImpl(new TreeSet<T>());
     }
 }
