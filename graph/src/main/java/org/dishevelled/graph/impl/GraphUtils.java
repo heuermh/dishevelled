@@ -173,9 +173,9 @@ public final class GraphUtils
             throw new IllegalArgumentException("procedure must not be null");
         }
         Map<Node<N, E>, Boolean> visited = graph.nodeMap();
-        for (Node<N, E> key : visited.keySet())
+        for (Map.Entry<Node<N, E>, Boolean> entry : visited.entrySet())
         {
-            visited.put(key, false);
+            entry.setValue(Boolean.FALSE);
         }
         Queue<Node<N, E>> queue = new ArrayBlockingQueue<Node<N, E>>(graph.nodeCount());
         queue.offer(node);
@@ -185,7 +185,7 @@ public final class GraphUtils
             if (!visited.get(next))
             {
                 procedure.run(next);
-                visited.put(next, true);
+                visited.put(next, Boolean.TRUE);
             }
             for (Edge<N, E> out : next.outEdges())
             {
@@ -225,9 +225,9 @@ public final class GraphUtils
             throw new IllegalArgumentException("procedure must not be null");
         }
         Map<Node<N, E>, Boolean> visited = graph.nodeMap();
-        for (Node<N, E> key : visited.keySet())
+        for (Map.Entry<Node<N, E>, Boolean> entry : visited.entrySet())
         {
-            visited.put(key, false);
+            entry.setValue(Boolean.FALSE);
         }
         Queue<Node<N, E>> queue = new ArrayBlockingQueue<Node<N, E>>(graph.nodeCount());
         queue.offer(node);
@@ -237,7 +237,7 @@ public final class GraphUtils
             if (!visited.get(next))
             {
                 procedure.run(next);
-                visited.put(next, true);
+                visited.put(next, Boolean.TRUE);
             }
             for (Edge<N, E> in : next.inEdges())
             {
