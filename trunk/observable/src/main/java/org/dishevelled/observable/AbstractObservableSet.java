@@ -325,7 +325,7 @@ public abstract class AbstractObservableSet<E>
     /** {@inheritDoc} */
     public Iterator<E> iterator()
     {
-        return new ObservableSetIterator<E>(super.iterator());
+        return new ObservableSetIterator(super.iterator());
     }
 
     /** {@inheritDoc} */
@@ -368,7 +368,7 @@ public abstract class AbstractObservableSet<E>
     /**
      * Observable set iterator.
      */
-    private class ObservableSetIterator<E>
+    private class ObservableSetIterator
         extends AbstractIteratorDecorator<E>
     {
 

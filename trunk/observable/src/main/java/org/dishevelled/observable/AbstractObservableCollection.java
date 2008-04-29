@@ -325,7 +325,7 @@ public abstract class AbstractObservableCollection<E>
     /** {@inheritDoc} */
     public Iterator<E> iterator()
     {
-        return new ObservableCollectionIterator<E>(super.iterator());
+        return new ObservableCollectionIterator(super.iterator());
     }
 
     /** {@inheritDoc} */
@@ -371,7 +371,7 @@ public abstract class AbstractObservableCollection<E>
     /**
      * Observable collection iterator.
      */
-    private class ObservableCollectionIterator<E>
+    private class ObservableCollectionIterator
         extends AbstractIteratorDecorator<E>
     {
 

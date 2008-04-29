@@ -130,7 +130,7 @@ public final class TileMap
         this.tileHeight = tileHeight;
         setBounds(0.0d, 0.0d, mapWidth * tileWidth, mapHeight * tileHeight);
 
-        tileMap = new SparseObjectMatrix2D<Sprite>(this.mapHeight, this.mapWidth);
+        tileMap = new SparseObjectMatrix2D<Sprite>(this.mapHeight, this.mapWidth, 1000, 0.75f);
 
         proxiesInvalid = true;
     }

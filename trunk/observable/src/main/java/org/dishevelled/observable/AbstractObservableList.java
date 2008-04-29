@@ -516,19 +516,19 @@ public abstract class AbstractObservableList<E>
     /** {@inheritDoc} */
     public Iterator<E> iterator()
     {
-        return new ObservableListIterator<E>(super.iterator());
+        return new ObservableListIterator(super.iterator());
     }
 
     /** {@inheritDoc} */
     public ListIterator<E> listIterator()
     {
-        return new ObservableListListIterator<E>(super.listIterator());
+        return new ObservableListListIterator(super.listIterator());
     }
 
     /** {@inheritDoc} */
     public ListIterator<E> listIterator(final int index)
     {
-        return new ObservableListListIterator<E>(super.listIterator(index));
+        return new ObservableListListIterator(super.listIterator(index));
     }
 
     /** {@inheritDoc} */
@@ -678,19 +678,19 @@ public abstract class AbstractObservableList<E>
         /** {@inheritDoc} */
         public Iterator<E> iterator()
         {
-            return new ObservableListIterator<E>(super.iterator());
+            return new ObservableListIterator(super.iterator());
         }
 
         /** {@inheritDoc} */
         public ListIterator<E> listIterator()
         {
-            return new ObservableListListIterator<E>(super.listIterator());
+            return new ObservableListListIterator(super.listIterator());
         }
 
         /** {@inheritDoc} */
         public ListIterator<E> listIterator(final int index)
         {
-            return new ObservableListListIterator<E>(super.listIterator(index));
+            return new ObservableListListIterator(super.listIterator(index));
         }
 
         /** {@inheritDoc} */
@@ -704,7 +704,7 @@ public abstract class AbstractObservableList<E>
     /**
      * Observable list iterator.
      */
-    private class ObservableListIterator<E>
+    private class ObservableListIterator
         extends AbstractIteratorDecorator<E>
     {
 
@@ -734,7 +734,7 @@ public abstract class AbstractObservableList<E>
     /**
      * Observable list list iterator.
      */
-    private class ObservableListListIterator<E>
+    private class ObservableListListIterator
         extends AbstractListIteratorDecorator<E>
     {
 

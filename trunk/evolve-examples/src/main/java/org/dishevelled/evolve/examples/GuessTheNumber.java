@@ -60,17 +60,18 @@ public final class GuessTheNumber
     implements Runnable
 {
     /** Number to guess. */
-    private int number;
+    private final int number;
 
     /** Number of individuals. */
-    private int individuals;
+    private final int individuals;
 
     /** Maximum number to guess. */
-    private int maxNumber;
+    private final int maxNumber;
 
     /** Source of randomness. */
     private final Random random;
 
+    /** Exit strategy. */
     private final ExitStrategy<Integer> exitStrategy;
 
     /** Null recombination. */
@@ -85,7 +86,9 @@ public final class GuessTheNumber
     /** Selection. */
     private final Selection<Integer> selection;
 
+    /** True if output should be verbose. */
     private final boolean verbose = true;
+
 
     /**
      * Create a new guess the number example.
@@ -129,30 +132,11 @@ public final class GuessTheNumber
         selection = new FitnessProportionalSelection<Integer>();
     }
 
-    public void setNumber(final int number)
-    {
-        this.number = number;
-    }
-
-    public int getNumber()
-    {
-        return number;
-    }
-
-    public void setIndividuals(final int individuals)
-    {
-        this.individuals = individuals;
-    }
-
-    public int getIndividuals()
-    {
-        return individuals;
-    }
-
+    /** {@inheritDoc} */
     public void run()
     {
         EvolutionaryAlgorithm<Integer> ea = new EvolutionaryAlgorithmImpl<Integer>();
-        EvolutionaryAlgorithmListener<Integer> logger = new LoggingEvolutionaryAlgorithmListener<Integer>();
+        EvolutionaryAlgorithmListener<Integer> logger = new LoggingEvolutionaryAlgorithmListener();
         if (verbose)
         {
             ea.addEvolutionaryAlgorithmListener(logger);
@@ -181,18 +165,28 @@ public final class GuessTheNumber
         }
     }
 
-    private class LoggingEvolutionaryAlgorithmListener<I>
-        extends EvolutionaryAlgorithmAdapter<I>
+    /**
+     * Evolutionary algorithm listener that logs exit failed events to stdout.
+     */
+    private class LoggingEvolutionaryAlgorithmListener
+        extends EvolutionaryAlgorithmAdapter<Integer>
     {
-        public void exitFailed(final EvolutionaryAlgorithmEvent<I> event)
+
+        /** {@inheritDoc} */
+        public void exitFailed(final EvolutionaryAlgorithmEvent<Integer> event)
         {
             int time = event.getTime();
-            List population = new ArrayList(event.getPopulation());
+            List<Integer> population = new ArrayList<Integer>(event.getPopulation());
             Collections.sort(population);
             System.out.println("time=" + time + " population=" + population);
         }
     }
 
+    /**
+     * Main.
+     *
+     * @param args command line arguments
+     */
     public static void main(final String[] args)
     {
         new GuessTheNumber().run();
