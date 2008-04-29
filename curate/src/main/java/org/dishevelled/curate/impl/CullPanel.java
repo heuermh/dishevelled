@@ -29,9 +29,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 
@@ -357,7 +355,7 @@ public final class CullPanel<E>
     /**
      * Assist.
      */
-    private class Assist<E>
+    private class Assist
     {
         /** Rate (in ms) at which new selection change events are triggered. */
         private int rate;
