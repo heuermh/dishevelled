@@ -121,6 +121,18 @@ public final class GraphUtilsTest
         {
             // expected
         }
+
+        Graph<String, Integer> graph1 = new GraphImpl<String, Integer>();
+        Node<String, Integer> node2 = graph1.createNode("node2");
+        try
+        {
+            GraphUtils.dfs(graph, node2, procedure);
+            fail("dfs(,node2,) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
     }
 
     public void testBfs()
@@ -167,6 +179,18 @@ public final class GraphUtilsTest
         {
             // expected
         }
+
+        Graph<String, Integer> graph1 = new GraphImpl<String, Integer>();
+        Node<String, Integer> node2 = graph1.createNode("node2");
+        try
+        {
+            GraphUtils.bfs(graph, node2, procedure);
+            fail("bfs(,node2,) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
     }
 
     public void testUndirectedBfs()
@@ -208,6 +232,18 @@ public final class GraphUtilsTest
         {
             GraphUtils.undirectedBfs(graph, node0, null);
             fail("undirectedBfs(,,null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+
+        Graph<String, Integer> graph1 = new GraphImpl<String, Integer>();
+        Node<String, Integer> node2 = graph1.createNode("node2");
+        try
+        {
+            GraphUtils.undirectedBfs(graph, node2, procedure);
+            fail("undirectedBfs(,node2,) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
         {
