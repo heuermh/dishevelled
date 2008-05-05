@@ -99,9 +99,9 @@ public abstract class AbstractGraphDecorator<N, E>
     }
 
     /** {@inheritDoc} */
-    public <T> Map<Node<N, E>, T> nodeMap()
+    public <T> Map<Node<N, E>, T> nodeMap(final T defaultValue)
     {
-        return graph.nodeMap();
+        return graph.nodeMap(defaultValue);
     }
 
     /** {@inheritDoc} */
@@ -148,9 +148,9 @@ public abstract class AbstractGraphDecorator<N, E>
     }
 
     /** {@inheritDoc} */
-    public <T> Map<Edge<N, E>, T> edgeMap()
+    public <T> Map<Edge<N, E>, T> edgeMap(final T defaultValue)
     {
-        return graph.edgeMap();
+        return graph.edgeMap(defaultValue);
     }
 
     /** {@inheritDoc} */
