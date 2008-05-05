@@ -109,11 +109,7 @@ public final class GraphUtils
         {
             throw new IllegalArgumentException("procedure must not be null");
         }
-        Map<Node<N, E>, Boolean> visited = graph.nodeMap();
-        for (Node<N, E> key : visited.keySet())
-        {
-            visited.put(key, false);
-        }
+        Map<Node<N, E>, Boolean> visited = graph.nodeMap(Boolean.FALSE);
         recursiveDfs(node, visited, procedure);
     }
 
@@ -172,11 +168,7 @@ public final class GraphUtils
         {
             throw new IllegalArgumentException("procedure must not be null");
         }
-        Map<Node<N, E>, Boolean> visited = graph.nodeMap();
-        for (Map.Entry<Node<N, E>, Boolean> entry : visited.entrySet())
-        {
-            entry.setValue(Boolean.FALSE);
-        }
+        Map<Node<N, E>, Boolean> visited = graph.nodeMap(Boolean.FALSE);
         Queue<Node<N, E>> queue = new ArrayBlockingQueue<Node<N, E>>(graph.nodeCount());
         queue.offer(node);
         while (!queue.isEmpty())
@@ -224,11 +216,7 @@ public final class GraphUtils
         {
             throw new IllegalArgumentException("procedure must not be null");
         }
-        Map<Node<N, E>, Boolean> visited = graph.nodeMap();
-        for (Map.Entry<Node<N, E>, Boolean> entry : visited.entrySet())
-        {
-            entry.setValue(Boolean.FALSE);
-        }
+        Map<Node<N, E>, Boolean> visited = graph.nodeMap(Boolean.FALSE);
         Queue<Node<N, E>> queue = new ArrayBlockingQueue<Node<N, E>>(graph.nodeCount());
         queue.offer(node);
         while (!queue.isEmpty())

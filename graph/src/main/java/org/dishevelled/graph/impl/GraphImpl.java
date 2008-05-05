@@ -110,17 +110,15 @@ public final class GraphImpl<N, E>
     }
 
     /** {@inheritDoc} */
-    public <T> Map<Node<N, E>, T> nodeMap()
+    public <T> Map<Node<N, E>, T> nodeMap(final T defaultValue)
     {
         Map<Node<N, E>, T> map = new HashMap<Node<N, E>, T>(nodeCount());
         for (Node<N, E> node : nodes)
         {
-            map.put(node, (T) null);
+            map.put(node, defaultValue);
         }
         return new MapDecorator<Node<N, E>, T>(map);
     }
-
-    // TODO:  consider nodeMap(T defaultValue);
 
     /** {@inheritDoc} */
     public void forEachNode(final UnaryProcedure<Node<N, E>> procedure)
@@ -213,17 +211,15 @@ public final class GraphImpl<N, E>
     }
 
     /** {@inheritDoc} */
-    public <T> Map<Edge<N, E>, T> edgeMap()
+    public <T> Map<Edge<N, E>, T> edgeMap(final T defaultValue)
     {
         Map<Edge<N, E>, T> map = new HashMap<Edge<N, E>, T>(edgeCount());
         for (Edge<N, E> edge : edges())
         {
-            map.put(edge, (T) null);
+            map.put(edge, defaultValue);
         }
         return new MapDecorator<Edge<N, E>, T>(map);
     }
-
-    // TODO: consider edgeMap(T defaultValue);
 
     /** {@inheritDoc} */
     public void forEachEdge(final UnaryProcedure<Edge<N, E>> procedure)

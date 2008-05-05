@@ -74,14 +74,16 @@ public interface Graph<N, E>
     /**
      * Return a map of type <code>&lt;Node&lt;N, E&gt;, T&gt;</code> with
      * the nodes in this graph as keys.  The keys in the returned map
-     * reference the nodes in this graph and are read-only.  The map
-     * may be empty (if <code>nodeCount() == 0</code>) but will not be null.
+     * reference the nodes in this graph and are read-only.  Each key maps to
+     * the specified default value, which may be null.  The map may be empty
+     * (if <code>nodeCount() == 0</code>) but will not be null.
      *
      * @param <T> node map value type
+     * @param defaultValue default value for each node mapping
      * @return a map of type <code>&lt;Node&lt;N, E&gt;, T&gt;</code> with
      *    the nodes in this graph as keys
      */
-    <T> Map<Node<N, E>, T> nodeMap();
+    <T> Map<Node<N, E>, T> nodeMap(T defaultValue);
 
     /**
      * Apply the specified procedure to each node in this graph.
@@ -142,14 +144,16 @@ public interface Graph<N, E>
     /**
      * Return a map of type <code>&lt;Edge&lt;N, E&gt;, T&gt;</code> with
      * the edges in this graph as keys.  The keys in the returned map
-     * reference the edges in this graph and are read-only.  The map
-     * may be empty (if <code>edgeCount() == 0</code>) but will not be null.
+     * reference the edges in this graph and are read-only.  Each key maps to
+     * the specified default value, which may be null.  The map may be empty
+     * (if <code>edgeCount() == 0</code>) but will not be null.
      *
      * @param <T> edge map value type
+     * @param defaultValue default value for each edge mapping
      * @return a map of type <code>&lt;Edge&lt;N, E&gt;, T&gt;</code> with
      *    the edges in this graph as keys
      */
-    <T> Map<Edge<N, E>, T> edgeMap();
+    <T> Map<Edge<N, E>, T> edgeMap(T defaultValue);
 
     /**
      * Apply the specified procedure to each edge in this graph.

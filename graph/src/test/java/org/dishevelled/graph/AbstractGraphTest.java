@@ -34,6 +34,8 @@ import junit.framework.TestCase;
 import org.dishevelled.functor.UnaryPredicate;
 import org.dishevelled.functor.UnaryProcedure;
 
+import sun.awt.SunHints.Value;
+
 /**
  * Abstract unit test for implementations of Graph.
  *
@@ -274,31 +276,31 @@ public abstract class AbstractGraphTest
     public void testNodeMap()
     {
         Graph<String, String> emptyGraph = createEmptyGraph();
-        assertNotNull(emptyGraph.nodeMap());
-        assertTrue(emptyGraph.nodeMap().isEmpty());
-        assertEquals(emptyGraph.nodeCount(), emptyGraph.nodeMap().size());
-        assertEquals(emptyGraph.nodeCount(), emptyGraph.nodeMap().keySet().size());
-        assertEquals(emptyGraph.nodeCount(), emptyGraph.nodeMap().entrySet().size());
-        assertEquals(emptyGraph.nodeCount(), emptyGraph.nodeMap().values().size());
+        assertNotNull(emptyGraph.nodeMap(null));
+        assertTrue(emptyGraph.nodeMap(null).isEmpty());
+        assertEquals(emptyGraph.nodeCount(), emptyGraph.nodeMap(null).size());
+        assertEquals(emptyGraph.nodeCount(), emptyGraph.nodeMap(null).keySet().size());
+        assertEquals(emptyGraph.nodeCount(), emptyGraph.nodeMap(null).entrySet().size());
+        assertEquals(emptyGraph.nodeCount(), emptyGraph.nodeMap(null).values().size());
 
         Graph<String, String> fullGraph = createFullGraph("node", "edge");
-        assertNotNull(fullGraph.nodeMap());
-        assertFalse(fullGraph.nodeMap().isEmpty());
-        assertEquals(fullGraph.nodeCount(), fullGraph.nodeMap().size());
-        assertEquals(fullGraph.nodeCount(), fullGraph.nodeMap().keySet().size());
-        assertEquals(fullGraph.nodeCount(), fullGraph.nodeMap().entrySet().size());
-        assertEquals(fullGraph.nodeCount(), fullGraph.nodeMap().values().size());
+        assertNotNull(fullGraph.nodeMap(null));
+        assertFalse(fullGraph.nodeMap(null).isEmpty());
+        assertEquals(fullGraph.nodeCount(), fullGraph.nodeMap(null).size());
+        assertEquals(fullGraph.nodeCount(), fullGraph.nodeMap(null).keySet().size());
+        assertEquals(fullGraph.nodeCount(), fullGraph.nodeMap(null).entrySet().size());
+        assertEquals(fullGraph.nodeCount(), fullGraph.nodeMap(null).values().size());
 
         for (Node<String, String> node : fullGraph.nodes())
         {
-            assertTrue(fullGraph.nodeMap().containsKey(node));
+            assertTrue(fullGraph.nodeMap(null).containsKey(node));
         }
     }
 
     public void testEmptyNodeMapKeysAreImmutable()
     {
         Graph<String, String> emptyGraph = createEmptyGraph();
-        Map<Node<String, String>, Integer> nodeMap = emptyGraph.nodeMap();
+        Map<Node<String, String>, Integer> nodeMap = emptyGraph.nodeMap(null);
         Set<Node<String, String>> nodeKeys = nodeMap.keySet();
         assertNotNull(nodeKeys);
         assertTrue(nodeKeys.isEmpty());
@@ -378,7 +380,7 @@ public abstract class AbstractGraphTest
     public void testFullNodeMapKeysAreImmutable()
     {
         Graph<String, String> fullGraph = createFullGraph("node", "edge");
-        Map<Node<String, String>, Integer> nodeMap = fullGraph.nodeMap();
+        Map<Node<String, String>, Integer> nodeMap = fullGraph.nodeMap(null);
         Set<Node<String, String>> nodeKeys = nodeMap.keySet();        
         assertNotNull(nodeKeys);
         assertFalse(nodeKeys.isEmpty());
@@ -456,10 +458,26 @@ public abstract class AbstractGraphTest
         }
     }
 
+    public void testNodeMapDefaultValue()
+    {
+        Graph<String, String> fullGraph = createFullGraph("node", "edge");
+        Map<Node<String, String>, Integer> nodeMap0 = fullGraph.nodeMap(null);
+        for (Integer value : nodeMap0.values())
+        {
+            assertEquals(null, value);
+        }
+        Integer defaultValue = Integer.valueOf(99);
+        Map<Node<String, String>, Integer> nodeMap1 = fullGraph.nodeMap(defaultValue);
+        for (Integer value : nodeMap1.values())
+        {
+            assertEquals(defaultValue, value);
+        }
+    }
+
     public void testNodeMapPut()
     {
         Graph<String, String> fullGraph = createFullGraph("node", "edge");
-        Map<Node<String, String>, Integer> nodeMap = fullGraph.nodeMap();
+        Map<Node<String, String>, Integer> nodeMap = fullGraph.nodeMap(null);
         Node<String, String> node = fullGraph.nodes().iterator().next();
         assertEquals((Integer) null, nodeMap.get(node));
         nodeMap.put(node, 1);
@@ -471,7 +489,7 @@ public abstract class AbstractGraphTest
     public void testNodeMapRemove()
     {
         Graph<String, String> fullGraph = createFullGraph("node", "edge");
-        Map<Node<String, String>, Double> nodeMap = fullGraph.nodeMap();
+        Map<Node<String, String>, Double> nodeMap = fullGraph.nodeMap(null);
 
         // TODO:  remove(node) sets value to null
         // TODO:  remove(not a node) throws IAE or fails silently; doc in nodeMap method
@@ -907,31 +925,31 @@ public abstract class AbstractGraphTest
     public void testEdgeMap()
     {
         Graph<String, String> emptyGraph = createEmptyGraph();
-        assertNotNull(emptyGraph.edgeMap());
-        assertTrue(emptyGraph.edgeMap().isEmpty());
-        assertEquals(emptyGraph.edgeCount(), emptyGraph.edgeMap().size());
-        assertEquals(emptyGraph.edgeCount(), emptyGraph.edgeMap().keySet().size());
-        assertEquals(emptyGraph.edgeCount(), emptyGraph.edgeMap().entrySet().size());
-        assertEquals(emptyGraph.edgeCount(), emptyGraph.edgeMap().values().size());
+        assertNotNull(emptyGraph.edgeMap(null));
+        assertTrue(emptyGraph.edgeMap(null).isEmpty());
+        assertEquals(emptyGraph.edgeCount(), emptyGraph.edgeMap(null).size());
+        assertEquals(emptyGraph.edgeCount(), emptyGraph.edgeMap(null).keySet().size());
+        assertEquals(emptyGraph.edgeCount(), emptyGraph.edgeMap(null).entrySet().size());
+        assertEquals(emptyGraph.edgeCount(), emptyGraph.edgeMap(null).values().size());
 
         Graph<String, String> fullGraph = createFullGraph("node", "edge");
-        assertNotNull(fullGraph.edgeMap());
-        assertFalse(fullGraph.edgeMap().isEmpty());
-        assertEquals(fullGraph.edgeCount(), fullGraph.edgeMap().size());
-        assertEquals(fullGraph.edgeCount(), fullGraph.edgeMap().keySet().size());
-        assertEquals(fullGraph.edgeCount(), fullGraph.edgeMap().entrySet().size());
-        assertEquals(fullGraph.edgeCount(), fullGraph.edgeMap().values().size());
+        assertNotNull(fullGraph.edgeMap(null));
+        assertFalse(fullGraph.edgeMap(null).isEmpty());
+        assertEquals(fullGraph.edgeCount(), fullGraph.edgeMap(null).size());
+        assertEquals(fullGraph.edgeCount(), fullGraph.edgeMap(null).keySet().size());
+        assertEquals(fullGraph.edgeCount(), fullGraph.edgeMap(null).entrySet().size());
+        assertEquals(fullGraph.edgeCount(), fullGraph.edgeMap(null).values().size());
 
         for (Edge<String, String> edge : fullGraph.edges())
         {
-            assertTrue(fullGraph.edgeMap().containsKey(edge));
+            assertTrue(fullGraph.edgeMap(null).containsKey(edge));
         }
     }
 
     public void testEmptyEdgeMapKeysAreImmutable()
     {
         Graph<String, String> emptyGraph = createEmptyGraph();
-        Map<Edge<String, String>, Integer> edgeMap = emptyGraph.edgeMap();
+        Map<Edge<String, String>, Integer> edgeMap = emptyGraph.edgeMap(null);
         Set<Edge<String, String>> edgeKeys = edgeMap.keySet();        
         assertNotNull(edgeKeys);
         assertTrue(edgeKeys.isEmpty());
@@ -1011,7 +1029,7 @@ public abstract class AbstractGraphTest
     public void testFullEdgeMapKeysAreImmutable()
     {
         Graph<String, String> fullGraph = createFullGraph("node", "edge");
-        Map<Edge<String, String>, Integer> edgeMap = fullGraph.edgeMap();
+        Map<Edge<String, String>, Integer> edgeMap = fullGraph.edgeMap(null);
         Set<Edge<String, String>> edgeKeys = edgeMap.keySet();        
         assertNotNull(edgeKeys);
         assertFalse(edgeKeys.isEmpty());
@@ -1089,10 +1107,26 @@ public abstract class AbstractGraphTest
         }
     }
 
+    public void testEdgeMapDefaultValue()
+    {
+        Graph<String, String> fullGraph = createFullGraph("node", "edge");
+        Map<Edge<String, String>, Integer> edgeMap0 = fullGraph.edgeMap(null);
+        for (Integer value : edgeMap0.values())
+        {
+            assertEquals(null, value);
+        }
+        Integer defaultValue = Integer.valueOf(99);
+        Map<Edge<String, String>, Integer> edgeMap1 = fullGraph.edgeMap(defaultValue);
+        for (Integer value : edgeMap1.values())
+        {
+            assertEquals(defaultValue, value);
+        }
+    }
+
     public void testEdgeMapPut()
     {
         Graph<String, String> fullGraph = createFullGraph("node", "edge");
-        Map<Edge<String, String>, Integer> edgeMap = fullGraph.edgeMap();
+        Map<Edge<String, String>, Integer> edgeMap = fullGraph.edgeMap(null);
         Edge<String, String> edge = fullGraph.edges().iterator().next();
         assertEquals((Integer) null, edgeMap.get(edge));
         edgeMap.put(edge, 1);
@@ -1104,7 +1138,7 @@ public abstract class AbstractGraphTest
     public void testEdgeMapRemove()
     {
         Graph<String, String> fullGraph = createFullGraph("node", "edge");
-        Map<Edge<String, String>, Double> edgeMap = fullGraph.edgeMap();
+        Map<Edge<String, String>, Double> edgeMap = fullGraph.edgeMap(null);
 
         // TODO:  remove(edge) throws ??
         // TODO:  remove(not an edge) ok ?
