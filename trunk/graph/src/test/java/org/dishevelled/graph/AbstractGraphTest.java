@@ -34,8 +34,6 @@ import junit.framework.TestCase;
 import org.dishevelled.functor.UnaryPredicate;
 import org.dishevelled.functor.UnaryProcedure;
 
-import sun.awt.SunHints.Value;
-
 /**
  * Abstract unit test for implementations of Graph.
  *
