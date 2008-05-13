@@ -86,6 +86,7 @@ public class TileMapBuilderExample
         this.description = description;
     }
 
+
     /** {@inheritDoc} */
     public void initialize()
     {
@@ -165,6 +166,11 @@ public class TileMapBuilderExample
         try
         {
             image = ImageIO.read(getClass().getResource(name + ".png"));
+        }
+        catch (IllegalArgumentException e)
+        {
+            System.err.println("could not find resource " + name + ".png on classpath");
+            e.printStackTrace();
         }
         catch (IOException e)
         {
