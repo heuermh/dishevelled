@@ -40,7 +40,7 @@ The iconbundle project requires java version 1.4 or later.
 
 <p>
 For example, consider the scalable image <code>text-x-generic.svg</code> from the
-<a href="http://tango-project.org">Tango Project</a> as a base image.  An instance
+<a href="http://tango.freedesktop.org">Tango Project</a> as a base image.  An instance
 of <a href="apidocs/org/dishevelled/iconbundle/IconBundle.html">IconBundle</a> can
 be created from this SVG base image:
 <source>
