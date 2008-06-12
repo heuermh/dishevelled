@@ -48,6 +48,35 @@ public final class GraphUtilsTest
         Graph<String, Integer> graph1 = GraphUtils.createGraph(16, 16);
         assertNotNull(graph1);
 
+        Graph<String, Integer> emptyGraph = GraphUtils.createGraph();
+        Graph<String, Integer> emptyCopy = new GraphImpl<String, Integer>(emptyGraph);
+        assertNotNull(emptyCopy);
+        assertTrue(emptyCopy.isEmpty());
+
+        Graph<String, Integer> fullGraph = GraphUtils.createGraph();
+        Node<String, Integer> node0 = fullGraph.createNode("foo");
+        Node<String, Integer> node1 = fullGraph.createNode("bar");
+        Node<String, Integer> node2 = fullGraph.createNode("baz");
+        Node<String, Integer> node3 = fullGraph.createNode("qux");
+        fullGraph.createEdge(node0, node1, Integer.valueOf(0));
+        fullGraph.createEdge(node0, node2, Integer.valueOf(1));
+        fullGraph.createEdge(node0, node3, Integer.valueOf(2));
+        fullGraph.createEdge(node1, node0, Integer.valueOf(3));
+        fullGraph.createEdge(node1, node2, Integer.valueOf(4));
+        fullGraph.createEdge(node1, node3, Integer.valueOf(5));
+        fullGraph.createEdge(node2, node0, Integer.valueOf(6));
+        fullGraph.createEdge(node2, node1, Integer.valueOf(7));
+        fullGraph.createEdge(node2, node3, Integer.valueOf(8));
+        fullGraph.createEdge(node3, node0, Integer.valueOf(9));
+        fullGraph.createEdge(node3, node1, Integer.valueOf(10));
+        fullGraph.createEdge(node3, node2, Integer.valueOf(11));
+        
+        Graph<String, Integer> fullCopy = new GraphImpl<String, Integer>(fullGraph);
+        assertNotNull(fullCopy);
+        assertFalse(fullCopy.isEmpty());
+        assertEquals(fullGraph.nodeCount(), fullCopy.nodeCount());
+        assertEquals(fullGraph.edgeCount(), fullCopy.edgeCount());
+
         try
         {
             Graph<String, Integer> graph = GraphUtils.createGraph(-1, 16);
@@ -75,9 +104,18 @@ public final class GraphUtilsTest
         {
             // expected
         }
+        try
+        {
+            Graph<String, Integer> graph = GraphUtils.createGraph(null);
+            fail("createGraph(null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
     }
 
-    public void testDfs()
+    public void testDepthFirstSearch()
     {
         Graph<String, Integer> graph = new GraphImpl<String, Integer>();
         Node<String, Integer> node0 = graph.createNode("node0");
@@ -92,12 +130,12 @@ public final class GraphUtilsTest
                 }
             };
 
-        GraphUtils.dfs(graph, node0, procedure);
+        GraphUtils.depthFirstSearch(graph, node0, procedure);
 
         try
         {
-            GraphUtils.dfs(null, node0, procedure);
-            fail("dfs(null,,) expected IllegalArgumentException");
+            GraphUtils.depthFirstSearch(null, node0, procedure);
+            fail("depthFirstSearch(null,,) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
         {
@@ -105,8 +143,8 @@ public final class GraphUtilsTest
         }
         try
         {
-            GraphUtils.dfs(graph, null, procedure);
-            fail("dfs(,null,) expected IllegalArgumentException");
+            GraphUtils.depthFirstSearch(graph, null, procedure);
+            fail("depthFirstSearch(,null,) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
         {
@@ -114,8 +152,8 @@ public final class GraphUtilsTest
         }
         try
         {
-            GraphUtils.dfs(graph, node0, null);
-            fail("dfs(,,null) expected IllegalArgumentException");
+            GraphUtils.depthFirstSearch(graph, node0, null);
+            fail("depthFirstSearch(,,null) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
         {
@@ -126,8 +164,8 @@ public final class GraphUtilsTest
         Node<String, Integer> node2 = graph1.createNode("node2");
         try
         {
-            GraphUtils.dfs(graph, node2, procedure);
-            fail("dfs(,node2,) expected IllegalArgumentException");
+            GraphUtils.depthFirstSearch(graph, node2, procedure);
+            fail("depthFirstSearch(,node2,) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
         {
@@ -135,7 +173,7 @@ public final class GraphUtilsTest
         }
     }
 
-    public void testBfs()
+    public void testBreadthFirstSearch()
     {
         Graph<String, Integer> graph = new GraphImpl<String, Integer>();
         Node<String, Integer> node0 = graph.createNode("node0");
@@ -150,12 +188,12 @@ public final class GraphUtilsTest
                 }
             };
 
-        GraphUtils.bfs(graph, node0, procedure);
+        GraphUtils.breadthFirstSearch(graph, node0, procedure);
 
         try
         {
-            GraphUtils.bfs(null, node0, procedure);
-            fail("bfs(null,,) expected IllegalArgumentException");
+            GraphUtils.breadthFirstSearch(null, node0, procedure);
+            fail("breadthFirstSearch(null,,) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
         {
@@ -163,8 +201,8 @@ public final class GraphUtilsTest
         }
         try
         {
-            GraphUtils.bfs(graph, null, procedure);
-            fail("bfs(,null,) expected IllegalArgumentException");
+            GraphUtils.breadthFirstSearch(graph, null, procedure);
+            fail("breadthFirstSearch(,null,) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
         {
@@ -172,8 +210,8 @@ public final class GraphUtilsTest
         }
         try
         {
-            GraphUtils.bfs(graph, node0, null);
-            fail("bfs(,,null) expected IllegalArgumentException");
+            GraphUtils.breadthFirstSearch(graph, node0, null);
+            fail("breadthFirstSearch(,,null) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
         {
@@ -184,8 +222,8 @@ public final class GraphUtilsTest
         Node<String, Integer> node2 = graph1.createNode("node2");
         try
         {
-            GraphUtils.bfs(graph, node2, procedure);
-            fail("bfs(,node2,) expected IllegalArgumentException");
+            GraphUtils.breadthFirstSearch(graph, node2, procedure);
+            fail("breadthFirstSearch(,node2,) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
         {
@@ -193,7 +231,7 @@ public final class GraphUtilsTest
         }
     }
 
-    public void testUndirectedBfs()
+    public void testUndirectedBreadthFirstSearch()
     {
         Graph<String, Integer> graph = new GraphImpl<String, Integer>();
         Node<String, Integer> node0 = graph.createNode("node0");
@@ -208,12 +246,12 @@ public final class GraphUtilsTest
                 }
             };
 
-        GraphUtils.undirectedBfs(graph, node0, procedure);
+        GraphUtils.undirectedBreadthFirstSearch(graph, node0, procedure);
 
         try
         {
-            GraphUtils.undirectedBfs(null, node0, procedure);
-            fail("undirectedBfs(null,,) expected IllegalArgumentException");
+            GraphUtils.undirectedBreadthFirstSearch(null, node0, procedure);
+            fail("undirectedBreadthFirstSearch(null,,) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
         {
@@ -221,8 +259,8 @@ public final class GraphUtilsTest
         }
         try
         {
-            GraphUtils.undirectedBfs(graph, null, procedure);
-            fail("undirectedBfs(,null,) expected IllegalArgumentException");
+            GraphUtils.undirectedBreadthFirstSearch(graph, null, procedure);
+            fail("undirectedBreadthFirstSearch(,null,) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
         {
@@ -230,8 +268,8 @@ public final class GraphUtilsTest
         }
         try
         {
-            GraphUtils.undirectedBfs(graph, node0, null);
-            fail("undirectedBfs(,,null) expected IllegalArgumentException");
+            GraphUtils.undirectedBreadthFirstSearch(graph, node0, null);
+            fail("undirectedBreadthFirstSearch(,,null) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
         {
@@ -242,8 +280,8 @@ public final class GraphUtilsTest
         Node<String, Integer> node2 = graph1.createNode("node2");
         try
         {
-            GraphUtils.undirectedBfs(graph, node2, procedure);
-            fail("undirectedBfs(,node2,) expected IllegalArgumentException");
+            GraphUtils.undirectedBreadthFirstSearch(graph, node2, procedure);
+            fail("undirectedBreadthFirstSearch(,node2,) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
         {

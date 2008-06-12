@@ -79,6 +79,41 @@ public final class GraphImpl<N, E>
         edges = new HashSet<Edge<N, E>>(edgeCapacity);
     }
 
+    /**
+     * Create a new directed graph with the same structure and same node
+     * and edge values as the specified graph (copy constructor).
+     *
+     * @param graph graph to copy, must not be null
+     */
+    public GraphImpl(final Graph<N, E> graph)
+    {
+        if (graph == null)
+        {
+            throw new IllegalArgumentException("graph must not be null");
+        }
+        if (graph.isEmpty())
+        {
+            nodes = new HashSet<Node<N, E>>();
+            edges = new HashSet<Edge<N, E>>();
+        }
+        else
+        {
+            nodes = new HashSet<Node<N, E>>(graph.nodeCount());
+            edges = new HashSet<Edge<N, E>>(graph.edgeCount());
+            Map<Node<N, E>, Node<N, E>> nodeMap = graph.nodeMap(null);
+            for (Map.Entry<Node<N, E>, Node<N, E>> entry : nodeMap.entrySet())
+            {
+                Node<N, E> node = createNode(entry.getKey().getValue());
+                entry.setValue(node);
+            }
+            for (Edge<N, E> edge : graph.edges())
+            {
+                Node<N, E> source = nodeMap.get(edge.source());
+                Node<N, E> target = nodeMap.get(edge.target());
+                createEdge(source, target, edge.getValue());
+            }
+        }
+    }
 
     /** {@inheritDoc} */
     public boolean isEmpty()
@@ -329,6 +364,7 @@ public final class GraphImpl<N, E>
     {
         Edge<N, E> edge = new EdgeImpl(source, target, value);
         edges.add(edge);
+        // safe cast since nodes must be created by this graph impl
         ((NodeImpl) source).addOutEdge(edge);
         ((NodeImpl) target).addInEdge(edge);
         return edge;
@@ -350,10 +386,12 @@ public final class GraphImpl<N, E>
         {
             if (node.inEdges().contains(edge))
             {
+                // safe cast since nodes must be created by this graph impl
                 ((NodeImpl) node).removeInEdge(edge);
             }
             if (node.outEdges().contains(edge))
             {
+                // safe cast since nodes must be created by this graph impl
                 ((NodeImpl) node).removeOutEdge(edge);
             }
         }

@@ -127,7 +127,7 @@ public final class ConnectedComponents<E>
         while (!remain.isEmpty())
         {
             Collect<E, Double> collect = new Collect<E, Double>(remain);
-            GraphUtils.undirectedBfs(graph, remain.get(0), collect);
+            GraphUtils.undirectedBreadthFirstSearch(graph, remain.get(0), collect);
             clusters.add(collect.getCluster());
         }
 

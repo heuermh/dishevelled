@@ -90,4 +90,29 @@ public final class GraphImplTest
             // expected
         }
     }
+
+    public void testCopyConstructor()
+    {
+        Graph<String, Integer> emptyGraph = createEmptyGraph();
+        Graph<String, Integer> emptyCopy = new GraphImpl<String, Integer>(emptyGraph);
+        assertNotNull(emptyCopy);
+        assertTrue(emptyCopy.isEmpty());
+
+        Graph<String, Integer> fullGraph = createFullGraph("foo", Integer.valueOf(1));
+        Graph<String, Integer> fullCopy = new GraphImpl<String, Integer>(fullGraph);
+        assertNotNull(fullCopy);
+        assertFalse(fullCopy.isEmpty());
+        assertEquals(fullGraph.nodeCount(), fullCopy.nodeCount());
+        assertEquals(fullGraph.edgeCount(), fullCopy.edgeCount());
+
+        try
+        {
+            Graph<String, Integer> graph = new GraphImpl<String, Integer>(null);
+            fail("ctr(null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+    }
 }
