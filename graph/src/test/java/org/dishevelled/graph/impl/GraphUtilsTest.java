@@ -49,7 +49,7 @@ public final class GraphUtilsTest
         assertNotNull(graph1);
 
         Graph<String, Integer> emptyGraph = GraphUtils.createGraph();
-        Graph<String, Integer> emptyCopy = new GraphImpl<String, Integer>(emptyGraph);
+        Graph<String, Integer> emptyCopy = GraphUtils.createGraph(emptyGraph);
         assertNotNull(emptyCopy);
         assertTrue(emptyCopy.isEmpty());
 
@@ -71,7 +71,7 @@ public final class GraphUtilsTest
         fullGraph.createEdge(node3, node1, Integer.valueOf(10));
         fullGraph.createEdge(node3, node2, Integer.valueOf(11));
         
-        Graph<String, Integer> fullCopy = new GraphImpl<String, Integer>(fullGraph);
+        Graph<String, Integer> fullCopy = GraphUtils.createGraph(fullGraph);
         assertNotNull(fullCopy);
         assertFalse(fullCopy.isEmpty());
         assertEquals(fullGraph.nodeCount(), fullCopy.nodeCount());
