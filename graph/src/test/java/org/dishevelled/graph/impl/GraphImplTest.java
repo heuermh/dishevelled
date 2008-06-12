@@ -38,13 +38,13 @@ public final class GraphImplTest
     extends AbstractGraphTest
 {
 
-    /** @{inheritDoc} */
+    /** {@inheritDoc} */
     protected <N, E> Graph<N, E> createEmptyGraph()
     {
         return new GraphImpl<N, E>();
     }
 
-    /** @{inheritDoc} */
+    /** {@inheritDoc} */
     protected <N, E> Graph<N, E> createFullGraph(final N nodeValue, final E edgeValue)
     {
         Graph<N, E> graph = new GraphImpl<N, E>();
