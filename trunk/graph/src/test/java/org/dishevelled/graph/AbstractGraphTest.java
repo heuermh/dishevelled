@@ -100,6 +100,19 @@ public abstract class AbstractGraphTest
         {
             assertNotNull(node);
             assertEquals("node", node.getValue());
+            try
+            {
+                node.setValue("new value");
+                assertEquals("new value", node.getValue());
+                node.setValue("node");
+            }
+            catch (UnsupportedOperationException e)
+            {
+                // ok, setValue operation is optional
+            }
+            assertNotNull(node.inEdges());
+            assertNotNull(node.outEdges());
+            assertEquals(node.degree(), node.inEdges().size() + node.outEdges().size());
         }
     }
 
@@ -749,6 +762,16 @@ public abstract class AbstractGraphTest
         {
             assertNotNull(edge);
             assertEquals("edge", edge.getValue());
+            try
+            {
+                edge.setValue("new value");
+                assertEquals("new value", edge.getValue());
+                edge.setValue("edge");
+            }
+            catch (UnsupportedOperationException e)
+            {
+                // ok, setValue operation is optional
+            }
         }
     }
 

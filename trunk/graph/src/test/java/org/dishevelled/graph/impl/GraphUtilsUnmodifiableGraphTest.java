@@ -38,13 +38,13 @@ public final class GraphUtilsUnmodifiableGraphTest
     extends AbstractGraphTest
 {
 
-    /** @{inheritDoc} */
+    /** {@inheritDoc} */
     protected <N, E> Graph<N, E> createEmptyGraph()
     {
         return GraphUtils.unmodifiableGraph(new GraphImpl<N, E>());
     }
 
-    /** @{inheritDoc} */
+    /** {@inheritDoc} */
     protected <N, E> Graph<N, E> createFullGraph(final N nodeValue, final E edgeValue)
     {
         Graph<N, E> graph = new GraphImpl<N, E>();
