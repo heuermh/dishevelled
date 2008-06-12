@@ -80,6 +80,21 @@ public final class GraphUtils
     }
 
     /**
+     * Create and return a new directed graph with the same structure and same node
+     * and edge values as the specified graph.  The graph will not be null.
+     *
+     * @param <N> node value type
+     * @param <E> edge value type
+     * @param graph graph to copy, must not be null
+     * @return a new directed graph with the same structure and same node
+     *    and edge values as the specified graph
+     */
+    public static <N, E> Graph<N, E> createGraph(final Graph<N, E> graph)
+    {
+        return new GraphImpl<N, E>(graph);
+    }
+
+    /**
      * Depth-first search.
      *
      * @param <N> node value type
@@ -89,7 +104,7 @@ public final class GraphUtils
      *    the specified graph
      * @param procedure procedure to run when visiting each node, must not be null
      */
-    public static <N, E> void dfs(final Graph<N, E> graph,
+    public static <N, E> void depthFirstSearch(final Graph<N, E> graph,
                                   final Node<N, E> node,
                                   final UnaryProcedure<Node<N, E>> procedure)
     {
@@ -110,7 +125,7 @@ public final class GraphUtils
             throw new IllegalArgumentException("procedure must not be null");
         }
         Map<Node<N, E>, Boolean> visited = graph.nodeMap(Boolean.FALSE);
-        recursiveDfs(node, visited, procedure);
+        recursiveDepthFirstSearch(node, visited, procedure);
     }
 
     /**
@@ -122,7 +137,7 @@ public final class GraphUtils
      * @param visited map of visited state keyed by node
      * @param procedure procedure
      */
-    private static <N, E> void recursiveDfs(final Node<N, E> node,
+    private static <N, E> void recursiveDepthFirstSearch(final Node<N, E> node,
                                     final Map<Node<N, E>, Boolean> visited,
                                     final UnaryProcedure<Node<N, E>> procedure)
     {
@@ -132,7 +147,7 @@ public final class GraphUtils
         }
         for (Edge<N, E> edge : node.outEdges())
         {
-            recursiveDfs(edge.target(), visited, procedure);
+            recursiveDepthFirstSearch(edge.target(), visited, procedure);
         }
         procedure.run(node);
         visited.put(node, true);
@@ -148,7 +163,7 @@ public final class GraphUtils
      *    the specified graph
      * @param procedure procedure to run when visiting each node, must not be null
      */
-    public static <N, E> void bfs(final Graph<N, E> graph,
+    public static <N, E> void breadthFirstSearch(final Graph<N, E> graph,
                                   final Node<N, E> node,
                                   final UnaryProcedure<Node<N, E>> procedure)
     {
@@ -196,7 +211,7 @@ public final class GraphUtils
      *    the specified graph
      * @param procedure procedure to run when visiting each node, must not be null
      */
-    public static <N, E> void undirectedBfs(final Graph<N, E> graph,
+    public static <N, E> void undirectedBreadthFirstSearch(final Graph<N, E> graph,
                                             final Node<N, E> node,
                                             final UnaryProcedure<Node<N, E>> procedure)
     {
