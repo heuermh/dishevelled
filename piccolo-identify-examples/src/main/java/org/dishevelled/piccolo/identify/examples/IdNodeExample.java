@@ -45,6 +45,7 @@ import org.dishevelled.identify.Identifiable;
 
 import org.dishevelled.piccolo.identify.GenericIdNode;
 import org.dishevelled.piccolo.identify.LeopardIdNode;
+import org.dishevelled.piccolo.identify.NautilusIdNode;
 import org.dishevelled.piccolo.identify.WinXPIdNode;
 
 /**
@@ -96,7 +97,6 @@ public final class IdNodeExample
         LeopardIdNode idNode5 = new LeopardIdNode(new Doc(), TangoProject.EXTRA_SMALL);
         idNode5.setFont(defaultFont.deriveFont(10.0f));
         idNode5.offset(75, 475);
-        idNode5.normal();
         canvas.getLayer().addChild(idNode5);
         LeopardIdNode idNode6 = new LeopardIdNode(new Mic(), TangoProject.SMALL);
         idNode6.setFont(defaultFont.deriveFont(11.0f));
@@ -105,7 +105,6 @@ public final class IdNodeExample
         canvas.getLayer().addChild(idNode6);
         LeopardIdNode idNode7 = new LeopardIdNode(new Computer(), TangoProject.MEDIUM);
         idNode7.offset(225, 625);
-        idNode7.normal();
         canvas.getLayer().addChild(idNode7);
         LeopardIdNode idNode8 = new LeopardIdNode(new Doc(), TangoProject.LARGE);
         idNode8.offset(300, 700);
@@ -114,14 +113,12 @@ public final class IdNodeExample
         LeopardIdNode idNode9 = new LeopardIdNode(new Mic(), CUSTOM_128X128);
         idNode9.setFont(defaultFont.deriveFont(14.0f));
         idNode9.offset(375, 775);
-        idNode9.normal();
         canvas.getLayer().addChild(idNode9);
 
         Font tahoma = new Font("Tahoma", Font.PLAIN, 11);
         WinXPIdNode idNode10 = new WinXPIdNode(new Doc(), TangoProject.EXTRA_SMALL);
         idNode10.setFont(tahoma.deriveFont(10.0f));
         idNode10.offset(75, 875);
-        idNode10.normal();
         canvas.getLayer().addChild(idNode10);
         WinXPIdNode idNode11 = new WinXPIdNode(new Mic(), TangoProject.SMALL);
         idNode11.setFont(tahoma);
@@ -131,7 +128,6 @@ public final class IdNodeExample
         WinXPIdNode idNode12 = new WinXPIdNode(new Computer(), TangoProject.MEDIUM);
         idNode12.setFont(tahoma);
         idNode12.offset(225, 1025);
-        idNode12.normal();
         canvas.getLayer().addChild(idNode12);
         WinXPIdNode idNode13 = new WinXPIdNode(new Doc(), TangoProject.LARGE);
         idNode13.setFont(tahoma);
@@ -141,8 +137,29 @@ public final class IdNodeExample
         WinXPIdNode idNode14 = new WinXPIdNode(new Mic(), CUSTOM_128X128);
         idNode14.setFont(tahoma.deriveFont(13.0f));
         idNode14.offset(375, 1175);
-        idNode14.normal();
         canvas.getLayer().addChild(idNode14);
+
+        NautilusIdNode idNode15 = new NautilusIdNode(new Doc(), TangoProject.EXTRA_SMALL);
+        idNode15.setFont(defaultFont.deriveFont(10.0f));
+        idNode15.offset(75, 1225);
+        canvas.getLayer().addChild(idNode15);
+        NautilusIdNode idNode16 = new NautilusIdNode(new Mic(), TangoProject.SMALL);
+        idNode16.setFont(defaultFont.deriveFont(11.0f));
+        idNode16.offset(150, 1300);
+        idNode16.selected();
+        canvas.getLayer().addChild(idNode16);
+        NautilusIdNode idNode17 = new NautilusIdNode(new Computer(), TangoProject.MEDIUM);
+        idNode17.offset(225, 1375);
+        idNode17.mouseover();
+        canvas.getLayer().addChild(idNode17);
+        NautilusIdNode idNode18 = new NautilusIdNode(new Doc(), TangoProject.LARGE);
+        idNode18.offset(300, 1425);
+        idNode18.selected();
+        canvas.getLayer().addChild(idNode18);        
+        NautilusIdNode idNode19 = new NautilusIdNode(new Mic(), CUSTOM_128X128);
+        idNode19.setFont(defaultFont.deriveFont(14.0f));
+        idNode19.offset(375, 1500);
+        canvas.getLayer().addChild(idNode19);
 
         setLayout(new BorderLayout());
         add("Center", canvas);
