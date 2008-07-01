@@ -39,10 +39,10 @@ public final class GenericIdNode
     extends AbstractIdNode
 {
     /** Default icon text gap. */
-    private static final int DEFAULT_ICON_TEXT_GAP = 4;
+    private static final double DEFAULT_ICON_TEXT_GAP = 2.0d;
 
     /** Icon text gap. */
-    private final int iconTextGap = DEFAULT_ICON_TEXT_GAP;
+    private final double iconTextGap = DEFAULT_ICON_TEXT_GAP;
 
 
     /**

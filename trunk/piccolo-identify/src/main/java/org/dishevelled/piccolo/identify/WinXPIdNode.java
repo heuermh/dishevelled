@@ -50,6 +50,12 @@ public final class WinXPIdNode
     /** Text selection node. */
     private PPath textSelection;
 
+    /** Default icon text gap. */
+    private static final double DEFAULT_ICON_TEXT_GAP = 2.0d;
+
+    /** Icon text gap. */
+    private final double iconTextGap = DEFAULT_ICON_TEXT_GAP;
+
 
     /**
      * Create a new Windows XP style id node.
@@ -126,9 +132,8 @@ public final class WinXPIdNode
         Point2D textCenter = textBounds.getCenter2D();
 
         double textSelectionWidthMargin = Math.min(0.2d * textBounds.getWidth(), 6.0d);
-        double textSelectionHeightMargin = Math.min(0.1d * textBounds.getHeight(), 2.0d);
+        double textSelectionHeightMargin = Math.min(0.1d * textBounds.getHeight(), 0.5d);
 
-        // TODO:  looks a little bit too big, might need to implement this similar to Leopard style
         Shape textSelectionRect = new Rectangle2D.Double(0.0d, 0.0d,
                                                          textBounds.getWidth() + 2 * textSelectionWidthMargin, textBounds.getHeight() + 2 * textSelectionHeightMargin);
         textSelection.setPathTo(textSelectionRect);
@@ -137,7 +142,7 @@ public final class WinXPIdNode
         Point2D textSelectionCenter = textSelectionBounds.getCenter2D();
 
         getIconBundleImageNode().offset(-iconCenter.getX(), -iconCenter.getY());
-        getNameTextNode().offset(-textCenter.getX(), iconCenter.getY() + 1.0d + textSelectionHeightMargin + textSelectionCenter.getY());
-        textSelection.offset(-textSelectionCenter.getX(), iconCenter.getY() + 1.0d + textSelectionCenter.getY());
+        textSelection.offset(-textSelectionCenter.getX(), iconCenter.getY() + iconTextGap);
+        getNameTextNode().offset(-textCenter.getX(), iconCenter.getY() + iconTextGap + textSelectionHeightMargin);
     }
 }

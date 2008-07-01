@@ -24,6 +24,7 @@
 package org.dishevelled.piccolo.identify;
 
 import java.awt.Image;
+import java.awt.Font;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -206,6 +207,17 @@ abstract class AbstractIdNode
         IconTextDirection oldIconTextDirection = this.iconTextDirection;
         this.iconTextDirection = iconTextDirection;
         firePropertyChange(-1, "iconTextDirection", oldIconTextDirection, this.iconTextDirection);
+    }
+
+    /**
+     * Set the font for the name text node to <code>font</code>.
+     *
+     * @param font font for the name text node
+     */
+    public final void setFont(final Font font)
+    {
+        // TODO:  manage property changes here?
+        nameTextNode.setFont(font);
     }
 
     /**
