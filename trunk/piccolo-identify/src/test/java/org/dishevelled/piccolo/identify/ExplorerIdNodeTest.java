@@ -26,42 +26,42 @@ package org.dishevelled.piccolo.identify;
 import org.dishevelled.iconbundle.IconSize;
 
 /**
- * Unit test for WinXPIdNode.
+ * Unit test for ExplorerIdNode.
  *
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public final class WinXPIdNodeTest
+public final class ExplorerIdNodeTest
     extends AbstractIdNodeTest
 {
 
     /** {@inheritDoc} */
     protected AbstractIdNode createIdNode(final Object value)
     {
-        return new WinXPIdNode(value);
+        return new ExplorerIdNode(value);
     }
 
     public void testConstructor()
     {
-        WinXPIdNode idNode0 = new WinXPIdNode();
+        ExplorerIdNode idNode0 = new ExplorerIdNode();
         assertNotNull(idNode0);
 
-        WinXPIdNode idNode1 = new WinXPIdNode(null);
+        ExplorerIdNode idNode1 = new ExplorerIdNode(null);
         assertNotNull(idNode1);
 
         Object value = new Object();
-        WinXPIdNode idNode2 = new WinXPIdNode(value);
+        ExplorerIdNode idNode2 = new ExplorerIdNode(value);
         assertNotNull(idNode2);
 
-        WinXPIdNode idNode3 = new WinXPIdNode(null, IconSize.DEFAULT_16X16);
+        ExplorerIdNode idNode3 = new ExplorerIdNode(null, IconSize.DEFAULT_16X16);
         assertNotNull(idNode3);
 
-        WinXPIdNode idNode4 = new WinXPIdNode(value, IconSize.DEFAULT_16X16);
+        ExplorerIdNode idNode4 = new ExplorerIdNode(value, IconSize.DEFAULT_16X16);
         assertNotNull(idNode4);
 
         try
         {
-            WinXPIdNode idNode = new WinXPIdNode(value, null);
+            ExplorerIdNode idNode = new ExplorerIdNode(value, null);
             fail("ctr(, null) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
