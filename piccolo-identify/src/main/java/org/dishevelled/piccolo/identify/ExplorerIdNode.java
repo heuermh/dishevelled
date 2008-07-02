@@ -39,12 +39,12 @@ import org.dishevelled.iconbundle.IconSize;
 import org.dishevelled.iconbundle.IconState;
 
 /**
- * Windows XP style id node.
+ * Explorer-style id node.
  *
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public final class WinXPIdNode
+public final class ExplorerIdNode
     extends AbstractIdNode
 {
     /** Text selection node. */
@@ -58,31 +58,31 @@ public final class WinXPIdNode
 
 
     /**
-     * Create a new Windows XP style id node.
+     * Create a new explorer-style id node.
      */
-    public WinXPIdNode()
+    public ExplorerIdNode()
     {
         this(null);
     }
 
     /**
-     * Create a new Windows XP style id node with the specified value.
+     * Create a new explorer-style id node with the specified value.
      *
      * @param value value for this id node
      */
-    public WinXPIdNode(final Object value)
+    public ExplorerIdNode(final Object value)
     {
         super(value);
         createNodes();
     }
 
     /**
-     * Create a new Windows XP style id node with the specified value and icon size.
+     * Create a new explorer-style id node with the specified value and icon size.
      *
      * @param value value for this id node
      * @param iconSize icon size for this id node, must not be null
      */
-    public WinXPIdNode(final Object value, final IconSize iconSize)
+    public ExplorerIdNode(final Object value, final IconSize iconSize)
     {
         super(value);
         setIconSize(iconSize);

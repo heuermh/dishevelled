@@ -45,12 +45,12 @@ import org.dishevelled.iconbundle.IconSize;
 import org.dishevelled.iconbundle.IconState;
 
 /**
- * Mac OSX 10.5.x (Leopard) style id node.
+ * Finder-style id node.
  *
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public final class LeopardIdNode
+public final class FinderIdNode
     extends AbstractIdNode
 {
     /** Text selection paint. */
@@ -79,31 +79,31 @@ public final class LeopardIdNode
 
 
     /**
-     * Create a new leopard id node.
+     * Create a new finder-style id node.
      */
-    public LeopardIdNode()
+    public FinderIdNode()
     {
         this(null);
     }
 
     /**
-     * Create a new leopard id node with the specified value.
+     * Create a new finder-style id node with the specified value.
      *
      * @param value value for this id node
      */
-    public LeopardIdNode(final Object value)
+    public FinderIdNode(final Object value)
     {
         super(value);
         createNodes();
     }
 
     /**
-     * Create a new leopard id node with the specified value and icon size.
+     * Create a new finder-style id node with the specified value and icon size.
      *
      * @param value value for this id node
      * @param iconSize icon size for this id node, must not be null
      */
-    public LeopardIdNode(final Object value, final IconSize iconSize)
+    public FinderIdNode(final Object value, final IconSize iconSize)
     {
         super(value);
         setIconSize(iconSize);
