@@ -139,7 +139,7 @@ public final class NautilusIdNode
         PBounds textBounds = getNameTextNode().getBoundsReference();
         Point2D textCenter = textBounds.getCenter2D();
 
-        double textSelectionWidthMargin = 2.0d;
+        double textSelectionWidthMargin = 3.0d;
         double textSelectionHeightMargin = 2.0d;
 
         Shape textSelectionRect = new RoundRectangle2D.Double(0.0d, 0.0d,

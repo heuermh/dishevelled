@@ -26,42 +26,42 @@ package org.dishevelled.piccolo.identify;
 import org.dishevelled.iconbundle.IconSize;
 
 /**
- * Unit test for LeopardIdNode.
+ * Unit test for NautilusIdNode.
  *
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public final class LeopardIdNodeTest
+public final class NautilusIdNodeTest
     extends AbstractIdNodeTest
 {
 
     /** {@inheritDoc} */
     protected AbstractIdNode createIdNode(final Object value)
     {
-        return new LeopardIdNode(value);
+        return new NautilusIdNode(value);
     }
 
     public void testConstructor()
     {
-        LeopardIdNode idNode0 = new LeopardIdNode();
+        NautilusIdNode idNode0 = new NautilusIdNode();
         assertNotNull(idNode0);
 
-        LeopardIdNode idNode1 = new LeopardIdNode(null);
+        NautilusIdNode idNode1 = new NautilusIdNode(null);
         assertNotNull(idNode1);
 
         Object value = new Object();
-        LeopardIdNode idNode2 = new LeopardIdNode(value);
+        NautilusIdNode idNode2 = new NautilusIdNode(value);
         assertNotNull(idNode2);
 
-        LeopardIdNode idNode3 = new LeopardIdNode(null, IconSize.DEFAULT_16X16);
+        NautilusIdNode idNode3 = new NautilusIdNode(null, IconSize.DEFAULT_16X16);
         assertNotNull(idNode3);
 
-        LeopardIdNode idNode4 = new LeopardIdNode(value, IconSize.DEFAULT_16X16);
+        NautilusIdNode idNode4 = new NautilusIdNode(value, IconSize.DEFAULT_16X16);
         assertNotNull(idNode4);
 
         try
         {
-            LeopardIdNode idNode = new LeopardIdNode(value, null);
+            NautilusIdNode idNode = new NautilusIdNode(value, null);
             fail("ctr(, null) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)

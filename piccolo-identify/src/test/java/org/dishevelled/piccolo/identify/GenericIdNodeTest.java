@@ -58,6 +58,7 @@ public final class GenericIdNodeTest
 
         GenericIdNode idNode4 = new GenericIdNode(value, IconSize.DEFAULT_16X16);
         assertNotNull(idNode4);
+
         try
         {
             GenericIdNode idNode = new GenericIdNode(value, null);

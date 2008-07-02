@@ -58,6 +58,7 @@ public final class WinXPIdNodeTest
 
         WinXPIdNode idNode4 = new WinXPIdNode(value, IconSize.DEFAULT_16X16);
         assertNotNull(idNode4);
+
         try
         {
             WinXPIdNode idNode = new WinXPIdNode(value, null);
