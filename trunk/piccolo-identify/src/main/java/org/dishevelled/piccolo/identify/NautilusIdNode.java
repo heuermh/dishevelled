@@ -49,7 +49,7 @@ public final class NautilusIdNode
     extends AbstractIdNode
 {
     /** Default icon text gap. */
-    private static final double DEFAULT_ICON_TEXT_GAP = 4.0d;
+    private static final double DEFAULT_ICON_TEXT_GAP = 2.0d;
 
     /** Icon text gap. */
     private final double iconTextGap = DEFAULT_ICON_TEXT_GAP;
@@ -139,12 +139,12 @@ public final class NautilusIdNode
         PBounds textBounds = getNameTextNode().getBoundsReference();
         Point2D textCenter = textBounds.getCenter2D();
 
-        double textSelectionWidthMargin = 3.0d;
-        double textSelectionHeightMargin = 2.0d;
+        double textSelectionWidthMargin = 4.0d;
+        double textSelectionHeightMargin = 1.0d;
 
         Shape textSelectionRect = new RoundRectangle2D.Double(0.0d, 0.0d,
                                                               textBounds.getWidth() + 2.0d * textSelectionWidthMargin, textBounds.getHeight() + 2.0d * textSelectionHeightMargin,
-                                                              4.0d, 4.0d);
+                                                              6.0d, 6.0d);
         textSelection.setPathTo(textSelectionRect);
         PBounds textSelectionBounds = textSelection.getBoundsReference();
         Point2D textSelectionCenter = textSelectionBounds.getCenter2D();
