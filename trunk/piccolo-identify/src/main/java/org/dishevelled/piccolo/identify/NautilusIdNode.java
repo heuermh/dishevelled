@@ -110,7 +110,6 @@ public final class NautilusIdNode
      */
     private void normal()
     {
-        setTransparency(1.0f);
         setIconState(IconState.NORMAL);
         getNameTextNode().setTextPaint(Color.BLACK);
         textSelection.setVisible(false);
@@ -121,7 +120,6 @@ public final class NautilusIdNode
      */
     private void active()
     {
-        setTransparency(1.0f);
         setIconState(IconState.SELECTED);
         getNameTextNode().setTextPaint(Color.WHITE);
         textSelection.setPaint(UIManager.getColor("List.selectionBackground"));
@@ -134,7 +132,6 @@ public final class NautilusIdNode
      */
     private void mouseover()
     {
-        setTransparency(1.0f);
         setIconState(IconState.MOUSEOVER);
         getNameTextNode().setTextPaint(Color.BLACK);
         textSelection.setVisible(false);
@@ -145,20 +142,11 @@ public final class NautilusIdNode
      */
     private void selected()
     {
-        setTransparency(1.0f);
         setIconState(IconState.SELECTED);
         getNameTextNode().setTextPaint(Color.WHITE);
         textSelection.setPaint(UIManager.getColor("List.selectionBackground"));
         textSelection.setStrokePaint(UIManager.getColor("List.selectionBackground"));
         textSelection.setVisible(true);
-    }
-
-    /**
-     * Dragging state.
-     */
-    private void dragging()
-    {
-        setTransparency(0.66f);
     }
 
     /** {@inheritDoc} */

@@ -23,6 +23,7 @@
 */
 package org.dishevelled.piccolo.identify;
 
+import java.awt.Component;
 import java.awt.Image;
 import java.awt.Font;
 
@@ -518,6 +519,7 @@ public abstract class AbstractIdNode
         NameTextNode()
         {
             super();
+            setJustification(Component.CENTER_ALIGNMENT);
             update();
             AbstractIdNode.this.addPropertyChangeListener("value", this);
             //AbstractIdNode.this.addPropertyChangeListener("iconTextDirection", this);
