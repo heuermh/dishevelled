@@ -75,6 +75,7 @@ public final class NautilusIdNode
     {
         super(value);
         createNodes();
+        resetStateMachine();
     }
 
     /**
@@ -88,6 +89,7 @@ public final class NautilusIdNode
         super(value);
         setIconSize(iconSize);
         createNodes();
+        resetStateMachine();
     }
 
 
@@ -101,32 +103,62 @@ public final class NautilusIdNode
         addChild(getIconBundleImageNode());
         addChild(textSelection);
         addChild(getNameTextNode());
-
-        normal();
     }
 
-    // TODO:  state machine
-    public void normal()
+    /**
+     * Normal state.
+     */
+    private void normal()
     {
+        setTransparency(1.0f);
         setIconState(IconState.NORMAL);
         getNameTextNode().setTextPaint(Color.BLACK);
         textSelection.setVisible(false);
     }
 
-    public void mouseover()
+    /**
+     * Active state.
+     */
+    private void active()
     {
-        setIconState(IconState.MOUSEOVER);
-        getNameTextNode().setTextPaint(Color.BLACK);
-        textSelection.setVisible(false);
-    }
-
-    public void selected()
-    {
+        setTransparency(1.0f);
         setIconState(IconState.SELECTED);
         getNameTextNode().setTextPaint(Color.WHITE);
         textSelection.setPaint(UIManager.getColor("List.selectionBackground"));
         textSelection.setStrokePaint(UIManager.getColor("List.selectionBackground"));
         textSelection.setVisible(true);
+    }
+
+    /**
+     * Mouseover state.
+     */
+    private void mouseover()
+    {
+        setTransparency(1.0f);
+        setIconState(IconState.MOUSEOVER);
+        getNameTextNode().setTextPaint(Color.BLACK);
+        textSelection.setVisible(false);
+    }
+
+    /**
+     * Selected state.
+     */
+    private void selected()
+    {
+        setTransparency(1.0f);
+        setIconState(IconState.SELECTED);
+        getNameTextNode().setTextPaint(Color.WHITE);
+        textSelection.setPaint(UIManager.getColor("List.selectionBackground"));
+        textSelection.setStrokePaint(UIManager.getColor("List.selectionBackground"));
+        textSelection.setVisible(true);
+    }
+
+    /**
+     * Dragging state.
+     */
+    private void dragging()
+    {
+        setTransparency(0.66f);
     }
 
     /** {@inheritDoc} */

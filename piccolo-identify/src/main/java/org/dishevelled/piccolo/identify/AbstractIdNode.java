@@ -26,13 +26,27 @@ package org.dishevelled.piccolo.identify;
 import java.awt.Image;
 import java.awt.Font;
 
+import java.awt.geom.Dimension2D;
+
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+import java.net.URL;
+
 import edu.umd.cs.piccolo.PNode;
+
+import edu.umd.cs.piccolo.event.PInputEvent;
+import edu.umd.cs.piccolo.event.PInputEventListener;
+import edu.umd.cs.piccolo.event.PDragSequenceEventHandler;
 
 import edu.umd.cs.piccolo.nodes.PImage;
 import edu.umd.cs.piccolo.nodes.PText;
+
+import org.apache.commons.scxml.env.SimpleErrorHandler;
+
+import org.apache.commons.scxml.model.SCXML;
+
+import org.apache.commons.scxml.io.SCXMLDigester;
 
 import org.dishevelled.iconbundle.IconBundle;
 import org.dishevelled.iconbundle.IconSize;
@@ -48,10 +62,37 @@ import org.dishevelled.identify.IdentifyUtils;
  * provided by this class but are not added as child nodes.  That
  * is left up to the subclass.</p>
  *
+ * <p>This node is backed by a state machine which is responsible
+ * for managing all state transitions.  Mouse events are translated
+ * into state transitions by a default mouse event handler.  Clients
+ * may fire additional state transitions using methods on this class (see e.g.
+ * <a href="#enable"><code>enable()</code>.</a>  Invalid state transitions
+ * are ignored.</p>
+ *
+ * <p>Subclasses may associate visual properties and behavior with states
+ * by providing private no-arg state methods which will be called via reflection
+ * on entry by the state machine engine.</p>
+ *
+ * <p>For example:
+ * <pre>
+ * class MyIdNode extends AbstractIdNode {
+ *   // ...
+ *
+ *   private void normal() {
+ *     setBackground(Color.WHITE);
+ *     setForeground(Color.BLACK);
+ *   }
+ *   private void selected() {
+ *     setBackground(Color.BLACK);
+ *     setForeground(Color.WHITE);
+ *   }
+ * }
+ * </pre></p>
+ *
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-abstract class AbstractIdNode
+public abstract class AbstractIdNode
     extends PNode
 {
     /** Default icon size, 32x32. */
@@ -81,6 +122,12 @@ abstract class AbstractIdNode
     /** Name text node. */
     private final NameTextNode nameTextNode;
 
+    /** State machine. */
+    private static SCXML stateMachine;
+
+    /** State machine support. */
+    private final StateMachineSupport stateMachineSupport;
+
 
     /**
      * Create a new abstract id node with the specified value.
@@ -95,6 +142,76 @@ abstract class AbstractIdNode
         iconTextDirection = DEFAULT_ICON_TEXT_DIRECTION;
         iconBundleImageNode = new IconBundleImageNode();
         nameTextNode = new NameTextNode();
+
+        // TODO:  split into drag, mouseover, selection handlers
+        addInputEventListener(new PDragSequenceEventHandler()
+            {
+                /** {@inheritDoc} */
+                protected void drag(final PInputEvent event)
+                {
+                    Dimension2D delta = event.getDeltaRelativeTo(AbstractIdNode.this);
+                    AbstractIdNode.this.translate(delta.getWidth(), delta.getHeight());
+                    event.setHandled(true);
+                }
+
+                /** {@inheritDoc} */
+                protected void startDrag(final PInputEvent event)
+                {
+                    // TODO:  piccolo PDragSequenceEventHandler is too aggressive in starting drags
+                    AbstractIdNode.this.moveToFront();
+                    AbstractIdNode.this.startDrag();
+                    super.startDrag(event);
+                }
+
+                /** {@inheritDoc} */
+                protected void endDrag(final PInputEvent event)
+                {
+                    AbstractIdNode.this.endDrag();
+                    super.endDrag(event);
+                }
+
+                /** {@inheritDoc} */
+                public void mouseEntered(final PInputEvent event)
+                {
+                    AbstractIdNode.this.mouseEntered();
+                    super.mouseEntered(event);
+                }
+
+                /** {@inheritDoc} */
+                public void mouseExited(final PInputEvent event)
+                {
+                    AbstractIdNode.this.mouseExited();
+                    super.mouseExited(event);
+                }
+
+                /** {@inheritDoc} */
+                public void mousePressed(final PInputEvent event)
+                {
+                    AbstractIdNode.this.mousePressed();
+                    super.mousePressed(event);
+                }
+
+                /** {@inheritDoc} */
+                public void mouseReleased(final PInputEvent event)
+                {
+                    AbstractIdNode.this.mouseReleased();
+                    super.mouseReleased(event);
+                }
+            });
+
+        if (stateMachine == null)
+        {
+            try
+            {
+                URL stateChart = getClass().getResource("stateChart.xml");
+                stateMachine = SCXMLDigester.digest(stateChart, new SimpleErrorHandler());
+            }
+            catch (Exception e)
+            {
+                // ignore
+            }
+        }
+        stateMachineSupport = new StateMachineSupport(this, stateMachine);
     }
 
 
@@ -238,6 +355,104 @@ abstract class AbstractIdNode
     protected final NameTextNode getNameTextNode()
     {
         return nameTextNode;
+    }
+
+    /**
+     * Reset the state machine to its &quot;initial&quot; configuration.
+     */
+    protected final void resetStateMachine()
+    {
+        stateMachineSupport.resetStateMachine();
+    }
+
+    /**
+     * Fire a state machine event with the specified event name.
+     *
+     * @param eventName event name, must not be null
+     */
+    private void fireStateMachineEvent(final String eventName)
+    {
+        stateMachineSupport.fireStateMachineEvent(eventName);
+    }
+
+    /**
+     * Fire an <code>"enable"</code> state transition event.
+     */
+    public final void enable()
+    {
+        fireStateMachineEvent("enable");
+    }
+
+    /**
+     * Fire a <code>"disable"</code> state transition event.
+     */
+    public final void disable()
+    {
+        fireStateMachineEvent("disable");
+    }
+
+    /**
+     * Fire a <code>"mouseEntered"</code> state transition event.
+     */
+    public final void mouseEntered()
+    {
+        fireStateMachineEvent("mouseEntered");
+    }
+
+    /**
+     * Fire a <code>"mouseExited"</code> state transition event.
+     */
+    public final void mouseExited()
+    {
+        fireStateMachineEvent("mouseExited");
+    }
+
+    /**
+     * Fire a <code>"mouseReleased"</code> state transition event.
+     */
+    public final void mouseReleased()
+    {
+        fireStateMachineEvent("mouseReleased");
+    }
+
+    /**
+     * Fire a <code>"mousePressed"</code> state transition event.
+     */
+    public final void mousePressed()
+    {
+        fireStateMachineEvent("mousePressed");
+    }
+
+    /**
+     * Fire a <code>"select"</code> state transition event.
+     */
+    public final void select()
+    {
+        fireStateMachineEvent("select");
+    }
+
+    /**
+     * Fire a <code>"deselect"</code> state transition event.
+     */
+    public final void deselect()
+    {
+        fireStateMachineEvent("deselect");
+    }
+
+    /**
+     * Fire a <code>"startDrag"</code> state transition event.
+     */
+    public final void startDrag()
+    {
+        fireStateMachineEvent("startDrag");
+    }
+
+    /**
+     * Fire a <code>"endDrag"</code> state transition event.
+     */
+    public final void endDrag()
+    {
+        fireStateMachineEvent("endDrag");
     }
 
     /**

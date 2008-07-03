@@ -63,6 +63,7 @@ public final class GenericIdNode
         super(value);
         addChild(getIconBundleImageNode());
         addChild(getNameTextNode());
+        resetStateMachine();
     }
 
     /**
@@ -77,6 +78,7 @@ public final class GenericIdNode
         setIconSize(iconSize);
         addChild(getIconBundleImageNode());
         addChild(getNameTextNode());
+        resetStateMachine();
     }
 
 
