@@ -60,6 +60,10 @@
   <build>
     <resources>
       <resource>
+        <directory>src/main/resources</directory>
+        <filtering>false</filtering>
+      </resource>
+      <resource>
         <targetPath>META-INF</targetPath>
         <filtering>false</filtering>
         <directory>${basedir}</directory>
@@ -116,6 +120,18 @@
       <artifactId>piccolo</artifactId>
       <version>1.2</version>
       <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>commons-scxml</groupId>
+      <artifactId>commons-scxml</artifactId>
+      <version>0.8</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>commons-jexl</groupId>
+      <artifactId>commons-jexl</artifactId>
+      <version>1.1</version>
+      <optional>runtime</optional>
     </dependency>
     <dependency>
       <groupId>junit</groupId>

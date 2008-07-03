@@ -95,6 +95,7 @@ public final class FinderIdNode
     {
         super(value);
         createNodes();
+        resetStateMachine();
     }
 
     /**
@@ -108,6 +109,7 @@ public final class FinderIdNode
         super(value);
         setIconSize(iconSize);
         createNodes();
+        resetStateMachine();
     }
 
 
@@ -136,25 +138,50 @@ public final class FinderIdNode
         addChild(textSelection);
         addChild(getIconBundleImageNode());
         addChild(getNameTextNode());
-
-        normal();
     }
 
-    // TODO:  state machine
-    public void normal()
+    /**
+     * Active state.
+     */
+    private void active()
     {
+        setTransparency(1.0f);
+        iconSelection.setVisible(true);
+        textSelection.setPaint(TEXT_SELECTION_SELECTED_PAINT);
+        textSelectionShadow.setVisible(true);
+        setIconState(IconState.NORMAL);
+    }
+
+    /**
+     * Normal state.
+     */
+    private void normal()
+    {
+        setTransparency(1.0f);
         iconSelection.setVisible(false);
         textSelection.setPaint(TEXT_SELECTION_PAINT);
         textSelectionShadow.setVisible(false);
         setIconState(IconState.NORMAL);
     }
 
-    public void selected()
+    /**
+     * Selected state.
+     */
+    private void selected()
     {
+        setTransparency(1.0f);
         iconSelection.setVisible(true);
         textSelection.setPaint(TEXT_SELECTION_SELECTED_PAINT);
         textSelectionShadow.setVisible(true);
         setIconState(IconState.NORMAL);
+    }
+
+    /**
+     * Dragging state.
+     */
+    private void dragging()
+    {
+        setTransparency(0.66f);
     }
 
     /** {@inheritDoc} */
@@ -177,6 +204,7 @@ public final class FinderIdNode
 
         // unfortunately, the height of the text node is larger than the Mac l&f desires it to be
         //PBounds textBounds = getNameTextNode().getBoundsReference();
+        // TODO:  this method doesn't support multi-line text nodes
         FontRenderContext frc = new FontRenderContext(new AffineTransform(), true, true);
         TextLayout textLayout = new TextLayout(getNameTextNode().getText(), getNameTextNode().getFont(), frc);
         Rectangle2D textBounds = textLayout.getBounds();

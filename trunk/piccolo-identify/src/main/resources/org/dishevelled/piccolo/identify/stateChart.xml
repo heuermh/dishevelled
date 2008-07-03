@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<!--
+
+    dsh-piccolo-identify  Piccolo nodes for identifiable beans.
+    Copyright (c) 2007-2008 held jointly by the individual authors.
+
+    This library is free software; you can redistribute it and/or modify it
+    under the terms of the GNU Lesser General Public License as published
+    by the Free Software Foundation; either version 3 of the License, or (at
+    your option) any later version.
+
+    This library is distributed in the hope that it will be useful, but WITHOUT
+    ANY WARRANTY; with out even the implied warranty of MERCHANTABILITY or
+    FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
+    License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with this library;  if not, write to the Free Software Foundation,
+    Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307  USA.
+
+    > http://www.fsf.org/licensing/licenses/lgpl.html
+    > http://www.opensource.org/licenses/lgpl-license.php
+
+-->
+<scxml xmlns="http://www.w3.org/2005/07/scxml"
+       version="1.0"
+       initialstate="normal">
+
+    <state id="active">
+      <transition event="disable" target="disabled"/>
+      <transition event="mouseReleased" target="selected"/>
+      <transition event="startDrag" target="dragging"/>
+    </state>
+
+    <state id="disabled">
+      <transition event="enable" target="normal"/>
+    </state>
+    
+    <state id="dragging">
+      <transition event="disable" target="disabled"/>
+      <transition event="endDrag" target="selected"/>
+    </state>
+
+    <state id="mouseover">
+      <transition event="disable" target="disabled"/>
+      <transition event="mousePressed" target="active"/>
+      <transition event="mouseExited" target="normal"/>
+    </state>
+
+    <state id="normal">
+      <transition event="disable" target="disabled"/>
+      <transition event="mouseEntered" target="mouseover"/>
+      <transition event="mousePressed" target="active"/>
+      <transition event="select" target="selected"/>
+    </state>
+
+    <state id="selected">
+      <transition event="disable" target="disabled"/>
+      <transition event="startDrag" target="dragging"/>
+      <!--<transition event="mouseReleased" target="mouseover"/>-->
+      <transition event="deselect" target="normal"/>
+    </state>
+</scxml>

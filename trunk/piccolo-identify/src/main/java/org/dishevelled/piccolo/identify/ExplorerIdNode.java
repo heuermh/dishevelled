@@ -74,6 +74,7 @@ public final class ExplorerIdNode
     {
         super(value);
         createNodes();
+        resetStateMachine();
     }
 
     /**
@@ -87,6 +88,7 @@ public final class ExplorerIdNode
         super(value);
         setIconSize(iconSize);
         createNodes();
+        resetStateMachine();
     }
 
 
@@ -100,26 +102,51 @@ public final class ExplorerIdNode
         addChild(textSelection);
         addChild(getIconBundleImageNode());
         addChild(getNameTextNode());
-
-        normal();
     }
 
-    // TODO:  state machine
-    public void normal()
+    /**
+     * Active state.
+     */
+    private void active()
     {
-        setIconState(IconState.NORMAL);
-        getNameTextNode().setTextPaint(Color.BLACK);
-        textSelection.setVisible(false);
-    }
-
-    public void selected()
-    {
-        // TODO:  selected iconbundle state with a dark selection color is not correct
+        setTransparency(1.0f);
         setIconState(IconState.SELECTED);
         getNameTextNode().setTextPaint(Color.WHITE);
         textSelection.setPaint(UIManager.getColor("List.selectionBackground"));
         textSelection.setStrokePaint(UIManager.getColor("List.selectionBackground"));
         textSelection.setVisible(true);
+    }
+
+    /**
+     * Normal state.
+     */
+    private void normal()
+    {
+        setTransparency(1.0f);
+        setIconState(IconState.NORMAL);
+        getNameTextNode().setTextPaint(Color.BLACK);
+        textSelection.setVisible(false);
+    }
+
+    /**
+     * Selected state.
+     */
+    private void selected()
+    {
+        setTransparency(1.0f);
+        setIconState(IconState.SELECTED);
+        getNameTextNode().setTextPaint(Color.WHITE);
+        textSelection.setPaint(UIManager.getColor("List.selectionBackground"));
+        textSelection.setStrokePaint(UIManager.getColor("List.selectionBackground"));
+        textSelection.setVisible(true);
+    }
+
+    /**
+     * Dragging state.
+     */
+    private void dragging()
+    {
+        setTransparency(0.66f);
     }
 
     /** {@inheritDoc} */
@@ -141,8 +168,8 @@ public final class ExplorerIdNode
         PBounds textSelectionBounds = textSelection.getBoundsReference();
         Point2D textSelectionCenter = textSelectionBounds.getCenter2D();
 
-        getIconBundleImageNode().offset(-iconCenter.getX(), -iconCenter.getY());
-        textSelection.offset(-textSelectionCenter.getX(), iconCenter.getY() + iconTextGap);
-        getNameTextNode().offset(-textCenter.getX(), iconCenter.getY() + iconTextGap + textSelectionHeightMargin);
+        getIconBundleImageNode().setOffset(-iconCenter.getX(), -iconCenter.getY());
+        textSelection.setOffset(-textSelectionCenter.getX(), iconCenter.getY() + iconTextGap);
+        getNameTextNode().setOffset(-textCenter.getX(), iconCenter.getY() + iconTextGap + textSelectionHeightMargin);
     }
 }
