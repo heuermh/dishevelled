@@ -43,7 +43,7 @@ import org.dishevelled.identify.ExampleWithNameProperty;
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-abstract class AbstractIdNodeTest
+public abstract class AbstractIdNodeTest
     extends TestCase
 {
     /** Example identifiable. */
