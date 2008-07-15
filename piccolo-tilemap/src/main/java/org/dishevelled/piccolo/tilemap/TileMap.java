@@ -318,7 +318,7 @@ public final class TileMap
     /**
      * Proxy.
      */
-    private class Proxy
+    private static class Proxy
         extends PNode
     {
         /** Tile. */

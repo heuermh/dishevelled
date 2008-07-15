@@ -179,7 +179,7 @@ public abstract class AbstractSwarmExample
     /**
      * Verbose listener.
      */
-    private class VerboseListener
+    private static class VerboseListener
         implements ParticleSwarmOptimizationAlgorithmListener
     {
 

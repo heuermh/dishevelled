@@ -556,7 +556,7 @@ public final class LabelFieldLayout
     * the single purpose of having the classname
     * <code>LabelFieldLayout.Constraints</code>.
     */
-    public final class Constraints
+    public static final class Constraints
         extends GridBagConstraints
     {
         // empty

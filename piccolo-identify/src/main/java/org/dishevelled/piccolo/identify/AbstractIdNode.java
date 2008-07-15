@@ -37,7 +37,6 @@ import java.net.URL;
 import edu.umd.cs.piccolo.PNode;
 
 import edu.umd.cs.piccolo.event.PInputEvent;
-import edu.umd.cs.piccolo.event.PInputEventListener;
 import edu.umd.cs.piccolo.event.PDragSequenceEventHandler;
 
 import edu.umd.cs.piccolo.nodes.PImage;
@@ -47,7 +46,7 @@ import org.apache.commons.scxml.env.SimpleErrorHandler;
 
 import org.apache.commons.scxml.model.SCXML;
 
-import org.apache.commons.scxml.io.SCXMLDigester;
+import org.apache.commons.scxml.io.SCXMLParser;
 
 import org.dishevelled.iconbundle.IconBundle;
 import org.dishevelled.iconbundle.IconSize;
@@ -205,7 +204,7 @@ public abstract class AbstractIdNode
             try
             {
                 URL stateChart = getClass().getResource("stateChart.xml");
-                stateMachine = SCXMLDigester.digest(stateChart, new SimpleErrorHandler());
+                stateMachine = SCXMLParser.parse(stateChart, new SimpleErrorHandler());
             }
             catch (Exception e)
             {
