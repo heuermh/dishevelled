@@ -62,7 +62,16 @@ import edu.umd.cs.piccolo.util.PPaintContext;
  * </pre>
  * or the Piccolo activity framework
  * <pre>
- * TODO
+ * final PRoot root = ...;
+ * final VerticalRibbon ribbon = new VerticalRibbon(...);
+ * PActivity activity = new PActivity()
+ *   {
+ *    protected void activityStep(final long elapsedTime)
+ *    {
+ *      ribbon.animate();
+ *    }
+ *   };
+ * root.addActivity(activity);
  * </pre>
  * </p>
  *
@@ -148,7 +157,7 @@ public final class VerticalRibbon
      */
     public boolean isNotMoving()
     {
-        return (State.NOT_MOVING == state);
+        return state.isNotMoving();
     }
 
     /**
@@ -166,7 +175,7 @@ public final class VerticalRibbon
      */
     public boolean isMovingUp()
     {
-        return (State.MOVING_UP == state);
+        return state.isMovingUp();
     }
 
     /**
@@ -184,7 +193,7 @@ public final class VerticalRibbon
      */
     public boolean isMovingDown()
     {
-        return (State.MOVING_DOWN == state);
+        return state.isMovingDown();
     }
 
     /**
@@ -294,6 +303,37 @@ public final class VerticalRibbon
         /**
          * When animating, this vertical ribbon moves down.
          */
-        MOVING_DOWN
+        MOVING_DOWN;
+
+
+        /**
+         * Return true if this state is NOT_MOVING.
+         *
+         * @return true if this state is NOT_MOVING
+         */
+        boolean isNotMoving()
+        {
+            return (this == NOT_MOVING);
+        }
+
+        /**
+         * Return true if this state is MOVING_UP.
+         *
+         * @return true if this state is MOVING_UP
+         */
+        boolean isMovingUp()
+        {
+            return (this == MOVING_UP);
+        }
+
+        /**
+         * Return true if this state is MOVING_DOWN.
+         *
+         * @return true if this state is MOVING_DOWN
+         */
+        boolean isMovingDown()
+        {
+            return (this == MOVING_DOWN);
+        }
     };
 }
