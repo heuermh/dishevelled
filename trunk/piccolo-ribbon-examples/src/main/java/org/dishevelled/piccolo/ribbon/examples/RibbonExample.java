@@ -36,6 +36,9 @@ import javax.imageio.ImageIO;
 
 import edu.umd.cs.piccolo.PCanvas;
 import edu.umd.cs.piccolo.PLayer;
+import edu.umd.cs.piccolo.PRoot;
+
+import edu.umd.cs.piccolo.activities.PActivity;
 
 import edu.umd.cs.piccolox.PFrame;
 
@@ -74,7 +77,7 @@ public final class RibbonExample
 
         Timer move0 = new Timer(12000, new ActionListener()
             {
-                /** @see ActionListener */
+                /** {@inheritDoc} */
                 public void actionPerformed(final ActionEvent e)
                 {
                     horizontalRibbon.moveRight();
@@ -84,7 +87,7 @@ public final class RibbonExample
 
         Timer move1 = new Timer(12000, new ActionListener()
             {
-                /** @see ActionListener */
+                /** {@inheritDoc} */
                 public void actionPerformed(final ActionEvent e)
                 {
                     horizontalRibbon.moveLeft();
@@ -99,18 +102,31 @@ public final class RibbonExample
         move1.setInitialDelay(6000);
         move1.start();
 
+        // schedule one using Timer...
         Timer timer = new Timer((int) (1000 / 12), new ActionListener()
             {
-                /** @see ActionListener */
+                /** {@inheritDoc} */
                 public void actionPerformed(final ActionEvent e)
                 {
                     horizontalRibbon.advance();
-                    verticalRibbon.advance();
                 }
             });
 
         timer.setRepeats(true);
         timer.start();
+
+        // and one using PActivity.
+        PRoot root = layer.getRoot();
+        PActivity activity = new PActivity(-1, (1000L / 12L))
+            {
+                /** {@inheritDoc} */
+                protected void activityStep(final long elapsedTime)
+                {
+                    verticalRibbon.advance();
+                }
+            };
+
+        root.addActivity(activity);
     }
 
     /**

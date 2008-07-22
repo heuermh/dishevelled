@@ -62,7 +62,16 @@ import edu.umd.cs.piccolo.util.PPaintContext;
  * </pre>
  * or the Piccolo activity framework
  * <pre>
- * TODO
+ * final PRoot root = ...;
+ * final HorizontalRibbon ribbon = new HorizontalRibbon(...);
+ * PActivity activity = new PActivity()
+ *   {
+ *    protected void activityStep(final long elapsedTime)
+ *    {
+ *      ribbon.animate();
+ *    }
+ *   };
+ * root.addActivity(activity);
  * </pre>
  * </p>
  *
@@ -148,7 +157,7 @@ public final class HorizontalRibbon
      */
     public boolean isNotMoving()
     {
-        return (State.NOT_MOVING == state);
+        return state.isNotMoving();
     }
 
     /**
@@ -166,7 +175,7 @@ public final class HorizontalRibbon
      */
     public boolean isMovingLeft()
     {
-        return (State.MOVING_LEFT == state);
+        return state.isMovingLeft();
     }
 
     /**
@@ -184,7 +193,7 @@ public final class HorizontalRibbon
      */
     public boolean isMovingRight()
     {
-        return (State.MOVING_RIGHT == state);
+        return state.isMovingRight();
     }
 
     /**
@@ -294,6 +303,37 @@ public final class HorizontalRibbon
         /**
          * When animating, this horizontal ribbon moves right.
          */
-        MOVING_RIGHT
+        MOVING_RIGHT;
+
+
+        /**
+         * Return true if this state is NOT_MOVING.
+         *
+         * @return true if this state is NOT_MOVING
+         */
+        boolean isNotMoving()
+        {
+            return (this == NOT_MOVING);
+        }
+
+        /**
+         * Return true if this state is MOVING_LEFT.
+         *
+         * @return true if this state is MOVING_LEFT
+         */
+        boolean isMovingLeft()
+        {
+            return (this == MOVING_LEFT);
+        }
+
+        /**
+         * Return true if this state is MOVING_RIGHT.
+         *
+         * @return true if this state is MOVING_RIGHT
+         */
+        boolean isMovingRight()
+        {
+            return (this == MOVING_RIGHT);
+        }
     };
 }
