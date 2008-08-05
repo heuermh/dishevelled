@@ -109,6 +109,7 @@ public final class CodegenShell
         if (inputFile == null)
         {
             System.out.println("Shell interface to org.dishevelled.codegen.Codegen");
+            System.out.println("Copyright (c) 2004-2008 held jointly by the individual authors.");
             bsh.run();
         }
     }
@@ -166,7 +167,8 @@ public final class CodegenShell
      */
     private static void help()
     {
-        System.out.println("Shell interface to org.biojava.codegen.Codegen");
+        System.out.println("Shell interface to org.dishevelled.codegen.Codegen");
+        System.out.println("Copyright (c) 2004-2008 held jointly by the individual authors.");
         System.out.println("  example:");
         System.out.println("");
         System.out.println("bsh % ClassDescription foo = new ClassDescription(\"example\", \"Foo\");");
