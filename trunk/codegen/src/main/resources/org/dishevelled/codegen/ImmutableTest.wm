@@ -24,6 +24,9 @@
 $!{license}
 package ${cd.PackageName};
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 #foreach ($a in $cd.Attributes)
 #if (($a.Cardinality.toString() == "ZeroToMany") || ($a.Cardinality.toString() == "OneToMany"))
 import ${a.CollectionDescription.InterfacePackageName}.${a.CollectionDescription.InterfaceName};
@@ -295,6 +298,20 @@ public final class ${cd.Upper}Test
         full${r.Upper}s = createFull${r.Upper}s();
 #end
 #end
+    }
+
+    public void testImmutable()
+    {
+        Class<${cd.Upper}> cls = ${cd.Upper}.class;
+        assertTrue(Modifier.isPublic(cls.getModifiers()));
+        assertTrue(Modifier.isFinal(cls.getModifiers()));
+        Field[] fields = cls.getDeclaredFields();
+        for (Field field : fields)
+        {
+            assertTrue(Modifier.isPrivate(field.getModifiers()));
+            assertTrue(Modifier.isFinal(field.getModifiers()) ||
+                    (Modifier.isVolatile(field.getModifiers()) && Modifier.isTransient(field.getModifiers())));
+        }
     }
 
     public void testConstructor()
