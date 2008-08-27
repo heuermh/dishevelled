@@ -297,6 +297,20 @@ public final class ${cd.Upper}Test
 #end
     }
 
+    public void testImmutable()
+    {
+        Class<${cd.Upper}> cls = ${cd.Upper}.class;
+        assertTrue(Modifier.isPublic(cls.getModifiers()));
+        assertTrue(Modifier.isFinal(cls.getModifiers()));
+        Field[] fields = cls.getDeclaredFields();
+        for (Field field : fields)
+        {
+            assertTrue(Modifier.isPrivate(field.getModifiers()));
+            assertTrue(Modifier.isFinal(field.getModifiers()) ||
+                    (Modifier.isVolatile(field.getModifiers()) && Modifier.isTransient(field.getModifiers())));
+        }
+    }
+
     public void testConstructor()
     {
         // TODO:  enumerate all valid parameter combinations
