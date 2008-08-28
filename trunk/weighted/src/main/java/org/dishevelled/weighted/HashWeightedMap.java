@@ -105,12 +105,12 @@ public final class HashWeightedMap<E>
      * Create a new weighted map with the elements and weights
      * in the specified weighted map (copy constructor).
      *
-     * @param t map to copy
+     * @param weightedMap weighted map to copy, must not be null
      */
-    public HashWeightedMap(final WeightedMap<? extends E> t)
+    public HashWeightedMap(final WeightedMap<? extends E> weightedMap)
     {
-        map = new HashMap<E, Double>(Math.max(2 * t.size(), DEFAULT_INITIAL_CAPACITY), DEFAULT_LOAD_FACTOR);
-        putAll(t);
+        map = new HashMap<E, Double>(Math.max(2 * weightedMap.size(), DEFAULT_INITIAL_CAPACITY), DEFAULT_LOAD_FACTOR);
+        putAll(weightedMap);
     }
 
 
