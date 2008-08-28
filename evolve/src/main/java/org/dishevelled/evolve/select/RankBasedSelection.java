@@ -99,7 +99,7 @@ public final class RankBasedSelection<I>
         int intermediateSize = intermediate.size();
         for (I i : intermediate.keySet())
         {
-            intermediate.put(i, Double.valueOf(rank / intermediateSize));
+            intermediate.put(i, Double.valueOf((double) rank / (double) intermediateSize));
         }
 
         // fitness proportional selection on intermediate map
