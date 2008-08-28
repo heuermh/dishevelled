@@ -130,7 +130,7 @@ public final class Maps
      *   }
      * }
      * </pre>
-     * Failure to follow this advice may result in non-deterministic behavior. 
+     * Failure to follow this advice may result in non-deterministic behavior.
      *
      * @param <K> key type
      * @param <V> value type
