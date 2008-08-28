@@ -49,8 +49,8 @@
     </license>
   </licenses>
   <scm>
-    <connection>scm|svn|http://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/cluster</connection>
-    <developerConnection>scm|svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/cluster</developerConnection>
+    <connection>scm:svn|http://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/cluster</connection>
+    <developerConnection>scm:svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/cluster</developerConnection>
     <url>http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/trunk/cluster</url>
   </scm>
   <organization>

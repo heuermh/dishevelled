@@ -49,8 +49,8 @@
     </license>
   </licenses>
   <scm>
-    <connection>scm|svn|http://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/affinity</connection>
-    <developerConnection>scm|svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/affinity</developerConnection>
+    <connection>scm:svn|http://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/affinity</connection>
+    <developerConnection>scm:svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/affinity</developerConnection>
     <url>http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/trunk/affinity</url>
   </scm>
   <organization>

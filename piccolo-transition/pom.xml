@@ -49,8 +49,8 @@
     </license>
   </licenses>
   <scm>
-    <connection>scm|svn|http://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/piccolo-transition</connection>
-    <developerConnection>scm|svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/piccolo-transition</developerConnection>
+    <connection>scm:svn|http://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/piccolo-transition</connection>
+    <developerConnection>scm:svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/piccolo-transition</developerConnection>
     <url>http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/trunk/piccolo-transition</url>
   </scm>
   <organization>
