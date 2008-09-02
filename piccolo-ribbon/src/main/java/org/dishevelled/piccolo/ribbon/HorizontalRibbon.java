@@ -46,7 +46,7 @@ import edu.umd.cs.piccolo.util.PPaintContext;
  * </p>
  *
  * <p>
- * Animate the ribbon by calling the <code>animate()</code> method
+ * Animate the ribbon by calling the <code>advance()</code> method
  * at regular intervals, using either the Swing timer
  * <pre>
  * final HorizontalRibbon ribbon = new HorizontalRibbon(...);
@@ -54,7 +54,7 @@ import edu.umd.cs.piccolo.util.PPaintContext;
  *   {
  *     public void actionPerformed(final ActionEvent event)
  *     {
- *       ribbon.animate();
+ *       ribbon.advance();
  *     }
  *   });
  * t.setRepeats(true);
@@ -68,7 +68,7 @@ import edu.umd.cs.piccolo.util.PPaintContext;
  *   {
  *    protected void activityStep(final long elapsedTime)
  *    {
- *      ribbon.animate();
+ *      ribbon.advance();
  *    }
  *   };
  * root.addActivity(activity);
