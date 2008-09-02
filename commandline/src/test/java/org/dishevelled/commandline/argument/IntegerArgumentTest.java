@@ -126,6 +126,17 @@ public class IntegerArgumentTest
         }
     }
 
+    public void testMissingValueShort() throws CommandLineParseException
+    {
+        Argument<Integer> integerArgument = new IntegerArgument("i", "integer", "Integer argument", true);
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { integerArgument }));
+
+        String[] args = new String[] { "-i" };
+        CommandLine commandLine = new CommandLine(args);
+        CommandLineParser.parse(commandLine, arguments);
+        Integer value = integerArgument.getValue();
+    }
+
     public void testInvalidArgumentLong()
     {
         try
