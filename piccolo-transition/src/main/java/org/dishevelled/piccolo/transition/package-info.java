@@ -25,4 +25,4 @@
 /**
  * Transitions implemented as Piccolo activities.
  */
-package org.dishevelled.piccolo.transitions;
+package org.dishevelled.piccolo.transition;
