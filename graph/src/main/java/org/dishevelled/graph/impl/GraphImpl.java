@@ -106,7 +106,7 @@ public final class GraphImpl<N, E>
                 Node<N, E> node = createNode(entry.getKey().getValue());
                 entry.setValue(node);
             }
-            for (Edge<N, E> edge : graph.edges())
+            for (Edge<? extends N, ? extends E> edge : graph.edges())
             {
                 Node<N, E> source = nodeMap.get(edge.source());
                 Node<N, E> target = nodeMap.get(edge.target());
