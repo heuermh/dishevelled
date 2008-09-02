@@ -83,4 +83,6 @@ public final class WeightedMaps
     {
         return new HashWeightedMap<E>(weightedMap);
     }
+
+    // todo:  unmodifiableWeightedMap
 }
