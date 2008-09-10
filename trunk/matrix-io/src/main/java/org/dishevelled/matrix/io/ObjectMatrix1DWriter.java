@@ -23,7 +23,9 @@
 */
 package org.dishevelled.matrix.io;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.OutputStream;
 
 import org.dishevelled.matrix.ObjectMatrix1D;
 
@@ -44,7 +46,25 @@ public interface ObjectMatrix1DWriter<E>
      * @param matrix 1D matrix to append, must not be null
      * @param appendable appendable to append the specified 1D matrix to, must not be null
      * @return the specified appendable with the specified 1D matrix appended
-     * @throws IOException if an error occurs
+     * @throws IOException if an IO error occurs
      */
-    <T extends Appendable> T append(final ObjectMatrix1D<E> matrix, final T appendable) throws IOException;
+    <T extends Appendable> T append(ObjectMatrix1D<E> matrix, T appendable) throws IOException;
+
+    /**
+     * Write the specified 1D matrix to the specified file.
+     *
+     * @param matrix 1D matrix to write, must not be null
+     * @param file file to write to, must not be null
+     * @throws IOException if an IO error occurs
+     */
+    void write(ObjectMatrix1D<E> matrix, File file) throws IOException;
+
+    /**
+     * Write the specified 1D matrix to the specified output stream.
+     *
+     * @param matrix 1D matrix to write, must not be null
+     * @param outputStream output stream to write to, must not be null
+     * @throws IOException if an IO error occurs
+     */
+    void write(ObjectMatrix1D<E> matrix, OutputStream outputStream) throws IOException;
 }
