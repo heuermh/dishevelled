@@ -33,23 +33,42 @@ import java.io.Writer;
 
 import java.util.Iterator;
 
-import org.dishevelled.matrix.ObjectMatrix1D;
+import org.dishevelled.functor.TertiaryPredicate;
+import org.dishevelled.functor.TertiaryProcedure;
 
-import org.dishevelled.matrix.io.ObjectMatrix1DWriter;
+import org.dishevelled.matrix.ObjectMatrix2D;
+
+import org.dishevelled.matrix.io.ObjectMatrix2DWriter;
 
 /**
- * Simple writer for matrices of objects in one dimension.
+ * Matrix Market format writer for matrices of objects in two dimensions.
  *
- * @param <E> 1D matrix element type
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public final class SimpleObjectMatrix1DWriter<E>
-    implements ObjectMatrix1DWriter<E>
+public final class MatrixMarketObjectMatrix2DWriter<E>
+    implements ObjectMatrix2DWriter<E>
 {
+    // TODO:
+    // MatrixMarket...Writer --> MatrixMarketWriter?
+    // is it possible to restrict E to a subclass of Number?
+    // matrix type (real, complex, integer, pattern) should be {specifiable, automatic}
+    // allow for specifying symmetry structure (general, symmetric, skew-symmetric, Hermitian)
+    // allow for specifying the number format to use when writing values
+
+    /** Not null predicate. */
+    private final TertiaryPredicate<Long, Long, E> notNull = new TertiaryPredicate<Long, Long, E>()
+        {
+            /** {@inheritDoc} */
+            public boolean test(final Long row, final Long column, final E value)
+            {
+                return (value != null);
+            }
+        };
+
 
     /** {@inheritDoc} */
-    public <T extends Appendable> T append(final ObjectMatrix1D<E> matrix, final T appendable)
+    public <T extends Appendable> T append(final ObjectMatrix2D<E> matrix, final T appendable)
         throws IOException
     {
         if (matrix == null)
@@ -60,26 +79,46 @@ public final class SimpleObjectMatrix1DWriter<E>
         {
             throw new IllegalArgumentException("appendable must not be null");
         }
-        appendable.append("[");
-        Iterator iterator = matrix.iterator();
-        if (iterator.hasNext())
-        {
-            // append one element
-            appendable.append(toCharSequence(iterator.next()));
+        // append Matrix Market header
+        appendable.append("%%MatrixMarket matrix coordinate real general\n");
+        appendable.append("%\n% Note indices are 1-based.\n%\n");
 
-            // append rest of elements
-            while (iterator.hasNext())
+        // append coordinate format dimensions
+        appendable.append(String.valueOf(matrix.rows()));
+        appendable.append("\t");
+        appendable.append(String.valueOf(matrix.columns()));
+        appendable.append("\t");
+        appendable.append(String.valueOf(matrix.cardinality()));
+        appendable.append("\n");
+
+        // append non-null values
+        matrix.forEach(notNull, new TertiaryProcedure<Long, Long, E>()
             {
-                appendable.append(",");
-                appendable.append(toCharSequence(iterator.next()));
-            }
-        }
-        appendable.append("]");
+                /** {@inheritDoc} */
+                public void run(final Long row, final Long column, final E value)
+                {
+                    // note:  indices are 1-based
+                    try
+                    {
+                        appendable.append(String.valueOf(row + 1L));
+                        appendable.append("\t");
+                        appendable.append(String.valueOf(column + 1L));
+                        appendable.append("\t");
+                        appendable.append(toCharSequence(value));
+                        appendable.append("\n");
+                    }
+                    catch (IOException e)
+                    {
+                        // TODO:  have to eat this IOException, unfortunately
+                    }
+                }
+            });
+
         return appendable;
     }
 
     /** {@inheritDoc} */
-    public void write(final ObjectMatrix1D<E> matrix, final File file) throws IOException
+    public void write(final ObjectMatrix2D<E> matrix, final File file) throws IOException
     {
         if (matrix == null)
         {
@@ -112,7 +151,7 @@ public final class SimpleObjectMatrix1DWriter<E>
     }
 
     /** {@inheritDoc} */
-    public void write(final ObjectMatrix1D<E> matrix, final OutputStream outputStream) throws IOException
+    public void write(final ObjectMatrix2D<E> matrix, final OutputStream outputStream) throws IOException
     {
         if (matrix == null)
         {
