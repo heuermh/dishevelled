@@ -179,33 +179,33 @@ public final class ObjectMatrixUtils
         }
 
         /** {@inheritDoc} */
-        public void forEach(final BinaryPredicate<Long, E> predicate,
-                            final BinaryProcedure<Long, E> procedure)
+        public void forEach(final BinaryPredicate<Long, ? super E> predicate,
+                            final BinaryProcedure<Long, ? super E> procedure)
         {
             matrix.forEach(predicate, procedure);
         }
 
         /** {@inheritDoc} */
-        public void forEach(final BinaryProcedure<Long, E> procedure)
+        public void forEach(final BinaryProcedure<Long, ? super E> procedure)
         {
             matrix.forEach(procedure);
         }
 
         /** {@inheritDoc} */
-        public void forEach(final UnaryPredicate<E> predicate,
-                            final UnaryProcedure<E> procedure)
+        public void forEach(final UnaryPredicate<? super E> predicate,
+                            final UnaryProcedure<? super E> procedure)
         {
             matrix.forEach(predicate, procedure);
         }
 
         /** {@inheritDoc} */
-        public void forEach(final UnaryProcedure<E> procedure)
+        public void forEach(final UnaryProcedure<? super E> procedure)
         {
             matrix.forEach(procedure);
         }
 
         /** {@inheritDoc} */
-        public void forEachNonNull(final UnaryProcedure<E> procedure)
+        public void forEachNonNull(final UnaryProcedure<? super E> procedure)
         {
             matrix.forEach(procedure);
         }
@@ -381,33 +381,33 @@ public final class ObjectMatrixUtils
         }
 
         /** {@inheritDoc} */
-        public void forEach(final TertiaryPredicate<Long, Long, E> predicate,
-                            final TertiaryProcedure<Long, Long, E> procedure)
+        public void forEach(final TertiaryPredicate<Long, Long, ? super E> predicate,
+                            final TertiaryProcedure<Long, Long, ? super E> procedure)
         {
             matrix.forEach(predicate, procedure);
         }
 
         /** {@inheritDoc} */
-        public void forEach(final TertiaryProcedure<Long, Long, E> procedure)
+        public void forEach(final TertiaryProcedure<Long, Long, ? super E> procedure)
         {
             matrix.forEach(procedure);
         }
 
         /** {@inheritDoc} */
-        public void forEachNonNull(final UnaryProcedure<E> procedure)
+        public void forEachNonNull(final UnaryProcedure<? super E> procedure)
         {
             matrix.forEachNonNull(procedure);
         }
 
         /** {@inheritDoc} */
-        public void forEach(final UnaryPredicate<E> predicate,
-                            final UnaryProcedure<E> procedure)
+        public void forEach(final UnaryPredicate<? super E> predicate,
+                            final UnaryProcedure<? super E> procedure)
         {
             matrix.forEach(predicate, procedure);
         }
 
         /** {@inheritDoc} */
-        public void forEach(final UnaryProcedure<E> procedure)
+        public void forEach(final UnaryProcedure<? super E> procedure)
         {
             matrix.forEach(procedure);
         }
@@ -621,33 +621,33 @@ public final class ObjectMatrixUtils
         }
 
         /** {@inheritDoc} */
-        public void forEach(final QuaternaryPredicate<Long, Long, Long, E> predicate,
-                            final QuaternaryProcedure<Long, Long, Long, E> procedure)
+        public void forEach(final QuaternaryPredicate<Long, Long, Long, ? super E> predicate,
+                            final QuaternaryProcedure<Long, Long, Long, ? super E> procedure)
         {
             matrix.forEach(predicate, procedure);
         }
 
         /** {@inheritDoc} */
-        public void forEach(final QuaternaryProcedure<Long, Long, Long, E> procedure)
+        public void forEach(final QuaternaryProcedure<Long, Long, Long, ? super E> procedure)
         {
             matrix.forEach(procedure);
         }
 
         /** {@inheritDoc} */
-        public void forEachNonNull(final UnaryProcedure<E> procedure)
+        public void forEachNonNull(final UnaryProcedure<? super E> procedure)
         {
             matrix.forEachNonNull(procedure);
         }
 
         /** {@inheritDoc} */
-        public void forEach(final UnaryPredicate<E> predicate,
-                            final UnaryProcedure<E> procedure)
+        public void forEach(final UnaryPredicate<? super E> predicate,
+                            final UnaryProcedure<? super E> procedure)
         {
             matrix.forEach(predicate, procedure);
         }
 
         /** {@inheritDoc} */
-        public void forEach(final UnaryProcedure<E> procedure)
+        public void forEach(final UnaryProcedure<? super E> procedure)
         {
             matrix.forEach(procedure);
         }

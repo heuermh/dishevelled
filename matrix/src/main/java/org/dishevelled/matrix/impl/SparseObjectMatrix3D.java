@@ -197,7 +197,7 @@ public class SparseObjectMatrix3D<E>
      *
      * Overridden for performance.
      */
-    public void forEachNonNull(final UnaryProcedure<E> procedure)
+    public void forEachNonNull(final UnaryProcedure<? super E> procedure)
     {
         if (isView)
         {
