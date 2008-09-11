@@ -679,7 +679,7 @@ abstract class AbstractObjectMatrix3D<E>
     }
 
     /** {@inheritDoc} */
-    public void forEach(final UnaryProcedure<E> procedure)
+    public void forEach(final UnaryProcedure<? super E> procedure)
     {
         for (long slice = 0; slice < slices; slice++)
         {
@@ -695,8 +695,8 @@ abstract class AbstractObjectMatrix3D<E>
     }
 
     /** {@inheritDoc} */
-    public void forEach(final UnaryPredicate<E> predicate,
-                        final UnaryProcedure<E> procedure)
+    public void forEach(final UnaryPredicate<? super E> predicate,
+                        final UnaryProcedure<? super E> procedure)
     {
         for (long slice = 0; slice < slices; slice++)
         {
@@ -715,7 +715,7 @@ abstract class AbstractObjectMatrix3D<E>
     }
 
     /** {@inheritDoc} */
-    public void forEachNonNull(final UnaryProcedure<E> procedure)
+    public void forEachNonNull(final UnaryProcedure<? super E> procedure)
     {
         forEach(new UnaryPredicate<E>()
             {
@@ -727,7 +727,7 @@ abstract class AbstractObjectMatrix3D<E>
     }
 
     /** {@inheritDoc} */
-    public void forEach(final QuaternaryProcedure<Long, Long, Long, E> procedure)
+    public void forEach(final QuaternaryProcedure<Long, Long, Long, ? super E> procedure)
     {
         for (long slice = 0; slice < slices; slice++)
         {
@@ -743,8 +743,8 @@ abstract class AbstractObjectMatrix3D<E>
     }
 
     /** {@inheritDoc} */
-    public void forEach(final QuaternaryPredicate<Long, Long, Long, E> predicate,
-                        final QuaternaryProcedure<Long, Long, Long, E> procedure)
+    public void forEach(final QuaternaryPredicate<Long, Long, Long, ? super E> predicate,
+                        final QuaternaryProcedure<Long, Long, Long, ? super E> procedure)
     {
         for (long slice = 0; slice < slices; slice++)
         {

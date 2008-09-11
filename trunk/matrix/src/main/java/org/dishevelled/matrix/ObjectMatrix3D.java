@@ -407,7 +407,7 @@ public interface ObjectMatrix3D<E>
      *
      * @param procedure procedure, must not be null
      */
-    void forEach(UnaryProcedure<E> procedure);
+    void forEach(UnaryProcedure<? super E> procedure);
 
     /**
      * Apply the specified procedure to each value in this 3D matrix
@@ -434,8 +434,8 @@ public interface ObjectMatrix3D<E>
      * @param predicate predicate, must not be null
      * @param procedure procedure, must not be null
      */
-    void forEach(UnaryPredicate<E> predicate,
-                 UnaryProcedure<E> procedure);
+    void forEach(UnaryPredicate<? super E> predicate,
+                 UnaryProcedure<? super E> procedure);
 
     /**
      * Apply the specified procedure to each non-null value in this 3D matrix.
@@ -454,7 +454,7 @@ public interface ObjectMatrix3D<E>
      *
      * @param procedure procedure, must not be null
      */
-    void forEachNonNull(UnaryProcedure<E> procedure);
+    void forEachNonNull(UnaryProcedure<? super E> procedure);
 
     /**
      * Apply the specified procedure to each slice, row, and column and
@@ -474,7 +474,7 @@ public interface ObjectMatrix3D<E>
      *
      * @param procedure procedure, must not be null
      */
-    void forEach(QuaternaryProcedure<Long, Long, Long, E> procedure);
+    void forEach(QuaternaryProcedure<Long, Long, Long, ? super E> procedure);
 
     /**
      * Apply the specified procedure to each slice, row, and column
@@ -501,6 +501,6 @@ public interface ObjectMatrix3D<E>
      * @param predicate predicate, must not be null
      * @param procedure procedure, must not be null
      */
-    void forEach(QuaternaryPredicate<Long, Long, Long, E> predicate,
-                 QuaternaryProcedure<Long, Long, Long, E> procedure);
+    void forEach(QuaternaryPredicate<Long, Long, Long, ? super E> predicate,
+                 QuaternaryProcedure<Long, Long, Long, ? super E> procedure);
 }

@@ -610,7 +610,7 @@ abstract class AbstractObjectMatrix2D<E>
     }
 
     /** {@inheritDoc} */
-    public void forEach(final UnaryProcedure<E> procedure)
+    public void forEach(final UnaryProcedure<? super E> procedure)
     {
         if (procedure == null)
         {
@@ -628,8 +628,8 @@ abstract class AbstractObjectMatrix2D<E>
     }
 
     /** {@inheritDoc} */
-    public void forEach(final UnaryPredicate<E> predicate,
-                        final UnaryProcedure<E> procedure)
+    public void forEach(final UnaryPredicate<? super E> predicate,
+                        final UnaryProcedure<? super E> procedure)
     {
         if (predicate == null)
         {
@@ -654,7 +654,7 @@ abstract class AbstractObjectMatrix2D<E>
     }
 
     /** {@inheritDoc} */
-    public void forEachNonNull(final UnaryProcedure<E> procedure)
+    public void forEachNonNull(final UnaryProcedure<? super E> procedure)
     {
         forEach(new UnaryPredicate<E>()
             {
@@ -666,7 +666,7 @@ abstract class AbstractObjectMatrix2D<E>
     }
 
     /** {@inheritDoc} */
-    public void forEach(final TertiaryProcedure<Long, Long, E> procedure)
+    public void forEach(final TertiaryProcedure<Long, Long, ? super E> procedure)
     {
         if (procedure == null)
         {
@@ -684,8 +684,8 @@ abstract class AbstractObjectMatrix2D<E>
     }
 
     /** {@inheritDoc} */
-    public void forEach(final TertiaryPredicate<Long, Long, E> predicate,
-                        final TertiaryProcedure<Long, Long, E> procedure)
+    public void forEach(final TertiaryPredicate<Long, Long, ? super E> predicate,
+                        final TertiaryProcedure<Long, Long, ? super E> procedure)
     {
         if (predicate == null)
         {

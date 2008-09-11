@@ -366,7 +366,7 @@ public interface ObjectMatrix2D<E>
      *
      * @param procedure procedure, must not be null
      */
-    void forEach(UnaryProcedure<E> procedure);
+    void forEach(UnaryProcedure<? super E> procedure);
 
     /**
      * Apply the specified procedure to each value in this 2D matrix
@@ -393,8 +393,8 @@ public interface ObjectMatrix2D<E>
      * @param predicate predicate, must not be null
      * @param procedure procedure, must not be null
      */
-    void forEach(UnaryPredicate<E> predicate,
-                 UnaryProcedure<E> procedure);
+    void forEach(UnaryPredicate<? super E> predicate,
+                 UnaryProcedure<? super E> procedure);
 
     /**
      * Apply the specified procedure to each non-null value in this 2D matrix.
@@ -413,7 +413,7 @@ public interface ObjectMatrix2D<E>
      *
      * @param procedure procedure, must not be null
      */
-    void forEachNonNull(UnaryProcedure<E> procedure);
+    void forEachNonNull(UnaryProcedure<? super E> procedure);
 
     /**
      * Apply the specified procedures to each row and column and
@@ -433,7 +433,7 @@ public interface ObjectMatrix2D<E>
      *
      * @param procedure procedure, must not be null
      */
-    void forEach(TertiaryProcedure<Long, Long, E> procedure);
+    void forEach(TertiaryProcedure<Long, Long, ? super E> procedure);
 
     /**
      * Apply the specified procedures to each row and column
@@ -460,6 +460,6 @@ public interface ObjectMatrix2D<E>
      * @param predicate predicate, must not be null
      * @param procedure procedure, must not be null
      */
-    void forEach(TertiaryPredicate<Long, Long, E> predicate,
-                 TertiaryProcedure<Long, Long, E> procedure);
+    void forEach(TertiaryPredicate<Long, Long, ? super E> predicate,
+                 TertiaryProcedure<Long, Long, ? super E> procedure);
 }

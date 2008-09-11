@@ -288,7 +288,7 @@ public interface ObjectMatrix1D<E>
      *
      * @param procedure procedure, must not be null
      */
-    void forEach(UnaryProcedure<E> procedure);
+    void forEach(UnaryProcedure<? super E> procedure);
 
     /**
      * Apply the specified procedure to each value in this 1D matrix
@@ -315,8 +315,8 @@ public interface ObjectMatrix1D<E>
      * @param predicate predicate, must not be null
      * @param procedure procedure, must not be null
      */
-    void forEach(UnaryPredicate<E> predicate,
-                 UnaryProcedure<E> procedure);
+    void forEach(UnaryPredicate<? super E> predicate,
+                 UnaryProcedure<? super E> procedure);
 
     /**
      * Apply the specified procedure to each non-null value in this 1D matrix.
@@ -335,7 +335,7 @@ public interface ObjectMatrix1D<E>
      *
      * @param procedure procedure, must not be null
      */
-    void forEachNonNull(UnaryProcedure<E> procedure);
+    void forEachNonNull(UnaryProcedure<? super E> procedure);
 
     /**
      * Apply the specified procedures to each index and value in this
@@ -355,7 +355,7 @@ public interface ObjectMatrix1D<E>
      *
      * @param procedure procedure, must not be null
      */
-    void forEach(BinaryProcedure<Long, E> procedure);
+    void forEach(BinaryProcedure<Long, ? super E> procedure);
 
     /**
      * Apply the specified procedures to each index and value in this
@@ -382,6 +382,6 @@ public interface ObjectMatrix1D<E>
      * @param predicate predicate, must not be null
      * @param procedure procedure, must not be null
      */
-    void forEach(BinaryPredicate<Long, E> predicate,
-                 BinaryProcedure<Long, E> procedure);
+    void forEach(BinaryPredicate<Long, ? super E> predicate,
+                 BinaryProcedure<Long, ? super E> procedure);
 }

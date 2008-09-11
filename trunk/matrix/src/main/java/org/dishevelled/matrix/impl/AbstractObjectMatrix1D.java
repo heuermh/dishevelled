@@ -452,7 +452,7 @@ abstract class AbstractObjectMatrix1D<E>
     }
 
     /** {@inheritDoc} */
-    public void forEach(final UnaryProcedure<E> procedure)
+    public void forEach(final UnaryProcedure<? super E> procedure)
     {
         if (procedure == null)
         {
@@ -467,8 +467,8 @@ abstract class AbstractObjectMatrix1D<E>
     }
 
     /** {@inheritDoc} */
-    public void forEach(final UnaryPredicate<E> predicate,
-                        final UnaryProcedure<E> procedure)
+    public void forEach(final UnaryPredicate<? super E> predicate,
+                        final UnaryProcedure<? super E> procedure)
     {
         if (predicate == null)
         {
@@ -490,7 +490,7 @@ abstract class AbstractObjectMatrix1D<E>
     }
 
     /** {@inheritDoc} */
-    public void forEachNonNull(final UnaryProcedure<E> procedure)
+    public void forEachNonNull(final UnaryProcedure<? super E> procedure)
     {
         forEach(new UnaryPredicate<E>()
                 {
@@ -502,7 +502,7 @@ abstract class AbstractObjectMatrix1D<E>
     }
 
     /** {@inheritDoc} */
-    public void forEach(final BinaryProcedure<Long, E> procedure)
+    public void forEach(final BinaryProcedure<Long, ? super E> procedure)
     {
         if (procedure == null)
         {
@@ -517,8 +517,8 @@ abstract class AbstractObjectMatrix1D<E>
     }
 
     /** {@inheritDoc} */
-    public void forEach(final BinaryPredicate<Long, E> predicate,
-                        final BinaryProcedure<Long, E> procedure)
+    public void forEach(final BinaryPredicate<Long, ? super E> predicate,
+                        final BinaryProcedure<Long, ? super E> procedure)
     {
         if (predicate == null)
         {
