@@ -31,8 +31,6 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 
-import java.util.Iterator;
-
 import org.dishevelled.functor.TertiaryPredicate;
 import org.dishevelled.functor.TertiaryProcedure;
 
@@ -46,12 +44,10 @@ import org.dishevelled.matrix.io.ObjectMatrix2DWriter;
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public final class MatrixMarketObjectMatrix2DWriter<E>
-    implements ObjectMatrix2DWriter<E>
+public final class MatrixMarketWriter
+    implements ObjectMatrix2DWriter<Number>
 {
     // TODO:
-    // MatrixMarket...Writer --> MatrixMarketWriter?
-    // is it possible to restrict E to a subclass of Number?
     // matrix type (real, complex, integer, pattern) should be {specifiable, automatic}
     // allow for specifying symmetry structure (general, symmetric, skew-symmetric, Hermitian)
     // allow for specifying the number format to use when writing values
@@ -68,7 +64,7 @@ public final class MatrixMarketObjectMatrix2DWriter<E>
 
 
     /** {@inheritDoc} */
-    public <T extends Appendable> T append(final ObjectMatrix2D<? extends E> matrix, final T appendable)
+    public <T extends Appendable> T append(final ObjectMatrix2D<? extends Number> matrix, final T appendable)
         throws IOException
     {
         if (matrix == null)
@@ -118,7 +114,7 @@ public final class MatrixMarketObjectMatrix2DWriter<E>
     }
 
     /** {@inheritDoc} */
-    public void write(final ObjectMatrix2D<? extends E> matrix, final File file) throws IOException
+    public void write(final ObjectMatrix2D<? extends Number> matrix, final File file) throws IOException
     {
         if (matrix == null)
         {
@@ -151,7 +147,7 @@ public final class MatrixMarketObjectMatrix2DWriter<E>
     }
 
     /** {@inheritDoc} */
-    public void write(final ObjectMatrix2D<? extends E> matrix, final OutputStream outputStream) throws IOException
+    public void write(final ObjectMatrix2D<? extends Number> matrix, final OutputStream outputStream) throws IOException
     {
         if (matrix == null)
         {

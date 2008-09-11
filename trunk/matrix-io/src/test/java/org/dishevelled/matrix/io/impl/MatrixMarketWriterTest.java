@@ -23,22 +23,139 @@
 */
 package org.dishevelled.matrix.io.impl;
 
-import org.dishevelled.matrix.io.AbstractObjectMatrix2DWriterTest;
-import org.dishevelled.matrix.io.ObjectMatrix2DWriter;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.OutputStream;
+
+import junit.framework.TestCase;
+
+import org.dishevelled.matrix.ObjectMatrix2D;
+
+import org.dishevelled.matrix.impl.SparseObjectMatrix2D;
 
 /**
- * Unit test for MatrixMarketObjectMatrix2DWriter.
+ * Unit test for MatrixMarketWriter.
  *
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public final class MatrixMarketObjectMatrix2DWriterTest
-    extends AbstractObjectMatrix2DWriterTest
+public final class MatrixMarketWriterTest
+    extends TestCase
 {
 
-    /** {@inheritDoc} */
-    protected <E> ObjectMatrix2DWriter<E> createObjectMatrix2DWriter()
+    public void testConstructor()
     {
-        return new MatrixMarketObjectMatrix2DWriter<E>();
+        MatrixMarketWriter writer = new MatrixMarketWriter();
+        assertNotNull(writer);
+    }
+
+    public void testAppend() throws IOException
+    {
+        ObjectMatrix2D<Double> matrix = new SparseObjectMatrix2D<Double>(16L, 16L);
+        MatrixMarketWriter writer = new MatrixMarketWriter();
+        StringBuffer appendable = new StringBuffer();
+        appendable = writer.append(matrix, appendable);
+        assertNotNull(appendable);
+
+        try
+        {
+            writer.append(null, null);
+            fail("append(null, null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+        try
+        {
+            writer.append(null, appendable);
+            fail("append(null, ) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+        try
+        {
+            writer.append(matrix, null);
+            fail("append(, null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+    }
+
+    public void testWriteFile() throws IOException
+    {
+        ObjectMatrix2D<Double> matrix = new SparseObjectMatrix2D<Double>(16L, 16L);
+        MatrixMarketWriter writer = new MatrixMarketWriter();
+        File file = File.createTempFile("abstractObjectMatrix2DTest", null);
+        writer.write(matrix, file);
+
+        try
+        {
+            writer.write(null, file);
+            fail("write(, null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+        try
+        {
+            writer.write(matrix, (File) null);
+            fail("write(, (File) null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+        try
+        {
+            writer.write(null, (File) null);
+            fail("write(null, (File) null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+    }
+
+    public void testWriteOutputStream() throws IOException
+    {
+        ObjectMatrix2D<Double> matrix = new SparseObjectMatrix2D<Double>(16L, 16L);
+        MatrixMarketWriter writer = new MatrixMarketWriter();
+        OutputStream outputStream = new ByteArrayOutputStream();
+        writer.write(matrix, outputStream);
+
+        try
+        {
+            writer.write(null, outputStream);
+            fail("write(, null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+        try
+        {
+            writer.write(matrix, (OutputStream) null);
+            fail("write(, (OutputStream) null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+        try
+        {
+            writer.write(null, (OutputStream) null);
+            fail("write(null, (OutputStream) null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
     }
 }
