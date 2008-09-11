@@ -57,10 +57,10 @@ public final class MatrixMarketObjectMatrix2DWriter<E>
     // allow for specifying the number format to use when writing values
 
     /** Not null predicate. */
-    private final TertiaryPredicate<Long, Long, E> notNull = new TertiaryPredicate<Long, Long, E>()
+    private static final TertiaryPredicate<Long, Long, Object> NOT_NULL = new TertiaryPredicate<Long, Long, Object>()
         {
             /** {@inheritDoc} */
-            public boolean test(final Long row, final Long column, final E value)
+            public boolean test(final Long row, final Long column, final Object value)
             {
                 return (value != null);
             }
@@ -68,7 +68,7 @@ public final class MatrixMarketObjectMatrix2DWriter<E>
 
 
     /** {@inheritDoc} */
-    public <T extends Appendable> T append(final ObjectMatrix2D<E> matrix, final T appendable)
+    public <T extends Appendable> T append(final ObjectMatrix2D<? extends E> matrix, final T appendable)
         throws IOException
     {
         if (matrix == null)
@@ -92,10 +92,10 @@ public final class MatrixMarketObjectMatrix2DWriter<E>
         appendable.append("\n");
 
         // append non-null values
-        matrix.forEach(notNull, new TertiaryProcedure<Long, Long, E>()
+        matrix.forEach(NOT_NULL, new TertiaryProcedure<Long, Long, Object>()
             {
                 /** {@inheritDoc} */
-                public void run(final Long row, final Long column, final E value)
+                public void run(final Long row, final Long column, final Object value)
                 {
                     // note:  indices are 1-based
                     try
@@ -118,7 +118,7 @@ public final class MatrixMarketObjectMatrix2DWriter<E>
     }
 
     /** {@inheritDoc} */
-    public void write(final ObjectMatrix2D<E> matrix, final File file) throws IOException
+    public void write(final ObjectMatrix2D<? extends E> matrix, final File file) throws IOException
     {
         if (matrix == null)
         {
@@ -151,7 +151,7 @@ public final class MatrixMarketObjectMatrix2DWriter<E>
     }
 
     /** {@inheritDoc} */
-    public void write(final ObjectMatrix2D<E> matrix, final OutputStream outputStream) throws IOException
+    public void write(final ObjectMatrix2D<? extends E> matrix, final OutputStream outputStream) throws IOException
     {
         if (matrix == null)
         {

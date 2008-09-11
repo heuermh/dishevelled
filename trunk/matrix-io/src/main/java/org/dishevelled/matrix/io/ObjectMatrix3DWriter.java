@@ -48,7 +48,7 @@ public interface ObjectMatrix3DWriter<E>
      * @return the specified appendable with the specified 3D matrix appended
      * @throws IOException if an IO error occurs
      */
-    <T extends Appendable> T append(ObjectMatrix3D<E> matrix, T appendable) throws IOException;
+    <T extends Appendable> T append(ObjectMatrix3D<? extends E> matrix, T appendable) throws IOException;
 
     /**
      * Write the specified 3D matrix to the specified file.
@@ -57,7 +57,7 @@ public interface ObjectMatrix3DWriter<E>
      * @param file file to write to, must not be null
      * @throws IOException if an IO error occurs
      */
-    void write(ObjectMatrix3D<E> matrix, File file) throws IOException;
+    void write(ObjectMatrix3D<? extends E> matrix, File file) throws IOException;
 
     /**
      * Write the specified 3D matrix to the specified output stream.
@@ -66,5 +66,5 @@ public interface ObjectMatrix3DWriter<E>
      * @param outputStream output stream to write to, must not be null
      * @throws IOException if an IO error occurs
      */
-    void write(ObjectMatrix3D<E> matrix, OutputStream outputStream) throws IOException;
+    void write(ObjectMatrix3D<? extends E> matrix, OutputStream outputStream) throws IOException;
 }
