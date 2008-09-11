@@ -49,7 +49,7 @@ public final class SimpleObjectMatrix1DWriter<E>
 {
 
     /** {@inheritDoc} */
-    public <T extends Appendable> T append(final ObjectMatrix1D<E> matrix, final T appendable)
+    public <T extends Appendable> T append(final ObjectMatrix1D<? extends E> matrix, final T appendable)
         throws IOException
     {
         if (matrix == null)
@@ -79,7 +79,7 @@ public final class SimpleObjectMatrix1DWriter<E>
     }
 
     /** {@inheritDoc} */
-    public void write(final ObjectMatrix1D<E> matrix, final File file) throws IOException
+    public void write(final ObjectMatrix1D<? extends E> matrix, final File file) throws IOException
     {
         if (matrix == null)
         {
@@ -112,7 +112,7 @@ public final class SimpleObjectMatrix1DWriter<E>
     }
 
     /** {@inheritDoc} */
-    public void write(final ObjectMatrix1D<E> matrix, final OutputStream outputStream) throws IOException
+    public void write(final ObjectMatrix1D<? extends E> matrix, final OutputStream outputStream) throws IOException
     {
         if (matrix == null)
         {
