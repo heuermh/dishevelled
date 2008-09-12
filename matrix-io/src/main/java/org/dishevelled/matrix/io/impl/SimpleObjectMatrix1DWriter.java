@@ -65,13 +65,13 @@ public final class SimpleObjectMatrix1DWriter<E>
         if (iterator.hasNext())
         {
             // append one element
-            appendable.append(toCharSequence(iterator.next()));
+            appendable.append(MatrixIOUtils.toCharSequence(iterator.next()));
 
             // append rest of elements
             while (iterator.hasNext())
             {
                 appendable.append(",");
-                appendable.append(toCharSequence(iterator.next()));
+                appendable.append(MatrixIOUtils.toCharSequence(iterator.next()));
             }
         }
         appendable.append("]");
@@ -97,17 +97,7 @@ public final class SimpleObjectMatrix1DWriter<E>
         }
         finally
         {
-            if (writer != null)
-            {
-                try
-                {
-                    writer.close();
-                }
-                catch (IOException e)
-                {
-                    // ignore
-                }
-            }
+            MatrixIOUtils.closeQuietly(writer);
         }
     }
 
@@ -125,16 +115,5 @@ public final class SimpleObjectMatrix1DWriter<E>
         Writer writer = new BufferedWriter(new OutputStreamWriter(outputStream));
         append(matrix, writer);
         writer.flush();
-    }
-
-    /**
-     * Return the specified value as a CharSequence.
-     *
-     * @param value value
-     * @return the specified value as a CharSequence
-     */
-    private CharSequence toCharSequence(final Object value)
-    {
-        return (value instanceof CharSequence) ? (CharSequence) value : String.valueOf(value);
     }
 }

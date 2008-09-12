@@ -100,7 +100,7 @@ public final class MatrixMarketWriter
                         appendable.append("\t");
                         appendable.append(String.valueOf(column + 1L));
                         appendable.append("\t");
-                        appendable.append(toCharSequence(value));
+                        appendable.append(MatrixIOUtils.toCharSequence(value));
                         appendable.append("\n");
                     }
                     catch (IOException e)
@@ -132,17 +132,7 @@ public final class MatrixMarketWriter
         }
         finally
         {
-            if (writer != null)
-            {
-                try
-                {
-                    writer.close();
-                }
-                catch (IOException e)
-                {
-                    // ignore
-                }
-            }
+            MatrixIOUtils.closeQuietly(writer);
         }
     }
 
@@ -160,16 +150,5 @@ public final class MatrixMarketWriter
         Writer writer = new BufferedWriter(new OutputStreamWriter(outputStream));
         append(matrix, writer);
         writer.flush();
-    }
-
-    /**
-     * Return the specified value as a CharSequence.
-     *
-     * @param value value
-     * @return the specified value as a CharSequence
-     */
-    private CharSequence toCharSequence(final Object value)
-    {
-        return (value instanceof CharSequence) ? (CharSequence) value : String.valueOf(value);
     }
 }
