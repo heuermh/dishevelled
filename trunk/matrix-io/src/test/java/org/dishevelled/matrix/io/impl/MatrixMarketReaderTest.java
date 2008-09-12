@@ -23,8 +23,11 @@
 */
 package org.dishevelled.matrix.io.impl;
 
+import java.io.File;
 import java.io.InputStream;
 import java.io.IOException;
+
+import java.net.URL;
 
 import junit.framework.TestCase;
 
@@ -103,6 +106,210 @@ public final class MatrixMarketReaderTest
         finally
         {
             closeQuietly(inputStream);
+        }
+    }
+
+    public void testFourByFourMatrix() throws IOException
+    {
+        InputStream inputStream = null;
+        try
+        {
+            inputStream = getClass().getResourceAsStream("fourByFour.mm");
+            MatrixMarketReader reader = new MatrixMarketReader();
+            ObjectMatrix2D<Double> matrix = reader.read(inputStream);
+            assertNotNull(matrix);
+            assertEquals(16, matrix.size());
+            assertEquals(4, matrix.rows());
+            assertEquals(4, matrix.columns());
+            assertFalse(matrix.isEmpty());
+            assertEquals(16, matrix.cardinality());
+            assertEquals(Double.valueOf(0.1d), matrix.get(0L, 0L), 0.01d);
+            assertEquals(Double.valueOf(0.2d), matrix.get(0L, 1L), 0.01d);
+            assertEquals(Double.valueOf(0.3d), matrix.get(0L, 2L), 0.01d);
+            assertEquals(Double.valueOf(0.4d), matrix.get(0L, 3L), 0.01d);
+            assertEquals(Double.valueOf(0.5d), matrix.get(1L, 0L), 0.01d);
+            assertEquals(Double.valueOf(0.6d), matrix.get(1L, 1L), 0.01d);
+            assertEquals(Double.valueOf(0.7d), matrix.get(1L, 2L), 0.01d);
+            assertEquals(Double.valueOf(0.8d), matrix.get(1L, 3L), 0.01d);
+            assertEquals(Double.valueOf(0.9d), matrix.get(2L, 0L), 0.01d);
+            assertEquals(Double.valueOf(1.0d), matrix.get(2L, 1L), 0.01d);
+            assertEquals(Double.valueOf(1.1d), matrix.get(2L, 2L), 0.01d);
+            assertEquals(Double.valueOf(1.2d), matrix.get(2L, 3L), 0.01d);
+            assertEquals(Double.valueOf(1.3d), matrix.get(3L, 0L), 0.01d);
+            assertEquals(Double.valueOf(1.4d), matrix.get(3L, 1L), 0.01d);
+            assertEquals(Double.valueOf(1.5d), matrix.get(3L, 2L), 0.01d);
+            assertEquals(Double.valueOf(1.6d), matrix.get(3L, 3L), 0.01d);
+        }
+        finally
+        {
+            closeQuietly(inputStream);
+        }
+    }
+
+    public void testSparseMatrix() throws IOException
+    {
+        InputStream inputStream = null;
+        try
+        {
+            inputStream = getClass().getResourceAsStream("sparse.mm");
+            MatrixMarketReader reader = new MatrixMarketReader();
+            ObjectMatrix2D<Double> matrix = reader.read(inputStream);
+            assertNotNull(matrix);
+            assertEquals((998 * 999), matrix.size());
+            assertEquals(998, matrix.rows());
+            assertEquals(999, matrix.columns());
+            assertFalse(matrix.isEmpty());
+            assertEquals(4, matrix.cardinality());
+            assertEquals(Double.valueOf(0.0d), matrix.get(0L, 0L), 0.01d);
+            assertEquals(Double.valueOf(1.0d), matrix.get(2L, 2L), 0.01d);
+            assertEquals(Double.valueOf(2.0d), matrix.get(3L, 4L), 0.01d);
+            assertEquals(Double.valueOf(3.0d), matrix.get(4L, 3L), 0.01d);
+        }
+        finally
+        {
+            closeQuietly(inputStream);
+        }
+    }
+
+    public void testInvalidRowMatrix()
+    {
+        InputStream inputStream = null;
+        try
+        {
+            inputStream = getClass().getResourceAsStream("invalidRow.mm");
+            MatrixMarketReader reader = new MatrixMarketReader();
+            ObjectMatrix2D<Double> matrix = reader.read(inputStream);
+            fail("invalidRow.mm expected IOException due to NumberFormatException");
+        }
+        catch (IOException e)
+        {
+            assertTrue(e.getMessage().contains("NumberFormatException"));
+        }
+        finally
+        {
+            closeQuietly(inputStream);
+        }
+    }
+
+    public void testInvalidColumnMatrix()
+    {
+        InputStream inputStream = null;
+        try
+        {
+            inputStream = getClass().getResourceAsStream("invalidColumn.mm");
+            MatrixMarketReader reader = new MatrixMarketReader();
+            ObjectMatrix2D<Double> matrix = reader.read(inputStream);
+            fail("invalidColumn.mm expected IOException due to NumberFormatException");
+        }
+        catch (IOException e)
+        {
+            assertTrue(e.getMessage().contains("NumberFormatException"));
+        }
+        finally
+        {
+            closeQuietly(inputStream);
+        }
+    }
+
+    public void testInvalidValueMatrix()
+    {
+        InputStream inputStream = null;
+        try
+        {
+            inputStream = getClass().getResourceAsStream("invalidValue.mm");
+            MatrixMarketReader reader = new MatrixMarketReader();
+            ObjectMatrix2D<Double> matrix = reader.read(inputStream);
+            fail("invalidValue.mm expected IOException due to NumberFormatException");
+        }
+        catch (IOException e)
+        {
+            assertTrue(e.getMessage().contains("NumberFormatException"));
+        }
+        finally
+        {
+            closeQuietly(inputStream);
+        }
+    }
+
+    public void testRowOutOfBoundsMatrix()
+    {
+        InputStream inputStream = null;
+        try
+        {
+            inputStream = getClass().getResourceAsStream("rowOutOfBounds.mm");
+            MatrixMarketReader reader = new MatrixMarketReader();
+            ObjectMatrix2D<Double> matrix = reader.read(inputStream);
+            fail("rowOutOfBounds.mm expected IOException due to NumberFormatException");
+        }
+        catch (IOException e)
+        {
+            assertTrue(e.getMessage().contains("IndexOutOfBoundsException"));
+        }
+        finally
+        {
+            closeQuietly(inputStream);
+        }
+    }
+
+    public void testColumnOutOfBoundsMatrix()
+    {
+        InputStream inputStream = null;
+        try
+        {
+            inputStream = getClass().getResourceAsStream("columnOutOfBounds.mm");
+            MatrixMarketReader reader = new MatrixMarketReader();
+            ObjectMatrix2D<Double> matrix = reader.read(inputStream);
+            fail("columnOutOfBounds.mm expected IOException due to NumberFormatException");
+        }
+        catch (IOException e)
+        {
+            assertTrue(e.getMessage().contains("IndexOutOfBoundsException"));
+        }
+        finally
+        {
+            closeQuietly(inputStream);
+        }
+    }
+
+    public void testReadInputStream() throws IOException
+    {
+        MatrixMarketReader reader = new MatrixMarketReader();
+        try
+        {
+            reader.read((InputStream) null);
+            fail("read((InputStream) null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+    }
+
+    public void testReadFile() throws IOException
+    {
+        MatrixMarketReader reader = new MatrixMarketReader();
+        try
+        {
+            reader.read((File) null);
+            fail("read((File) null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+    }
+
+    public void testReadURL() throws IOException
+    {
+        MatrixMarketReader reader = new MatrixMarketReader();
+        try
+        {
+            reader.read((URL) null);
+            fail("read((URL) null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
         }
     }
 

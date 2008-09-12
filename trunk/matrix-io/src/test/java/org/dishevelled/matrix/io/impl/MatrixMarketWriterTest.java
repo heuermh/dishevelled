@@ -53,6 +53,10 @@ public final class MatrixMarketWriterTest
     public void testAppend() throws IOException
     {
         ObjectMatrix2D<Double> matrix = new SparseObjectMatrix2D<Double>(16L, 16L);
+        matrix.setQuick(0L, 0L, Double.valueOf(0.0d));
+        matrix.setQuick(2L, 2L, Double.valueOf(1.0d));
+        matrix.setQuick(3L, 4L, Double.valueOf(2.0d));
+        matrix.setQuick(4L, 3L, Double.valueOf(3.0d));
         MatrixMarketWriter writer = new MatrixMarketWriter();
         StringBuffer appendable = new StringBuffer();
         appendable = writer.append(matrix, appendable);

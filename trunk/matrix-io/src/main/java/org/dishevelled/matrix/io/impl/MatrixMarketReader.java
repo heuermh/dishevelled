@@ -29,7 +29,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.Reader;
 
 import java.net.URL;
 
@@ -68,7 +67,7 @@ public final class MatrixMarketReader
         }
         finally
         {
-            closeQuietly(inputStream);
+            MatrixIOUtils.closeQuietly(inputStream);
         }
     }
 
@@ -91,7 +90,7 @@ public final class MatrixMarketReader
         }
         finally
         {
-            closeQuietly(inputStream);
+            MatrixIOUtils.closeQuietly(inputStream);
         }
     }
 
@@ -144,52 +143,12 @@ public final class MatrixMarketReader
         }
         finally
         {
-            closeQuietly(reader);
+            MatrixIOUtils.closeQuietly(reader);
         }
         if (matrix == null)
         {
             throw new IOException("could not create create matrix, check header and first non-comment line");
         }
         return matrix;
-    }
-
-    /**
-     * Close the specified input stream quietly.
-     *
-     * @param inputStream input stream to close
-     */
-    private void closeQuietly(final InputStream inputStream)
-    {
-        try
-        {
-            if (inputStream != null)
-            {
-                inputStream.close();
-            }
-        }
-        catch (IOException e)
-        {
-            // ignore
-        }
-    }
-
-    /**
-     * Close the specified reader quietly.
-     *
-     * @param reader reader to close
-     */
-    private void closeQuietly(final Reader reader)
-    {
-        try
-        {
-            if (reader != null)
-            {
-                reader.close();
-            }
-        }
-        catch (IOException e)
-        {
-            // ignore
-        }
     }
 }
