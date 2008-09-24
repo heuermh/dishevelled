@@ -21,7 +21,7 @@
     > http://www.opensource.org/licenses/lgpl-license.php
 
 */
-package org.dishevelled.cluster.exitstrategy;
+package org.dishevelled.cluster.exit;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -31,6 +31,7 @@ import java.util.Set;
 import org.dishevelled.cluster.Cluster;
 import org.dishevelled.cluster.ExitStrategy;
 import org.dishevelled.cluster.AbstractExitStrategyTest;
+import org.dishevelled.cluster.exit.IterationLimitExitStrategy;
 
 /**
  * Unit test for IterationLimitExitStrategy.

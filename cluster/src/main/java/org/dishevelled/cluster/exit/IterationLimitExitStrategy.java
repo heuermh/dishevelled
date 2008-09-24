@@ -21,7 +21,7 @@
     > http://www.opensource.org/licenses/lgpl-license.php
 
 */
-package org.dishevelled.cluster.exitstrategy;
+package org.dishevelled.cluster.exit;
 
 import java.util.List;
 import java.util.Set;
