@@ -34,7 +34,7 @@ import org.dishevelled.cluster.Cluster;
 import org.dishevelled.cluster.ExitStrategy;
 import org.dishevelled.cluster.Similarity;
 
-import org.dishevelled.cluster.exitstrategy.IterationLimitExitStrategy;
+import org.dishevelled.cluster.exit.IterationLimitExitStrategy;
 
 import org.dishevelled.cluster.similarity.EqualitySimilarity;
 import org.dishevelled.cluster.similarity.UniformSimilarity;
