@@ -34,8 +34,34 @@ import java.util.Collection;
  */
 public interface CullView<E>
 {
+
+    /**
+     * Set the input collection for this cull view to <code>input</code>.
+     *
+     * @param input input collection for this cull view, must not be null
+     */
     void setInput(Collection<E> input);
+
+    /**
+     * Return an unmodifiable collection of the input collection elements that
+     * should remain.  The collection may be empty but will not be null.  The union
+     * of this collection and <code>getRemoved()</code> should have the same
+     * elements as the input collection.
+     *
+     * @return an unmodifiable collection of the input collection elements that
+     *    should remain
+     */
     Collection<E> getRemaining();
+
+    /**
+     * Return an unmodifiable collection of the input collection elements that
+     * should be removed.  The collection may be empty but will not be null.  The
+     * union of this collection and <code>getRemaining()</code> should have
+     * the same elements as the input collection.
+     *
+     * @return an unmodifiable collection of the input collection elements that
+     *    should be removed
+     */
     Collection<E> getRemoved();
 
     // some notification to clients of the progress...

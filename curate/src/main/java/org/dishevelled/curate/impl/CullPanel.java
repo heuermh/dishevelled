@@ -146,9 +146,9 @@ public final class CullPanel<E>
                     remainingLabel.setText(sb.toString());
                 }
             };
-        remainingList = new JList(new EventListModel(remaining));
+        remainingList = new JList(new EventListModel<E>(remaining));
 
-        EventSelectionModel remainingSelectionModel = new EventSelectionModel(remaining);
+        EventSelectionModel<E> remainingSelectionModel = new EventSelectionModel<E>(remaining);
         remainingSelectionModel.setSelectionMode(EventSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         remainingList.setSelectionModel(remainingSelectionModel);
         selectedRemaining = remainingSelectionModel.getSelected();
@@ -166,7 +166,7 @@ public final class CullPanel<E>
                     removedLabel.setText(sb.toString());
                 }
             };
-        removedList = new JList(new EventListModel(removed));
+        removedList = new JList(new EventListModel<E>(removed));
 
         removeAction = new IdentifiableAction("Remove", TangoProject.LIST_REMOVE)
             {
@@ -324,10 +324,10 @@ public final class CullPanel<E>
         remaining = GlazedLists.eventList(input);
         removed = GlazedLists.eventList(Collections.<E>emptyList());
 
-        remainingList.setModel(new EventListModel(remaining));
-        removedList.setModel(new EventListModel(removed));
+        remainingList.setModel(new EventListModel<E>(remaining));
+        removedList.setModel(new EventListModel<E>(removed));
 
-        EventSelectionModel remainingSelectionModel = new EventSelectionModel(remaining);
+        EventSelectionModel<E> remainingSelectionModel = new EventSelectionModel<E>(remaining);
         remainingList.setSelectionModel(remainingSelectionModel);
         remainingSelectionModel.setSelectionMode(EventSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         selectedRemaining = remainingSelectionModel.getSelected();
