@@ -30,9 +30,9 @@ import edu.umd.cs.piccolo.util.PPaintContext;
 import org.dishevelled.functor.UnaryProcedure;
 import org.dishevelled.functor.TertiaryProcedure;
 
-import org.dishevelled.matrix.ObjectMatrix2D;
+import org.dishevelled.matrix.Matrix2D;
 
-import org.dishevelled.matrix.impl.SparseObjectMatrix2D;
+import org.dishevelled.matrix.impl.SparseMatrix2D;
 
 import org.dishevelled.piccolo.sprite.Sprite;
 
@@ -58,7 +58,7 @@ public final class TileMap
     private final double tileHeight;
 
     /** Map of tiles. */
-    private final ObjectMatrix2D<Sprite> tileMap;
+    private final Matrix2D<Sprite> tileMap;
 
     /** Flag for validating proxies. */
     private boolean proxiesInvalid;
@@ -130,7 +130,7 @@ public final class TileMap
         this.tileHeight = tileHeight;
         setBounds(0.0d, 0.0d, mapWidth * tileWidth, mapHeight * tileHeight);
 
-        tileMap = new SparseObjectMatrix2D<Sprite>(this.mapHeight, this.mapWidth, 1000, 0.75f);
+        tileMap = new SparseMatrix2D<Sprite>(this.mapHeight, this.mapWidth, 1000, 0.75f);
 
         proxiesInvalid = true;
     }
