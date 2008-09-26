@@ -45,7 +45,7 @@ public class SparseMatrix2DTest
 {
 
     /** @see AbstractMatrix2D */
-    protected <T> Matrix2D<T> createObjectMatrix2D(final long rows, final long columns)
+    protected <T> Matrix2D<T> createMatrix2D(final long rows, final long columns)
     {
         Matrix2D<T> m = new SparseMatrix2D<T>(rows, columns);
         return m;

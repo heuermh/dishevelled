@@ -45,7 +45,7 @@ public class SparseMatrix1DTest
 {
 
     /** @see AbstractMatrix1DTest */
-    protected <T> Matrix1D<T> createObjectMatrix1D(final long size)
+    protected <T> Matrix1D<T> createMatrix1D(final long size)
     {
         Matrix1D<T> m = new SparseMatrix1D<T>(size);
         return m;
