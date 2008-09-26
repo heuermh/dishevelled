@@ -30,38 +30,38 @@ import java.io.OutputStream;
 
 import junit.framework.TestCase;
 
-import org.dishevelled.matrix.ObjectMatrix1D;
+import org.dishevelled.matrix.Matrix1D;
 
-import org.dishevelled.matrix.impl.SparseObjectMatrix1D;
+import org.dishevelled.matrix.impl.SparseMatrix1D;
 
 /**
- * Abstract unit test for implementations of ObjectMatrix1DWriter.
+ * Abstract unit test for implementations of Matrix1DWriter.
  *
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public abstract class AbstractObjectMatrix1DWriterTest
+public abstract class AbstractMatrix1DWriterTest
     extends TestCase
 {
 
     /**
-     * Create and return a new instance of an implementation of ObjectMatrix1DWriter to test.
+     * Create and return a new instance of an implementation of Matrix1DWriter to test.
      *
      * @param <E> 1D matrix element type
-     * @return a new instance of an implementation of ObjectMatrix1DWriter to test
+     * @return a new instance of an implementation of Matrix1DWriter to test
      */
-    protected abstract <E> ObjectMatrix1DWriter<E> createObjectMatrix1DWriter();
+    protected abstract <E> Matrix1DWriter<E> createMatrix1DWriter();
 
     public void testCreateObjectMatrix1DWriter()
     {
-        ObjectMatrix1DWriter<String> writer = createObjectMatrix1DWriter();
+        Matrix1DWriter<String> writer = createMatrix1DWriter();
         assertNotNull(writer);
     }
 
     public void testAppend() throws IOException
     {
-        ObjectMatrix1D<String> matrix = new SparseObjectMatrix1D<String>(16L);
-        ObjectMatrix1DWriter<String> writer = createObjectMatrix1DWriter();
+        Matrix1D<String> matrix = new SparseMatrix1D<String>(16L);
+        Matrix1DWriter<String> writer = createMatrix1DWriter();
         StringBuffer appendable = new StringBuffer();
         appendable = writer.append(matrix, appendable);
         assertNotNull(appendable);
@@ -97,8 +97,8 @@ public abstract class AbstractObjectMatrix1DWriterTest
 
     public void testWriteFile() throws IOException
     {
-        ObjectMatrix1D<String> matrix = new SparseObjectMatrix1D<String>(16L);
-        ObjectMatrix1DWriter<String> writer = createObjectMatrix1DWriter();
+        Matrix1D<String> matrix = new SparseMatrix1D<String>(16L);
+        Matrix1DWriter<String> writer = createMatrix1DWriter();
         File file = File.createTempFile("abstractObjectMatrix1DTest", null);
         writer.write(matrix, file);
 
@@ -133,8 +133,8 @@ public abstract class AbstractObjectMatrix1DWriterTest
 
     public void testWriteOutputStream() throws IOException
     {
-        ObjectMatrix1D<String> matrix = new SparseObjectMatrix1D<String>(16L);
-        ObjectMatrix1DWriter<String> writer = createObjectMatrix1DWriter();
+        Matrix1D<String> matrix = new SparseMatrix1D<String>(16L);
+        Matrix1DWriter<String> writer = createMatrix1DWriter();
         OutputStream outputStream = new ByteArrayOutputStream();
         writer.write(matrix, outputStream);
 

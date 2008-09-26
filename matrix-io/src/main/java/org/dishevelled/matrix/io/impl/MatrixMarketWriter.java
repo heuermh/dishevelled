@@ -34,18 +34,18 @@ import java.io.Writer;
 import org.dishevelled.functor.TertiaryPredicate;
 import org.dishevelled.functor.TertiaryProcedure;
 
-import org.dishevelled.matrix.ObjectMatrix2D;
+import org.dishevelled.matrix.Matrix2D;
 
-import org.dishevelled.matrix.io.ObjectMatrix2DWriter;
+import org.dishevelled.matrix.io.Matrix2DWriter;
 
 /**
- * Matrix Market format writer for matrices of objects in two dimensions.
+ * Matrix Market format writer for matrices of numbers in two dimensions.
  *
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
 public final class MatrixMarketWriter
-    implements ObjectMatrix2DWriter<Number>
+    implements Matrix2DWriter<Number>
 {
     // TODO:
     // matrix type (real, complex, integer, pattern) should be {specifiable, automatic}
@@ -64,7 +64,7 @@ public final class MatrixMarketWriter
 
 
     /** {@inheritDoc} */
-    public <T extends Appendable> T append(final ObjectMatrix2D<? extends Number> matrix, final T appendable)
+    public <T extends Appendable> T append(final Matrix2D<? extends Number> matrix, final T appendable)
         throws IOException
     {
         if (matrix == null)
@@ -114,7 +114,7 @@ public final class MatrixMarketWriter
     }
 
     /** {@inheritDoc} */
-    public void write(final ObjectMatrix2D<? extends Number> matrix, final File file) throws IOException
+    public void write(final Matrix2D<? extends Number> matrix, final File file) throws IOException
     {
         if (matrix == null)
         {
@@ -137,7 +137,7 @@ public final class MatrixMarketWriter
     }
 
     /** {@inheritDoc} */
-    public void write(final ObjectMatrix2D<? extends Number> matrix, final OutputStream outputStream) throws IOException
+    public void write(final Matrix2D<? extends Number> matrix, final OutputStream outputStream) throws IOException
     {
         if (matrix == null)
         {

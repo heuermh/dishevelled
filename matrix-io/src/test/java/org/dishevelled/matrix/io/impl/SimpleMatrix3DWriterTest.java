@@ -25,33 +25,33 @@ package org.dishevelled.matrix.io.impl;
 
 import java.io.IOException;
 
-import org.dishevelled.matrix.ObjectMatrix3D;
+import org.dishevelled.matrix.Matrix3D;
 
-import org.dishevelled.matrix.impl.SparseObjectMatrix3D;
+import org.dishevelled.matrix.impl.SparseMatrix3D;
 
-import org.dishevelled.matrix.io.AbstractObjectMatrix3DWriterTest;
-import org.dishevelled.matrix.io.ObjectMatrix3DWriter;
+import org.dishevelled.matrix.io.AbstractMatrix3DWriterTest;
+import org.dishevelled.matrix.io.Matrix3DWriter;
 
 /**
- * Unit test for SimpleObjectMatrix3DWriter.
+ * Unit test for SimpleMatrix3DWriter.
  *
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public final class SimpleObjectMatrix3DWriterTest
-    extends AbstractObjectMatrix3DWriterTest
+public final class SimpleMatrix3DWriterTest
+    extends AbstractMatrix3DWriterTest
 {
 
     /** {@inheritDoc} */
-    protected <E> ObjectMatrix3DWriter<E> createObjectMatrix3DWriter()
+    protected <E> Matrix3DWriter<E> createMatrix3DWriter()
     {
-        return new SimpleObjectMatrix3DWriter<E>();
+        return new SimpleMatrix3DWriter<E>();
     }
 
     public void testEmptyMatrix() throws IOException
     {
-        ObjectMatrix3D<String> matrix = new SparseObjectMatrix3D(0L, 0L, 0L);
-        ObjectMatrix3DWriter<String> writer = new SimpleObjectMatrix3DWriter();
+        Matrix3D<String> matrix = new SparseMatrix3D(0L, 0L, 0L);
+        Matrix3DWriter<String> writer = new SimpleMatrix3DWriter();
         StringBuffer appendable = new StringBuffer();
         appendable = writer.append(matrix, appendable);
         assertEquals("[]", appendable.toString());
@@ -59,9 +59,9 @@ public final class SimpleObjectMatrix3DWriterTest
 
     public void testOneElementMatrix() throws IOException
     {
-        ObjectMatrix3D<String> matrix = new SparseObjectMatrix3D(1L, 1L, 1L);
+        Matrix3D<String> matrix = new SparseMatrix3D(1L, 1L, 1L);
         matrix.setQuick(0L, 0L, 0L, "foo");
-        ObjectMatrix3DWriter<String> writer = new SimpleObjectMatrix3DWriter();
+        Matrix3DWriter<String> writer = new SimpleMatrix3DWriter();
         StringBuffer appendable = new StringBuffer();
         appendable = writer.append(matrix, appendable);
         assertEquals("[foo]", appendable.toString());

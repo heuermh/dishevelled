@@ -33,23 +33,23 @@ import java.io.Writer;
 
 import java.util.Iterator;
 
-import org.dishevelled.matrix.ObjectMatrix2D;
+import org.dishevelled.matrix.Matrix3D;
 
-import org.dishevelled.matrix.io.ObjectMatrix2DWriter;
+import org.dishevelled.matrix.io.Matrix3DWriter;
 
 /**
- * Simple writer for matrices of objects in two dimensions.
+ * Simple writer for matrices of objects in three dimensions.
  *
- * @param <E> 2D matrix element type
+ * @param <E> 3D matrix element type
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public final class SimpleObjectMatrix2DWriter<E>
-    implements ObjectMatrix2DWriter<E>
+public final class SimpleMatrix3DWriter<E>
+    implements Matrix3DWriter<E>
 {
 
     /** {@inheritDoc} */
-    public <T extends Appendable> T append(final ObjectMatrix2D<? extends E> matrix, final T appendable)
+    public <T extends Appendable> T append(final Matrix3D<? extends E> matrix, final T appendable)
         throws IOException
     {
         if (matrix == null)
@@ -79,7 +79,7 @@ public final class SimpleObjectMatrix2DWriter<E>
     }
 
     /** {@inheritDoc} */
-    public void write(final ObjectMatrix2D<? extends E> matrix, final File file) throws IOException
+    public void write(final Matrix3D<? extends E> matrix, final File file) throws IOException
     {
         if (matrix == null)
         {
@@ -102,7 +102,7 @@ public final class SimpleObjectMatrix2DWriter<E>
     }
 
     /** {@inheritDoc} */
-    public void write(final ObjectMatrix2D<? extends E> matrix, final OutputStream outputStream) throws IOException
+    public void write(final Matrix3D<? extends E> matrix, final OutputStream outputStream) throws IOException
     {
         if (matrix == null)
         {

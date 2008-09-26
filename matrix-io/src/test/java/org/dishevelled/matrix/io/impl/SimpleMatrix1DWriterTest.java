@@ -25,33 +25,33 @@ package org.dishevelled.matrix.io.impl;
 
 import java.io.IOException;
 
-import org.dishevelled.matrix.ObjectMatrix1D;
+import org.dishevelled.matrix.Matrix1D;
 
-import org.dishevelled.matrix.impl.SparseObjectMatrix1D;
+import org.dishevelled.matrix.impl.SparseMatrix1D;
 
-import org.dishevelled.matrix.io.AbstractObjectMatrix1DWriterTest;
-import org.dishevelled.matrix.io.ObjectMatrix1DWriter;
+import org.dishevelled.matrix.io.AbstractMatrix1DWriterTest;
+import org.dishevelled.matrix.io.Matrix1DWriter;
 
 /**
- * Unit test for SimpleObjectMatrix1DWriter.
+ * Unit test for SimpleMatrix1DWriter.
  *
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public final class SimpleObjectMatrix1DWriterTest
-    extends AbstractObjectMatrix1DWriterTest
+public final class SimpleMatrix1DWriterTest
+    extends AbstractMatrix1DWriterTest
 {
 
     /** {@inheritDoc} */
-    protected <E> ObjectMatrix1DWriter<E> createObjectMatrix1DWriter()
+    protected <E> Matrix1DWriter<E> createMatrix1DWriter()
     {
-        return new SimpleObjectMatrix1DWriter<E>();
+        return new SimpleMatrix1DWriter<E>();
     }
 
     public void testEmptyMatrix() throws IOException
     {
-        ObjectMatrix1D<String> matrix = new SparseObjectMatrix1D(0L);
-        ObjectMatrix1DWriter<String> writer = new SimpleObjectMatrix1DWriter();
+        Matrix1D<String> matrix = new SparseMatrix1D(0L);
+        Matrix1DWriter<String> writer = new SimpleMatrix1DWriter();
         StringBuffer appendable = new StringBuffer();
         appendable = writer.append(matrix, appendable);
         assertEquals("[]", appendable.toString());
@@ -59,9 +59,9 @@ public final class SimpleObjectMatrix1DWriterTest
 
     public void testOneElementMatrix() throws IOException
     {
-        ObjectMatrix1D<String> matrix = new SparseObjectMatrix1D(1L);
+        Matrix1D<String> matrix = new SparseMatrix1D(1L);
         matrix.setQuick(0L, "foo");
-        ObjectMatrix1DWriter<String> writer = new SimpleObjectMatrix1DWriter();
+        Matrix1DWriter<String> writer = new SimpleMatrix1DWriter();
         StringBuffer appendable = new StringBuffer();
         appendable = writer.append(matrix, appendable);
         assertEquals("[foo]", appendable.toString());
@@ -69,10 +69,10 @@ public final class SimpleObjectMatrix1DWriterTest
 
     public void testTwoElementMatrix() throws IOException
     {
-        ObjectMatrix1D<String> matrix = new SparseObjectMatrix1D(2L);
+        Matrix1D<String> matrix = new SparseMatrix1D(2L);
         matrix.setQuick(0L, "foo");
         matrix.setQuick(1L, "bar");
-        ObjectMatrix1DWriter<String> writer = new SimpleObjectMatrix1DWriter();
+        Matrix1DWriter<String> writer = new SimpleMatrix1DWriter();
         StringBuffer appendable = new StringBuffer();
         appendable = writer.append(matrix, appendable);
         assertEquals("[foo,bar]", appendable.toString());

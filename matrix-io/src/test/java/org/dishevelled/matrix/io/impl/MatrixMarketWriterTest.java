@@ -30,9 +30,9 @@ import java.io.OutputStream;
 
 import junit.framework.TestCase;
 
-import org.dishevelled.matrix.ObjectMatrix2D;
+import org.dishevelled.matrix.Matrix2D;
 
-import org.dishevelled.matrix.impl.SparseObjectMatrix2D;
+import org.dishevelled.matrix.impl.SparseMatrix2D;
 
 /**
  * Unit test for MatrixMarketWriter.
@@ -52,7 +52,7 @@ public final class MatrixMarketWriterTest
 
     public void testAppend() throws IOException
     {
-        ObjectMatrix2D<Double> matrix = new SparseObjectMatrix2D<Double>(16L, 16L);
+        Matrix2D<Double> matrix = new SparseMatrix2D<Double>(16L, 16L);
         matrix.setQuick(0L, 0L, Double.valueOf(0.0d));
         matrix.setQuick(2L, 2L, Double.valueOf(1.0d));
         matrix.setQuick(3L, 4L, Double.valueOf(2.0d));
@@ -93,7 +93,7 @@ public final class MatrixMarketWriterTest
 
     public void testWriteFile() throws IOException
     {
-        ObjectMatrix2D<Double> matrix = new SparseObjectMatrix2D<Double>(16L, 16L);
+        Matrix2D<Double> matrix = new SparseMatrix2D<Double>(16L, 16L);
         MatrixMarketWriter writer = new MatrixMarketWriter();
         File file = File.createTempFile("abstractObjectMatrix2DTest", null);
         writer.write(matrix, file);
@@ -129,7 +129,7 @@ public final class MatrixMarketWriterTest
 
     public void testWriteOutputStream() throws IOException
     {
-        ObjectMatrix2D<Double> matrix = new SparseObjectMatrix2D<Double>(16L, 16L);
+        Matrix2D<Double> matrix = new SparseMatrix2D<Double>(16L, 16L);
         MatrixMarketWriter writer = new MatrixMarketWriter();
         OutputStream outputStream = new ByteArrayOutputStream();
         writer.write(matrix, outputStream);

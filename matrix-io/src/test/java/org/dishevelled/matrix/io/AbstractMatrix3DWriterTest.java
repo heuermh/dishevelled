@@ -30,38 +30,38 @@ import java.io.OutputStream;
 
 import junit.framework.TestCase;
 
-import org.dishevelled.matrix.ObjectMatrix2D;
+import org.dishevelled.matrix.Matrix3D;
 
-import org.dishevelled.matrix.impl.SparseObjectMatrix2D;
+import org.dishevelled.matrix.impl.SparseMatrix3D;
 
 /**
- * Abstract unit test for implementations of ObjectMatrix2DWriter.
+ * Abstract unit test for implementations of Matrix3DWriter.
  *
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public abstract class AbstractObjectMatrix2DWriterTest
+public abstract class AbstractMatrix3DWriterTest
     extends TestCase
 {
 
     /**
-     * Create and return a new instance of an implementation of ObjectMatrix2DWriter to test.
+     * Create and return a new instance of an implementation of Matrix3DWriter to test.
      *
-     * @param <E> 2D matrix element type
-     * @return a new instance of an implementation of ObjectMatrix2DWriter to test
+     * @param <E> 3D matrix element type
+     * @return a new instance of an implementation of Matrix3DWriter to test
      */
-    protected abstract <E> ObjectMatrix2DWriter<E> createObjectMatrix2DWriter();
+    protected abstract <E> Matrix3DWriter<E> createMatrix3DWriter();
 
-    public void testCreateObjectMatrix2DWriter()
+    public void testCreateObjectMatrix3DWriter()
     {
-        ObjectMatrix2DWriter<String> writer = createObjectMatrix2DWriter();
+        Matrix3DWriter<String> writer = createMatrix3DWriter();
         assertNotNull(writer);
     }
 
     public void testAppend() throws IOException
     {
-        ObjectMatrix2D<String> matrix = new SparseObjectMatrix2D<String>(16L, 16L);
-        ObjectMatrix2DWriter<String> writer = createObjectMatrix2DWriter();
+        Matrix3D<String> matrix = new SparseMatrix3D<String>(16L, 16L, 16L);
+        Matrix3DWriter<String> writer = createMatrix3DWriter();
         StringBuffer appendable = new StringBuffer();
         appendable = writer.append(matrix, appendable);
         assertNotNull(appendable);
@@ -97,9 +97,9 @@ public abstract class AbstractObjectMatrix2DWriterTest
 
     public void testWriteFile() throws IOException
     {
-        ObjectMatrix2D<String> matrix = new SparseObjectMatrix2D<String>(16L, 16L);
-        ObjectMatrix2DWriter<String> writer = createObjectMatrix2DWriter();
-        File file = File.createTempFile("abstractObjectMatrix2DTest", null);
+        Matrix3D<String> matrix = new SparseMatrix3D<String>(16L, 16L, 16L);
+        Matrix3DWriter<String> writer = createMatrix3DWriter();
+        File file = File.createTempFile("abstractObjectMatrix3DTest", null);
         writer.write(matrix, file);
 
         try
@@ -133,8 +133,8 @@ public abstract class AbstractObjectMatrix2DWriterTest
 
     public void testWriteOutputStream() throws IOException
     {
-        ObjectMatrix2D<String> matrix = new SparseObjectMatrix2D<String>(16L, 16L);
-        ObjectMatrix2DWriter<String> writer = createObjectMatrix2DWriter();
+        Matrix3D<String> matrix = new SparseMatrix3D<String>(16L, 16L, 16L);
+        Matrix3DWriter<String> writer = createMatrix3DWriter();
         OutputStream outputStream = new ByteArrayOutputStream();
         writer.write(matrix, outputStream);
 
