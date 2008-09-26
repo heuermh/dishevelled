@@ -37,12 +37,12 @@ import org.dishevelled.functor.UnaryPredicate;
 import org.dishevelled.functor.UnaryProcedure;
 
 /**
- * Abstract unit test for ObjectMatrixUtils.
+ * Abstract unit test for MatrixUtils.
  *
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public abstract class AbstractObjectMatrixUtilsTest
+public abstract class AbstractMatrixUtilsTest
     extends TestCase
 {
     /** Binary function. */
@@ -147,41 +147,41 @@ public abstract class AbstractObjectMatrixUtilsTest
 
 
     /**
-     * Create and return a new instance of an implementation of ObjectMatrix1D<T> to test.
+     * Create and return a new instance of an implementation of Matrix1D<T> to test.
      *
      * @param <T> 1D object matrix type
-     * @return a new instance of an implementation of ObjectMatrix1D<T> to test
+     * @return a new instance of an implementation of Matrix1D<T> to test
      */
-    protected abstract <T> ObjectMatrix1D<T> createObjectMatrix1D();
+    protected abstract <T> Matrix1D<T> createObjectMatrix1D();
 
     /**
-     * Create and return a new instance of an implementation of ObjectMatrix2D<T> to test.
+     * Create and return a new instance of an implementation of Matrix2D<T> to test.
      *
      * @param <T> 2D object matrix type
-     * @return a new instance of an implementation of ObjectMatrix2D<T> to test
+     * @return a new instance of an implementation of Matrix2D<T> to test
      */
-    protected abstract <T> ObjectMatrix2D<T> createObjectMatrix2D();
+    protected abstract <T> Matrix2D<T> createObjectMatrix2D();
 
     /**
-     * Create and return a new instance of an implementation of ObjectMatrix3D<T> to test.
+     * Create and return a new instance of an implementation of Matrix3D<T> to test.
      *
      * @param <T> 3D object matrix type
-     * @return a new instance of an implementation of ObjectMatrix3D<T> to test
+     * @return a new instance of an implementation of Matrix3D<T> to test
      */
-    protected abstract <T> ObjectMatrix3D<T> createObjectMatrix3D();
+    protected abstract <T> Matrix3D<T> createObjectMatrix3D();
 
 
     public void testUnmodifiableObjectMatrix1D()
     {
-        ObjectMatrix1D<String> matrix = createObjectMatrix1D();
-        ObjectMatrix1D<String> other = createObjectMatrix1D();
-        ObjectMatrix1D<String> unmodifiableView = ObjectMatrixUtils.unmodifiableObjectMatrix(matrix);
+        Matrix1D<String> matrix = createObjectMatrix1D();
+        Matrix1D<String> other = createObjectMatrix1D();
+        Matrix1D<String> unmodifiableView = MatrixUtils.unmodifiableMatrix(matrix);
         assertNotNull("unmodifiableView not null", unmodifiableView);
 
         assertNotNull("aggregate(BinaryFunction, UnaryFunction) not null",
                       unmodifiableView.aggregate(binaryFunction, unaryFunction));
 
-        assertNotNull("aggregate(ObjectMatrix1D, BinaryFunction, BinaryFunction) not null",
+        assertNotNull("aggregate(Matrix1D, BinaryFunction, BinaryFunction) not null",
                       unmodifiableView.aggregate(other, binaryFunction, binaryFunction));
 
         assertEquals(matrix.cardinality(), unmodifiableView.cardinality());
@@ -219,7 +219,7 @@ public abstract class AbstractObjectMatrixUtilsTest
         try
         {
             unmodifiableView.assign(other);
-            fail("assign(ObjectMatrix1D) expected UnsupportedOperationException");
+            fail("assign(Matrix1D) expected UnsupportedOperationException");
         }
         catch (UnsupportedOperationException e)
         {
@@ -228,7 +228,7 @@ public abstract class AbstractObjectMatrixUtilsTest
         try
         {
             unmodifiableView.assign(other, binaryFunction);
-            fail("assign(ObjectMatrix1D, BinaryFunction) expected UnsupportedOperationException");
+            fail("assign(Matrix1D, BinaryFunction) expected UnsupportedOperationException");
         }
         catch (UnsupportedOperationException e)
         {
@@ -273,7 +273,7 @@ public abstract class AbstractObjectMatrixUtilsTest
 
         try
         {
-            ObjectMatrixUtils.unmodifiableObjectMatrix((ObjectMatrix1D<String>) null);
+            MatrixUtils.unmodifiableMatrix((Matrix1D<String>) null);
             fail("unmodifiableObjectMatrix(null) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
@@ -284,15 +284,15 @@ public abstract class AbstractObjectMatrixUtilsTest
 
     public void testUnmodifiableObjectMatrix2D()
     {
-        ObjectMatrix2D<String> matrix = createObjectMatrix2D();
-        ObjectMatrix2D<String> other = createObjectMatrix2D();
-        ObjectMatrix2D<String> unmodifiableView = ObjectMatrixUtils.unmodifiableObjectMatrix(matrix);
+        Matrix2D<String> matrix = createObjectMatrix2D();
+        Matrix2D<String> other = createObjectMatrix2D();
+        Matrix2D<String> unmodifiableView = MatrixUtils.unmodifiableMatrix(matrix);
         assertNotNull("unmodifiableView not null", unmodifiableView);
 
         assertNotNull("aggregate(BinaryFunction, UnaryFunction) not null",
                       unmodifiableView.aggregate(binaryFunction, unaryFunction));
 
-        assertNotNull("aggregate(ObjectMatrix2D, BinaryFunction, BinaryFunction) not null",
+        assertNotNull("aggregate(Matrix2D, BinaryFunction, BinaryFunction) not null",
                       unmodifiableView.aggregate(other, binaryFunction, binaryFunction));
 
         assertEquals(matrix.cardinality(), unmodifiableView.cardinality());
@@ -336,7 +336,7 @@ public abstract class AbstractObjectMatrixUtilsTest
         try
         {
             unmodifiableView.assign(other);
-            fail("assign(ObjectMatrix2D) expected UnsupportedOperationException");
+            fail("assign(Matrix2D) expected UnsupportedOperationException");
         }
         catch (UnsupportedOperationException e)
         {
@@ -345,7 +345,7 @@ public abstract class AbstractObjectMatrixUtilsTest
         try
         {
             unmodifiableView.assign(other, binaryFunction);
-            fail("assign(ObjectMatrix2D, BinaryFunction) expected UnsupportedOperationException");
+            fail("assign(Matrix2D, BinaryFunction) expected UnsupportedOperationException");
         }
         catch (UnsupportedOperationException e)
         {
@@ -390,7 +390,7 @@ public abstract class AbstractObjectMatrixUtilsTest
 
         try
         {
-            ObjectMatrixUtils.unmodifiableObjectMatrix((ObjectMatrix2D<String>) null);
+            MatrixUtils.unmodifiableMatrix((Matrix2D<String>) null);
             fail("unmodifiableObjectMatrix(null) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
@@ -401,15 +401,15 @@ public abstract class AbstractObjectMatrixUtilsTest
 
     public void testUnmodifiableObjectMatrix3D()
     {
-        ObjectMatrix3D<String> matrix = createObjectMatrix3D();
-        ObjectMatrix3D<String> other = createObjectMatrix3D();
-        ObjectMatrix3D<String> unmodifiableView = ObjectMatrixUtils.unmodifiableObjectMatrix(matrix);
+        Matrix3D<String> matrix = createObjectMatrix3D();
+        Matrix3D<String> other = createObjectMatrix3D();
+        Matrix3D<String> unmodifiableView = MatrixUtils.unmodifiableMatrix(matrix);
         assertNotNull("unmodifiableView not null", unmodifiableView);
 
         assertNotNull("aggregate(BinaryFunction, UnaryFunction) not null",
                       unmodifiableView.aggregate(binaryFunction, unaryFunction));
 
-        assertNotNull("aggregate(ObjectMatrix3D, BinaryFunction, BinaryFunction) not null",
+        assertNotNull("aggregate(Matrix3D, BinaryFunction, BinaryFunction) not null",
                       unmodifiableView.aggregate(other, binaryFunction, binaryFunction));
 
         assertEquals(matrix.cardinality(), unmodifiableView.cardinality());
@@ -455,7 +455,7 @@ public abstract class AbstractObjectMatrixUtilsTest
         try
         {
             unmodifiableView.assign(other);
-            fail("assign(ObjectMatrix3D) expected UnsupportedOperationException");
+            fail("assign(Matrix3D) expected UnsupportedOperationException");
         }
         catch (UnsupportedOperationException e)
         {
@@ -464,7 +464,7 @@ public abstract class AbstractObjectMatrixUtilsTest
         try
         {
             unmodifiableView.assign(other, binaryFunction);
-            fail("assign(ObjectMatrix3D, BinaryFunction) expected UnsupportedOperationException");
+            fail("assign(Matrix3D, BinaryFunction) expected UnsupportedOperationException");
         }
         catch (UnsupportedOperationException e)
         {
@@ -509,7 +509,7 @@ public abstract class AbstractObjectMatrixUtilsTest
 
         try
         {
-            ObjectMatrixUtils.unmodifiableObjectMatrix((ObjectMatrix3D<String>) null);
+            MatrixUtils.unmodifiableMatrix((Matrix3D<String>) null);
             fail("unmodifiableObjectMatrix(null) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)

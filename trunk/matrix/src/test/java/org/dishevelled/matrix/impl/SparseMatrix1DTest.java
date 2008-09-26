@@ -31,23 +31,23 @@ import java.io.ByteArrayOutputStream;
 
 import org.dishevelled.functor.BinaryProcedure;
 
-import org.dishevelled.matrix.ObjectMatrix1D;
-import org.dishevelled.matrix.AbstractObjectMatrix1DTest;
+import org.dishevelled.matrix.Matrix1D;
+import org.dishevelled.matrix.AbstractMatrix1DTest;
 
 /**
- * Unit test for SparseObjectMatrix1D.
+ * Unit test for SparseMatrix1D.
  *
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public class SparseObjectMatrix1DTest
-    extends AbstractObjectMatrix1DTest
+public class SparseMatrix1DTest
+    extends AbstractMatrix1DTest
 {
 
-    /** @see AbstractObjectMatrix1DTest */
-    protected <T> ObjectMatrix1D<T> createObjectMatrix1D(final long size)
+    /** @see AbstractMatrix1DTest */
+    protected <T> Matrix1D<T> createObjectMatrix1D(final long size)
     {
-        ObjectMatrix1D<T> m = new SparseObjectMatrix1D<T>(size);
+        Matrix1D<T> m = new SparseMatrix1D<T>(size);
         return m;
     }
 
@@ -58,7 +58,7 @@ public class SparseObjectMatrix1DTest
     public void testEmptySerialization()
         throws Exception
     {
-        final SparseObjectMatrix1D<String> m0 = new SparseObjectMatrix1D<String>(100);
+        final SparseMatrix1D<String> m0 = new SparseMatrix1D<String>(100);
         assertNotNull("m0 not null", m0);
         assertEquals("m0 size == 100", 100, m0.size());
         assertEquals("m0 cardinality == 0", 0, m0.cardinality());
@@ -74,9 +74,9 @@ public class SparseObjectMatrix1DTest
         in.close();
 
         assertNotNull("dest not null", dest);
-        assertTrue("dest instanceof SparseObjectMatrix1D", (dest instanceof SparseObjectMatrix1D));
+        assertTrue("dest instanceof SparseMatrix1D", (dest instanceof SparseMatrix1D));
 
-        final SparseObjectMatrix1D<String> m1 = (SparseObjectMatrix1D<String>) dest;
+        final SparseMatrix1D<String> m1 = (SparseMatrix1D<String>) dest;
 
         assertEquals("m1 size == m0 size", m0.size(), m1.size());
         assertEquals("m1 cardinality == m0 cardinality", m0.cardinality(), m1.cardinality());
@@ -93,7 +93,7 @@ public class SparseObjectMatrix1DTest
     public void testFullSerialization()
         throws Exception
     {
-        final SparseObjectMatrix1D<String> m0 = new SparseObjectMatrix1D<String>(100);
+        final SparseMatrix1D<String> m0 = new SparseMatrix1D<String>(100);
         assertNotNull("m0 not null", m0);
 
         m0.forEach(new BinaryProcedure<Long, String>()
@@ -118,9 +118,9 @@ public class SparseObjectMatrix1DTest
         in.close();
 
         assertNotNull("dest not null", dest);
-        assertTrue("dest instanceof SparseObjectMatrix1D", (dest instanceof SparseObjectMatrix1D));
+        assertTrue("dest instanceof SparseMatrix1D", (dest instanceof SparseMatrix1D));
 
-        final SparseObjectMatrix1D<String> m1 = (SparseObjectMatrix1D<String>) dest;
+        final SparseMatrix1D<String> m1 = (SparseMatrix1D<String>) dest;
 
         assertEquals("m1 size == m0 size", m0.size(), m1.size());
         assertEquals("m1 cardinality == m0 cardinality", m0.cardinality(), m1.size());
@@ -138,24 +138,24 @@ public class SparseObjectMatrix1DTest
     public void testEmptySerializationCompatibility()
         throws Exception
     {
-        final SparseObjectMatrix1D<String> m0 = new SparseObjectMatrix1D<String>(100);
+        final SparseMatrix1D<String> m0 = new SparseMatrix1D<String>(100);
         assertNotNull("m0 not null", m0);
         assertEquals("m0 size == 100", 100, m0.size());
         assertEquals("m0 cardinality == 0", 0, m0.cardinality());
         assertTrue("m0 instanceof Serializable", (m0 instanceof Serializable));
 
-        String name = "SparseObjectMatrix1D<String>.empty.ser";
-        java.net.URL url = SparseObjectMatrix1DTest.class.getResource(name);
+        String name = "SparseMatrix1D<String>.empty.ser";
+        java.net.URL url = SparseMatrix1DTest.class.getResource(name);
         assertNotNull("url not null", url);
 
-        ObjectInputStream in = new ObjectInputStream(SparseObjectMatrix1DTest.class.getResourceAsStream(name));
+        ObjectInputStream in = new ObjectInputStream(SparseMatrix1DTest.class.getResourceAsStream(name));
         Object dest = in.readObject();
         in.close();
 
         assertNotNull("dest not null", dest);
-        assertTrue("dest instanceof SparseObjectMatrix1D", (dest instanceof SparseObjectMatrix1D));
+        assertTrue("dest instanceof SparseMatrix1D", (dest instanceof SparseMatrix1D));
 
-        final SparseObjectMatrix1D<String> m1 = (SparseObjectMatrix1D<String>) dest;
+        final SparseMatrix1D<String> m1 = (SparseMatrix1D<String>) dest;
 
         assertEquals("m1 size == m0 size", m0.size(), m1.size());
         assertEquals("m1 cardinality == m0 cardinality", m0.cardinality(), m1.cardinality());
@@ -173,7 +173,7 @@ public class SparseObjectMatrix1DTest
     public void testFullSerializationCompatibility()
         throws Exception
     {
-        final SparseObjectMatrix1D<String> m0 = new SparseObjectMatrix1D<String>(100);
+        final SparseMatrix1D<String> m0 = new SparseMatrix1D<String>(100);
         assertNotNull("m0 not null", m0);
 
         m0.forEach(new BinaryProcedure<Long, String>()
@@ -190,15 +190,15 @@ public class SparseObjectMatrix1DTest
 
         System.out.println("m0 before=" + m0);
 
-        String name = "SparseObjectMatrix1D<String>.full.ser";
-        ObjectInputStream in = new ObjectInputStream(SparseObjectMatrix1DTest.class.getResourceAsStream(name));
+        String name = "SparseMatrix1D<String>.full.ser";
+        ObjectInputStream in = new ObjectInputStream(SparseMatrix1DTest.class.getResourceAsStream(name));
         Object dest = in.readObject();
         in.close();
 
         assertNotNull("dest not null", dest);
-        assertTrue("dest instanceof SparseObjectMatrix1D", (dest instanceof SparseObjectMatrix1D));
+        assertTrue("dest instanceof SparseMatrix1D", (dest instanceof SparseMatrix1D));
 
-        final SparseObjectMatrix1D<String> m1 = (SparseObjectMatrix1D<String>) dest;
+        final SparseMatrix1D<String> m1 = (SparseMatrix1D<String>) dest;
 
         System.out.println("m0 after=" + m0);
         System.out.println("m1=" + m1);

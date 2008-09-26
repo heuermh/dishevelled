@@ -34,7 +34,7 @@ import java.util.HashMap;
 import org.dishevelled.functor.UnaryProcedure;
 
 /**
- * Sparse implementation of ObjectMatrix1D based on
+ * Sparse implementation of Matrix1D based on
  * a hash map whose keys are <code>Long</code>s.
  *
  * <p>The cardinality of this sparse object matrix is limited
@@ -47,8 +47,8 @@ import org.dishevelled.functor.UnaryProcedure;
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public class SparseObjectMatrix1D<E>
-    extends AbstractObjectMatrix1D<E>
+public class SparseMatrix1D<E>
+    extends AbstractMatrix1D<E>
     implements Serializable
 {
     /** Map of elements keyed by a <code>Long</code> index. */
@@ -61,7 +61,7 @@ public class SparseObjectMatrix1D<E>
     /**
      * Private no-arg constructor, to support serialization.
      */
-    private SparseObjectMatrix1D()
+    private SparseMatrix1D()
     {
         elements = null;
     }
@@ -72,7 +72,7 @@ public class SparseObjectMatrix1D<E>
      * @param size size, must be <code>&gt;= 0</code>
      * @throws IllegalArgumentException if <code>size</code> is negative
      */
-    public SparseObjectMatrix1D(final long size)
+    public SparseMatrix1D(final long size)
     {
         this(size, (int) Math.min(Integer.MAX_VALUE, (size * DEFAULT_LOAD_FACTOR)), DEFAULT_LOAD_FACTOR);
     }
@@ -85,14 +85,14 @@ public class SparseObjectMatrix1D<E>
      * @param initialCapacity initial capacity, must be <code>&gt;= 0</code>
      * @param loadFactor load factor, must be <code>&gt; 0</code>
      */
-    public SparseObjectMatrix1D(final long size, final int initialCapacity, final float loadFactor)
+    public SparseMatrix1D(final long size, final int initialCapacity, final float loadFactor)
     {
         super(size);
         elements = new HashMap<Long, E>(initialCapacity, loadFactor);
     }
 
     /**
-     * Create a new instance of SparseObjectMatrix1D with the specified
+     * Create a new instance of SparseMatrix1D with the specified
      * parameters and map of elements.  Used exclusively by the
      * <code>clone()</code> method.
      *
@@ -102,7 +102,7 @@ public class SparseObjectMatrix1D<E>
      * @param isView true if this instance is a view
      * @param elements map of elements
      */
-    protected SparseObjectMatrix1D(final long size,
+    protected SparseMatrix1D(final long size,
                                    final long zero,
                                    final long stride,
                                    final boolean isView,
@@ -116,7 +116,7 @@ public class SparseObjectMatrix1D<E>
     /** {@inheritDoc} */
     public Object clone()
     {
-        return new SparseObjectMatrix1D<E>(size, zero, stride, isView, elements);
+        return new SparseMatrix1D<E>(size, zero, stride, isView, elements);
     }
 
     /** {@inheritDoc} */
@@ -183,7 +183,7 @@ public class SparseObjectMatrix1D<E>
     }
 
     /**
-     * Write this 1D object matrix to the specified object output stream.
+     * Write this 1D matrix to the specified object output stream.
      *
      * @see java.io.ObjectOutputStream
      * @param out object output stream
@@ -200,7 +200,7 @@ public class SparseObjectMatrix1D<E>
     }
 
     /**
-     * Read this 1D object matrix in from the specified object input stream.
+     * Read this 1D matrix in from the specified object input stream.
      *
      * @see java.io.ObjectInputStream
      * @param in object input stream

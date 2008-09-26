@@ -40,7 +40,7 @@ import org.dishevelled.functor.TertiaryProcedure;
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public interface ObjectMatrix2D<E>
+public interface Matrix2D<E>
     extends Iterable<E>
 {
 
@@ -159,7 +159,7 @@ public interface ObjectMatrix2D<E>
      * @throws UnsupportedOperationException if this <code>assign</code> operation
      *    is not supported by this 2D matrix
      */
-    ObjectMatrix2D<E> assign(E e);
+    Matrix2D<E> assign(E e);
 
     /**
      * Assign the result of the specified function to each value
@@ -170,7 +170,7 @@ public interface ObjectMatrix2D<E>
      * @throws UnsupportedOperationException if this <code>assign</code> operation
      *    is not supported by this 2D matrix
      */
-    ObjectMatrix2D<E> assign(UnaryFunction<E, E> function);
+    Matrix2D<E> assign(UnaryFunction<E, E> function);
 
     /**
      * Assign all values in this 2D matrix to the values in the
@@ -182,7 +182,7 @@ public interface ObjectMatrix2D<E>
      * @throws UnsupportedOperationException if this <code>assign</code> operation
      *    is not supported by this 2D matrix
      */
-    ObjectMatrix2D<E> assign(ObjectMatrix2D<? extends E> other);
+    Matrix2D<E> assign(Matrix2D<? extends E> other);
 
     /**
      * Assign the result of the specified function of a value from
@@ -196,7 +196,7 @@ public interface ObjectMatrix2D<E>
      * @throws UnsupportedOperationException if this <code>assign</code> operation
      *    is not supported by this 2D matrix
      */
-    ObjectMatrix2D<E> assign(ObjectMatrix2D<? extends E> other,
+    Matrix2D<E> assign(Matrix2D<? extends E> other,
                              BinaryFunction<E, E, E> function);
 
     /**
@@ -219,7 +219,7 @@ public interface ObjectMatrix2D<E>
      * @param function function, must not be null
      * @return the aggregate result
      */
-    E aggregate(ObjectMatrix2D<? extends E> other,
+    E aggregate(Matrix2D<? extends E> other,
                 BinaryFunction<E, E, E> aggr,
                 BinaryFunction<E, E, E> function);
 
@@ -233,7 +233,7 @@ public interface ObjectMatrix2D<E>
      * @throws IndexOutOfBoundsException if <code>row</code> is negative or if
      *    <code>row</code> is greater than or equal to <code>rows()</code>
      */
-    ObjectMatrix1D<E> viewRow(long row);
+    Matrix1D<E> viewRow(long row);
 
     /**
      * Return a new 1D matrix <i>slice view</i> of the specified column.  The view
@@ -245,7 +245,7 @@ public interface ObjectMatrix2D<E>
      * @throws IndexOutOfBoundsException if <code>column</code> is negative or if
      *    <code>column</code> is greater than or equal to <code>columns()</code>
      */
-    ObjectMatrix1D<E> viewColumn(long column);
+    Matrix1D<E> viewColumn(long column);
 
     /**
      * Return a new 2D matrix <i>dice (transposition) view</i>.  The view has
@@ -257,7 +257,7 @@ public interface ObjectMatrix2D<E>
      *
      * @return a new 2D matrix <i>dice (transposition) view</i>
      */
-    ObjectMatrix2D<E> viewDice();
+    Matrix2D<E> viewDice();
 
     /**
      * Return a new 2D matrix <i>flip view</i> along the row axis.
@@ -268,7 +268,7 @@ public interface ObjectMatrix2D<E>
      *
      * @return a new 2D matrix <i>flip view</i> along the row axis
      */
-    ObjectMatrix2D<E> viewRowFlip();
+    Matrix2D<E> viewRowFlip();
 
     /**
      * Return a new 2D matrix <i>flip view</i> along the column axis.
@@ -279,7 +279,7 @@ public interface ObjectMatrix2D<E>
      *
      * @return a new 2D matrix <i>flip view</i> along the column axis
      */
-    ObjectMatrix2D<E> viewColumnFlip();
+    Matrix2D<E> viewColumnFlip();
 
     /**
      * Return a new 2D matrix <i>sub-range view</i> that contains only those values
@@ -296,7 +296,7 @@ public interface ObjectMatrix2D<E>
      *    from <code>(row, column)</code> to
      *    <code>(row + height - 1, column + width - 1)</code>.
      */
-    ObjectMatrix2D<E> viewPart(long row, long column, long height, long width);
+    Matrix2D<E> viewPart(long row, long column, long height, long width);
 
     /**
      * Return a new 2D matrix <i>selection view</i> that contains only those values at the
@@ -308,7 +308,7 @@ public interface ObjectMatrix2D<E>
      * @return a new 2D matrix <i>selection view</i> that contains only those values at the
      *    specified indices
      */
-    ObjectMatrix2D<E> viewSelection(long[] rowIndices, long[] columnIndices);
+    Matrix2D<E> viewSelection(long[] rowIndices, long[] columnIndices);
 
     /**
      * Return a new 2D matrix <i>selection view</i> that contains only those <b>rows</b>
@@ -320,7 +320,7 @@ public interface ObjectMatrix2D<E>
      * @return a new 2D matrix view that contains only those rows
      *    selected by the specified predicate
      */
-    ObjectMatrix2D<E> viewSelection(UnaryPredicate<ObjectMatrix1D<E>> predicate);
+    Matrix2D<E> viewSelection(UnaryPredicate<Matrix1D<E>> predicate);
 
     /**
      * Return a new 2D matrix <i>selection view</i> that contains only those values
@@ -331,7 +331,7 @@ public interface ObjectMatrix2D<E>
      * @return a new 2D matrix <i>selection view</i> that contains only those values
      *    at the indices present in the specified mask
      */
-    ObjectMatrix2D<E> viewSelection(BitMatrix2D mask);
+    Matrix2D<E> viewSelection(BitMatrix2D mask);
 
     /**
      * Return a new 2D matrix <i>stride view</i> which is a sub matrix consisting
@@ -347,14 +347,14 @@ public interface ObjectMatrix2D<E>
      * @throws IndexOutOfBoundsException if either <code>rowStride</code>
      *    or <code>columnStride</code> are negative or zero
      */
-    ObjectMatrix2D<E> viewStrides(long rowStride, long columnStride);
+    Matrix2D<E> viewStrides(long rowStride, long columnStride);
 
     /**
      * Apply the specified procedure to each value in this 2D matrix.
      *
      * <p>For example:
      * <pre>
-     * ObjectMatrix2D&lt;String&gt; m;
+     * Matrix2D&lt;String&gt; m;
      * m.forEach(new UnaryProcedure&lt;String&gt;()
      *     {
      *         public void run(final String value)
@@ -374,7 +374,7 @@ public interface ObjectMatrix2D<E>
      *
      * <p>For example:
      * <pre>
-     * ObjectMatrix2D&lt;String&gt; m;
+     * Matrix2D&lt;String&gt; m;
      * m.forEach(new UnaryPredicate&lt;String&gt;()
      *     {
      *         public boolean test(final String value)
@@ -401,7 +401,7 @@ public interface ObjectMatrix2D<E>
      *
      * <p>For example:
      * <pre>
-     * ObjectMatrix2D&lt;String&gt; m;
+     * Matrix2D&lt;String&gt; m;
      * m.forEachNonNull(new UnaryProcedure&lt;String&gt;()
      *     {
      *         public void run(final String value)
@@ -421,7 +421,7 @@ public interface ObjectMatrix2D<E>
      *
      * <p>For example:
      * <pre>
-     * ObjectMatrix2D&lt;String&gt; m;
+     * Matrix2D&lt;String&gt; m;
      * m.forEach(new TertiaryProcedure&lt;Long, Long, String&gt;()
      *     {
      *         public void run(final Long row, final Long column, final String value)
@@ -441,7 +441,7 @@ public interface ObjectMatrix2D<E>
      *
      * <p>For example:
      * <pre>
-     * ObjectMatrix2D&lt;String&gt; m;
+     * Matrix2D&lt;String&gt; m;
      * m.forEach(new TertiaryPredicate&lt;Long, Long, String&gt;()
      *     {
      *         public boolean test(final Long row, final Long column, final String value)

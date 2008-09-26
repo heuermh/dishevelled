@@ -33,56 +33,56 @@ import org.dishevelled.functor.BinaryFunction;
 import org.dishevelled.functor.QuaternaryProcedure;
 
 /**
- * Abstract unit test for implementations of ObjectMatrix3D.
+ * Abstract unit test for implementations of Matrix3D.
  *
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public abstract class AbstractObjectMatrix3DTest
+public abstract class AbstractMatrix3DTest
     extends TestCase
 {
 
     /**
-     * Create a new instance of ObjectMatrix3D to test.
+     * Create a new instance of Matrix3D to test.
      *
      * @param slices slices
      * @param rows rows
      * @param columns columns
-     * @return a new instance of ObjectMatrix3D to test
+     * @return a new instance of Matrix3D to test
      */
-    protected abstract <T> ObjectMatrix3D<T> createObjectMatrix3D(long slices, long rows, long columns);
+    protected abstract <T> Matrix3D<T> createObjectMatrix3D(long slices, long rows, long columns);
 
     public void testSize()
     {
-        ObjectMatrix3D<String> m0 = createObjectMatrix3D(0, 0, 0);
+        Matrix3D<String> m0 = createObjectMatrix3D(0, 0, 0);
         assertNotNull("m0 not null", m0);
         assertEquals("m0 size == 0", 0, m0.size());
         assertEquals("m0 slices == 0", 0, m0.slices());
         assertEquals("m0 rows == 0", 0, m0.rows());
         assertEquals("m0 columns == 0", 0, m0.columns());
 
-        ObjectMatrix3D<String> m1 = createObjectMatrix3D(1, 1, 1);
+        Matrix3D<String> m1 = createObjectMatrix3D(1, 1, 1);
         assertNotNull("m1 not null", m1);
         assertEquals("m1 size == 1", 1, m1.size());
         assertEquals("m1 slices == 1", 1, m1.slices());
         assertEquals("m1 rows == 1", 1, m1.rows());
         assertEquals("m1 columns == 1", 1, m1.columns());
 
-        ObjectMatrix3D<String> m2 = createObjectMatrix3D(10, 10, 10);
+        Matrix3D<String> m2 = createObjectMatrix3D(10, 10, 10);
         assertNotNull("m2 not null", m2);
         assertEquals("m2 size == 1000", 1000, m2.size());
         assertEquals("m2 slices == 10", 10, m2.slices());
         assertEquals("m2 rows == 10", 10, m2.rows());
         assertEquals("m2 columns == 10", 10, m2.columns());
 
-        ObjectMatrix3D<String> m3 = createObjectMatrix3D(100, 100, 100);
+        Matrix3D<String> m3 = createObjectMatrix3D(100, 100, 100);
         assertNotNull("m3 not null", m3);
         assertEquals("m3 size == 1000000", 1000000, m3.size());
         assertEquals("m3 slices == 100", 100, m3.slices());
         assertEquals("m3 rows == 100", 100, m3.rows());
         assertEquals("m3 columns == 100", 100, m3.columns());
 
-        ObjectMatrix3D<String> m4 = createObjectMatrix3D(1000, 1000, 10);
+        Matrix3D<String> m4 = createObjectMatrix3D(1000, 1000, 10);
         assertNotNull("m4 not null", m4);
         assertEquals("m4 size == 10000000", 10000000, m4.size());
         assertEquals("m4 slices == 1000", 1000, m4.slices());
@@ -92,7 +92,7 @@ public abstract class AbstractObjectMatrix3DTest
 
     public void testCardinality()
     {
-        ObjectMatrix3D<String> m = createObjectMatrix3D(10, 10, 10);
+        Matrix3D<String> m = createObjectMatrix3D(10, 10, 10);
         assertNotNull("m not null", m);
         assertEquals("m size == 1000", 1000, m.size());
         assertEquals("m cardinality == 0", 0, m.cardinality());
@@ -121,7 +121,7 @@ public abstract class AbstractObjectMatrix3DTest
 
     public void testIsEmpty()
     {
-        ObjectMatrix3D<String> m = createObjectMatrix3D(10, 10, 10);
+        Matrix3D<String> m = createObjectMatrix3D(10, 10, 10);
         assertNotNull("m not null");
         assertEquals("m size == 1000", 1000, m.size());
         assertEquals("m cardinality == 0", 0, m.cardinality());
@@ -138,7 +138,7 @@ public abstract class AbstractObjectMatrix3DTest
 
     public void testGet()
     {
-        ObjectMatrix3D<String> m = createObjectMatrix3D(10, 10, 10);
+        Matrix3D<String> m = createObjectMatrix3D(10, 10, 10);
         assertNotNull("m not null");
         assertEquals("m size == 1000", 1000, m.size());
 
@@ -224,7 +224,7 @@ public abstract class AbstractObjectMatrix3DTest
 
     public void testSet()
     {
-        ObjectMatrix3D<String> m = createObjectMatrix3D(10, 10, 10);
+        Matrix3D<String> m = createObjectMatrix3D(10, 10, 10);
         assertNotNull("m not null");
         assertEquals("m size == 1000", 1000, m.size());
 
@@ -303,12 +303,12 @@ public abstract class AbstractObjectMatrix3DTest
 
     public void testAssign()
     {
-        ObjectMatrix3D<String> m = createObjectMatrix3D(10, 10, 10);
+        Matrix3D<String> m = createObjectMatrix3D(10, 10, 10);
         assertNotNull("m not null");
         assertEquals("m size == 1000", 1000, m.size());
         assertEquals("m cardinality == 0", 0, m.cardinality());
 
-        ObjectMatrix3D<String> m0 = m.assign((String) null);
+        Matrix3D<String> m0 = m.assign((String) null);
         assertNotNull("m0 not null", m0);
         assertEquals("m0.get(0, 0, 0) == null", null, m0.get(0, 0, 0));
         assertEquals("m0.get(0, 1, 0) == null", null, m0.get(0, 1, 0));
@@ -316,7 +316,7 @@ public abstract class AbstractObjectMatrix3DTest
         assertEquals("m0.cardinality() == 0", 0, m0.cardinality());
         assertEquals("m0 == m", m, m0);
 
-        ObjectMatrix3D<String> m1 = m.assign("foo");
+        Matrix3D<String> m1 = m.assign("foo");
         assertNotNull("m1 not null", m1);
         assertEquals("m1.get(0, 0, 0) == foo", "foo", m1.get(0, 0, 0));
         assertEquals("m1.get(0, 1, 0) == foo", "foo", m1.get(0, 1, 0));
@@ -324,7 +324,7 @@ public abstract class AbstractObjectMatrix3DTest
         assertEquals("m1.cardinality() == 1000", 1000, m1.cardinality());
         assertEquals("m1 == m", m, m1);
 
-        ObjectMatrix3D<String> m2 = m.assign((String) null);
+        Matrix3D<String> m2 = m.assign((String) null);
         assertNotNull("m2 not null", m2);
         assertEquals("m2.get(0, 0, 0) == null", null, m2.get(0, 0, 0));
         assertEquals("m2.get(0, 1, 0) == null", null, m2.get(0, 1, 0));
@@ -332,7 +332,7 @@ public abstract class AbstractObjectMatrix3DTest
         assertEquals("m2.cardinality() == 0", 0, m2.cardinality());
         assertEquals("m2 == m", m, m2);
 
-        ObjectMatrix3D<String> m3 = m.assign(new UnaryFunction<String, String>()
+        Matrix3D<String> m3 = m.assign(new UnaryFunction<String, String>()
             {
                 public String evaluate(final String s)
                 {
@@ -346,7 +346,7 @@ public abstract class AbstractObjectMatrix3DTest
         assertEquals("m3.cardinality() == 0", 0, m3.cardinality());
         assertEquals("m3 == m", m, m3);
 
-        ObjectMatrix3D<String> m4 = m.assign(new UnaryFunction<String, String>()
+        Matrix3D<String> m4 = m.assign(new UnaryFunction<String, String>()
             {
                 public String evaluate(final String s)
                 {
@@ -362,7 +362,7 @@ public abstract class AbstractObjectMatrix3DTest
 
         try
         {
-            ObjectMatrix3D<String> m5 = m.assign((UnaryFunction<String,String>) null);
+            Matrix3D<String> m5 = m.assign((UnaryFunction<String,String>) null);
             fail("assign((UnaryFunction<String,String>) null) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
@@ -370,16 +370,16 @@ public abstract class AbstractObjectMatrix3DTest
             // expected
         }
 
-        ObjectMatrix3D<String> nulls = createObjectMatrix3D(10, 10, 10);
+        Matrix3D<String> nulls = createObjectMatrix3D(10, 10, 10);
         nulls.assign((String) null);
 
-        ObjectMatrix3D<String> bars = createObjectMatrix3D(10, 10, 10);
+        Matrix3D<String> bars = createObjectMatrix3D(10, 10, 10);
         bars.assign("bar");
 
-        ObjectMatrix3D<String> bazs = createObjectMatrix3D(10, 10, 10);
+        Matrix3D<String> bazs = createObjectMatrix3D(10, 10, 10);
         bazs.assign("baz");
 
-        ObjectMatrix3D<String> m6 = m.assign(nulls);
+        Matrix3D<String> m6 = m.assign(nulls);
         assertNotNull("m6 not null", m6);
         assertEquals("m6.get(0, 0, 0) == null", null, m6.get(0, 0, 0));
         assertEquals("m6.get(0, 1, 0) == null", null, m6.get(0, 1, 0));
@@ -387,7 +387,7 @@ public abstract class AbstractObjectMatrix3DTest
         assertEquals("m6.cardinality() == 0", 0, m6.cardinality());
         assertEquals("m6 == m", m, m6);
 
-        ObjectMatrix3D<String> m7 = m.assign(bars);
+        Matrix3D<String> m7 = m.assign(bars);
         assertNotNull("m7 not null", m7);
         assertEquals("m7.get(0, 0, 0) == bar", "bar", m7.get(0, 0, 0));
         assertEquals("m7.get(0, 1, 0) == bar", "bar", m7.get(0, 1, 0));
@@ -395,7 +395,7 @@ public abstract class AbstractObjectMatrix3DTest
         assertEquals("m7.cardinality() == 1000", 1000, m7.cardinality());
         assertEquals("m7 == m", m, m7);
 
-        ObjectMatrix3D<String> m8 = m.assign(bazs);
+        Matrix3D<String> m8 = m.assign(bazs);
         assertNotNull("m8 not null", m8);
         assertEquals("m8.get(0, 0, 0) == baz", "baz", m8.get(0, 0, 0));
         assertEquals("m8.get(0, 1, 0) == baz", "baz", m8.get(0, 1, 0));
@@ -405,8 +405,8 @@ public abstract class AbstractObjectMatrix3DTest
 
         try
         {
-            ObjectMatrix3D<String> m9 = m.assign((ObjectMatrix3D<String>) null);
-            fail("assign((ObjectMatrix3D<E>) null) expected IllegalArgumentException");
+            Matrix3D<String> m9 = m.assign((Matrix3D<String>) null);
+            fail("assign((Matrix3D<E>) null) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
         {
@@ -415,7 +415,7 @@ public abstract class AbstractObjectMatrix3DTest
 
         try
         {
-            ObjectMatrix3D<String> tooSmall = createObjectMatrix3D(9, 10, 10);
+            Matrix3D<String> tooSmall = createObjectMatrix3D(9, 10, 10);
             m.assign(tooSmall);
             fail("assign(tooSmall) expected IllegalArgumentException");
         }
@@ -426,7 +426,7 @@ public abstract class AbstractObjectMatrix3DTest
 
         try
         {
-            ObjectMatrix3D<String> tooBig = createObjectMatrix3D(10, 11, 10);
+            Matrix3D<String> tooBig = createObjectMatrix3D(10, 11, 10);
             m.assign(tooBig);
             fail("assign(tooBig) expected IllegalArgumentException");
         }
@@ -436,7 +436,7 @@ public abstract class AbstractObjectMatrix3DTest
         }
 
         m.clear();
-        ObjectMatrix3D<String> m10 = m.assign(nulls,
+        Matrix3D<String> m10 = m.assign(nulls,
                                               new BinaryFunction<String, String, String>()
             {
                 public String evaluate(final String s0, final String s1)
@@ -451,7 +451,7 @@ public abstract class AbstractObjectMatrix3DTest
         assertEquals("m10.cardinality() == 1000", 1000, m10.cardinality());
         assertEquals("m10 == m", m, m10);
 
-        ObjectMatrix3D<String> m11 = m.assign(bars,
+        Matrix3D<String> m11 = m.assign(bars,
                                               new BinaryFunction<String, String, String>()
             {
                 public String evaluate(final String s0, final String s1)
@@ -476,8 +476,8 @@ public abstract class AbstractObjectMatrix3DTest
 
         try
         {
-            ObjectMatrix3D<String> m12 = m.assign((ObjectMatrix3D<String>) null, ignore);
-            fail("assign((ObjectMatrix3D<E>) null,) expected IllegalArgumentException");
+            Matrix3D<String> m12 = m.assign((Matrix3D<String>) null, ignore);
+            fail("assign((Matrix3D<E>) null,) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
         {
@@ -486,7 +486,7 @@ public abstract class AbstractObjectMatrix3DTest
 
         try
         {
-            ObjectMatrix3D<String> tooSmall = createObjectMatrix3D(9, 10, 10);
+            Matrix3D<String> tooSmall = createObjectMatrix3D(9, 10, 10);
             m.assign(tooSmall, ignore);
             fail("assign(tooSmall,) expected IllegalArgumentException");
         }
@@ -497,7 +497,7 @@ public abstract class AbstractObjectMatrix3DTest
 
         try
         {
-            ObjectMatrix3D<String> tooBig = createObjectMatrix3D(10, 11, 10);
+            Matrix3D<String> tooBig = createObjectMatrix3D(10, 11, 10);
             m.assign(tooBig, ignore);
             fail("assign(tooBig,) expected IllegalArgumentException");
         }
@@ -524,7 +524,7 @@ public abstract class AbstractObjectMatrix3DTest
 
     public void testIterator()
     {
-        ObjectMatrix3D<String> m = createObjectMatrix3D(10, 10, 10);
+        Matrix3D<String> m = createObjectMatrix3D(10, 10, 10);
         assertNotNull("m not null");
         assertEquals("m size == 1000", 1000, m.size());
         assertEquals("m cardinality == 0", 0, m.cardinality());
@@ -599,7 +599,7 @@ public abstract class AbstractObjectMatrix3DTest
 
     public void testForEachNonNull()
     {
-        ObjectMatrix3D<String> m = createObjectMatrix3D(10, 10, 10);
+        Matrix3D<String> m = createObjectMatrix3D(10, 10, 10);
         final MutableInt count = new MutableInt();
 
         count.setValue(0);
@@ -634,7 +634,7 @@ public abstract class AbstractObjectMatrix3DTest
              });
         assertEquals("count == 1000", 1000, count.intValue());
 
-        ObjectMatrix3D<String> rowFlip = m.viewRowFlip();
+        Matrix3D<String> rowFlip = m.viewRowFlip();
         count.setValue(0);
         rowFlip.forEachNonNull(new UnaryProcedure<String>()
              {
@@ -645,7 +645,7 @@ public abstract class AbstractObjectMatrix3DTest
              });
         assertEquals("count == 1000", 1000, count.intValue());
 
-        ObjectMatrix2D<String> slice = m.viewSlice(0);
+        Matrix2D<String> slice = m.viewSlice(0);
         count.setValue(0);
         slice.forEachNonNull(new UnaryProcedure<String>()
              {
@@ -656,7 +656,7 @@ public abstract class AbstractObjectMatrix3DTest
              });
         assertEquals("count == 100", 100, count.intValue());
 
-        ObjectMatrix1D<String> firstRowOfSlice = slice.viewRow(0);
+        Matrix1D<String> firstRowOfSlice = slice.viewRow(0);
         count.setValue(0);
         firstRowOfSlice.forEachNonNull(new UnaryProcedure<String>()
              {
@@ -685,7 +685,7 @@ public abstract class AbstractObjectMatrix3DTest
 
     public void testViewSlice()
     {
-        final ObjectMatrix3D<String> m = createObjectMatrix3D(10, 10, 10);
+        final Matrix3D<String> m = createObjectMatrix3D(10, 10, 10);
         m.forEach(new QuaternaryProcedure<Long, Long, Long, String>()
             {
                 public void run(final Long slice, final Long row, final Long column, final String s)
@@ -704,7 +704,7 @@ public abstract class AbstractObjectMatrix3DTest
         assertEquals("m get(0,9,0) == 0x9x0", "0x9x0", m.get(0, 9, 0));
         assertEquals("m get(9,9,9) == 9x9x9", "9x9x9", m.get(9, 9, 9));
 
-        ObjectMatrix2D<String> firstSlice = m.viewSlice(0);
+        Matrix2D<String> firstSlice = m.viewSlice(0);
         assertNotNull("firstSlice not null", firstSlice);
         assertEquals("firstSlice size == 100", 100, firstSlice.size());
         assertEquals("firstSlice cardinality == 100", 100, firstSlice.cardinality());
@@ -714,7 +714,7 @@ public abstract class AbstractObjectMatrix3DTest
         assertEquals("firstSlice.get(1, 1) == 0x1x1", "0x1x1", firstSlice.get(1, 1));
         assertEquals("firstSlice.get(9, 9) == 0x9x9", "0x9x9", firstSlice.get(9, 9));
 
-        ObjectMatrix2D<String> lastSlice = m.viewSlice(9);
+        Matrix2D<String> lastSlice = m.viewSlice(9);
         assertNotNull("lastSlice not null", lastSlice);
         assertEquals("lastSlice size == 100", 100, lastSlice.size());
         assertEquals("lastSlice cardinality == 100", 100, lastSlice.cardinality());
@@ -727,7 +727,7 @@ public abstract class AbstractObjectMatrix3DTest
 
     public void testViewRow()
     {
-        final ObjectMatrix3D<String> m = createObjectMatrix3D(10, 10, 10);
+        final Matrix3D<String> m = createObjectMatrix3D(10, 10, 10);
         m.forEach(new QuaternaryProcedure<Long, Long, Long, String>()
             {
                 public void run(final Long slice, final Long row, final Long column, final String s)
@@ -746,7 +746,7 @@ public abstract class AbstractObjectMatrix3DTest
         assertEquals("m get(0,9,0) == 0x9x0", "0x9x0", m.get(0, 9, 0));
         assertEquals("m get(9,9,9) == 9x9x9", "9x9x9", m.get(9, 9, 9));
 
-        ObjectMatrix2D<String> firstRow = m.viewRow(0);
+        Matrix2D<String> firstRow = m.viewRow(0);
         assertNotNull("firstRow not null", firstRow);
         assertEquals("firstRow size == 100", 100, firstRow.size());
         assertEquals("firstRow cardinality == 100", 100, firstRow.cardinality());
@@ -756,7 +756,7 @@ public abstract class AbstractObjectMatrix3DTest
         assertEquals("firstRow.get(1, 1) == 1x0x1", "1x0x1", firstRow.get(1, 1));
         assertEquals("firstRow.get(9, 9) == 9x0x9", "9x0x9", firstRow.get(9, 9));
 
-        ObjectMatrix2D<String> lastRow = m.viewRow(9);
+        Matrix2D<String> lastRow = m.viewRow(9);
         assertNotNull("lastRow not null", lastRow);
         assertEquals("lastRow size == 100", 100, lastRow.size());
         assertEquals("lastRow cardinality == 100", 100, lastRow.cardinality());
@@ -769,7 +769,7 @@ public abstract class AbstractObjectMatrix3DTest
 
     public void testViewColumn()
     {
-        final ObjectMatrix3D<String> m = createObjectMatrix3D(10, 10, 10);
+        final Matrix3D<String> m = createObjectMatrix3D(10, 10, 10);
         m.forEach(new QuaternaryProcedure<Long, Long, Long, String>()
             {
                 public void run(final Long slice, final Long row, final Long column, final String s)
@@ -788,7 +788,7 @@ public abstract class AbstractObjectMatrix3DTest
         assertEquals("m get(0,9,0) == 0x9x0", "0x9x0", m.get(0, 9, 0));
         assertEquals("m get(9,9,9) == 9x9x9", "9x9x9", m.get(9, 9, 9));
 
-        ObjectMatrix2D<String> firstColumn = m.viewColumn(0);
+        Matrix2D<String> firstColumn = m.viewColumn(0);
         assertNotNull("firstColumn not null", firstColumn);
         assertEquals("firstColumn size == 100", 100, firstColumn.size());
         assertEquals("firstColumn cardinality == 100", 100, firstColumn.cardinality());
@@ -798,7 +798,7 @@ public abstract class AbstractObjectMatrix3DTest
         assertEquals("firstColumn.get(1, 1) == 1x1x0", "1x1x0", firstColumn.get(1, 1));
         assertEquals("firstColumn.get(9, 9) == 9x9x0", "9x9x0", firstColumn.get(9, 9));
         
-        ObjectMatrix2D<String> lastColumn = m.viewColumn(9);
+        Matrix2D<String> lastColumn = m.viewColumn(9);
         assertNotNull("lastColumn not null", lastColumn);
         assertEquals("lastColumn size == 100", 100, lastColumn.size());
         assertEquals("lastColumn cardinality == 100", 100, lastColumn.cardinality());
@@ -811,8 +811,8 @@ public abstract class AbstractObjectMatrix3DTest
 
     public void testRowFlip()
     {
-        ObjectMatrix3D<String> m = createObjectMatrix3D(10, 10, 10);
-        ObjectMatrix3D<String> rowFlip = m.viewRowFlip();
+        Matrix3D<String> m = createObjectMatrix3D(10, 10, 10);
+        Matrix3D<String> rowFlip = m.viewRowFlip();
         assertNotNull("rowFlip not null", rowFlip);
         assertEquals("rowFlip size == m size", m.size(), rowFlip.size());
         assertEquals("rowFlip cardinality == m cardinality", m.cardinality(), rowFlip.cardinality());
