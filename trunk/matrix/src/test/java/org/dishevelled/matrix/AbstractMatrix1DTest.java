@@ -530,6 +530,11 @@ public abstract class AbstractMatrix1DTest
         {
             // expected
         }
+
+        Matrix1D<String> empty0 = createObjectMatrix1D(0);
+        Matrix1D<String> empty1 = createObjectMatrix1D(0);
+        assertEquals(null, empty0.aggregate(append, passThru));
+        assertEquals(null, empty0.aggregate(empty1, append, combine));
     }
 
     public void testIterator()
@@ -734,6 +739,78 @@ public abstract class AbstractMatrix1DTest
                           assertTrue("s == foo or s == bar", ("bar".equals(s)) || ("foo".equals(s)));
                       }
                   });
+
+        try
+        {
+            m.forEach((UnaryProcedure<String>) null);
+            fail("forEach((UnaryProcedure<String>) null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+
+        try
+        {
+            m.forEach((UnaryPredicate<String>) null, (UnaryProcedure<String>) null);
+            fail("forEach((UnaryPredicate<String>) null, (UnaryProcedure<String>) null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+
+        try
+        {
+            m.forEach(new UnaryPredicate<String>()
+                  {
+                      public boolean test(final String s)
+                      {
+                          return ("foo".equals(s));
+                      }
+                  }, (UnaryProcedure<String>) null);
+            fail("forEach(,(UnaryProcedure<String>) null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+
+        try
+        {
+            m.forEach((BinaryProcedure<Long, String>) null);
+            fail("forEach((BinaryProcedure<Long, String>) null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+
+        try
+        {
+            m.forEach((BinaryPredicate<Long, String>) null, (BinaryProcedure<Long, String>) null);
+            fail("forEach((BinaryPredicate<Long, String>) null, (BinaryProcedure<Long, String>) null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+
+        try
+        {
+            m.forEach(new BinaryPredicate<Long, String>()
+                  {
+                      public boolean test(final Long index, final String s)
+                      {
+                          return ((0L == index.longValue()) || ("foo".equals(s)));
+                      }
+                  }, (BinaryProcedure<Long, String>) null);
+            fail("forEach(,(BinaryProcedure<Long, String>) null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
     }
 
     public void testViewFlip()
@@ -1003,5 +1080,12 @@ public abstract class AbstractMatrix1DTest
         assertEquals("part cardinality == 0", 0, part.cardinality());
         assertEquals("stride size == 5", 5, stride.size());
         assertEquals("stride cardinality == 0", 0, stride.cardinality());
+    }
+
+    public void testToString()
+    {
+        Matrix1D<String> m = createObjectMatrix1D(10);
+        m.assign("foo");
+        assertNotNull(m.toString());
     }
 }

@@ -588,6 +588,11 @@ public abstract class AbstractMatrix2DTest
         {
             // expected
         }
+
+        Matrix2D<String> empty0 = createObjectMatrix2D(0, 0);
+        Matrix2D<String> empty1 = createObjectMatrix2D(0, 0);
+        assertEquals(null, empty0.aggregate(append, passThru));
+        assertEquals(null, empty0.aggregate(empty1, append, combine));
     }
 
     public void testIterator()
@@ -804,6 +809,78 @@ public abstract class AbstractMatrix2DTest
                               assertTrue("s == foo or s == bar", ("bar".equals(s)) || ("foo".equals(s)));
                           }
                   });
+
+        try
+        {
+            m.forEach((UnaryProcedure<String>) null);
+            fail("forEach((UnaryProcedure<String>) null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+
+        try
+        {
+            m.forEach((UnaryPredicate<String>) null, (UnaryProcedure<String>) null);
+            fail("forEach((UnaryPredicate<String>) null, (UnaryProcedure<String>) null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+
+        try
+        {
+            m.forEach(new UnaryPredicate<String>()
+                  {
+                      public boolean test(final String s)
+                      {
+                          return ("foo".equals(s));
+                      }
+                  }, (UnaryProcedure<String>) null);
+            fail("forEach(,(UnaryProcedure<String>) null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+
+        try
+        {
+            m.forEach((TertiaryProcedure<Long, Long, String>) null);
+            fail("forEach((TertiaryProcedure<Long, Long, String>) null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+
+        try
+        {
+            m.forEach((TertiaryPredicate<Long, Long, String>) null, (TertiaryProcedure<Long, Long, String>) null);
+            fail("forEach((TertiaryPredicate<Long, Long, String>) null, (TertiaryProcedure<Long, Long, String>) null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+
+        try
+        {
+            m.forEach(new TertiaryPredicate<Long, Long, String>()
+                  {
+                      public boolean test(final Long row, final Long column, final String s)
+                      {
+                          return ((0L == row.longValue()) || ("foo".equals(s)));
+                      }
+                  }, (TertiaryProcedure<Long, Long, String>) null);
+            fail("forEach(,(TertiaryProcedure<Long, Long, String>) null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
     }
 
     public void testViewRow()
@@ -1336,5 +1413,12 @@ public abstract class AbstractMatrix2DTest
         assertEquals("every2ndOfEvery10thColumn.get(1, 2) == 1x40", "1x40", every2ndOfEvery10thColumn.get(1, 2));
         assertEquals("every2ndOfEvery10thColumn.get(2, 2) == 2x40", "2x40", every2ndOfEvery10thColumn.get(2, 2));
         assertEquals("every2ndOfEvery10thColumn.get(99, 4) == 99x80", "99x80", every2ndOfEvery10thColumn.get(99, 4));
+    }
+
+    public void testToString()
+    {
+        Matrix2D<String> m = createObjectMatrix2D(10, 10);
+        m.assign("foo");
+        assertNotNull(m.toString());
     }
 }
