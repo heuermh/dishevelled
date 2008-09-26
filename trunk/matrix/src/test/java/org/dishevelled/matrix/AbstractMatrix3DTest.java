@@ -28,8 +28,10 @@ import junit.framework.TestCase;
 import org.apache.commons.lang.mutable.MutableInt;
 
 import org.dishevelled.functor.UnaryFunction;
+import org.dishevelled.functor.UnaryPredicate;
 import org.dishevelled.functor.UnaryProcedure;
 import org.dishevelled.functor.BinaryFunction;
+import org.dishevelled.functor.QuaternaryPredicate;
 import org.dishevelled.functor.QuaternaryProcedure;
 
 /**
@@ -680,7 +682,160 @@ public abstract class AbstractMatrix3DTest
 
     public void testForEach()
     {
-        // TODO
+        Matrix3D<String> m = createMatrix3D(10, 10, 10);
+
+        m.forEach(new UnaryProcedure<String>()
+              {
+                  public void run(final String s)
+                  {
+                      assertEquals("s == null", null, s);
+                  }
+              });
+
+        m.assign("foo");
+        m.forEach(new UnaryProcedure<String>()
+              {
+                  public void run(final String s)
+                  {
+                      assertEquals("s == foo", "foo", s);
+                  }
+              });
+
+        m.set(0, 0, 0, "bar");
+        m.set(0, 0, 1, null);
+        m.forEach(new UnaryPredicate<String>()
+                  {
+                      public boolean test(final String s)
+                          {
+                              return ("foo".equals(s));
+                          }
+                  },
+                  new UnaryProcedure<String>()
+                  {
+                      public void run(final String s)
+                          {
+                              assertEquals("s == foo", "foo", s);
+                      }
+                  });
+
+        m.assign((String) null);
+        m.forEach(new QuaternaryProcedure<Long, Long, Long, String>()
+            {
+                public void run(final Long slice, final Long row, final Long column, final String s)
+                {
+                    assertTrue("slice >= 0", slice >= 0);
+                    assertTrue("slice < 10", slice < 10);
+                    assertTrue("row >= 0", row >= 0);
+                    assertTrue("row < 10", row < 10);
+                    assertTrue("column >= 0", column >= 0);
+                    assertTrue("column < 10", column < 10);
+                    assertEquals("s == null", null, s);
+                }
+            });
+
+        m.assign("foo");
+        m.forEach(new QuaternaryProcedure<Long, Long, Long, String>()
+            {
+                public void run(final Long slice, final Long row, final Long column, final String s)
+                {
+                    assertTrue("slice >= 0", slice >= 0);
+                    assertTrue("slice < 10", slice < 10);
+                    assertTrue("row >= 0", row >= 0);
+                    assertTrue("row < 10", row < 10);
+                    assertTrue("column >= 0", column >= 0);
+                    assertTrue("column < 10", column < 10);
+                    assertEquals("s == foo", "foo", s);
+                }
+            });
+
+        m.set(0, 0, 0, "bar");
+        m.set(0, 0, 1, null);
+        m.forEach(new QuaternaryPredicate<Long, Long, Long, String>()
+                  {
+                      public boolean test(final Long slice, final Long row, final Long column, final String s)
+                          {
+                              return ( ((0L == row.longValue()) && (0L == column.longValue())) || ("foo".equals(s)) ); 
+                          }
+                  },
+                  new QuaternaryProcedure<Long, Long, Long, String>()
+                  {
+                      public void run(final Long slice, final Long row, final Long column, final String s)
+                          {
+                              assertTrue("s == foo or s == bar", ("bar".equals(s)) || ("foo".equals(s)));
+                          }
+                  });
+
+        try
+        {
+            m.forEach((UnaryProcedure<String>) null);
+            fail("forEach((UnaryProcedure<String>) null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+
+        try
+        {
+            m.forEach((UnaryPredicate<String>) null, (UnaryProcedure<String>) null);
+            fail("forEach((UnaryPredicate<String>) null, (UnaryProcedure<String>) null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+
+        try
+        {
+            m.forEach(new UnaryPredicate<String>()
+                  {
+                      public boolean test(final String s)
+                      {
+                          return ("foo".equals(s));
+                      }
+                  }, (UnaryProcedure<String>) null);
+            fail("forEach(,(UnaryProcedure<String>) null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+
+        try
+        {
+            m.forEach((QuaternaryProcedure<Long, Long, Long, String>) null);
+            fail("forEach((QuatenaryProcedure<Long, Long, Long, String>) null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+
+        try
+        {
+            m.forEach((QuaternaryPredicate<Long, Long, Long, String>) null, (QuaternaryProcedure<Long, Long, Long, String>) null);
+            fail("forEach((QuaternaryPredicate<Long, Long, Long, String>) null, (QuaternaryProcedure<Long, Long, Long, String>) null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+
+        try
+        {
+            m.forEach(new QuaternaryPredicate<Long, Long, Long, String>()
+                  {
+                      public boolean test(final Long slice, final Long row, final Long column, final String s)
+                      {
+                          return ((0L == row.longValue()) || ("foo".equals(s)));
+                      }
+                  }, (QuaternaryProcedure<Long, Long, Long, String>) null);
+            fail("forEach(,(QuaternaryProcedure<Long, Long, Long, String>) null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
     }
 
     public void testViewSlice()
@@ -824,5 +979,12 @@ public abstract class AbstractMatrix3DTest
         rowFlip.clear();
         assertEquals("rowFlip size == m size", m.size(), rowFlip.size());
         assertEquals("rowFlip cardinality == m cardinality", m.cardinality(), rowFlip.cardinality());
+    }
+
+    public void testToString()
+    {
+        Matrix3D<String> m = createMatrix3D(10, 10, 10);
+        m.assign("foo");
+        assertNotNull(m.toString());
     }
 }

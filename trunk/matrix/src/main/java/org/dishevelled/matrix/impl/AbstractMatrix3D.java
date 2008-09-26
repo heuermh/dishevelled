@@ -681,6 +681,10 @@ abstract class AbstractMatrix3D<E>
     /** {@inheritDoc} */
     public void forEach(final UnaryProcedure<? super E> procedure)
     {
+        if (procedure == null)
+        {
+            throw new IllegalArgumentException("procedure must not be null");
+        }
         for (long slice = 0; slice < slices; slice++)
         {
             for (long row = 0; row < rows; row++)
@@ -698,6 +702,14 @@ abstract class AbstractMatrix3D<E>
     public void forEach(final UnaryPredicate<? super E> predicate,
                         final UnaryProcedure<? super E> procedure)
     {
+        if (predicate == null)
+        {
+            throw new IllegalArgumentException("predicate must not be null");
+        }
+        if (procedure == null)
+        {
+            throw new IllegalArgumentException("procedure must not be null");
+        }
         for (long slice = 0; slice < slices; slice++)
         {
             for (long row = 0; row < rows; row++)
@@ -717,6 +729,10 @@ abstract class AbstractMatrix3D<E>
     /** {@inheritDoc} */
     public void forEachNonNull(final UnaryProcedure<? super E> procedure)
     {
+        if (procedure == null)
+        {
+            throw new IllegalArgumentException("procedure must not be null");
+        }
         forEach(new UnaryPredicate<E>()
             {
                 public boolean test(final E e)
@@ -729,6 +745,10 @@ abstract class AbstractMatrix3D<E>
     /** {@inheritDoc} */
     public void forEach(final QuaternaryProcedure<Long, Long, Long, ? super E> procedure)
     {
+        if (procedure == null)
+        {
+            throw new IllegalArgumentException("procedure must not be null");
+        }
         for (long slice = 0; slice < slices; slice++)
         {
             for (long row = 0; row < rows; row++)
@@ -746,6 +766,14 @@ abstract class AbstractMatrix3D<E>
     public void forEach(final QuaternaryPredicate<Long, Long, Long, ? super E> predicate,
                         final QuaternaryProcedure<Long, Long, Long, ? super E> procedure)
     {
+        if (predicate == null)
+        {
+            throw new IllegalArgumentException("predicate must not be null");
+        }
+        if (procedure == null)
+        {
+            throw new IllegalArgumentException("procedure must not be null");
+        }
         for (long slice = 0; slice < slices; slice++)
         {
             for (long row = 0; row < rows; row++)
