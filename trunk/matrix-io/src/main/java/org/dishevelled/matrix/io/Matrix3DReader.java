@@ -25,46 +25,46 @@ package org.dishevelled.matrix.io;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.OutputStream;
+import java.io.InputStream;
 
-import org.dishevelled.matrix.ObjectMatrix3D;
+import java.net.URL;
+
+import org.dishevelled.matrix.Matrix3D;
 
 /**
- * Writer for matrices of objects in three dimensions.
+ * Reader for matrices of objects in three dimensions.
  *
  * @param <E> 3D matrix element type
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public interface ObjectMatrix3DWriter<E>
+public interface Matrix3DReader<E>
 {
 
     /**
-     * Append the specified 3D matrix to the specified appendable.
+     * Read a 3D matrix from the specified file.
      *
-     * @param <T> extends Appendable
-     * @param matrix 3D matrix to append, must not be null
-     * @param appendable appendable to append the specified 3D matrix to, must not be null
-     * @return the specified appendable with the specified 3D matrix appended
+     * @param file file to read from, must not be null
+     * @return a 3D matrix read from the specified file
      * @throws IOException if an IO error occurs
      */
-    <T extends Appendable> T append(ObjectMatrix3D<? extends E> matrix, T appendable) throws IOException;
+    Matrix3D<E> read(File file) throws IOException;
 
     /**
-     * Write the specified 3D matrix to the specified file.
+     * Read a 3D matrix from the specified URL.
      *
-     * @param matrix 3D matrix to write, must not be null
-     * @param file file to write to, must not be null
+     * @param url URL to read from, must not be null
+     * @return a 3D matrix read from the specified URL
      * @throws IOException if an IO error occurs
      */
-    void write(ObjectMatrix3D<? extends E> matrix, File file) throws IOException;
+    Matrix3D<E> read(URL url) throws IOException;
 
     /**
-     * Write the specified 3D matrix to the specified output stream.
+     * Read a 3D matrix from the specified input stream.
      *
-     * @param matrix 3D matrix to write, must not be null
-     * @param outputStream output stream to write to, must not be null
+     * @param inputStream input stream to read from, must not be null
+     * @return a 3D matrix read from the specified input stream
      * @throws IOException if an IO error occurs
      */
-    void write(ObjectMatrix3D<? extends E> matrix, OutputStream outputStream) throws IOException;
+    Matrix3D<E> read(InputStream inputStream) throws IOException;
 }

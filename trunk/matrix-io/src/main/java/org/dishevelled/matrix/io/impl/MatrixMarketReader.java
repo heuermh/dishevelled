@@ -32,11 +32,11 @@ import java.io.InputStreamReader;
 
 import java.net.URL;
 
-import org.dishevelled.matrix.ObjectMatrix2D;
+import org.dishevelled.matrix.Matrix2D;
 
-import org.dishevelled.matrix.impl.SparseObjectMatrix2D;
+import org.dishevelled.matrix.impl.SparseMatrix2D;
 
-import org.dishevelled.matrix.io.ObjectMatrix2DReader;
+import org.dishevelled.matrix.io.Matrix2DReader;
 
 /**
  * Matrix Market format reader for sparse matrices of doubles in two dimensions.
@@ -45,11 +45,11 @@ import org.dishevelled.matrix.io.ObjectMatrix2DReader;
  * @version $Revision$ $Date$
  */
 public final class MatrixMarketReader
-    implements ObjectMatrix2DReader<Double>
+    implements Matrix2DReader<Double>
 {
 
     /** {@inheritDoc} */
-    public ObjectMatrix2D<Double> read(final File file) throws IOException
+    public Matrix2D<Double> read(final File file) throws IOException
     {
         if (file == null)
         {
@@ -72,7 +72,7 @@ public final class MatrixMarketReader
     }
 
     /** {@inheritDoc} */
-    public ObjectMatrix2D<Double> read(final URL url) throws IOException
+    public Matrix2D<Double> read(final URL url) throws IOException
     {
         if (url == null)
         {
@@ -95,7 +95,7 @@ public final class MatrixMarketReader
     }
 
     /** {@inheritDoc} */
-    public ObjectMatrix2D<Double> read(final InputStream inputStream) throws IOException
+    public Matrix2D<Double> read(final InputStream inputStream) throws IOException
     {
         if (inputStream == null)
         {
@@ -103,7 +103,7 @@ public final class MatrixMarketReader
         }
         int lineNumber = 0;
         BufferedReader reader = null;
-        ObjectMatrix2D<Double> matrix = null;
+        Matrix2D<Double> matrix = null;
         try
         {
             reader = new BufferedReader(new InputStreamReader(inputStream));
@@ -119,7 +119,7 @@ public final class MatrixMarketReader
                         long rows = Long.parseLong(tokens[0]);
                         long columns = Long.parseLong(tokens[1]);
                         int cardinality = Integer.parseInt(tokens[2]);
-                        matrix = new SparseObjectMatrix2D<Double>(rows, columns, cardinality, 0.75f);
+                        matrix = new SparseMatrix2D<Double>(rows, columns, cardinality, 0.75f);
                     }
                     else
                     {
@@ -135,11 +135,15 @@ public final class MatrixMarketReader
         }
         catch (NumberFormatException e)
         {
-            throw new IOException("caught NumberFormatException at line number " + lineNumber, e);
+            throw new IOException("caught NumberFormatException at line number " + lineNumber + "\n" + e.getMessage());
+            // jdk 1.6+
+            //throw new IOException("caught NumberFormatException at line number " + lineNumber, e);
         }
         catch (IndexOutOfBoundsException e)
         {
-            throw new IOException("caught IndexOutOfBoundsException at line number " + lineNumber, e);
+            throw new IOException("caught IndexOutOfBoundsException at line number " + lineNumber + "\n" + e.getMessage());
+            // jdk 1.6+
+            //throw new IOException("caught IndexOutOfBoundsException at line number " + lineNumber, e);
         }
         finally
         {

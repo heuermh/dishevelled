@@ -23,6 +23,6 @@
 */
 
 /**
- * Implementations of <b>ObjectMatrix*DReader</b> and <b>ObjectMatrix*DWriter</b>.
+ * Implementations of <b>Matrix*DReader</b> and <b>Matrix*DWriter</b>.
  */
 package org.dishevelled.matrix.io.impl;

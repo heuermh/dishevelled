@@ -29,7 +29,7 @@ import java.io.InputStream;
 
 import java.net.URL;
 
-import org.dishevelled.matrix.ObjectMatrix1D;
+import org.dishevelled.matrix.Matrix1D;
 
 /**
  * Reader for matrices of objects in one dimension.
@@ -38,7 +38,7 @@ import org.dishevelled.matrix.ObjectMatrix1D;
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public interface ObjectMatrix1DReader<E>
+public interface Matrix1DReader<E>
 {
 
     /**
@@ -48,7 +48,7 @@ public interface ObjectMatrix1DReader<E>
      * @return a 1D matrix read from the specified file
      * @throws IOException if an IO error occurs
      */
-    ObjectMatrix1D<E> read(File file) throws IOException;
+    Matrix1D<E> read(File file) throws IOException;
 
     /**
      * Read a 1D matrix from the specified URL.
@@ -57,7 +57,7 @@ public interface ObjectMatrix1DReader<E>
      * @return a 1D matrix read from the specified URL
      * @throws IOException if an IO error occurs
      */
-    ObjectMatrix1D<E> read(URL url) throws IOException;
+    Matrix1D<E> read(URL url) throws IOException;
 
     /**
      * Read a 1D matrix from the specified input stream.
@@ -66,5 +66,5 @@ public interface ObjectMatrix1DReader<E>
      * @return a 1D matrix read from the specified input stream
      * @throws IOException if an IO error occurs
      */
-    ObjectMatrix1D<E> read(InputStream inputStream) throws IOException;
+    Matrix1D<E> read(InputStream inputStream) throws IOException;
 }

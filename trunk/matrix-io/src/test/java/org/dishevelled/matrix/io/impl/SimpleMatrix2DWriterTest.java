@@ -25,33 +25,33 @@ package org.dishevelled.matrix.io.impl;
 
 import java.io.IOException;
 
-import org.dishevelled.matrix.ObjectMatrix2D;
+import org.dishevelled.matrix.Matrix2D;
 
-import org.dishevelled.matrix.impl.SparseObjectMatrix2D;
+import org.dishevelled.matrix.impl.SparseMatrix2D;
 
-import org.dishevelled.matrix.io.AbstractObjectMatrix2DWriterTest;
-import org.dishevelled.matrix.io.ObjectMatrix2DWriter;
+import org.dishevelled.matrix.io.AbstractMatrix2DWriterTest;
+import org.dishevelled.matrix.io.Matrix2DWriter;
 
 /**
- * Unit test for SimpleObjectMatrix2DWriter.
+ * Unit test for SimpleMatrix2DWriter.
  *
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public final class SimpleObjectMatrix2DWriterTest
-    extends AbstractObjectMatrix2DWriterTest
+public final class SimpleMatrix2DWriterTest
+    extends AbstractMatrix2DWriterTest
 {
 
     /** {@inheritDoc} */
-    protected <E> ObjectMatrix2DWriter<E> createObjectMatrix2DWriter()
+    protected <E> Matrix2DWriter<E> createMatrix2DWriter()
     {
-        return new SimpleObjectMatrix2DWriter<E>();
+        return new SimpleMatrix2DWriter<E>();
     }
 
     public void testEmptyMatrix() throws IOException
     {
-        ObjectMatrix2D<String> matrix = new SparseObjectMatrix2D(0L, 0L);
-        ObjectMatrix2DWriter<String> writer = new SimpleObjectMatrix2DWriter();
+        Matrix2D<String> matrix = new SparseMatrix2D(0L, 0L);
+        Matrix2DWriter<String> writer = new SimpleMatrix2DWriter();
         StringBuffer appendable = new StringBuffer();
         appendable = writer.append(matrix, appendable);
         assertEquals("[]", appendable.toString());
@@ -59,9 +59,9 @@ public final class SimpleObjectMatrix2DWriterTest
 
     public void testOneElementMatrix() throws IOException
     {
-        ObjectMatrix2D<String> matrix = new SparseObjectMatrix2D(1L, 1L);
+        Matrix2D<String> matrix = new SparseMatrix2D(1L, 1L);
         matrix.setQuick(0L, 0L, "foo");
-        ObjectMatrix2DWriter<String> writer = new SimpleObjectMatrix2DWriter();
+        Matrix2DWriter<String> writer = new SimpleMatrix2DWriter();
         StringBuffer appendable = new StringBuffer();
         appendable = writer.append(matrix, appendable);
         assertEquals("[foo]", appendable.toString());
