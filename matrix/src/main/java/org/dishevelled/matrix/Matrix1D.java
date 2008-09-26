@@ -40,7 +40,7 @@ import org.dishevelled.functor.BinaryProcedure;
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public interface ObjectMatrix1D<E>
+public interface Matrix1D<E>
     extends Iterable<E>
 {
 
@@ -134,7 +134,7 @@ public interface ObjectMatrix1D<E>
      * @throws UnsupportedOperationException if this <code>assign</code> operation
      *    is not supported by this 1D matrix
      */
-    ObjectMatrix1D<E> assign(E e);
+    Matrix1D<E> assign(E e);
 
     /**
      * Assign the result of the specified function to each value
@@ -145,7 +145,7 @@ public interface ObjectMatrix1D<E>
      * @throws UnsupportedOperationException if this <code>assign</code> operation
      *    is not supported by this 1D matrix
      */
-    ObjectMatrix1D<E> assign(UnaryFunction<E, E> function);
+    Matrix1D<E> assign(UnaryFunction<E, E> function);
 
     /**
      * Assign all values in this 1D matrix to the values in the
@@ -157,7 +157,7 @@ public interface ObjectMatrix1D<E>
      * @throws UnsupportedOperationException if this <code>assign</code> operation
      *    is not supported by this 1D matrix
      */
-    ObjectMatrix1D<E> assign(ObjectMatrix1D<? extends E> other);
+    Matrix1D<E> assign(Matrix1D<? extends E> other);
 
     /**
      * Assign the result of the specified function of a value from
@@ -171,7 +171,7 @@ public interface ObjectMatrix1D<E>
      * @throws UnsupportedOperationException if this <code>assign</code> operation
      *    is not supported by this 1D matrix
      */
-    ObjectMatrix1D<E> assign(ObjectMatrix1D<? extends E> other,
+    Matrix1D<E> assign(Matrix1D<? extends E> other,
                              BinaryFunction<E, E, E> function);
 
     /**
@@ -194,7 +194,7 @@ public interface ObjectMatrix1D<E>
      * @param function function, must not be null
      * @return the aggregate result
      */
-    E aggregate(ObjectMatrix1D<? extends E> other,
+    E aggregate(Matrix1D<? extends E> other,
                 BinaryFunction<E, E, E> aggr,
                 BinaryFunction<E, E, E> function);
 
@@ -207,7 +207,7 @@ public interface ObjectMatrix1D<E>
      *
      * @return a new 1D matrix <i>flip view</i>
      */
-    ObjectMatrix1D<E> viewFlip();
+    Matrix1D<E> viewFlip();
 
     /**
      * Return a new 1D matrix <i>sub-range view</i> that contains only those values
@@ -220,7 +220,7 @@ public interface ObjectMatrix1D<E>
      * @return a new 1D matrix <i>sub-range view</i> that contains only those values
      *    from index <code>index</code> to <code>index + width - 1</code>
      */
-    ObjectMatrix1D<E> viewPart(long index, long width);
+    Matrix1D<E> viewPart(long index, long width);
 
     /**
      * Return a new 1D matrix <i>selection view</i> that contains only those values
@@ -232,7 +232,7 @@ public interface ObjectMatrix1D<E>
      * @return a new 1D matrix <i>selection view</i> that contains only those values
      *    at the specified indices
      */
-    ObjectMatrix1D<E> viewSelection(long[] indices);
+    Matrix1D<E> viewSelection(long[] indices);
 
     /**
      * Return a new 1D matrix <i>selection view</i> that contains only those values
@@ -244,7 +244,7 @@ public interface ObjectMatrix1D<E>
      * @return a new 1D matrix <i>selection view</i> that contains only those values
      *    selected by the specified predicate
      */
-    ObjectMatrix1D<E> viewSelection(UnaryPredicate<E> predicate);
+    Matrix1D<E> viewSelection(UnaryPredicate<E> predicate);
 
     /**
      * Return a new 1D matrix <i>selection view</i> that contains only those values
@@ -255,7 +255,7 @@ public interface ObjectMatrix1D<E>
      * @return a new 1D matrix <i>selection view</i> that contains only those values
      *    at the indices present in the specified mask
      */
-    ObjectMatrix1D<E> viewSelection(BitMatrix1D mask);
+    Matrix1D<E> viewSelection(BitMatrix1D mask);
 
     /**
      * Return a new 1D matrix <i>stride view</i> which is a sub matrix
@@ -269,14 +269,14 @@ public interface ObjectMatrix1D<E>
      * @throws IndexOutOfBoundsException if <code>stride</code> is
      *    negative or zero
      */
-    ObjectMatrix1D<E> viewStrides(long stride);
+    Matrix1D<E> viewStrides(long stride);
 
     /**
      * Apply the specified procedure to each value in this 1D matrix.
      *
      * <p>For example:
      * <pre>
-     * ObjectMatrix1D&lt;String&gt; m;
+     * Matrix1D&lt;String&gt; m;
      * m.forEach(new UnaryProcedure&lt;String&gt;()
      *     {
      *         public void run(final String value)
@@ -296,7 +296,7 @@ public interface ObjectMatrix1D<E>
      *
      * <p>For example:
      * <pre>
-     * ObjectMatrix1D&lt;String&gt; m;
+     * Matrix1D&lt;String&gt; m;
      * m.forEach(new UnaryPredicate&lt;String&gt;()
      *     {
      *         public boolean test(final String value)
@@ -323,7 +323,7 @@ public interface ObjectMatrix1D<E>
      *
      * <p>For example:
      * <pre>
-     * ObjectMatrix1D&lt;String&gt; m;
+     * Matrix1D&lt;String&gt; m;
      * m.forEachNonNull(new UnaryProcedure&lt;String&gt;()
      *     {
      *         public void run(final String value)
@@ -343,7 +343,7 @@ public interface ObjectMatrix1D<E>
      *
      * <p>For example:
      * <pre>
-     * ObjectMatrix1D&lt;String&gt; m;
+     * Matrix1D&lt;String&gt; m;
      * m.forEach(new BinaryProcedure&lt;Long, String&gt;()
      *     {
      *         public void run(final Long index, final String value)
@@ -363,7 +363,7 @@ public interface ObjectMatrix1D<E>
      *
      * <p>For example:
      * <pre>
-     * ObjectMatrix1D&lt;String&gt; m;
+     * Matrix1D&lt;String&gt; m;
      * m.forEach(new BinaryPredicate&lt;Long, String&gt;()
      *     {
      *         public boolean test(final Long index, final String value)

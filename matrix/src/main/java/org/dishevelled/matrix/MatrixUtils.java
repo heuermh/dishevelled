@@ -37,86 +37,86 @@ import org.dishevelled.functor.UnaryPredicate;
 import org.dishevelled.functor.UnaryProcedure;
 
 /**
- * Static utility methods on object matrices.
+ * Static utility methods on matrices.
  *
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public final class ObjectMatrixUtils
+public final class MatrixUtils
 {
 
     /**
      * Private constructor.
      */
-    private ObjectMatrixUtils()
+    private MatrixUtils()
     {
         // empty
     }
 
 
     /**
-     * Return an unmodifiable view of the specified 1D object matrix.  Query operations
-     * on the returned 1D object matrix read through to the specified matrix, and any attempt
-     * to modify the returned 1D object matrix, whether directly or via its iterator, will result
+     * Return an unmodifiable view of the specified 1D matrix.  Query operations
+     * on the returned 1D matrix read through to the specified matrix, and any attempt
+     * to modify the returned 1D matrix, whether directly or via its iterator, will result
      * in an <code>UnsupportedOperationException</code>.
      *
-     * @param <T> 1D object matrix type
-     * @param matrix 1D object matrix to view, must not be null
-     * @return an unmodifiable view of the specified 1D object matrix
+     * @param <T> 1D matrix type
+     * @param matrix 1D matrix to view, must not be null
+     * @return an unmodifiable view of the specified 1D matrix
      */
-    public static <T> ObjectMatrix1D<T> unmodifiableObjectMatrix(final ObjectMatrix1D<T> matrix)
+    public static <T> Matrix1D<T> unmodifiableMatrix(final Matrix1D<T> matrix)
     {
-        return new UnmodifiableObjectMatrix1D<T>(matrix);
+        return new UnmodifiableMatrix1D<T>(matrix);
     }
 
     /**
-     * Return an unmodifiable view of the specified 2D object matrix.  Query operations
-     * on the returned 2D object matrix read through to the specified matrix, and any attempt
-     * to modify the returned 2D object matrix, whether directly or via its iterator, will result
+     * Return an unmodifiable view of the specified 2D matrix.  Query operations
+     * on the returned 2D matrix read through to the specified matrix, and any attempt
+     * to modify the returned 2D matrix, whether directly or via its iterator, will result
      * in an <code>UnsupportedOperationException</code>.
      *
-     * @param <T> 2D object matrix type
-     * @param matrix 2D object matrix to view, must not be null
-     * @return an unmodifiable view of the specified 2D object matrix
+     * @param <T> 2D matrix type
+     * @param matrix 2D matrix to view, must not be null
+     * @return an unmodifiable view of the specified 2D matrix
      */
-    public static <T> ObjectMatrix2D<T> unmodifiableObjectMatrix(final ObjectMatrix2D<T> matrix)
+    public static <T> Matrix2D<T> unmodifiableMatrix(final Matrix2D<T> matrix)
     {
-        return new UnmodifiableObjectMatrix2D<T>(matrix);
+        return new UnmodifiableMatrix2D<T>(matrix);
     }
 
     /**
-     * Return an unmodifiable view of the specified 3D object matrix.  Query operations
-     * on the returned 3D object matrix read through to the specified matrix, and any attempt
-     * to modify the returned 3D object matrix, whether directly or via its iterator, will result
+     * Return an unmodifiable view of the specified 3D matrix.  Query operations
+     * on the returned 3D matrix read through to the specified matrix, and any attempt
+     * to modify the returned 3D matrix, whether directly or via its iterator, will result
      * in an <code>UnsupportedOperationException</code>.
      *
-     * @param <T> 3D object matrix type
-     * @param matrix 3D object matrix to view, must not be null
-     * @return an unmodifiable view of the specified 3D object matrix
+     * @param <T> 3D matrix type
+     * @param matrix 3D matrix to view, must not be null
+     * @return an unmodifiable view of the specified 3D matrix
      */
-    public static <T> ObjectMatrix3D<T> unmodifiableObjectMatrix(final ObjectMatrix3D<T> matrix)
+    public static <T> Matrix3D<T> unmodifiableMatrix(final Matrix3D<T> matrix)
     {
-        return new UnmodifiableObjectMatrix3D<T>(matrix);
+        return new UnmodifiableMatrix3D<T>(matrix);
     }
 
 
     /**
-     * Unmodifiable 1D object matrix view.
+     * Unmodifiable 1D matrix view.
      */
-    private static class UnmodifiableObjectMatrix1D<E>
-        implements ObjectMatrix1D<E>
+    private static class UnmodifiableMatrix1D<E>
+        implements Matrix1D<E>
     {
-        /** Wrapped 1D object matrix. */
-        private final ObjectMatrix1D<E> matrix;
+        /** Wrapped 1D matrix. */
+        private final Matrix1D<E> matrix;
 
 
         /**
-         * Create a new unmodifiable 1D object matrix view for the
-         * specified 1D object matrix.
+         * Create a new unmodifiable 1D matrix view for the
+         * specified 1D matrix.
          *
          * @param matrix 1D object matrix to view, must not be null
          */
-        UnmodifiableObjectMatrix1D(final ObjectMatrix1D<E> matrix)
+        UnmodifiableMatrix1D(final Matrix1D<E> matrix)
         {
             if (matrix == null)
             {
@@ -134,7 +134,7 @@ public final class ObjectMatrixUtils
         }
 
         /** {@inheritDoc} */
-        public E aggregate(final ObjectMatrix1D<? extends E> other,
+        public E aggregate(final Matrix1D<? extends E> other,
                            final BinaryFunction<E, E, E> aggr,
                            final BinaryFunction<E, E, E> function)
         {
@@ -142,28 +142,28 @@ public final class ObjectMatrixUtils
         }
 
         /** {@inheritDoc} */
-        public ObjectMatrix1D<E> assign(final E e)
+        public Matrix1D<E> assign(final E e)
         {
-            throw new UnsupportedOperationException("assign operation not supported by this 1D object matrix");
+            throw new UnsupportedOperationException("assign operation not supported by this 1D matrix");
         }
 
         /** {@inheritDoc} */
-        public ObjectMatrix1D<E> assign(final ObjectMatrix1D<? extends E> other)
+        public Matrix1D<E> assign(final Matrix1D<? extends E> other)
         {
-            throw new UnsupportedOperationException("assign operation not supported by this 1D object matrix");
+            throw new UnsupportedOperationException("assign operation not supported by this 1D matrix");
         }
 
         /** {@inheritDoc} */
-        public ObjectMatrix1D<E> assign(final ObjectMatrix1D<? extends E> other,
+        public Matrix1D<E> assign(final Matrix1D<? extends E> other,
                                         final BinaryFunction<E, E, E> function)
         {
-            throw new UnsupportedOperationException("assign operation not supported by this 1D object matrix");
+            throw new UnsupportedOperationException("assign operation not supported by this 1D matrix");
         }
 
         /** {@inheritDoc} */
-        public ObjectMatrix1D<E> assign(final UnaryFunction<E, E> function)
+        public Matrix1D<E> assign(final UnaryFunction<E, E> function)
         {
-            throw new UnsupportedOperationException("assign operation not supported by this 1D object matrix");
+            throw new UnsupportedOperationException("assign operation not supported by this 1D matrix");
         }
 
         /** {@inheritDoc} */
@@ -175,7 +175,7 @@ public final class ObjectMatrixUtils
         /** {@inheritDoc} */
         public void clear()
         {
-            throw new UnsupportedOperationException("clear operation not supported by this 1D object matrix");
+            throw new UnsupportedOperationException("clear operation not supported by this 1D matrix");
         }
 
         /** {@inheritDoc} */
@@ -238,13 +238,13 @@ public final class ObjectMatrixUtils
         /** {@inheritDoc} */
         public void set(final long index, final E e)
         {
-            throw new UnsupportedOperationException("set operation not supported by this 1D object matrix");
+            throw new UnsupportedOperationException("set operation not supported by this 1D matrix");
         }
 
         /** {@inheritDoc} */
         public void setQuick(final long index, final E e)
         {
-            throw new UnsupportedOperationException("setQuick operation not supported by this 1D object matrix");
+            throw new UnsupportedOperationException("setQuick operation not supported by this 1D matrix");
         }
 
         /** {@inheritDoc} */
@@ -254,65 +254,65 @@ public final class ObjectMatrixUtils
         }
 
         /** {@inheritDoc} */
-        public ObjectMatrix1D<E> viewFlip()
+        public Matrix1D<E> viewFlip()
         {
-            ObjectMatrix1D<E> flip = matrix.viewFlip();
-            return ObjectMatrixUtils.unmodifiableObjectMatrix(flip);
+            Matrix1D<E> flip = matrix.viewFlip();
+            return MatrixUtils.unmodifiableMatrix(flip);
         }
 
         /** {@inheritDoc} */
-        public ObjectMatrix1D<E> viewPart(final long index, final long width)
+        public Matrix1D<E> viewPart(final long index, final long width)
         {
-            ObjectMatrix1D<E> part = matrix.viewPart(index, width);
-            return ObjectMatrixUtils.unmodifiableObjectMatrix(part);
+            Matrix1D<E> part = matrix.viewPart(index, width);
+            return MatrixUtils.unmodifiableMatrix(part);
         }
 
         /** {@inheritDoc} */
-        public ObjectMatrix1D<E> viewSelection(final long[] indices)
+        public Matrix1D<E> viewSelection(final long[] indices)
         {
-            ObjectMatrix1D<E> selection = matrix.viewSelection(indices);
-            return ObjectMatrixUtils.unmodifiableObjectMatrix(selection);
+            Matrix1D<E> selection = matrix.viewSelection(indices);
+            return MatrixUtils.unmodifiableMatrix(selection);
         }
 
         /** {@inheritDoc} */
-        public ObjectMatrix1D<E> viewSelection(final UnaryPredicate<E> predicate)
+        public Matrix1D<E> viewSelection(final UnaryPredicate<E> predicate)
         {
-            ObjectMatrix1D<E> selection = matrix.viewSelection(predicate);
-            return ObjectMatrixUtils.unmodifiableObjectMatrix(selection);
+            Matrix1D<E> selection = matrix.viewSelection(predicate);
+            return MatrixUtils.unmodifiableMatrix(selection);
         }
 
         /** {@inheritDoc} */
-        public ObjectMatrix1D<E> viewSelection(final BitMatrix1D mask)
+        public Matrix1D<E> viewSelection(final BitMatrix1D mask)
         {
-            ObjectMatrix1D<E> selection = matrix.viewSelection(mask);
-            return ObjectMatrixUtils.unmodifiableObjectMatrix(selection);
+            Matrix1D<E> selection = matrix.viewSelection(mask);
+            return MatrixUtils.unmodifiableMatrix(selection);
         }
 
         /** {@inheritDoc} */
-        public ObjectMatrix1D<E> viewStrides(final long stride)
+        public Matrix1D<E> viewStrides(final long stride)
         {
-            ObjectMatrix1D<E> strides = matrix.viewStrides(stride);
-            return ObjectMatrixUtils.unmodifiableObjectMatrix(strides);
+            Matrix1D<E> strides = matrix.viewStrides(stride);
+            return MatrixUtils.unmodifiableMatrix(strides);
         }
     }
 
     /**
-     * Unmodifiable 2D object matrix view.
+     * Unmodifiable 2D matrix view.
      */
-    private static class UnmodifiableObjectMatrix2D<E>
-        implements ObjectMatrix2D<E>
+    private static class UnmodifiableMatrix2D<E>
+        implements Matrix2D<E>
     {
-        /** Wrapped 2D object matrix. */
-        private final ObjectMatrix2D<E> matrix;
+        /** Wrapped 2D matrix. */
+        private final Matrix2D<E> matrix;
 
 
         /**
-         * Create a new unmodifiable 2D object matrix view for the
-         * specified 2D object matrix.
+         * Create a new unmodifiable 2D matrix view for the
+         * specified 2D matrix.
          *
-         * @param matrix 2D object matrix to view, must not be null
+         * @param matrix 2D matrix to view, must not be null
          */
-        UnmodifiableObjectMatrix2D(final ObjectMatrix2D<E> matrix)
+        UnmodifiableMatrix2D(final Matrix2D<E> matrix)
         {
             if (matrix == null)
             {
@@ -330,7 +330,7 @@ public final class ObjectMatrixUtils
         }
 
         /** {@inheritDoc} */
-        public E aggregate(final ObjectMatrix2D<? extends E> other,
+        public E aggregate(final Matrix2D<? extends E> other,
                            final BinaryFunction<E, E, E> aggr,
                            final BinaryFunction<E, E, E> function)
         {
@@ -338,28 +338,28 @@ public final class ObjectMatrixUtils
         }
 
         /** {@inheritDoc} */
-        public ObjectMatrix2D<E> assign(final E e)
+        public Matrix2D<E> assign(final E e)
         {
-            throw new UnsupportedOperationException("assign operation not supported by this 2D object matrix");
+            throw new UnsupportedOperationException("assign operation not supported by this 2D matrix");
         }
 
         /** {@inheritDoc} */
-        public ObjectMatrix2D<E> assign(final ObjectMatrix2D<? extends E> other)
+        public Matrix2D<E> assign(final Matrix2D<? extends E> other)
         {
-            throw new UnsupportedOperationException("assign operation not supported by this 2D object matrix");
+            throw new UnsupportedOperationException("assign operation not supported by this 2D matrix");
         }
 
         /** {@inheritDoc} */
-        public ObjectMatrix2D<E> assign(final ObjectMatrix2D<? extends E> other,
+        public Matrix2D<E> assign(final Matrix2D<? extends E> other,
                                         final BinaryFunction<E, E, E> function)
         {
-            throw new UnsupportedOperationException("assign operation not supported by this 2D object matrix");
+            throw new UnsupportedOperationException("assign operation not supported by this 2D matrix");
         }
 
         /** {@inheritDoc} */
-        public ObjectMatrix2D<E> assign(final UnaryFunction<E, E> function)
+        public Matrix2D<E> assign(final UnaryFunction<E, E> function)
         {
-            throw new UnsupportedOperationException("assign operation not supported by this 2D object matrix");
+            throw new UnsupportedOperationException("assign operation not supported by this 2D matrix");
         }
 
         /** {@inheritDoc} */
@@ -371,7 +371,7 @@ public final class ObjectMatrixUtils
         /** {@inheritDoc} */
         public void clear()
         {
-            throw new UnsupportedOperationException("clear operation not supported by this 2D object matrix");
+            throw new UnsupportedOperationException("clear operation not supported by this 2D matrix");
         }
 
         /** {@inheritDoc} */
@@ -446,13 +446,13 @@ public final class ObjectMatrixUtils
         /** {@inheritDoc} */
         public void set(final long row, final long column, final E e)
         {
-            throw new UnsupportedOperationException("set operation not supported by this 2D object matrix");
+            throw new UnsupportedOperationException("set operation not supported by this 2D matrix");
         }
 
         /** {@inheritDoc} */
         public void setQuick(final long row, final long column, final E e)
         {
-            throw new UnsupportedOperationException("setQuick operation not supported by this 2D object matrix");
+            throw new UnsupportedOperationException("setQuick operation not supported by this 2D matrix");
         }
 
         /** {@inheritDoc} */
@@ -462,97 +462,97 @@ public final class ObjectMatrixUtils
         }
 
         /** {@inheritDoc} */
-        public ObjectMatrix1D<E> viewColumn(final long column)
+        public Matrix1D<E> viewColumn(final long column)
         {
-            ObjectMatrix1D<E> columnView = matrix.viewColumn(column);
-            return ObjectMatrixUtils.unmodifiableObjectMatrix(columnView);
+            Matrix1D<E> columnView = matrix.viewColumn(column);
+            return MatrixUtils.unmodifiableMatrix(columnView);
         }
 
         /** {@inheritDoc} */
-        public ObjectMatrix2D<E> viewColumnFlip()
+        public Matrix2D<E> viewColumnFlip()
         {
-            ObjectMatrix2D<E> columnFlip = matrix.viewColumnFlip();
-            return ObjectMatrixUtils.unmodifiableObjectMatrix(columnFlip);
+            Matrix2D<E> columnFlip = matrix.viewColumnFlip();
+            return MatrixUtils.unmodifiableMatrix(columnFlip);
         }
 
         /** {@inheritDoc} */
-        public ObjectMatrix2D<E> viewDice()
+        public Matrix2D<E> viewDice()
         {
-            ObjectMatrix2D<E> dice = matrix.viewDice();
-            return ObjectMatrixUtils.unmodifiableObjectMatrix(dice);
+            Matrix2D<E> dice = matrix.viewDice();
+            return MatrixUtils.unmodifiableMatrix(dice);
         }
 
         /** {@inheritDoc} */
-        public ObjectMatrix2D<E> viewPart(final long row,
+        public Matrix2D<E> viewPart(final long row,
                                           final long column,
                                           final long height,
                                           final long width)
         {
-            ObjectMatrix2D<E> part = matrix.viewPart(row, column, height, width);
-            return ObjectMatrixUtils.unmodifiableObjectMatrix(part);
+            Matrix2D<E> part = matrix.viewPart(row, column, height, width);
+            return MatrixUtils.unmodifiableMatrix(part);
         }
 
         /** {@inheritDoc} */
-        public ObjectMatrix1D<E> viewRow(final long row)
+        public Matrix1D<E> viewRow(final long row)
         {
-            ObjectMatrix1D<E> rowView = matrix.viewRow(row);
-            return ObjectMatrixUtils.unmodifiableObjectMatrix(rowView);
+            Matrix1D<E> rowView = matrix.viewRow(row);
+            return MatrixUtils.unmodifiableMatrix(rowView);
         }
 
         /** {@inheritDoc} */
-        public ObjectMatrix2D<E> viewRowFlip()
+        public Matrix2D<E> viewRowFlip()
         {
-            ObjectMatrix2D<E> rowFlip = matrix.viewRowFlip();
-            return ObjectMatrixUtils.unmodifiableObjectMatrix(rowFlip);
+            Matrix2D<E> rowFlip = matrix.viewRowFlip();
+            return MatrixUtils.unmodifiableMatrix(rowFlip);
         }
 
         /** {@inheritDoc} */
-        public ObjectMatrix2D<E> viewSelection(final long[] rowIndices,
+        public Matrix2D<E> viewSelection(final long[] rowIndices,
                                                final long[] columnIndices)
         {
-            ObjectMatrix2D<E> selection = matrix.viewSelection(rowIndices, columnIndices);
-            return ObjectMatrixUtils.unmodifiableObjectMatrix(selection);
+            Matrix2D<E> selection = matrix.viewSelection(rowIndices, columnIndices);
+            return MatrixUtils.unmodifiableMatrix(selection);
         }
 
         /** {@inheritDoc} */
-        public ObjectMatrix2D<E> viewSelection(final UnaryPredicate<ObjectMatrix1D<E>> predicate)
+        public Matrix2D<E> viewSelection(final UnaryPredicate<Matrix1D<E>> predicate)
         {
-            ObjectMatrix2D<E> selection = matrix.viewSelection(predicate);
-            return ObjectMatrixUtils.unmodifiableObjectMatrix(selection);
+            Matrix2D<E> selection = matrix.viewSelection(predicate);
+            return MatrixUtils.unmodifiableMatrix(selection);
         }
 
         /** {@inheritDoc} */
-        public ObjectMatrix2D<E> viewSelection(final BitMatrix2D mask)
+        public Matrix2D<E> viewSelection(final BitMatrix2D mask)
         {
-            ObjectMatrix2D<E> selection = matrix.viewSelection(mask);
-            return ObjectMatrixUtils.unmodifiableObjectMatrix(selection);
+            Matrix2D<E> selection = matrix.viewSelection(mask);
+            return MatrixUtils.unmodifiableMatrix(selection);
         }
 
         /** {@inheritDoc} */
-        public ObjectMatrix2D<E> viewStrides(final long rowStride, final long columnStride)
+        public Matrix2D<E> viewStrides(final long rowStride, final long columnStride)
         {
-            ObjectMatrix2D<E> strides = matrix.viewStrides(rowStride, columnStride);
-            return ObjectMatrixUtils.unmodifiableObjectMatrix(strides);
+            Matrix2D<E> strides = matrix.viewStrides(rowStride, columnStride);
+            return MatrixUtils.unmodifiableMatrix(strides);
         }
     }
 
     /**
-     * Unmodifiable 3D object matrix view.
+     * Unmodifiable 3D matrix view.
      */
-    private static class UnmodifiableObjectMatrix3D<E>
-        implements ObjectMatrix3D<E>
+    private static class UnmodifiableMatrix3D<E>
+        implements Matrix3D<E>
     {
-        /** Wrapped 3D object matrix. */
-        private final ObjectMatrix3D<E> matrix;
+        /** Wrapped 3D matrix. */
+        private final Matrix3D<E> matrix;
 
 
         /**
-         * Create a new unmodifiable 3D object matrix view for the
-         * specified 3D object matrix.
+         * Create a new unmodifiable 3D matrix view for the
+         * specified 3D matrix.
          *
-         * @param matrix 3D object matrix to view, must not be null
+         * @param matrix 3D matrix to view, must not be null
          */
-        UnmodifiableObjectMatrix3D(final ObjectMatrix3D<E> matrix)
+        UnmodifiableMatrix3D(final Matrix3D<E> matrix)
         {
             if (matrix == null)
             {
@@ -570,7 +570,7 @@ public final class ObjectMatrixUtils
         }
 
         /** {@inheritDoc} */
-        public E aggregate(final ObjectMatrix3D<? extends E> other,
+        public E aggregate(final Matrix3D<? extends E> other,
                            final BinaryFunction<E, E, E> aggr,
                            final BinaryFunction<E, E, E> function)
         {
@@ -578,28 +578,28 @@ public final class ObjectMatrixUtils
         }
 
         /** {@inheritDoc} */
-        public ObjectMatrix3D<E> assign(final E e)
+        public Matrix3D<E> assign(final E e)
         {
-            throw new UnsupportedOperationException("assign operation not supported by this 3D object matrix");
+            throw new UnsupportedOperationException("assign operation not supported by this 3D matrix");
         }
 
         /** {@inheritDoc} */
-        public ObjectMatrix3D<E> assign(final ObjectMatrix3D<? extends E> other)
+        public Matrix3D<E> assign(final Matrix3D<? extends E> other)
         {
-            throw new UnsupportedOperationException("assign operation not supported by this 3D object matrix");
+            throw new UnsupportedOperationException("assign operation not supported by this 3D matrix");
         }
 
         /** {@inheritDoc} */
-        public ObjectMatrix3D<E> assign(final ObjectMatrix3D<? extends E> other,
+        public Matrix3D<E> assign(final Matrix3D<? extends E> other,
                                         final BinaryFunction<E, E, E> function)
         {
-            throw new UnsupportedOperationException("assign operation not supported by this 3D object matrix");
+            throw new UnsupportedOperationException("assign operation not supported by this 3D matrix");
         }
 
         /** {@inheritDoc} */
-        public ObjectMatrix3D<E> assign(final UnaryFunction<E, E> function)
+        public Matrix3D<E> assign(final UnaryFunction<E, E> function)
         {
-            throw new UnsupportedOperationException("assign operation not supported by this 3D object matrix");
+            throw new UnsupportedOperationException("assign operation not supported by this 3D matrix");
         }
 
         /** {@inheritDoc} */
@@ -611,7 +611,7 @@ public final class ObjectMatrixUtils
         /** {@inheritDoc} */
         public void clear()
         {
-            throw new UnsupportedOperationException("clear operation not supported by this 3D object matrix");
+            throw new UnsupportedOperationException("clear operation not supported by this 3D matrix");
         }
 
         /** {@inheritDoc} */
@@ -686,13 +686,13 @@ public final class ObjectMatrixUtils
         /** {@inheritDoc} */
         public void set(final long slice, final long row, final long column, final E e)
         {
-            throw new UnsupportedOperationException("set operation not supported by this 3D object matrix");
+            throw new UnsupportedOperationException("set operation not supported by this 3D matrix");
         }
 
         /** {@inheritDoc} */
         public void setQuick(final long slice, final long row, final long column, final E e)
         {
-            throw new UnsupportedOperationException("setQuick operation not supported by this 3D object matrix");
+            throw new UnsupportedOperationException("setQuick operation not supported by this 3D matrix");
         }
 
         /** {@inheritDoc} */
@@ -708,96 +708,96 @@ public final class ObjectMatrixUtils
         }
 
         /** {@inheritDoc} */
-        public ObjectMatrix2D<E> viewColumn(final long column)
+        public Matrix2D<E> viewColumn(final long column)
         {
-            ObjectMatrix2D<E> columnView = matrix.viewColumn(column);
-            return ObjectMatrixUtils.unmodifiableObjectMatrix(columnView);
+            Matrix2D<E> columnView = matrix.viewColumn(column);
+            return MatrixUtils.unmodifiableMatrix(columnView);
         }
 
         /** {@inheritDoc} */
-        public ObjectMatrix3D<E> viewColumnFlip()
+        public Matrix3D<E> viewColumnFlip()
         {
-            ObjectMatrix3D<E> columnFlip = matrix.viewColumnFlip();
-            return ObjectMatrixUtils.unmodifiableObjectMatrix(columnFlip);
+            Matrix3D<E> columnFlip = matrix.viewColumnFlip();
+            return MatrixUtils.unmodifiableMatrix(columnFlip);
         }
 
         /** {@inheritDoc} */
-        public ObjectMatrix3D<E> viewDice(final int axis0, final int axis1, final int axis2)
+        public Matrix3D<E> viewDice(final int axis0, final int axis1, final int axis2)
         {
-            ObjectMatrix3D<E> dice = matrix.viewDice(axis0, axis1, axis2);
-            return ObjectMatrixUtils.unmodifiableObjectMatrix(dice);
+            Matrix3D<E> dice = matrix.viewDice(axis0, axis1, axis2);
+            return MatrixUtils.unmodifiableMatrix(dice);
         }
 
         /** {@inheritDoc} */
-        public ObjectMatrix3D<E> viewPart(final long slice,
+        public Matrix3D<E> viewPart(final long slice,
                                           final long row,
                                           final long column,
                                           final long depth,
                                           final long height,
                                           final long width)
         {
-            ObjectMatrix3D<E> part = matrix.viewPart(slice, row, column, depth, height, width);
-            return ObjectMatrixUtils.unmodifiableObjectMatrix(part);
+            Matrix3D<E> part = matrix.viewPart(slice, row, column, depth, height, width);
+            return MatrixUtils.unmodifiableMatrix(part);
         }
 
         /** {@inheritDoc} */
-        public ObjectMatrix2D<E> viewRow(final long row)
+        public Matrix2D<E> viewRow(final long row)
         {
-            ObjectMatrix2D<E> rowView = matrix.viewColumn(row);
-            return ObjectMatrixUtils.unmodifiableObjectMatrix(rowView);
+            Matrix2D<E> rowView = matrix.viewColumn(row);
+            return MatrixUtils.unmodifiableMatrix(rowView);
         }
 
         /** {@inheritDoc} */
-        public ObjectMatrix3D<E> viewRowFlip()
+        public Matrix3D<E> viewRowFlip()
         {
-            ObjectMatrix3D<E> rowFlip = matrix.viewRowFlip();
-            return ObjectMatrixUtils.unmodifiableObjectMatrix(rowFlip);
+            Matrix3D<E> rowFlip = matrix.viewRowFlip();
+            return MatrixUtils.unmodifiableMatrix(rowFlip);
         }
 
         /** {@inheritDoc} */
-        public ObjectMatrix3D<E> viewSelection(final long[] sliceIndices,
+        public Matrix3D<E> viewSelection(final long[] sliceIndices,
                                                final long[] rowIndices,
                                                final long[] columnIndices)
         {
-            ObjectMatrix3D<E> selection = matrix.viewSelection(sliceIndices, rowIndices, columnIndices);
-            return ObjectMatrixUtils.unmodifiableObjectMatrix(selection);
+            Matrix3D<E> selection = matrix.viewSelection(sliceIndices, rowIndices, columnIndices);
+            return MatrixUtils.unmodifiableMatrix(selection);
         }
 
         /** {@inheritDoc} */
-        public ObjectMatrix3D<E> viewSelection(final UnaryPredicate<ObjectMatrix2D<E>> predicate)
+        public Matrix3D<E> viewSelection(final UnaryPredicate<Matrix2D<E>> predicate)
         {
-            ObjectMatrix3D<E> selection = matrix.viewSelection(predicate);
-            return ObjectMatrixUtils.unmodifiableObjectMatrix(selection);
+            Matrix3D<E> selection = matrix.viewSelection(predicate);
+            return MatrixUtils.unmodifiableMatrix(selection);
         }
 
         /** {@inheritDoc} */
-        public ObjectMatrix3D<E> viewSelection(final BitMatrix3D mask)
+        public Matrix3D<E> viewSelection(final BitMatrix3D mask)
         {
-            ObjectMatrix3D<E> selection = matrix.viewSelection(mask);
-            return ObjectMatrixUtils.unmodifiableObjectMatrix(selection);
+            Matrix3D<E> selection = matrix.viewSelection(mask);
+            return MatrixUtils.unmodifiableMatrix(selection);
         }
 
         /** {@inheritDoc} */
-        public ObjectMatrix2D<E> viewSlice(final long slice)
+        public Matrix2D<E> viewSlice(final long slice)
         {
-            ObjectMatrix2D<E> sliceView = matrix.viewColumn(slice);
-            return ObjectMatrixUtils.unmodifiableObjectMatrix(sliceView);
+            Matrix2D<E> sliceView = matrix.viewColumn(slice);
+            return MatrixUtils.unmodifiableMatrix(sliceView);
         }
 
         /** {@inheritDoc} */
-        public ObjectMatrix3D<E> viewSliceFlip()
+        public Matrix3D<E> viewSliceFlip()
         {
-            ObjectMatrix3D<E> sliceFlip = matrix.viewSliceFlip();
-            return ObjectMatrixUtils.unmodifiableObjectMatrix(sliceFlip);
+            Matrix3D<E> sliceFlip = matrix.viewSliceFlip();
+            return MatrixUtils.unmodifiableMatrix(sliceFlip);
         }
 
         /** {@inheritDoc} */
-        public ObjectMatrix3D<E> viewStrides(final long sliceStride,
+        public Matrix3D<E> viewStrides(final long sliceStride,
                                              final long rowStride,
                                              final long columnStride)
         {
-            ObjectMatrix3D<E> strides = matrix.viewStrides(sliceStride, rowStride, columnStride);
-            return ObjectMatrixUtils.unmodifiableObjectMatrix(strides);
+            Matrix3D<E> strides = matrix.viewStrides(sliceStride, rowStride, columnStride);
+            return MatrixUtils.unmodifiableMatrix(strides);
         }
     }
 }

@@ -23,37 +23,37 @@
 */
 package org.dishevelled.matrix.impl;
 
-import org.dishevelled.matrix.AbstractObjectMatrixUtilsTest;
-import org.dishevelled.matrix.ObjectMatrix1D;
-import org.dishevelled.matrix.ObjectMatrix2D;
-import org.dishevelled.matrix.ObjectMatrix3D;
+import org.dishevelled.matrix.AbstractMatrixUtilsTest;
+import org.dishevelled.matrix.Matrix1D;
+import org.dishevelled.matrix.Matrix2D;
+import org.dishevelled.matrix.Matrix3D;
 
 
 /**
- * Unit test for ObjectMatrixUtils with sparse object matrix implementations.
+ * Unit test for MatrixUtils with sparse object matrix implementations.
  *
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public final class SparseObjectMatrixUtilsTest
-    extends AbstractObjectMatrixUtilsTest
+public final class SparseMatrixUtilsTest
+    extends AbstractMatrixUtilsTest
 {
 
     /** {@inheritDoc} */
-    protected <T> ObjectMatrix1D<T> createObjectMatrix1D()
+    protected <T> Matrix1D<T> createObjectMatrix1D()
     {
-        return new SparseObjectMatrix1D<T>(100L);
+        return new SparseMatrix1D<T>(100L);
     }
 
     /** {@inheritDoc} */
-    protected <T> ObjectMatrix2D<T> createObjectMatrix2D()
+    protected <T> Matrix2D<T> createObjectMatrix2D()
     {
-        return new SparseObjectMatrix2D<T>(100L, 100L);
+        return new SparseMatrix2D<T>(100L, 100L);
     }
 
     /** {@inheritDoc} */
-    protected <T> ObjectMatrix3D<T> createObjectMatrix3D()
+    protected <T> Matrix3D<T> createObjectMatrix3D()
     {
-        return new SparseObjectMatrix3D<T>(100L, 100L, 100L);
+        return new SparseMatrix3D<T>(100L, 100L, 100L);
     }
 }

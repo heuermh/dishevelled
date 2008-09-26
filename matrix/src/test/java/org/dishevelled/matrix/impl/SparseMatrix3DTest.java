@@ -31,23 +31,23 @@ import java.io.ByteArrayOutputStream;
 
 import org.dishevelled.functor.QuaternaryProcedure;
 
-import org.dishevelled.matrix.ObjectMatrix3D;
-import org.dishevelled.matrix.AbstractObjectMatrix3DTest;
+import org.dishevelled.matrix.Matrix3D;
+import org.dishevelled.matrix.AbstractMatrix3DTest;
 
 /**
- * Unit test for SparseObjectMatrix3D.
+ * Unit test for SparseMatrix3D.
  *
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public class SparseObjectMatrix3DTest
-    extends AbstractObjectMatrix3DTest
+public class SparseMatrix3DTest
+    extends AbstractMatrix3DTest
 {
 
-    /** @see AbstractObjectMatrix3D */
-    protected <T> ObjectMatrix3D<T> createObjectMatrix3D(final long slices, final long rows, final long columns)
+    /** @see AbstractMatrix3D */
+    protected <T> Matrix3D<T> createObjectMatrix3D(final long slices, final long rows, final long columns)
     {
-        ObjectMatrix3D<T> m = new SparseObjectMatrix3D<T>(slices, rows, columns);
+        Matrix3D<T> m = new SparseMatrix3D<T>(slices, rows, columns);
         return m;
     }
 
@@ -58,7 +58,7 @@ public class SparseObjectMatrix3DTest
     public void testEmptySerialization()
         throws Exception
     {
-        final SparseObjectMatrix3D<String> m0 = new SparseObjectMatrix3D<String>(10, 10, 10);
+        final SparseMatrix3D<String> m0 = new SparseMatrix3D<String>(10, 10, 10);
         assertNotNull("m0 not null", m0);
         assertEquals("m0 size == 1000", 1000, m0.size());
         assertEquals("m0 cardinality == 0", 0, m0.cardinality());
@@ -74,9 +74,9 @@ public class SparseObjectMatrix3DTest
         in.close();
 
         assertNotNull("dest not null", dest);
-        assertTrue("dest instanceof SparseObjectMatrix3D", (dest instanceof SparseObjectMatrix3D));
+        assertTrue("dest instanceof SparseMatrix3D", (dest instanceof SparseMatrix3D));
 
-        final SparseObjectMatrix3D<String> m1 = (SparseObjectMatrix3D<String>) dest;
+        final SparseMatrix3D<String> m1 = (SparseMatrix3D<String>) dest;
 
         assertEquals("m1 size == m0 size", m0.size(), m1.size());
         assertEquals("m1 cardinality == m0 cardinality", m0.cardinality(), m1.cardinality());
@@ -94,7 +94,7 @@ public class SparseObjectMatrix3DTest
     public void testFullSerialization()
         throws Exception
     {
-        final SparseObjectMatrix3D<String> m0 = new SparseObjectMatrix3D<String>(10, 10, 10);
+        final SparseMatrix3D<String> m0 = new SparseMatrix3D<String>(10, 10, 10);
         assertNotNull("m0 not null", m0);
 
         m0.forEach(new QuaternaryProcedure<Long, Long, Long, String>()
@@ -119,9 +119,9 @@ public class SparseObjectMatrix3DTest
         in.close();
 
         assertNotNull("dest not null", dest);
-        assertTrue("dest instanceof SparseObjectMatrix3D", (dest instanceof SparseObjectMatrix3D));
+        assertTrue("dest instanceof SparseMatrix3D", (dest instanceof SparseMatrix3D));
 
-        final SparseObjectMatrix3D<String> m1 = (SparseObjectMatrix3D<String>) dest;
+        final SparseMatrix3D<String> m1 = (SparseMatrix3D<String>) dest;
 
         assertEquals("m1 size == m0 size", m0.size(), m1.size());
         assertEquals("m1 cardinality == m0 cardinality", m0.cardinality(), m1.size());

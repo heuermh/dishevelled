@@ -23,6 +23,6 @@
 */
 
 /**
- * Implementations of the <b>ObjectMatrix*D</b> interfaces.
+ * Implementations of the <b>Matrix*D</b> interfaces.
  */
 package org.dishevelled.matrix.impl;

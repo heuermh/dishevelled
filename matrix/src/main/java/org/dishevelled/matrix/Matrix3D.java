@@ -40,7 +40,7 @@ import org.dishevelled.functor.QuaternaryProcedure;
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public interface ObjectMatrix3D<E>
+public interface Matrix3D<E>
     extends Iterable<E>
 {
 
@@ -175,7 +175,7 @@ public interface ObjectMatrix3D<E>
      * @throws UnsupportedOperationException if this <code>assign</code> operation
      *    is not supported by this 3D matrix
      */
-    ObjectMatrix3D<E> assign(E e);
+    Matrix3D<E> assign(E e);
 
     /**
      * Assign the result of the specified function to each value
@@ -186,7 +186,7 @@ public interface ObjectMatrix3D<E>
      * @throws UnsupportedOperationException if this <code>assign</code> operation
      *    is not supported by this 3D matrix
      */
-    ObjectMatrix3D<E> assign(UnaryFunction<E, E> function);
+    Matrix3D<E> assign(UnaryFunction<E, E> function);
 
     /**
      * Assign all values in this 3D matrix to the values in the
@@ -198,7 +198,7 @@ public interface ObjectMatrix3D<E>
      * @throws UnsupportedOperationException if this <code>assign</code> operation
      *    is not supported by this 3D matrix
      */
-    ObjectMatrix3D<E> assign(ObjectMatrix3D<? extends E> other);
+    Matrix3D<E> assign(Matrix3D<? extends E> other);
 
     /**
      * Assign the result of the specified function of a value from
@@ -212,7 +212,7 @@ public interface ObjectMatrix3D<E>
      * @throws UnsupportedOperationException if this <code>assign</code> operation
      *    is not supported by this 3D matrix
      */
-    ObjectMatrix3D<E> assign(ObjectMatrix3D<? extends E> other,
+    Matrix3D<E> assign(Matrix3D<? extends E> other,
                              BinaryFunction<E, E, E> function);
 
     /**
@@ -235,7 +235,7 @@ public interface ObjectMatrix3D<E>
      * @param function function, must not be null
      * @return the aggregate result
      */
-    E aggregate(ObjectMatrix3D<? extends E> other,
+    E aggregate(Matrix3D<? extends E> other,
                 BinaryFunction<E, E, E> aggr,
                 BinaryFunction<E, E, E> function);
 
@@ -247,7 +247,7 @@ public interface ObjectMatrix3D<E>
      * @param slice slice index, must be <code>&gt;= 0</code> and <code>&lt; slices()</code>
      * @return a new 2D matrix <i>slice view</i> of the specified slice
      */
-    ObjectMatrix2D<E> viewSlice(long slice);
+    Matrix2D<E> viewSlice(long slice);
 
     /**
      * Return a new 2D matrix <i>slice view</i> of the specified row.  The view
@@ -257,7 +257,7 @@ public interface ObjectMatrix3D<E>
      * @param row row index, must be <code>&gt;= 0</code> and <code>&lt; rows()</code>
      * @return a new 2D matrix <i>slice view</i> of the specified row
      */
-    ObjectMatrix2D<E> viewRow(long row);
+    Matrix2D<E> viewRow(long row);
 
     /**
      * Return a new 2D matrix <i>slice view</i> of the specified column.  The view
@@ -267,7 +267,7 @@ public interface ObjectMatrix3D<E>
      * @param column column index, must be <code>&gt;= 0</code> and <code>&lt; columns()</code>
      * @return a new 2D matrix <i>slice view</i> of the specified column
      */
-    ObjectMatrix2D<E> viewColumn(long column);
+    Matrix2D<E> viewColumn(long column);
 
     /**
      * Return a new 3D matrix <i>dice (transposition) view</i>.  The view has
@@ -282,7 +282,7 @@ public interface ObjectMatrix3D<E>
      * @throws IllegalArgumentException if any of the parameters are equal or
      *    if any of the parameters are not 0, 1, or 2.
      */
-    ObjectMatrix3D<E> viewDice(int axis0, int axis1, int axis2);
+    Matrix3D<E> viewDice(int axis0, int axis1, int axis2);
 
     /**
      * Return a new 3D matrix <i>flip view</i> along the slice axis.
@@ -293,7 +293,7 @@ public interface ObjectMatrix3D<E>
      *
      * @return a new 3D matrix <i>slice view</i> along the row axis
      */
-    ObjectMatrix3D<E> viewSliceFlip();
+    Matrix3D<E> viewSliceFlip();
 
     /**
      * Return a new 3D matrix <i>flip view</i> along the row axis.
@@ -304,7 +304,7 @@ public interface ObjectMatrix3D<E>
      *
      * @return a new 3D matrix <i>flip view</i> along the row axis
      */
-    ObjectMatrix3D<E> viewRowFlip();
+    Matrix3D<E> viewRowFlip();
 
     /**
      * Return a new 3D matrix <i>flip view</i> along the column axis.
@@ -315,7 +315,7 @@ public interface ObjectMatrix3D<E>
      *
      * @return a new 3D matrix <i>flip view</i> along the column axis
      */
-    ObjectMatrix3D<E> viewColumnFlip();
+    Matrix3D<E> viewColumnFlip();
 
     /**
      * Return a new 3D matrix <i>sub-range view</i> that contains only those values
@@ -334,7 +334,7 @@ public interface ObjectMatrix3D<E>
      *    from <code>(slice, row, column)</code> to
      *    <code>(slice + depth - 1, row + height - 1, column + width - 1)</code>.
      */
-    ObjectMatrix3D<E> viewPart(long slice, long row, long column,
+    Matrix3D<E> viewPart(long slice, long row, long column,
                                long depth, long height, long width);
 
     /**
@@ -348,7 +348,7 @@ public interface ObjectMatrix3D<E>
      * @return a new 3D matrix <i>selection view</i> that contains only those values at the
      *    specified indices
      */
-    ObjectMatrix3D<E> viewSelection(long[] sliceIndices, long[] rowIndices, long[] columnIndices);
+    Matrix3D<E> viewSelection(long[] sliceIndices, long[] rowIndices, long[] columnIndices);
 
     /**
      * Return a new 3D matrix <i>selection view</i> that contains only those <b>slices</b>
@@ -359,7 +359,7 @@ public interface ObjectMatrix3D<E>
      * @return a new 3D matrix <i>selection view</i> that contains only those slices
      *    selected by the specified predicate
      */
-    ObjectMatrix3D<E> viewSelection(UnaryPredicate<ObjectMatrix2D<E>> predicate);
+    Matrix3D<E> viewSelection(UnaryPredicate<Matrix2D<E>> predicate);
 
     /**
      * Return a new 3D matrix <i>selection view</i> that contains only those values
@@ -370,7 +370,7 @@ public interface ObjectMatrix3D<E>
      * @return a new 3D matrix <i>selection view</i> that contains only those values
      *    at the indices present in the specified mask
      */
-    ObjectMatrix3D<E> viewSelection(BitMatrix3D mask);
+    Matrix3D<E> viewSelection(BitMatrix3D mask);
 
     /**
      * Return a new 3D matrix <i>stride view</i> which is a sub matrix consisting
@@ -388,14 +388,14 @@ public interface ObjectMatrix3D<E>
      * @throws IndexOutOfBoundsException if any of <code>sliceStride</code>,
      *    <code>rowStride</code>, or <code>columnStride</code> are negative or zero
      */
-    ObjectMatrix3D<E> viewStrides(long sliceStride, long rowStride, long columnStride);
+    Matrix3D<E> viewStrides(long sliceStride, long rowStride, long columnStride);
 
     /**
      * Apply the specified procedure to each value in this 3D matrix.
      *
      * <p>For example:
      * <pre>
-     * ObjectMatrix3D&lt;String&gt; m;
+     * Matrix3D&lt;String&gt; m;
      * m.forEach(new UnaryProcedure&lt;String&gt;()
      *     {
      *         public void run(final String value)
@@ -415,7 +415,7 @@ public interface ObjectMatrix3D<E>
      *
      * <p>For example:
      * <pre>
-     * ObjectMatrix3D&lt;String&gt; m;
+     * Matrix3D&lt;String&gt; m;
      * m.forEach(new UnaryPredicate&lt;String&gt;()
      *     {
      *         public boolean test(final String value)
@@ -442,7 +442,7 @@ public interface ObjectMatrix3D<E>
      *
      * <p>For example:
      * <pre>
-     * ObjectMatrix3D&lt;String&gt; m;
+     * Matrix3D&lt;String&gt; m;
      * m.forEachNonNull(new UnaryProcedure&lt;String&gt;()
      *     {
      *         public void run(final String value)
@@ -462,7 +462,7 @@ public interface ObjectMatrix3D<E>
      *
      * <p>For example:
      * <pre>
-     * ObjectMatrix3D&lt;String&gt; m;
+     * Matrix3D&lt;String&gt; m;
      * m.forEach(new QuaternaryProcedure&lt;Long, Long, Long, String&gt;()
      *     {
      *         public void run(final Long slice, final Long row, final Long column, final String value)
@@ -482,7 +482,7 @@ public interface ObjectMatrix3D<E>
      *
      * <p>For example:
      * <pre>
-     * ObjectMatrix3D&lt;String&gt; m;
+     * Matrix3D&lt;String&gt; m;
      * m.forEach(new QuaternaryPredicate&lt;Long, Long, Long, String&gt;()
      *     {
      *         public boolean test(final Long slice, final Long row, final Long column, final String value)

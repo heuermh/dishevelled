@@ -27,8 +27,8 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 import org.dishevelled.matrix.BitMatrix2D;
-import org.dishevelled.matrix.ObjectMatrix1D;
-import org.dishevelled.matrix.ObjectMatrix2D;
+import org.dishevelled.matrix.Matrix1D;
+import org.dishevelled.matrix.Matrix2D;
 
 import org.dishevelled.functor.UnaryPredicate;
 import org.dishevelled.functor.UnaryProcedure;
@@ -38,14 +38,14 @@ import org.dishevelled.functor.TertiaryPredicate;
 import org.dishevelled.functor.TertiaryProcedure;
 
 /**
- * Abstract implementation of ObjectMatrix2D.
+ * Abstract implementation of Matrix2D.
  *
  * @param <E> type of this abstract 2D matrix
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-abstract class AbstractObjectMatrix2D<E>
-    implements ObjectMatrix2D<E>
+abstract class AbstractMatrix2D<E>
+    implements Matrix2D<E>
 {
     /** Number of rows. */
     protected long rows;
@@ -72,7 +72,7 @@ abstract class AbstractObjectMatrix2D<E>
     /**
      * Protected no-arg constructor, to support serialization.
      */
-    protected AbstractObjectMatrix2D()
+    protected AbstractMatrix2D()
     {
         // empty
     }
@@ -86,7 +86,7 @@ abstract class AbstractObjectMatrix2D<E>
      * @throws IllegalArgumentException if either <code>rows</code> or
      *    <code>columns</code> is negative
      */
-    protected AbstractObjectMatrix2D(final long rows, final long columns)
+    protected AbstractMatrix2D(final long rows, final long columns)
     {
         if (rows < 0)
         {
@@ -117,7 +117,7 @@ abstract class AbstractObjectMatrix2D<E>
      * @param columnStride number of columns between two elements
      * @param isView true if this instance is a view
      */
-    protected AbstractObjectMatrix2D(final long rows,
+    protected AbstractMatrix2D(final long rows,
                                      final long columns,
                                      final long rowZero,
                                      final long columnZero,
@@ -256,7 +256,7 @@ abstract class AbstractObjectMatrix2D<E>
     }
 
     /** {@inheritDoc} */
-    public ObjectMatrix2D<E> assign(final E e)
+    public Matrix2D<E> assign(final E e)
     {
         forEach(new TertiaryProcedure<Long, Long, E>()
             {
@@ -270,7 +270,7 @@ abstract class AbstractObjectMatrix2D<E>
     }
 
     /** {@inheritDoc} */
-    public ObjectMatrix2D<E> assign(final UnaryFunction<E, E> function)
+    public Matrix2D<E> assign(final UnaryFunction<E, E> function)
     {
         if (function == null)
         {
@@ -289,7 +289,7 @@ abstract class AbstractObjectMatrix2D<E>
     }
 
     /** {@inheritDoc} */
-    public ObjectMatrix2D<E> assign(final ObjectMatrix2D<? extends E> other)
+    public Matrix2D<E> assign(final Matrix2D<? extends E> other)
     {
         if (other == null)
         {
@@ -311,7 +311,7 @@ abstract class AbstractObjectMatrix2D<E>
     }
 
     /** {@inheritDoc} */
-    public ObjectMatrix2D<E> assign(final ObjectMatrix2D<? extends E> other,
+    public Matrix2D<E> assign(final Matrix2D<? extends E> other,
                                     final BinaryFunction<E, E, E> function)
     {
         if (other == null)
@@ -372,7 +372,7 @@ abstract class AbstractObjectMatrix2D<E>
     }
 
     /** {@inheritDoc} */
-    public E aggregate(final ObjectMatrix2D<? extends E> other,
+    public E aggregate(final Matrix2D<? extends E> other,
                        final BinaryFunction<E, E, E> aggr,
                        final BinaryFunction<E, E, E> function)
     {
@@ -418,11 +418,11 @@ abstract class AbstractObjectMatrix2D<E>
      *
      * @return a new view
      */
-    protected AbstractObjectMatrix2D<E> view()
+    protected AbstractMatrix2D<E> view()
     {
         try
         {
-            AbstractObjectMatrix2D<E> m = (AbstractObjectMatrix2D<E>) clone();
+            AbstractMatrix2D<E> m = (AbstractMatrix2D<E>) clone();
             return m;
         }
         catch (CloneNotSupportedException e)
@@ -436,7 +436,7 @@ abstract class AbstractObjectMatrix2D<E>
      *
      * @return modified version of <code>this</cod>
      */
-    protected AbstractObjectMatrix2D<E> vDice()
+    protected AbstractMatrix2D<E> vDice()
     {
         long tmp;
 
@@ -457,7 +457,7 @@ abstract class AbstractObjectMatrix2D<E>
     }
 
     /** {@inheritDoc} */
-    public ObjectMatrix2D<E> viewDice()
+    public Matrix2D<E> viewDice()
     {
         return view().vDice();
     }
@@ -467,7 +467,7 @@ abstract class AbstractObjectMatrix2D<E>
      *
      * @return modified version of <code>this</code>
      */
-    protected AbstractObjectMatrix2D<E> vRowFlip()
+    protected AbstractMatrix2D<E> vRowFlip()
     {
         if (rows > 0)
         {
@@ -480,7 +480,7 @@ abstract class AbstractObjectMatrix2D<E>
     }
 
     /** {@inheritDoc} */
-    public ObjectMatrix2D<E> viewRowFlip()
+    public Matrix2D<E> viewRowFlip()
     {
         return view().vRowFlip();
     }
@@ -490,7 +490,7 @@ abstract class AbstractObjectMatrix2D<E>
      *
      * @return modified version of <code>this</code>
      */
-    protected AbstractObjectMatrix2D<E> vColumnFlip()
+    protected AbstractMatrix2D<E> vColumnFlip()
     {
         if (columns > 0)
         {
@@ -503,7 +503,7 @@ abstract class AbstractObjectMatrix2D<E>
     }
 
     /** {@inheritDoc} */
-    public ObjectMatrix2D<E> viewColumnFlip()
+    public Matrix2D<E> viewColumnFlip()
     {
         return view().vColumnFlip();
     }
@@ -517,7 +517,7 @@ abstract class AbstractObjectMatrix2D<E>
      * @param width width
      * @return modified version of <code>this</code>
      */
-    protected AbstractObjectMatrix2D<E> vPart(final long row, final long column,
+    protected AbstractMatrix2D<E> vPart(final long row, final long column,
                                               final long height, final long width)
     {
         rowZero += (rowStride * row);
@@ -530,7 +530,7 @@ abstract class AbstractObjectMatrix2D<E>
     }
 
     /** {@inheritDoc} */
-    public ObjectMatrix2D<E> viewPart(final long row, final long column,
+    public Matrix2D<E> viewPart(final long row, final long column,
                                       final long height, final long width)
     {
         if (row < 0)
@@ -561,19 +561,19 @@ abstract class AbstractObjectMatrix2D<E>
     }
 
     /** {@inheritDoc} */
-    public ObjectMatrix2D<E> viewSelection(final long[] rows, final long[] columns)
+    public Matrix2D<E> viewSelection(final long[] rows, final long[] columns)
     {
         return null;
     }
 
     /** {@inheritDoc} */
-    public ObjectMatrix2D<E> viewSelection(final UnaryPredicate<ObjectMatrix1D<E>> predicate)
+    public Matrix2D<E> viewSelection(final UnaryPredicate<Matrix1D<E>> predicate)
     {
         return null;
     }
 
     /** {@inheritDoc} */
-    public ObjectMatrix2D<E> viewSelection(final BitMatrix2D mask)
+    public Matrix2D<E> viewSelection(final BitMatrix2D mask)
     {
         return null;
     }
@@ -585,7 +585,7 @@ abstract class AbstractObjectMatrix2D<E>
      * @param columnStride column stride
      * @return modified version of <code>this</code>
      */
-    protected AbstractObjectMatrix2D<E> vStrides(final long rowStride, final long columnStride)
+    protected AbstractMatrix2D<E> vStrides(final long rowStride, final long columnStride)
     {
         this.rowStride *= rowStride;
         this.columnStride *= columnStride;
@@ -604,7 +604,7 @@ abstract class AbstractObjectMatrix2D<E>
     }
 
     /** {@inheritDoc} */
-    public ObjectMatrix2D<E> viewStrides(final long rowStride, final long columnStride)
+    public Matrix2D<E> viewStrides(final long rowStride, final long columnStride)
     {
         return view().vStrides(rowStride, columnStride);
     }
@@ -737,7 +737,7 @@ abstract class AbstractObjectMatrix2D<E>
     }
 
     /**
-     * ObjectMatrix2D iterator.
+     * Matrix2D iterator.
      */
     private class ObjectMatrix2DIterator
         implements Iterator<E>

@@ -35,51 +35,51 @@ import org.dishevelled.functor.TertiaryPredicate;
 import org.dishevelled.functor.TertiaryProcedure;
 
 /**
- * Abstract unit test for implementations of ObjectMatrix2D.
+ * Abstract unit test for implementations of Matrix2D.
  *
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public abstract class AbstractObjectMatrix2DTest
+public abstract class AbstractMatrix2DTest
     extends TestCase
 {
 
     /**
-     * Create a new instance of ObjectMatrix2D to test.
+     * Create a new instance of Matrix2D to test.
      *
      * @param rows rows
      * @param columns columns
-     * @return a new instance of ObjectMatrix2D to test
+     * @return a new instance of Matrix2D to test
      */
-    protected abstract <T> ObjectMatrix2D<T> createObjectMatrix2D(long rows, long columns);
+    protected abstract <T> Matrix2D<T> createObjectMatrix2D(long rows, long columns);
 
     public void testSize()
     {
-        ObjectMatrix2D<String> m0 = createObjectMatrix2D(0, 0);
+        Matrix2D<String> m0 = createObjectMatrix2D(0, 0);
         assertNotNull("m0 not null", m0);
         assertEquals("m0 size == 0", 0, m0.size());
         assertEquals("m0 rows == 0", 0, m0.rows());
         assertEquals("m0 columns == 0", 0, m0.columns());
 
-        ObjectMatrix2D<String> m1 = createObjectMatrix2D(1, 1);
+        Matrix2D<String> m1 = createObjectMatrix2D(1, 1);
         assertNotNull("m1 not null", m1);
         assertEquals("m1 size == 1", 1, m1.size());
         assertEquals("m1 rows == 1", 1, m1.rows());
         assertEquals("m1 columns == 1", 1, m1.columns());
 
-        ObjectMatrix2D<String> m2 = createObjectMatrix2D(10, 10);
+        Matrix2D<String> m2 = createObjectMatrix2D(10, 10);
         assertNotNull("m2 not null", m2);
         assertEquals("m2 size == 100", 100, m2.size());
         assertEquals("m2 rows == 10", 10, m2.rows());
         assertEquals("m2 columns == 10", 10, m2.columns());
 
-        ObjectMatrix2D<String> m3 = createObjectMatrix2D(100, 100);
+        Matrix2D<String> m3 = createObjectMatrix2D(100, 100);
         assertNotNull("m3 not null", m3);
         assertEquals("m3 size == 10000", 10000, m3.size());
         assertEquals("m3 rows == 100", 100, m3.rows());
         assertEquals("m3 columns == 100", 100, m3.columns());
 
-        ObjectMatrix2D<String> m4 = createObjectMatrix2D(1000, 1000);
+        Matrix2D<String> m4 = createObjectMatrix2D(1000, 1000);
         assertNotNull("m4 not null", m4);
         assertEquals("m4 size == 1000000", 1000000, m4.size());
         assertEquals("m4 rows == 1000", 1000, m4.rows());
@@ -88,7 +88,7 @@ public abstract class AbstractObjectMatrix2DTest
 
     public void testCardinality()
     {
-        ObjectMatrix2D<String> m = createObjectMatrix2D(10, 10);
+        Matrix2D<String> m = createObjectMatrix2D(10, 10);
         assertNotNull("m not null", m);
         assertEquals("m size == 100", 100, m.size());
         assertEquals("m cardinality == 0", 0, m.cardinality());
@@ -117,7 +117,7 @@ public abstract class AbstractObjectMatrix2DTest
 
     public void testIsEmpty()
     {
-        ObjectMatrix2D<String> m = createObjectMatrix2D(10, 10);
+        Matrix2D<String> m = createObjectMatrix2D(10, 10);
         assertNotNull("m not null", m);
         assertEquals("m size == 100", 100, m.size());
         assertEquals("m cardinality == 0", 0, m.cardinality());
@@ -134,7 +134,7 @@ public abstract class AbstractObjectMatrix2DTest
 
     public void testGet()
     {
-        ObjectMatrix2D<String> m = createObjectMatrix2D(10, 10);
+        Matrix2D<String> m = createObjectMatrix2D(10, 10);
         assertNotNull("m not null", m);
         assertEquals("m size == 100", 100, m.size());
 
@@ -200,7 +200,7 @@ public abstract class AbstractObjectMatrix2DTest
 
     public void testSet()
     {
-        ObjectMatrix2D<String> m = createObjectMatrix2D(10, 10);
+        Matrix2D<String> m = createObjectMatrix2D(10, 10);
         assertNotNull("m not null", m);
         assertEquals("m size == 100", 100, m.size());
 
@@ -259,10 +259,10 @@ public abstract class AbstractObjectMatrix2DTest
 
     public void testAssign()
     {
-        ObjectMatrix2D<String> m = createObjectMatrix2D(10, 10);
+        Matrix2D<String> m = createObjectMatrix2D(10, 10);
         assertNotNull("m not null");
 
-        ObjectMatrix2D<String> m0 = m.assign((String) null);
+        Matrix2D<String> m0 = m.assign((String) null);
         assertNotNull("m0 not null", m0);
         assertEquals("m0.get(0, 0) == null", null, m0.get(0, 0));
         assertEquals("m0.get(0, 1) == null", null, m0.get(0, 1));
@@ -270,7 +270,7 @@ public abstract class AbstractObjectMatrix2DTest
         assertEquals("m0.cardinality() == 0", 0, m0.cardinality());
         assertEquals("m0 == m", m, m0);
 
-        ObjectMatrix2D<String> m1 = m.assign("foo");
+        Matrix2D<String> m1 = m.assign("foo");
         assertNotNull("m1 not null", m1);
         assertEquals("m1.get(0, 0) == foo", "foo", m1.get(0, 0));
         assertEquals("m1.get(0, 1) == foo", "foo", m1.get(0, 1));
@@ -278,7 +278,7 @@ public abstract class AbstractObjectMatrix2DTest
         assertEquals("m1.cardinality() == 100", 100, m1.cardinality());
         assertEquals("m1 == m", m, m1);
 
-        ObjectMatrix2D<String> m2 = m.assign((String) null);
+        Matrix2D<String> m2 = m.assign((String) null);
         assertNotNull("m2 not null", m2);
         assertEquals("m2.get(0, 0) == null", null, m2.get(0, 0));
         assertEquals("m2.get(0, 1) == null", null, m2.get(0, 1));
@@ -286,7 +286,7 @@ public abstract class AbstractObjectMatrix2DTest
         assertEquals("m2.cardinality() == 0", 0, m2.cardinality());
         assertEquals("m2 == m", m, m2);
 
-        ObjectMatrix2D<String> m3 = m.assign(new UnaryFunction<String, String>()
+        Matrix2D<String> m3 = m.assign(new UnaryFunction<String, String>()
             {
                 public String evaluate(final String s)
                 {
@@ -300,7 +300,7 @@ public abstract class AbstractObjectMatrix2DTest
         assertEquals("m3.cardinality() == 0", 0, m3.cardinality());
         assertEquals("m3 == m", m, m3);
 
-        ObjectMatrix2D<String> m4 = m.assign(new UnaryFunction<String, String>()
+        Matrix2D<String> m4 = m.assign(new UnaryFunction<String, String>()
             {
                 public String evaluate(final String s)
                 {
@@ -316,7 +316,7 @@ public abstract class AbstractObjectMatrix2DTest
 
         try
         {
-            ObjectMatrix2D<String> m5 = m.assign((UnaryFunction<String,String>) null);
+            Matrix2D<String> m5 = m.assign((UnaryFunction<String,String>) null);
             fail("assign((UnaryFunction<String,String>) null) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
@@ -324,16 +324,16 @@ public abstract class AbstractObjectMatrix2DTest
             // expected
         }
 
-        ObjectMatrix2D<String> nulls = createObjectMatrix2D(10, 10);
+        Matrix2D<String> nulls = createObjectMatrix2D(10, 10);
         nulls.assign((String) null);
 
-        ObjectMatrix2D<String> bars = createObjectMatrix2D(10, 10);
+        Matrix2D<String> bars = createObjectMatrix2D(10, 10);
         bars.assign("bar");
 
-        ObjectMatrix2D<String> bazs = createObjectMatrix2D(10, 10);
+        Matrix2D<String> bazs = createObjectMatrix2D(10, 10);
         bazs.assign("baz");
 
-        ObjectMatrix2D<String> m6 = m.assign(nulls);
+        Matrix2D<String> m6 = m.assign(nulls);
         assertNotNull("m6 not null", m6);
         assertEquals("m6.get(0, 0) == null", null, m6.get(0, 0));
         assertEquals("m6.get(0, 1) == null", null, m6.get(0, 1));
@@ -341,7 +341,7 @@ public abstract class AbstractObjectMatrix2DTest
         assertEquals("m6.cardinality() == 0", 0, m6.cardinality());
         assertEquals("m6 == m", m, m6);
 
-        ObjectMatrix2D<String> m7 = m.assign(bars);
+        Matrix2D<String> m7 = m.assign(bars);
         assertNotNull("m7 not null", m7);
         assertEquals("m7.get(0, 0) == bar", "bar", m7.get(0, 0));
         assertEquals("m7.get(0, 1) == bar", "bar", m7.get(0, 1));
@@ -349,7 +349,7 @@ public abstract class AbstractObjectMatrix2DTest
         assertEquals("m7.cardinality() == 100", 100, m7.cardinality());
         assertEquals("m7 == m", m, m7);
 
-        ObjectMatrix2D<String> m8 = m.assign(bazs);
+        Matrix2D<String> m8 = m.assign(bazs);
         assertNotNull("m8 not null", m8);
         assertEquals("m8.get(0, 0) == baz", "baz", m8.get(0, 0));
         assertEquals("m8.get(0, 1) == baz", "baz", m8.get(0, 1));
@@ -359,8 +359,8 @@ public abstract class AbstractObjectMatrix2DTest
 
         try
         {
-            ObjectMatrix2D<String> m9 = m.assign((ObjectMatrix2D<String>) null);
-            fail("assign((ObjectMatrix2D<E>) null) expected IllegalArgumentException");
+            Matrix2D<String> m9 = m.assign((Matrix2D<String>) null);
+            fail("assign((Matrix2D<E>) null) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
         {
@@ -369,7 +369,7 @@ public abstract class AbstractObjectMatrix2DTest
 
         try
         {
-            ObjectMatrix2D<String> tooSmall = createObjectMatrix2D(9, 10);
+            Matrix2D<String> tooSmall = createObjectMatrix2D(9, 10);
             m.assign(tooSmall);
             fail("assign(tooSmall) expected IllegalArgumentException");
         }
@@ -380,7 +380,7 @@ public abstract class AbstractObjectMatrix2DTest
 
         try
         {
-            ObjectMatrix2D<String> tooBig = createObjectMatrix2D(10, 11);
+            Matrix2D<String> tooBig = createObjectMatrix2D(10, 11);
             m.assign(tooBig);
             fail("assign(tooBig) expected IllegalArgumentException");
         }
@@ -390,7 +390,7 @@ public abstract class AbstractObjectMatrix2DTest
         }
 
         m.clear();
-        ObjectMatrix2D<String> m10 = m.assign(nulls,
+        Matrix2D<String> m10 = m.assign(nulls,
                                               new BinaryFunction<String, String, String>()
             {
                 public String evaluate(final String s0, final String s1)
@@ -405,7 +405,7 @@ public abstract class AbstractObjectMatrix2DTest
         assertEquals("m10.cardinality() == 100", 100, m10.cardinality());
         assertEquals("m10 == m", m, m10);
 
-        ObjectMatrix2D<String> m11 = m.assign(bars,
+        Matrix2D<String> m11 = m.assign(bars,
                                               new BinaryFunction<String, String, String>()
             {
                 public String evaluate(final String s0, final String s1)
@@ -430,8 +430,8 @@ public abstract class AbstractObjectMatrix2DTest
 
         try
         {
-            ObjectMatrix2D<String> m12 = m.assign((ObjectMatrix2D<String>) null, ignore);
-            fail("assign((ObjectMatrix2D<E>) null,) expected IllegalArgumentException");
+            Matrix2D<String> m12 = m.assign((Matrix2D<String>) null, ignore);
+            fail("assign((Matrix2D<E>) null,) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
         {
@@ -440,7 +440,7 @@ public abstract class AbstractObjectMatrix2DTest
 
         try
         {
-            ObjectMatrix2D<String> tooSmall = createObjectMatrix2D(9, 10);
+            Matrix2D<String> tooSmall = createObjectMatrix2D(9, 10);
             m.assign(tooSmall, ignore);
             fail("assign(tooSmall,) expected IllegalArgumentException");
         }
@@ -451,7 +451,7 @@ public abstract class AbstractObjectMatrix2DTest
 
         try
         {
-            ObjectMatrix2D<String> tooBig = createObjectMatrix2D(10, 11);
+            Matrix2D<String> tooBig = createObjectMatrix2D(10, 11);
             m.assign(tooBig, ignore);
             fail("assign(tooBig,) expected IllegalArgumentException");
         }
@@ -473,8 +473,8 @@ public abstract class AbstractObjectMatrix2DTest
 
     public void testAggregate()
     {
-        ObjectMatrix2D<String> m0 = createObjectMatrix2D(3, 3);
-        ObjectMatrix2D<String> m1 = createObjectMatrix2D(3, 3);
+        Matrix2D<String> m0 = createObjectMatrix2D(3, 3);
+        Matrix2D<String> m1 = createObjectMatrix2D(3, 3);
 
         m0.assign("foo");
 
@@ -549,7 +549,7 @@ public abstract class AbstractObjectMatrix2DTest
 
         try
         {
-            ObjectMatrix2D<String> tooSmall = createObjectMatrix2D(2, 3);
+            Matrix2D<String> tooSmall = createObjectMatrix2D(2, 3);
             m0.aggregate(tooSmall, append, combine);
             fail("aggregate(tooSmall,,) expected IllegalArgumentException");
         }
@@ -560,7 +560,7 @@ public abstract class AbstractObjectMatrix2DTest
 
         try
         {
-            ObjectMatrix2D<String> tooBig = createObjectMatrix2D(3, 4);
+            Matrix2D<String> tooBig = createObjectMatrix2D(3, 4);
             m0.aggregate(tooBig, append, combine);
             fail("aggregate(tooBig,,) expected IllegalArgumentException");
         }
@@ -592,7 +592,7 @@ public abstract class AbstractObjectMatrix2DTest
 
     public void testIterator()
     {
-        ObjectMatrix2D<String> m = createObjectMatrix2D(10, 10);
+        Matrix2D<String> m = createObjectMatrix2D(10, 10);
         assertNotNull("m not null");
         assertEquals("m size == 100", 100, m.size());
         assertEquals("m cardinality == 0", 0, m.cardinality());
@@ -667,7 +667,7 @@ public abstract class AbstractObjectMatrix2DTest
 
     public void testForEachNonNull()
     {
-        ObjectMatrix2D<String> m = createObjectMatrix2D(10, 10);
+        Matrix2D<String> m = createObjectMatrix2D(10, 10);
         final MutableInt count = new MutableInt();
 
         count.setValue(0);
@@ -702,7 +702,7 @@ public abstract class AbstractObjectMatrix2DTest
              });
         assertEquals("count == 100", 100, count.intValue());
 
-        ObjectMatrix1D<String> row = m.viewRow(0);
+        Matrix1D<String> row = m.viewRow(0);
         count.setValue(0);
         row.forEachNonNull(new UnaryProcedure<String>()
              {
@@ -726,7 +726,7 @@ public abstract class AbstractObjectMatrix2DTest
 
     public void testForEach()
     {
-        ObjectMatrix2D<String> m = createObjectMatrix2D(10, 10);
+        Matrix2D<String> m = createObjectMatrix2D(10, 10);
 
         m.forEach(new UnaryProcedure<String>()
               {
@@ -808,7 +808,7 @@ public abstract class AbstractObjectMatrix2DTest
 
     public void testViewRow()
     {
-        final ObjectMatrix2D<String> m = createObjectMatrix2D(10, 10);
+        final Matrix2D<String> m = createObjectMatrix2D(10, 10);
 
         m.forEach(new TertiaryProcedure<Long, Long, String>()
             {
@@ -826,7 +826,7 @@ public abstract class AbstractObjectMatrix2DTest
         assertEquals("m.get(1, 1) == 1x1", "1x1", m.get(1, 1));
         assertEquals("m.get(9, 9) == 9x9", "9x9", m.get(9, 9));
 
-        ObjectMatrix1D<String> firstRow = m.viewRow(0);
+        Matrix1D<String> firstRow = m.viewRow(0);
         assertNotNull("firstRow not null", firstRow);
         assertEquals("firstRow size == 10", 10, firstRow.size());
         assertEquals("firstRow cardinality == 10", 10, firstRow.cardinality());
@@ -835,7 +835,7 @@ public abstract class AbstractObjectMatrix2DTest
         assertEquals("firstRow.get(8) == 0x8", "0x8", firstRow.get(8));
         assertEquals("firstRow.get(9) == 0x9", "0x9", firstRow.get(9));
 
-        ObjectMatrix1D<String> lastRow = m.viewRow(9);
+        Matrix1D<String> lastRow = m.viewRow(9);
         assertNotNull("lastRow not null", lastRow);
         assertEquals("lastRow size == 10", 10, lastRow.size());
         assertEquals("lastRow cardinality == 10", 10, lastRow.cardinality());
@@ -866,7 +866,7 @@ public abstract class AbstractObjectMatrix2DTest
 
     public void testViewColumn()
     {
-        final ObjectMatrix2D<String> m = createObjectMatrix2D(10, 10);
+        final Matrix2D<String> m = createObjectMatrix2D(10, 10);
 
         m.forEach(new TertiaryProcedure<Long, Long, String>()
             {
@@ -884,7 +884,7 @@ public abstract class AbstractObjectMatrix2DTest
         assertEquals("m.get(1, 1) == 1x1", "1x1", m.get(1, 1));
         assertEquals("m.get(9, 9) == 9x9", "9x9", m.get(9, 9));
 
-        ObjectMatrix1D<String> firstColumn = m.viewColumn(0);
+        Matrix1D<String> firstColumn = m.viewColumn(0);
         assertNotNull("firstColumn not null", firstColumn);
         assertEquals("firstColumn size == 10", 10, firstColumn.size());
         assertEquals("firstColumn cardinality == 10", 10, firstColumn.cardinality());
@@ -893,7 +893,7 @@ public abstract class AbstractObjectMatrix2DTest
         assertEquals("firstColumn.get(8) == 8x0", "8x0", firstColumn.get(8));
         assertEquals("firstColumn.get(9) == 9x0", "9x0", firstColumn.get(9));
 
-        ObjectMatrix1D<String> lastColumn = m.viewColumn(9);
+        Matrix1D<String> lastColumn = m.viewColumn(9);
         assertNotNull("lastColumn not null", lastColumn);
         assertEquals("lastColumn size == 10", 10, lastColumn.size());
         assertEquals("lastColumn cardinality == 10", 10, lastColumn.cardinality());
@@ -929,7 +929,7 @@ public abstract class AbstractObjectMatrix2DTest
 
     public void testViewRowFlip()
     {
-        final ObjectMatrix2D<String> m = createObjectMatrix2D(10, 10);
+        final Matrix2D<String> m = createObjectMatrix2D(10, 10);
 
         m.forEach(new TertiaryProcedure<Long, Long, String>()
             {
@@ -947,7 +947,7 @@ public abstract class AbstractObjectMatrix2DTest
         assertEquals("m.get(1, 1) == 1x1", "1x1", m.get(1, 1));
         assertEquals("m.get(9, 9) == 9x9", "9x9", m.get(9, 9));
 
-        ObjectMatrix2D<String> flip = m.viewRowFlip();
+        Matrix2D<String> flip = m.viewRowFlip();
         assertNotNull("flip not null", flip);
         assertEquals("flip size == 100", 100, flip.size());
         assertEquals("flip cardinality == 100", 100, flip.cardinality());
@@ -958,7 +958,7 @@ public abstract class AbstractObjectMatrix2DTest
         assertEquals("flip.get(8, 9) == 1x9", "1x9", flip.get(8, 9));
         assertEquals("flip.get(9, 9) == 0x9", "0x9", flip.get(9, 9));
 
-        ObjectMatrix2D<String> flipTwice = flip.viewRowFlip();
+        Matrix2D<String> flipTwice = flip.viewRowFlip();
         assertNotNull("flipTwice not null", flipTwice);
         assertEquals("flipTwice size == 100", 100, flipTwice.size());
         assertEquals("flipTwice cardinality == 100", 100, flipTwice.cardinality());
@@ -969,7 +969,7 @@ public abstract class AbstractObjectMatrix2DTest
         assertEquals("flipTwice.get(8, 9) == 8x9", "8x9", flipTwice.get(8, 9));
         assertEquals("flipTwice.get(9, 9) == 9x9", "9x9", flipTwice.get(9, 9));
 
-        ObjectMatrix2D<String> flipThrice = flipTwice.viewRowFlip();
+        Matrix2D<String> flipThrice = flipTwice.viewRowFlip();
         assertNotNull("flipThrice not null", flipThrice);
         assertEquals("flipThrice size == 100", 100, flipThrice.size());
         assertEquals("flipThrice cardinality == 100", 100, flipThrice.cardinality());
@@ -980,7 +980,7 @@ public abstract class AbstractObjectMatrix2DTest
         assertEquals("flipThrice.get(8, 9) == 1x9", "1x9", flipThrice.get(8, 9));
         assertEquals("flipThrice.get(9, 9) == 0x9", "0x9", flipThrice.get(9, 9));
 
-        ObjectMatrix2D<String> flipBoth = flip.viewColumnFlip();
+        Matrix2D<String> flipBoth = flip.viewColumnFlip();
         assertEquals("flipBoth size == 100", 100, flipBoth.size());
         assertEquals("flipBoth cardinality == 100", 100, flipBoth.cardinality());
         assertEquals("flipBoth.get(0, 0) == 9x9", "9x9", flipBoth.get(0, 0));
@@ -993,7 +993,7 @@ public abstract class AbstractObjectMatrix2DTest
 
     public void testViewColumnFlip()
     {
-        final ObjectMatrix2D<String> m = createObjectMatrix2D(10, 10);
+        final Matrix2D<String> m = createObjectMatrix2D(10, 10);
 
         m.forEach(new TertiaryProcedure<Long, Long, String>()
             {
@@ -1011,7 +1011,7 @@ public abstract class AbstractObjectMatrix2DTest
         assertEquals("m.get(1, 1) == 1x1", "1x1", m.get(1, 1));
         assertEquals("m.get(9, 9) == 9x9", "9x9", m.get(9, 9));
 
-        ObjectMatrix2D<String> flip = m.viewColumnFlip();
+        Matrix2D<String> flip = m.viewColumnFlip();
         assertNotNull("flip not null", flip);
         assertEquals("flip size == 100", 100, flip.size());
         assertEquals("flip cardinality == 100", 100, flip.cardinality());
@@ -1022,7 +1022,7 @@ public abstract class AbstractObjectMatrix2DTest
         assertEquals("flip.get(9, 8) == 9x1", "9x1", flip.get(9, 8));
         assertEquals("flip.get(9, 9) == 9x0", "9x0", flip.get(9, 9));
 
-        ObjectMatrix2D<String> flipTwice = flip.viewColumnFlip();
+        Matrix2D<String> flipTwice = flip.viewColumnFlip();
         assertNotNull("flipTwice not null", flipTwice);
         assertEquals("flipTwice size == 100", 100, flipTwice.size());
         assertEquals("flipTwice cardinality == 100", 100, flipTwice.cardinality());
@@ -1033,7 +1033,7 @@ public abstract class AbstractObjectMatrix2DTest
         assertEquals("flipTwice.get(9, 8) == 9x8", "9x8", flipTwice.get(9, 8));
         assertEquals("flipTwice.get(9, 9) == 9x9", "9x9", flipTwice.get(9, 9));
 
-        ObjectMatrix2D<String> flipThrice = flipTwice.viewColumnFlip();
+        Matrix2D<String> flipThrice = flipTwice.viewColumnFlip();
         assertNotNull("flipThrice not null", flipThrice);
         assertEquals("flipThrice size == 100", 100, flipThrice.size());
         assertEquals("flipThrice cardinality == 100", 100, flipThrice.cardinality());
@@ -1044,7 +1044,7 @@ public abstract class AbstractObjectMatrix2DTest
         assertEquals("flipThrice.get(9, 8) == 9x1", "9x1", flipThrice.get(9, 8));
         assertEquals("flipThrice.get(9, 9) == 9x0", "9x0", flipThrice.get(9, 9));
 
-        ObjectMatrix2D<String> flipBoth = flip.viewRowFlip();
+        Matrix2D<String> flipBoth = flip.viewRowFlip();
         assertEquals("flipBoth size == 100", 100, flipBoth.size());
         assertEquals("flipBoth cardinality == 100", 100, flipBoth.cardinality());
         assertEquals("flipBoth.get(0, 0) == 9x9", "9x9", flipBoth.get(0, 0));
@@ -1057,7 +1057,7 @@ public abstract class AbstractObjectMatrix2DTest
 
     public void testViewPart()
     {
-        final ObjectMatrix2D<String> m = createObjectMatrix2D(10, 10);
+        final Matrix2D<String> m = createObjectMatrix2D(10, 10);
 
         m.forEach(new TertiaryProcedure<Long, Long, String>()
             {
@@ -1075,7 +1075,7 @@ public abstract class AbstractObjectMatrix2DTest
         assertEquals("m.get(1, 1) == 1x1", "1x1", m.get(1, 1));
         assertEquals("m.get(9, 9) == 9x9", "9x9", m.get(9, 9));
 
-        ObjectMatrix2D<String> firstFiveRows = m.viewPart(0, 0, 5, 10);
+        Matrix2D<String> firstFiveRows = m.viewPart(0, 0, 5, 10);
         assertNotNull("firstFiveRows not null", firstFiveRows);
         assertEquals("firstFiveRows size == 50", 50, firstFiveRows.size());
         assertEquals("firstFiveRows rows == 5", 5, firstFiveRows.rows());
@@ -1087,7 +1087,7 @@ public abstract class AbstractObjectMatrix2DTest
         assertEquals("firstFiveRows.get(1, 1) == 1x1", "1x1", firstFiveRows.get(1, 1));
         assertEquals("firstFiveRows.get(4, 9) == 4x9", "4x9", firstFiveRows.get(4, 9));
 
-        ObjectMatrix2D<String> firstThreeRows = firstFiveRows.viewPart(0, 0, 3, 10);
+        Matrix2D<String> firstThreeRows = firstFiveRows.viewPart(0, 0, 3, 10);
         assertNotNull("firstThreeRows not null", firstThreeRows);
         assertEquals("firstThreeRows size == 30", 30, firstThreeRows.size());
         assertEquals("firstThreeRows rows == 3", 3, firstThreeRows.rows());
@@ -1099,7 +1099,7 @@ public abstract class AbstractObjectMatrix2DTest
         assertEquals("firstThreeRows.get(1, 1) == 1x1", "1x1", firstThreeRows.get(1, 1));
         assertEquals("firstThreeRows.get(2, 9) == 2x9", "2x9", firstThreeRows.get(2, 9));
 
-        ObjectMatrix2D<String> firstFiveColumns = m.viewPart(0, 0, 10, 5);
+        Matrix2D<String> firstFiveColumns = m.viewPart(0, 0, 10, 5);
         assertNotNull("firstFiveColumns not null", firstFiveColumns);
         assertEquals("firstFiveColumns size == 50", 50, firstFiveColumns.size());
         assertEquals("firstFiveColumns rows == 10", 10, firstFiveColumns.rows());
@@ -1111,7 +1111,7 @@ public abstract class AbstractObjectMatrix2DTest
         assertEquals("firstFiveColumns.get(1, 1) == 1x1", "1x1", firstFiveColumns.get(1, 1));
         assertEquals("firstFiveColumns.get(9, 4) == 9x4", "9x4", firstFiveColumns.get(9, 4));
 
-        ObjectMatrix2D<String> firstThreeColumns = firstFiveColumns.viewPart(0, 0, 10, 3);
+        Matrix2D<String> firstThreeColumns = firstFiveColumns.viewPart(0, 0, 10, 3);
         assertNotNull("firstThreeColumns not null", firstThreeColumns);
         assertEquals("firstThreeColumns size == 30", 30, firstThreeColumns.size());
         assertEquals("firstThreeColumns rows == 10", 10, firstThreeColumns.rows());
@@ -1123,7 +1123,7 @@ public abstract class AbstractObjectMatrix2DTest
         assertEquals("firstThreeColumns.get(1, 1) == 1x1", "1x1", firstThreeColumns.get(1, 1));
         assertEquals("firstThreeColumns.get(9, 2) == 9x2", "9x2", firstThreeColumns.get(9, 2));
 
-        ObjectMatrix2D<String> middleFive = m.viewPart(2, 2, 5, 5);
+        Matrix2D<String> middleFive = m.viewPart(2, 2, 5, 5);
         assertNotNull("middleFive not null", middleFive);
         assertEquals("middleFive size == 25", 25, middleFive.size());
         assertEquals("middleFive rows == 5", 5, middleFive.rows());
@@ -1216,7 +1216,7 @@ public abstract class AbstractObjectMatrix2DTest
 
     public void testViewStrides()
     {
-        final ObjectMatrix2D<String> m = createObjectMatrix2D(100, 100);
+        final Matrix2D<String> m = createObjectMatrix2D(100, 100);
 
         m.forEach(new TertiaryProcedure<Long, Long, String>()
             {
@@ -1235,7 +1235,7 @@ public abstract class AbstractObjectMatrix2DTest
         assertEquals("m.get(1, 1) == 1x1", "1x1", m.get(1, 1));
         assertEquals("m.get(99, 99) == 99x99", "99x99", m.get(99, 99));
 
-        ObjectMatrix2D<String> every2ndRow = m.viewStrides(2, 1);
+        Matrix2D<String> every2ndRow = m.viewStrides(2, 1);
         assertNotNull("every2ndRow not null", every2ndRow);
         assertEquals("every2ndRow rows == 50", 50, every2ndRow.rows());
         assertEquals("every2ndRow columns == 100", 100, every2ndRow.columns());
@@ -1252,7 +1252,7 @@ public abstract class AbstractObjectMatrix2DTest
         assertEquals("every2ndRow.get(2, 2) == 4x2", "4x2", every2ndRow.get(2, 2));
         assertEquals("every2ndRow.get(49, 99) == 98x99", "98x99", every2ndRow.get(49, 99));
 
-        ObjectMatrix2D<String> every10thRow = m.viewStrides(10, 1);
+        Matrix2D<String> every10thRow = m.viewStrides(10, 1);
         assertNotNull("every10thRow not null", every10thRow);
         assertEquals("every10thRow rows == 10", 10, every10thRow.rows());
         assertEquals("every10thRow columns == 100", 100, every10thRow.columns());
@@ -1269,7 +1269,7 @@ public abstract class AbstractObjectMatrix2DTest
         assertEquals("every10thRow.get(2, 2) == 20x2", "20x2", every10thRow.get(2, 2));
         assertEquals("every10thRow.get(9, 99) == 90x99", "90x99", every10thRow.get(9, 99));
 
-        ObjectMatrix2D<String> every2ndOfEvery10thRow = every10thRow.viewStrides(2, 1);
+        Matrix2D<String> every2ndOfEvery10thRow = every10thRow.viewStrides(2, 1);
         assertNotNull("every2ndOfEvery10thRow not null", every2ndOfEvery10thRow);
         assertEquals("every2ndOfEvery10thRow rows == 5", 5, every2ndOfEvery10thRow.rows());
         assertEquals("every2ndOfEvery10thRow columns == 100", 100, every2ndOfEvery10thRow.columns());
@@ -1286,7 +1286,7 @@ public abstract class AbstractObjectMatrix2DTest
         assertEquals("every2ndOfEvery10thRow.get(2, 2) == 40x2", "40x2", every2ndOfEvery10thRow.get(2, 2));
         assertEquals("every2ndOfEvery10thRow.get(4, 99) == 80x99", "80x99", every2ndOfEvery10thRow.get(4, 99));
 
-        ObjectMatrix2D<String> every2ndColumn = m.viewStrides(1, 2);
+        Matrix2D<String> every2ndColumn = m.viewStrides(1, 2);
         assertNotNull("every2ndColumn not null", every2ndColumn);
         assertEquals("every2ndColumn rows == 100", 100, every2ndColumn.rows());
         assertEquals("every2ndColumn columns == 50", 50, every2ndColumn.columns());
@@ -1303,7 +1303,7 @@ public abstract class AbstractObjectMatrix2DTest
         assertEquals("every2ndColumn.get(2, 2) == 2x4", "2x4", every2ndColumn.get(2, 2));
         assertEquals("every2ndColumn.get(99, 49) == 99x98", "99x98", every2ndColumn.get(99, 49));
 
-        ObjectMatrix2D<String> every10thColumn = m.viewStrides(1, 10);
+        Matrix2D<String> every10thColumn = m.viewStrides(1, 10);
         assertNotNull("every10thColumn not null", every10thColumn);
         assertEquals("every10thColumn rows == 100", 100, every10thColumn.rows());
         assertEquals("every10thColumn columns == 10", 10, every10thColumn.columns());
@@ -1320,7 +1320,7 @@ public abstract class AbstractObjectMatrix2DTest
         assertEquals("every10thColumn.get(2, 2) == 2x20", "2x20", every10thColumn.get(2, 2));
         assertEquals("every10thColumn.get(99, 9) == 99x90", "99x90", every10thColumn.get(99, 9));
 
-        ObjectMatrix2D<String> every2ndOfEvery10thColumn = every10thColumn.viewStrides(1, 2);
+        Matrix2D<String> every2ndOfEvery10thColumn = every10thColumn.viewStrides(1, 2);
         assertNotNull("every2ndOfEvery10thColumn not null", every2ndOfEvery10thColumn);
         assertEquals("every2ndOfEvery10thColumn rows == 100", 100, every2ndOfEvery10thColumn.rows());
         assertEquals("every2ndOfEvery10thColumn columns == 5", 5, every2ndOfEvery10thColumn.columns());
