@@ -45,7 +45,7 @@ public class SparseMatrix3DTest
 {
 
     /** @see AbstractMatrix3D */
-    protected <T> Matrix3D<T> createObjectMatrix3D(final long slices, final long rows, final long columns)
+    protected <T> Matrix3D<T> createMatrix3D(final long slices, final long rows, final long columns)
     {
         Matrix3D<T> m = new SparseMatrix3D<T>(slices, rows, columns);
         return m;

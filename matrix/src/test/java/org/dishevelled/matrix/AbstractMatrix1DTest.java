@@ -50,26 +50,26 @@ public abstract class AbstractMatrix1DTest
      * @param size size
      * @return a new instance of Matrix1D to test
      */
-    protected abstract <T> Matrix1D<T> createObjectMatrix1D(long size);
+    protected abstract <T> Matrix1D<T> createMatrix1D(long size);
 
     public void testSize()
     {
-        Matrix1D<String> m0 = createObjectMatrix1D(0);
+        Matrix1D<String> m0 = createMatrix1D(0);
         assertNotNull("m0 not null", m0);
         assertEquals("m0 size == 0", 0, m0.size());
 
-        Matrix1D<String> m1 = createObjectMatrix1D(100);
+        Matrix1D<String> m1 = createMatrix1D(100);
         assertNotNull("m1 not null", m1);
         assertEquals("m1 size == 100", 100, m1.size());
 
-        Matrix1D<String> m2 = createObjectMatrix1D(1000);
+        Matrix1D<String> m2 = createMatrix1D(1000);
         assertNotNull("m2 not null", m2);
         assertEquals("m2 size == 1000", 1000, m2.size());
     }
 
     public void testCardinality()
     {
-        Matrix1D<String> m = createObjectMatrix1D(100);
+        Matrix1D<String> m = createMatrix1D(100);
         assertNotNull("m not null", m);
         assertEquals("m size == 100", 100, m.size());
         assertEquals("m cardinality == 0", 0, m.cardinality());
@@ -98,7 +98,7 @@ public abstract class AbstractMatrix1DTest
 
     public void testIsEmpty()
     {
-        Matrix1D<String> m = createObjectMatrix1D(100);
+        Matrix1D<String> m = createMatrix1D(100);
         assertNotNull("m not null", m);
         assertEquals("m size == 100", 100, m.size());
         assertEquals("m cardinality == 0", 0, m.cardinality());
@@ -115,7 +115,7 @@ public abstract class AbstractMatrix1DTest
 
     public void testGet()
     {
-        Matrix1D<String> m = createObjectMatrix1D(100);
+        Matrix1D<String> m = createMatrix1D(100);
         assertNotNull("m not null", m);
         assertEquals("m size == 100", 100, m.size());
 
@@ -161,7 +161,7 @@ public abstract class AbstractMatrix1DTest
 
     public void testSet()
     {
-        Matrix1D<String> m = createObjectMatrix1D(100);
+        Matrix1D<String> m = createMatrix1D(100);
         assertNotNull("m not null", m);
         assertEquals("m size == 100", 100, m.size());
 
@@ -200,7 +200,7 @@ public abstract class AbstractMatrix1DTest
 
     public void testAssign()
     {
-        Matrix1D<String> m = createObjectMatrix1D(100);
+        Matrix1D<String> m = createMatrix1D(100);
         assertNotNull("m not null", m);
 
         Matrix1D<String> m0 = m.assign((String) null);
@@ -265,13 +265,13 @@ public abstract class AbstractMatrix1DTest
             // expected
         }
 
-        Matrix1D<String> nulls = createObjectMatrix1D(100);
+        Matrix1D<String> nulls = createMatrix1D(100);
         nulls.assign((String) null);
 
-        Matrix1D<String> bars = createObjectMatrix1D(100);
+        Matrix1D<String> bars = createMatrix1D(100);
         bars.assign("bar");
 
-        Matrix1D<String> bazs = createObjectMatrix1D(100);
+        Matrix1D<String> bazs = createMatrix1D(100);
         bazs.assign("baz");
 
         Matrix1D<String> m6 = m.assign(nulls);
@@ -310,7 +310,7 @@ public abstract class AbstractMatrix1DTest
 
         try
         {
-            Matrix1D<String> tooSmall = createObjectMatrix1D(99);
+            Matrix1D<String> tooSmall = createMatrix1D(99);
             m.assign(tooSmall);
             fail("assign(tooSmall) expected IllegalArgumentException");
         }
@@ -321,7 +321,7 @@ public abstract class AbstractMatrix1DTest
 
         try
         {
-            Matrix1D<String> tooBig = createObjectMatrix1D(101);
+            Matrix1D<String> tooBig = createMatrix1D(101);
             m.assign(tooBig);
             fail("assign(tooBig) expected IllegalArgumentException");
         }
@@ -381,7 +381,7 @@ public abstract class AbstractMatrix1DTest
 
         try
         {
-            Matrix1D<String> tooSmall = createObjectMatrix1D(99);
+            Matrix1D<String> tooSmall = createMatrix1D(99);
             m.assign(tooSmall, ignore);
             fail("assign(tooSmall,) expected IllegalArgumentException");
         }
@@ -392,7 +392,7 @@ public abstract class AbstractMatrix1DTest
 
         try
         {
-            Matrix1D<String> tooBig = createObjectMatrix1D(101);
+            Matrix1D<String> tooBig = createMatrix1D(101);
             m.assign(tooBig, ignore);
             fail("assign(tooBig,) expected IllegalArgumentException");
         }
@@ -414,8 +414,8 @@ public abstract class AbstractMatrix1DTest
 
     public void testAggregate()
     {
-        Matrix1D<String> m0 = createObjectMatrix1D(10);
-        Matrix1D<String> m1 = createObjectMatrix1D(10);
+        Matrix1D<String> m0 = createMatrix1D(10);
+        Matrix1D<String> m1 = createMatrix1D(10);
 
         m0.assign("foo");
 
@@ -491,7 +491,7 @@ public abstract class AbstractMatrix1DTest
 
         try
         {
-            Matrix1D<String> tooSmall = createObjectMatrix1D(9);
+            Matrix1D<String> tooSmall = createMatrix1D(9);
             m0.aggregate(tooSmall, append, combine);
             fail("aggregate(tooSmall,,) expected IllegalArgumentException");
         }
@@ -502,7 +502,7 @@ public abstract class AbstractMatrix1DTest
 
         try
         {
-            Matrix1D<String> tooBig = createObjectMatrix1D(11);
+            Matrix1D<String> tooBig = createMatrix1D(11);
             m0.aggregate(tooBig, append, combine);
             fail("aggregate(tooBig,,) expected IllegalArgumentException");
         }
@@ -531,15 +531,15 @@ public abstract class AbstractMatrix1DTest
             // expected
         }
 
-        Matrix1D<String> empty0 = createObjectMatrix1D(0);
-        Matrix1D<String> empty1 = createObjectMatrix1D(0);
+        Matrix1D<String> empty0 = createMatrix1D(0);
+        Matrix1D<String> empty1 = createMatrix1D(0);
         assertEquals(null, empty0.aggregate(append, passThru));
         assertEquals(null, empty0.aggregate(empty1, append, combine));
     }
 
     public void testIterator()
     {
-        Matrix1D<String> m = createObjectMatrix1D(100);
+        Matrix1D<String> m = createMatrix1D(100);
         assertNotNull("m not null");
         assertEquals("m size == 100", 100, m.size());
         assertEquals("m cardinality == 0", 0, m.cardinality());
@@ -617,7 +617,7 @@ public abstract class AbstractMatrix1DTest
 
     public void testForEachNonNull()
     {
-        Matrix1D<String> m = createObjectMatrix1D(100);
+        Matrix1D<String> m = createMatrix1D(100);
         final MutableInt count = new MutableInt();
 
         count.setValue(0);
@@ -665,7 +665,7 @@ public abstract class AbstractMatrix1DTest
 
     public void testForEach()
     {
-        Matrix1D<String> m = createObjectMatrix1D(100);
+        Matrix1D<String> m = createMatrix1D(100);
 
         m.forEach(new UnaryProcedure<String>()
               {
@@ -815,7 +815,7 @@ public abstract class AbstractMatrix1DTest
 
     public void testViewFlip()
     {
-        Matrix1D<String> m = createObjectMatrix1D(5);
+        Matrix1D<String> m = createMatrix1D(5);
 
         m.set(0, "0");
         m.set(1, "1");
@@ -869,7 +869,7 @@ public abstract class AbstractMatrix1DTest
 
     public void testViewPart()
     {
-        Matrix1D<String> m = createObjectMatrix1D(10);
+        Matrix1D<String> m = createMatrix1D(10);
 
         m.set(0, "0");
         m.set(1, "1");
@@ -944,7 +944,7 @@ public abstract class AbstractMatrix1DTest
 
     public void testViewStrides()
     {
-        final Matrix1D<String> m = createObjectMatrix1D(100);
+        final Matrix1D<String> m = createMatrix1D(100);
 
         m.forEach(new BinaryProcedure<Long, String>()
             {
@@ -1015,7 +1015,7 @@ public abstract class AbstractMatrix1DTest
 
     public void testClear()
     {
-        Matrix1D<String> m = createObjectMatrix1D(10);
+        Matrix1D<String> m = createMatrix1D(10);
 
         m.assign("foo");
         assertEquals("m size == 10", 10, m.size());
@@ -1084,7 +1084,7 @@ public abstract class AbstractMatrix1DTest
 
     public void testToString()
     {
-        Matrix1D<String> m = createObjectMatrix1D(10);
+        Matrix1D<String> m = createMatrix1D(10);
         m.assign("foo");
         assertNotNull(m.toString());
     }

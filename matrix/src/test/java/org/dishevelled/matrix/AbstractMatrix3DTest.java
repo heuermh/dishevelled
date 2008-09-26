@@ -50,39 +50,39 @@ public abstract class AbstractMatrix3DTest
      * @param columns columns
      * @return a new instance of Matrix3D to test
      */
-    protected abstract <T> Matrix3D<T> createObjectMatrix3D(long slices, long rows, long columns);
+    protected abstract <T> Matrix3D<T> createMatrix3D(long slices, long rows, long columns);
 
     public void testSize()
     {
-        Matrix3D<String> m0 = createObjectMatrix3D(0, 0, 0);
+        Matrix3D<String> m0 = createMatrix3D(0, 0, 0);
         assertNotNull("m0 not null", m0);
         assertEquals("m0 size == 0", 0, m0.size());
         assertEquals("m0 slices == 0", 0, m0.slices());
         assertEquals("m0 rows == 0", 0, m0.rows());
         assertEquals("m0 columns == 0", 0, m0.columns());
 
-        Matrix3D<String> m1 = createObjectMatrix3D(1, 1, 1);
+        Matrix3D<String> m1 = createMatrix3D(1, 1, 1);
         assertNotNull("m1 not null", m1);
         assertEquals("m1 size == 1", 1, m1.size());
         assertEquals("m1 slices == 1", 1, m1.slices());
         assertEquals("m1 rows == 1", 1, m1.rows());
         assertEquals("m1 columns == 1", 1, m1.columns());
 
-        Matrix3D<String> m2 = createObjectMatrix3D(10, 10, 10);
+        Matrix3D<String> m2 = createMatrix3D(10, 10, 10);
         assertNotNull("m2 not null", m2);
         assertEquals("m2 size == 1000", 1000, m2.size());
         assertEquals("m2 slices == 10", 10, m2.slices());
         assertEquals("m2 rows == 10", 10, m2.rows());
         assertEquals("m2 columns == 10", 10, m2.columns());
 
-        Matrix3D<String> m3 = createObjectMatrix3D(100, 100, 100);
+        Matrix3D<String> m3 = createMatrix3D(100, 100, 100);
         assertNotNull("m3 not null", m3);
         assertEquals("m3 size == 1000000", 1000000, m3.size());
         assertEquals("m3 slices == 100", 100, m3.slices());
         assertEquals("m3 rows == 100", 100, m3.rows());
         assertEquals("m3 columns == 100", 100, m3.columns());
 
-        Matrix3D<String> m4 = createObjectMatrix3D(1000, 1000, 10);
+        Matrix3D<String> m4 = createMatrix3D(1000, 1000, 10);
         assertNotNull("m4 not null", m4);
         assertEquals("m4 size == 10000000", 10000000, m4.size());
         assertEquals("m4 slices == 1000", 1000, m4.slices());
@@ -92,7 +92,7 @@ public abstract class AbstractMatrix3DTest
 
     public void testCardinality()
     {
-        Matrix3D<String> m = createObjectMatrix3D(10, 10, 10);
+        Matrix3D<String> m = createMatrix3D(10, 10, 10);
         assertNotNull("m not null", m);
         assertEquals("m size == 1000", 1000, m.size());
         assertEquals("m cardinality == 0", 0, m.cardinality());
@@ -121,7 +121,7 @@ public abstract class AbstractMatrix3DTest
 
     public void testIsEmpty()
     {
-        Matrix3D<String> m = createObjectMatrix3D(10, 10, 10);
+        Matrix3D<String> m = createMatrix3D(10, 10, 10);
         assertNotNull("m not null");
         assertEquals("m size == 1000", 1000, m.size());
         assertEquals("m cardinality == 0", 0, m.cardinality());
@@ -138,7 +138,7 @@ public abstract class AbstractMatrix3DTest
 
     public void testGet()
     {
-        Matrix3D<String> m = createObjectMatrix3D(10, 10, 10);
+        Matrix3D<String> m = createMatrix3D(10, 10, 10);
         assertNotNull("m not null");
         assertEquals("m size == 1000", 1000, m.size());
 
@@ -224,7 +224,7 @@ public abstract class AbstractMatrix3DTest
 
     public void testSet()
     {
-        Matrix3D<String> m = createObjectMatrix3D(10, 10, 10);
+        Matrix3D<String> m = createMatrix3D(10, 10, 10);
         assertNotNull("m not null");
         assertEquals("m size == 1000", 1000, m.size());
 
@@ -303,7 +303,7 @@ public abstract class AbstractMatrix3DTest
 
     public void testAssign()
     {
-        Matrix3D<String> m = createObjectMatrix3D(10, 10, 10);
+        Matrix3D<String> m = createMatrix3D(10, 10, 10);
         assertNotNull("m not null");
         assertEquals("m size == 1000", 1000, m.size());
         assertEquals("m cardinality == 0", 0, m.cardinality());
@@ -370,13 +370,13 @@ public abstract class AbstractMatrix3DTest
             // expected
         }
 
-        Matrix3D<String> nulls = createObjectMatrix3D(10, 10, 10);
+        Matrix3D<String> nulls = createMatrix3D(10, 10, 10);
         nulls.assign((String) null);
 
-        Matrix3D<String> bars = createObjectMatrix3D(10, 10, 10);
+        Matrix3D<String> bars = createMatrix3D(10, 10, 10);
         bars.assign("bar");
 
-        Matrix3D<String> bazs = createObjectMatrix3D(10, 10, 10);
+        Matrix3D<String> bazs = createMatrix3D(10, 10, 10);
         bazs.assign("baz");
 
         Matrix3D<String> m6 = m.assign(nulls);
@@ -415,7 +415,7 @@ public abstract class AbstractMatrix3DTest
 
         try
         {
-            Matrix3D<String> tooSmall = createObjectMatrix3D(9, 10, 10);
+            Matrix3D<String> tooSmall = createMatrix3D(9, 10, 10);
             m.assign(tooSmall);
             fail("assign(tooSmall) expected IllegalArgumentException");
         }
@@ -426,7 +426,7 @@ public abstract class AbstractMatrix3DTest
 
         try
         {
-            Matrix3D<String> tooBig = createObjectMatrix3D(10, 11, 10);
+            Matrix3D<String> tooBig = createMatrix3D(10, 11, 10);
             m.assign(tooBig);
             fail("assign(tooBig) expected IllegalArgumentException");
         }
@@ -486,7 +486,7 @@ public abstract class AbstractMatrix3DTest
 
         try
         {
-            Matrix3D<String> tooSmall = createObjectMatrix3D(9, 10, 10);
+            Matrix3D<String> tooSmall = createMatrix3D(9, 10, 10);
             m.assign(tooSmall, ignore);
             fail("assign(tooSmall,) expected IllegalArgumentException");
         }
@@ -497,7 +497,7 @@ public abstract class AbstractMatrix3DTest
 
         try
         {
-            Matrix3D<String> tooBig = createObjectMatrix3D(10, 11, 10);
+            Matrix3D<String> tooBig = createMatrix3D(10, 11, 10);
             m.assign(tooBig, ignore);
             fail("assign(tooBig,) expected IllegalArgumentException");
         }
@@ -524,7 +524,7 @@ public abstract class AbstractMatrix3DTest
 
     public void testIterator()
     {
-        Matrix3D<String> m = createObjectMatrix3D(10, 10, 10);
+        Matrix3D<String> m = createMatrix3D(10, 10, 10);
         assertNotNull("m not null");
         assertEquals("m size == 1000", 1000, m.size());
         assertEquals("m cardinality == 0", 0, m.cardinality());
@@ -599,7 +599,7 @@ public abstract class AbstractMatrix3DTest
 
     public void testForEachNonNull()
     {
-        Matrix3D<String> m = createObjectMatrix3D(10, 10, 10);
+        Matrix3D<String> m = createMatrix3D(10, 10, 10);
         final MutableInt count = new MutableInt();
 
         count.setValue(0);
@@ -685,7 +685,7 @@ public abstract class AbstractMatrix3DTest
 
     public void testViewSlice()
     {
-        final Matrix3D<String> m = createObjectMatrix3D(10, 10, 10);
+        final Matrix3D<String> m = createMatrix3D(10, 10, 10);
         m.forEach(new QuaternaryProcedure<Long, Long, Long, String>()
             {
                 public void run(final Long slice, final Long row, final Long column, final String s)
@@ -727,7 +727,7 @@ public abstract class AbstractMatrix3DTest
 
     public void testViewRow()
     {
-        final Matrix3D<String> m = createObjectMatrix3D(10, 10, 10);
+        final Matrix3D<String> m = createMatrix3D(10, 10, 10);
         m.forEach(new QuaternaryProcedure<Long, Long, Long, String>()
             {
                 public void run(final Long slice, final Long row, final Long column, final String s)
@@ -769,7 +769,7 @@ public abstract class AbstractMatrix3DTest
 
     public void testViewColumn()
     {
-        final Matrix3D<String> m = createObjectMatrix3D(10, 10, 10);
+        final Matrix3D<String> m = createMatrix3D(10, 10, 10);
         m.forEach(new QuaternaryProcedure<Long, Long, Long, String>()
             {
                 public void run(final Long slice, final Long row, final Long column, final String s)
@@ -811,7 +811,7 @@ public abstract class AbstractMatrix3DTest
 
     public void testRowFlip()
     {
-        Matrix3D<String> m = createObjectMatrix3D(10, 10, 10);
+        Matrix3D<String> m = createMatrix3D(10, 10, 10);
         Matrix3D<String> rowFlip = m.viewRowFlip();
         assertNotNull("rowFlip not null", rowFlip);
         assertEquals("rowFlip size == m size", m.size(), rowFlip.size());
