@@ -61,6 +61,11 @@ Command line parser based on typed arguments.<br/>
 </p>
 
 <p>
+Resizeable container component with a label and an expand/collapse control.<br/>
+&gt; <a href="disclosure-triangle">http://www.dishevelled.org/disclosure-triangle</a>
+</p>
+
+<p>
 Framework for evolutionary algorithms.<br/>
 &gt; <a href="evolve">http://www.dishevelled.org/evolve</a>
 </p>
@@ -73,6 +78,11 @@ Typed functor object interfaces.<br/>
 <p>
 Directed graph interface and implementation.<br/>
 &gt; <a href="graph">http://www.dishevelled.org/graph</a>
+</p>
+
+<p>
+Directed graph readers and writers.<br/>
+&gt; <a href="graph-io">http://www.dishevelled.org/graph-io</a>
 </p>
 
 <p>
@@ -101,17 +111,27 @@ Observable decorators for collection and map interfaces.<br/>
 </p>
 
 <p>
-Piccolo ribbon nodes and supporting classes.<br/>
+Observable decorators for graph interfaces.<br/>
+&gt; <a href="observable-graph">http://www.dishevelled.org/observable-graph</a>
+</p>
+
+<p>
+Piccolo2D nodes for identifiable beans.<br/>
+&gt; <a href="piccolo-identify">http://www.dishevelled.org/piccolo-identify</a>
+</p>
+
+<p>
+Piccolo2D ribbon nodes and supporting classes.<br/>
 &gt; <a href="piccolo-ribbon">http://www.dishevelled.org/piccolo-ribbon</a>
 </p>
 
 <p>
-Piccolo sprite nodes and supporting classes.<br/>
+Piccolo2D sprite nodes and supporting classes.<br/>
 &gt; <a href="piccolo-sprite">http://www.dishevelled.org/piccolo-sprite</a>
 </p>
 
 <p>
-Piccolo tile map nodes and supporting classes.<br/>
+Piccolo2D tile map nodes and supporting classes.<br/>
 &gt; <a href="piccolo-tilemap">http://www.dishevelled.org/piccolo-tilemap</a>
 </p>
 
@@ -129,7 +149,10 @@ Timer class with nanosecond resolution and summary statistics on recorded elapse
 Weighted map interface and implementation.<br/>
 &gt; <a href="weighted">http://www.dishevelled.org/weighted</a>
 </p>
+</section>
 
+<section name="Metrics">
+  <script type="text/javascript" src="http://www.ohloh.net/projects/10932/widgets/project_cocomo"></script>
 </section>
 
 <section name="Acknowledgements">
