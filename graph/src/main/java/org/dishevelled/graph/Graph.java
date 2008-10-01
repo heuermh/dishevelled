@@ -107,7 +107,7 @@ public interface Graph<N, E>
      *
      * @param procedure procedure to apply, must not be null
      */
-    void forEachNodeValue(UnaryProcedure<N> procedure);
+    void forEachNodeValue(UnaryProcedure<? super N> procedure);
 
     /**
      * Apply the specified procedure to each node value in this graph
@@ -177,7 +177,7 @@ public interface Graph<N, E>
      *
      * @param procedure procedure to apply, must not be null
      */
-    void forEachEdgeValue(UnaryProcedure<E> procedure);
+    void forEachEdgeValue(UnaryProcedure<? super E> procedure);
 
     /**
      * Apply the specified procedure to each edge value in this graph

@@ -190,7 +190,7 @@ public final class GraphImpl<N, E>
     }
 
     /** {@inheritDoc} */
-    public void forEachNodeValue(final UnaryProcedure<N> procedure)
+    public void forEachNodeValue(final UnaryProcedure<? super N> procedure)
     {
         if (procedure == null)
         {
@@ -291,7 +291,7 @@ public final class GraphImpl<N, E>
     }
 
     /** {@inheritDoc} */
-    public void forEachEdgeValue(final UnaryProcedure<E> procedure)
+    public void forEachEdgeValue(final UnaryProcedure<? super E> procedure)
     {
         if (procedure == null)
         {
