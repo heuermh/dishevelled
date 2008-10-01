@@ -30,7 +30,7 @@
       <item name="Javadocs" href="apidocs/index.html"/>
       <item name="Checkstyle" href="checkstyle.html"/>
       <item name="Test coverage" href="cobertura/index.html"/>
-      <item name="Changes"/>
+      <item name="Changes" href="http://cia.vc/stats/project/dishevelled"/>
       <item name="Changelog"/>
     </menu>
   </body>
