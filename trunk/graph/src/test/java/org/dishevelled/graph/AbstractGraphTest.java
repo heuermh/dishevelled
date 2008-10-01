@@ -656,6 +656,17 @@ public abstract class AbstractGraphTest
         {
             // expected
         }
+
+        UnaryProcedure<Object> superProcedure = new UnaryProcedure<Object>()
+        {
+            /** {@inheritDoc} */
+            public void run(final Object nodeValue)
+            {
+                // empty
+            }
+        };
+        emptyGraph.forEachNodeValue(superProcedure);
+        fullGraph.forEachNodeValue(superProcedure);
     }
 
     public void testForEachNodeValueWithPredicate()
@@ -1315,6 +1326,17 @@ public abstract class AbstractGraphTest
         {
             // expected
         }
+
+        UnaryProcedure<Object> superProcedure = new UnaryProcedure<Object>()
+        {
+            /** {@inheritDoc} */
+            public void run(final Object edgeValue)
+            {
+                // empty
+            }
+        };
+        emptyGraph.forEachEdgeValue(superProcedure);
+        fullGraph.forEachEdgeValue(superProcedure);
     }
 
     public void testForEachEdgeValueWithPredicate()

@@ -118,7 +118,7 @@ public abstract class AbstractGraphDecorator<N, E>
     }
 
     /** {@inheritDoc} */
-    public void forEachNodeValue(final UnaryProcedure<N> procedure)
+    public void forEachNodeValue(final UnaryProcedure<? super N> procedure)
     {
         graph.forEachNodeValue(procedure);
     }
@@ -167,7 +167,7 @@ public abstract class AbstractGraphDecorator<N, E>
     }
 
     /** {@inheritDoc} */
-    public void forEachEdgeValue(final UnaryProcedure<E> procedure)
+    public void forEachEdgeValue(final UnaryProcedure<? super E> procedure)
     {
         graph.forEachEdgeValue(procedure);
     }
