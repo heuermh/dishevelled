@@ -143,6 +143,8 @@ public final class LabelFieldPanelTest
         }
 
         panel.addField(new JTextField(12));
+        panel.addField("Xyzzy", "Thud");
+        panel.addField((String) null, (String) null);
         panel.addField("Baz", new JTextField(12));
         panel.addField((String) null, new JTextField(12));
         panel.addField(new JLabel("Qux"), new JTextField(12));
@@ -167,8 +169,8 @@ public final class LabelFieldPanelTest
         }
         try
         {
-            panel.addField("Fred", null);
-            fail("addField(,null) expected IllegalArgumentException");
+            panel.addField("Fred", (JLabel) null);
+            fail("addField(, (JLabel) null) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
         {

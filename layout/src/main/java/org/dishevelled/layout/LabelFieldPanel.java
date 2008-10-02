@@ -45,7 +45,7 @@ public final class LabelFieldPanel
     private boolean hasFinal;
 
     /** Label field layout for this label field panel. */
-    private LabelFieldLayout layout;
+    private final LabelFieldLayout layout;
 
     /** MacOSX look and feel class name. */
     private static final String MAC_OSX_LOOK_AND_FEEL_CLASS_NAME = "apple.laf.AquaLookAndFeel";
@@ -153,6 +153,17 @@ public final class LabelFieldPanel
         }
         super.add(field, layout.wideField());
         layout.nextLine();
+    }
+
+    /**
+     * Add the specified field to this label field panel.
+     *
+     * @param labelText label text
+     * @param fieldText field text
+     */
+    public void addField(final String labelText, final String fieldText)
+    {
+        addField(labelText, new JLabel(fieldText));
     }
 
     /**
