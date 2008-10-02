@@ -1,6 +1,6 @@
 /*
 
-    dsh-piccolo-ribbon  Piccolo ribbon nodes and supporting classes.
+    dsh-piccolo-ribbon  Piccolo2D ribbon nodes and supporting classes.
     Copyright (c) 2006-2008 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
@@ -23,6 +23,6 @@
 */
 
 /**
- * Piccolo ribbon nodes and supporting classes.
+ * Piccolo2D ribbon nodes and supporting classes.
  */
 package org.dishevelled.piccolo.ribbon;

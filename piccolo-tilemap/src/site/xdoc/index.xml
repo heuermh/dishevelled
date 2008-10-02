@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!--
 
-    dsh-piccolo-tilemap  Piccolo tile map nodes and supporting classes.
+    dsh-piccolo-tilemap  Piccolo2D tile map nodes and supporting classes.
     Copyright (c) 2006-2008 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
@@ -31,15 +31,15 @@
 <section name="Summary">
 <p>
 dishevelled.org <b>piccolo-tilemap</b> provides tile map nodes and supporting
-classes for the Piccolo [<a href="#1">1</a>] 2D structured graphics toolkit.
+classes for the Piccolo2D [<a href="#1">1</a>] structured graphics toolkit.
 The piccolo-tilemap project requires java version 1.5 or later.
 </p>
 </section>
 
 <section name="References">
 <p id="1">
-[1] Piccolo Toolkit<br/>
-&gt; <a href="http://www.cs.umd.edu/hcil/jazz">http://www.cs.umd.edu/hcil/jazz</a>
+[1] Piccolo2D Toolkit<br/>
+&gt; <a href="http://piccolo2d.org">http://piccolo2d.org</a>
 </p>
 </section>
 

@@ -1,6 +1,6 @@
 /*
 
-    dsh-piccolo-identify  Piccolo nodes for identifiable beans.
+    dsh-piccolo-identify  Piccolo2D nodes for identifiable beans.
     Copyright (c) 2007-2008 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
@@ -23,6 +23,6 @@
 */
 
 /**
- * Piccolo nodes for identifiable beans.
+ * Piccolo2D nodes for identifiable beans.
  */
 package org.dishevelled.piccolo.identify;

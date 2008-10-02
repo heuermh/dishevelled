@@ -6,7 +6,7 @@
   <packaging>jar</packaging>
   <name>dishevelled.org piccolo sprite examples</name>
   <version>1.0-SNAPSHOT</version>
-  <description>Piccolo sprite node examples.</description>
+  <description>Piccolo2D sprite node examples.</description>
   <url>http://www.dishevelled.org/piccolo-sprite-examples</url>
   <inceptionYear>2006</inceptionYear>
   <mailingLists>

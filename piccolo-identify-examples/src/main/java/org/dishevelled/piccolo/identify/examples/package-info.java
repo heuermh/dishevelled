@@ -1,6 +1,6 @@
 /*
 
-    dsh-piccolo-identify-examples  Piccolo identifiable bean node examples.
+    dsh-piccolo-identify-examples  Piccolo2D identifiable bean node examples.
     Copyright (c) 2007-2008 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
@@ -23,6 +23,6 @@
 */
 
 /**
- * Piccolo identifiable bean node examples.
+ * Piccolo2D identifiable bean node examples.
  */
 package org.dishevelled.piccolo.identify.examples;

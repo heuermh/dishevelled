@@ -1,6 +1,6 @@
 /*
 
-    dsh-piccolo-sprite-examples  Piccolo sprite node examples.
+    dsh-piccolo-sprite-examples  Piccolo2D sprite node examples.
     Copyright (c) 2006-2008 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it

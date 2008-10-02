@@ -1,6 +1,6 @@
 /*
 
-    dsh-piccolo-ribbon  Piccolo ribbon nodes and supporting classes.
+    dsh-piccolo-ribbon  Piccolo2D ribbon nodes and supporting classes.
     Copyright (c) 2006-2008 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
@@ -40,7 +40,7 @@ import edu.umd.cs.piccolo.util.PPaintContext;
  *
  * <p>
  * Displays an image textured/repeated horizontally for the entire
- * width of a Piccolo camera view.  The anchor for the textured image can
+ * width of a Piccolo2D camera view.  The anchor for the textured image can
  * be moved left or right using a cursor position and distance unit to
  * indicate scrolling or movement.
  * </p>
@@ -60,7 +60,7 @@ import edu.umd.cs.piccolo.util.PPaintContext;
  * t.setRepeats(true);
  * t.start();
  * </pre>
- * or the Piccolo activity framework
+ * or the Piccolo2D activity framework
  * <pre>
  * final PRoot root = ...;
  * final HorizontalRibbon ribbon = new HorizontalRibbon(...);

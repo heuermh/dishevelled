@@ -6,7 +6,7 @@
   <packaging>jar</packaging>
   <name>dishevelled.org piccolo ribbon</name>
   <version>1.0-SNAPSHOT</version>
-  <description>Piccolo ribbon nodes and supporting classes.</description>
+  <description>Piccolo2D ribbon nodes and supporting classes.</description>
   <url>http://www.dishevelled.org/piccolo-ribbon</url>
   <inceptionYear>2006</inceptionYear>
   <mailingLists>

@@ -1,6 +1,6 @@
 /*
 
-    dsh-piccolo-sprite  Piccolo sprite nodes and supporting classes.
+    dsh-piccolo-sprite  Piccolo2D sprite nodes and supporting classes.
     Copyright (c) 2006-2008 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
@@ -36,7 +36,7 @@ import edu.umd.cs.piccolo.util.PBounds;
 import edu.umd.cs.piccolo.util.PPaintContext;
 
 /**
- * Piccolo sprite node.
+ * Piccolo2D sprite node.
  *
  * @author  Michael Heuer
  * @version $Revision$ $Date$

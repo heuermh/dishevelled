@@ -1,6 +1,6 @@
 /*
 
-    dsh-piccolo-tilemap-examples  Piccolo tile map node examples.
+    dsh-piccolo-tilemap-examples  Piccolo2D tile map node examples.
     Copyright (c) 2006-2008 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
@@ -117,6 +117,12 @@ public class TileMapBuilderExample
 
             PLayer layer = canvas.getLayer();
             layer.addChild(tileMap);
+
+            Image image = loadImage("link-24x25");
+            Animation animation = new SingleFrameAnimation(image);
+            Sprite link = new Sprite(animation, Collections.singleton(animation));
+            link.setBounds(1300.0d, 900.0d, 24.0d, 25.0d);
+            layer.addChild(link);
         }
         catch (IOException e)
         {
