@@ -1,6 +1,6 @@
 /*
 
-    dsh-piccolo-tilemap-examples  Piccolo tile map node examples.
+    dsh-piccolo-tilemap-examples  Piccolo2D tile map node examples.
     Copyright (c) 2006-2008 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it

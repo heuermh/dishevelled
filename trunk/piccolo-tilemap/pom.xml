@@ -6,7 +6,7 @@
   <packaging>jar</packaging>
   <name>dishevelled.org piccolo tilemap</name>
   <version>1.0-SNAPSHOT</version>
-  <description>Piccolo tile map nodes and supporting classes.</description>
+  <description>Piccolo2D tile map nodes and supporting classes.</description>
   <url>http://www.dishevelled.org/piccolo-tilemap</url>
   <inceptionYear>2006</inceptionYear>
   <mailingLists>

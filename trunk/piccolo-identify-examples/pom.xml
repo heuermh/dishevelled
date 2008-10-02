@@ -6,7 +6,7 @@
   <packaging>jar</packaging>
   <name>dishevelled.org piccolo-identify-examples</name>
   <version>1.0-SNAPSHOT</version>
-  <description>Piccolo identifiable bean node examples.</description>
+  <description>Piccolo2D identifiable bean node examples.</description>
   <url>http://www.dishevelled.org/piccolo-identify-examples</url>
   <inceptionYear>2007</inceptionYear>
   <mailingLists>

@@ -1,6 +1,6 @@
 /*
 
-    dsh-piccolo-tilemap  Piccolo tile map nodes and supporting classes.
+    dsh-piccolo-tilemap  Piccolo2D tile map nodes and supporting classes.
     Copyright (c) 2006-2008 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
@@ -37,7 +37,7 @@ import org.dishevelled.matrix.impl.SparseMatrix2D;
 import org.dishevelled.piccolo.sprite.Sprite;
 
 /**
- * Piccolo tile map node.
+ * Piccolo2D tile map node.
  *
  * @author  Michael Heuer
  * @version $Revision$ $Date$

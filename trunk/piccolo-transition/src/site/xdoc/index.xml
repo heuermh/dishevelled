@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!--
 
-    dsh-piccolo-transition  Transitions implemented as Piccolo activities.
+    dsh-piccolo-transition  Transitions implemented as Piccolo2D activities.
     Copyright (c) 2007-2008 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
@@ -32,7 +32,7 @@
 
 <p>
 dishevelled.org <b>piccolo-transition</b> provides transitions [<a href="#1">1</a>]
-implemented as Piccolo [<a href="#2">2</a>] activities.  The API attempts to follow the
+implemented as Piccolo2D [<a href="#2">2</a>] activities.  The API attempts to follow the
 Synchronized Multimedia Integration Language (SMIL) specification [<a href="#3">3</a>]
 where appropriate.  The piccolo-transition library requires java version 1.6 or later.
 </p>
@@ -44,8 +44,8 @@ where appropriate.  The piccolo-transition library requires java version 1.6 or 
 &gt; <a href="http://developer.yahoo.com/ypatterns/parent.php?pattern=transition">http://developer.yahoo.com/ypatterns/parent.php?pattern=transition</a>
 </p>
 <p id="2">
-[2] Piccolo Toolkit<br/>
-&gt; <a href="http://www.cs.umd.edu/hcil/jazz">http://www.cs.umd.edu/hcil/jazz</a>
+[2] Piccolo2D Toolkit<br/>
+&gt; <a href="http://piccolo2d.org">http://piccolo2d.org</a>
 </p>
 <p id="3">
 [3] Synchronized Multimedia Integration Language (SMIL 3.0)<br/>

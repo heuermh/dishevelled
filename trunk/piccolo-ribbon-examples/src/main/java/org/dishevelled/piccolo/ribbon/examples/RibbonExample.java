@@ -1,6 +1,6 @@
 /*
 
-    dsh-piccolo-ribbon-examples  Piccolo ribbon node examples.
+    dsh-piccolo-ribbon-examples  Piccolo2D ribbon node examples.
     Copyright (c) 2006-2008 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it

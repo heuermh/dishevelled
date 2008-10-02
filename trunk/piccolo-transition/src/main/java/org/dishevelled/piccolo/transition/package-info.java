@@ -1,6 +1,6 @@
 /*
 
-    dsh-piccolo-transition  Transitions implemented as Piccolo activities.
+    dsh-piccolo-transition  Transitions implemented as Piccolo2D activities.
     Copyright (c) 2007-2008 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
@@ -23,6 +23,6 @@
 */
 
 /**
- * Transitions implemented as Piccolo activities.
+ * Transitions implemented as Piccolo2D activities.
  */
 package org.dishevelled.piccolo.transition;
