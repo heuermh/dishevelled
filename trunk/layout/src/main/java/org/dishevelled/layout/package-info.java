@@ -1,6 +1,6 @@
 /*
 
-    dsh-layout  Layout manager(s) for lightweight components.
+    dsh-layout  Layout managers for lightweight components.
     Copyright (c) 2003-2008 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
@@ -23,6 +23,6 @@
 */
 
 /**
- * Layout manager(s) for lightweight components.
+ * Layout managers for lightweight components.
  */
 package org.dishevelled.layout;
