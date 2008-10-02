@@ -32,14 +32,13 @@
 <section name="Summary">
 <p>
 dishevelled.org <b>layout</b> provides layout manager(s) for
-lightweight JFC/Swing components.  The only layout manager included
-to date is LabelFieldLayout.
+lightweight JFC/Swing components.
 </p>
 </section>
 
 <section name="LabelFieldLayout">
 <p>
-LabelFieldLayout is a wrapper around GridBagLayout that simplifies things
+<a href="apidocs/org/dishevelled/layout/LabelFieldLayout.html">LabelFieldLayout</a> is a wrapper around GridBagLayout that simplifies things
 for the common case of two columns, one of labels and one of fields.
 </p>
 
@@ -75,9 +74,39 @@ panel.add(new JScrollPane(list), l.finalWideField());
 The final component in a LabelFieldLayout stretches vertically to cover
 space left at the bottom of its container.  It can be either an empty
 component, such as <code>Box.createGlue()</code>, a wide label, or a wide field,
-such as a <code>JList</code> in a <code>JScrollPane</code>, as this image demonstrates:
+such as a <code>JList</code> in a <code>JScrollPane</code>:
 </p>
 <img src="images/mac-look.png" alt="LabelFieldLayout example"/>
+
+<p>
+See <a href="http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/trunk/layout-examples/src/main/java/org/dishevelled/layout/examples/LabelFieldLayoutExample.java?view=markup">LabelFieldLayoutExample.java</a> for a complete example.
+</p>
+</section>
+
+<section name="LabelFieldPanel">
+
+<p>
+<a href="apidocs/org/dishevelled/layout/LabelFieldPanel.html">LabelFieldPanel</a> is a JPanel whose layout manager is
+an instance of LabelFieldLayout.  It contains helper <code>addLabel</code> and <code>addField</code>
+methods to reduce the lines of code necessary to lay out components.  The above example
+code can be reduced to the following with LabelFieldPanel:
+</p>
+
+<source>
+LabelFieldPanel panel = new LabelFieldPanel();
+panel.addField("Label label:", "Label field");
+panel.addField("Normal label 0:", new JTextField("Normal field 0"));
+panel.addSpacing(12);
+panel.addLabel("Final wide field:");
+JList list = new JList(new Object[] { "Final wide field A",
+                                      "Final wide field B",
+                                      "Final wide field C" });
+panel.addFinalField(new JScrollPane(list));
+</source>
+
+<p>
+See <a href="http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/trunk/layout-examples/src/main/java/org/dishevelled/layout/examples/LabelFieldPanelExample.java?view=markup">LabelFieldPanelExample.java</a> for a complete example.
+</p>
 </section>
 
 <section name="Acknowledgements">
