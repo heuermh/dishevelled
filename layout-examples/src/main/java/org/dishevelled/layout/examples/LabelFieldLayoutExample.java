@@ -64,18 +64,12 @@ public final class LabelFieldLayoutExample
         finalSpacing.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         finalSpacing.setBounds(120, 120, 380, 480);
 
-        final JFrame finalWideLabel = new JFrame("Final wide label example");
-        finalWideLabel.setContentPane(createFinalWideLabelPane());
-        finalWideLabel.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        finalWideLabel.setBounds(160, 160, 380, 480);
-
         final JFrame finalWideField = new JFrame("Final wide field example");
         finalWideField.setContentPane(createFinalWideFieldPane());
         finalWideField.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         finalWideField.setBounds(200, 200, 380, 480);
 
         finalSpacing.setVisible(true);
-        finalWideLabel.setVisible(true);
         finalWideField.setVisible(true);
     }
 
@@ -114,52 +108,10 @@ public final class LabelFieldLayoutExample
         contentPane.add(Box.createVerticalStrut(12), l.spacing());
 
         l.nextLine();
-        contentPane.add(new JLabel("Wide label:"), l.wideLabel());
+        contentPane.add(new JLabel("Wide label"), l.wideLabel());
 
         l.nextLine();
         contentPane.add(Box.createGlue(), l.finalSpacing());
-        return contentPane;
-    }
-
-    /**
-     * Create and return a new final wide label conent pane.
-     *
-     * @return a new final wide label content pane
-     */
-    private JPanel createFinalWideLabelPane()
-    {
-        JPanel contentPane = new JPanel();
-        LabelFieldLayout l = new LabelFieldLayout();
-        contentPane.setLayout(l);
-        contentPane.setBorder(new EmptyBorder(11, 11, 11, 11));
-
-        contentPane.add(new JLabel("Label label 0:"), l.labelLabel());
-        contentPane.add(new JLabel("Label field 0"), l.labelField());
-
-        l.nextLine();
-        contentPane.add(new JLabel("Label label 1:"), l.labelLabel());
-        contentPane.add(new JLabel("Label field 1"), l.labelField());
-
-        l.nextLine();
-        contentPane.add(new JLabel("Label label 2:"), l.labelLabel());
-        contentPane.add(new JLabel("Label field 2"), l.labelField());
-
-        l.nextLine();
-        contentPane.add(new JLabel("Normal label 0:"), l.normalLabel());
-        contentPane.add(new JTextField("Normal field 0"), l.normalField());
-
-        l.nextLine();
-        contentPane.add(new JLabel("Normal label 1:"), l.normalLabel());
-        contentPane.add(new JTextField("Normal field 1"), l.normalField());
-
-        l.nextLine();
-        contentPane.add(Box.createVerticalStrut(12), l.spacing());
-
-        l.nextLine();
-        contentPane.add(new JLabel("Wide label:"), l.wideLabel());
-
-        l.nextLine();
-        contentPane.add(new JLabel("Final wide label"), l.finalWideField());
         return contentPane;
     }
 
@@ -198,7 +150,13 @@ public final class LabelFieldLayoutExample
         contentPane.add(Box.createVerticalStrut(12), l.spacing());
 
         l.nextLine();
-        contentPane.add(new JLabel("Wide label:"), l.wideLabel());
+        contentPane.add(new JLabel("Wide label"), l.wideLabel());
+
+        l.nextLine();
+        contentPane.add(Box.createVerticalStrut(12), l.spacing());
+
+        l.nextLine();
+        contentPane.add(new JLabel("Final wide field:"), l.wideLabel());
 
         l.nextLine();
         JList list = new JList(new Object[] { "Final wide field A",

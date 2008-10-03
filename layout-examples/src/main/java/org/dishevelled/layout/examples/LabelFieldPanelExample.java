@@ -65,7 +65,7 @@ public final class LabelFieldPanelExample
         final JFrame finalField = new JFrame("Final field example");
         finalField.setContentPane(createFinalFieldPane());
         finalField.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        finalField.setBounds(160, 160, 380, 480);
+        finalField.setBounds(200, 200, 380, 480);
 
         finalSpacing.setVisible(true);
         finalField.setVisible(true);
@@ -107,10 +107,11 @@ public final class LabelFieldPanelExample
         contentPane.addField("Normal label 1:", new JTextField("Normal field 1"));
         contentPane.addSpacing(12);
         contentPane.addLabel("Wide label");
-        contentPane.addLabel("Final wide field:");
-        JList list = new JList(new Object[] { "Final wide field A",
-                                              "Final wide field B",
-                                              "Final wide field C" });
+        contentPane.addSpacing(12);
+        contentPane.addLabel("Final field:");
+        JList list = new JList(new Object[] { "Final field A",
+                                              "Final field B",
+                                              "Final field C" });
         contentPane.addFinalField(new JScrollPane(list));
         return contentPane;
     }
