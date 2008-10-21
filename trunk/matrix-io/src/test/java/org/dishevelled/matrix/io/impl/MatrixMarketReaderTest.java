@@ -171,6 +171,137 @@ public final class MatrixMarketReaderTest
         }
     }
 
+    public void testSymmetricMatrix() throws IOException
+    {
+        InputStream inputStream = null;
+        try
+        {
+            inputStream = getClass().getResourceAsStream("symmetric.mm");
+            MatrixMarketReader reader = new MatrixMarketReader();
+            Matrix2D<Double> matrix = reader.read(inputStream);
+            assertNotNull(matrix);
+            // TODO:  add'l assertions
+        }
+        finally
+        {
+            closeQuietly(inputStream);
+        }
+    }
+
+    public void testSkewSymmetricMatrix() throws IOException
+    {
+        InputStream inputStream = null;
+        try
+        {
+            inputStream = getClass().getResourceAsStream("skewSymmetric.mm");
+            MatrixMarketReader reader = new MatrixMarketReader();
+            Matrix2D<Double> matrix = reader.read(inputStream);
+            assertNotNull(matrix);
+            // TODO:  add'l assertions
+        }
+        finally
+        {
+            closeQuietly(inputStream);
+        }
+    }
+
+    public void testHermitianMatrix() throws IOException
+    {
+        InputStream inputStream = null;
+        try
+        {
+            inputStream = getClass().getResourceAsStream("hermitian.mm");
+            MatrixMarketReader reader = new MatrixMarketReader();
+            Matrix2D<Double> matrix = reader.read(inputStream);
+            assertNotNull(matrix);
+            // TODO:  add'l assertions
+        }
+        finally
+        {
+            closeQuietly(inputStream);
+        }
+    }
+
+    public void testInvalidHeader()
+    {
+        InputStream inputStream = null;
+        try
+        {
+            inputStream = getClass().getResourceAsStream("invalidHeader.mm");
+            MatrixMarketReader reader = new MatrixMarketReader();
+            Matrix2D<Double> matrix = reader.read(inputStream);
+            fail("invalidHeader.mm expected IOException");
+        }
+        catch (IOException e)
+        {
+            // expected
+        }
+        finally
+        {
+            closeQuietly(inputStream);
+        }
+    }
+
+    public void testInvalidHeaderFormat()
+    {
+        InputStream inputStream = null;
+        try
+        {
+            inputStream = getClass().getResourceAsStream("invalidHeaderFormat.mm");
+            MatrixMarketReader reader = new MatrixMarketReader();
+            Matrix2D<Double> matrix = reader.read(inputStream);
+            fail("invalidHeaderFormat.mm expected IOException");
+        }
+        catch (IOException e)
+        {
+            // expected
+        }
+        finally
+        {
+            closeQuietly(inputStream);
+        }
+    }
+
+    public void testInvalidHeaderType()
+    {
+        InputStream inputStream = null;
+        try
+        {
+            inputStream = getClass().getResourceAsStream("invalidHeaderType.mm");
+            MatrixMarketReader reader = new MatrixMarketReader();
+            Matrix2D<Double> matrix = reader.read(inputStream);
+            fail("invalidHeaderType.mm expected IOException");
+        }
+        catch (IOException e)
+        {
+            // expected
+        }
+        finally
+        {
+            closeQuietly(inputStream);
+        }
+    }
+
+    public void testInvalidHeaderSymmetryStructure()
+    {
+        InputStream inputStream = null;
+        try
+        {
+            inputStream = getClass().getResourceAsStream("invalidHeaderSymmetryStructure.mm");
+            MatrixMarketReader reader = new MatrixMarketReader();
+            Matrix2D<Double> matrix = reader.read(inputStream);
+            fail("invalidHeaderSymmetryStructure.mm expected IOException");
+        }
+        catch (IOException e)
+        {
+            // expected
+        }
+        finally
+        {
+            closeQuietly(inputStream);
+        }
+    }
+
     public void testInvalidRowMatrix()
     {
         InputStream inputStream = null;
