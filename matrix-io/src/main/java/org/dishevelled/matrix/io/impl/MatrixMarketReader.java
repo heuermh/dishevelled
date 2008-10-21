@@ -24,19 +24,19 @@
 package org.dishevelled.matrix.io.impl;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.dishevelled.matrix.Matrix2D;
 
 import org.dishevelled.matrix.impl.SparseMatrix2D;
-
-import org.dishevelled.matrix.io.Matrix2DReader;
 
 /**
  * Matrix Market format reader for sparse matrices of doubles in two dimensions.
@@ -45,53 +45,21 @@ import org.dishevelled.matrix.io.Matrix2DReader;
  * @version $Revision$ $Date$
  */
 public final class MatrixMarketReader
-    implements Matrix2DReader<Double>
+    extends AbstractMatrix2DReader<Double>
 {
+    /** Map of reader strategies keyed by name. */
+    private static final Map<String, ReaderStrategy> STRATEGIES;
 
-    /** {@inheritDoc} */
-    public Matrix2D<Double> read(final File file) throws IOException
-    {
-        if (file == null)
-        {
-            throw new IllegalArgumentException("file must not be null");
-        }
-        InputStream inputStream = null;
-        try
-        {
-            inputStream = new FileInputStream(file);
-            return read(inputStream);
-        }
-        catch (IOException e)
-        {
-            throw e;
-        }
-        finally
-        {
-            MatrixIOUtils.closeQuietly(inputStream);
-        }
-    }
+    /** Pattern to match Matrix Market header line. */
+    private static final Pattern HEADER = Pattern.compile("^%%MatrixMarket matrix\\s+(\\S+)\\s+(\\S+)\\s+(\\S+)\\s*$");
 
-    /** {@inheritDoc} */
-    public Matrix2D<Double> read(final URL url) throws IOException
+    static
     {
-        if (url == null)
-        {
-            throw new IllegalArgumentException("url must not be null");
-        }
-        InputStream inputStream = null;
-        try
-        {
-            inputStream = url.openStream();
-            return read(inputStream);
-        }
-        catch (IOException e)
-        {
-            throw e;
-        }
-        finally
-        {
-            MatrixIOUtils.closeQuietly(inputStream);
-        }
+        STRATEGIES = new HashMap<String, ReaderStrategy>();
+        STRATEGIES.put("general", new GeneralReaderStrategy());
+        STRATEGIES.put("symmetric", new SymmetricReaderStrategy());
+        STRATEGIES.put("skew-symmetric", new SkewSymmetricReaderStrategy());
+        STRATEGIES.put("hermitian", new HermitianReaderStrategy());
     }
 
     /** {@inheritDoc} */
@@ -103,6 +71,7 @@ public final class MatrixMarketReader
         }
         int lineNumber = 0;
         BufferedReader reader = null;
+        ReaderStrategy readerStrategy = null;
         Matrix2D<Double> matrix = null;
         try
         {
@@ -110,8 +79,31 @@ public final class MatrixMarketReader
             while (reader.ready())
             {
                 String line = reader.readLine();
-                // TODO:  parse Matrix Market header values
-                if (!line.startsWith("%"))
+                if (line.startsWith("%"))
+                {
+                    Matcher m = HEADER.matcher(line);
+                    if (m.matches())
+                    {
+                        String format = m.group(1); // coordinate, array
+                        if (!("coordinate".equals(format)))
+                        {
+                            throw new IOException("header line format must be coordinate, was " + format);
+                        }
+                        String type = m.group(2); // real, complex, integer, pattern
+                        if (!("real".equals(type) || "integer".equals(type)))
+                        {
+                            throw new IOException("header line type must be real or integer, was " + type);
+                        }
+                        String symmetryStructure = m.group(3); // general, symmetric, skew-symmetric, hermitian
+                        readerStrategy = STRATEGIES.get(symmetryStructure);
+                        if (readerStrategy == null)
+                        {
+                            throw new IOException("header line symmetry structure must be one of:  general, symmetric,"
+                                                  + "skew-symmetric, or hermitian; was " + symmetryStructure);
+                        }
+                    }
+                }
+                else
                 {
                     String[] tokens = line.split("\\s+");
                     if (matrix == null)
@@ -126,8 +118,13 @@ public final class MatrixMarketReader
                         long row = Long.parseLong(tokens[0]);
                         long column = Long.parseLong(tokens[1]);
                         double value = Double.parseDouble(tokens[2]);
+                        if (readerStrategy == null)
+                        {
+                            throw new IOException("read values at line number " + lineNumber
+                                                  + " before reading header line");
+                        }
                         // note:  indices in the file are 1-based
-                        matrix.set(row - 1, column - 1, value);
+                        readerStrategy.read(matrix, row - 1, column - 1, value);
                     }
                 }
                 lineNumber++;
@@ -135,13 +132,15 @@ public final class MatrixMarketReader
         }
         catch (NumberFormatException e)
         {
-            throw new IOException("caught NumberFormatException at line number " + lineNumber + "\n" + e.getMessage());
+            throw new IOException("caught NumberFormatException at line number " + lineNumber
+                                  + "\n" + e.getMessage());
             // jdk 1.6+
             //throw new IOException("caught NumberFormatException at line number " + lineNumber, e);
         }
         catch (IndexOutOfBoundsException e)
         {
-            throw new IOException("caught IndexOutOfBoundsException at line number " + lineNumber + "\n" + e.getMessage());
+            throw new IOException("caught IndexOutOfBoundsException at line number " + lineNumber
+                                  + "\n" + e.getMessage());
             // jdk 1.6+
             //throw new IOException("caught IndexOutOfBoundsException at line number " + lineNumber, e);
         }
@@ -154,5 +153,82 @@ public final class MatrixMarketReader
             throw new IOException("could not create create matrix, check header and first non-comment line");
         }
         return matrix;
+    }
+
+    /**
+     * Strategy for handling symmetry structure.
+     */
+    interface ReaderStrategy
+    {
+
+        /**
+         * Notify this reader strategy that the specified value was read for the specified
+         * matrix at the specified coordinates.
+         *
+         * @param matrix matrix
+         * @param row row
+         * @param column column
+         * @param value value
+         */
+        void read(Matrix2D<Double> matrix, long row, long column, double value);
+    }
+
+    /**
+     * Reader strategy for <code>general</code> symmetry structure.
+     */
+    private static class GeneralReaderStrategy implements ReaderStrategy
+    {
+        /** {@inheritDoc} */
+        public void read(final Matrix2D<Double> matrix, final long row, final long column, final double value)
+        {
+            matrix.set(row, column, value);
+        }
+    }
+
+    /**
+     * Reader strategy for <code>symmetric</code> symmetry structure.
+     */
+    private static class SymmetricReaderStrategy implements ReaderStrategy
+    {
+        /** {@inheritDoc} */
+        public void read(final Matrix2D<Double> matrix, final long row, final long column, final double value)
+        {
+            matrix.set(row, column, value);
+            // only set values on the diagonal once
+            if (row != column)
+            {
+                matrix.set(column, row, value);
+            }
+        }
+    }
+
+    /**
+     * Reader strategy for <code>skew-symmetric</code> symmetry structure.
+     */
+    private static class SkewSymmetricReaderStrategy implements ReaderStrategy
+    {
+        /** {@inheritDoc} */
+        public void read(final Matrix2D<Double> matrix, final long row, final long column, final double value)
+        {
+            // diagonal entries are always zero
+            if (row != column)
+            {
+                matrix.set(row, column, value);
+                matrix.set(column, row, value);
+            }
+        }
+    }
+
+    /**
+     * Reader strategy for <code>hermitian</code> symmetry structure.
+     */
+    private static class HermitianReaderStrategy implements ReaderStrategy
+    {
+        /** {@inheritDoc} */
+        public void read(final Matrix2D<Double> matrix, final long row, final long column, final double value)
+        {
+            matrix.set(row, column, value);
+            matrix.set(column, row, value);
+        }
     }
 }
