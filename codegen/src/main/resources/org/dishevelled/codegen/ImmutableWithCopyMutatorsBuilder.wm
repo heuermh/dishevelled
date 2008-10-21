@@ -172,7 +172,7 @@ public final class ${cd.Upper}Builder
      * Return this ${cd.Lower} builder configured with the specified ${r.Lower}(s).  Multiple calls to
      * this method add to the ${coll.InterfaceDescription} of ${r.Lower}s for this ${cd.Lower} builder.
      *
-     * @param ${r.Mixed} variable number of ${r.Lower}s for this ${cd.Lower} builder, must not be null
+     * @param ${r.Mixed}s variable number of ${r.Lower}s for this ${cd.Lower} builder, must not be null
      * @return this ${cd.Lower} builder configured with the specified ${r.Lower}(s)
      */
     public ${cd.Upper}Builder with${r.Upper}s(final ${a.Upper}... ${r.Mixed}s)
@@ -194,7 +194,7 @@ public final class ${cd.Upper}Builder
      * Return this ${cd.Lower} builder configured with the specified ${r.Lower}(s).  Multiple calls to
      * this method add to the ${coll.InterfaceDescription} of ${r.Lower}s for this ${cd.Lower} builder.
      *
-     * @param ${r.Mixed} variable number of ${r.Lower}s for this ${cd.Lower} builder, must not be null
+     * @param ${r.Mixed}s variable number of ${r.Lower}s for this ${cd.Lower} builder, must not be null
      * @return this ${cd.Lower} builder configured with the specified ${r.Lower}(s)
      */
     public ${cd.Upper}Builder with${r.Upper}s(final ${a.Upper}... ${r.Mixed}s)
@@ -250,7 +250,7 @@ public final class ${cd.Upper}Builder
      * Return this ${cd.Lower} builder configured with the specified ${r.Lower}(s).  Multiple calls to
      * this method add to the ${coll.InterfaceDescription} of ${r.Lower}s for this ${cd.Lower} builder.
      *
-     * @param ${r.Mixed} variable number of ${r.Lower}s for this ${cd.Lower} builder, must not be null
+     * @param ${r.Mixed}s variable number of ${r.Lower}s for this ${cd.Lower} builder, must not be null
      * @return this ${cd.Lower} builder configured with the specified ${r.Lower}(s)
      */
     public ${cd.Upper}Builder with${r.Upper}s(final ${a.Upper}... ${r.Mixed}s)
@@ -272,7 +272,7 @@ public final class ${cd.Upper}Builder
      * Return this ${cd.Lower} builder configured with the specified ${r.Lower}(s).  Multiple calls to
      * this method add to the ${coll.InterfaceDescription} of ${r.Lower}s for this ${cd.Lower} builder.
      *
-     * @param ${r.Mixed} variable number of ${r.Lower}s for this ${cd.Lower} builder, must not be null
+     * @param ${r.Mixed}s variable number of ${r.Lower}s for this ${cd.Lower} builder, must not be null
      * @return this ${cd.Lower} builder configured with the specified ${r.Lower}(s)
      */
     public ${cd.Upper}Builder with${r.Upper}s(final ${a.Upper}... ${r.Mixed}s)
