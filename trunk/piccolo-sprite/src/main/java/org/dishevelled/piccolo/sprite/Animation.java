@@ -36,8 +36,10 @@ public interface Animation
 
     /**
      * Advance this animation one frame.
+     *
+     * @return true if consumers of this animation should schedule a repaint
      */
-    void advance();
+    boolean advance();
 
     /**
      * Return the current frame for this animation.

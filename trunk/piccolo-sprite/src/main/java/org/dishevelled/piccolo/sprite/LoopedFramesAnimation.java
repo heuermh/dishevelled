@@ -73,13 +73,14 @@ public final class LoopedFramesAnimation
 
 
     /** {@inheritDoc} */
-    public void advance()
+    public boolean advance()
     {
         index++;
         if (index == frames.size())
         {
             index = 0;
         }
+        return true;
     }
 
     /** {@inheritDoc} */

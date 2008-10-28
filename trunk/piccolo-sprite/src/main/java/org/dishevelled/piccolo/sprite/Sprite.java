@@ -96,11 +96,11 @@ public class Sprite
     public final void advance()
     {
         // advance the current animation
-        currentAnimation.advance();
-        // and schedule a repaint
-        // todo:
-        //    -- advance() returns a boolean if the animation requires a repaint
-        repaint();
+        if (currentAnimation.advance())
+        {
+            // and schedule a repaint
+            repaint();
+        }
     }
 
     /**
