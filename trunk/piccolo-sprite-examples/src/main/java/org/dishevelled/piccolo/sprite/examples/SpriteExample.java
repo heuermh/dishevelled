@@ -70,7 +70,7 @@ public class SpriteExample
 
         Image f = loadImage("f");
         Animation fAnimation = new SingleFrameAnimation(f);
-        final Sprite fSprite = new Sprite(fAnimation, Collections.singleton(fAnimation));
+        final Sprite fSprite = new Sprite(fAnimation);
         fSprite.setBounds(0.0d, 0.0d, 64.0d, 64.0d);
         fSprite.offset(100.0d, 100.0d);
 
@@ -79,7 +79,7 @@ public class SpriteExample
         Image r = loadImage("r");
         List<Image> bar = Arrays.asList(new Image[] { b, a, r });
         Animation barAnimation = new LoopedFramesAnimation(bar);
-        final Sprite barSprite = new Sprite(barAnimation, Collections.singleton(barAnimation));
+        final Sprite barSprite = new Sprite(barAnimation);
         barSprite.setBounds(0.0d, 0.0d, 64.0d, 64.0d);
         barSprite.offset(200.0d, 100.0d);
 

@@ -52,8 +52,18 @@ public class SpriteTest
 
         Animation animation = new SingleFrameAnimation(image);
         Set<Animation> animations = Collections.singleton(animation);
-        Sprite sprite0 = new Sprite(animation, animations);
+        Sprite sprite0 = new Sprite(animation);
+        Sprite sprite1 = new Sprite(animation, animations);
 
+        try
+        {
+            Sprite sprite = new Sprite(null);
+            fail("ctr(null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
         try
         {
             Sprite sprite = new Sprite(null, animations);
@@ -91,7 +101,7 @@ public class SpriteTest
 
         animations1.add(animation1);
         animations1.add(animation2);
-        Sprite sprite1 = new Sprite(animation1, animations1);
+        Sprite sprite2 = new Sprite(animation1, animations1);
 
         try
         {
