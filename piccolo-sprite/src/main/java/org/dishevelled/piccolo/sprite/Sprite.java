@@ -52,6 +52,16 @@ public class Sprite
 
 
     /**
+     * Create a new piccolo sprite node with the specified animation.
+     *
+     * @param animation animation for this piccolo sprite node, must not be null
+     */
+    public Sprite(final Animation animation)
+    {
+        this(animation, Collections.singleton(animation));
+    }
+
+    /**
      * Create a new piccolo sprite node from the specified required parameters.
      *
      * <p>The specified animation must be contained in the set of animations for this piccolo
