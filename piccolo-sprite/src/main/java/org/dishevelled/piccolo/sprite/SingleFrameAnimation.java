@@ -55,9 +55,9 @@ public final class SingleFrameAnimation
 
 
     /** {@inheritDoc} */
-    public void advance()
+    public boolean advance()
     {
-        // empty
+        return false;
     }
 
     /** {@inheritDoc} */
