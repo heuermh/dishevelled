@@ -26,6 +26,7 @@ package org.dishevelled.observable.impl;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 import java.util.Set;
 import java.util.SortedMap;
 import java.util.SortedSet;
@@ -33,6 +34,7 @@ import java.util.SortedSet;
 import org.dishevelled.observable.ObservableCollection;
 import org.dishevelled.observable.ObservableList;
 import org.dishevelled.observable.ObservableMap;
+import org.dishevelled.observable.ObservableQueue;
 import org.dishevelled.observable.ObservableSet;
 import org.dishevelled.observable.ObservableSortedMap;
 import org.dishevelled.observable.ObservableSortedSet;
@@ -91,6 +93,18 @@ public final class ObservableUtils
     public static <K, V> ObservableMap<K, V> observableMap(final Map<K, V> map)
     {
         return new ObservableMapImpl<K, V>(map);
+    }
+
+    /**
+     * Create and return a new simple observable decorator for the specified set.
+     *
+     * @param <T> queue element type
+     * @param queue queue to decorate, must not be null
+     * @return a new simple observable decorator for the specified queue
+     */
+    public static <T> ObservableQueue<T> observableQueue(final Queue<T> queue)
+    {
+        return new ObservableQueueImpl<T>(queue);
     }
 
     /**

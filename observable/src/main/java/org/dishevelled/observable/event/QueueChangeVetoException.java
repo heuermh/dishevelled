@@ -21,17 +21,38 @@
     > http://www.opensource.org/licenses/lgpl-license.php
 
 */
+package org.dishevelled.observable.event;
+
+import java.io.Serializable;
 
 /**
- * Observable decorator implementations for collection and map interfaces.
+ * Exception thrown in the event a queue change
+ * is vetoed by a <code>VetoableQueueChangeListener</code>.
  *
- * <h4>Summary</h4>
- *
- * <p>
- * The decorators in this package fire empty vetoable change events in
- * <code>preXxx</code> methods and empty change events in <code>postXxx</code> methods.
- * Listeners may query the source of the events to determine what may or may
- * not have changed due to the event.
- * </p>
+ * @author  Michael Heuer
+ * @version $Revision$ $Date$
  */
-package org.dishevelled.observable.impl;
+public class QueueChangeVetoException
+    extends Exception
+    implements Serializable
+{
+
+    /**
+     * Create a new queue change veto exception.
+     */
+    public QueueChangeVetoException()
+    {
+        super();
+    }
+
+    /**
+     * Create a new queue change veto exception
+     * with the specified error message.
+     *
+     * @param message error message
+     */
+    public QueueChangeVetoException(final String message)
+    {
+        super(message);
+    }
+}
