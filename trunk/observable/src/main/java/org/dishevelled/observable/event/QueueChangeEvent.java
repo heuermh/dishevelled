@@ -21,17 +21,45 @@
     > http://www.opensource.org/licenses/lgpl-license.php
 
 */
+package org.dishevelled.observable.event;
+
+import java.util.EventObject;
+
+import org.dishevelled.observable.ObservableQueue;
 
 /**
- * Observable decorator implementations for collection and map interfaces.
+ * An event object representing a change made to
+ * an observable queue.
  *
- * <h4>Summary</h4>
- *
- * <p>
- * The decorators in this package fire empty vetoable change events in
- * <code>preXxx</code> methods and empty change events in <code>postXxx</code> methods.
- * Listeners may query the source of the events to determine what may or may
- * not have changed due to the event.
- * </p>
+ * @param <E> queue element type
+ * @author  Michael Heuer
+ * @version $Revision$ $Date$
  */
-package org.dishevelled.observable.impl;
+public class QueueChangeEvent<E>
+    extends EventObject
+{
+
+    /**
+     * Create a new queue change event with the specified
+     * observable queue as the event source.
+     *
+     * @param source source of the event
+     */
+    public QueueChangeEvent(final ObservableQueue<E> source)
+    {
+        super(source);
+    }
+
+
+    /**
+     * Return the source of this queue change event as an
+     * <code>ObservableQueue</code>.
+     *
+     * @return the source of this queue change event as an
+     *    <code>ObservableQueue</code>
+     */
+    public final ObservableQueue<E> getObservableQueue()
+    {
+        return (ObservableQueue<E>) super.getSource();
+    }
+}

@@ -21,17 +21,30 @@
     > http://www.opensource.org/licenses/lgpl-license.php
 
 */
+package org.dishevelled.observable.event;
+
+import java.util.EventListener;
 
 /**
- * Observable decorator implementations for collection and map interfaces.
+ * A listener that receives notification of vetoable
+ * changes about to be made to an observable queue.
  *
- * <h4>Summary</h4>
- *
- * <p>
- * The decorators in this package fire empty vetoable change events in
- * <code>preXxx</code> methods and empty change events in <code>postXxx</code> methods.
- * Listeners may query the source of the events to determine what may or may
- * not have changed due to the event.
- * </p>
+ * @param <E> queue element type
+ * @author  Michael Heuer
+ * @version $Revision$ $Date$
  */
-package org.dishevelled.observable.impl;
+public interface VetoableQueueChangeListener<E>
+    extends EventListener
+{
+
+    /**
+     * Notify this listener that a vetoable change is about
+     * to be made to the observable queue.
+     *
+     * @param e vetoable queue change event
+     * @throws QueueChangeVetoException if this listener wishes
+     *    the change about to be made to be rolled back
+     */
+    void queueWillChange(VetoableQueueChangeEvent<E> e)
+        throws QueueChangeVetoException;
+}
