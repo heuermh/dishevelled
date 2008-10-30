@@ -59,6 +59,7 @@ public final class MatrixMarketReader
         STRATEGIES.put("general", new GeneralReaderStrategy());
         STRATEGIES.put("symmetric", new SymmetricReaderStrategy());
         STRATEGIES.put("skew-symmetric", new SkewSymmetricReaderStrategy());
+        // TODO:  hermitian might only be valid for complex matrices
         STRATEGIES.put("hermitian", new HermitianReaderStrategy());
     }
 
@@ -110,7 +111,13 @@ public final class MatrixMarketReader
                     {
                         long rows = Long.parseLong(tokens[0]);
                         long columns = Long.parseLong(tokens[1]);
-                        int cardinality = Integer.parseInt(tokens[2]);
+                        int entries = Integer.parseInt(tokens[2]);
+                        if (readerStrategy == null)
+                        {
+                            throw new IOException("read matrix size definition at line number " + lineNumber
+                                                  + " before reading header line");
+                        }
+                        int cardinality = readerStrategy.cardinality(entries);
                         matrix = new SparseMatrix2D<Double>(rows, columns, cardinality, 0.75f);
                     }
                     else
@@ -162,6 +169,16 @@ public final class MatrixMarketReader
     {
 
         /**
+         * Return the approximate cardinality of the matrix to create for the specified number
+         * of entries in the file.
+         *
+         * @param entries number of entries in the file
+         * @return the approximate cardinality of the matrix to create for the specified number
+         *    of entries in the file
+         */
+        int cardinality(int entries);
+
+        /**
          * Notify this reader strategy that the specified value was read for the specified
          * matrix at the specified coordinates.
          *
@@ -179,6 +196,12 @@ public final class MatrixMarketReader
     private static class GeneralReaderStrategy implements ReaderStrategy
     {
         /** {@inheritDoc} */
+        public int cardinality(final int entries)
+        {
+            return entries;
+        }
+
+        /** {@inheritDoc} */
         public void read(final Matrix2D<Double> matrix, final long row, final long column, final double value)
         {
             matrix.set(row, column, value);
@@ -191,8 +214,15 @@ public final class MatrixMarketReader
     private static class SymmetricReaderStrategy implements ReaderStrategy
     {
         /** {@inheritDoc} */
+        public int cardinality(final int entries)
+        {
+            return (2 * entries);
+        }
+
+        /** {@inheritDoc} */
         public void read(final Matrix2D<Double> matrix, final long row, final long column, final double value)
         {
+            // TODO:  what if an upper-right value is specified?
             matrix.set(row, column, value);
             // only set values on the diagonal once
             if (row != column)
@@ -208,13 +238,22 @@ public final class MatrixMarketReader
     private static class SkewSymmetricReaderStrategy implements ReaderStrategy
     {
         /** {@inheritDoc} */
+        public int cardinality(final int entries)
+        {
+            return (2 * entries);
+        }
+
+        /** {@inheritDoc} */
         public void read(final Matrix2D<Double> matrix, final long row, final long column, final double value)
         {
+            // TODO:  what if an upper-right value is specified?
             // diagonal entries are always zero
             if (row != column)
             {
+                // lower-left values should be specified
                 matrix.set(row, column, value);
-                matrix.set(column, row, value);
+                // upper-right values are inverse
+                matrix.set(column, row, -1.0d * value);
             }
         }
     }
@@ -224,6 +263,12 @@ public final class MatrixMarketReader
      */
     private static class HermitianReaderStrategy implements ReaderStrategy
     {
+        /** {@inheritDoc} */
+        public int cardinality(final int entries)
+        {
+            return entries;
+        }
+
         /** {@inheritDoc} */
         public void read(final Matrix2D<Double> matrix, final long row, final long column, final double value)
         {

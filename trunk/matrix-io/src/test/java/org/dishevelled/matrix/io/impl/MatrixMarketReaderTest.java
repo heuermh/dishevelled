@@ -180,7 +180,20 @@ public final class MatrixMarketReaderTest
             MatrixMarketReader reader = new MatrixMarketReader();
             Matrix2D<Double> matrix = reader.read(inputStream);
             assertNotNull(matrix);
-            // TODO:  add'l assertions
+            assertEquals(3 * 3, matrix.size());
+            assertEquals(3, matrix.rows());
+            assertEquals(3, matrix.columns());
+            assertFalse(matrix.isEmpty());
+            assertEquals(7, matrix.cardinality());
+            assertEquals(Double.valueOf(1.0d), matrix.get(0L, 0L), 0.01d);
+            assertEquals(Double.valueOf(4.0d), matrix.get(1L, 1L), 0.01d);
+            assertNull(matrix.get(0L, 1L));
+            assertNull(matrix.get(1L, 0L));
+            assertEquals(Double.valueOf(6.0d), matrix.get(2L, 2L), 0.01d);
+            assertEquals(Double.valueOf(3.0d), matrix.get(2L, 0L), 0.01d);
+            assertEquals(Double.valueOf(3.0d), matrix.get(0L, 2L), 0.01d);
+            assertEquals(Double.valueOf(-5.0d), matrix.get(2L, 1L), 0.01d);
+            assertEquals(Double.valueOf(-5.0d), matrix.get(1L, 2L), 0.01d);
         }
         finally
         {
@@ -197,7 +210,20 @@ public final class MatrixMarketReaderTest
             MatrixMarketReader reader = new MatrixMarketReader();
             Matrix2D<Double> matrix = reader.read(inputStream);
             assertNotNull(matrix);
-            // TODO:  add'l assertions
+            assertEquals(3 * 3, matrix.size());
+            assertEquals(3, matrix.rows());
+            assertEquals(3, matrix.columns());
+            assertFalse(matrix.isEmpty());
+            assertEquals(6, matrix.cardinality());
+            assertNull(matrix.get(0L, 0L));
+            assertNull(matrix.get(1L, 1L));
+            assertNull(matrix.get(2L, 2L));
+            assertEquals(Double.valueOf(3.0d), matrix.get(1L, 0L), 0.01d);
+            assertEquals(Double.valueOf(-3.0d), matrix.get(0L, 1L), 0.01d);
+            assertEquals(Double.valueOf(-4.0d), matrix.get(2L, 0L), 0.01d);
+            assertEquals(Double.valueOf(4.0d), matrix.get(0L, 2L), 0.01d);
+            assertEquals(Double.valueOf(5.0d), matrix.get(2L, 1L), 0.01d);
+            assertEquals(Double.valueOf(-5.0d), matrix.get(1L, 2L), 0.01d);
         }
         finally
         {
