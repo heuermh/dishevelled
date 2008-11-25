@@ -23,9 +23,7 @@
 */
 package org.dishevelled.collect;
 
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.NavigableSet;
@@ -194,28 +192,28 @@ public final class SetsTest
 
     public void testNewSet()
     {
-        Set<String> set0 = newSet();
+        Set<String> set0 = createSet();
         assertNotNull(set0);
 
         Collection<String> elements = asSet("foo", "bar", "baz");
-        Set<String> set1 = newSet(elements);
+        Set<String> set1 = createSet(elements);
         assertNotNull(set1);
 
-        Set<String> set2 = newSet(10);
+        Set<String> set2 = createSet(10);
         assertNotNull(set2);
 
-        Set<String> set3 = newSet(1000);
+        Set<String> set3 = createSet(1000);
         assertNotNull(set3);
 
-        Set<String> set4 = newSet(10, 0.90f);
+        Set<String> set4 = createSet(10, 0.90f);
         assertNotNull(set4);
 
-        Set<String> set5 = newSet(1000, 0.50f);
+        Set<String> set5 = createSet(1000, 0.50f);
         assertNotNull(set5);
 
         try
         {
-            Set<String> set = newSet((Collection<String>) null);
+            Set<String> set = createSet((Collection<String>) null);
             fail("newSet((Collection<String>) null) expected IllegalArgumentException");
         }
         //catch (IllegalArgumentException e)
@@ -227,31 +225,31 @@ public final class SetsTest
 
     public void testNewSortedSet()
     {
-        SortedSet<String> set0 = newSortedSet();
+        SortedSet<String> set0 = createSortedSet();
         assertNotNull(set0);
 
         Collection<String> elements = asSet("foo", "bar", "baz");
-        SortedSet<String> set1 = newSortedSet(elements);
+        SortedSet<String> set1 = createSortedSet(elements);
         assertNotNull(set1);
 
-        SortedSet<String> set2 = newSortedSet(COMPARATOR);
+        SortedSet<String> set2 = createSortedSet(COMPARATOR);
         assertNotNull(set2);
 
-        SortedSet<String> set3 = newSortedSet((Comparator<String>) null);
+        SortedSet<String> set3 = createSortedSet((Comparator<String>) null);
         assertNotNull(set3);
 
-        SortedSet<String> set4 = newSortedSet(elements, COMPARATOR);
+        SortedSet<String> set4 = createSortedSet(elements, COMPARATOR);
         assertNotNull(set4);
 
-        SortedSet<String> set5 = newSortedSet(elements, null);
+        SortedSet<String> set5 = createSortedSet(elements, null);
         assertNotNull(set5);
 
-        SortedSet<String> set6 = newSortedSet(set1);
+        SortedSet<String> set6 = createSortedSet(set1);
         assertNotNull(set6);
 
         try
         {
-            SortedSet<String> set = newSortedSet((Collection<String>) null);
+            SortedSet<String> set = createSortedSet((Collection<String>) null);
             fail("newSortedSet((Collection<String>) null) expected IllegalArgumentException");
         }
         //catch (IllegalArgumentException e)
@@ -261,7 +259,7 @@ public final class SetsTest
         }
         try
         {
-            SortedSet<String> set = newSortedSet((SortedSet<String>) null);
+            SortedSet<String> set = createSortedSet((SortedSet<String>) null);
             fail("newSortedSet((SortedSet<String>) null) expected IllegalArgumentException");
         }
         //catch (IllegalArgumentException e)
@@ -271,7 +269,7 @@ public final class SetsTest
         }
         try
         {
-            SortedSet<String> set = newSortedSet((Collection<String>) null, COMPARATOR);
+            SortedSet<String> set = createSortedSet((Collection<String>) null, COMPARATOR);
             fail("newSortedSet((Collection<String>) null, COMPARATOR) expected IllegalArgumentException");
         }
         //catch (IllegalArgumentException e)
@@ -281,7 +279,7 @@ public final class SetsTest
         }
         try
         {
-            SortedSet<String> set = newSortedSet((SortedSet<String>) null, COMPARATOR);
+            SortedSet<String> set = createSortedSet((SortedSet<String>) null, COMPARATOR);
             fail("newSortedSet((SortedSet<String>) null, COMPARATOR) expected IllegalArgumentException");
         }
         //catch (IllegalArgumentException e)
@@ -293,32 +291,32 @@ public final class SetsTest
 
     public void testNewNavigableSet()
     {
-        NavigableSet<String> set0 = newNavigableSet();
+        NavigableSet<String> set0 = createNavigableSet();
         assertNotNull(set0);
 
         Collection<String> elements = asSet("foo", "bar", "baz");
-        NavigableSet<String> set1 = newNavigableSet(elements);
+        NavigableSet<String> set1 = createNavigableSet(elements);
         assertNotNull(set1);
 
-        NavigableSet<String> set2 = newNavigableSet(COMPARATOR);
+        NavigableSet<String> set2 = createNavigableSet(COMPARATOR);
         assertNotNull(set2);
 
-        NavigableSet<String> set3 = newNavigableSet((Comparator<String>) null);
+        NavigableSet<String> set3 = createNavigableSet((Comparator<String>) null);
         assertNotNull(set3);
 
-        NavigableSet<String> set4 = newNavigableSet(elements, COMPARATOR);
+        NavigableSet<String> set4 = createNavigableSet(elements, COMPARATOR);
         assertNotNull(set4);
 
-        NavigableSet<String> set5 = newNavigableSet(elements, null);
+        NavigableSet<String> set5 = createNavigableSet(elements, null);
         assertNotNull(set5);
 
         SortedSet<String> sortedSet = asSortedSet("foo", "bar", "baz");
-        NavigableSet<String> set6 = newNavigableSet(sortedSet);
+        NavigableSet<String> set6 = createNavigableSet(sortedSet);
         assertNotNull(set6);
 
         try
         {
-            NavigableSet<String> set = newNavigableSet((Collection<String>) null);
+            NavigableSet<String> set = createNavigableSet((Collection<String>) null);
             fail("newNavigableSet((Collection<String>) null) expected IllegalArgumentException");
         }
         //catch (IllegalArgumentException e)
@@ -328,7 +326,7 @@ public final class SetsTest
         }
         try
         {
-            NavigableSet<String> set = newNavigableSet((SortedSet<String>) null);
+            NavigableSet<String> set = createNavigableSet((SortedSet<String>) null);
             fail("newNavigableSet((SortedSet<String>) null) expected IllegalArgumentException");
         }
         //catch (IllegalArgumentException e)
@@ -338,7 +336,7 @@ public final class SetsTest
         }
         try
         {
-            NavigableSet<String> set = newNavigableSet((Collection<String>) null, COMPARATOR);
+            NavigableSet<String> set = createNavigableSet((Collection<String>) null, COMPARATOR);
             fail("newNavigableSet((Collection<String>) null, COMPARATOR) expected IllegalArgumentException");
         }
         //catch (IllegalArgumentException e)
@@ -348,7 +346,7 @@ public final class SetsTest
         }
         try
         {
-            NavigableSet<String> set = newNavigableSet((SortedSet<String>) null, COMPARATOR);
+            NavigableSet<String> set = createNavigableSet((SortedSet<String>) null, COMPARATOR);
             fail("newNavigableSet((SortedSet<String>) null, COMPARATOR) expected IllegalArgumentException");
         }
         //catch (IllegalArgumentException e)
@@ -360,32 +358,32 @@ public final class SetsTest
 
     public void testNewConcurrentSkipListSet()
     {
-        ConcurrentSkipListSet<String> set0 = newConcurrentSkipListSet();
+        ConcurrentSkipListSet<String> set0 = createConcurrentSkipListSet();
         assertNotNull(set0);
 
         Collection<String> elements = asSet("foo", "bar", "baz");
-        ConcurrentSkipListSet<String> set1 = newConcurrentSkipListSet(elements);
+        ConcurrentSkipListSet<String> set1 = createConcurrentSkipListSet(elements);
         assertNotNull(set1);
 
-        ConcurrentSkipListSet<String> set2 = newConcurrentSkipListSet(COMPARATOR);
+        ConcurrentSkipListSet<String> set2 = createConcurrentSkipListSet(COMPARATOR);
         assertNotNull(set2);
 
-        ConcurrentSkipListSet<String> set3 = newConcurrentSkipListSet((Comparator<String>) null);
+        ConcurrentSkipListSet<String> set3 = createConcurrentSkipListSet((Comparator<String>) null);
         assertNotNull(set3);
 
-        ConcurrentSkipListSet<String> set4 = newConcurrentSkipListSet(elements, COMPARATOR);
+        ConcurrentSkipListSet<String> set4 = createConcurrentSkipListSet(elements, COMPARATOR);
         assertNotNull(set4);
 
-        ConcurrentSkipListSet<String> set5 = newConcurrentSkipListSet(elements, null);
+        ConcurrentSkipListSet<String> set5 = createConcurrentSkipListSet(elements, null);
         assertNotNull(set5);
 
         SortedSet<String> sortedSet = asSortedSet("foo", "bar", "baz");
-        ConcurrentSkipListSet<String> set6 = newConcurrentSkipListSet(sortedSet);
+        ConcurrentSkipListSet<String> set6 = createConcurrentSkipListSet(sortedSet);
         assertNotNull(set6);
 
         try
         {
-            ConcurrentSkipListSet<String> set = newConcurrentSkipListSet((Collection<String>) null);
+            ConcurrentSkipListSet<String> set = createConcurrentSkipListSet((Collection<String>) null);
             fail("newConcurrentSkipListSet((Collection<String>) null) expected IllegalArgumentException");
         }
         //catch (IllegalArgumentException e)
@@ -395,7 +393,7 @@ public final class SetsTest
         }
         try
         {
-            ConcurrentSkipListSet<String> set = newConcurrentSkipListSet((SortedSet<String>) null);
+            ConcurrentSkipListSet<String> set = createConcurrentSkipListSet((SortedSet<String>) null);
             fail("newConcurrentSkipListSet((SortedSet<String>) null) expected IllegalArgumentException");
         }
         //catch (IllegalArgumentException e)
@@ -405,7 +403,7 @@ public final class SetsTest
         }
         try
         {
-            ConcurrentSkipListSet<String> set = newConcurrentSkipListSet((Collection<String>) null, COMPARATOR);
+            ConcurrentSkipListSet<String> set = createConcurrentSkipListSet((Collection<String>) null, COMPARATOR);
             fail("newConcurrentSkipListSet((Collection<String>) null, COMPARATOR) expected IllegalArgumentException");
         }
         //catch (IllegalArgumentException e)
@@ -415,7 +413,7 @@ public final class SetsTest
         }
         try
         {
-            ConcurrentSkipListSet<String> set = newConcurrentSkipListSet((SortedSet<String>) null, COMPARATOR);
+            ConcurrentSkipListSet<String> set = createConcurrentSkipListSet((SortedSet<String>) null, COMPARATOR);
             fail("newConcurrentSkipListSet((SortedSet<String>) null, COMPARATOR) expected IllegalArgumentException");
         }
         //catch (IllegalArgumentException e)
@@ -427,16 +425,16 @@ public final class SetsTest
 
     public void testNewCopyOnWriteArraySet()
     {
-        CopyOnWriteArraySet<String> set0 = newCopyOnWriteArraySet();
+        CopyOnWriteArraySet<String> set0 = createCopyOnWriteArraySet();
         assertNotNull(set0);
 
         Collection<String> elements = asSet("foo", "bar", "baz");
-        CopyOnWriteArraySet<String> set1 = newCopyOnWriteArraySet(elements);
+        CopyOnWriteArraySet<String> set1 = createCopyOnWriteArraySet(elements);
         assertNotNull(set1);
 
         try
         {
-            CopyOnWriteArraySet<String> set = newCopyOnWriteArraySet((Collection<String>) null);
+            CopyOnWriteArraySet<String> set = createCopyOnWriteArraySet((Collection<String>) null);
             fail("newCopyOnWriteArraySet((Collection<String>) null) expected IllegalArgumentException");
         }
         //catch (IllegalArgumentException e)
@@ -448,16 +446,16 @@ public final class SetsTest
 
     public void testNewNonBlockingSet()
     {
-        Set<String> set0 = newNonBlockingSet();
+        Set<String> set0 = createNonBlockingSet();
         assertNotNull(set0);
 
         Collection<String> elements = asSet("foo", "bar", "baz");
-        Set<String> set1 = newNonBlockingSet(elements);
+        Set<String> set1 = createNonBlockingSet(elements);
         assertNotNull(set1);
 
         try
         {
-            Set<String> set = newNonBlockingSet((Collection<String>) null);
+            Set<String> set = createNonBlockingSet((Collection<String>) null);
             fail("newNonBlockingSet((Collection<String>) null) expected IllegalArgumentException");
         }
         //catch (IllegalArgumentException e)
