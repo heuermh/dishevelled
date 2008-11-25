@@ -60,7 +60,7 @@ public final class Lists
      */
     public static <T> List<T> asList(final T... elements)
     {
-        List<T> list = newList(elements.length);
+        List<T> list = createList(elements.length);
         for (T t : elements)
         {
             list.add(t);
@@ -82,7 +82,7 @@ public final class Lists
         {
             throw new IllegalArgumentException("iterator must not be null");
         }
-        List<T> list = newList();
+        List<T> list = createList();
         while (iterator.hasNext())
         {
             list.add(iterator.next());
@@ -104,7 +104,7 @@ public final class Lists
         {
             throw new IllegalArgumentException("iterable must not be null");
         }
-        List<T> list = newList();
+        List<T> list = createList();
         for (T t : iterable)
         {
             list.add(t);
@@ -118,7 +118,7 @@ public final class Lists
      * @param <T> element type
      * @return a new instance of List
      */
-    public static <T> List<T> newList()
+    public static <T> List<T> createList()
     {
         return new ArrayList<T>();
     }
@@ -133,7 +133,7 @@ public final class Lists
      * @return a new instance of List containing the elements of the specified
      *    collection
      */
-    public static <T> List<T> newList(final Collection<? extends T> elements)
+    public static <T> List<T> createList(final Collection<? extends T> elements)
     {
         return new ArrayList<T>(elements);
     }
@@ -145,7 +145,7 @@ public final class Lists
      * @param initialCapacity initial capacity
      * @return a new instance of List with the specified initial capacity
      */
-    public static <T> List<T> newList(final int initialCapacity)
+    public static <T> List<T> createList(final int initialCapacity)
     {
         return new ArrayList<T>(initialCapacity);
     }
@@ -156,7 +156,7 @@ public final class Lists
      * @param <T> element type
      * @return a new instance of LinkedList
      */
-    public static <T> LinkedList<T> newLinkedList()
+    public static <T> LinkedList<T> createLinkedList()
     {
         return new LinkedList<T>();
     }
@@ -171,7 +171,7 @@ public final class Lists
      * @return a new instance of LinkedList containing the elements of the specified
      *    collection
      */
-    public static <T> LinkedList<T> newLinkedList(final Collection<? extends T> elements)
+    public static <T> LinkedList<T> createLinkedList(final Collection<? extends T> elements)
     {
         return new LinkedList<T>(elements);
     }
@@ -182,7 +182,7 @@ public final class Lists
      * @param <T> element type
      * @return a new instance of CopyOnWriteArrayList
      */
-    public static <T> CopyOnWriteArrayList<T> newCopyOnWriteArrayList()
+    public static <T> CopyOnWriteArrayList<T> createCopyOnWriteArrayList()
     {
         return new CopyOnWriteArrayList<T>();
     }
@@ -197,7 +197,7 @@ public final class Lists
      * @return a new instance of CopyOnWriteArrayLIst containing the elements
      *    of the specified collection
      */
-    public static <T> CopyOnWriteArrayList<T> newCopyOnWriteArrayList(final Collection<? extends T> elements)
+    public static <T> CopyOnWriteArrayList<T> createCopyOnWriteArrayList(final Collection<? extends T> elements)
     {
         return new CopyOnWriteArrayList<T>(elements);
     }
@@ -211,7 +211,7 @@ public final class Lists
      * @return a new instance of CopyOnWriteArrayList holding a copy of the
      *    specified array of elements
      */
-    public static <T> CopyOnWriteArrayList<T> newCopyOnWriteArrayList(final T[] elements)
+    public static <T> CopyOnWriteArrayList<T> createCopyOnWriteArrayList(final T[] elements)
     {
         return new CopyOnWriteArrayList<T>(elements);
     }

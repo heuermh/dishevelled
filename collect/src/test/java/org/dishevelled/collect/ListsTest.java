@@ -23,9 +23,7 @@
 */
 package org.dishevelled.collect;
 
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -92,22 +90,22 @@ public final class ListsTest
 
     public void testNewList()
     {
-        List<String> list0 = newList();
+        List<String> list0 = createList();
         assertNotNull(list0);
 
         Collection<String> elements = asList("foo", "bar", "baz");
-        List<String> list1 = newList(elements);
+        List<String> list1 = createList(elements);
         assertNotNull(list1);
 
-        List<String> list2 = newList(10);
+        List<String> list2 = createList(10);
         assertNotNull(list2);
 
-        List<String> list3 = newList(1000);
+        List<String> list3 = createList(1000);
         assertNotNull(list3);
 
         try
         {
-            List<String> list = newList((Collection<String>) null);
+            List<String> list = createList((Collection<String>) null);
             fail("newList((Collection<String>) null) expected IllegalArgumentException");
         }
         //catch (IllegalArgumentException e)
@@ -119,16 +117,16 @@ public final class ListsTest
 
     public void testNewLinkedList()
     {
-        LinkedList<String> list0 = newLinkedList();
+        LinkedList<String> list0 = createLinkedList();
         assertNotNull(list0);
 
         Collection<String> elements = asList("foo", "bar", "baz");
-        LinkedList<String> list1 = newLinkedList(elements);
+        LinkedList<String> list1 = createLinkedList(elements);
         assertNotNull(list1);
 
         try
         {
-            LinkedList<String> list = newLinkedList((Collection<String>) null);
+            LinkedList<String> list = createLinkedList((Collection<String>) null);
             fail("newLinkedList((Collection<String>) null) expected IllegalArgumentException");
         }
         //catch (IllegalArgumentException e)
@@ -140,20 +138,20 @@ public final class ListsTest
 
     public void testNewCopyOnWriteArrayList()
     {
-        CopyOnWriteArrayList<String> list0 = newCopyOnWriteArrayList();
+        CopyOnWriteArrayList<String> list0 = createCopyOnWriteArrayList();
         assertNotNull(list0);
 
         Collection<String> elements = asList("foo", "bar", "baz");
-        CopyOnWriteArrayList<String> list1 = newCopyOnWriteArrayList(elements);
+        CopyOnWriteArrayList<String> list1 = createCopyOnWriteArrayList(elements);
         assertNotNull(list1);
 
         String[] elementArray = new String[] { "foo", "bar", "baz" };
-        CopyOnWriteArrayList<String> list2 = newCopyOnWriteArrayList(elementArray);
+        CopyOnWriteArrayList<String> list2 = createCopyOnWriteArrayList(elementArray);
         assertNotNull(list2);
 
         try
         {
-            CopyOnWriteArrayList<String> list = newCopyOnWriteArrayList((Collection<String>) null);
+            CopyOnWriteArrayList<String> list = createCopyOnWriteArrayList((Collection<String>) null);
             fail("newCopyOnWriteArrayList((Collection<String>) null) expected IllegalArgumentException");
         }
         //catch (IllegalArgumentException e)
@@ -163,7 +161,7 @@ public final class ListsTest
         }
         try
         {
-            CopyOnWriteArrayList<String> list = newCopyOnWriteArrayList((String[]) null);
+            CopyOnWriteArrayList<String> list = createCopyOnWriteArrayList((String[]) null);
             fail("newCopyOnWriteArrayList((String[]) null) expected IllegalArgumentException");
         }
         //catch (IllegalArgumentException e)

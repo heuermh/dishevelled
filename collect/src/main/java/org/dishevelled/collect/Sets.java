@@ -66,7 +66,7 @@ public final class Sets
      */
     public static <T> Set<T> asSet(final T... elements)
     {
-        Set<T> set = newSet(elements.length);
+        Set<T> set = createSet(elements.length);
         for (T t : elements)
         {
             set.add(t);
@@ -88,7 +88,7 @@ public final class Sets
         {
             throw new IllegalArgumentException("iterator must not be null");
         }
-        Set<T> set = newSet();
+        Set<T> set = createSet();
         while (iterator.hasNext())
         {
             set.add(iterator.next());
@@ -110,7 +110,7 @@ public final class Sets
         {
             throw new IllegalArgumentException("iterable must not be null");
         }
-        Set<T> set = newSet();
+        Set<T> set = createSet();
         for (T t : iterable)
         {
             set.add(t);
@@ -128,7 +128,7 @@ public final class Sets
      */
     public static <T> SortedSet<T> asSortedSet(final T... elements)
     {
-        SortedSet<T> sortedSet = newSortedSet();
+        SortedSet<T> sortedSet = createSortedSet();
         for (T t : elements)
         {
             sortedSet.add(t);
@@ -150,7 +150,7 @@ public final class Sets
         {
             throw new IllegalArgumentException("iterator must not be null");
         }
-        SortedSet<T> sortedSet = newSortedSet();
+        SortedSet<T> sortedSet = createSortedSet();
         while (iterator.hasNext())
         {
             sortedSet.add(iterator.next());
@@ -172,7 +172,7 @@ public final class Sets
         {
             throw new IllegalArgumentException("iterable must not be null");
         }
-        SortedSet<T> sortedSet = newSortedSet();
+        SortedSet<T> sortedSet = createSortedSet();
         for (T t : iterable)
         {
             sortedSet.add(t);
@@ -197,7 +197,7 @@ public final class Sets
         {
             throw new IllegalArgumentException("iterator must not be null");
         }
-        SortedSet<T> sortedSet = newSortedSet(comparator);
+        SortedSet<T> sortedSet = createSortedSet(comparator);
         while (iterator.hasNext())
         {
             sortedSet.add(iterator.next());
@@ -222,7 +222,7 @@ public final class Sets
         {
             throw new IllegalArgumentException("iterable must not be null");
         }
-        SortedSet<T> sortedSet = newSortedSet(comparator);
+        SortedSet<T> sortedSet = createSortedSet(comparator);
         for (T t : iterable)
         {
             sortedSet.add(t);
@@ -236,7 +236,7 @@ public final class Sets
      * @param <T> element type
      * @return a new instance of Set
      */
-    public static <T> Set<T> newSet()
+    public static <T> Set<T> createSet()
     {
         return new HashSet<T>();
     }
@@ -250,7 +250,7 @@ public final class Sets
      * @return a new instance of Set containing the elements of the specified
      *    collection
      */
-    public static <T> Set<T> newSet(final Collection<? extends T> elements)
+    public static <T> Set<T> createSet(final Collection<? extends T> elements)
     {
         return new HashSet<T>(elements);
     }
@@ -262,7 +262,7 @@ public final class Sets
      * @param initialCapacity initial capacity
      * @return a new instance of Set with the specified initial capacity
      */
-    public static <T> Set<T> newSet(final int initialCapacity)
+    public static <T> Set<T> createSet(final int initialCapacity)
     {
         return new HashSet<T>(initialCapacity);
     }
@@ -277,7 +277,7 @@ public final class Sets
      * @return a new instance of Set with the specified initial capacity and
      *    load factor
      */
-    public static <T> Set<T> newSet(final int initialCapacity, final float loadFactor)
+    public static <T> Set<T> createSet(final int initialCapacity, final float loadFactor)
     {
         return new HashSet<T>(initialCapacity, loadFactor);
     }
@@ -288,7 +288,7 @@ public final class Sets
      * @param <T> element type
      * @return a new instance of SortedSet
      */
-    public static <T> SortedSet<T> newSortedSet()
+    public static <T> SortedSet<T> createSortedSet()
     {
         return new TreeSet<T>();
     }
@@ -302,7 +302,7 @@ public final class Sets
      * @return a new instance of SortedSet containing the elements of the
      *    specified collection
      */
-    public static <T> SortedSet<T> newSortedSet(final Collection<? extends T> elements)
+    public static <T> SortedSet<T> createSortedSet(final Collection<? extends T> elements)
     {
         return new TreeSet<T>(elements);
     }
@@ -315,7 +315,7 @@ public final class Sets
      * @param comparator comparator to be used to sort the returned set
      * @return a new instance of SortedSet
      */
-    public static <T> SortedSet<T> newSortedSet(final Comparator<? super T> comparator)
+    public static <T> SortedSet<T> createSortedSet(final Comparator<? super T> comparator)
     {
         return new TreeSet<T>(comparator);
     }
@@ -330,10 +330,10 @@ public final class Sets
      * @return a new instance of SortedSet containing the elements of the
      *    specified collection sorted according to the specified comparator
      */
-    public static <T> SortedSet<T> newSortedSet(final Collection<? extends T> elements,
+    public static <T> SortedSet<T> createSortedSet(final Collection<? extends T> elements,
                                                 final Comparator<? super T> comparator)
     {
-        SortedSet<T> sortedSet = newSortedSet(comparator);
+        SortedSet<T> sortedSet = createSortedSet(comparator);
         sortedSet.addAll(elements);
         return sortedSet;
     }
@@ -347,7 +347,7 @@ public final class Sets
      * @return a new instance of SortedSet containing the same elements in the same
      *    order as the specified sorted set
      */
-    public static <T> SortedSet<T> newSortedSet(final SortedSet<T> sortedSet)
+    public static <T> SortedSet<T> createSortedSet(final SortedSet<T> sortedSet)
     {
         return new TreeSet<T>(sortedSet);
     }
@@ -358,7 +358,7 @@ public final class Sets
      * @param <T> element type
      * @return a new instance of NavigableSet
      */
-    public static <T> NavigableSet<T> newNavigableSet()
+    public static <T> NavigableSet<T> createNavigableSet()
     {
         return new TreeSet<T>();
     }
@@ -372,7 +372,7 @@ public final class Sets
      * @return a new instance of NavigableSet containing the elements of the
      *    specified collection
      */
-    public static <T> NavigableSet<T> newNavigableSet(final Collection<? extends T> elements)
+    public static <T> NavigableSet<T> createNavigableSet(final Collection<? extends T> elements)
     {
         return new TreeSet<T>(elements);
     }
@@ -385,7 +385,7 @@ public final class Sets
      * @param comparator comparator to be used to sort the returned set
      * @return a new instance of NavigableSet sorted according to the specified comparator
      */
-    public static <T> NavigableSet<T> newNavigableSet(final Comparator<? super T> comparator)
+    public static <T> NavigableSet<T> createNavigableSet(final Comparator<? super T> comparator)
     {
         return new TreeSet<T>(comparator);
     }
@@ -400,10 +400,10 @@ public final class Sets
      * @return a new instance of NavigableSet containing the elements of the
      *    specified collection sorted according to the specified comparator
      */
-    public static <T> NavigableSet<T> newNavigableSet(final Collection<? extends T> elements,
+    public static <T> NavigableSet<T> createNavigableSet(final Collection<? extends T> elements,
                                                       final Comparator<? super T> comparator)
     {
-        NavigableSet<T> navigableSet = newNavigableSet(comparator);
+        NavigableSet<T> navigableSet = createNavigableSet(comparator);
         navigableSet.addAll(elements);
         return navigableSet;
     }
@@ -417,7 +417,7 @@ public final class Sets
      * @return a new instance of NavigableSet containing the same elements in the same
      *    order as the specified sorted set
      */
-    public static <T> NavigableSet<T> newNavigableSet(final SortedSet<T> sortedSet)
+    public static <T> NavigableSet<T> createNavigableSet(final SortedSet<T> sortedSet)
     {
         return new TreeSet<T>(sortedSet);
     }
@@ -428,7 +428,7 @@ public final class Sets
      * @param <T> element type
      * @return a new instance of ConcurrentSkipListSet
      */
-    public static <T> ConcurrentSkipListSet<T> newConcurrentSkipListSet()
+    public static <T> ConcurrentSkipListSet<T> createConcurrentSkipListSet()
     {
         return new ConcurrentSkipListSet<T>();
     }
@@ -442,7 +442,7 @@ public final class Sets
      * @return a new instance of ConcurrentSkipListSet containing the elements of the
      *    specified collection
      */
-    public static <T> ConcurrentSkipListSet<T> newConcurrentSkipListSet(final Collection<? extends T> elements)
+    public static <T> ConcurrentSkipListSet<T> createConcurrentSkipListSet(final Collection<? extends T> elements)
     {
         return new ConcurrentSkipListSet<T>(elements);
     }
@@ -455,7 +455,7 @@ public final class Sets
      * @param comparator comparator to be used to sort the returned set
      * @return a new instance of ConcurrentSkipListSet
      */
-    public static <T> ConcurrentSkipListSet<T> newConcurrentSkipListSet(final Comparator<? super T> comparator)
+    public static <T> ConcurrentSkipListSet<T> createConcurrentSkipListSet(final Comparator<? super T> comparator)
     {
         return new ConcurrentSkipListSet<T>(comparator);
     }
@@ -470,10 +470,10 @@ public final class Sets
      * @return a new instance of ConcurrentSkipListSet containing the elements of the
      *    specified collection sorted according to the specified comparator
      */
-    public static <T> ConcurrentSkipListSet<T> newConcurrentSkipListSet(final Collection<? extends T> elements,
+    public static <T> ConcurrentSkipListSet<T> createConcurrentSkipListSet(final Collection<? extends T> elements,
                                                                         final Comparator<? super T> comparator)
     {
-        ConcurrentSkipListSet<T> set = new ConcurrentSkipListSet(comparator);
+        ConcurrentSkipListSet<T> set = createConcurrentSkipListSet(comparator);
         set.addAll(elements);
         return set;
     }
@@ -487,7 +487,7 @@ public final class Sets
      * @return a new instance of ConcurrentSkipListSet containing the same elements in the same
      *    order as the specified sorted set
      */
-    public static <T> ConcurrentSkipListSet<T> newConcurrentSkipListSet(final SortedSet<T> sortedSet)
+    public static <T> ConcurrentSkipListSet<T> createConcurrentSkipListSet(final SortedSet<T> sortedSet)
     {
         return new ConcurrentSkipListSet<T>(sortedSet);
     }
@@ -498,7 +498,7 @@ public final class Sets
      * @param <T> element type
      * @return a new instance of CopyOnWriteArraySet
      */
-    public static <T> CopyOnWriteArraySet<T> newCopyOnWriteArraySet()
+    public static <T> CopyOnWriteArraySet<T> createCopyOnWriteArraySet()
     {
         return new CopyOnWriteArraySet<T>();
     }
@@ -512,7 +512,7 @@ public final class Sets
      * @return a new instance of CopyOnWriteArraySet containing the elements of the
      *    specified collection
      */
-    public static <T> CopyOnWriteArraySet<T> newCopyOnWriteArraySet(final Collection<? extends T> elements)
+    public static <T> CopyOnWriteArraySet<T> createCopyOnWriteArraySet(final Collection<? extends T> elements)
     {
         return new CopyOnWriteArraySet<T>(elements);
     }
@@ -523,9 +523,9 @@ public final class Sets
      * @param <T> element type
      * @return a new non-blocking implementation of Set
      */
-    public static <T> Set<T> newNonBlockingSet()
+    public static <T> Set<T> createNonBlockingSet()
     {
-        return new NonBlockingHashSet();
+        return new NonBlockingHashSet<T>();
     }
 
     /**
@@ -537,9 +537,9 @@ public final class Sets
      * @return a new non-blocking implementation of Set containing the elements of the
      *    specified collection
      */
-    public static <T> Set<T> newNonBlockingSet(final Collection<? extends T> elements)
+    public static <T> Set<T> createNonBlockingSet(final Collection<? extends T> elements)
     {
-        Set<T> set = newNonBlockingSet();
+        Set<T> set = createNonBlockingSet();
         set.addAll(elements);
         return set;
     }

@@ -62,7 +62,7 @@ public final class Maps
      * @param <V> value type
      * @return a new instance of Map
      */
-    public static <K, V> Map<K, V> newMap()
+    public static <K, V> Map<K, V> createMap()
     {
         return new HashMap<K, V>();
     }
@@ -75,7 +75,7 @@ public final class Maps
      * @param initialCapacity initial capacity
      * @return a new instance of Map with the specified initial capacity
      */
-    public static <K, V> Map<K, V> newMap(final int initialCapacity)
+    public static <K, V> Map<K, V> createMap(final int initialCapacity)
     {
         return new HashMap<K, V>(initialCapacity);
     }
@@ -91,7 +91,7 @@ public final class Maps
      * @return a new instance of Map with the specified initial capacity
      *    and load factor
      */
-    public static <K, V> Map<K, V> newMap(final int initialCapacity, final float loadFactor)
+    public static <K, V> Map<K, V> createMap(final int initialCapacity, final float loadFactor)
     {
         return new HashMap<K, V>(initialCapacity, loadFactor);
     }
@@ -107,7 +107,7 @@ public final class Maps
      * @return a new instance of Map with the same mappings as the
      *    specified map
      */
-    public static <K, V> Map<K, V> newMap(final Map<? extends K, ? extends V> map)
+    public static <K, V> Map<K, V> createMap(final Map<? extends K, ? extends V> map)
     {
         return new HashMap<K, V>(map);
     }
@@ -136,7 +136,7 @@ public final class Maps
      * @param <V> value type
      * @return a new synchronized (thread-safe) instance of Map
      */
-    public static <K, V> Map<K, V> newSynchronizedMap()
+    public static <K, V> Map<K, V> createSynchronizedMap()
     {
         return Collections.synchronizedMap(new HashMap<K, V>());
     }
@@ -168,7 +168,7 @@ public final class Maps
      * @return a new synchronized (thread-safe) instance of Map with
      *    the specified initial capacity
      */
-    public static <K, V> Map<K, V> newSynchronizedMap(final int initialCapacity)
+    public static <K, V> Map<K, V> createSynchronizedMap(final int initialCapacity)
     {
         return Collections.synchronizedMap(new HashMap<K, V>(initialCapacity));
     }
@@ -201,7 +201,7 @@ public final class Maps
      * @return a new synchronized (thread-safe) instance of Map with
      *    the specified intial capacity and load factor
      */
-    public static <K, V> Map<K, V> newSynchronizedMap(final int initialCapacity, final float loadFactor)
+    public static <K, V> Map<K, V> createSynchronizedMap(final int initialCapacity, final float loadFactor)
     {
         return Collections.synchronizedMap(new HashMap<K, V>(initialCapacity, loadFactor));
     }
@@ -234,7 +234,7 @@ public final class Maps
      * @return a new synchronized (thread-safe) instance of Map with
      *    the same mappings as the specified map
      */
-    public static <K, V> Map<K, V> newSynchronizedMap(final Map<? extends K, ? extends V> map)
+    public static <K, V> Map<K, V> createSynchronizedMap(final Map<? extends K, ? extends V> map)
     {
         return Collections.synchronizedMap(new HashMap<K, V>(map));
     }
@@ -246,7 +246,7 @@ public final class Maps
      * @param <V> value type
      * @return a new instance of ConcurrentMap
      */
-    public static <K, V> ConcurrentMap<K, V> newConcurrentMap()
+    public static <K, V> ConcurrentMap<K, V> createConcurrentMap()
     {
         return new ConcurrentHashMap<K, V>();
     }
@@ -259,7 +259,7 @@ public final class Maps
      * @param initialCapacity initial capacity
      * @return a new instance of ConcurrentMap with the specified initial capacity
      */
-    public static <K, V> ConcurrentMap<K, V> newConcurrentMap(final int initialCapacity)
+    public static <K, V> ConcurrentMap<K, V> createConcurrentMap(final int initialCapacity)
     {
         return new ConcurrentHashMap<K, V>(initialCapacity);
     }
@@ -275,7 +275,7 @@ public final class Maps
      * @return a new instance of ConcurrentMap with the specified initial capacity
      *    and load factor
      */
-    public static <K, V> ConcurrentMap<K, V> newConcurrentMap(final int initialCapacity,
+    public static <K, V> ConcurrentMap<K, V> createConcurrentMap(final int initialCapacity,
                                                               final float loadFactor)
     {
         return new ConcurrentHashMap<K, V>(initialCapacity, loadFactor);
@@ -293,7 +293,7 @@ public final class Maps
      * @return a new instance of ConcurrentMap with the specified initial capacity
      *    load factor, and concurrency level
      */
-    public static <K, V> ConcurrentMap<K, V> newConcurrentMap(final int initialCapacity,
+    public static <K, V> ConcurrentMap<K, V> createConcurrentMap(final int initialCapacity,
                                                               final float loadFactor,
                                                               final int concurrencyLevel)
     {
@@ -311,7 +311,7 @@ public final class Maps
      * @return a new instance of ConcurrentMap with the same mappings as the
      *    specified map
      */
-    public static <K, V> ConcurrentMap<K, V> newConcurrentMap(final Map<? extends K, ? extends V> map)
+    public static <K, V> ConcurrentMap<K, V> createConcurrentMap(final Map<? extends K, ? extends V> map)
     {
         return new ConcurrentHashMap<K, V>(map);
     }
@@ -323,7 +323,7 @@ public final class Maps
      * @param <V> value type
      * @return a new non-blocking implementation of ConcurrentMap
      */
-    public static <K, V> ConcurrentMap<K, V> newNonBlockingMap()
+    public static <K, V> ConcurrentMap<K, V> createNonBlockingMap()
     {
         return new NonBlockingHashMap<K, V>();
     }
@@ -338,7 +338,7 @@ public final class Maps
      * @return a new non-blocking implementation of ConcurrentMap with the
      *    specified initial capacity
      */
-    public static <K, V> ConcurrentMap<K, V> newNonBlockingMap(final int initialCapacity)
+    public static <K, V> ConcurrentMap<K, V> createNonBlockingMap(final int initialCapacity)
     {
         return new NonBlockingHashMap<K, V>(initialCapacity);
     }
@@ -351,7 +351,7 @@ public final class Maps
      * @return a new non-blocking implementation of ConcurrentMap with
      *    <code>Long</code>s as keys
      */
-    public static <V> ConcurrentMap<Long, V> newLongNonBlockingMap()
+    public static <V> ConcurrentMap<Long, V> createLongNonBlockingMap()
     {
         return new NonBlockingHashMapLong<V>();
     }
@@ -365,7 +365,7 @@ public final class Maps
      * @return a new non-blocking implementation of ConcurrentMap with
      *    <code>Long</code>s as keys
      */
-    public static <V> ConcurrentMap<Long, V> newLongNonBlockingMap(final boolean optimizeForSpace)
+    public static <V> ConcurrentMap<Long, V> createLongNonBlockingMap(final boolean optimizeForSpace)
     {
         return new NonBlockingHashMapLong<V>(optimizeForSpace);
     }
@@ -379,7 +379,7 @@ public final class Maps
      * @return a new non-blocking implementation of ConcurrentMap with
      *    the specified initial capacity and <code>Long</code>s as keys
      */
-    public static <V> ConcurrentMap<Long, V> newLongNonBlockingMap(final int initialCapacity)
+    public static <V> ConcurrentMap<Long, V> createLongNonBlockingMap(final int initialCapacity)
     {
         return new NonBlockingHashMapLong<V>(initialCapacity);
     }
@@ -394,7 +394,7 @@ public final class Maps
      * @return a new non-blocking implementation of ConcurrentMap with
      *    the specified initial capacity and <code>Long</code>s as keys
      */
-    public static <V> ConcurrentMap<Long, V> newLongNonBlockingMap(final int initialCapacity,
+    public static <V> ConcurrentMap<Long, V> createLongNonBlockingMap(final int initialCapacity,
                                                                    final boolean optimizeForSpace)
     {
         return new NonBlockingHashMapLong<V>(initialCapacity, optimizeForSpace);
@@ -409,7 +409,7 @@ public final class Maps
      * @return a new instance of ConcurrentSkipListMap sorted according
      *    to the natural ordering of its keys
      */
-    public static <K, V> ConcurrentSkipListMap<K, V> newConcurrentSkipListMap()
+    public static <K, V> ConcurrentSkipListMap<K, V> createConcurrentSkipListMap()
     {
         return new ConcurrentSkipListMap<K, V>();
     }
@@ -425,7 +425,7 @@ public final class Maps
      * @return a new instance of ConcurrentSkipListMap sorted according
      *    to the specified comparator
      */
-    public static <K, V> ConcurrentSkipListMap<K, V> newConcurrentSkipListMap(final Comparator<? super K> comparator)
+    public static <K, V> ConcurrentSkipListMap<K, V> createConcurrentSkipListMap(final Comparator<? super K> comparator)
     {
         return new ConcurrentSkipListMap<K, V>(comparator);
     }
@@ -442,7 +442,7 @@ public final class Maps
      *    same mappings as the specified map and sorted according to the natural ordering of
      *    its keys
      */
-    public static <K, V> ConcurrentSkipListMap<K, V> newConcurrentSkipListMap(final Map<? extends K, ? extends V> map)
+    public static <K, V> ConcurrentSkipListMap<K, V> createConcurrentSkipListMap(final Map<? extends K, ? extends V> map)
     {
         return new ConcurrentSkipListMap<K, V>(map);
     }
@@ -457,7 +457,7 @@ public final class Maps
      * @return a new instance of ConcurrentSkipListMap containing the
      *    same mappings and using the same ordering as the specified sorted map
      */
-    public static <K, V> ConcurrentSkipListMap<K, V> newConcurrentSkipListMap(final SortedMap<K, ? extends V> sortedMap)
+    public static <K, V> ConcurrentSkipListMap<K, V> createConcurrentSkipListMap(final SortedMap<K, ? extends V> sortedMap)
     {
         return new ConcurrentSkipListMap<K, V>(sortedMap);
     }
@@ -469,7 +469,7 @@ public final class Maps
      * @param <V> value type
      * @return a new instance of SortedMap using the natural ordering of its keys
      */
-    public static <K, V> SortedMap<K, V> newSortedMap()
+    public static <K, V> SortedMap<K, V> createSortedMap()
     {
         return new TreeMap<K, V>();
     }
@@ -483,7 +483,7 @@ public final class Maps
      *    natural ordering of its keys
      * @return a new instance of SortedMap ordered according to the specified comparator
      */
-    public static <K, V> SortedMap<K, V> newSortedMap(final Comparator<? super K> comparator)
+    public static <K, V> SortedMap<K, V> createSortedMap(final Comparator<? super K> comparator)
     {
         return new TreeMap<K, V>(comparator);
     }
@@ -498,7 +498,7 @@ public final class Maps
      * @return a new instance of SortedMap containing the same mappings as the specified
      *    map ordered according to the natural ordering of its keys
      */
-    public static <K, V> SortedMap<K, V> newSortedMap(final Map<? extends K, ? extends V> map)
+    public static <K, V> SortedMap<K, V> createSortedMap(final Map<? extends K, ? extends V> map)
     {
         return new TreeMap<K, V>(map);
     }
@@ -513,7 +513,7 @@ public final class Maps
      * @return a new instance of SortedMap containing the same mappings and the same
      *    ordering as the specified sorted map
      */
-    public static <K, V> SortedMap<K, V> newSortedMap(final SortedMap<K, ? extends V> sortedMap)
+    public static <K, V> SortedMap<K, V> createSortedMap(final SortedMap<K, ? extends V> sortedMap)
     {
         return new TreeMap<K, V>(sortedMap);
     }
@@ -530,7 +530,7 @@ public final class Maps
     public static <K, V> Map<K, V> singletonMap(final K key, final V value)
     {
         // todo:  use fixed size map?
-        Map<K, V> map = newMap();
+        Map<K, V> map = createMap();
         map.put(key, value);
         return unmodifiableMap(map);
     }

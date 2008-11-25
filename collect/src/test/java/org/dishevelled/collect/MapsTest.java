@@ -46,97 +46,97 @@ public final class MapsTest
 
     public void testNewMap()
     {
-        Map<String, Double> map0 = newMap();
+        Map<String, Double> map0 = createMap();
         assertNotNull(map0);
 
-        Map<String, Double> map1 = newMap(10);
+        Map<String, Double> map1 = createMap(10);
         assertNotNull(map1);
 
-        Map<String, Double> map2 = newMap(10, 0.80f);
+        Map<String, Double> map2 = createMap(10, 0.80f);
         assertNotNull(map2);
 
-        Map<String, Double> toCopy = newMap();
+        Map<String, Double> toCopy = createMap();
         toCopy.put("foo", Double.valueOf(1.0d));
         toCopy.put("bar", Double.valueOf(2.0d));
 
-        Map<String, Double> map3 = newMap(toCopy);
+        Map<String, Double> map3 = createMap(toCopy);
         assertNotNull(map3);
     }
 
     public void testNewSynchronizedMap()
     {
-        Map<String, Double> map0 = newSynchronizedMap();
+        Map<String, Double> map0 = createSynchronizedMap();
         assertNotNull(map0);
 
-        Map<String, Double> map1 = newSynchronizedMap(10);
+        Map<String, Double> map1 = createSynchronizedMap(10);
         assertNotNull(map1);
 
-        Map<String, Double> map2 = newSynchronizedMap(10, 0.80f);
+        Map<String, Double> map2 = createSynchronizedMap(10, 0.80f);
         assertNotNull(map2);
 
-        Map<String, Double> toCopy = newMap();
+        Map<String, Double> toCopy = createMap();
         toCopy.put("foo", Double.valueOf(1.0d));
         toCopy.put("bar", Double.valueOf(2.0d));
 
-        Map<String, Double> map3 = newSynchronizedMap(toCopy);
+        Map<String, Double> map3 = createSynchronizedMap(toCopy);
         assertNotNull(map3);
     }
 
     public void testNewConcurrentMap()
     {
-        ConcurrentMap<String, Double> concurrentMap0 = newConcurrentMap();
+        ConcurrentMap<String, Double> concurrentMap0 = createConcurrentMap();
         assertNotNull(concurrentMap0);
 
-        ConcurrentMap<String, Double> concurrentMap1 = newConcurrentMap(10);
+        ConcurrentMap<String, Double> concurrentMap1 = createConcurrentMap(10);
         assertNotNull(concurrentMap1);
 
-        ConcurrentMap<String, Double> concurrentMap2 = newConcurrentMap(10, 0.80f);
+        ConcurrentMap<String, Double> concurrentMap2 = createConcurrentMap(10, 0.80f);
         assertNotNull(concurrentMap2);
 
-        ConcurrentMap<String, Double> concurrentMap3 = newConcurrentMap(10, 0.80f, 5);
+        ConcurrentMap<String, Double> concurrentMap3 = createConcurrentMap(10, 0.80f, 5);
         assertNotNull(concurrentMap3);
 
-        Map<String, Double> toCopy = newMap();
+        Map<String, Double> toCopy = createMap();
         toCopy.put("foo", Double.valueOf(1.0d));
         toCopy.put("bar", Double.valueOf(2.0d));
 
-        ConcurrentMap<String, Double> concurrentMap4 = newConcurrentMap(toCopy);
+        ConcurrentMap<String, Double> concurrentMap4 = createConcurrentMap(toCopy);
         assertNotNull(concurrentMap4);
     }
 
     public void testNewNonBlockingMap()
     {
-        ConcurrentMap<String, Double> concurrentMap0 = newNonBlockingMap();
+        ConcurrentMap<String, Double> concurrentMap0 = createNonBlockingMap();
         assertNotNull(concurrentMap0);
 
-        ConcurrentMap<String, Double> concurrentMap1 = newNonBlockingMap(10);
+        ConcurrentMap<String, Double> concurrentMap1 = createNonBlockingMap(10);
         assertNotNull(concurrentMap1);
     }
 
     public void testNewLongNonBlockingMap()
     {
-        ConcurrentMap<Long, Double> concurrentMap0 = newLongNonBlockingMap();
+        ConcurrentMap<Long, Double> concurrentMap0 = createLongNonBlockingMap();
         assertNotNull(concurrentMap0);
 
-        ConcurrentMap<Long, Double> concurrentMap1 = newLongNonBlockingMap(true);
+        ConcurrentMap<Long, Double> concurrentMap1 = createLongNonBlockingMap(true);
         assertNotNull(concurrentMap1);
 
-        ConcurrentMap<Long, Double> concurrentMap2 = newLongNonBlockingMap(false);
+        ConcurrentMap<Long, Double> concurrentMap2 = createLongNonBlockingMap(false);
         assertNotNull(concurrentMap2);
 
-        ConcurrentMap<Long, Double> concurrentMap3 = newLongNonBlockingMap(10);
+        ConcurrentMap<Long, Double> concurrentMap3 = createLongNonBlockingMap(10);
         assertNotNull(concurrentMap3);
 
-        ConcurrentMap<Long, Double> concurrentMap4 = newLongNonBlockingMap(10, true);
+        ConcurrentMap<Long, Double> concurrentMap4 = createLongNonBlockingMap(10, true);
         assertNotNull(concurrentMap4);
 
-        ConcurrentMap<Long, Double> concurrentMap5 = newLongNonBlockingMap(10, false);
+        ConcurrentMap<Long, Double> concurrentMap5 = createLongNonBlockingMap(10, false);
         assertNotNull(concurrentMap5);
     }
 
     public void testNewConcurrentSkipListMap()
     {
-        ConcurrentSkipListMap<String, Double> concurrentSkipListMap0 = newConcurrentSkipListMap();
+        ConcurrentSkipListMap<String, Double> concurrentSkipListMap0 = createConcurrentSkipListMap();
         assertNotNull(concurrentSkipListMap0);
 
         Comparator<String> comparator = new Comparator<String>()
@@ -148,27 +148,27 @@ public final class MapsTest
                 }
             };
 
-        ConcurrentSkipListMap<String, Double> concurrentSkipListMap1 = newConcurrentSkipListMap(comparator);
+        ConcurrentSkipListMap<String, Double> concurrentSkipListMap1 = createConcurrentSkipListMap(comparator);
         assertNotNull(concurrentSkipListMap1);
 
-        Map<String, Double> toCopy = newMap();
+        Map<String, Double> toCopy = createMap();
         toCopy.put("foo", Double.valueOf(1.0d));
         toCopy.put("bar", Double.valueOf(2.0d));
 
-        ConcurrentSkipListMap<String, Double> concurrentSkipListMap2 = newConcurrentSkipListMap(toCopy);
+        ConcurrentSkipListMap<String, Double> concurrentSkipListMap2 = createConcurrentSkipListMap(toCopy);
         assertNotNull(concurrentSkipListMap2);
 
-        SortedMap<String, Double> sortedToCopy = newSortedMap();
+        SortedMap<String, Double> sortedToCopy = createSortedMap();
         sortedToCopy.put("foo", Double.valueOf(1.0d));
         sortedToCopy.put("bar", Double.valueOf(2.0d));
 
-        ConcurrentSkipListMap<String, Double> concurrentSkipListMap3 = newConcurrentSkipListMap(sortedToCopy);
+        ConcurrentSkipListMap<String, Double> concurrentSkipListMap3 = createConcurrentSkipListMap(sortedToCopy);
         assertNotNull(concurrentSkipListMap3);
     }
 
     public void testNewSortedMap()
     {
-        SortedMap<String, Double> sortedMap0 = newSortedMap();
+        SortedMap<String, Double> sortedMap0 = createSortedMap();
         assertNotNull(sortedMap0);
 
         Comparator<String> comparator = new Comparator<String>()
@@ -180,29 +180,29 @@ public final class MapsTest
                 }
             };
 
-        SortedMap<String, Double> sortedMap1 = newSortedMap(comparator);
+        SortedMap<String, Double> sortedMap1 = createSortedMap(comparator);
         assertNotNull(sortedMap1);
 
-        SortedMap<String, Double> sortedMap2 = newSortedMap((Comparator<String>) null);
+        SortedMap<String, Double> sortedMap2 = createSortedMap((Comparator<String>) null);
         assertNotNull(sortedMap2);
 
-        Map<String, Double> toCopy = newMap();
+        Map<String, Double> toCopy = createMap();
         toCopy.put("foo", Double.valueOf(1.0d));
         toCopy.put("bar", Double.valueOf(2.0d));
 
-        SortedMap<String, Double> sortedMap3 = newSortedMap(toCopy);
+        SortedMap<String, Double> sortedMap3 = createSortedMap(toCopy);
         assertNotNull(sortedMap3);
 
-        SortedMap<String, Double> sortedToCopy = newSortedMap();
+        SortedMap<String, Double> sortedToCopy = createSortedMap();
         sortedToCopy.put("foo", Double.valueOf(1.0d));
         sortedToCopy.put("bar", Double.valueOf(2.0d));
 
-        SortedMap<String, Double> sortedMap4 = newSortedMap(sortedToCopy);
+        SortedMap<String, Double> sortedMap4 = createSortedMap(sortedToCopy);
         assertNotNull(sortedMap4);
 
         try
         {
-            SortedMap<String, Double> ignore = newSortedMap((Map<String, Double>) null);
+            SortedMap<String, Double> ignore = createSortedMap((Map<String, Double>) null);
             fail("newSortedMap((Map<String, Double>) null) expected NullPointerException");
         }
         catch (NullPointerException e)
@@ -212,7 +212,7 @@ public final class MapsTest
 
         try
         {
-            SortedMap<String, Double> ignore = newSortedMap((SortedMap<String, Double>) null);
+            SortedMap<String, Double> ignore = createSortedMap((SortedMap<String, Double>) null);
             fail("newSortedMap((SortedMap<String, Double>) null) expected NullPointerException");
         }
         catch (NullPointerException e)
@@ -235,7 +235,7 @@ public final class MapsTest
 
     public void testUnmodifiableMap()
     {
-        Map<String,  Double> toView = newMap();
+        Map<String,  Double> toView = createMap();
         toView.put("foo", Double.valueOf(1.0d));
         toView.put("bar", Double.valueOf(2.0d));
 
@@ -255,7 +255,7 @@ public final class MapsTest
 
     public void testUnmodifiableSortedMap()
     {
-        SortedMap<String, Double> toView = newSortedMap();
+        SortedMap<String, Double> toView = createSortedMap();
         toView.put("foo", Double.valueOf(1.0d));
         toView.put("bar", Double.valueOf(2.0d));
 
