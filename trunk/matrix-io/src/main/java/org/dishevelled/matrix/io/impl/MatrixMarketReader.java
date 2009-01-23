@@ -1,7 +1,7 @@
 /*
 
     dsh-matrix-io  Matrix readers and writers.
-    Copyright (c) 2008 held jointly by the individual authors.
+    Copyright (c) 2008-2009 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
