@@ -38,12 +38,6 @@ public final class DefaultColorFactory
 {
 
     /** {@inheritDoc} */
-    public Color createColor(final int red, final int green, final int blue)
-    {
-        return createColor(red, green, blue, 255);
-    }
-
-    /** {@inheritDoc} */
     public Color createColor(final int red, final int green, final int blue, final int alpha)
     {
         return new Color(red, green, blue, alpha);
