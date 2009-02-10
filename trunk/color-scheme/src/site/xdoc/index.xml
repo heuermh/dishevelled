@@ -38,6 +38,7 @@ The color-scheme library requires java version 1.5 or later.
 
 <section name="Acknowledgements">
   <ul>
+    <li>This product includes color specifications and designs developed by Cynthia Brewer (http://colorbrewer.org/).</li>
     <li>Powered by Apache <a href="http://maven.apache.org">Maven</a>.</li>
     <li>Project hosting by <a href="http://sourceforge.net">SourceForge.net</a>.</li>
   </ul>
