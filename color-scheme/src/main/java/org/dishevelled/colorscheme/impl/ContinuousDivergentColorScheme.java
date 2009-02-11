@@ -32,10 +32,6 @@ import org.dishevelled.colorscheme.ColorFactory;
 import org.dishevelled.colorscheme.ColorScheme;
 import org.dishevelled.colorscheme.Interpolation;
 
-import org.dishevelled.colorscheme.factory.DefaultColorFactory;
-
-import org.dishevelled.colorscheme.interpolate.LinearInterpolation;
-
 /**
  * Continuous divergent color scheme.
  *
