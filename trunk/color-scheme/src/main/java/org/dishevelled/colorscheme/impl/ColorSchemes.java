@@ -34,10 +34,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.xml.parsers.SAXParserFactory;
-import javax.xml.parsers.ParserConfigurationException;
 
 import net.sf.stax.SAX2StAXAdaptor;
-import net.sf.stax.StAXContentHandler;
 import net.sf.stax.StAXContentHandlerBase;
 import net.sf.stax.StAXContext;
 import net.sf.stax.StAXDelegationContext;
