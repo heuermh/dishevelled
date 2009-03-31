@@ -262,7 +262,7 @@ public class ObservableListImpl<E>
     }
 
     /** {@inheritDoc} */
-    protected void postRetainAll(final Collection coll)
+    protected void postRetainAll(final Collection<?> coll)
     {
         fireListChanged(changeEvent);
     }
