@@ -59,7 +59,7 @@ public abstract class AbstractObservableQueue<E>
     protected AbstractObservableQueue(final Queue<E> queue)
     {
         super(queue);
-        support = new ObservableQueueChangeSupport(this);
+        support = new ObservableQueueChangeSupport<E>(this);
     }
 
 
