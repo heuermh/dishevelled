@@ -252,7 +252,7 @@ public final class Maps
     }
 
     /**
-     * Create and return a new instance of ConcurrentMap with the specified intial capacity.
+     * Create and return a new instance of ConcurrentMap with the specified initial capacity.
      *
      * @param <K> key type
      * @param <V> value type
@@ -265,7 +265,7 @@ public final class Maps
     }
 
     /**
-     * Create and return a new instance of ConcurrentMap with the specified intial capacity
+     * Create and return a new instance of ConcurrentMap with the specified initial capacity
      * and load factor.
      *
      * @param <K> key type
@@ -282,7 +282,7 @@ public final class Maps
     }
 
     /**
-     * Create and return a new instance of ConcurrentMap with the specified intial capacity,
+     * Create and return a new instance of ConcurrentMap with the specified initial capacity,
      * load factor, and concurrency level.
      *
      * @param <K> key type
@@ -372,7 +372,7 @@ public final class Maps
 
     /**
      * Create and return a new non-blocking implementation of ConcurrentMap with
-     * the specified inital capacity and <code>Long</code>s as keys.
+     * the specified initial capacity and <code>Long</code>s as keys.
      *
      * @param <V> value type
      * @param initialCapacity initial capacity
@@ -386,7 +386,7 @@ public final class Maps
 
     /**
      * Create and return a new non-blocking implementation of ConcurrentMap with
-     * the specified inital capacity and <code>Long</code>s as keys.
+     * the specified initial capacity and <code>Long</code>s as keys.
      *
      * @param <V> value type
      * @param initialCapacity initial capacity
