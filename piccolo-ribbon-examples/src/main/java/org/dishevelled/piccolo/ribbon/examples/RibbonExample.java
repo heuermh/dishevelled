@@ -23,6 +23,8 @@
 */
 package org.dishevelled.piccolo.ribbon.examples;
 
+import java.awt.BorderLayout;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -30,6 +32,9 @@ import java.awt.image.BufferedImage;
 
 import java.io.IOException;
 
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
 import javax.imageio.ImageIO;
@@ -40,7 +45,7 @@ import edu.umd.cs.piccolo.PRoot;
 
 import edu.umd.cs.piccolo.activities.PActivity;
 
-import edu.umd.cs.piccolox.PFrame;
+import edu.umd.cs.piccolo.util.PPaintContext;
 
 import org.dishevelled.piccolo.ribbon.VerticalRibbon;
 import org.dishevelled.piccolo.ribbon.HorizontalRibbon;
@@ -52,30 +57,32 @@ import org.dishevelled.piccolo.ribbon.HorizontalRibbon;
  * @version $Revision$ $Date$
  */
 public final class RibbonExample
-    extends PFrame
+    extends JPanel
+    implements Runnable
 {
-    /** Horizontal ribbon. */
-    private HorizontalRibbon horizontalRibbon;
 
-    /** Vertical ribbon. */
-    private VerticalRibbon verticalRibbon;
-
-
-    /** {@inheritDoc} */
-    public void initialize()
+    /**
+     * Create a new ribbon example.
+     */
+    public RibbonExample()
     {
-        PCanvas canvas = getCanvas();
-        PLayer layer = canvas.getLayer();
+        super();
+
+        PCanvas canvas = new PCanvas();
+        canvas.setAnimatingRenderQuality(PPaintContext.HIGH_QUALITY_RENDERING);
+        canvas.setDefaultRenderQuality(PPaintContext.HIGH_QUALITY_RENDERING);
+        canvas.setInteractingRenderQuality(PPaintContext.HIGH_QUALITY_RENDERING);
 
         BufferedImage horizontalImage = loadImage("horizontal");
-        horizontalRibbon = new HorizontalRibbon(horizontalImage, 0.0d, 4.0d);
+        final HorizontalRibbon horizontalRibbon = new HorizontalRibbon(horizontalImage, 0.0d, 4.0d);
         BufferedImage verticalImage = loadImage("vertical");
-        verticalRibbon = new VerticalRibbon(verticalImage, 0.0d, 2.0d);
+        final VerticalRibbon verticalRibbon = new VerticalRibbon(verticalImage, 0.0d, 2.0d);
 
+        PLayer layer = canvas.getLayer();
         layer.addChild(horizontalRibbon);
         layer.addChild(verticalRibbon);
 
-        Timer move0 = new Timer(12000, new ActionListener()
+        Timer moveRightDown = new Timer(12000, new ActionListener()
             {
                 /** {@inheritDoc} */
                 public void actionPerformed(final ActionEvent e)
@@ -84,8 +91,10 @@ public final class RibbonExample
                     verticalRibbon.moveDown();
                 }
             });
+        moveRightDown.setRepeats(true);
+        moveRightDown.start();
 
-        Timer move1 = new Timer(12000, new ActionListener()
+        Timer moveLeftUp = new Timer(12000, new ActionListener()
             {
                 /** {@inheritDoc} */
                 public void actionPerformed(final ActionEvent e)
@@ -94,16 +103,12 @@ public final class RibbonExample
                     verticalRibbon.moveUp();
                 }
             });
+        moveLeftUp.setRepeats(true);
+        moveLeftUp.setInitialDelay(6000);
+        moveLeftUp.start();
 
-        move0.setRepeats(true);
-        move0.start();
-
-        move1.setRepeats(true);
-        move1.setInitialDelay(6000);
-        move1.start();
-
-        // schedule one using Timer...
-        Timer timer = new Timer((int) (1000 / 12), new ActionListener()
+        // schedule one refresh using Timer...
+        Timer horizontalRefresh = new Timer((int) (1000 / 12), new ActionListener()
             {
                 /** {@inheritDoc} */
                 public void actionPerformed(final ActionEvent e)
@@ -111,13 +116,12 @@ public final class RibbonExample
                     horizontalRibbon.advance();
                 }
             });
-
-        timer.setRepeats(true);
-        timer.start();
+        horizontalRefresh.setRepeats(true);
+        horizontalRefresh.start();
 
         // and one using PActivity.
         PRoot root = layer.getRoot();
-        PActivity activity = new PActivity(-1, (1000L / 12L))
+        PActivity verticalRefresh = new PActivity(-1, (1000L / 12L))
             {
                 /** {@inheritDoc} */
                 protected void activityStep(final long elapsedTime)
@@ -125,8 +129,21 @@ public final class RibbonExample
                     verticalRibbon.advance();
                 }
             };
+        root.addActivity(verticalRefresh);
 
-        root.addActivity(activity);
+        setLayout(new BorderLayout());
+        add("Center", canvas);
+    }
+
+
+    /** {@inheritDoc} */
+    public void run()
+    {
+        final JFrame f = new JFrame("Ribbon Example");
+        f.setContentPane(this);
+        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        f.setBounds(100, 100, 400, 400);
+        f.setVisible(true);
     }
 
     /**
@@ -135,12 +152,12 @@ public final class RibbonExample
      * @param name name
      * @return image
      */
-    private BufferedImage loadImage(final String name)
+    private static BufferedImage loadImage(final String name)
     {
         BufferedImage image = null;
         try
         {
-            image = ImageIO.read(getClass().getResource(name + ".png"));
+            image = ImageIO.read(RibbonExample.class.getResource(name + ".png"));
         }
         catch (IOException e)
         {
@@ -157,6 +174,13 @@ public final class RibbonExample
      */
     public static void main(final String[] args)
     {
-        new RibbonExample();
+        SwingUtilities.invokeLater(new Runnable()
+            {
+                /** {@inheritDoc} */
+                public void run()
+                {
+                    new RibbonExample().run();
+                }
+            });
     }
 }
