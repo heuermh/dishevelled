@@ -107,12 +107,6 @@
       <scope>compile</scope>
     </dependency>
     <dependency>
-      <groupId>edu.umd.cs.piccolo</groupId>
-      <artifactId>piccolo</artifactId>
-      <version>1.2</version>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>3.8.2</version>
