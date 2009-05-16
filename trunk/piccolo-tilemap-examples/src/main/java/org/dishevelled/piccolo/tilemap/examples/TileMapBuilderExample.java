@@ -23,6 +23,7 @@
 */
 package org.dishevelled.piccolo.tilemap.examples;
 
+import java.awt.BorderLayout;
 import java.awt.Image;
 
 import java.io.BufferedReader;
@@ -36,12 +37,14 @@ import java.util.Map;
 
 import javax.imageio.ImageIO;
 
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
+
 import edu.umd.cs.piccolo.PCanvas;
 import edu.umd.cs.piccolo.PLayer;
 
 import edu.umd.cs.piccolo.util.PPaintContext;
-
-import edu.umd.cs.piccolox.PFrame;
 
 import org.dishevelled.commandline.ArgumentList;
 import org.dishevelled.commandline.CommandLine;
@@ -57,12 +60,12 @@ import org.dishevelled.piccolo.sprite.Sprite;
 
 import org.dishevelled.piccolo.tilemap.TileMap;
 
-
 /**
  * Tile map builder example.
  */
 public class TileMapBuilderExample
-    extends PFrame
+    extends JPanel
+    implements Runnable
 {
     /** Tile map description. */
     private final File description;
@@ -75,6 +78,8 @@ public class TileMapBuilderExample
      */
     public TileMapBuilderExample(final File description)
     {
+        super();
+
         if (description == null)
         {
             throw new IllegalArgumentException("description must not be null");
@@ -84,12 +89,7 @@ public class TileMapBuilderExample
             throw new IllegalArgumentException("description must exist");
         }
         this.description = description;
-    }
 
-
-    /** {@inheritDoc} */
-    public void initialize()
-    {
         BufferedReader reader = null;
         TileMap tileMap = new TileMap(200, 200, 16.0d, 16.0d);
         Map<String, Sprite> tiles = new HashMap<String, Sprite>();
@@ -110,7 +110,7 @@ public class TileMapBuilderExample
                 tileMap.setTile(row, column, tiles.get(tileName));
             }
 
-            PCanvas canvas = getCanvas();
+            PCanvas canvas = new PCanvas();
             canvas.setDefaultRenderQuality(PPaintContext.LOW_QUALITY_RENDERING);
             canvas.setAnimatingRenderQuality(PPaintContext.LOW_QUALITY_RENDERING);
             canvas.setInteractingRenderQuality(PPaintContext.LOW_QUALITY_RENDERING);
@@ -123,6 +123,9 @@ public class TileMapBuilderExample
             Sprite link = new Sprite(animation, Collections.singleton(animation));
             link.setBounds(1300.0d, 900.0d, 24.0d, 25.0d);
             layer.addChild(link);
+
+            setLayout(new BorderLayout());
+            add("Center", canvas);
         }
         catch (IOException e)
         {
@@ -143,6 +146,17 @@ public class TileMapBuilderExample
                 }
             }
         }
+    }
+
+
+    /** {@inheritDoc} */
+    public void run()
+    {
+        JFrame f = new JFrame("TileMap Builder Example");
+        f.setContentPane(this);
+        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        f.setBounds(100, 100, 400, 400);
+        f.setVisible(true);
     }
 
     /**
@@ -166,12 +180,12 @@ public class TileMapBuilderExample
      * @param name name
      * @return a PNG image from the classpath with the specified name
      */
-    private Image loadImage(final String name)
+    private static Image loadImage(final String name)
     {
         Image image = null;
         try
         {
-            image = ImageIO.read(getClass().getResource(name + ".png"));
+            image = ImageIO.read(TileMapBuilderExample.class.getResource(name + ".png"));
         }
         catch (IllegalArgumentException e)
         {
@@ -201,15 +215,15 @@ public class TileMapBuilderExample
             arguments = new ArgumentList(description);
             commandLine = new CommandLine(args);
             CommandLineParser.parse(commandLine, arguments);
-            new TileMapBuilderExample(description.getValue());
+            new TileMapBuilderExample(description.getValue()).run();
         }
         catch (CommandLineParseException e)
         {
-            Usage.usage("java MapDecompositor [args]", e, commandLine, arguments, System.err);
+            Usage.usage("java TileMapBuilderExample [args]", e, commandLine, arguments, System.err);
         }
         catch (IllegalArgumentException e)
         {
-            Usage.usage("java MapDecompositor [args]", e, commandLine, arguments, System.err);
+            Usage.usage("java TileMapBuilderExample [args]", e, commandLine, arguments, System.err);
         }
     }
 }

@@ -23,6 +23,7 @@
 */
 package org.dishevelled.piccolo.sprite.examples;
 
+import java.awt.BorderLayout;
 import java.awt.Image;
 
 import java.awt.event.ActionEvent;
@@ -36,14 +37,15 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
 import edu.umd.cs.piccolo.PCanvas;
 import edu.umd.cs.piccolo.PLayer;
 
 import edu.umd.cs.piccolo.util.PPaintContext;
-
-import edu.umd.cs.piccolox.PFrame;
 
 import org.dishevelled.piccolo.sprite.Animation;
 import org.dishevelled.piccolo.sprite.LoopedFramesAnimation;
@@ -57,13 +59,18 @@ import org.dishevelled.piccolo.sprite.SingleFrameAnimation;
  * @version $Revision$ $Date$
  */
 public class SpriteExample
-    extends PFrame
+    extends JPanel
+    implements Runnable
 {
 
-    /** {@inheritDoc} */
-    public void initialize()
+    /**
+     * Create a new sprite example.
+     */
+    public SpriteExample()
     {
-        PCanvas canvas = getCanvas();
+        super();
+
+        PCanvas canvas = new PCanvas();
         canvas.setDefaultRenderQuality(PPaintContext.HIGH_QUALITY_RENDERING);
         canvas.setAnimatingRenderQuality(PPaintContext.HIGH_QUALITY_RENDERING);
         canvas.setInteractingRenderQuality(PPaintContext.HIGH_QUALITY_RENDERING);
@@ -99,6 +106,20 @@ public class SpriteExample
 
         timer.setRepeats(true);
         timer.start();
+
+        setLayout(new BorderLayout());
+        add("Center", canvas);
+    }
+
+
+    /** {@inheritDoc} */
+    public void run()
+    {
+        JFrame f = new JFrame("Sprite Example");
+        f.setContentPane(this);
+        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        f.setBounds(100, 100, 400, 400);
+        f.setVisible(true);
     }
 
     /**
@@ -107,12 +128,12 @@ public class SpriteExample
      * @param name name
      * @return image
      */
-    private Image loadImage(final String name)
+    private static Image loadImage(final String name)
     {
         Image image = null;
         try
         {
-            image = ImageIO.read(getClass().getResource(name + ".png"));
+            image = ImageIO.read(SpriteExample.class.getResource(name + ".png"));
         }
         catch (IOException e)
         {
@@ -129,6 +150,13 @@ public class SpriteExample
      */
     public static void main(final String[] args)
     {
-        new SpriteExample();
+        SwingUtilities.invokeLater(new Runnable()
+            {
+                /** {@inheritDoc} */
+                public void run()
+                {
+                    new SpriteExample().run();
+                }
+            });
     }
 }
