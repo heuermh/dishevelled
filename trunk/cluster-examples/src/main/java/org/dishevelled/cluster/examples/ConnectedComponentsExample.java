@@ -43,7 +43,7 @@ import org.dishevelled.cluster.ClusteringAlgorithmException;
 import org.dishevelled.cluster.ExitStrategy;
 import org.dishevelled.cluster.Similarity;
 
-import org.dishevelled.cluster.exitstrategy.IterationLimitExitStrategy;
+import org.dishevelled.cluster.exit.IterationLimitExitStrategy;
 
 import org.dishevelled.cluster.impl.ConnectedComponents;
 
