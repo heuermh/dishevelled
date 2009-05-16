@@ -72,9 +72,9 @@
   </build>
   <dependencies>
     <dependency>
-      <groupId>edu.umd.cs.piccolo</groupId>
-      <artifactId>piccolo</artifactId>
-      <version>1.2</version>
+      <groupId>org.piccolo2d</groupId>
+      <artifactId>piccolo2d-core</artifactId>
+      <version>1.2.1</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
