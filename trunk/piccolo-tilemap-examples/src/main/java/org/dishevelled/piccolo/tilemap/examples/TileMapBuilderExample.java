@@ -95,7 +95,7 @@ public class TileMapBuilderExample
         Map<String, Sprite> tiles = new HashMap<String, Sprite>();
         try
         {
-            reader = new BufferedReader(new FileReader(description));
+            reader = new BufferedReader(new FileReader(this.description));
             while (reader.ready())
             {
                 String line = reader.readLine();
@@ -215,7 +215,15 @@ public class TileMapBuilderExample
             arguments = new ArgumentList(description);
             commandLine = new CommandLine(args);
             CommandLineParser.parse(commandLine, arguments);
-            new TileMapBuilderExample(description.getValue()).run();
+            final TileMapBuilderExample example = new TileMapBuilderExample(description.getValue());
+            SwingUtilities.invokeLater(new Runnable()
+                {
+                    /** {@inheritDoc} */
+                    public void run()
+                    {
+                        example.run();
+                    }
+                });
         }
         catch (CommandLineParseException e)
         {
