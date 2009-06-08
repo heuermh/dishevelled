@@ -96,6 +96,10 @@ public final class SetsTest
         Set<String> set6 = asSet(set4);
         assertNotNull(set6);
 
+        Set<String> set7 = asSet("foo");
+        assertNotNull(set7);
+        assertEquals(1, set7.size());
+
         try
         {
             Set<String> set = asSet((Iterator<String>) null);
@@ -152,6 +156,10 @@ public final class SetsTest
         SortedSet<String> set10 = asSortedSet(set4, null);
         assertNotNull(set10);
 
+        SortedSet<String> set11 = asSortedSet("foo");
+        assertNotNull(set11);
+        assertEquals(1, set11.size());
+
         try
         {
             SortedSet<String> set = asSortedSet((Iterator<String>) null);
@@ -190,7 +198,7 @@ public final class SetsTest
         }
     }
 
-    public void testNewSet()
+    public void testCreateSet()
     {
         Set<String> set0 = createSet();
         assertNotNull(set0);
@@ -223,7 +231,7 @@ public final class SetsTest
         }
     }
 
-    public void testNewSortedSet()
+    public void testCreateSortedSet()
     {
         SortedSet<String> set0 = createSortedSet();
         assertNotNull(set0);
@@ -289,7 +297,7 @@ public final class SetsTest
         }
     }
 
-    public void testNewNavigableSet()
+    public void testCreateNavigableSet()
     {
         NavigableSet<String> set0 = createNavigableSet();
         assertNotNull(set0);
@@ -356,7 +364,7 @@ public final class SetsTest
         }
     }
 
-    public void testNewConcurrentSkipListSet()
+    public void testCreateConcurrentSkipListSet()
     {
         ConcurrentSkipListSet<String> set0 = createConcurrentSkipListSet();
         assertNotNull(set0);
@@ -423,7 +431,7 @@ public final class SetsTest
         }
     }
 
-    public void testNewCopyOnWriteArraySet()
+    public void testCreateCopyOnWriteArraySet()
     {
         CopyOnWriteArraySet<String> set0 = createCopyOnWriteArraySet();
         assertNotNull(set0);
@@ -444,7 +452,7 @@ public final class SetsTest
         }
     }
 
-    public void testNewNonBlockingSet()
+    public void testCreateNonBlockingSet()
     {
         Set<String> set0 = createNonBlockingSet();
         assertNotNull(set0);
@@ -463,24 +471,6 @@ public final class SetsTest
         {
             // expected
         }
-    }
-
-    public void testSingleton()
-    {
-        Set<String> set0 = singleton("foo");
-        assertNotNull(set0);
-
-        Set<String> set1 = singleton(null);
-        assertNotNull(set1);
-    }
-
-    public void testSingletonSet()
-    {
-        Set<String> set0 = singletonSet("foo");
-        assertNotNull(set0);
-
-        Set<String> set1 = singletonSet(null);
-        assertNotNull(set1);
     }
 
     public void testUnmodifiableSet()
@@ -513,6 +503,179 @@ public final class SetsTest
         {
             SortedSet<String> sortedSet = unmodifiableSortedSet((SortedSet<String>) null);
             fail("unmodifiableSortedSet((SortedSet<String>) null) expected IllegalArgumentException");
+        }
+        //catch (IllegalArgumentException e)
+        catch (NullPointerException e)
+        {
+            // expected
+        }
+    }
+
+    public void testAsImmutableSet()
+    {
+        Set<String> set0 = asImmutableSet("foo", "foo");
+        assertNotNull(set0);
+        assertEquals(1, set0.size());
+
+        Set<String> set1 = asImmutableSet("foo", "bar", "foo");
+        assertNotNull(set1);
+        assertEquals(2, set1.size());
+
+        Set<String> set2 = asImmutableSet("foo", "bar", "baz", "foo");
+        assertNotNull(set2);
+        assertEquals(3, set2.size());
+
+        Set<String> set4 = asImmutableSet(new String[] { "foo", "bar", "baz", "foo" });
+        assertNotNull(set4);
+        assertEquals(3, set4.size());
+
+        Set<String> set5 = asImmutableSet(set4.iterator());
+        assertNotNull(set5);
+
+        Set<String> set6 = asImmutableSet(set4);
+        assertNotNull(set6);
+
+        Set<String> set7 = asImmutableSet("foo");
+        assertNotNull(set7);
+        assertEquals(1, set7.size());
+
+        try
+        {
+            Set<String> set3 = asImmutableSet((String) null);
+            fail("asImmutableSet((String) null) expected IllegalArgumentException");
+        }
+        catch (NullPointerException e)
+        {
+            // expected, ImmutableSet does not accept null elements
+        }
+        try
+        {
+            Set<String> set = asImmutableSet((Iterator<String>) null);
+            fail("asImmutableSet((Iterator<String>) null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+        try
+        {
+            Set<String> set = asImmutableSet((Iterable<String>) null);
+            fail("asImmutableSet((Iterable<String>) null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+    }
+
+    public void testAsImmutableSortedSet()
+    {
+        SortedSet<String> set0 = asImmutableSortedSet("foo", "foo");
+        assertNotNull(set0);
+        assertEquals(1, set0.size());
+
+        SortedSet<String> set1 = asImmutableSortedSet("foo", "bar", "foo");
+        assertNotNull(set1);
+        assertEquals(2, set1.size());
+
+        SortedSet<String> set2 = asImmutableSortedSet("foo", "bar", "baz", "foo");
+        assertNotNull(set2);
+        assertEquals(3, set2.size());
+
+        SortedSet<String> set4 = asImmutableSortedSet(new String[] { "foo", "bar", "baz", "foo" });
+        assertNotNull(set4);
+        assertEquals(3, set4.size());
+
+        SortedSet<String> set5 = asImmutableSortedSet(set4.iterator());
+        assertNotNull(set5);
+
+        SortedSet<String> set6 = asImmutableSortedSet(set4);
+        assertNotNull(set6);
+
+        SortedSet<String> set7 = asImmutableSortedSet(set4.iterator(), COMPARATOR);
+        assertNotNull(set7);
+
+        SortedSet<String> set8 = asImmutableSortedSet(set4.iterator(), null);
+        assertNotNull(set8);
+
+        SortedSet<String> set9 = asImmutableSortedSet(set4, COMPARATOR);
+        assertNotNull(set9);
+
+        SortedSet<String> set10 = asImmutableSortedSet(set4, null);
+        assertNotNull(set10);
+
+        SortedSet<String> set11 = asImmutableSortedSet("foo");
+        assertNotNull(set11);
+        assertEquals(1, set11.size());
+
+        try
+        {
+            SortedSet<String> set = asImmutableSortedSet((Iterator<String>) null);
+            fail("asImmutableSortedSet((Iterator<String>) null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+        try
+        {
+            SortedSet<String> set = asImmutableSortedSet((Iterable<String>) null);
+            fail("asImmutableSortedSet((Iterable<String>) null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+        try
+        {
+            SortedSet<String> set = asImmutableSortedSet((Iterator<String>) null, COMPARATOR);
+            fail("asImmutableSortedSet((Iterator<String>) null, COMPARATOR) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+        try
+        {
+            SortedSet<String> set = asImmutableSortedSet((Iterable<String>) null, COMPARATOR);
+            fail("asImmutableSortedSet((Iterable<String>) null, COMPARATOR) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+    }
+
+    public void testImmutableSet()
+    {
+        Set<String> toCopy = asSet("foo", "bar", "baz");
+        Set<String> immutableSet = immutableSet(toCopy);
+        assertNotNull(immutableSet);
+        // TODO:  add'l assertions
+
+        try
+        {
+            Set<String> set = immutableSet((Set<String>) null);
+            fail("immutableSet((Set<String>) null) expected IllegalArgumentException");
+        }
+        //catch (IllegalArgumentException e)
+        catch (NullPointerException e)
+        {
+            // expected
+        }
+    }
+
+    public void testImmutableSortedSet()
+    {
+        SortedSet<String> toCopy = asSortedSet("foo", "bar", "baz");
+        SortedSet<String> immutableSortedSet = immutableSortedSet(toCopy);
+        assertNotNull(immutableSortedSet);
+        // TODO:  add'l assertions
+
+        try
+        {
+            SortedSet<String> sortedSet = immutableSortedSet((SortedSet<String>) null);
+            fail("immutableSortedSet((SortedSet<String>) null) expected IllegalArgumentException");
         }
         //catch (IllegalArgumentException e)
         catch (NullPointerException e)

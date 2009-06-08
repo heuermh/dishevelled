@@ -36,6 +36,9 @@ import java.util.TreeSet;
 import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.CopyOnWriteArraySet;
 
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.ImmutableSortedSet;
+
 import org.cliffc.high_scale_lib.NonBlockingHashSet;
 
 /**
@@ -56,6 +59,9 @@ public final class Sets
     }
 
 
+    //
+    // asXxx methods, which accept elements as parameters
+
     /**
      * Create and return a set containing the unique elements in <code>elements</code>.
      *
@@ -66,6 +72,7 @@ public final class Sets
      */
     public static <T> Set<T> asSet(final T... elements)
     {
+        // TODO:  check null?
         Set<T> set = createSet(elements.length);
         for (T t : elements)
         {
@@ -119,12 +126,14 @@ public final class Sets
     }
 
     /**
-     * Create and return a sorted set containing the unique elements in <code>elements</code>.
+     * Create and return a sorted set containing the unique elements in <code>elements</code>
+     * sorted in their natural order.
      *
      * @param <T> element type
      * @param elements variable number of elements to be added to the
      *    returned sorted set
      * @return a sorted set containing the unique elements in <code>elements</code>
+     *    sorted in their natural order
      */
     public static <T> SortedSet<T> asSortedSet(final T... elements)
     {
@@ -138,11 +147,12 @@ public final class Sets
 
     /**
      * Create and return a sorted set containing the unique elements returned by the
-     * specified iterator.
+     * specified iterator sorted in their natural order.
      *
      * @param <T> element type
      * @param iterator iterator, must not be null
      * @return a sorted set containing the unique elements returned by the specified iterator
+     *    sorted in their natural order
      */
     public static <T> SortedSet<T> asSortedSet(final Iterator<? extends T> iterator)
     {
@@ -160,11 +170,12 @@ public final class Sets
 
    /**
      * Create and return a sorted set containing the unique elements returned by the
-     * specified iterable.
+     * specified iterable sorted in their natural order.
      *
      * @param <T> element type
      * @param iterable iterable, must not be null
      * @return a sorted set containing the unique elements returned by the specified iterable
+     *    sorted in their natural order
      */
     public static <T> SortedSet<T> asSortedSet(final Iterable<? extends T> iterable)
     {
@@ -186,7 +197,7 @@ public final class Sets
      *
      * @param <T> element type
      * @param iterator iterator, must not be null
-     * @param comparator comparator comparator to be used to sort the returned set
+     * @param comparator comparator to be used to sort the returned sorted set
      * @return a sorted set containing the unique elements returned by the specified iterator
      *    sorted according to the specified comparator
      */
@@ -211,7 +222,7 @@ public final class Sets
      *
      * @param <T> element type
      * @param iterable iterable, must not be null
-     * @param comparator comparator to be used to sort the returned set
+     * @param comparator comparator to be used to sort the returned sorted set
      * @return a sorted set containing the unique elements returned by the specified iterable
      *    sorted according to the specified comparator
      */
@@ -229,6 +240,183 @@ public final class Sets
         }
         return sortedSet;
     }
+
+    /**
+     * Create and return an immutable set containing the unique elements in <code>elements</code>.
+     * The returned immutable set is a high-performance, immutable <code>Set</code> with reliable
+     * iteration order.
+     *
+     * @param <T> element type
+     * @param elements variable number of elements to be added to the
+     *    returned immutable set
+     * @return an immutable set containing the unique elements in <code>elements</code>
+     */
+    public static <T> Set<T> asImmutableSet(final T... elements)
+    {
+        return ImmutableSet.of(elements);
+    }
+
+   /**
+     * Create and return an immutable set containing the unique elements returned by the
+     * specified iterator.  The returned immutable set is a high-performance, immutable <code>Set</code>
+     * with reliable iteration order.
+     *
+     * @param <T> element type
+     * @param iterator iterator, must not be null
+     * @return an immutable set containing the unique elements returned by the specified iterator
+     */
+    public static <T> Set<T> asImmutableSet(final Iterator<? extends T> iterator)
+    {
+        if (iterator == null)
+        {
+            throw new IllegalArgumentException("iterator must not be null");
+        }
+        return ImmutableSet.copyOf(iterator);
+    }
+
+   /**
+     * Create and return an immutable set containing the unique elements returned by the
+     * specified iterable.  The returned immutable set is a high-performance, immutable <code>Set</code>
+     * with reliable iteration order.
+     *
+     * @param <T> element type
+     * @param iterable iterable, must not be null
+     * @return an immutable set containing the unique elements returned by the specified iterable
+     */
+    public static <T> Set<T> asImmutableSet(final Iterable<? extends T> iterable)
+    {
+        if (iterable == null)
+        {
+            throw new IllegalArgumentException("iterable must not be null");
+        }
+        return ImmutableSet.copyOf(iterable);
+    }
+
+    /**
+     * Create and return an immutable sorted set containing the unique elements in <code>elements</code>
+     * sorted by their natural order. The returned immutable sorted set is a high-performance, immutable
+     * <code>SortedSet</code> that stores its elements in a sorted array.
+     *
+     * @param <T> element type
+     * @param elements variable number of elements to be added to the
+     *    returned immutable sorted set
+     * @return an immutable sorted set containing the unique elements in <code>elements</code>
+     *    sorted by their natural order
+     */
+    //public static <T> SortedSet<T> asImmutableSortedSet(final T... elements)
+    public static <T extends Comparable<T>> SortedSet<T> asImmutableSortedSet(final T... elements)
+    {
+        //return ImmutableSortedSet.of(elements);
+        //return ImmutableSortedSet.naturalOrder().add(elements).build();
+        ImmutableSortedSet.Builder<T> builder = ImmutableSortedSet.naturalOrder();
+        builder.add(elements);
+        return builder.build();
+    }
+
+   /**
+     * Create and return an immutable sorted set containing the unique elements in the specified iterator
+     * sorted by their natural order. The returned immutable sorted set is a high-performance, immutable
+     * <code>SortedSet</code> that stores its elements in a sorted array.
+     *
+     * @param <T> element type
+     * @param iterator iterator, must not be null
+     * @return an immutable set containing the unique elements returned by the specified iterator
+     *    sorted by their natural order
+     */
+    //public static <T> SortedSet<T> asImmutableSortedSet(final Iterator<? extends T> iterator)
+    public static <T extends Comparable<T>> SortedSet<T> asImmutableSortedSet(final Iterator<? extends T> iterator)
+    {
+        if (iterator == null)
+        {
+            throw new IllegalArgumentException("iterator must not be null");
+        }
+        //return ImmutableSortedSet.copyOf(iterator);
+        //return ImmutableSortedSet.naturalOrder().addAll(iterator).build();
+        ImmutableSortedSet.Builder<T> builder = ImmutableSortedSet.naturalOrder();
+        builder.addAll(iterator);
+        return builder.build();
+    }
+
+   /**
+     * Create and return an immutable sorted set containing the unique elements in the specified iterable
+     * sorted by their natural order. The returned immutable sorted set is a high-performance, immutable
+     * <code>SortedSet</code> that stores its elements in a sorted array.
+     *
+     * @param <T> element type
+     * @param iterable iterable, must not be null
+     * @return an immutable set containing the unique elements returned by the specified iterable
+     *    sorted by their natural order
+     */
+    //public static <T> SortedSet<T> asImmutableSortedSet(final Iterable<? extends T> iterable)
+    public static <T extends Comparable<T>> SortedSet<T> asImmutableSortedSet(final Iterable<? extends T> iterable)
+    {
+        if (iterable == null)
+        {
+            throw new IllegalArgumentException("iterable must not be null");
+        }
+        //return ImmutableSortedSet.copyOf(iterable);
+        //return ImmutableSortedSet.naturalOrder().addAll(iterable).build();
+        ImmutableSortedSet.Builder<T> builder = ImmutableSortedSet.naturalOrder();
+        builder.addAll(iterable);
+        return builder.build();
+    }
+
+   /**
+     * Create and return an immutable sorted set containing the unique elements in the specified iterator
+     * sorted according to the specified comparator. The returned immutable sorted set is a high-performance,
+     * immutable <code>SortedSet</code> that stores its elements in a sorted array.
+     *
+     * @param <T> element type
+     * @param iterator iterator, must not be null
+     * @param comparator comparator to be used to sort the returned immutable sorted set
+     * @return an immutable set containing the unique elements returned by the specified iterator
+     *    sorted according to the specified comparator
+     */
+    public static <T extends Comparable<T>> SortedSet<T> asImmutableSortedSet(final Iterator<? extends T> iterator,
+                                                                              final Comparator<? super T> comparator)
+    {
+        if (iterator == null)
+        {
+            throw new IllegalArgumentException("iterator must not be null");
+        }
+        if (comparator == null)
+        {
+            return asImmutableSortedSet(iterator);
+        }
+        ImmutableSortedSet.Builder<T> builder = new ImmutableSortedSet.Builder(comparator);
+        builder.addAll(iterator);
+        return builder.build();
+    }
+
+   /**
+     * Create and return an immutable sorted set containing the unique elements in the specified iterable
+     * sorted according to the specified comparator. The returned immutable sorted set is a high-performance,
+     * immutable <code>SortedSet</code> that stores its elements in a sorted array.
+     *
+     * @param <T> element type
+     * @param iterable iterable, must not be null
+     * @param comparator comparator to be used to sort the returned immutable sorted set
+     * @return an immutable set containing the unique elements returned by the specified iterable
+     *    sorted according to the specified comparator
+     */
+    public static <T extends Comparable<T>> SortedSet<T> asImmutableSortedSet(final Iterable<? extends T> iterable,
+                                                                              final Comparator<? super T> comparator)
+    {
+        if (iterable == null)
+        {
+            throw new IllegalArgumentException("iterable must not be null");
+        }
+        if (comparator == null)
+        {
+            return asImmutableSortedSet(iterable);
+        }
+        ImmutableSortedSet.Builder<T> builder = new ImmutableSortedSet.Builder(comparator);
+        builder.addAll(iterable);
+        return builder.build();
+    }
+
+    //
+    // createXxx methods, which accept constructor parameters
 
     /**
      * Create and return a new instance of Set.
@@ -544,31 +732,8 @@ public final class Sets
         return set;
     }
 
-    /**
-     * Create and return an immutable set containing only the specified object.
-     *
-     * @param <T> element type
-     * @param element element to be added to the returned set
-     * @return an immutable set containing only the specified object
-     */
-    public static <T> Set<T> singleton(final T element)
-    {
-        return Collections.singleton(element);
-    }
-
-    /**
-     * Create and return an immutable set containing only the specified object.
-     * Alias to <code>static Set&lt;T&gt; singleton(T)</code> method.
-     *
-     * @see #singleton
-     * @param <T> element type
-     * @param element element to be added to the returned set
-     * @return an immutable set containing only the specified object
-     */
-    public static <T> Set<T> singletonSet(final T element)
-    {
-        return singleton(element);
-    }
+    //
+    // view or wrapper methods, which accept sets or sorted sets as parameters
 
     /**
      * Create and return an unmodifiable view of the specified set.  Query operations on the
@@ -600,4 +765,31 @@ public final class Sets
         return Collections.unmodifiableSortedSet(sortedSet);
     }
 
+    /**
+     * Create and return an immutable set containing the elements in the specified set, in order.
+     * The returned immutable set is a high-performance, immutable <code>Set</code>
+     * with reliable iteration order.
+     *
+     * @param <T> element type
+     * @param set set to copy, must not be null
+     * @return an immutable set containing the elements in the specified set, in order
+     */
+    public static <T> Set<T> immutableSet(final Set<? extends T> set)
+    {
+        return ImmutableSet.copyOf(set);
+    }
+
+    /**
+     * Create and return an immutable sorted set containing the elements in the specified
+     * sorted set, sorted by the same comparator.
+     *
+     * @param <T> element type
+     * @param sortedSet sorted set to copy, must not be null
+     * @return an immutable sorted set containing the elements in the specified sorted set,
+     *    sorted by the same comparator
+     */
+    public static <T> SortedSet<T> immutableSortedSet(final SortedSet<T> sortedSet)
+    {
+        return ImmutableSortedSet.copyOfSorted(sortedSet);
+    }
 }
