@@ -303,14 +303,9 @@ public final class Sets
      * @return an immutable sorted set containing the unique elements in <code>elements</code>
      *    sorted by their natural order
      */
-    //public static <T> SortedSet<T> asImmutableSortedSet(final T... elements)
-    public static <T extends Comparable<T>> SortedSet<T> asImmutableSortedSet(final T... elements)
+    public static <T extends Comparable<? super T>> SortedSet<T> asImmutableSortedSet(final T... elements)
     {
-        //return ImmutableSortedSet.of(elements);
-        //return ImmutableSortedSet.naturalOrder().add(elements).build();
-        ImmutableSortedSet.Builder<T> builder = ImmutableSortedSet.naturalOrder();
-        builder.add(elements);
-        return builder.build();
+        return ImmutableSortedSet.of(elements);
     }
 
    /**
@@ -323,18 +318,13 @@ public final class Sets
      * @return an immutable set containing the unique elements returned by the specified iterator
      *    sorted by their natural order
      */
-    //public static <T> SortedSet<T> asImmutableSortedSet(final Iterator<? extends T> iterator)
-    public static <T extends Comparable<T>> SortedSet<T> asImmutableSortedSet(final Iterator<? extends T> iterator)
+    public static <T extends Comparable<? super T>> SortedSet<T> asImmutableSortedSet(final Iterator<? extends T> iterator)
     {
         if (iterator == null)
         {
             throw new IllegalArgumentException("iterator must not be null");
         }
-        //return ImmutableSortedSet.copyOf(iterator);
-        //return ImmutableSortedSet.naturalOrder().addAll(iterator).build();
-        ImmutableSortedSet.Builder<T> builder = ImmutableSortedSet.naturalOrder();
-        builder.addAll(iterator);
-        return builder.build();
+        return ImmutableSortedSet.copyOf(iterator);
     }
 
    /**
@@ -347,18 +337,13 @@ public final class Sets
      * @return an immutable set containing the unique elements returned by the specified iterable
      *    sorted by their natural order
      */
-    //public static <T> SortedSet<T> asImmutableSortedSet(final Iterable<? extends T> iterable)
-    public static <T extends Comparable<T>> SortedSet<T> asImmutableSortedSet(final Iterable<? extends T> iterable)
+    public static <T extends Comparable<? super T>> SortedSet<T> asImmutableSortedSet(final Iterable<? extends T> iterable)
     {
         if (iterable == null)
         {
             throw new IllegalArgumentException("iterable must not be null");
         }
-        //return ImmutableSortedSet.copyOf(iterable);
-        //return ImmutableSortedSet.naturalOrder().addAll(iterable).build();
-        ImmutableSortedSet.Builder<T> builder = ImmutableSortedSet.naturalOrder();
-        builder.addAll(iterable);
-        return builder.build();
+        return ImmutableSortedSet.copyOf(iterable);
     }
 
    /**
@@ -372,7 +357,7 @@ public final class Sets
      * @return an immutable set containing the unique elements returned by the specified iterator
      *    sorted according to the specified comparator
      */
-    public static <T extends Comparable<T>> SortedSet<T> asImmutableSortedSet(final Iterator<? extends T> iterator,
+    public static <T extends Comparable<? super T>> SortedSet<T> asImmutableSortedSet(final Iterator<? extends T> iterator,
                                                                               final Comparator<? super T> comparator)
     {
         if (iterator == null)
@@ -399,7 +384,7 @@ public final class Sets
      * @return an immutable set containing the unique elements returned by the specified iterable
      *    sorted according to the specified comparator
      */
-    public static <T extends Comparable<T>> SortedSet<T> asImmutableSortedSet(final Iterable<? extends T> iterable,
+    public static <T extends Comparable<? super T>> SortedSet<T> asImmutableSortedSet(final Iterable<? extends T> iterable,
                                                                               final Comparator<? super T> comparator)
     {
         if (iterable == null)
