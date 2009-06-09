@@ -368,7 +368,7 @@ public final class Sets
         {
             return asImmutableSortedSet(iterator);
         }
-        ImmutableSortedSet.Builder<T> builder = new ImmutableSortedSet.Builder(comparator);
+        ImmutableSortedSet.Builder<T> builder = new ImmutableSortedSet.Builder<T>(comparator);
         builder.addAll(iterator);
         return builder.build();
     }
@@ -395,7 +395,7 @@ public final class Sets
         {
             return asImmutableSortedSet(iterable);
         }
-        ImmutableSortedSet.Builder<T> builder = new ImmutableSortedSet.Builder(comparator);
+        ImmutableSortedSet.Builder<T> builder = new ImmutableSortedSet.Builder<T>(comparator);
         builder.addAll(iterable);
         return builder.build();
     }
