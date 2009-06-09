@@ -37,6 +37,9 @@ import java.util.concurrent.ConcurrentSkipListMap;
 import org.cliffc.high_scale_lib.NonBlockingHashMap;
 import org.cliffc.high_scale_lib.NonBlockingHashMapLong;
 
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSortedMap;
+
 /**
  * Static utility methods for Maps.
  *
@@ -519,23 +522,6 @@ public final class Maps
     }
 
     /**
-     * Create and return a new unmodifiable instance of Map containing only the specified mapping.
-     *
-     * @param <K> key type
-     * @param <V> value type
-     * @param key key
-     * @param value value
-     * @return a new unmodifiable instance of Map containing only the specified mapping
-     */
-    public static <K, V> Map<K, V> singletonMap(final K key, final V value)
-    {
-        // todo:  use fixed size map?
-        Map<K, V> map = createMap();
-        map.put(key, value);
-        return unmodifiableMap(map);
-    }
-
-    /**
      * Create and return a new unmodifiable view of the specified map.  Query operations on
      * the returned map "read through" to the specified map.  Attempts to modify the returned map,
      * whether direct or via its collection views, result in an <code>UnsupportedOperationException<code>.
@@ -567,5 +553,31 @@ public final class Maps
         return Collections.unmodifiableSortedMap(sortedMap);
     }
 
-    // todo:   unmodifiableConcurrentMap?
+    /**
+     * Create and return an immutable map containing the same mappings as the specified map.
+     *
+     * @param <K> key type
+     * @param <V> value type
+     * @param map map to copy, must not be null
+     * @return an immutable map containing the same mappings as the specified map
+     */
+    public static <K, V> Map<K, V> immutableMap(final Map<? extends K, ? extends V> map)
+    {
+        return ImmutableMap.copyOf(map);
+    }
+
+    /**
+     * Create and return an immutable sorted map containing the same mappings and the same
+     * ordering as the specified sorted map.
+     *
+     * @param <K> key type
+     * @param <V> value type
+     * @param sortedMap sorted map to copy, must not be null
+     * @return an immutable sorted map containing the same mappings and the same
+     *    ordering as the specified sorted map
+     */
+    public static <K, V> SortedMap<K, V> immutableSortedMap(final SortedMap<K, ? extends V> sortedMap)
+    {
+        return ImmutableSortedMap.copyOfSorted(sortedMap);
+    }
 }

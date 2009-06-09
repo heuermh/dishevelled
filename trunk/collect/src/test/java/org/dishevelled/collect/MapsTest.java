@@ -44,7 +44,7 @@ public final class MapsTest
     extends TestCase
 {
 
-    public void testNewMap()
+    public void testCreateMap()
     {
         Map<String, Double> map0 = createMap();
         assertNotNull(map0);
@@ -63,7 +63,7 @@ public final class MapsTest
         assertNotNull(map3);
     }
 
-    public void testNewSynchronizedMap()
+    public void testCreateSynchronizedMap()
     {
         Map<String, Double> map0 = createSynchronizedMap();
         assertNotNull(map0);
@@ -82,7 +82,7 @@ public final class MapsTest
         assertNotNull(map3);
     }
 
-    public void testNewConcurrentMap()
+    public void testCreateConcurrentMap()
     {
         ConcurrentMap<String, Double> concurrentMap0 = createConcurrentMap();
         assertNotNull(concurrentMap0);
@@ -104,7 +104,7 @@ public final class MapsTest
         assertNotNull(concurrentMap4);
     }
 
-    public void testNewNonBlockingMap()
+    public void testCreateNonBlockingMap()
     {
         ConcurrentMap<String, Double> concurrentMap0 = createNonBlockingMap();
         assertNotNull(concurrentMap0);
@@ -113,7 +113,7 @@ public final class MapsTest
         assertNotNull(concurrentMap1);
     }
 
-    public void testNewLongNonBlockingMap()
+    public void testCreateLongNonBlockingMap()
     {
         ConcurrentMap<Long, Double> concurrentMap0 = createLongNonBlockingMap();
         assertNotNull(concurrentMap0);
@@ -134,7 +134,7 @@ public final class MapsTest
         assertNotNull(concurrentMap5);
     }
 
-    public void testNewConcurrentSkipListMap()
+    public void testCreateConcurrentSkipListMap()
     {
         ConcurrentSkipListMap<String, Double> concurrentSkipListMap0 = createConcurrentSkipListMap();
         assertNotNull(concurrentSkipListMap0);
@@ -166,7 +166,7 @@ public final class MapsTest
         assertNotNull(concurrentSkipListMap3);
     }
 
-    public void testNewSortedMap()
+    public void testCreateSortedMap()
     {
         SortedMap<String, Double> sortedMap0 = createSortedMap();
         assertNotNull(sortedMap0);
@@ -202,7 +202,7 @@ public final class MapsTest
 
         try
         {
-            SortedMap<String, Double> ignore = createSortedMap((Map<String, Double>) null);
+            createSortedMap((Map<String, Double>) null);
             fail("newSortedMap((Map<String, Double>) null) expected NullPointerException");
         }
         catch (NullPointerException e)
@@ -212,25 +212,13 @@ public final class MapsTest
 
         try
         {
-            SortedMap<String, Double> ignore = createSortedMap((SortedMap<String, Double>) null);
+            createSortedMap((SortedMap<String, Double>) null);
             fail("newSortedMap((SortedMap<String, Double>) null) expected NullPointerException");
         }
         catch (NullPointerException e)
         {
             // expected
         }
-    }
-
-    public void testSingletonMap()
-    {
-        Map<String, Double> singletonMap = singletonMap("foo", Double.valueOf(1.0d));
-        assertNotNull(singletonMap);
-        assertFalse(singletonMap.isEmpty());
-        assertEquals(1, singletonMap.size());
-        assertTrue(singletonMap.containsKey("foo"));
-        assertTrue(singletonMap.keySet().contains("foo"));
-        assertTrue(singletonMap.containsValue(Double.valueOf(1.0d)));
-        assertTrue(singletonMap.values().contains(Double.valueOf(1.0d)));
     }
 
     public void testUnmodifiableMap()
@@ -244,7 +232,7 @@ public final class MapsTest
 
         try
         {
-            Map<String, Double> ignore = unmodifiableMap(null);
+            unmodifiableMap(null);
             fail("unmodifiableMap(null) expected NullPointerException");
         }
         catch (NullPointerException e)
@@ -264,8 +252,48 @@ public final class MapsTest
 
         try
         {
-            SortedMap<String, Double> ignore = unmodifiableSortedMap(null);
+            unmodifiableSortedMap(null);
             fail("unmodifiableSortedMap(null) expected NullPointerException");
+        }
+        catch (NullPointerException e)
+        {
+            // expected
+        }
+    }
+
+    public void testImmutableMap()
+    {
+        Map<String,  Double> toCopy = createMap();
+        toCopy.put("foo", Double.valueOf(1.0d));
+        toCopy.put("bar", Double.valueOf(2.0d));
+
+        Map<String, Double> immutableMap = unmodifiableMap(toCopy);
+        assertNotNull(immutableMap);
+
+        try
+        {
+            immutableMap(null);
+            fail("immutableMap(null) expected NullPointerException");
+        }
+        catch (NullPointerException e)
+        {
+            // expected
+        }
+    }
+
+    public void testImmutableSortedMap()
+    {
+        SortedMap<String, Double> toCopy = createSortedMap();
+        toCopy.put("foo", Double.valueOf(1.0d));
+        toCopy.put("bar", Double.valueOf(2.0d));
+
+        SortedMap<String, Double> immutableSortedMap = immutableSortedMap(toCopy);
+        assertNotNull(immutableSortedMap);
+
+        try
+        {
+            immutableSortedMap(null);
+            fail("immutableSortedMap(null) expected NullPointerException");
         }
         catch (NullPointerException e)
         {
