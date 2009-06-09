@@ -70,7 +70,7 @@ public final class ListsTest
 
         try
         {
-            List<String> list = asList((Iterator<String>) null);
+            asList((Iterator<String>) null);
             fail("asList((Iterator<String>) null) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
@@ -79,7 +79,7 @@ public final class ListsTest
         }
         try
         {
-            List<String> list = asList((Iterable<String>) null);
+            asList((Iterable<String>) null);
             fail("asList((Iterable<String>) null) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
@@ -88,7 +88,56 @@ public final class ListsTest
         }
     }
 
-    public void testNewList()
+    public void testAsImmutableList()
+    {
+        List<String> immutableList0 = asImmutableList("foo");
+        assertNotNull(immutableList0);
+
+        List<String> immutableList1 = asImmutableList("foo", "bar");
+        assertNotNull(immutableList1);
+
+        List<String> immutableList2 = asImmutableList("foo", "bar", "baz");
+        assertNotNull(immutableList2);
+
+        List<String> immutableList4 = asImmutableList(new String[] { "foo", "bar", "baz" });
+        assertNotNull(immutableList4);
+
+        List<String> immutableList5 = asImmutableList(immutableList4.iterator());
+        assertNotNull(immutableList5);
+
+        List<String> immutableList6 = asImmutableList(immutableList4);
+        assertNotNull(immutableList6);
+
+        try
+        {
+            asImmutableList((String) null);
+            fail("asImmutableList((String) null) expected NullPointerException");
+        }
+        catch (NullPointerException e)
+        {
+            // expected, ImmutableList does not accept null elements
+        }
+        try
+        {
+            asImmutableList((Iterator<String>) null);
+            fail("asImmutableList((Iterator<String>) null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+        try
+        {
+            asImmutableList((Iterable<String>) null);
+            fail("asImmutableList((Iterable<String>) null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+    }
+
+    public void testCreateList()
     {
         List<String> list0 = createList();
         assertNotNull(list0);
@@ -105,7 +154,7 @@ public final class ListsTest
 
         try
         {
-            List<String> list = createList((Collection<String>) null);
+            createList((Collection<String>) null);
             fail("newList((Collection<String>) null) expected IllegalArgumentException");
         }
         //catch (IllegalArgumentException e)
@@ -115,7 +164,7 @@ public final class ListsTest
         }
     }
 
-    public void testNewLinkedList()
+    public void testCreateLinkedList()
     {
         LinkedList<String> list0 = createLinkedList();
         assertNotNull(list0);
@@ -126,7 +175,7 @@ public final class ListsTest
 
         try
         {
-            LinkedList<String> list = createLinkedList((Collection<String>) null);
+            createLinkedList((Collection<String>) null);
             fail("newLinkedList((Collection<String>) null) expected IllegalArgumentException");
         }
         //catch (IllegalArgumentException e)
@@ -136,7 +185,7 @@ public final class ListsTest
         }
     }
 
-    public void testNewCopyOnWriteArrayList()
+    public void testCreateCopyOnWriteArrayList()
     {
         CopyOnWriteArrayList<String> list0 = createCopyOnWriteArrayList();
         assertNotNull(list0);
@@ -151,7 +200,7 @@ public final class ListsTest
 
         try
         {
-            CopyOnWriteArrayList<String> list = createCopyOnWriteArrayList((Collection<String>) null);
+            createCopyOnWriteArrayList((Collection<String>) null);
             fail("newCopyOnWriteArrayList((Collection<String>) null) expected IllegalArgumentException");
         }
         //catch (IllegalArgumentException e)
@@ -161,7 +210,7 @@ public final class ListsTest
         }
         try
         {
-            CopyOnWriteArrayList<String> list = createCopyOnWriteArrayList((String[]) null);
+            createCopyOnWriteArrayList((String[]) null);
             fail("newCopyOnWriteArrayList((String[]) null) expected IllegalArgumentException");
         }
         //catch (IllegalArgumentException e)
@@ -169,15 +218,6 @@ public final class ListsTest
         {
             // expected
         }
-    }
-
-    public void testSingletonList()
-    {
-        List<String> list0 = singletonList("foo");
-        assertNotNull(list0);
-
-        List<String> list1 = singletonList(null);
-        assertNotNull(list1);
     }
 
     public void testUnmodifiableList()
@@ -189,7 +229,7 @@ public final class ListsTest
 
         try
         {
-            List<String> list = unmodifiableList((List<String>) null);
+            unmodifiableList((List<String>) null);
             fail("unmodifiableList((List<String>) null) expected IllegalArgumentException");
         }
         //catch (IllegalArgumentException e)
@@ -197,6 +237,24 @@ public final class ListsTest
         {
             // expected
         }
+    }
 
+    public void testImmutableList()
+    {
+        List<String> toCopy = asList("foo", "bar", "baz");
+        List<String> immutableList = unmodifiableList(toCopy);
+        assertNotNull(immutableList);
+        // TODO:  add'l assertions
+
+        try
+        {
+            unmodifiableList((List<String>) null);
+            fail("unmodifiableList((List<String>) null) expected IllegalArgumentException");
+        }
+        //catch (IllegalArgumentException e)
+        catch (NullPointerException e)
+        {
+            // expected
+        }
     }
 }

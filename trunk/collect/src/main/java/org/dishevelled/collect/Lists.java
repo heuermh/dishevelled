@@ -32,6 +32,8 @@ import java.util.LinkedList;
 
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import com.google.common.collect.ImmutableList;
+
 /**
  * Static utility methods for Lists.
  *
@@ -112,6 +114,53 @@ public final class Lists
         return list;
     }
 
+    /**
+     * Create and return an immutable list containing the specified elements.
+     *
+     * @param <T> element type
+     * @param elements variable number of elements to be added to the
+     *    returned immutable list
+     * @return an immutable list containing the specified elements
+     */
+    public static <T> List<T> asImmutableList(final T... elements)
+    {
+        return ImmutableList.of(elements);
+    }
+
+    /**
+     * Create and return an immutable list containing the elements returned by the
+     * specified iterator.
+     *
+     * @param <T> element type
+     * @param iterator iterator, must not be null
+     * @return an immutable list containing the elements returned by the specified iterator
+     */
+    public static <T> List<T> asImmutableList(final Iterator<? extends T> iterator)
+    {
+        if (iterator == null)
+        {
+            throw new IllegalArgumentException("iterator must not be null");
+        }
+        return ImmutableList.copyOf(iterator);
+    }
+
+    /**
+     * Create and return an immutable list containing the elements returned by the
+     * specified iterable.
+     *
+     * @param <T> element type
+     * @param iterable iterable, must not be null
+     * @return an immutable list containing the elements returned by the specified iterable
+     */
+    public static <T> List<T> asImmutableList(final Iterable<? extends T> iterable)
+    {
+        if (iterable == null)
+        {
+            throw new IllegalArgumentException("iterable must not be null");
+        }
+        return ImmutableList.copyOf(iterable);
+    }
+    
     /**
      * Create and return a new instance of List.
      *
@@ -217,18 +266,6 @@ public final class Lists
     }
 
     /**
-     * Create and return an immutable list containing only the specified object.
-     *
-     * @param <T> element type
-     * @param element element to be added to the returned list
-     * @return an immutable list containing only the specified object
-     */
-    public static <T> List<T> singletonList(final T element)
-    {
-        return Collections.singletonList(element);
-    }
-
-    /**
      * Create and return an unmodifiable view of the specified list.  Query operations on
      * the returned list "read through" to the specified list, and attempts to modify the
      * returned list, whether direct or via its iterator, result in an
@@ -241,5 +278,17 @@ public final class Lists
     public static <T> List<T> unmodifiableList(final List<? extends T> list)
     {
         return Collections.unmodifiableList(list);
+    }
+
+    /**
+     * Create and return an immutable list containing the elements in the specified list.
+     *
+     * @param <T> element type
+     * @param list list to copy, must not be null
+     * @return an immutable list containing the elements in the specified list
+     */
+    public static <T> List<T> immutableList(final List<? extends T> list)
+    {
+        return ImmutableList.copyOf(list);
     }
 }

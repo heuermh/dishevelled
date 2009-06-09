@@ -542,7 +542,7 @@ public final class SetsTest
         try
         {
             Set<String> set3 = asImmutableSet((String) null);
-            fail("asImmutableSet((String) null) expected IllegalArgumentException");
+            fail("asImmutableSet((String) null) expected NullPointerException");
         }
         catch (NullPointerException e)
         {
