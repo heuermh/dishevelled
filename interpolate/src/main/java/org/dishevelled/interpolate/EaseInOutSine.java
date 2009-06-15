@@ -25,6 +25,7 @@ package org.dishevelled.interpolate;
 
 /**
  * Ease-in-out sine interpolation function.
+ * <img src="doc-files/ease-in-out-sine.png" alt="ease-in-out sine graph" />
  *
  * @author  Michael Heuer
  * @version $Revision$ $Date$

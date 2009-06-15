@@ -25,6 +25,7 @@ package org.dishevelled.interpolate;
 
 /**
  * Ease-out elastic interpolation function.
+ * <img src="doc-files/ease-out-elastic.png" alt="ease-out elastic graph" />
  *
  * @author  Michael Heuer
  * @version $Revision$ $Date$
