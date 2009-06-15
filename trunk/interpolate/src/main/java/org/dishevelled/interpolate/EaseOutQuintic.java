@@ -25,6 +25,7 @@ package org.dishevelled.interpolate;
 
 /**
  * Ease-out quintic interpolation function.
+ * <img src="doc-files/ease-out-quintic.png" alt="ease-out quintic graph" />
  *
  * @author  Michael Heuer
  * @version $Revision$ $Date$

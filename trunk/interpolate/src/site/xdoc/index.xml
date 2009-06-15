@@ -36,6 +36,42 @@ The interpolate library requires java version 1.5 or later.
 </p>
 </section>
 
+<section name="Easing functions">
+
+<!-- todo:  format these in some fashion -->
+<img src="images/linear.png" alt="linear easing graph"/>
+<img src="images/ease-in-quadratic.png" alt="ease-in quadratic graph"/>
+<img src="images/ease-out-quadratic.png" alt="ease-out quadratic graph"/>
+<img src="images/ease-in-out-quadratic.png" alt="ease-in-out quadratic graph"/>
+<img src="images/ease-in-cubic.png" alt="ease-in cubic graph"/>
+<img src="images/ease-out-cubic.png" alt="ease-out cubic graph"/>
+<img src="images/ease-in-out-cubic.png" alt="ease-in-out cubic graph"/>
+<img src="images/ease-in-quartic.png" alt="ease-in quartic graph"/>
+<img src="images/ease-out-quartic.png" alt="ease-out quartic graph"/>
+<img src="images/ease-in-out-quartic.png" alt="ease-in-out quartic graph"/>
+<img src="images/ease-in-quintic.png" alt="ease-in quintic graph"/>
+<img src="images/ease-out-quintic.png" alt="ease-out quintic graph"/>
+<img src="images/ease-in-out-quintic.png" alt="ease-in-out quintic graph"/>
+<img src="images/ease-in-sine.png" alt="ease-in sine graph"/>
+<img src="images/ease-out-sine.png" alt="ease-out sine graph"/>
+<img src="images/ease-in-out-sine.png" alt="ease-in-out sine graph"/>
+<img src="images/ease-in-exponential.png" alt="ease-in exponential graph"/>
+<img src="images/ease-out-exponential.png" alt="ease-out exponential graph"/>
+<img src="images/ease-in-out-exponential.png" alt="ease-in-out exponential graph"/>
+<img src="images/ease-in-circular.png" alt="ease-in circular graph"/>
+<img src="images/ease-out-circular.png" alt="ease-out circular graph"/>
+<img src="images/ease-in-out-circular.png" alt="ease-in-out circular graph"/>
+<img src="images/ease-in-elastic.png" alt="ease-in elastic graph"/>
+<img src="images/ease-out-elastic.png" alt="ease-out elastic graph"/>
+<img src="images/ease-in-out-elastic.png" alt="ease-in-out elastic graph"/>
+<img src="images/ease-in-back.png" alt="ease-in back graph"/>
+<img src="images/ease-out-back.png" alt="ease-out back graph"/>
+<img src="images/ease-in-out-back.png" alt="ease-in-out back graph"/>
+<img src="images/ease-in-bounce.png" alt="ease-in bounce graph"/>
+<img src="images/ease-out-bounce.png" alt="ease-out bounce graph"/>
+<img src="images/ease-in-out-bounce.png" alt="ease-in-out bounce graph"/>
+</section>
+
 <section name="Acknowledgements">
   <ul>
     <li>Powered by Apache <a href="http://maven.apache.org">Maven</a>.</li>
