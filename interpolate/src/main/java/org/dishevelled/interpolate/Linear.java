@@ -25,7 +25,7 @@ package org.dishevelled.interpolate;
 
 /**
  * Linear easing interpolation function.
- * <img src="doc-files/linear.png" alt="linear easing graph" />
+ * <p><img src="../../../../images/linear.png" alt="linear easing graph" /></p>
  *
  * @author  Michael Heuer
  * @version $Revision$ $Date$

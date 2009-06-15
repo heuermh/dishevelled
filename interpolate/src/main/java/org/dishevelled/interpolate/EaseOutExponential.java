@@ -25,7 +25,7 @@ package org.dishevelled.interpolate;
 
 /**
  * Ease-out exponential interpolation function.
- * <img src="doc-files/ease-out-exponential.png" alt="ease-out exponential graph" />
+ * <p><img src="../../../../images/ease-out-exponential.png" alt="ease-out exponential graph" /></p>
  *
  * @author  Michael Heuer
  * @version $Revision$ $Date$

@@ -25,7 +25,7 @@ package org.dishevelled.interpolate;
 
 /**
  * Ease-out back interpolation function.
- * <img src="doc-files/ease-out-back.png" alt="ease-out back graph" />
+ * <p><img src="../../../../images/ease-out-back.png" alt="ease-out back graph" /></p>
  *
  * @author  Michael Heuer
  * @version $Revision$ $Date$

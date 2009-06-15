@@ -25,7 +25,7 @@ package org.dishevelled.interpolate;
 
 /**
  * Ease-in quartic interpolation function.
- * <img src="doc-files/ease-in-quartic.png" alt="ease-in quartic graph" />
+ * <p><img src="../../../../images/ease-in-quartic.png" alt="ease-in quartic graph" /></p>
  *
  * @author  Michael Heuer
  * @version $Revision$ $Date$

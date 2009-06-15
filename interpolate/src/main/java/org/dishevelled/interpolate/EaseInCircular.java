@@ -25,7 +25,7 @@ package org.dishevelled.interpolate;
 
 /**
  * Ease-in circular interpolation function.
- * <img src="doc-files/ease-in-circular.png" alt="ease-in circular graph" />
+ * <p><img src="../../../../images/ease-in-circular.png" alt="ease-in circular graph" /></p>
  *
  * @author  Michael Heuer
  * @version $Revision$ $Date$

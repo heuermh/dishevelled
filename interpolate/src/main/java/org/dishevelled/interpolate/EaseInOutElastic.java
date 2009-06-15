@@ -25,7 +25,7 @@ package org.dishevelled.interpolate;
 
 /**
  * Ease-in-out elastic interpolation function.
- * <img src="doc-files/ease-in-out-elastic.png" alt="ease-in-out elastic graph" />
+ * <p><img src="../../../../images/ease-in-out-elastic.png" alt="ease-in-out elastic graph" /></p>
  *
  * @author  Michael Heuer
  * @version $Revision$ $Date$

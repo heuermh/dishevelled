@@ -25,7 +25,7 @@ package org.dishevelled.interpolate;
 
 /**
  * Ease-out bounce interpolation function.
- * <img src="doc-files/ease-out-bounce.png" alt="ease-out bounce graph" />
+ * <p><img src="../../../../images/ease-out-bounce.png" alt="ease-out bounce graph" /></p>
  *
  * @author  Michael Heuer
  * @version $Revision$ $Date$
