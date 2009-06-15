@@ -25,7 +25,7 @@ package org.dishevelled.interpolate;
 
 /**
  * Ease-out quadratic interpolation function.
- * <img src="doc-files/ease-out-quadratic.png" alt="ease-out quadratic graph" />
+ * <p><img src="../../../../images/ease-out-quadratic.png" alt="ease-out quadratic graph" /></p>
  *
  * @author  Michael Heuer
  * @version $Revision$ $Date$

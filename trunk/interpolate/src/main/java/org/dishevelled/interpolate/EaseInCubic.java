@@ -25,7 +25,7 @@ package org.dishevelled.interpolate;
 
 /**
  * Ease-in cubic interpolation function.
- * <img src="doc-files/ease-in-cubic.png" alt="ease-in cubic graph" />
+ * <p><img src="../../../../images/ease-in-cubic.png" alt="ease-in cubic graph" /></p>
  *
  * @author  Michael Heuer
  * @version $Revision$ $Date$
