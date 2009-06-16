@@ -57,7 +57,7 @@ public final class RandomThreshold
 
 
     /** {@inheritDoc} */
-    public final Double evaluate(final Double value)
+    public Double evaluate(final Double value)
     {
         return Math.max(0.0d, random.nextDouble() * value);
     }

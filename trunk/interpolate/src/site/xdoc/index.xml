@@ -37,39 +37,84 @@ The interpolate library requires java version 1.5 or later.
 </section>
 
 <section name="Easing functions">
-
-<!-- todo:  format these in some fashion -->
-<img src="images/linear.png" alt="linear easing graph"/>
-<img src="images/ease-in-quadratic.png" alt="ease-in quadratic graph"/>
-<img src="images/ease-out-quadratic.png" alt="ease-out quadratic graph"/>
-<img src="images/ease-in-out-quadratic.png" alt="ease-in-out quadratic graph"/>
-<img src="images/ease-in-cubic.png" alt="ease-in cubic graph"/>
-<img src="images/ease-out-cubic.png" alt="ease-out cubic graph"/>
-<img src="images/ease-in-out-cubic.png" alt="ease-in-out cubic graph"/>
-<img src="images/ease-in-quartic.png" alt="ease-in quartic graph"/>
-<img src="images/ease-out-quartic.png" alt="ease-out quartic graph"/>
-<img src="images/ease-in-out-quartic.png" alt="ease-in-out quartic graph"/>
-<img src="images/ease-in-quintic.png" alt="ease-in quintic graph"/>
-<img src="images/ease-out-quintic.png" alt="ease-out quintic graph"/>
-<img src="images/ease-in-out-quintic.png" alt="ease-in-out quintic graph"/>
-<img src="images/ease-in-sine.png" alt="ease-in sine graph"/>
-<img src="images/ease-out-sine.png" alt="ease-out sine graph"/>
-<img src="images/ease-in-out-sine.png" alt="ease-in-out sine graph"/>
-<img src="images/ease-in-exponential.png" alt="ease-in exponential graph"/>
-<img src="images/ease-out-exponential.png" alt="ease-out exponential graph"/>
-<img src="images/ease-in-out-exponential.png" alt="ease-in-out exponential graph"/>
-<img src="images/ease-in-circular.png" alt="ease-in circular graph"/>
-<img src="images/ease-out-circular.png" alt="ease-out circular graph"/>
-<img src="images/ease-in-out-circular.png" alt="ease-in-out circular graph"/>
-<img src="images/ease-in-elastic.png" alt="ease-in elastic graph"/>
-<img src="images/ease-out-elastic.png" alt="ease-out elastic graph"/>
-<img src="images/ease-in-out-elastic.png" alt="ease-in-out elastic graph"/>
-<img src="images/ease-in-back.png" alt="ease-in back graph"/>
-<img src="images/ease-out-back.png" alt="ease-out back graph"/>
-<img src="images/ease-in-out-back.png" alt="ease-in-out back graph"/>
-<img src="images/ease-in-bounce.png" alt="ease-in bounce graph"/>
-<img src="images/ease-out-bounce.png" alt="ease-out bounce graph"/>
-<img src="images/ease-in-out-bounce.png" alt="ease-in-out bounce graph"/>
+<table>
+  <tr>
+    <th width="75%">Function class</th>
+    <th colspan="3">Ease in, ease out, ease in-out</th>
+  </tr>
+  <tr>
+    <td>Linear</td>
+    <td colspan="3"><img src="images/linear.png" alt="linear easing graph"/></td>
+  </tr>
+  <tr>
+    <td>Quadratic</td>
+    <td><img src="images/ease-in-quadratic.png" alt="ease-in quadratic graph"/></td>
+    <td><img src="images/ease-out-quadratic.png" alt="ease-out quadratic graph"/></td>
+    <td><img src="images/ease-in-out-quadratic.png" alt="ease-in-out quadratic graph"/></td>
+  </tr>
+  <tr>
+    <td>Cubic</td>
+    <td><img src="images/ease-in-cubic.png" alt="ease-in cubic graph"/></td>
+    <td><img src="images/ease-out-cubic.png" alt="ease-out cubic graph"/></td>
+    <td><img src="images/ease-in-out-cubic.png" alt="ease-in-out cubic graph"/></td>
+  </tr>
+  <tr>
+    <td>Quartic</td>
+    <td><img src="images/ease-in-quartic.png" alt="ease-in quartic graph"/></td>
+    <td><img src="images/ease-out-quartic.png" alt="ease-out quartic graph"/></td>
+    <td><img src="images/ease-in-out-quartic.png" alt="ease-in-out quartic graph"/></td>
+  </tr>
+  <tr>
+    <td>Quintic</td>
+    <td><img src="images/ease-in-quintic.png" alt="ease-in quintic graph"/></td>
+    <td><img src="images/ease-out-quintic.png" alt="ease-out quintic graph"/></td>
+    <td><img src="images/ease-in-out-quintic.png" alt="ease-in-out quintic graph"/></td>
+  </tr>
+  <tr>
+    <td>Sine</td>
+    <td><img src="images/ease-in-sine.png" alt="ease-in sine graph"/></td>
+    <td><img src="images/ease-out-sine.png" alt="ease-out sine graph"/></td>
+    <td><img src="images/ease-in-out-sine.png" alt="ease-in-out sine graph"/></td>
+  </tr>
+  <tr>
+    <td>Exponential (base 10)</td>
+    <td><img src="images/ease-in-exponential.png" alt="ease-in exponential graph"/></td>
+    <td><img src="images/ease-out-exponential.png" alt="ease-out exponential graph"/></td>
+    <td><img src="images/ease-in-out-exponential.png" alt="ease-in-out exponential graph"/></td>
+  </tr>
+  <tr>
+    <td>Circular</td>
+    <td><img src="images/ease-in-circular.png" alt="ease-in circular graph"/></td>
+    <td><img src="images/ease-out-circular.png" alt="ease-out circular graph"/></td>
+    <td><img src="images/ease-in-out-circular.png" alt="ease-in-out circular graph"/></td>
+  </tr>
+  <tr>
+    <td>Elastic</td>
+    <td><img src="images/ease-in-elastic.png" alt="ease-in elastic graph"/></td>
+    <td><img src="images/ease-out-elastic.png" alt="ease-out elastic graph"/></td>
+    <td><img src="images/ease-in-out-elastic.png" alt="ease-in-out elastic graph"/></td>
+  </tr>
+  <tr>
+    <td>Back</td>
+    <td><img src="images/ease-in-back.png" alt="ease-in back graph"/></td>
+    <td><img src="images/ease-out-back.png" alt="ease-out back graph"/></td>
+    <td><img src="images/ease-in-out-back.png" alt="ease-in-out back graph"/></td>
+  </tr>
+  <tr>
+    <td>Bounce</td>
+    <td><img src="images/ease-in-bounce.png" alt="ease-in bounce graph"/></td>
+    <td><img src="images/ease-out-bounce.png" alt="ease-out bounce graph"/></td>
+    <td><img src="images/ease-in-out-bounce.png" alt="ease-in-out bounce graph"/></td>
+  </tr>
+  <tr>
+    <td>Random floor</td>
+    <td colspan="3"><img src="images/random-floor.png" alt="random-floor graph"/></td>
+  </tr>
+  <tr>
+    <td>Random threshold</td>
+    <td colspan="3"><img src="images/random-threshold.png" alt="random-threshold graph"/></td>
+  </tr>
+</table>
 </section>
 
 <section name="Acknowledgements">
