@@ -36,38 +36,19 @@ public final class RandomThresholdTest
 {
 
     /** {@inheritDoc} */
-    protected AbstractEasingFunction createEasingFunction()
+    protected EasingFunction createEasingFunction()
     {
-        return new RandomThreshold(new Random(), new Linear());
+        return new RandomThreshold(new Random());
     }
 
     public void testConstructor()
     {
         Random random = new Random();
-        AbstractEasingFunction function = new Linear();
-        new RandomThreshold(random, function);
+        new RandomThreshold(random);
         try
         {
-            new RandomThreshold(null, function);
-            fail("ctr(null,) expected IllegalArgumentException");
-        }
-        catch (IllegalArgumentException e)
-        {
-            // expected
-        }
-        try
-        {
-            new RandomThreshold(random, null);
-            fail("ctr(,null) expected IllegalArgumentException");
-        }
-        catch (IllegalArgumentException e)
-        {
-            // expected
-        }
-        try
-        {
-            new RandomThreshold(null, null);
-            fail("ctr(null, null) expected IllegalArgumentException");
+            new RandomThreshold(null);
+            fail("ctr(null) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
         {

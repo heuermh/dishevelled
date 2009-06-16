@@ -34,7 +34,7 @@ public final class LinearTest
 {
 
     /** {@inheritDoc} */
-    protected AbstractEasingFunction createEasingFunction()
+    protected EasingFunction createEasingFunction()
     {
         return new Linear();
     }

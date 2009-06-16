@@ -34,7 +34,7 @@ public final class EaseInOutQuinticTest
 {
 
     /** {@inheritDoc} */
-    protected AbstractEasingFunction createEasingFunction()
+    protected EasingFunction createEasingFunction()
     {
         return new EaseInOutQuintic();
     }

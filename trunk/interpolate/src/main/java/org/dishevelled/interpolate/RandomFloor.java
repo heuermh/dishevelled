@@ -27,59 +27,38 @@ import java.util.Random;
 
 /**
  * Random floor interpolation function.  Generates random values (in red)
- * between the value returned by a decorated easing function (in blue) and <code>1.0d</code>.
+ * between the value and <code>1.0d</code>.  May be composed with an easing function (in blue).
  * <p><img src="../../../../images/random-floor.png" alt="random floor graph" /></p>
  *
+ * @see EasingFunctions#compose
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
 public final class RandomFloor
-    extends AbstractEasingFunction
+    implements EasingFunction
 {
     /** Source of randomness. */
     private final Random random;
 
-    /** Easing function to delegate to. */
-    private final AbstractEasingFunction delegate;
-
 
     /**
-     * Create a new random floor interpolation function that delegates to the specified easing function.
+     * Create a new random floor interpolation function with the specified source of randomness.
      *
      * @param random source of randomness, must not be null
-     * @param delegate easing function to delegate to, must not be null
      */
-    public RandomFloor(final Random random, final AbstractEasingFunction delegate)
+    public RandomFloor(final Random random)
     {
         if (random == null)
         {
             throw new IllegalArgumentException("random must not be null");
         }
-        if (delegate == null)
-        {
-            throw new IllegalArgumentException("delegate must not be null");
-        }
         this.random = random;
-        this.delegate = delegate;
     }
 
-
-    /** {@inheritDoc} */
-    public String getName()
-    {
-        return delegate.getName() + ", wrapped by random floor";
-    }
-
-    /** {@inheritDoc} */
-    public String getDescription()
-    {
-        return delegate.getDescription() + ", wrapped by random floor";
-    }
 
     /** {@inheritDoc} */
     public final Double evaluate(final Double value)
     {
-        double v = delegate.evaluate(value);
-        return Math.min(1.0d, v + random.nextDouble() * (1.0d - v));
+        return Math.min(1.0d, value + random.nextDouble() * (1.0d - value));
     }
 }

@@ -31,19 +31,13 @@ package org.dishevelled.interpolate;
  * @version $Revision$ $Date$
  */
 public final class EaseInOutCubic
-    extends AbstractEasingFunction
+    implements EasingFunction
 {
 
     /** {@inheritDoc} */
-    public String getName()
+    public String toString()
     {
         return "ease-in-out-cubic";
-    }
-
-    /** {@inheritDoc} */
-    public String getDescription()
-    {
-        return "Ease-in-out cubic interpolation function";
     }
 
     /** {@inheritDoc} */

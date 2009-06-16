@@ -34,7 +34,7 @@ public final class EaseInOutSineTest
 {
 
     /** {@inheritDoc} */
-    protected AbstractEasingFunction createEasingFunction()
+    protected EasingFunction createEasingFunction()
     {
         return new EaseInOutSine();
     }

@@ -34,7 +34,7 @@ public final class EaseInExponentialTest
 {
 
     /** {@inheritDoc} */
-    protected AbstractEasingFunction createEasingFunction()
+    protected EasingFunction createEasingFunction()
     {
         return new EaseInExponential();
     }

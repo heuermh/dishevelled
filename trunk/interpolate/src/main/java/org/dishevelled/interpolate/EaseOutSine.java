@@ -31,22 +31,16 @@ package org.dishevelled.interpolate;
  * @version $Revision$ $Date$
  */
 public final class EaseOutSine
-    extends AbstractEasingFunction
+    implements EasingFunction
 {
     /** <code>Math.PI / 2.0d</code>. */
     private static final double PI_OVER_2 = Math.PI / 2.0d;
 
 
     /** {@inheritDoc} */
-    public String getName()
+    public String toString()
     {
         return "ease-out-sine";
-    }
-
-    /** {@inheritDoc} */
-    public String getDescription()
-    {
-        return "Ease-out sine interpolation function";
     }
 
     /** {@inheritDoc} */

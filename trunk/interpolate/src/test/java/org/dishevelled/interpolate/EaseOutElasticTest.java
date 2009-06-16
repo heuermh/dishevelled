@@ -34,7 +34,7 @@ public final class EaseOutElasticTest
 {
 
     /** {@inheritDoc} */
-    protected AbstractEasingFunction createEasingFunction()
+    protected EasingFunction createEasingFunction()
     {
         return new EaseOutElastic();
     }

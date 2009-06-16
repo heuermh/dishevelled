@@ -23,19 +23,56 @@
 */
 package org.dishevelled.interpolate;
 
+import java.util.Random;
+
 /**
- * Unit test for EaseOutQuartic.
+ * Unit test for CompositeEasingFunction.
  *
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public final class EaseOutQuarticTest
+public final class CompositeEasingFunctionTest
     extends AbstractEasingFunctionTest
 {
 
     /** {@inheritDoc} */
     protected EasingFunction createEasingFunction()
     {
-        return new EaseOutQuartic();
+        return EasingFunctions.compose(new RandomFloor(new Random()), new Linear());
+    }
+
+    public void testConstructor()
+    {
+        Random random = new Random();
+        EasingFunction g = new RandomFloor(random);
+        EasingFunction h = new Linear();
+        new CompositeEasingFunction(g, h);
+        try
+        {
+            new CompositeEasingFunction(null, h);
+            fail("ctr(null,) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+        try
+        {
+            new CompositeEasingFunction(g, null);
+            fail("ctr(,null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+        try
+        {
+            new CompositeEasingFunction(null, null);
+            fail("ctr(null,null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
     }
 }

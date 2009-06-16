@@ -130,7 +130,7 @@ public final class EasingFunctions
     public static final EaseInOutBounce EASE_IN_OUT_BOUNCE = new EaseInOutBounce();
 
     /** Array of easing interpolation functions. */
-    private static final AbstractEasingFunction[] values = new AbstractEasingFunction[] { LINEAR, EASE_IN_QUADRATIC, EASE_OUT_QUADRATIC,
+    private static final EasingFunction[] values = new EasingFunction[] { LINEAR, EASE_IN_QUADRATIC, EASE_OUT_QUADRATIC,
             EASE_IN_OUT_QUADRATIC, EASE_IN_CUBIC, EASE_OUT_CUBIC, EASE_IN_OUT_CUBIC, EASE_IN_QUARTIC, EASE_OUT_QUARTIC, EASE_IN_OUT_QUARTIC,
             EASE_IN_QUINTIC, EASE_OUT_QUINTIC, EASE_IN_OUT_QUINTIC, EASE_IN_SINE, EASE_OUT_SINE, EASE_IN_OUT_SINE, EASE_IN_EXPONENTIAL,
             EASE_OUT_EXPONENTIAL, EASE_IN_OUT_EXPONENTIAL, EASE_IN_CIRCULAR, EASE_OUT_CIRCULAR, EASE_IN_OUT_CIRCULAR, EASE_IN_ELASTIC,
@@ -138,16 +138,16 @@ public final class EasingFunctions
             EASE_IN_OUT_BOUNCE };
 
     /** List of easing interpolation functions. */
-    public static final List<AbstractEasingFunction> VALUES = Arrays.asList(values);
+    public static final List<EasingFunction> VALUES = Arrays.asList(values);
 
     /** Map of easing interpolation functions keyed by name. */
-    private static final Map<String, AbstractEasingFunction> KEYED_BY_NAME = new HashMap<String, AbstractEasingFunction>(32);
+    private static final Map<String, EasingFunction> KEYED_BY_NAME = new HashMap<String, EasingFunction>(32);
 
     static
     {
-        for (AbstractEasingFunction function : VALUES)
+        for (EasingFunction function : VALUES)
         {
-            KEYED_BY_NAME.put(function.getName(), function);
+            KEYED_BY_NAME.put(function.toString(), function);
         }
     }
 
@@ -168,8 +168,21 @@ public final class EasingFunctions
      * @return the easing interpolation function for the specified name, or <code>null</code>
      *    if no such easing interpolation function exists
      */
-    public static AbstractEasingFunction valueOf(final String name)
+    public static EasingFunction valueOf(final String name)
     {
         return KEYED_BY_NAME.get(name);
+    }
+
+    /**
+     * Create and return new composite easing function <code>g(h(value))</code> with the
+     * specified easing functions <code>g</code> and <code>h</code>.
+     *
+     * @param g easing function g, in <code>g(h(value))</code>, must not be null
+     * @param h easing function h, in <code>g(h(value))</code>, must not be null
+     * @return a new composite easing function <code>g(h(value))</code>
+     */
+    public static CompositeEasingFunction compose(final EasingFunction g, final EasingFunction h)
+    {
+        return new CompositeEasingFunction(g, h);
     }
 }

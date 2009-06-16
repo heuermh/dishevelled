@@ -36,38 +36,19 @@ public final class RandomFloorTest
 {
 
     /** {@inheritDoc} */
-    protected AbstractEasingFunction createEasingFunction()
+    protected EasingFunction createEasingFunction()
     {
-        return new RandomFloor(new Random(), new Linear());
+        return new RandomFloor(new Random());
     }
 
     public void testConstructor()
     {
         Random random = new Random();
-        AbstractEasingFunction function = new Linear();
-        new RandomFloor(random, function);
+        new RandomFloor(random);
         try
         {
-            new RandomFloor(null, function);
-            fail("ctr(null,) expected IllegalArgumentException");
-        }
-        catch (IllegalArgumentException e)
-        {
-            // expected
-        }
-        try
-        {
-            new RandomFloor(random, null);
-            fail("ctr(,null) expected IllegalArgumentException");
-        }
-        catch (IllegalArgumentException e)
-        {
-            // expected
-        }
-        try
-        {
-            new RandomFloor(null, null);
-            fail("ctr(null, null) expected IllegalArgumentException");
+            new RandomFloor(null);
+            fail("ctr(null) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
         {

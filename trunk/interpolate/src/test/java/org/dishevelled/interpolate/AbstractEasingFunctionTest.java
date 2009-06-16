@@ -26,7 +26,7 @@ package org.dishevelled.interpolate;
 import junit.framework.TestCase;
 
 /**
- * Abstract unit test for subclasses of AbstractEasingFunction.
+ * Abstract unit test for implementations of EasingFunction.
  *
  * @author  Michael Heuer
  * @version $Revision$ $Date$
@@ -36,24 +36,22 @@ public abstract class AbstractEasingFunctionTest
 {
 
     /**
-     * Create and return a new instance of a subclass of AbstractEasingFunction to test.
+     * Create and return a new instance of an implementation of EasingFunction to test.
      *
-     * @return a new instance of a subclass of AbstractEasingFunction to test
+     * @return a new instance of an implementation of EasingFunction to test
      */
-    protected abstract AbstractEasingFunction createEasingFunction();
+    protected abstract EasingFunction createEasingFunction();
 
     public void testCreateEasingFunction()
     {
-        AbstractEasingFunction function = createEasingFunction();
+        EasingFunction function = createEasingFunction();
         assertNotNull(function);
     }
 
     public void testEasingFunction()
     {
-        AbstractEasingFunction function = createEasingFunction();
+        EasingFunction function = createEasingFunction();
         assertNotNull(function);
-        assertNotNull(function.getName());
-        assertNotNull(function.getDescription());
         for (double v = 0.0d; v < 1.01d; v += 0.01d)
         {
             assertNotNull(function.evaluate(v));
