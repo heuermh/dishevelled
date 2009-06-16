@@ -57,7 +57,7 @@ public final class RandomFloor
 
 
     /** {@inheritDoc} */
-    public final Double evaluate(final Double value)
+    public Double evaluate(final Double value)
     {
         return Math.min(1.0d, value + random.nextDouble() * (1.0d - value));
     }
