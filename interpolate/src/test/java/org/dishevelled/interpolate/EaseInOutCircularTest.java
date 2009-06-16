@@ -34,7 +34,7 @@ public final class EaseInOutCircularTest
 {
 
     /** {@inheritDoc} */
-    protected AbstractEasingFunction createEasingFunction()
+    protected EasingFunction createEasingFunction()
     {
         return new EaseInOutCircular();
     }

@@ -31,22 +31,16 @@ package org.dishevelled.interpolate;
  * @version $Revision$ $Date$
  */
 public final class EaseOutElastic
-    extends AbstractEasingFunction
+    implements EasingFunction
 {
     /** <code>Math.PI * 2.0d</code>. */
     private static final double PI_TIMES_2 = Math.PI * 2.0d;
 
 
     /** {@inheritDoc} */
-    public String getName()
+    public String toString()
     {
         return "ease-out-elastic";
-    }
-
-    /** {@inheritDoc} */
-    public String getDescription()
-    {
-        return "Ease-out elastic interpolation function";
     }
 
     /** {@inheritDoc} */

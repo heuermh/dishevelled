@@ -39,7 +39,7 @@ public final class EasingFunctionsTest
     {
         assertNotNull(EasingFunctions.VALUES);
         assertFalse(EasingFunctions.VALUES.isEmpty());
-        for (AbstractEasingFunction function : EasingFunctions.VALUES)
+        for (EasingFunction function : EasingFunctions.VALUES)
         {
             assertNotNull(function);
         }

@@ -23,42 +23,47 @@
 */
 package org.dishevelled.interpolate;
 
-import java.util.Random;
-
 /**
- * Random threshold interpolation function.  Generates random values (in red)
- * between <code>0.0d</code> and the value.  May be composed with an easing function (in blue).
- * <p><img src="../../../../images/random-threshold.png" alt="random threshold graph" /></p>
+ * Composite easing function, <code>g(h(value))</code>.
  *
- * @see EasingFunctions#compose
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public final class RandomThreshold
+public final class CompositeEasingFunction
     implements EasingFunction
 {
-    /** Source of randomness. */
-    private final Random random;
+    /** Easing function g, in <code>g(h(value))</code>. */
+    private final EasingFunction g;
+
+    /** Easing function h, in <code>g(h(value))</code>. */
+    private final EasingFunction h;
 
 
     /**
-     * Create a new random threshold interpolation function with the specified source of randomness.
+     * Create a new composite easing function <code>g(h(value))</code> with the
+     * specified easing functions <code>g</code> and <code>h</code>.
      *
-     * @param random source of randomness, must not be null
+     * @param g easing function g, in <code>g(h(value))</code>, must not be null
+     * @param h easing function h, in <code>g(h(value))</code>, must not be null
      */
-    public RandomThreshold(final Random random)
+    public CompositeEasingFunction(final EasingFunction g, final EasingFunction h)
     {
-        if (random == null)
+        if (g == null)
         {
-            throw new IllegalArgumentException("random must not be null");
+            throw new IllegalArgumentException("g must not be null");
         }
-        this.random = random;
+        if (h == null)
+        {
+            throw new IllegalArgumentException("h must not be null");
+        }
+        this.g = g;
+        this.h = h;
     }
 
 
     /** {@inheritDoc} */
-    public final Double evaluate(final Double value)
+    public Double evaluate(final Double value)
     {
-        return Math.max(0.0d, random.nextDouble() * value);
+        return g.evaluate(h.evaluate(value));
     }
 }

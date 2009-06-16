@@ -30,7 +30,7 @@ package org.dishevelled.interpolate;
  * @version $Revision$ $Date$
  */
 abstract class AbstractBounceEasingFunction
-    extends AbstractEasingFunction
+    implements EasingFunction
 {
 
     /**

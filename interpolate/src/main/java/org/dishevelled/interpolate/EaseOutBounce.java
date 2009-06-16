@@ -35,15 +35,9 @@ public final class EaseOutBounce
 {
 
     /** {@inheritDoc} */
-    public String getName()
+    public String toString()
     {
         return "ease-out-bounce";
-    }
-
-    /** {@inheritDoc} */
-    public String getDescription()
-    {
-        return "Ease-out bounce interpolation function";
     }
 
     /** {@inheritDoc} */

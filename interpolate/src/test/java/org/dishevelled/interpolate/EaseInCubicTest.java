@@ -34,7 +34,7 @@ public final class EaseInCubicTest
 {
 
     /** {@inheritDoc} */
-    protected AbstractEasingFunction createEasingFunction()
+    protected EasingFunction createEasingFunction()
     {
         return new EaseInCubic();
     }

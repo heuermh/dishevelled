@@ -34,7 +34,7 @@ public final class EaseOutBounceTest
 {
 
     /** {@inheritDoc} */
-    protected AbstractEasingFunction createEasingFunction()
+    protected EasingFunction createEasingFunction()
     {
         return new EaseOutBounce();
     }

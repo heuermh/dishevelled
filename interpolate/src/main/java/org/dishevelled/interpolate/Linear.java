@@ -31,19 +31,13 @@ package org.dishevelled.interpolate;
  * @version $Revision$ $Date$
  */
 public final class Linear
-    extends AbstractEasingFunction
+    implements EasingFunction
 {
 
     /** {@inheritDoc} */
-    public String getName()
+    public String toString()
     {
         return "linear";
-    }
-
-    /** {@inheritDoc} */
-    public String getDescription()
-    {
-        return "Linear easing interpolation function";
     }
 
     /** {@inheritDoc} */
