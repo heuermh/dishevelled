@@ -56,14 +56,18 @@ import ${s.PackageName}.${s.Upper};
 import ${r.PackageName}.${r.Upper};
 #end
 #end
+import java.util.Map;
+import java.util.HashMap;
+
+import static com.google.collect.ImmutableMap.copyOf;
 
 /**
- * ${cd.Description}.
+ * ${StringUtils.capitalize($cd.Description)}.
  *
  * @author ${cd.Author}
  * @version ${cd.Version}
  */
-public class ${cd.Upper}
+public enum ${cd.Upper}
 #if ($cd.Specializes.size() > 0)
     extends #foreach ($s in $cd.Specializes)${s.Upper}#if ($velocityCount < ($cd.Specializes.size() - 1)), #end#end
 #end
@@ -71,6 +75,23 @@ public class ${cd.Upper}
     implements #foreach ($r in $cd.Realizes)${r.Upper}#if ($velocityCount < ($cd.Realizes.size() - 1)), #end#end
 #end
 {
+    /** ${StringUtils.capitalize($cd.Description)}. */
+    ${CodegenUtils.makeUppercaseWithUnderscores($cd.Upper)}(...);
+
+    /** Map of ${cd.Description}s keyed by name and lowercase-with-dashes name. */
+    private static final Map<String, ${cd.Upper}> ${CodegenUtils.makeUppercaseWithUnderscores($cd.Upper)}S;
+
+    static
+    {
+        Map<String, ${cd.Upper}> tmp = new HashMap<String, ${cd.Upper}>();
+        for (${cd.Upper} ${cd.Mixed} : values())
+        {
+            tmp.put(${cd.Mixed}.name(), ${cd.Mixed});
+            tmp.put(${cd.Mixed}.lowercaseName(), ${cd.Mixed});
+        }
+        ${CodegenUtils.makeUppercaseWithUnderscores($cd.Upper)}S = copyOf(tmp);
+    }
+
 #foreach ($a in $cd.Attributes)
 #set ($r = $a.Role)
 #if ($a.Cardinality.toString() == "ZeroToOne")
@@ -116,6 +137,7 @@ public class ${cd.Upper}
 #end
 #end
 
+#if (($cd.Associations.size() > 0) || ($cd.Attributes.size() > 0))
     /**
      * Create a new ${cd.Lower} from the specified parameters.
      *
@@ -123,14 +145,14 @@ public class ${cd.Upper}
 #if ($a.Cardinality.toString() == "ZeroToMany")
 #set ($r = $a.Role)
      * <p>The ${r.Lower}s in <code>${r.Mixed}s</code> are copied defensively
-     * into this class.</p>
+     * into this enum.</p>
      *
 #elseif ($a.Cardinality.toString() == "OneToMany")
 #set ($r = $a.Role)
 #set ($coll = $a.CollectionDescription)
      * <p>The specified ${coll.InterfaceDescription} of ${r.Lower}s must contain at least one ${r.Lower}.
      * The ${r.Lower}s in <code>${r.Mixed}s</code> are copied defensively
-     * into this class.</p>
+     * into this enum.</p>
      *
 #end
 #end
@@ -138,14 +160,14 @@ public class ${cd.Upper}
 #if ($a.Cardinality.toString() == "ZeroToMany")
 #set ($r = $a.Role)
      * <p>The ${r.Lower}s in <code>${r.Mixed}s</code> are copied defensively
-     * into this class.</p>
+     * into this enum.</p>
      *
 #elseif ($a.Cardinality.toString() == "OneToMany")
 #set ($r = $a.Role)
 #set ($coll = $a.CollectionDescription)
      * <p>The specified ${coll.InterfaceDescription} of ${r.Lower}s must contain at least one ${r.Lower}.
      * The ${r.Lower}s in <code>${r.Mixed}s</code> are copied defensively
-     * into this class.</p>
+     * into this enum.</p>
      *
 #end
 #end
@@ -194,7 +216,7 @@ public class ${cd.Upper}
 #end
 #end
      */
-    public ${cd.Upper}(
+    private ${cd.Upper}(
 #foreach ($a in $cd.Attributes)
 #set ($r = $a.Role)
 #if (($a.Cardinality.toString() == "ZeroToOne") || ($a.Cardinality.toString() == "StrictlyOne"))
@@ -281,6 +303,7 @@ public class ${cd.Upper}
 #end
     }
 
+#end
 #foreach ($a in $cd.Attributes)
 #set ($r = $a.Role)
 #if ($a.Cardinality.toString() == "ZeroToOne")
@@ -291,7 +314,7 @@ public class ${cd.Upper}
      *
      * @return the ${r.Lower} for this ${cd.Lower}
      */
-    public final ${a.Upper} get${r.Upper}()
+    public ${a.Upper} get${r.Upper}()
     {
         return ${r.Mixed};
     }
@@ -303,7 +326,7 @@ public class ${cd.Upper}
      *
      * @return the ${r.Lower} for this ${cd.Lower}
      */
-    public final ${a.Upper} get${r.Upper}()
+    public ${a.Upper} get${r.Upper}()
     {
         return ${r.Mixed};
     }
@@ -318,9 +341,9 @@ public class ${cd.Upper}
      * @return an unmodifiable ${coll.InterfaceDescription} of ${r.Lower}s
      *    for this ${cd.Lower}
      */
-    public final ${coll.InterfaceName}<${a.Upper}> get${r.Upper}s()
+    public ${coll.InterfaceName}<${a.Upper}> get${r.Upper}s()
     {
-        return ${r.Mixed};
+        return ${r.Mixed}s;
     }
 #elseif ($a.Cardinality.toString() == "OneToMany")
 #set ($coll = $a.CollectionDescription)
@@ -333,9 +356,9 @@ public class ${cd.Upper}
      * @return an unmodifiable ${coll.InterfaceDescription} of ${r.Lower}s
      *    for this ${cd.Lower}
      */
-    public final ${coll.InterfaceName}<${a.Upper}> get${r.Upper}s()
+    public ${coll.InterfaceName}<${a.Upper}> get${r.Upper}s()
     {
-        return ${r.Mixed};
+        return ${r.Mixed}s;
     }
 #end
 #end
@@ -349,7 +372,7 @@ public class ${cd.Upper}
      *
      * @return the ${r.Lower} for this ${cd.Lower}
      */
-    public final ${a.Upper} get${r.Upper}()
+    public ${a.Upper} get${r.Upper}()
     {
         return ${r.Mixed};
     }
@@ -361,7 +384,7 @@ public class ${cd.Upper}
      *
      * @return the ${r.Lower} for this ${cd.Lower}
      */
-    public final ${a.Upper} get${r.Upper}()
+    public ${a.Upper} get${r.Upper}()
     {
         return ${r.Mixed};
     }
@@ -376,9 +399,9 @@ public class ${cd.Upper}
      * @return an unmodifiable ${coll.InterfaceDescription} of ${r.Lower}s
      *    for this ${cd.Lower}
      */
-    public final ${coll.interfaceName}<${a.Upper}> get${r.Upper}s()
+    public ${coll.interfaceName}<${a.Upper}> get${r.Upper}s()
     {
-        return ${r.Mixed};
+        return ${r.Mixed}s;
     }
 #elseif ($a.Cardinality.toString() == "OneToMany")
 #set ($coll = $a.CollectionDescription)
@@ -391,10 +414,35 @@ public class ${cd.Upper}
      * @return an unmodifiable ${coll.InterfaceDescription} of ${r.Lower}s
      *    for this ${cd.Lower}
      */
-    public final ${coll.InterfaceName}<${a.Upper}> get${r.Upper}s()
+    public ${coll.InterfaceName}<${a.Upper}> get${r.Upper}s()
     {
-        return ${r.Mixed};
+        return ${r.Mixed}s;
     }
 #end
 #end
+
+    /**
+     * Return the name of this ${cd.Description} in <code>lowercase-with-dashes</code> style.
+     *
+     * @return the name of this ${cd.Description} in <code>lowercase-with-dashes</code> style
+     */
+    public String lowercaseName()
+    {
+        return name().toLowerCase().replace('_', '-');
+    }
+
+
+    /**
+     * Return the ${cd.Description} with the specified name, if any.  The name may
+     * be specified in either <code>UPPERCASE_WITH_UNDERSCORES</code>
+     * or <code>lowercase-with-dashes</code> style.
+     *
+     * @param name name
+     * @return the ${cd.Description} with the specified name, or <code>null</code>
+     *    if no such ${cd.Description} exists
+     */
+    public ${cd.Upper} valueOf(final String name)
+    {
+        return ${CodegenUtils.makeUppercaseWithUnderscores($cd.Upper)}S.get(name);
+    }
 }

@@ -31,6 +31,7 @@ import org.apache.commons.lang.StringUtils;
 
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
+
 import org.apache.velocity.app.Velocity;
 
 /**
@@ -78,6 +79,7 @@ public final class Codegen
 
             VelocityContext context = new VelocityContext();
             context.put("id", id);
+            context.put("CodegenUtils", new CodegenUtils());
             context.put("StringUtils", new StringUtils());
 
             Template template = Velocity.getTemplate("org/dishevelled/codegen/Interface.wm");
@@ -128,6 +130,7 @@ public final class Codegen
 
             VelocityContext context = new VelocityContext();
             context.put("id", id);
+            context.put("CodegenUtils", new CodegenUtils());
             context.put("StringUtils", new StringUtils());
 
             Template template = Velocity.getTemplate("org/dishevelled/codegen/AbstractInterfaceTest.wm");
@@ -183,6 +186,7 @@ public final class Codegen
 
             VelocityContext context = new VelocityContext();
             context.put("cd", cd);
+            context.put("CodegenUtils", new CodegenUtils());
             context.put("StringUtils", new StringUtils());
 
             Template template = Velocity.getTemplate("org/dishevelled/codegen/" + style + ".wm");
@@ -239,6 +243,7 @@ public final class Codegen
 
             VelocityContext context = new VelocityContext();
             context.put("cd", cd);
+            context.put("CodegenUtils", new CodegenUtils());
             context.put("StringUtils", new StringUtils());
 
             Template template = Velocity.getTemplate("org/dishevelled/codegen/" + style + "Builder.wm");
@@ -294,9 +299,110 @@ public final class Codegen
 
             VelocityContext context = new VelocityContext();
             context.put("cd", cd);
+            context.put("CodegenUtils", new CodegenUtils());
             context.put("StringUtils", new StringUtils());
 
             Template template = Velocity.getTemplate("org/dishevelled/codegen/" + style + "Test.wm");
+            template.merge(context, fw);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            System.exit(1);
+        }
+        finally
+        {
+            try
+            {
+                fw.close();
+            }
+            catch (Exception e)
+            {
+                // empty
+            }
+        }
+    }
+
+    /**
+     * Generate an enum source file for the specified class description.
+     *
+     * @param cd class description, must not be null
+     */
+    public static void generateEnum(final ClassDescription cd)
+    {
+        if (cd == null)
+        {
+            throw new IllegalArgumentException("cd must not be null");
+        }
+
+        FileWriter fw = null;
+        try
+        {
+            Properties p = new Properties();
+            p.setProperty("resource.loader", "class");
+            p.setProperty("class.resource.loader.class",
+                          "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
+
+            Velocity.init(p);
+
+            fw = new FileWriter(cd.getUpper() + ".java");
+
+            VelocityContext context = new VelocityContext();
+            context.put("cd", cd);
+            context.put("CodegenUtils", new CodegenUtils());
+            context.put("StringUtils", new StringUtils());
+
+            Template template = Velocity.getTemplate("org/dishevelled/codegen/Enum.wm");
+            template.merge(context, fw);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            System.exit(1);
+        }
+        finally
+        {
+            try
+            {
+                fw.close();
+            }
+            catch (Exception e)
+            {
+                // empty
+            }
+        }
+    }
+
+    /**
+     * Generate an enum with lookup source file for the specified class description.
+     *
+     * @param cd class description, must not be null
+     */
+    public static void generateEnumWithLookup(final ClassDescription cd)
+    {
+        if (cd == null)
+        {
+            throw new IllegalArgumentException("cd must not be null");
+        }
+
+        FileWriter fw = null;
+        try
+        {
+            Properties p = new Properties();
+            p.setProperty("resource.loader", "class");
+            p.setProperty("class.resource.loader.class",
+                          "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
+
+            Velocity.init(p);
+
+            fw = new FileWriter(cd.getUpper() + ".java");
+
+            VelocityContext context = new VelocityContext();
+            context.put("cd", cd);
+            context.put("CodegenUtils", new CodegenUtils());
+            context.put("StringUtils", new StringUtils());
+
+            Template template = Velocity.getTemplate("org/dishevelled/codegen/EnumWithLookup.wm");
             template.merge(context, fw);
         }
         catch (Exception e)

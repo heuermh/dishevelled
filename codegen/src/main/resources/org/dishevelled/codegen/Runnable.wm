@@ -150,7 +150,6 @@ public class ${cd.Upper}
         }
 #end
 #end
-
 #foreach ($a in $cd.Attributes)
 #set ($r = $a.Role)
 #if ($a.Cardinality.toString() == "ZeroToOne")
@@ -243,7 +242,6 @@ public class ${cd.Upper}
         }
 #end
 #end
-
 #foreach ($a in $cd.Attributes)
 #set ($r = $a.Role)
 #if (($a.Cardinality.toString() == "ZeroToOne") || ($a.Cardinality.toString() == "StrictlyOne"))
