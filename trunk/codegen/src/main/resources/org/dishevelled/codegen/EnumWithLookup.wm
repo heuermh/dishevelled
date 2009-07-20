@@ -59,7 +59,8 @@ import ${r.PackageName}.${r.Upper};
 import java.util.Map;
 import java.util.HashMap;
 
-import static com.google.collect.ImmutableMap.copyOf;
+//import static com.google.common.collect.ImmutableMap.copyOf;
+import static org.dishevelled.collect.Maps.*;
 
 /**
  * ${StringUtils.capitalize($cd.Description)}.
@@ -83,13 +84,15 @@ public enum ${cd.Upper}
 
     static
     {
-        Map<String, ${cd.Upper}> tmp = new HashMap<String, ${cd.Upper}>();
+        //Map<String, ${cd.Upper}> tmp = new HashMap<String, ${cd.Upper}>();
+        Map<String, ${cd.Upper}> tmp = createMap();
         for (${cd.Upper} ${cd.Mixed} : values())
         {
             tmp.put(${cd.Mixed}.name(), ${cd.Mixed});
             tmp.put(${cd.Mixed}.lowercaseName(), ${cd.Mixed});
         }
-        ${CodegenUtils.makeUppercaseWithUnderscores($cd.Upper)}S = copyOf(tmp);
+        //${CodegenUtils.makeUppercaseWithUnderscores($cd.Upper)}S = copyOf(tmp);
+        ${CodegenUtils.makeUppercaseWithUnderscores($cd.Upper)}S = immutableMap(tmp);
     }
 
 #foreach ($a in $cd.Attributes)
@@ -441,7 +444,7 @@ public enum ${cd.Upper}
      * @return the ${cd.Description} with the specified name, or <code>null</code>
      *    if no such ${cd.Description} exists
      */
-    public ${cd.Upper} valueOf(final String name)
+    public ${cd.Upper} parse${cd.Upper}(final String name)
     {
         return ${CodegenUtils.makeUppercaseWithUnderscores($cd.Upper)}S.get(name);
     }
