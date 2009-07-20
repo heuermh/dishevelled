@@ -83,7 +83,7 @@ public final class ClassDescription
         this.mixed = CodegenUtils.makeMixedCase(name);
         this.upper = CodegenUtils.makeUppercase(name);
         this.description = CodegenUtils.makeDescription(name);
-        this.author = "codegen";
+        this.author = " codegen";
         this.version = "$Revision$ $Date$";
         this.specializes = new LinkedHashSet<ClassDescription>();
         this.realizes = new LinkedHashSet<InterfaceDescription>();
