@@ -64,7 +64,7 @@ public class Sprite
     /**
      * Create a new piccolo sprite node from the specified required parameters.
      *
-     * <p>The specified animation must be contained in the set of animations for this piccolo
+     * <p>The specified current animation must be contained in the set of animations for this piccolo
      * sprite node.</p>
      *
      * <p>The specified set of animations must contain at least one animation.
