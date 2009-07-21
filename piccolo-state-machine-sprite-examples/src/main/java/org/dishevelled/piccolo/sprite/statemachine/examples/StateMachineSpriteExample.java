@@ -76,7 +76,7 @@ public final class StateMachineSpriteExample
 
         Random random = new Random();
         walkingSprites = new CopyOnWriteArrayList<WalkingSprite>();
-        for (int i = 0; i < 2; i++)
+        for (int i = 0; i < 50; i++)
         {
             WalkingSprite walkingSprite = new WalkingSprite();
             walkingSprite.setWidth(18.0);
