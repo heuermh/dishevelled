@@ -91,10 +91,10 @@ import org.xml.sax.SAXException;
  * on entry by the state machine engine.
  * <pre>
  * private void normal() {
- * //
+ *   walkingActivity.stop();
  * }
  * private void walking() {
- * //
+ *   walkingActivity.start();
  * }
  * </pre>
  * <p>
@@ -104,7 +104,7 @@ import org.xml.sax.SAXException;
  * <code>null</code> if no such animation exists.
  * <pre>
  *   protected Animation createAnimation(final String id) {
- *     Image image = loadImage(id + ".png");
+ *     Image image = loadImage(getClass(), id + ".png");
  *     return Animations.createAnimation(image);
  *   }
  * </pre>
@@ -115,19 +115,19 @@ import org.xml.sax.SAXException;
  * <pre>
  * class MySprite extends AbstractStateMachineSprite {
  *   // walking activity
- *   private PActivity walkingActivity = ...;
+ *   private final WalkingActivity walkingActivity = ...;
  *   // load the state machine backing all instances of this MySprite
  *   private static final SCXML stateMachine = loadStateMachine(MySprite.class, "stateMachine.xml");
  *
  *   MySprite() {
  *     super();
- *    // initialize the state machine
+ *     // initialize the state machine
  *     initializeStateMachine(stateMachine);
  *   }
  *
  *   protected Animation createAnimation(final String id) {
- *    // load a single PNG image for each state id
- *     Image image = loadImage(id + ".png");
+ *     // load a single PNG image for each state id
+ *     Image image = loadImage(getClass(), id + ".png");
  *     return Animations.createAnimation(image);
  *   }
  *
@@ -187,6 +187,11 @@ public abstract class AbstractStateMachineSprite
     /**
      * Initialize the specified state machine.  Animations are loaded for all
      * the state ids and the current animation is set to the initial target, if any.
+     *
+     * <p>
+     * <b>Note:</b> this method should be called from the constructor
+     * of a subclass after its state machine has been instantiated.
+     * </p>
      *
      * @param stateMachine state machine to initialize, must not be null
      */
@@ -297,11 +302,13 @@ public abstract class AbstractStateMachineSprite
     }
 
     /**
-     * Load the state machine resource with the specified name, if any.
+     * Load the state machine resource with the specified name, if any.  Any exceptions thrown
+     * will be ignored.
      *
      * @param cls class
      * @param name name
-     * @return the state machine resource with the specified name, or null if no such resource exists
+     * @return the state machine resource with the specified name, or <code>null</code>
+     *    if no such resource exists
      */
     protected static final SCXML loadStateMachine(final Class cls, final String name)
     {
@@ -326,11 +333,13 @@ public abstract class AbstractStateMachineSprite
     }
 
     /**
-     * Load the image resource with the specified name, if any.
+     * Load the image resource with the specified name, if any.  Any exceptions thrown will be
+     * ignored.
      *
      * @param cls class
      * @param name name
-     * @return the image resource with the specified name, or null if no such resource exists
+     * @return the image resource with the specified name, or <code>null</code> if no such
+     *    resource exists
      */
     protected static final BufferedImage loadImage(final Class cls, final String name)
     {
@@ -341,7 +350,7 @@ public abstract class AbstractStateMachineSprite
         }
         catch (IOException e)
         {
-            e.printStackTrace();
+            // ignore
         }
         return image;
     }
