@@ -60,7 +60,7 @@ public final class WalkingSprite
     private static final List<Image> WALKING = Animations.createFrameList(SPRITE_SHEET, 0, 0, 18, 28, 2);
 
     /** Walking activity. */
-    private PActivity walkingActivity;
+    private final PActivity walkingActivity = new WalkingActivity();
 
 
     /**
@@ -119,7 +119,6 @@ public final class WalkingSprite
      */
     private void walking()
     {
-        walkingActivity = new WalkingActivity();
         addActivity(walkingActivity);
     }
 
