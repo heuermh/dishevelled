@@ -41,7 +41,7 @@ import javax.imageio.ImageIO;
  * Static utility methods for creating animations.
  *
  * @author  Michael Heuer
- * @version $Revision $ $Date$
+ * @version $Revision$ $Date$
  */
 public final class Animations
 {
@@ -156,13 +156,14 @@ public final class Animations
      * @param y starting location y
      * @param width frame width
      * @param height frame height
-     * @param frame number of frames
+     * @param frames number of frames
      * @return a new looped frames animation containing all the frame images
      *    from <code>spriteSheet</code> as specified by the starting location <code>(x, y)</code>
      *    and read horizontally the specified number of frames
      * @throws IOException if an IO error occurs
      */
-    public static LoopedFramesAnimation createAnimation(final File spriteSheet, final int x, final int y, final int width, final int height, final int frames)
+    public static LoopedFramesAnimation createAnimation(final File spriteSheet, final int x, final int y,
+                                                        final int width, final int height, final int frames)
         throws IOException
     {
         BufferedImage bufferedImage = ImageIO.read(spriteSheet);
@@ -179,13 +180,14 @@ public final class Animations
      * @param y starting location y
      * @param width frame width
      * @param height frame height
-     * @param frame number of frames
+     * @param frames number of frames
      * @return a new looped frames animation containing all the frame images
      *    from <code>spriteSheet</code> as specified by the starting location <code>(x, y)</code>
      *    and read horizontally the specified number of frames
      * @throws IOException if an IO error occurs
      */
-    public static LoopedFramesAnimation createAnimation(final URL spriteSheet, final int x, final int y, final int width, final int height, final int frames)
+    public static LoopedFramesAnimation createAnimation(final URL spriteSheet, final int x, final int y,
+                                                        final int width, final int height, final int frames)
         throws IOException
     {
         BufferedImage bufferedImage = ImageIO.read(spriteSheet);
@@ -202,13 +204,13 @@ public final class Animations
      * @param y starting location y
      * @param width frame width
      * @param height frame height
-     * @param frame number of frames
+     * @param frames number of frames
      * @return a new looped frames animation containing all the frame images
      *    from <code>spriteSheet</code> as specified by the starting location <code>(x, y)</code>
      *    and read horizontally the specified number of frames
-     * @throws IOException if an IO error occurs
      */
-    public static LoopedFramesAnimation createAnimation(final BufferedImage spriteSheet, final int x, final int y, final int width, final int height, final int frames)
+    public static LoopedFramesAnimation createAnimation(final BufferedImage spriteSheet, final int x, final int y,
+                                                        final int width, final int height, final int frames)
     {
         if (spriteSheet == null)
         {

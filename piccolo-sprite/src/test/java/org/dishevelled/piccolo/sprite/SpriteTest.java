@@ -28,6 +28,8 @@ import java.awt.Image;
 
 import java.awt.image.BufferedImage;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 import java.util.HashSet;
 import java.util.Collections;
@@ -116,8 +118,10 @@ public class SpriteTest
 
     public void testSprite()
     {
-        Image image = new BufferedImage(10, 10, BufferedImage.TYPE_INT_ARGB);
-        Animation animation = new SingleFrameAnimation(image);
+        Image image0 = new BufferedImage(10, 10, BufferedImage.TYPE_INT_ARGB);
+        Image image1 = new BufferedImage(10, 10, BufferedImage.TYPE_INT_ARGB);
+        List<Image> images = Arrays.asList(new Image[] { image0, image1 });
+        Animation animation = new LoopedFramesAnimation(images);
         Set<Animation> animations = Collections.singleton(animation);
         Sprite sprite = new Sprite(animation, animations);
 
@@ -153,7 +157,7 @@ public class SpriteTest
 
         try
         {
-            Animation invalidAnimation = new SingleFrameAnimation(image);
+            Animation invalidAnimation = new SingleFrameAnimation(image0);
             sprite.setCurrentAnimation(invalidAnimation);
             fail("setCurrentAnimation(invalidAnimation) expected IllegalArgumentException");
         }
@@ -162,7 +166,7 @@ public class SpriteTest
             // expected
         }
 
-        Animation animation1 = new SingleFrameAnimation(image);
+        Animation animation1 = new SingleFrameAnimation(image0);
         sprite.addAnimation(animation1);
         sprite.setCurrentAnimation(animation1);
 
