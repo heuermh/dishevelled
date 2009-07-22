@@ -23,7 +23,11 @@
 */
 package org.dishevelled.piccolo.sprite.statemachine.examples;
 
+import java.awt.Image;
+
 import java.awt.image.BufferedImage;
+
+import java.util.List;
 
 import edu.umd.cs.piccolo.activities.PActivity;
 
@@ -49,6 +53,12 @@ public final class WalkingSprite
     /** Sprite sheet. */
     private static final BufferedImage SPRITE_SHEET = loadImage(WalkingSprite.class, "weakGreenSoldierLeft.png");
 
+    /** Normal animation frames. */
+    private static final List<Image> NORMAL = Animations.createFrameList(SPRITE_SHEET, 0, 28, 18, 28, 4);
+
+    /** Walking animation frames. */
+    private static final List<Image> WALKING = Animations.createFrameList(SPRITE_SHEET, 0, 0, 18, 28, 2);
+
     /** Walking activity. */
     private PActivity walkingActivity;
 
@@ -68,11 +78,11 @@ public final class WalkingSprite
     {
         if ("normal".equals(id))
         {
-            return Animations.createAnimation(SPRITE_SHEET, 0, 28, 18, 28, 4);
+            return Animations.createAnimation(NORMAL);
         }
         else if ("walking".equals(id))
         {
-            return Animations.createAnimation(SPRITE_SHEET, 0, 0, 18, 28, 2);
+            return Animations.createAnimation(WALKING);
         }
         return null;
     }
