@@ -108,7 +108,7 @@ public final class WalkingSprite
      */
     private void normal()
     {
-        if ((walkingActivity != null) && (walkingActivity.isStepping()))
+        if (walkingActivity.isStepping())
         {
             walkingActivity.terminate(PActivity.TERMINATE_WITHOUT_FINISHING);
         }
