@@ -31,6 +31,9 @@ import java.awt.event.ActionListener;
 
 import java.io.IOException;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
@@ -107,6 +110,26 @@ public final class StateMachineSpriteExample
             walkingSprites.add(walkingSprite);
         }
 
+        // put sprites in correct z-order based on y-location
+        List<WalkingSprite> toSort = new ArrayList<WalkingSprite>(walkingSprites);
+        Collections.sort(toSort, new Comparator<WalkingSprite>()
+            {
+                /** {@inheritDoc} */
+                public int compare(final WalkingSprite walkingSprite0, final WalkingSprite walkingSprite1)
+                {
+                    if (walkingSprite0 == walkingSprite1)
+                    {
+                        return 0;
+                    }
+                    return Double.compare(walkingSprite0.getFullBoundsReference().getY(), walkingSprite1.getFullBoundsReference().getY());
+                }
+            });
+        for (WalkingSprite walkingSprite : toSort)
+        {
+            walkingSprite.moveToFront();
+        }
+
+        // animation frame rate timer
         Timer timer = new Timer((int) (1000 / 3), new ActionListener()
             {
                 /** {@inheritDoc} */
@@ -122,6 +145,7 @@ public final class StateMachineSpriteExample
         timer.setRepeats(true);
         timer.start();
 
+        // set some sprites walking every five seconds
         Timer timer2 = new Timer(5000, new ActionListener()
             {
                 /** {@inheritDoc} */
@@ -139,6 +163,7 @@ public final class StateMachineSpriteExample
         timer2.setRepeats(true);
         timer2.start();
 
+        // stop some walking sprites every five seconds
         Timer timer3 = new Timer(5000, new ActionListener()
             {
                 /** {@inheritDoc} */
@@ -153,6 +178,7 @@ public final class StateMachineSpriteExample
                     }
                 }
             });
+        // offset by two and a half seconds
         timer3.setInitialDelay(2500);
         timer3.setRepeats(true);
         timer3.start();
