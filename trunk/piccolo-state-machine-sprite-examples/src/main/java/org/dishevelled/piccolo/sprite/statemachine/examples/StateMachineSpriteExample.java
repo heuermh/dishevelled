@@ -24,6 +24,7 @@
 package org.dishevelled.piccolo.sprite.statemachine.examples;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -57,6 +58,9 @@ public final class StateMachineSpriteExample
     extends JPanel
     implements Runnable
 {
+    /** Source of randomness. */
+    private final Random random;
+
     /** List of walking sprites. */
     private final List<WalkingSprite> walkingSprites;
 
@@ -72,9 +76,11 @@ public final class StateMachineSpriteExample
         canvas.setDefaultRenderQuality(PPaintContext.LOW_QUALITY_RENDERING);
         canvas.setAnimatingRenderQuality(PPaintContext.LOW_QUALITY_RENDERING);
         canvas.setInteractingRenderQuality(PPaintContext.LOW_QUALITY_RENDERING);
+        canvas.setOpaque(true);
+        canvas.setBackground(new Color(0, 64, 0));
         PLayer layer = canvas.getLayer();
 
-        Random random = new Random();
+        random = new Random();
         walkingSprites = new CopyOnWriteArrayList<WalkingSprite>();
         for (int i = 0; i < 50; i++)
         {
@@ -82,6 +88,21 @@ public final class StateMachineSpriteExample
             walkingSprite.setWidth(18.0);
             walkingSprite.setHeight(28.0);
             walkingSprite.offset(random.nextDouble() * 400.0d, random.nextDouble() * 400.0d);
+
+            // randomly tweak the starting animation frame
+            if (random.nextDouble() > 0.5d)
+            {
+                walkingSprite.advance();
+            }
+            if (random.nextDouble() > 0.5d)
+            {
+                walkingSprite.advance();
+            }
+            if (random.nextDouble() > 0.5d)
+            {
+                walkingSprite.advance();
+            }
+
             layer.addChild(walkingSprite);
             walkingSprites.add(walkingSprite);
         }
@@ -108,7 +129,10 @@ public final class StateMachineSpriteExample
                 {
                     for (WalkingSprite walkingSprite : walkingSprites)
                     {
-                        walkingSprite.walk();
+                        if (random.nextDouble() > 0.33d)
+                        {
+                            walkingSprite.walk();
+                        }
                     }
                 }
             });
@@ -122,7 +146,10 @@ public final class StateMachineSpriteExample
                 {
                     for (WalkingSprite walkingSprite : walkingSprites)
                     {
-                        walkingSprite.stop();
+                        if (random.nextDouble() > 0.33d)
+                        {
+                            walkingSprite.stop();
+                        }
                     }
                 }
             });
