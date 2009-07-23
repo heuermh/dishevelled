@@ -29,6 +29,9 @@ import java.awt.image.BufferedImage;
 
 import java.util.List;
 
+import edu.umd.cs.piccolo.event.PBasicInputEventHandler;
+import edu.umd.cs.piccolo.event.PInputEvent;
+
 import edu.umd.cs.piccolo.activities.PActivity;
 
 import org.apache.commons.scxml.model.SCXML;
@@ -70,6 +73,15 @@ public final class WalkingSprite
     {
         super();
         initializeStateMachine(STATE_MACHINE);
+
+        addInputEventListener(new PBasicInputEventHandler()
+            {
+                /** {@inheritDoc} */
+                public void mousePressed(final PInputEvent event)
+                {
+                    stop();
+                }
+            });
     }
 
 
