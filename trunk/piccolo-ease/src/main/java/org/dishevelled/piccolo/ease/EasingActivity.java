@@ -21,7 +21,7 @@
     > http://www.opensource.org/licenses/lgpl-license.php
 
 */
-package org.dishevelled.piccolo.easing;
+package org.dishevelled.piccolo.ease;
 
 import edu.umd.cs.piccolo.activities.PInterpolatingActivity;
 
