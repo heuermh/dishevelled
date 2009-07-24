@@ -23,25 +23,16 @@
 */
 package org.dishevelled.interpolate;
 
+import org.dishevelled.functor.UnaryFunction;
+
 /**
- * Easing interpolation function.
+ * Interpolation function.
  *
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public interface EasingFunction
-    extends Interpolation
+public interface Interpolation
+    extends UnaryFunction<Double, Double>
 {
-
-    /**
-     * {@inheritDoc}
-     *
-     * <p>
-     * The typical interval for an interpolation function is <code>0.0d</code> to
-     * <code>1.0d</code>, inclusive.  An easing interpolation function allows for
-     * overshooting this interval range in both directions, so the valid interval for
-     * returned values is <code>-1.0d</code> to <code>2.0d</code>, inclusive.
-     * </p>
-     */
-    Double evaluate(Double value);
+    // empty
 }
