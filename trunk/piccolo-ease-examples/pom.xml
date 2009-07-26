@@ -2,13 +2,13 @@
 <project>
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.dishevelled</groupId>
-  <artifactId>dsh-piccolo-identify-examples</artifactId>
+  <artifactId>dsh-piccolo-ease-examples</artifactId>
   <packaging>jar</packaging>
-  <name>dishevelled.org piccolo-identify-examples</name>
+  <name>dishevelled.org piccolo-ease-examples</name>
   <version>1.0-SNAPSHOT</version>
-  <description>Piccolo2D identifiable bean node examples.</description>
-  <url>http://www.dishevelled.org/piccolo-identify-examples</url>
-  <inceptionYear>2007</inceptionYear>
+  <description>Piccolo2D easing activities examples.</description>
+  <url>http://www.dishevelled.org/piccolo-ease-examples</url>
+  <inceptionYear>2009</inceptionYear>
   <mailingLists>
     <mailingList>
       <name>dishevelled.org announce mailing list</name>
@@ -49,9 +49,9 @@
     </license>
   </licenses>
   <scm>
-    <connection>scm:svn|http://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/piccolo-identify-examples</connection>
-    <developerConnection>scm:svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/piccolo-identify-examples</developerConnection>
-    <url>http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/trunk/piccolo-identify-examples</url>
+    <connection>scm:svn|http://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/piccolo-ease-examples</connection>
+    <developerConnection>scm:svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/piccolo-ease-examples</developerConnection>
+    <url>http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/trunk/piccolo-ease-examples</url>
   </scm>
   <organization>
     <name>dishevelled.org</name>
@@ -59,10 +59,6 @@
   </organization>
   <build>
     <resources>
-      <resource>
-        <directory>src/main/resources</directory>
-        <filtering>false</filtering>
-      </resource>
       <resource>
         <targetPath>META-INF</targetPath>
         <filtering>false</filtering>
@@ -73,41 +69,43 @@
         </includes>
       </resource>
     </resources>
-    <plugins>
-      <plugin>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <configuration>
-          <source>1.5</source>
-          <target>1.5</target>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-assembly-plugin</artifactId>
-        <configuration>
-          <archive>
-            <manifest>
-              <mainClass>org.dishevelled.piccolo.identify.examples.IdNodeExample</mainClass>
-            </manifest>
-          </archive>
-          <descriptorRefs>
-            <descriptorRef>jar-with-dependencies</descriptorRef>
-          </descriptorRefs>
-        </configuration>
-      </plugin>
-    </plugins>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <configuration>
+            <source>1.5</source>
+            <target>1.5</target>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-assembly-plugin</artifactId>
+          <configuration>
+            <archive>
+              <manifest>
+                <mainClass>org.dishevelled.piccolo.ease.examples.EasingActivityExample</mainClass>
+              </manifest>
+            </archive>
+            <descriptorRefs>
+              <descriptorRef>jar-with-dependencies</descriptorRef>
+            </descriptorRefs>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
   </build>
   <dependencies>
     <dependency>
       <groupId>org.dishevelled</groupId>
-      <artifactId>dsh-piccolo-identify</artifactId>
+      <artifactId>dsh-piccolo-ease</artifactId>
       <version>1.0-SNAPSHOT</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
-      <groupId>org.dishevelled</groupId>
-      <artifactId>dsh-iconbundle-tango</artifactId>
-      <version>1.0-SNAPSHOT</version>
+      <groupId>org.piccolo2d</groupId>
+      <artifactId>piccolo2d-core</artifactId>
+      <version>1.2.1</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
@@ -130,7 +128,13 @@
         <artifactId>maven-javadoc-plugin</artifactId>
         <configuration>
           <!-- todo:  must manually update the copyright dates here -->
-          <bottom>Copyright (c) 2007-2009 held jointly by the individual authors. Licensed under the &lt;a href="http://www.fsf.org/licensing/licenses/lgpl.html"&gt;GNU Lesser General Public License&lt;a&gt; (LGPL).</bottom>
+          <bottom>Copyright (c) 2009 held jointly by the individual authors. Licensed under the &lt;a href="http://www.fsf.org/licensing/licenses/lgpl.html"&gt;GNU Lesser General Public License&lt;a&gt; (LGPL).</bottom>
+          <source>1.5</source>
+          <verbose>false</verbose>
+          <show>public</show>
+          <links>
+            <link>http://java.sun.com/j2se/1.5.0/docs/api</link>
+          </links>
         </configuration>
       </plugin>
       <plugin>
@@ -140,7 +144,6 @@
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>cobertura-maven-plugin</artifactId>
-        <version>2.0</version>
       </plugin>
     </plugins>
   </reporting>
