@@ -115,14 +115,6 @@ public final class ExplorerIdNode
         textSelection.setPaint(UIManager.getColor("List.selectionBackground"));
         textSelection.setStrokePaint(UIManager.getColor("List.selectionBackground"));
         textSelection.setVisible(true);
-    /*
-        setTransparency(1.0f);
-        setIconState(IconState.SELECTED);
-        getNameTextNode().setTextPaint(Color.WHITE);
-        textSelection.setPaint(UIManager.getColor("List.selectionBackground"));
-        textSelection.setStrokePaint(UIManager.getColor("List.selectionBackground"));
-        textSelection.setVisible(true);
-    */
     }
 
     /**
@@ -132,8 +124,7 @@ public final class ExplorerIdNode
     {
         setTransparency(1.0f);
         setIconState(IconState.NORMAL);
-        getNameTextNode().setTextPaint(Color.WHITE);
-        //getNameTextNode().setTextPaint(Color.BLACK);
+        getNameTextNode().setTextPaint(Color.BLACK);
         textSelection.setVisible(false);
     }
 
