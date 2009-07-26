@@ -24,17 +24,9 @@
 package org.dishevelled.piccolo.identify.examples;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Font;
-import java.awt.Image;
-
-import java.awt.image.BufferedImage;
-
-import java.io.IOException;
 
 import java.util.Iterator;
-
-import javax.imageio.ImageIO;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -46,7 +38,6 @@ import edu.umd.cs.piccolo.PNode;
 import edu.umd.cs.piccolo.event.PBasicInputEventHandler;
 import edu.umd.cs.piccolo.event.PInputEvent;
 
-import edu.umd.cs.piccolo.nodes.PImage;
 import edu.umd.cs.piccolo.nodes.PText;
 
 import edu.umd.cs.piccolo.util.PPaintContext;
@@ -89,17 +80,9 @@ public final class IdNodeExample
         canvas.setAnimatingRenderQuality(PPaintContext.HIGH_QUALITY_RENDERING);
         canvas.setDefaultRenderQuality(PPaintContext.HIGH_QUALITY_RENDERING);
         canvas.setInteractingRenderQuality(PPaintContext.HIGH_QUALITY_RENDERING);
-        canvas.setOpaque(true);
-        //canvas.setBackgroundPaint(Color.BLACK);
-
-        Image backgroundImage = loadImage("mandolux-liriope-r-1440-flipped.jpg");
-        final PImage background = new PImage(backgroundImage);
-        background.offset(0.0d, 0.0d);
-        canvas.getLayer().addChild(background);
 
         PText genericLabel = new PText("Generic");
         genericLabel.offset(0, 50);
-        genericLabel.setTextPaint(Color.WHITE);
         canvas.getLayer().addChild(genericLabel);
         Font defaultFont = PText.DEFAULT_FONT;
         GenericIdNode idNode0 = new GenericIdNode(new Doc(), TangoProject.EXTRA_SMALL);
@@ -123,7 +106,6 @@ public final class IdNodeExample
 
         PText finderLabel = new PText("Finder-style");
         finderLabel.offset(0, 250);
-        finderLabel.setTextPaint(Color.WHITE);
         canvas.getLayer().addChild(finderLabel);
         FinderIdNode idNode5 = new FinderIdNode(new Doc(), TangoProject.EXTRA_SMALL);
         idNode5.setFont(defaultFont.deriveFont(10.0f));
@@ -146,7 +128,6 @@ public final class IdNodeExample
 
         PText explorerLabel = new PText("Explorer-style");
         explorerLabel.offset(0, 450);
-        explorerLabel.setTextPaint(Color.WHITE);
         canvas.getLayer().addChild(explorerLabel);
         Font tahoma = new Font("Tahoma", Font.PLAIN, 11);
         ExplorerIdNode idNode10 = new ExplorerIdNode(new Doc(), TangoProject.EXTRA_SMALL);
@@ -172,7 +153,6 @@ public final class IdNodeExample
 
         PText nautilusLabel = new PText("Nautilus-style");
         nautilusLabel.offset(0, 650);
-        nautilusLabel.setTextPaint(Color.WHITE);
         canvas.getLayer().addChild(nautilusLabel);
         NautilusIdNode idNode15 = new NautilusIdNode(new Doc(), TangoProject.EXTRA_SMALL);
         idNode15.setFont(defaultFont.deriveFont(10.0f));
@@ -199,7 +179,7 @@ public final class IdNodeExample
                 /** {@inheritDoc} */
                 public void mousePressed(final PInputEvent event)
                 {
-                    if (event.getCamera().equals(event.getPickedNode()) || background.equals(event.getPickedNode()))
+                    if (event.getCamera().equals(event.getPickedNode()))
                     {
                         for (Iterator i = canvas.getLayer().getChildrenIterator(); i.hasNext(); )
                         {
@@ -225,7 +205,7 @@ public final class IdNodeExample
         final JFrame f = new JFrame("IdNode Example");
         f.setContentPane(this);
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        f.setBounds(100, 100, 800, 600);
+        f.setBounds(100, 100, 400, 400);
         f.setVisible(true);
     }
 
@@ -285,20 +265,6 @@ public final class IdNodeExample
         {
             return "My Computer";
         }
-    }
-
-    private Image loadImage(final String name)
-    {
-        BufferedImage image = null;
-        try
-        {
-            image = ImageIO.read(getClass().getResource(name));
-        }
-        catch (IOException e)
-        {
-            // ignore
-        }
-        return image;
     }
 
     /**

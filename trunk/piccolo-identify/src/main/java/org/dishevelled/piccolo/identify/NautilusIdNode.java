@@ -110,8 +110,7 @@ public final class NautilusIdNode
     private void normal()
     {
         setIconState(IconState.NORMAL);
-        getNameTextNode().setTextPaint(Color.WHITE);
-        //getNameTextNode().setTextPaint(Color.BLACK);
+        getNameTextNode().setTextPaint(Color.BLACK);
         textSelection.setVisible(false);
     }
 
@@ -133,8 +132,7 @@ public final class NautilusIdNode
     private void mouseover()
     {
         setIconState(IconState.MOUSEOVER);
-        getNameTextNode().setTextPaint(Color.WHITE);
-        //getNameTextNode().setTextPaint(Color.BLACK);
+        getNameTextNode().setTextPaint(Color.BLACK);
         textSelection.setVisible(false);
     }
 
