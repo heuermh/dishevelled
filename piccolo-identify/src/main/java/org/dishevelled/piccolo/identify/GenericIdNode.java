@@ -23,6 +23,8 @@
 */
 package org.dishevelled.piccolo.identify;
 
+import java.awt.Color;
+
 import java.awt.geom.Point2D;
 
 import edu.umd.cs.piccolo.util.PBounds;
@@ -62,6 +64,7 @@ public final class GenericIdNode
     {
         super(value);
         addChild(getIconBundleImageNode());
+        getNameTextNode().setTextPaint(Color.WHITE);
         addChild(getNameTextNode());
         resetStateMachine();
     }
@@ -77,6 +80,7 @@ public final class GenericIdNode
         super(value);
         setIconSize(iconSize);
         addChild(getIconBundleImageNode());
+        getNameTextNode().setTextPaint(Color.WHITE);
         addChild(getNameTextNode());
         resetStateMachine();
     }
