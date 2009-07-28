@@ -49,10 +49,10 @@ public final class CullViewExample
     private final List<String> strings;
 
     /** Cull dialog. */
-    private CullDialog<String> cullDialog;
+    private final CullDialog<String> cullDialog;
 
     /** Cull panel. */
-    private CullPanel<String> cullPanel;
+    private final CullPanel<String> cullPanel;
 
 
     /**

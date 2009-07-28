@@ -29,6 +29,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -38,6 +40,7 @@ import javax.swing.Action;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.KeyStroke;
 import javax.swing.Timer;
@@ -59,6 +62,7 @@ import org.dishevelled.curate.CullView;
 import org.dishevelled.iconbundle.tango.TangoProject;
 
 import org.dishevelled.identify.IdentifiableAction;
+import org.dishevelled.identify.IdMenuItem;
 
 import org.dishevelled.layout.LabelFieldPanel;
 
@@ -112,6 +116,9 @@ public final class CullPanel<E>
     /** Remove action. */
     private final IdentifiableAction removeAction;
 
+    /** Remove all action. */
+    private final Action removeAllAction;
+
     /** Start assist action. */
     private final IdentifiableAction startAssistAction;
 
@@ -120,6 +127,9 @@ public final class CullPanel<E>
 
     /** Toggle assist action. */
     private final Action toggleAssistAction;
+
+    /** Context menu. */
+    private final JPopupMenu contextMenu;
 
 
     /**
@@ -189,6 +199,20 @@ public final class CullPanel<E>
                 }
             };
 
+        removeAllAction = new AbstractAction("Remove all")
+            {
+                /** {@inheritDoc} */
+                public void actionPerformed(final ActionEvent event)
+                {
+                    if (assist.isRunning())
+                    {
+                        assist.stop();
+                    }
+                    removed.addAll(remaining);
+                    remaining.clear();
+                }
+            };
+
         assist = new Assist(DEFAULT_ASSIST_RATE);
 
         startAssistAction = new IdentifiableAction("Start assist", TangoProject.MEDIA_PLAYBACK_START)
@@ -196,7 +220,10 @@ public final class CullPanel<E>
                 /** {@inheritDoc} */
                 public void actionPerformed(final ActionEvent event)
                 {
-                    assist.start();
+                    if (!assist.isRunning())
+                    {
+                        assist.start();
+                    }
                 }
             };
 
@@ -206,7 +233,10 @@ public final class CullPanel<E>
                 /** {@inheritDoc} */
                 public void actionPerformed(final ActionEvent event)
                 {
-                    assist.stop();
+                    if (assist.isRunning())
+                    {
+                        assist.stop();
+                    }
                 }
             };
         stopAssistAction.setEnabled(false);
@@ -269,8 +299,45 @@ public final class CullPanel<E>
 
         // TODO:  down should restart assist?
         // TODO:  adapt assist rate to combined delete + down keystroke rate
-        // TODO:  add actions to context menu
-        // TODO:  create assist display/toolbar
+        contextMenu = new JPopupMenu();
+        contextMenu.add(new IdMenuItem(removeAction));
+        contextMenu.add(removeAllAction);
+        contextMenu.addSeparator();
+        contextMenu.add(new IdMenuItem(startAssistAction));
+        // stop action will never be enabled on popup trigger
+        //contextMenu.add(new IdMenuItem(stopAssistAction));
+
+        remainingList.addMouseListener(new MouseAdapter()
+            {
+                /** {@inheritDoc} */
+                public void mousePressed(final MouseEvent event) {
+                    if (assist.isRunning())
+                    {
+                        assist.stop();
+                    }
+                    if (event.isPopupTrigger())
+                    {
+                        showContextMenu(event);
+                    }
+                }
+
+                /** {@inheritDoc} */
+                public void mouseReleased(final MouseEvent event) {
+                    if (event.isPopupTrigger())
+                    {
+                        showContextMenu(event);
+                    }
+                }
+
+                /**
+                 * Show context menu.
+                 */
+                private void showContextMenu(final MouseEvent event)
+                {
+                    contextMenu.show(event.getComponent(), event.getX(), event.getY());
+                }
+            });
+
         layoutComponents();
     }
 
@@ -350,6 +417,50 @@ public final class CullPanel<E>
     public Collection<E> getRemoved()
     {
         return Collections.unmodifiableList(removed);
+    }
+
+    /**
+     * Return the remove action for this cull panel.
+     * The remove action will not be null.
+     *
+     * @return the remove action for this cull panel
+     */
+    IdentifiableAction getRemoveAction()
+    {
+        return removeAction;
+    }
+
+    /**
+     * Return the remove all action for this cull panel.
+     * The remove all action will not be null.
+     *
+     * @return the remove action for this cull panel
+     */
+    Action getRemoveAllAction()
+    {
+        return removeAllAction;
+    }
+
+    /**
+     * Return the start assist action for this cull panel.
+     * The start assist action will not be null.
+     *
+     * @return the start assist action for this cull panel
+     */
+    IdentifiableAction getStartAssistAction()
+    {
+        return startAssistAction;
+    }
+
+    /**
+     * Return the stop assist action for this cull panel.
+     * The stop assist action will not be null.
+     *
+     * @return the stop assist action for this cull panel
+     */
+    IdentifiableAction getStopAssistAction()
+    {
+        return stopAssistAction;
     }
 
     /**

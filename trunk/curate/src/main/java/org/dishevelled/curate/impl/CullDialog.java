@@ -33,6 +33,10 @@ import javax.swing.border.EmptyBorder;
 
 import org.dishevelled.curate.CullView;
 
+import org.dishevelled.iconbundle.tango.TangoProject;
+
+import org.dishevelled.identify.IdToolBar;
+
 /**
  * Cull dialog.
  *
@@ -47,6 +51,9 @@ public final class CullDialog<E>
     /** Cull panel. */
     private final CullPanel<E> cullPanel;
 
+    /** Toolbar. */
+    private final IdToolBar toolBar;
+
 
     /**
      * Create a new cull dialog.
@@ -54,13 +61,26 @@ public final class CullDialog<E>
     public CullDialog()
     {
         cullPanel = new CullPanel<E>();
+        toolBar = new IdToolBar();
+        toolBar.add(cullPanel.getRemoveAction());
+        toolBar.add(cullPanel.getRemoveAllAction());
+        toolBar.addSeparator();
+        toolBar.add(cullPanel.getStartAssistAction());
+        toolBar.add(cullPanel.getStopAssistAction());
+        toolBar.displayIcons();
+        toolBar.setFloatable(false);
+        toolBar.setIconSize(TangoProject.SMALL);
 
         JPanel contentPane = (JPanel) getContentPane();
         contentPane.setLayout(new BorderLayout());
-        cullPanel.setBorder(new EmptyBorder(0, 0, 20, 0));
+        cullPanel.setBorder(new EmptyBorder(20, 10, 20, 10));
+        JPanel buttonPanel = createButtonPanel();
+        buttonPanel.setBorder(new EmptyBorder(0, 10, 10, 10));
+
+        contentPane.add("North", toolBar);
         contentPane.add("Center", cullPanel);
-        contentPane.add("South", createButtonPanel());
-        contentPane.setBorder(new EmptyBorder(10, 10, 10, 10));
+        contentPane.add("South", buttonPanel);
+        contentPane.requestFocus();
     }
 
 
