@@ -42,6 +42,8 @@ import edu.umd.cs.piccolo.nodes.PText;
 
 import edu.umd.cs.piccolo.util.PPaintContext;
 
+import edu.umd.cs.piccolox.swing.PScrollPane;
+
 import org.dishevelled.iconbundle.IconBundle;
 import org.dishevelled.iconbundle.IconSize;
 
@@ -194,8 +196,11 @@ public final class IdNodeExample
                 }
             });
 
+        // remove pan event handler, as it interferes with drag starts
+        canvas.removeInputEventListener(canvas.getPanEventHandler());
+
         setLayout(new BorderLayout());
-        add("Center", canvas);
+        add("Center", new PScrollPane(canvas));
     }
 
 
