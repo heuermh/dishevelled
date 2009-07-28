@@ -144,7 +144,7 @@ public abstract class AbstractIdNode
         nameTextNode = new NameTextNode();
 
         // TODO:  split into drag, mouseover, selection handlers
-        addInputEventListener(new PDragSequenceEventHandler()
+        PDragSequenceEventHandler dragSequenceEventHandler = new PDragSequenceEventHandler()
             {
                 /** {@inheritDoc} */
                 protected void drag(final PInputEvent event)
@@ -157,7 +157,6 @@ public abstract class AbstractIdNode
                 /** {@inheritDoc} */
                 protected void startDrag(final PInputEvent event)
                 {
-                    // TODO:  piccolo PDragSequenceEventHandler is too aggressive in starting drags
                     AbstractIdNode.this.moveToFront();
                     AbstractIdNode.this.startDrag();
                     super.startDrag(event);
@@ -197,7 +196,9 @@ public abstract class AbstractIdNode
                     AbstractIdNode.this.mouseReleased();
                     super.mouseReleased(event);
                 }
-            });
+            };
+        dragSequenceEventHandler.setMinDragStartDistance(4.0d);
+        addInputEventListener(dragSequenceEventHandler);
 
         if (stateMachine == null)
         {
