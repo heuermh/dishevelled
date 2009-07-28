@@ -24,10 +24,15 @@
 package org.dishevelled.curate.impl;
 
 import java.awt.BorderLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import java.util.Collection;
+import java.util.Iterator;
 
+import javax.swing.Action;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 
 import javax.swing.border.EmptyBorder;
 
@@ -70,6 +75,46 @@ public final class CullDialog<E>
         toolBar.displayIcons();
         toolBar.setFloatable(false);
         toolBar.setIconSize(TangoProject.SMALL);
+        // todo:  would be nice if actions displayed checkbox in menu
+        final JPopupMenu toolBarContextMenu = new JPopupMenu();
+        for (Iterator<?> displayActions = ((IdToolBar) toolBar).getDisplayActions().iterator(); displayActions.hasNext(); )
+        {
+            Action displayAction = (Action) displayActions.next();
+            toolBarContextMenu.add(displayAction);
+        }
+        toolBarContextMenu.addSeparator();
+        for (Iterator<?> iconSizeActions = ((IdToolBar) toolBar).getDefaultIconSizeActions().iterator(); iconSizeActions.hasNext(); )
+        {
+            Action iconSizeAction = (Action) iconSizeActions.next();
+            toolBarContextMenu.add(iconSizeAction);
+        }
+        toolBar.addMouseListener(new MouseAdapter()
+        {
+            /** {@inheritDoc} */
+            public void mousePressed(final MouseEvent event)
+            {
+                showContextMenu(event);
+            }
+
+            /** {@inheritDoc} */
+            public void mouseReleased(final MouseEvent event)
+            {
+                showContextMenu(event);
+            }
+
+            /**
+             * Show the context menu if the specified mouse event is a popup trigger.
+             *
+             * @param event event
+             */
+            private void showContextMenu(final MouseEvent event)
+            {
+                if (event.isPopupTrigger())
+                {
+                    toolBarContextMenu.show(event.getComponent(), event.getX(), event.getY());
+                }
+            }
+        });
 
         JPanel contentPane = (JPanel) getContentPane();
         contentPane.setLayout(new BorderLayout());
