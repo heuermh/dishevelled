@@ -72,7 +72,7 @@ public final class LabelFieldPanelExample
     }
 
     /**
-     * Create and return a new final spacing conent pane.
+     * Create and return a new final spacing content pane.
      *
      * @return a new final spacing content pane
      */
@@ -92,7 +92,7 @@ public final class LabelFieldPanelExample
     }
 
     /**
-     * Create and return a new final field conent pane.
+     * Create and return a new final field content pane.
      *
      * @return a new final field content pane
      */
