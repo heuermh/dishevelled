@@ -60,6 +60,10 @@
   <build>
     <resources>
       <resource>
+        <directory>src/main/resources</directory>
+        <filtering>false</filtering>
+      </resource>
+      <resource>
         <targetPath>META-INF</targetPath>
         <filtering>false</filtering>
         <directory>${basedir}</directory>
