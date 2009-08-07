@@ -24,12 +24,23 @@
 package org.dishevelled.piccolo.identify.examples;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Font;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+import java.net.URL;
 
 import java.util.Iterator;
 
+import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
+import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
 
 import edu.umd.cs.piccolo.PCanvas;
@@ -37,7 +48,9 @@ import edu.umd.cs.piccolo.PNode;
 
 import edu.umd.cs.piccolo.event.PBasicInputEventHandler;
 import edu.umd.cs.piccolo.event.PInputEvent;
+import edu.umd.cs.piccolo.event.PInputEventListener;
 
+import edu.umd.cs.piccolo.nodes.PImage;
 import edu.umd.cs.piccolo.nodes.PText;
 
 import edu.umd.cs.piccolo.util.PPaintContext;
@@ -70,6 +83,27 @@ public final class IdNodeExample
     /** Custom 128x128 icon size. */
     private static final IconSize CUSTOM_128X128 = new IconSize(128, 128) {};
 
+    // download these images to src/main/resources/org/dishevelled/piccolo/identify/examples
+    //    as the terms of use do not allow redistribution or hot-linking
+
+    /** Light background image url, <code>http://www.mandolux.com/desktops/flowers/mandolux-serengeti-b-1024.jpg</code>. */
+    private static final String LIGHT_BACKGROUND = "mandolux-serengeti-b-1024.jpg";
+
+    /** Dark background image url, <code>http://www.mandolux.com/desktops/yuck/mandolux-liriope-r-1024.jpg</code>. */
+    private static final String DARK_BACKGROUND = "mandolux-liriope-r-1024.jpg";
+
+    /** Canvas. */
+    private final PCanvas canvas;
+
+    /** True if the id nodes should display light text against a dark background. */
+    private boolean reverseVideo;
+
+    /** Dark background. */
+    private final PImage darkBackground;
+
+    /** Light background. */
+    private final PImage lightBackground;
+
 
     /**
      * Create a new id node example.
@@ -78,102 +112,139 @@ public final class IdNodeExample
     {
         super();
 
-        final PCanvas canvas = new PCanvas();
+        canvas = new PCanvas();
+        canvas.setOpaque(true);
         canvas.setAnimatingRenderQuality(PPaintContext.HIGH_QUALITY_RENDERING);
         canvas.setDefaultRenderQuality(PPaintContext.HIGH_QUALITY_RENDERING);
         canvas.setInteractingRenderQuality(PPaintContext.HIGH_QUALITY_RENDERING);
+        reverseVideo = false;
+
+        URL darkBackgroundURL = null;
+        try
+        {
+            darkBackgroundURL = getClass().getResource(DARK_BACKGROUND);
+        }
+        catch (Exception e)
+        {
+            // ignore
+        }
+        URL lightBackgroundURL = null;
+        try
+        {
+            lightBackgroundURL = getClass().getResource(LIGHT_BACKGROUND);
+        }
+        catch (Exception e)
+        {
+            // ignore
+        }
+        darkBackground = new PImage(darkBackgroundURL);
+        lightBackground = new PImage(lightBackgroundURL);
+        canvas.getLayer().addChild(darkBackground);
+        canvas.getLayer().addChild(lightBackground);
 
         PText genericLabel = new PText("Generic");
-        genericLabel.offset(0, 50);
+        genericLabel.offset(50, 50);
         canvas.getLayer().addChild(genericLabel);
         Font defaultFont = PText.DEFAULT_FONT;
         GenericIdNode idNode0 = new GenericIdNode(new Doc(), TangoProject.EXTRA_SMALL);
         idNode0.setFont(defaultFont.deriveFont(10.0f));
-        idNode0.offset(75, 0);
+        idNode0.offset(150 - idNode0.getWidth() / 2.0d, 100 + idNode0.getHeight() / 2.0d);
         canvas.getLayer().addChild(idNode0);
         GenericIdNode idNode1 = new GenericIdNode(new Mic(), TangoProject.SMALL);
         idNode1.setFont(defaultFont.deriveFont(11.0f));
-        idNode1.offset(150, 25);
+        idNode1.offset(250 - idNode1.getWidth() / 2.0d, 100 + idNode1.getHeight() / 2.0d);
         canvas.getLayer().addChild(idNode1);
         GenericIdNode idNode2 = new GenericIdNode(new Computer(), TangoProject.MEDIUM);
-        idNode2.offset(225, 50);
+        idNode2.offset(350 - idNode2.getWidth() / 2.0d, 100 + idNode2.getHeight() / 2.0d);
         canvas.getLayer().addChild(idNode2);
         GenericIdNode idNode3 = new GenericIdNode(new Doc(), TangoProject.LARGE);
-        idNode3.offset(300, 75);
+        idNode3.offset(450 - idNode3.getWidth() / 2.0d, 100 + idNode3.getHeight() / 2.0d);
         canvas.getLayer().addChild(idNode3);
         GenericIdNode idNode4 = new GenericIdNode(new Mic(), CUSTOM_128X128);
         idNode4.setFont(defaultFont.deriveFont(14.0f));
-        idNode4.offset(375, 100);
+        idNode4.offset(550 - idNode4.getWidth() / 2.0d, 100 + idNode4.getHeight() / 2.0d);
         canvas.getLayer().addChild(idNode4);
 
         PText finderLabel = new PText("Finder-style");
-        finderLabel.offset(0, 250);
+        finderLabel.offset(50, 200);
         canvas.getLayer().addChild(finderLabel);
         FinderIdNode idNode5 = new FinderIdNode(new Doc(), TangoProject.EXTRA_SMALL);
         idNode5.setFont(defaultFont.deriveFont(10.0f));
-        idNode5.offset(75, 200);
+        idNode5.offset(150 - idNode5.getWidth() / 2.0d, 250 + idNode5.getHeight() / 2.0d);
         canvas.getLayer().addChild(idNode5);
         FinderIdNode idNode6 = new FinderIdNode(new Mic(), TangoProject.SMALL);
         idNode6.setFont(defaultFont.deriveFont(11.0f));
-        idNode6.offset(150, 225);
+        idNode6.offset(250 - idNode6.getWidth() / 2.0d, 250 + idNode6.getHeight() / 2.0d);
         canvas.getLayer().addChild(idNode6);
         FinderIdNode idNode7 = new FinderIdNode(new Computer(), TangoProject.MEDIUM);
-        idNode7.offset(225, 250);
+        idNode7.offset(350 - idNode7.getWidth() / 2.0d, 250 + idNode7.getHeight() / 2.0d);
         canvas.getLayer().addChild(idNode7);
         FinderIdNode idNode8 = new FinderIdNode(new Doc(), TangoProject.LARGE);
-        idNode8.offset(300, 275);
+        idNode8.offset(450 - idNode8.getWidth() / 2.0d, 250 + idNode8.getHeight() / 2.0d);
         canvas.getLayer().addChild(idNode8);
         FinderIdNode idNode9 = new FinderIdNode(new Mic(), CUSTOM_128X128);
         idNode9.setFont(defaultFont.deriveFont(14.0f));
-        idNode9.offset(375, 300);
+        idNode9.offset(550 - idNode9.getWidth() / 2.0d, 250 + idNode9.getHeight() / 2.0d);
         canvas.getLayer().addChild(idNode9);
 
         PText explorerLabel = new PText("Explorer-style");
-        explorerLabel.offset(0, 450);
+        explorerLabel.offset(50, 400);
         canvas.getLayer().addChild(explorerLabel);
         Font tahoma = new Font("Tahoma", Font.PLAIN, 11);
         ExplorerIdNode idNode10 = new ExplorerIdNode(new Doc(), TangoProject.EXTRA_SMALL);
         idNode10.setFont(tahoma.deriveFont(10.0f));
-        idNode10.offset(75, 400);
+        idNode10.offset(150 - idNode10.getWidth() / 2.0d, 450 + idNode10.getHeight() / 2.0d);
         canvas.getLayer().addChild(idNode10);
         ExplorerIdNode idNode11 = new ExplorerIdNode(new Mic(), TangoProject.SMALL);
         idNode11.setFont(tahoma);
-        idNode11.offset(150, 425);
+        idNode11.offset(250 - idNode11.getWidth() / 2.0d, 450 + idNode11.getHeight() / 2.0d);
         canvas.getLayer().addChild(idNode11);
         ExplorerIdNode idNode12 = new ExplorerIdNode(new Computer(), TangoProject.MEDIUM);
         idNode12.setFont(tahoma);
-        idNode12.offset(225, 450);
+        idNode12.offset(350 - idNode12.getWidth() / 2.0d, 450 + idNode12.getHeight() / 2.0d);
         canvas.getLayer().addChild(idNode12);
         ExplorerIdNode idNode13 = new ExplorerIdNode(new Doc(), TangoProject.LARGE);
         idNode13.setFont(tahoma);
-        idNode13.offset(300, 475);
+        idNode13.offset(450 - idNode13.getWidth() / 2.0d, 450 + idNode13.getHeight() / 2.0d);
         canvas.getLayer().addChild(idNode13);
         ExplorerIdNode idNode14 = new ExplorerIdNode(new Mic(), CUSTOM_128X128);
         idNode14.setFont(tahoma.deriveFont(13.0f));
-        idNode14.offset(375, 500);
+        idNode14.offset(550 - idNode14.getWidth() / 2.0d, 450 + idNode14.getHeight() / 2.0d);
         canvas.getLayer().addChild(idNode14);
 
         PText nautilusLabel = new PText("Nautilus-style");
-        nautilusLabel.offset(0, 650);
+        nautilusLabel.offset(50, 600);
         canvas.getLayer().addChild(nautilusLabel);
         NautilusIdNode idNode15 = new NautilusIdNode(new Doc(), TangoProject.EXTRA_SMALL);
         idNode15.setFont(defaultFont.deriveFont(10.0f));
-        idNode15.offset(75, 600);
+        idNode15.offset(150 + idNode15.getWidth() / 2.0d, 650 + idNode15.getHeight() / 2.0d);
         canvas.getLayer().addChild(idNode15);
         NautilusIdNode idNode16 = new NautilusIdNode(new Mic(), TangoProject.SMALL);
         idNode16.setFont(defaultFont.deriveFont(11.0f));
-        idNode16.offset(150, 625);
+        idNode16.offset(250 - idNode16.getWidth() / 2.0d, 650 + idNode16.getHeight() / 2.0d);
         canvas.getLayer().addChild(idNode16);
         NautilusIdNode idNode17 = new NautilusIdNode(new Computer(), TangoProject.MEDIUM);
-        idNode17.offset(225, 650);
+        idNode17.offset(350 - idNode17.getWidth() / 2.0d, 650 + idNode17.getHeight() / 2.0d);
         canvas.getLayer().addChild(idNode17);
         NautilusIdNode idNode18 = new NautilusIdNode(new Doc(), TangoProject.LARGE);
-        idNode18.offset(300, 675);
-        canvas.getLayer().addChild(idNode18);        
+        idNode18.offset(450 - idNode18.getWidth() / 2.0d, 650 + idNode18.getHeight() / 2.0d);
+        canvas.getLayer().addChild(idNode18);
         NautilusIdNode idNode19 = new NautilusIdNode(new Mic(), CUSTOM_128X128);
         idNode19.setFont(defaultFont.deriveFont(14.0f));
-        idNode19.offset(375, 700);
+        idNode19.offset(550 - idNode19.getWidth() / 2.0d, 650 + idNode19.getHeight() / 2.0d);
         canvas.getLayer().addChild(idNode19);
+
+        // add actions to reverse video
+        Action reverseVideo = new AbstractAction("Reverse video")
+            {
+                /** {@inheritDoc} */
+                public void actionPerformed(final ActionEvent event)
+                {
+                    reverseVideo();
+                }
+            };
+        canvas.getInputMap().put(KeyStroke.getKeyStroke("ctrl R"), "reverseVideo");
+        canvas.getActionMap().put("reverseVideo", reverseVideo);
 
         // simulate a selection model by deselecting all when clicking outside a pickable node
         canvas.getCamera().addInputEventListener(new PBasicInputEventHandler()
@@ -181,7 +252,9 @@ public final class IdNodeExample
                 /** {@inheritDoc} */
                 public void mousePressed(final PInputEvent event)
                 {
-                    if (event.getCamera().equals(event.getPickedNode()))
+                    if (event.getCamera().equals(event.getPickedNode())
+                        || lightBackground.equals(event.getPickedNode())
+                        || darkBackground.equals(event.getPickedNode()))
                     {
                         for (Iterator i = canvas.getLayer().getChildrenIterator(); i.hasNext(); )
                         {
@@ -203,6 +276,72 @@ public final class IdNodeExample
         add("Center", new PScrollPane(canvas));
     }
 
+    /**
+     * Reverse video.
+     */
+    private void reverseVideo()
+    {
+        if (reverseVideo)
+        {
+            lightenBackground();
+        }
+        else
+        {
+            darkenBackground();
+        }
+    }
+
+    /**
+     * Darken background.
+     */
+    private void darkenBackground()
+    {
+        canvas.setBackground(Color.BLACK);
+        darkBackground.moveToBack();
+        lightBackground.moveToBack();
+
+        for (Iterator iterator = canvas.getLayer().getChildrenIterator(); iterator.hasNext(); )
+        {
+            PNode node = (PNode) iterator.next();
+            if (node instanceof AbstractIdNode)
+            {
+                AbstractIdNode idNode = (AbstractIdNode) node;
+                idNode.reverseVideo();
+            }
+            if (node instanceof PText)
+            {
+                PText text = (PText) node;
+                text.setTextPaint(Color.WHITE);
+            }
+        }
+        reverseVideo = true;
+    }
+
+    /**
+     * Lighten background.
+     */
+    private void lightenBackground()
+    {
+        canvas.setBackground(Color.WHITE);
+        lightBackground.moveToBack();
+        darkBackground.moveToBack();
+
+        for (Iterator iterator = canvas.getLayer().getChildrenIterator(); iterator.hasNext(); )
+        {
+            PNode node = (PNode) iterator.next();
+            if (node instanceof AbstractIdNode)
+            {
+                AbstractIdNode idNode = (AbstractIdNode) node;
+                idNode.reverseVideo();
+            }
+            if (node instanceof PText)
+            {
+                PText text = (PText) node;
+                text.setTextPaint(Color.BLACK);
+            }
+        }
+        reverseVideo = false;
+    }
 
     /** {@inheritDoc} */
     public void run()
