@@ -30,21 +30,25 @@
       <transition event="disable" target="disabled"/>
       <transition event="mouseReleased" target="selected"/>
       <transition event="startDrag" target="dragging"/>
+      <transition event="reverseVideo" target="reverseActive"/>
     </state>
 
     <state id="disabled">
       <transition event="enable" target="normal"/>
+      <transition event="reverseVideo" target="reverseDisabled"/>
     </state>
     
     <state id="dragging">
       <transition event="disable" target="disabled"/>
       <transition event="endDrag" target="selected"/>
+      <transition event="reverseVideo" target="reverseDragging"/>
     </state>
 
     <state id="mouseover">
       <transition event="disable" target="disabled"/>
       <transition event="mousePressed" target="active"/>
       <transition event="mouseExited" target="normal"/>
+      <transition event="reverseVideo" target="reverseMouseover"/>
     </state>
 
     <state id="normal">
@@ -52,6 +56,7 @@
       <transition event="mouseEntered" target="mouseover"/>
       <transition event="mousePressed" target="active"/>
       <transition event="select" target="selected"/>
+      <transition event="reverseVideo" target="reverseNormal"/>
     </state>
 
     <state id="selected">
@@ -59,5 +64,49 @@
       <transition event="startDrag" target="dragging"/>
       <!--<transition event="mouseReleased" target="mouseover"/>-->
       <transition event="deselect" target="normal"/>
+      <transition event="reverseVideo" target="reverseSelected"/>
+    </state>
+
+    <!-- reverse video states -->
+
+    <state id="reverseActive">
+      <transition event="disable" target="reverseDisabled"/>
+      <transition event="mouseReleased" target="reverseSelected"/>
+      <transition event="startDrag" target="reverseDragging"/>
+      <transition event="reverseVideo" target="active"/>
+    </state>
+
+    <state id="reverseDisabled">
+      <transition event="enable" target="reverseNormal"/>
+      <transition event="reverseVideo" target="disabled"/>
+    </state>
+    
+    <state id="reverseDragging">
+      <transition event="disable" target="reverseDisabled"/>
+      <transition event="endDrag" target="reverseSelected"/>
+      <transition event="reverseVideo" target="dragging"/>
+    </state>
+
+    <state id="reverseMouseover">
+      <transition event="disable" target="reverseDisabled"/>
+      <transition event="mousePressed" target="reverseActive"/>
+      <transition event="mouseExited" target="reverseNormal"/>
+      <transition event="reverseVideo" target="mouseover"/>
+    </state>
+
+    <state id="reverseNormal">
+      <transition event="disable" target="reverseDisabled"/>
+      <transition event="mouseEntered" target="reverseMouseover"/>
+      <transition event="mousePressed" target="reverseActive"/>
+      <transition event="select" target="reverseSelected"/>
+      <transition event="reverseVideo" target="normal"/>
+    </state>
+
+    <state id="reverseSelected">
+      <transition event="disable" target="reverseDisabled"/>
+      <transition event="startDrag" target="reverseDragging"/>
+      <!--<transition event="mouseReleased" target="reverseMouseover"/>-->
+      <transition event="deselect" target="reverseNormal"/>
+      <transition event="reverseVideo" target="selected"/>
     </state>
 </scxml>

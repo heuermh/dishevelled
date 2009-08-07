@@ -98,7 +98,6 @@ public final class NautilusIdNode
     private void createNodes()
     {
         textSelection = new PPath();
-
         addChild(getIconBundleImageNode());
         addChild(textSelection);
         addChild(getNameTextNode());
@@ -115,6 +114,17 @@ public final class NautilusIdNode
     }
 
     /**
+     * Reverse normal state.
+     */
+    private void reverseNormal()
+    {
+        setIconState(IconState.NORMAL);
+        getNameTextNode().setTextPaint(Color.WHITE);
+        // todo:  add 1-pixel black drop shadow if reverse video
+        textSelection.setVisible(false);
+    }
+
+    /**
      * Active state.
      */
     private void active()
@@ -124,6 +134,14 @@ public final class NautilusIdNode
         textSelection.setPaint(UIManager.getColor("List.selectionBackground"));
         textSelection.setStrokePaint(UIManager.getColor("List.selectionBackground"));
         textSelection.setVisible(true);
+    }
+
+    /**
+     * Reverse active state.
+     */
+    private void reverseActive()
+    {
+        active();
     }
 
     /**
@@ -137,6 +155,17 @@ public final class NautilusIdNode
     }
 
     /**
+     * Reverse mouseover state.
+     */
+    private void reverseMouseover()
+    {
+        setIconState(IconState.MOUSEOVER);
+        getNameTextNode().setTextPaint(Color.WHITE);
+        // todo:  add 1-pixel black drop shadow if reverse video
+        textSelection.setVisible(false);
+    }
+
+    /**
      * Selected state.
      */
     private void selected()
@@ -146,6 +175,14 @@ public final class NautilusIdNode
         textSelection.setPaint(UIManager.getColor("List.selectionBackground"));
         textSelection.setStrokePaint(UIManager.getColor("List.selectionBackground"));
         textSelection.setVisible(true);
+    }
+
+    /**
+     * Reverse selected state.
+     */
+    private void reverseSelected()
+    {
+        selected();
     }
 
     /** {@inheritDoc} */
