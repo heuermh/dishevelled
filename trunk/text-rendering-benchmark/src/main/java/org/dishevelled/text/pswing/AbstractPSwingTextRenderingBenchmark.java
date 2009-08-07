@@ -23,7 +23,6 @@
 */
 package org.dishevelled.text.pswing;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -38,8 +37,6 @@ import javax.swing.JLabel;
 
 import edu.umd.cs.piccolox.pswing.PSwing;
 import edu.umd.cs.piccolox.pswing.PSwingCanvas;
-
-import edu.umd.cs.piccolo.util.PPaintContext;
 
 import org.dishevelled.text.TextRenderingBenchmark;
 

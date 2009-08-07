@@ -30,17 +30,8 @@ import java.awt.Font;
 
 import java.awt.event.ActionEvent;
 
-import java.awt.image.BufferedImage;
-
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
-
 import java.util.Arrays;
 import java.util.List;
-
-import javax.imageio.ImageIO;
 
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
