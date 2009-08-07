@@ -25,4 +25,4 @@
 /**
  * Text rendering benchmarks.
  */
-package org.dishvelled.text;
+package org.dishevelled.text;
