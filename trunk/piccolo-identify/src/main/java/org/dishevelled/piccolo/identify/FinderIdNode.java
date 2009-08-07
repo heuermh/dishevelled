@@ -65,9 +65,6 @@ public final class FinderIdNode
     /** Icon selection stroke paint. */
     private static final Paint ICON_SELECTION_STROKE_PAINT = new Color(130, 130, 130);
 
-    /** Text paint. */
-    private static final Paint TEXT_PAINT = Color.WHITE;
-
     /** Icon selection node. */
     private PPath iconSelection;
 
@@ -123,8 +120,6 @@ public final class FinderIdNode
         iconSelection.setStroke(ICON_SELECTION_STROKE);
         iconSelection.setStrokePaint(ICON_SELECTION_STROKE_PAINT);
 
-        getNameTextNode().setTextPaint(TEXT_PAINT);
-
         textSelection = new PPath();
         textSelection.setPaint(TEXT_SELECTION_PAINT);
         textSelection.setStroke(null);
@@ -146,10 +141,19 @@ public final class FinderIdNode
     private void active()
     {
         setTransparency(1.0f);
+        getNameTextNode().setTextPaint(Color.WHITE);
         iconSelection.setVisible(true);
         textSelection.setPaint(TEXT_SELECTION_SELECTED_PAINT);
         textSelectionShadow.setVisible(true);
         setIconState(IconState.NORMAL);
+    }
+
+    /**
+     * Reverse active state.
+     */
+    private void reverseActive()
+    {
+        active();
     }
 
     /**
@@ -158,6 +162,21 @@ public final class FinderIdNode
     private void normal()
     {
         setTransparency(1.0f);
+        getNameTextNode().setTextPaint(Color.BLACK);
+        iconSelection.setVisible(false);
+        textSelection.setPaint(TEXT_SELECTION_PAINT);
+        textSelectionShadow.setVisible(false);
+        setIconState(IconState.NORMAL);
+    }
+
+    /**
+     * Reverse normal state.
+     */
+    private void reverseNormal()
+    {
+        setTransparency(1.0f);
+        getNameTextNode().setTextPaint(Color.WHITE);
+        // todo:  add drop shadow if reverse video
         iconSelection.setVisible(false);
         textSelection.setPaint(TEXT_SELECTION_PAINT);
         textSelectionShadow.setVisible(false);
@@ -170,10 +189,19 @@ public final class FinderIdNode
     private void selected()
     {
         setTransparency(1.0f);
+        getNameTextNode().setTextPaint(Color.WHITE);
         iconSelection.setVisible(true);
         textSelection.setPaint(TEXT_SELECTION_SELECTED_PAINT);
         textSelectionShadow.setVisible(true);
         setIconState(IconState.NORMAL);
+    }
+
+    /**
+     * Reverse selected state.
+     */
+    private void reverseSelected()
+    {
+        selected();
     }
 
     /**
@@ -182,6 +210,14 @@ public final class FinderIdNode
     private void dragging()
     {
         setTransparency(0.66f);
+    }
+
+    /**
+     * Reverse dragging state.
+     */
+    private void reverseDragging()
+    {
+        dragging();
     }
 
     /** {@inheritDoc} */

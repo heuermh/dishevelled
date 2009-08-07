@@ -98,7 +98,6 @@ public final class ExplorerIdNode
     private void createNodes()
     {
         textSelection = new PPath();
-
         addChild(textSelection);
         addChild(getIconBundleImageNode());
         addChild(getNameTextNode());
@@ -118,6 +117,14 @@ public final class ExplorerIdNode
     }
 
     /**
+     * Reverse active state.
+     */
+    private void reverseActive()
+    {
+        active();
+    }
+
+    /**
      * Normal state.
      */
     private void normal()
@@ -125,6 +132,18 @@ public final class ExplorerIdNode
         setTransparency(1.0f);
         setIconState(IconState.NORMAL);
         getNameTextNode().setTextPaint(Color.BLACK);
+        textSelection.setVisible(false);
+    }
+
+    /**
+     * Reverse normal state.
+     */
+    private void reverseNormal()
+    {
+        setTransparency(1.0f);
+        setIconState(IconState.NORMAL);
+        getNameTextNode().setTextPaint(Color.WHITE);
+        // todo: add drop shadow if reverse video
         textSelection.setVisible(false);
     }
 
@@ -142,11 +161,27 @@ public final class ExplorerIdNode
     }
 
     /**
+     * Reverse selected state.
+     */
+    private void reverseSelected()
+    {
+        selected();
+    }
+
+    /**
      * Dragging state.
      */
     private void dragging()
     {
         setTransparency(0.66f);
+    }
+
+    /**
+     * Reverse dragging state.
+     */
+    private void reverseDragging()
+    {
+        dragging();
     }
 
     /** {@inheritDoc} */

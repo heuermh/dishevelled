@@ -377,6 +377,14 @@ public abstract class AbstractIdNode
     }
 
     /**
+     * Fire a <code>"reverseVideo"</code> state transition event.
+     */
+    public final void reverseVideo()
+    {
+        fireStateMachineEvent("reverseVideo");
+    }
+
+    /**
      * Fire an <code>"enable"</code> state transition event.
      */
     public final void enable()
