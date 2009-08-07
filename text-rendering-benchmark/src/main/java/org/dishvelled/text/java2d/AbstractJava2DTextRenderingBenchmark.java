@@ -54,7 +54,6 @@ public abstract class AbstractJava2DTextRenderingBenchmark
     private String text;
 
     /** Component to render text. */
-    //private final JPanel component = new JPanel()
     private final JPanel component = new JPanel()
         {
             /** {@inheritDoc} */

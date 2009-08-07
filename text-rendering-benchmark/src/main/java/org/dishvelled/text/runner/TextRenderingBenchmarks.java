@@ -42,8 +42,6 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
-import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -55,6 +53,7 @@ import javax.swing.SwingUtilities;
 
 import javax.swing.border.EmptyBorder;
 
+import org.dishevelled.layout.ButtonPanel;
 import org.dishevelled.layout.LabelFieldPanel;
 
 import org.dishevelled.text.TextRenderingBenchmark;
@@ -184,10 +183,7 @@ public final class TextRenderingBenchmarks
      */
     private JPanel createButtonPanel()
     {
-        JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
-        panel.add(Box.createHorizontalGlue());
-        panel.add(Box.createHorizontalGlue());
+        ButtonPanel panel = new ButtonPanel();
         panel.add(new JButton(exitAction));
         return panel;
     }
