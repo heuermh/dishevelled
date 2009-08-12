@@ -38,6 +38,8 @@ import org.dishevelled.iconbundle.tango.TangoProject;
 import org.dishevelled.identify.IdButton;
 import org.dishevelled.identify.IdentifiableAction;
 
+import org.dishevelled.layout.ButtonPanel;
+
 /**
  * Abstract curate dialog.
  *
@@ -102,26 +104,14 @@ public abstract class AbstractCurateDialog
      */
     protected final JPanel createButtonPanel()
     {
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
-        buttonPanel.add(Box.createHorizontalGlue());
-        buttonPanel.add(Box.createHorizontalGlue());
-
-        //IdButton cancelButton = new IdButton(cancel);
-        JButton cancelButton = new JButton(cancel);
-        IdButton helpButton = new IdButton(help);
-        //IdButton okButton = new IdButton(ok);
-        JButton okButton = new JButton(ok);
+        ButtonPanel buttonPanel = new ButtonPanel();
+        JButton okButton = buttonPanel.add(ok);
+        JButton cancelButton = buttonPanel.add(cancel);
+        buttonPanel.add(new IdButton(help));
 
         // don't let ok button get too small
         okButton.setPreferredSize(cancelButton.getPreferredSize());
         getRootPane().setDefaultButton(okButton);
-
-        buttonPanel.add(okButton);
-        buttonPanel.add(Box.createHorizontalStrut(10));
-        buttonPanel.add(cancelButton);
-        buttonPanel.add(Box.createHorizontalStrut(10));
-        buttonPanel.add(helpButton);
 
         return buttonPanel;
     }
