@@ -53,6 +53,15 @@ import org.dishevelled.iconbundle.IconState;
 public final class FinderIdNode
     extends AbstractIdNode
 {
+    /** Icon selection node. */
+    private PPath iconSelection;
+
+    /** Text selection node. */
+    private PPath textSelection;
+
+    /** Text selection shadow node. */
+    private PPath textSelectionShadow;
+
     /** Text selection paint. */
     private static final Paint TEXT_SELECTION_PAINT = new Color(0, 0, 0, 100);
 
@@ -64,15 +73,6 @@ public final class FinderIdNode
 
     /** Icon selection stroke paint. */
     private static final Paint ICON_SELECTION_STROKE_PAINT = new Color(130, 130, 130);
-
-    /** Icon selection node. */
-    private PPath iconSelection;
-
-    /** Text selection node. */
-    private PPath textSelection;
-
-    /** Text selection shadow node. */
-    private PPath textSelectionShadow;
 
 
     /**
@@ -176,7 +176,6 @@ public final class FinderIdNode
     {
         setTransparency(1.0f);
         getNameTextNode().setTextPaint(Color.WHITE);
-        // todo:  add drop shadow if reverse video
         iconSelection.setVisible(false);
         textSelection.setPaint(TEXT_SELECTION_PAINT);
         textSelectionShadow.setVisible(false);

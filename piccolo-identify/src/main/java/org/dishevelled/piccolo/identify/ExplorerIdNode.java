@@ -29,11 +29,16 @@ import java.awt.Shape;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+
 import javax.swing.UIManager;
 
 import edu.umd.cs.piccolo.nodes.PPath;
 
 import edu.umd.cs.piccolo.util.PBounds;
+
+import edu.umd.cs.piccolox.nodes.PShadow;
 
 import org.dishevelled.iconbundle.IconSize;
 import org.dishevelled.iconbundle.IconState;
@@ -50,11 +55,20 @@ public final class ExplorerIdNode
     /** Text selection node. */
     private PPath textSelection;
 
-    /** Default icon text gap. */
-    private static final double DEFAULT_ICON_TEXT_GAP = 2.0d;
+    /** Text shadow node. */
+    private PShadow textShadow;
 
     /** Icon text gap. */
     private final double iconTextGap = DEFAULT_ICON_TEXT_GAP;
+
+    /** Text shadow blur radius, <code>4</code>. */
+    private static final int BLUR_RADIUS = 4;
+
+    /** Text shadow offset, <code>0.5d</code> */
+    private static final double TEXT_SHADOW_OFFSET = 0.5d;
+
+   /** Default icon text gap. */
+    private static final double DEFAULT_ICON_TEXT_GAP = 2.0d;
 
 
     /**
@@ -98,9 +112,23 @@ public final class ExplorerIdNode
     private void createNodes()
     {
         textSelection = new PPath();
+        textShadow = new PShadow(getNameTextNode().toImage(), Color.BLACK, BLUR_RADIUS);
         addChild(textSelection);
+        addChild(textShadow);
         addChild(getIconBundleImageNode());
         addChild(getNameTextNode());
+
+        // update text shadow on text node property changes
+        PropertyChangeListener listener = new PropertyChangeListener()
+            {
+                /** {@inheritDoc} */
+                public void propertyChange(final PropertyChangeEvent event)
+                {
+                    updateTextShadow();
+                }
+            };
+        getNameTextNode().addPropertyChangeListener("font", listener);
+        getNameTextNode().addPropertyChangeListener("text", listener);
     }
 
     /**
@@ -113,6 +141,7 @@ public final class ExplorerIdNode
         getNameTextNode().setTextPaint(Color.WHITE);
         textSelection.setPaint(UIManager.getColor("List.selectionBackground"));
         textSelection.setStrokePaint(UIManager.getColor("List.selectionBackground"));
+        textShadow.setVisible(false);
         textSelection.setVisible(true);
     }
 
@@ -133,6 +162,7 @@ public final class ExplorerIdNode
         setIconState(IconState.NORMAL);
         getNameTextNode().setTextPaint(Color.BLACK);
         textSelection.setVisible(false);
+        textShadow.setVisible(false);
     }
 
     /**
@@ -143,8 +173,8 @@ public final class ExplorerIdNode
         setTransparency(1.0f);
         setIconState(IconState.NORMAL);
         getNameTextNode().setTextPaint(Color.WHITE);
-        // todo: add drop shadow if reverse video
         textSelection.setVisible(false);
+        textShadow.setVisible(true);
     }
 
     /**
@@ -158,6 +188,7 @@ public final class ExplorerIdNode
         textSelection.setPaint(UIManager.getColor("List.selectionBackground"));
         textSelection.setStrokePaint(UIManager.getColor("List.selectionBackground"));
         textSelection.setVisible(true);
+        textShadow.setVisible(false);
     }
 
     /**
@@ -184,6 +215,18 @@ public final class ExplorerIdNode
         dragging();
     }
 
+    /**
+     * Update text shadow.
+     */
+    private void updateTextShadow()
+    {
+        removeChild(textShadow);
+        boolean visible = textShadow.getVisible();
+        textShadow = new PShadow(getNameTextNode().toImage(), Color.BLACK, BLUR_RADIUS);
+        textShadow.setVisible(visible);
+        addChild(0, textShadow);
+    }
+
     /** {@inheritDoc} */
     protected void layoutChildren()
     {
@@ -206,5 +249,7 @@ public final class ExplorerIdNode
         getIconBundleImageNode().setOffset(-iconCenter.getX(), -iconCenter.getY());
         textSelection.setOffset(-textSelectionCenter.getX(), iconCenter.getY() + iconTextGap);
         getNameTextNode().setOffset(-textCenter.getX(), iconCenter.getY() + iconTextGap + textSelectionHeightMargin);
+        textShadow.setOffset(-textCenter.getX() - (2 * BLUR_RADIUS) + TEXT_SHADOW_OFFSET,
+                             iconCenter.getY() + iconTextGap + textSelectionHeightMargin - (2 * BLUR_RADIUS) + TEXT_SHADOW_OFFSET);
     }
 }
