@@ -95,15 +95,6 @@ import org.dishevelled.identify.IdentifyUtils;
 public abstract class AbstractIdNode
     extends PNode
 {
-    /** Default icon size, 32x32. */
-    public static final IconSize DEFAULT_ICON_SIZE = IconSize.DEFAULT_32X32;
-
-    /** Default icon state, normal. */
-    public static final IconState DEFAULT_ICON_STATE = IconState.NORMAL;
-
-    /** Default icon text direction, left to right. */
-    public static final IconTextDirection DEFAULT_ICON_TEXT_DIRECTION = IconTextDirection.LEFT_TO_RIGHT;
-
     /** Value for this id node. */
     private Object value;
 
@@ -127,6 +118,15 @@ public abstract class AbstractIdNode
 
     /** State machine support. */
     private final StateMachineSupport stateMachineSupport;
+
+    /** Default icon size, 32x32. */
+    public static final IconSize DEFAULT_ICON_SIZE = IconSize.DEFAULT_32X32;
+
+    /** Default icon state, normal. */
+    public static final IconState DEFAULT_ICON_STATE = IconState.NORMAL;
+
+    /** Default icon text direction, left to right. */
+    public static final IconTextDirection DEFAULT_ICON_TEXT_DIRECTION = IconTextDirection.LEFT_TO_RIGHT;
 
 
     /**
