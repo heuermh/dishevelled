@@ -82,11 +82,17 @@ public final class IdNodeExample
     // download these images to src/main/resources/org/dishevelled/piccolo/identify/examples
     //    as the terms of use do not allow redistribution or hot-linking
 
+    /** Dark background image url, <code>http://www.mandolux.com/desktops/yuck/mandolux-liriope-r-1024.jpg</code>. */
+    private static final String DARK_BACKGROUND = "mandolux-liriope-r-1024.jpg";
+
     /** Light background image url, <code>http://www.mandolux.com/desktops/flowers/mandolux-serengeti-b-1024.jpg</code>. */
     private static final String LIGHT_BACKGROUND = "mandolux-serengeti-b-1024.jpg";
 
-    /** Dark background image url, <code>http://www.mandolux.com/desktops/yuck/mandolux-liriope-r-1024.jpg</code>. */
-    private static final String DARK_BACKGROUND = "mandolux-liriope-r-1024.jpg";
+    /** Dark background color. */
+    private static final Color DARK_BACKGROUND_COLOR = new Color(80, 80, 80);
+
+    /** Light background color. */
+    private static final Color LIGHT_BACKGROUND_COLOR = new Color(220, 220, 220);
 
     /** Canvas. */
     private final PCanvas canvas;
@@ -292,7 +298,7 @@ public final class IdNodeExample
      */
     private void darkenBackground()
     {
-        canvas.setBackground(Color.BLACK);
+        canvas.setBackground(DARK_BACKGROUND_COLOR);
         darkBackground.moveToBack();
         lightBackground.moveToBack();
 
@@ -318,7 +324,7 @@ public final class IdNodeExample
      */
     private void lightenBackground()
     {
-        canvas.setBackground(Color.WHITE);
+        canvas.setBackground(LIGHT_BACKGROUND_COLOR);
         lightBackground.moveToBack();
         darkBackground.moveToBack();
 
