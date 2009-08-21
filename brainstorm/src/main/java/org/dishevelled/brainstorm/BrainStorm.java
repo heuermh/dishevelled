@@ -33,6 +33,8 @@ import java.awt.GraphicsEnvironment;
 import java.awt.Paint;
 import java.awt.Rectangle;
 
+import static java.awt.RenderingHints.*;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
@@ -119,7 +121,17 @@ public final class BrainStorm
     private void initComponents()
     {
         Font font = new Font(chooseFontName(), Font.PLAIN, 28);
-        textArea = new JTextArea();
+        textArea = new JTextArea()
+            {
+                /** {@inheritDoc} */
+                protected void paintComponent(final Graphics graphics)
+                {
+                    Graphics2D g2 = (Graphics2D) graphics;
+                    g2.setRenderingHint(KEY_FRACTIONALMETRICS, VALUE_FRACTIONALMETRICS_ON);
+                    g2.setRenderingHint(KEY_TEXT_ANTIALIASING, VALUE_TEXT_ANTIALIAS_LCD_HRGB);
+                    super.paintComponent(g2);
+                }
+            };
         textArea.setFont(font);
         textArea.setOpaque(true);
         textArea.setBackground(Color.BLACK);
