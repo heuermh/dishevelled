@@ -47,6 +47,7 @@ are created by the
 
 <source>
 IconBundle folder = TangoProject.FOLDER;
+IconBundle calculator = TangoProject.ACCESSORIES_CALCULATOR;
 IconBundle multimediaPlayer = TangoProject.MULTIMEDIA_PLAYER;
 IconBundle viewRefresh = TangoProject.VIEW_REFRESH;
 </source>
@@ -55,7 +56,7 @@ IconBundle viewRefresh = TangoProject.VIEW_REFRESH;
 All variants of this base image, for different text directions, sizes, and states,
 are available from this icon bundle.  Tango Project icon theme icons are currently
 only available in left-to-right orientation.  The default Tango Project icon sizes
-(Extra Small, Small, and Large) are provided as static instances of
+(Extra Small, Small, Medium, and Large) are provided as static instances of
 <a href="http://www.dishevelled.org/iconbundle/apidocs/org/dishevelled/iconbundle/IconSize.html">IconSize</a>
 in the class <a href="apidocs/org/dishevelled/iconbundle/tango/TangoProject.html">TangoProject</a>.
 An AWT or Swing component may be passed to the icon bundle to provide hints as to e.g.
@@ -71,6 +72,12 @@ Image folderRtlNormalLarge = folder.getImage(label,
   IconState.NORMAL,
   TangoProject.LARGE);
 
+// Medium (32x32)
+Image calculatorRtlDisabledMedium = calculator.getImage(label,
+  IconTextDirection.RIGHT_TO_LEFT,
+  IconState.DISABLED,
+  TangoProject.MEDIUM);
+
 // Small (22x22)
 Image multimediaPlayerLtrSelectedSmall = multimediaPlayer.getImage(label,
   IconTextDirection.LEFT_TO_RIGHT,
@@ -85,8 +92,8 @@ Image viewRefreshLtrMouseoverExtraSmall = viewRefresh.getImage(label,
 </source>
 
 <p>
-The icon bundle will load Extra Small and Small icons from 16x16 and 22x22 pixel .png files and will
-load Large and any other size icons from scalable .svg files.  A jar artifact including these
+The icon bundle will load Extra Small, Small, and Medium icons from 16x16, 22x22, and 32x32 pixel .png files 
+respectively and will load Large and any other size icons from scalable .svg files.  A jar artifact including these
 Tango Project icons is available from the central maven repository and is used by this library.
 </p>
 </section>
@@ -103,9 +110,6 @@ Tango Project<br/>
 &gt; <a href="http://tango.freedesktop.org">http://tango.freedesktop.org</a>
 </p>
 
-<p>
-The Tango Project icons are licensed under the <a href="http://creativecommons.org/licenses/by-sa/2.5/">Creative Commons Attribution Share-Alike license</a>.
-</p>
 </section>
 
 <section name="Acknowledgements">
