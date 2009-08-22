@@ -52,7 +52,7 @@ final class TangoProjectIconBundle
     implements IconBundle
 {
     /** Base url. */
-    private static final String BASE_URL = "/org/tango-project/tango-icon-theme/";
+    private static final String BASE_URL = "/org/freedesktop/tango/";
 
     /** Tango project standard icon context. */
     private final String context;

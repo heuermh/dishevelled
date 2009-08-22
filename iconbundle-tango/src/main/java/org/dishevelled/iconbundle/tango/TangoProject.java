@@ -584,11 +584,8 @@ public final class TangoProject
     /** Icon bundle for <code>emotes/face-crying</code>. */
     public static final IconBundle FACE_CRYING = new CachingIconBundle(new TangoProjectIconBundle("emotes", "face-crying"));
 
-    /** Icon bundle for <code>emotes/face-devil-grin</code>. */
-    public static final IconBundle FACE_DEVIL_GRIN = new CachingIconBundle(new TangoProjectIconBundle("emotes", "face-devil-grin"));
-
-    /** Icon bundle for <code>emotes/face-devil-sad</code>. */
-    //public static final IconBundle FACE_DEVIL_SAD = new CachingIconBundle(new TangoProjectIconBundle("emotes", "face-devil-sad"));
+    /** Icon bundle for <code>emotes/face-devilish</code>. */
+    public static final IconBundle FACE_DEVILISH = new CachingIconBundle(new TangoProjectIconBundle("emotes", "face-devilish"));
 
     /** Icon bundle for <code>emotes/face-glasses</code>. */
     public static final IconBundle FACE_GLASSES = new CachingIconBundle(new TangoProjectIconBundle("emotes", "face-glasses"));
@@ -1052,8 +1049,7 @@ public final class TangoProject
 
         iconBundles.put("face-angel", FACE_ANGEL);
         iconBundles.put("face-crying", FACE_CRYING);
-        iconBundles.put("face-devil-grin", FACE_DEVIL_GRIN);
-        //iconBundles.put("face-devil-grin", FACE_DEVIL_SAD);
+        iconBundles.put("face-devilish", FACE_DEVILISH);
         iconBundles.put("face-glasses", FACE_GLASSES);
         iconBundles.put("face-kiss", FACE_KISS);
         iconBundles.put("face-monkey", FACE_MONKEY);
