@@ -283,8 +283,7 @@ final class TangoTreeModel
 
         multiMap.put("emotes", new Icon("face-angel", TangoProject.FACE_ANGEL));
         multiMap.put("emotes", new Icon("face-crying", TangoProject.FACE_CRYING));
-        multiMap.put("emotes", new Icon("face-devil-grin", TangoProject.FACE_DEVIL_GRIN));
-        //multiMap.put("emotes", new Icon("face-devil-grin", TangoProject.FACE_DEVIL_SAD));
+        multiMap.put("emotes", new Icon("face-devilish", TangoProject.FACE_DEVILISH));
         multiMap.put("emotes", new Icon("face-glasses", TangoProject.FACE_GLASSES));
         multiMap.put("emotes", new Icon("face-kiss", TangoProject.FACE_KISS));
         multiMap.put("emotes", new Icon("face-monkey", TangoProject.FACE_MONKEY));
