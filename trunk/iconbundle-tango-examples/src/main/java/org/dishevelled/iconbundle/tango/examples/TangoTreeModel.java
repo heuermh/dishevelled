@@ -109,6 +109,7 @@ final class TangoTreeModel
         multiMap.put("actions", new Icon("address-book-new", TangoProject.ADDRESS_BOOK_NEW));
         //multiMap.put("actions", new Icon("application-exit", TangoProject.APPLICATION_EXIT));
         multiMap.put("actions", new Icon("appointment-new", TangoProject.APPOINTMENT_NEW));
+        multiMap.put("actions", new Icon("bookmark-new", TangoProject.BOOKMARK_NEW));
         multiMap.put("actions", new Icon("contact-new", TangoProject.CONTACT_NEW));
         //multiMap.put("actions", new Icon("dialog-cancel", TangoProject.DIALOG_CANCEL));
         //multiMap.put("actions", new Icon("dialog-close", TangoProject.DIALOG_CLOSE));
@@ -123,6 +124,7 @@ final class TangoTreeModel
         //multiMap.put("actions", new Icon("document-revert", TangoProject.DOCUMENT_REVERT));
         multiMap.put("actions", new Icon("document-save", TangoProject.DOCUMENT_SAVE));
         multiMap.put("actions", new Icon("document-save-as", TangoProject.DOCUMENT_SAVE_AS));
+        multiMap.put("actions", new Icon("edit-clear", TangoProject.EDIT_CLEAR));
         multiMap.put("actions", new Icon("edit-copy", TangoProject.EDIT_COPY));
         multiMap.put("actions", new Icon("edit-cut", TangoProject.EDIT_CUT));
         multiMap.put("actions", new Icon("edit-delete", TangoProject.EDIT_DELETE));
@@ -132,6 +134,7 @@ final class TangoTreeModel
         multiMap.put("actions", new Icon("edit-redo", TangoProject.EDIT_REDO));
         multiMap.put("actions", new Icon("edit-select-all", TangoProject.EDIT_SELECT_ALL));
         multiMap.put("actions", new Icon("edit-undo", TangoProject.EDIT_UNDO));
+        multiMap.put("actions", new Icon("folder-new", TangoProject.FOLDER_NEW));
         multiMap.put("actions", new Icon("format-indent-less", TangoProject.FORMAT_INDENT_LESS));
         multiMap.put("actions", new Icon("format-indent-more", TangoProject.FORMAT_INDENT_MORE));
         multiMap.put("actions", new Icon("format-justify-center", TangoProject.FORMAT_JUSTIFY_CENTER));
@@ -187,10 +190,13 @@ final class TangoTreeModel
         //multiMap.put("actions", new Icon("object-flip-vertical", TangoProject.OBJECT_FLIP_VERTICAL));
         //multiMap.put("actions", new Icon("object-rotate-left", TangoProject.OBJECT_ROTATE_LEFT));
         //multiMap.put("actions", new Icon("object-rotate-right", TangoProject.OBJECT_ROTATE_RIGHT));
+        multiMap.put("actions", new Icon("process-stop", TangoProject.PROCESS_STOP));
         multiMap.put("actions", new Icon("system-lock-screen", TangoProject.SYSTEM_LOCK_SCREEN));
         multiMap.put("actions", new Icon("system-log-out", TangoProject.SYSTEM_LOG_OUT));
         //multiMap.put("actions", new Icon("system-run", TangoProject.SYSTEM_RUN));
         multiMap.put("actions", new Icon("system-search", TangoProject.SYSTEM_SEARCH));
+        multiMap.put("actions", new Icon("system-shutdown", TangoProject.SYSTEM_SHUTDOWN));
+        multiMap.put("actions", new Icon("tab-new", TangoProject.TAB_NEW));
         //multiMap.put("actions", new Icon("tools-check-spelling", TangoProject.TOOLS_CHECK_SPELLING));
         multiMap.put("actions", new Icon("view-fullscreen", TangoProject.VIEW_FULLSCREEN));
         multiMap.put("actions", new Icon("view-refresh", TangoProject.VIEW_REFRESH));
@@ -210,16 +216,27 @@ final class TangoTreeModel
         //multiMap.put("apps", new Icon("accessories-dictionary", TangoProject.ACCESSORIES_DICTIONARY));
         multiMap.put("apps", new Icon("accessories-text-editor", TangoProject.ACCESSORIES_TEXT_EDITOR));
         multiMap.put("apps", new Icon("help-browser", TangoProject.HELP_BROWSER));
+        multiMap.put("apps", new Icon("internet-group-chat", TangoProject.INTERNET_GROUP_CHAT));
+        multiMap.put("apps", new Icon("internet-mail", TangoProject.INTERNET_MAIL));
+        multiMap.put("apps", new Icon("internet-web-browser", TangoProject.INTERNET_WEB_BROWSER));
+        multiMap.put("apps", new Icon("office-calendar", TangoProject.OFFICE_CALENDAR));
         //multiMap.put("apps", new Icon("multimedia-volume-control", TangoProject.MULTIMEDIA_VOLUME_CONTROL));
         multiMap.put("apps", new Icon("preferences-desktop-accessibility", TangoProject.PREFERENCES_DESKTOP_ACCESSIBILITY));
+        multiMap.put("apps", new Icon("preferences-desktop-assistive-technology", TangoProject.PREFERENCES_DESKTOP_ASSISTIVE_TECHNOLOGY));
         multiMap.put("apps", new Icon("preferences-desktop-font", TangoProject.PREFERENCES_DESKTOP_FONT));
         //multiMap.put("apps", new Icon("preferences-desktop-keyboard", TangoProject.PREFERENCES_DESKTOP_KEYBOARD));
+        multiMap.put("apps", new Icon("preferences-desktop-keyboard-shortcuts", TangoProject.PREFERENCES_DESKTOP_KEYBOARD_SHORTCUTS));
         multiMap.put("apps", new Icon("preferences-desktop-locale", TangoProject.PREFERENCES_DESKTOP_LOCALE));
-        //multiMap.put("apps", new Icon("preferences-desktop-multimedia", TangoProject.PREFERENCES_DESKTOP_MULTIMEDIA));
+        multiMap.put("apps", new Icon("preferences-desktop-multimedia", TangoProject.PREFERENCES_DESKTOP_MULTIMEDIA));
+        multiMap.put("apps", new Icon("preferences-desktop-remote-desktop", TangoProject.PREFERENCES_DESKTOP_REMOTE_DESKTOP));
         multiMap.put("apps", new Icon("preferences-desktop-screensaver", TangoProject.PREFERENCES_DESKTOP_SCREENSAVER));
         multiMap.put("apps", new Icon("preferences-desktop-theme", TangoProject.PREFERENCES_DESKTOP_THEME));
         multiMap.put("apps", new Icon("preferences-desktop-wallpaper", TangoProject.PREFERENCES_DESKTOP_WALLPAPER));
+        multiMap.put("apps", new Icon("preferences-system-network-proxy", TangoProject.PREFERENCES_SYSTEM_NETWORK_PROXY));
+        multiMap.put("apps", new Icon("preferences-system-sesson", TangoProject.PREFERENCES_SYSTEM_SESSION));
+        multiMap.put("apps", new Icon("preferences-system-windows", TangoProject.PREFERENCES_SYSTEM_WINDOWS));
         multiMap.put("apps", new Icon("system-file-manager", TangoProject.SYSTEM_FILE_MANAGER));
+        multiMap.put("apps", new Icon("system-users", TangoProject.SYSTEM_USERS));
         //multiMap.put("apps", new Icon("system-software-update", TangoProject.SYSTEM_SOFTWARE_UPDATE));
         multiMap.put("apps", new Icon("utilities-system-monitor", TangoProject.UTILITIES_SYSTEM_MONITOR));
         multiMap.put("apps", new Icon("utilities-terminal", TangoProject.UTILITIES_TERMINAL));
@@ -285,6 +302,7 @@ final class TangoTreeModel
         multiMap.put("emotes", new Icon("face-crying", TangoProject.FACE_CRYING));
         multiMap.put("emotes", new Icon("face-devilish", TangoProject.FACE_DEVILISH));
         multiMap.put("emotes", new Icon("face-glasses", TangoProject.FACE_GLASSES));
+        multiMap.put("emotes", new Icon("face-grin", TangoProject.FACE_GRIN));
         multiMap.put("emotes", new Icon("face-kiss", TangoProject.FACE_KISS));
         multiMap.put("emotes", new Icon("face-monkey", TangoProject.FACE_MONKEY));
         multiMap.put("emotes", new Icon("face-plain", TangoProject.FACE_PLAIN));
@@ -298,6 +316,7 @@ final class TangoTreeModel
         //multiMap.put("intl", new Icon("flag-..", TangoProject.FLAG_..));
 
         multiMap.put("mimetypes", new Icon("application-x-executable", TangoProject.APPLICATION_X_EXECUTABLE));
+        multiMap.put("mimetypes", new Icon("application-certificate", TangoProject.APPLICATION_CERTIFICATE));
         multiMap.put("mimetypes", new Icon("audio-x-generic", TangoProject.AUDIO_X_GENERIC));
         multiMap.put("mimetypes", new Icon("font-x-generic", TangoProject.FONT_X_GENERIC));
         multiMap.put("mimetypes", new Icon("image-x-generic", TangoProject.IMAGE_X_GENERIC));
@@ -310,11 +329,17 @@ final class TangoTreeModel
         multiMap.put("mimetypes", new Icon("x-office-address-book", TangoProject.X_OFFICE_ADDRESS_BOOK));
         multiMap.put("mimetypes", new Icon("x-office-calendar", TangoProject.X_OFFICE_CALENDAR));
         multiMap.put("mimetypes", new Icon("x-office-document", TangoProject.X_OFFICE_DOCUMENT));
+        multiMap.put("mimetypes", new Icon("x-office-document-template", TangoProject.X_OFFICE_DOCUMENT_TEMPLATE));
+        multiMap.put("mimetypes", new Icon("x-office-drawing", TangoProject.X_OFFICE_DRAWING));
+        multiMap.put("mimetypes", new Icon("x-office-drawing-template", TangoProject.X_OFFICE_DRAWING_TEMPLATE));
         multiMap.put("mimetypes", new Icon("x-office-presentation", TangoProject.X_OFFICE_PRESENTATION));
+        multiMap.put("mimetypes", new Icon("x-office-presentation-template", TangoProject.X_OFFICE_PRESENTATION_TEMPLATE));
         multiMap.put("mimetypes", new Icon("x-office-spreadsheet", TangoProject.X_OFFICE_SPREADSHEET));
+        multiMap.put("mimetypes", new Icon("x-office-spreadsheet-template", TangoProject.X_OFFICE_SPREADSHEET_TEMPLATE));
 
         multiMap.put("places", new Icon("folder", TangoProject.FOLDER));
         multiMap.put("places", new Icon("folder-remote", TangoProject.FOLDER_REMOTE));
+        multiMap.put("places", new Icon("folder-saved-search", TangoProject.FOLDER_SAVED_SEARCH));
         multiMap.put("places", new Icon("network-server", TangoProject.NETWORK_SERVER));
         multiMap.put("places", new Icon("network-workgroup", TangoProject.NETWORK_WORKGROUP));
         multiMap.put("places", new Icon("start-here", TangoProject.START_HERE));
@@ -354,6 +379,7 @@ final class TangoTreeModel
         multiMap.put("status", new Icon("network-receive", TangoProject.NETWORK_RECEIVE));
         multiMap.put("status", new Icon("network-transmit", TangoProject.NETWORK_TRANSMIT));
         multiMap.put("status", new Icon("network-transmit-receive", TangoProject.NETWORK_TRANSMIT_RECEIVE));
+        multiMap.put("status", new Icon("network-wireless-encrypted", TangoProject.NETWORK_WIRELESS_ENCRYPTED));
         multiMap.put("status", new Icon("printer-error", TangoProject.PRINTER_ERROR));
         //multiMap.put("status", new Icon("printer-printing", TangoProject.PRINTER_PRINTING));
         //multiMap.put("status", new Icon("security-high", TangoProject.SECURITY_HIGH));

@@ -77,6 +77,9 @@ public final class TangoProject
     /** Icon bundle for <code>actions/appointment-new</code>. */
     public static final IconBundle APPOINTMENT_NEW = new CachingIconBundle(new TangoProjectIconBundle("actions", "appointment-new"));
 
+    /** Icon bundle for <code>actions/bookmark-new</code>. */
+    public static final IconBundle BOOKMARK_NEW = new CachingIconBundle(new TangoProjectIconBundle("actions", "bookmark-new"));
+
     /** Icon bundle for <code>actions/contact-new</code>. */
     public static final IconBundle CONTACT_NEW = new CachingIconBundle(new TangoProjectIconBundle("actions", "contact-new"));
 
@@ -119,6 +122,9 @@ public final class TangoProject
     /** Icon bundle for <code>actions/document-save-as</code>. */
     public static final IconBundle DOCUMENT_SAVE_AS = new CachingIconBundle(new TangoProjectIconBundle("actions", "document-save-as"));
 
+    /** Icon bundle for <code>actions/edit-clear</code>. */
+    public static final IconBundle EDIT_CLEAR = new CachingIconBundle(new TangoProjectIconBundle("actions", "edit-clear"));
+
     /** Icon bundle for <code>actions/edit-copy</code>. */
     public static final IconBundle EDIT_COPY = new CachingIconBundle(new TangoProjectIconBundle("actions", "edit-copy"));
 
@@ -145,6 +151,9 @@ public final class TangoProject
 
     /** Icon bundle for <code>actions/edit-undo</code>. */
     public static final IconBundle EDIT_UNDO = new CachingIconBundle(new TangoProjectIconBundle("actions", "edit-undo"));
+
+    /** Icon bundle for <code>actions/folder-new</code>. */
+    public static final IconBundle FOLDER_NEW = new CachingIconBundle(new TangoProjectIconBundle("actions", "folder-new"));
 
     /** Icon bundle for <code>actions/format-indent-less</code>. */
     public static final IconBundle FORMAT_INDENT_LESS = new CachingIconBundle(new TangoProjectIconBundle("actions", "format-indent-less"));
@@ -311,6 +320,9 @@ public final class TangoProject
     /** Icon bundle for <code>actions/object-rotate-right</code>. */
     //public static final IconBundle OBJECT_ROTATE_RIGHT = new CachingIconBundle(new TangoProjectIconBundle("actions", "object-rotate-right"));
 
+    /** Icon bundle for <code>actions/process-stop</code>. */
+    public static final IconBundle PROCESS_STOP = new CachingIconBundle(new TangoProjectIconBundle("actions", "process-stop"));
+
     /** Icon bundle for <code>actions/system-lock-screen</code>. */
     public static final IconBundle SYSTEM_LOCK_SCREEN = new CachingIconBundle(new TangoProjectIconBundle("actions", "system-lock-screen"));
 
@@ -322,6 +334,12 @@ public final class TangoProject
 
     /** Icon bundle for <code>actions/system-search</code>. */
     public static final IconBundle SYSTEM_SEARCH = new CachingIconBundle(new TangoProjectIconBundle("actions", "system-search"));
+
+    /** Icon bundle for <code>actions/system-shutdown</code>. */
+    public static final IconBundle SYSTEM_SHUTDOWN = new CachingIconBundle(new TangoProjectIconBundle("actions", "system-shutdown"));
+
+    /** Icon bundle for <code>actions/tab-new</code>. */
+    public static final IconBundle TAB_NEW = new CachingIconBundle(new TangoProjectIconBundle("actions", "tab-new"));
 
     /** Icon bundle for <code>actions/tools-check-spelling</code>. */
     //public static final IconBundle TOOLS_CHECK_SPELLING = new CachingIconBundle(new TangoProjectIconBundle("actions", "tools-check-spelling"));
@@ -377,11 +395,26 @@ public final class TangoProject
     /** Icon bundle for <code>apps/help-browser</code>. */
     public static final IconBundle HELP_BROWSER = new CachingIconBundle(new TangoProjectIconBundle("apps", "help-browser"));
 
+    /** Icon bundle for <code>apps/internet-group-chat</code>. */
+    public static final IconBundle INTERNET_GROUP_CHAT = new CachingIconBundle(new TangoProjectIconBundle("apps", "internet-group-chat"));
+
+    /** Icon bundle for <code>apps/internet-mail</code>. */
+    public static final IconBundle INTERNET_MAIL = new CachingIconBundle(new TangoProjectIconBundle("apps", "internet-mail"));
+
+    /** Icon bundle for <code>apps/internet-web-browser</code>. */
+    public static final IconBundle INTERNET_WEB_BROWSER = new CachingIconBundle(new TangoProjectIconBundle("apps", "internet-web-browser"));
+
+    /** Icon bundle for <code>apps/office-calendar</code>. */
+    public static final IconBundle OFFICE_CALENDAR = new CachingIconBundle(new TangoProjectIconBundle("apps", "office-calendar"));
+
     /** Icon bundle for <code>apps/multimedia-volume-control</code>. */
     public static final IconBundle MULTIMEDIA_VOLUME_CONTROL = new CachingIconBundle(new TangoProjectIconBundle("apps", "multimedia-volume-control"));
 
     /** Icon bundle for <code>apps/preferences-desktop-accessibility</code>. */
     public static final IconBundle PREFERENCES_DESKTOP_ACCESSIBILITY = new CachingIconBundle(new TangoProjectIconBundle("apps", "preferences-desktop-accessibility"));
+
+    /** Icon bundle for <code>apps/preferences-desktop-assistive-technology</code>. */
+    public static final IconBundle PREFERENCES_DESKTOP_ASSISTIVE_TECHNOLOGY = new CachingIconBundle(new TangoProjectIconBundle("apps", "preferences-desktop-assistive-technology"));
 
     /** Icon bundle for <code>apps/preferences-desktop-font</code>. */
     public static final IconBundle PREFERENCES_DESKTOP_FONT = new CachingIconBundle(new TangoProjectIconBundle("apps", "preferences-desktop-font"));
@@ -389,11 +422,17 @@ public final class TangoProject
     /** Icon bundle for <code>apps/preferences-desktop-keyboard</code>. */
     //public static final IconBundle PREFERENCES_DESKTOP_KEYBOARD = new CachingIconBundle(new TangoProjectIconBundle("apps", "preferences-desktop-keyboard"));
 
+    /** Icon bundle for <code>apps/preferences-desktop-keyboard-shortcuts</code>. */
+    public static final IconBundle PREFERENCES_DESKTOP_KEYBOARD_SHORTCUTS = new CachingIconBundle(new TangoProjectIconBundle("apps", "preferences-desktop-keyboard-shortcuts"));
+
     /** Icon bundle for <code>apps/preferences-desktop-locale</code>. */
     public static final IconBundle PREFERENCES_DESKTOP_LOCALE = new CachingIconBundle(new TangoProjectIconBundle("apps", "preferences-desktop-locale"));
 
     /** Icon bundle for <code>apps/preferences-desktop-multimedia</code>. */
-    //public static final IconBundle PREFERENCES_DESKTOP_MULTIMEDIA = new CachingIconBundle(new TangoProjectIconBundle("apps", "preferences-desktop-multimedia"));
+    public static final IconBundle PREFERENCES_DESKTOP_MULTIMEDIA = new CachingIconBundle(new TangoProjectIconBundle("apps", "preferences-desktop-multimedia"));
+
+    /** Icon bundle for <code>apps/preferences-desktop-remote-desktop</code>. */
+    public static final IconBundle PREFERENCES_DESKTOP_REMOTE_DESKTOP = new CachingIconBundle(new TangoProjectIconBundle("apps", "preferences-desktop-remote-desktop"));
 
     /** Icon bundle for <code>apps/preferences-desktop-screensaver</code>. */
     public static final IconBundle PREFERENCES_DESKTOP_SCREENSAVER = new CachingIconBundle(new TangoProjectIconBundle("apps", "preferences-desktop-screensaver"));
@@ -404,11 +443,23 @@ public final class TangoProject
     /** Icon bundle for <code>apps/preferences-desktop-wallpaper</code>. */
     public static final IconBundle PREFERENCES_DESKTOP_WALLPAPER = new CachingIconBundle(new TangoProjectIconBundle("apps", "preferences-desktop-wallpaper"));
 
+    /** Icon bundle for <code>apps/preferences-system-network-proxy</code>. */
+    public static final IconBundle PREFERENCES_SYSTEM_NETWORK_PROXY = new CachingIconBundle(new TangoProjectIconBundle("apps", "preferences-system-network-proxy"));
+
+    /** Icon bundle for <code>apps/preferences-system-session</code>. */
+    public static final IconBundle PREFERENCES_SYSTEM_SESSION = new CachingIconBundle(new TangoProjectIconBundle("apps", "preferences-system-session"));
+
+    /** Icon bundle for <code>apps/preferences-system-windows</code>. */
+    public static final IconBundle PREFERENCES_SYSTEM_WINDOWS = new CachingIconBundle(new TangoProjectIconBundle("apps", "preferences-system-windows"));
+
     /** Icon bundle for <code>apps/system-file-manager</code>. */
     public static final IconBundle SYSTEM_FILE_MANAGER = new CachingIconBundle(new TangoProjectIconBundle("apps", "system-file-manager"));
 
     /** Icon bundle for <code>apps/system-software-update</code>. */
     public static final IconBundle SYSTEM_SOFTWARE_UPDATE = new CachingIconBundle(new TangoProjectIconBundle("apps", "system-software-update"));
+
+    /** Icon bundle for <code>apps/system-users</code>. */
+    public static final IconBundle SYSTEM_USERS = new CachingIconBundle(new TangoProjectIconBundle("apps", "system-users"));
 
     /** Icon bundle for <code>apps/utilities-system-monitor</code>. */
     public static final IconBundle UTILITIES_SYSTEM_MONITOR = new CachingIconBundle(new TangoProjectIconBundle("apps", "utilities-system-monitor"));
@@ -590,6 +641,9 @@ public final class TangoProject
     /** Icon bundle for <code>emotes/face-glasses</code>. */
     public static final IconBundle FACE_GLASSES = new CachingIconBundle(new TangoProjectIconBundle("emotes", "face-glasses"));
 
+    /** Icon bundle for <code>emotes/face-grin</code>. */
+    public static final IconBundle FACE_GRIN = new CachingIconBundle(new TangoProjectIconBundle("emotes", "face-grin"));
+
     /** Icon bundle for <code>emotes/face-angel</code>. */
     public static final IconBundle FACE_KISS = new CachingIconBundle(new TangoProjectIconBundle("emotes", "face-kiss"));
 
@@ -619,6 +673,9 @@ public final class TangoProject
 
     /** Icon bundle for <code>intl/flag-..</code>. */
     //public static final IconBundle FLAG_.. = new CachingIconBundle(new TangoProjectIconBundle("intl", "flag-.."));
+
+    /** Icon bundle for <code>mimetypes/application-certificate</code>. */
+    public static final IconBundle APPLICATION_CERTIFICATE = new CachingIconBundle(new TangoProjectIconBundle("mimetypes", "application-certificate"));
 
     /** Icon bundle for <code>mimetypes/application-x-executable</code>. */
     public static final IconBundle APPLICATION_X_EXECUTABLE = new CachingIconBundle(new TangoProjectIconBundle("mimetypes", "application-x-executable"));
@@ -659,17 +716,35 @@ public final class TangoProject
     /** Icon bundle for <code>mimetypes/x-office-document</code>. */
     public static final IconBundle X_OFFICE_DOCUMENT = new CachingIconBundle(new TangoProjectIconBundle("mimetypes", "x-office-document"));
 
+    /** Icon bundle for <code>mimetypes/x-office-document-template</code>. */
+    public static final IconBundle X_OFFICE_DOCUMENT_TEMPLATE = new CachingIconBundle(new TangoProjectIconBundle("mimetypes", "x-office-document-template"));
+
+    /** Icon bundle for <code>mimetypes/x-office-drawing</code>. */
+    public static final IconBundle X_OFFICE_DRAWING = new CachingIconBundle(new TangoProjectIconBundle("mimetypes", "x-office-drawing"));
+
+    /** Icon bundle for <code>mimetypes/x-office-drawing-template</code>. */
+    public static final IconBundle X_OFFICE_DRAWING_TEMPLATE = new CachingIconBundle(new TangoProjectIconBundle("mimetypes", "x-office-drawing-template"));
+
     /** Icon bundle for <code>mimetypes/x-office-presentation</code>. */
     public static final IconBundle X_OFFICE_PRESENTATION = new CachingIconBundle(new TangoProjectIconBundle("mimetypes", "x-office-presentation"));
 
+    /** Icon bundle for <code>mimetypes/x-office-presentation-template</code>. */
+    public static final IconBundle X_OFFICE_PRESENTATION_TEMPLATE = new CachingIconBundle(new TangoProjectIconBundle("mimetypes", "x-office-presentation-template"));
+
     /** Icon bundle for <code>mimetypes/x-office-spreadsheet</code>. */
     public static final IconBundle X_OFFICE_SPREADSHEET = new CachingIconBundle(new TangoProjectIconBundle("mimetypes", "x-office-spreadsheet"));
+
+    /** Icon bundle for <code>mimetypes/x-office-spreadsheet-template</code>. */
+    public static final IconBundle X_OFFICE_SPREADSHEET_TEMPLATE = new CachingIconBundle(new TangoProjectIconBundle("mimetypes", "x-office-spreadsheet-template"));
 
     /** Icon bundle for <code>places/folder</code>. */
     public static final IconBundle FOLDER = new CachingIconBundle(new TangoProjectIconBundle("places", "folder"));
 
     /** Icon bundle for <code>places/folder-remote</code>. */
     public static final IconBundle FOLDER_REMOTE = new CachingIconBundle(new TangoProjectIconBundle("places", "folder-remote"));
+
+    /** Icon bundle for <code>places/folder-saved-search</code>. */
+    public static final IconBundle FOLDER_SAVED_SEARCH = new CachingIconBundle(new TangoProjectIconBundle("places", "folder-saved-search"));
 
     /** Icon bundle for <code>places/network-server</code>. */
     public static final IconBundle NETWORK_SERVER = new CachingIconBundle(new TangoProjectIconBundle("places", "network-server"));
@@ -785,6 +860,9 @@ public final class TangoProject
     /** Icon bundle for <code>status/network-transmit-receive</code>. */
     public static final IconBundle NETWORK_TRANSMIT_RECEIVE = new CachingIconBundle(new TangoProjectIconBundle("status", "network-transmit-receive"));
 
+    /** Icon bundle for <code>status/network-wireless-encrypted</code>. */
+    public static final IconBundle NETWORK_WIRELESS_ENCRYPTED = new CachingIconBundle(new TangoProjectIconBundle("status", "network-wireless-encrypted"));
+
     /** Icon bundle for <code>status/printer-error</code>. */
     public static final IconBundle PRINTER_ERROR = new CachingIconBundle(new TangoProjectIconBundle("status", "printer-error"));
 
@@ -801,10 +879,10 @@ public final class TangoProject
     //public static final IconBundle SECURITY_LOW = new CachingIconBundle(new TangoProjectIconBundle("status", "security-low"));
 
     /** Icon bundle for <code>status/software-update-available</code>. */
-    //public static final IconBundle SOFTWARE_UPDATE_AVAILABLE = new CachingIconBundle(new TangoProjectIconBundle("status", "software-update-available"));
+    public static final IconBundle SOFTWARE_UPDATE_AVAILABLE = new CachingIconBundle(new TangoProjectIconBundle("status", "software-update-available"));
 
     /** Icon bundle for <code>status/software-update-urgent</code>. */
-    //public static final IconBundle SOFTWARE_UPDATE_URGENT = new CachingIconBundle(new TangoProjectIconBundle("status", "software-update-urgent"));
+   public static final IconBundle SOFTWARE_UPDATE_URGENT = new CachingIconBundle(new TangoProjectIconBundle("status", "software-update-urgent"));
 
     /** Icon bundle for <code>status/sync-error</code>. */
     //public static final IconBundle SYNC_ERROR = new CachingIconBundle(new TangoProjectIconBundle("status", "sync-error"));
@@ -867,7 +945,7 @@ public final class TangoProject
     public static final IconBundle WEATHER_STORM = new CachingIconBundle(new TangoProjectIconBundle("status", "weather-storm"));
 
     /** Map of Tango Project icon bundles keyed by name. */
-    //private final Map<String, IconBundle> iconBundles = new HashMap<String, IconBundle>(275);
+    //private static final Map<String, IconBundle> iconBundles = new HashMap<String, IconBundle>(275);
     private static final Map iconBundles = new HashMap(275);
 
     static
@@ -875,6 +953,7 @@ public final class TangoProject
         iconBundles.put("address-book-new", ADDRESS_BOOK_NEW);
         //iconBundles.put("application-exit", APPLICATION_EXIT);
         iconBundles.put("appointment-new", APPOINTMENT_NEW);
+        iconBundles.put("bookmark-new", BOOKMARK_NEW);
         iconBundles.put("contact-new", CONTACT_NEW);
         //iconBundles.put("dialog-cancel", DIALOG_CANCEL);
         //iconBundles.put("dialog-close", DIALOG_CLOSE);
@@ -889,6 +968,7 @@ public final class TangoProject
         //iconBundles.put("document-revert", DOCUMENT_REVERT);
         iconBundles.put("document-save", DOCUMENT_SAVE);
         iconBundles.put("document-save-as", DOCUMENT_SAVE_AS);
+        iconBundles.put("edit-clear", EDIT_CLEAR);
         iconBundles.put("edit-copy", EDIT_COPY);
         iconBundles.put("edit-cut", EDIT_CUT);
         iconBundles.put("edit-delete", EDIT_DELETE);
@@ -898,6 +978,7 @@ public final class TangoProject
         iconBundles.put("edit-redo", EDIT_REDO);
         iconBundles.put("edit-select-all", EDIT_SELECT_ALL);
         iconBundles.put("edit-undo", EDIT_UNDO);
+        iconBundles.put("folder-new", FOLDER_NEW);
         iconBundles.put("format-indent-less", FORMAT_INDENT_LESS);
         iconBundles.put("format-indent-more", FORMAT_INDENT_MORE);
         iconBundles.put("format-justify-center", FORMAT_JUSTIFY_CENTER);
@@ -953,10 +1034,13 @@ public final class TangoProject
         //iconBundles.put("object-flip-vertical", OBJECT_FLIP_VERTICAL);
         //iconBundles.put("object-rotate-left", OBJECT_ROTATE_LEFT);
         //iconBundles.put("object-rotate-right", OBJECT_ROTATE_RIGHT);
+        iconBundles.put("process-stop", PROCESS_STOP);
         iconBundles.put("system-lock-screen", SYSTEM_LOCK_SCREEN);
         iconBundles.put("system-log-out", SYSTEM_LOG_OUT);
         //iconBundles.put("system-run", SYSTEM_RUN);
         iconBundles.put("system-search", SYSTEM_SEARCH);
+        iconBundles.put("system-shutdown", SYSTEM_SHUTDOWN);
+        iconBundles.put("tab-new", TAB_NEW);
         //iconBundles.put("tools-check-spelling", TOOLS_CHECK_SPELLING);
         iconBundles.put("view-fullscreen", VIEW_FULLSCREEN);
         iconBundles.put("view-refresh", VIEW_REFRESH);
@@ -976,20 +1060,30 @@ public final class TangoProject
         //iconBundles.put("accessories-dictionary", ACCESSORIES_DICTIONARY);
         iconBundles.put("accessories-text-editor", ACCESSORIES_TEXT_EDITOR);
         iconBundles.put("help-browser", HELP_BROWSER);
+        iconBundles.put("internet-group-chat", INTERNET_GROUP_CHAT);
+        iconBundles.put("internet-mail", INTERNET_MAIL);
+        iconBundles.put("internet-web-browser", INTERNET_WEB_BROWSER);
+        iconBundles.put("office-calendar", OFFICE_CALENDAR);
         //iconBundles.put("multimedia-volume-control", MULTIMEDIA_VOLUME_CONTROL);
         iconBundles.put("preferences-desktop-accessibility", PREFERENCES_DESKTOP_ACCESSIBILITY);
+        iconBundles.put("preferences-desktop-assistive-technology", PREFERENCES_DESKTOP_ASSISTIVE_TECHNOLOGY);
         iconBundles.put("preferences-desktop-font", PREFERENCES_DESKTOP_FONT);
         //iconBundles.put("preferences-desktop-keyboard", PREFERENCES_DESKTOP_KEYBOARD);
+        iconBundles.put("preferences-desktop-keyboard-shortcuts", PREFERENCES_DESKTOP_KEYBOARD_SHORTCUTS);
         iconBundles.put("preferences-desktop-locale", PREFERENCES_DESKTOP_LOCALE);
-        //iconBundles.put("preferences-desktop-multimedia", PREFERENCES_DESKTOP_MULTIMEDIA);
+        iconBundles.put("preferences-desktop-multimedia", PREFERENCES_DESKTOP_MULTIMEDIA);
         iconBundles.put("preferences-desktop-screensaver", PREFERENCES_DESKTOP_SCREENSAVER);
+        iconBundles.put("preferences-desktop-remote-desktop", PREFERENCES_DESKTOP_REMOTE_DESKTOP);
         iconBundles.put("preferences-desktop-theme", PREFERENCES_DESKTOP_THEME);
         iconBundles.put("preferences-desktop-wallpaper", PREFERENCES_DESKTOP_WALLPAPER);
+        iconBundles.put("preferences-system-network-proxy", PREFERENCES_SYSTEM_NETWORK_PROXY);
+        iconBundles.put("preferences-system-session", PREFERENCES_SYSTEM_SESSION);
+        iconBundles.put("preferences-system-windows", PREFERENCES_SYSTEM_WINDOWS);
         iconBundles.put("system-file-manager", SYSTEM_FILE_MANAGER);
         //iconBundles.put("system-software-update", SYSTEM_SOFTWARE_UPDATE);
+        iconBundles.put("system-users", SYSTEM_USERS);
         iconBundles.put("utilities-system-monitor", UTILITIES_SYSTEM_MONITOR);
         iconBundles.put("utilities-terminal", UTILITIES_TERMINAL);
-
         iconBundles.put("applications-accessories", APPLICATIONS_ACCESSORIES);
         //iconBundles.put("applications-development", APPLICATIONS_DEVELOPMENT);
         //iconBundles.put("applications-engineering", APPLICATIONS_ENGINEERING);
@@ -1009,7 +1103,6 @@ public final class TangoProject
         iconBundles.put("preferences-system", PREFERENCES_SYSTEM);
         //iconBundles.put("preferences-system-network", PREFERENCES_SYSTEM_NETWORK);
         //iconBundles.put("system-help", SYSTEM_HELP);
-
         iconBundles.put("audio-card", AUDIO_CARD);
         iconBundles.put("audio-input-microphone", AUDIO_INPUT_MICROPHONE);
         iconBundles.put("battery", BATTERY);
@@ -1051,6 +1144,7 @@ public final class TangoProject
         iconBundles.put("face-crying", FACE_CRYING);
         iconBundles.put("face-devilish", FACE_DEVILISH);
         iconBundles.put("face-glasses", FACE_GLASSES);
+        iconBundles.put("face-grin", FACE_GRIN);
         iconBundles.put("face-kiss", FACE_KISS);
         iconBundles.put("face-monkey", FACE_MONKEY);
         iconBundles.put("face-plain", FACE_PLAIN);
@@ -1063,6 +1157,7 @@ public final class TangoProject
 
         //iconBundles.put("flag-..", FLAG_..);
 
+        iconBundles.put("application-certificate", APPLICATION_CERTIFICATE);
         iconBundles.put("application-x-executable", APPLICATION_X_EXECUTABLE);
         iconBundles.put("audio-x-generic", AUDIO_X_GENERIC);
         iconBundles.put("font-x-generic", FONT_X_GENERIC);
@@ -1076,11 +1171,17 @@ public final class TangoProject
         iconBundles.put("x-office-address-book", X_OFFICE_ADDRESS_BOOK);
         iconBundles.put("x-office-calendar", X_OFFICE_CALENDAR);
         iconBundles.put("x-office-document", X_OFFICE_DOCUMENT);
+        iconBundles.put("x-office-document-template", X_OFFICE_DOCUMENT_TEMPLATE);
+        iconBundles.put("x-office-drawing", X_OFFICE_DRAWING);
+        iconBundles.put("x-office-drawing-template", X_OFFICE_DRAWING_TEMPLATE);
         iconBundles.put("x-office-presentation", X_OFFICE_PRESENTATION);
+        iconBundles.put("x-office-presentation-template", X_OFFICE_PRESENTATION_TEMPLATE);
         iconBundles.put("x-office-spreadsheet", X_OFFICE_SPREADSHEET);
+        iconBundles.put("x-office-spreadsheet-template", X_OFFICE_SPREADSHEET_TEMPLATE);
 
         iconBundles.put("folder", FOLDER);
         iconBundles.put("folder-remote", FOLDER_REMOTE);
+        iconBundles.put("folder-saved-search", FOLDER_SAVED_SEARCH);
         iconBundles.put("network-server", NETWORK_SERVER);
         iconBundles.put("network-workgroup", NETWORK_WORKGROUP);
         iconBundles.put("start-here", START_HERE);
@@ -1120,6 +1221,7 @@ public final class TangoProject
         iconBundles.put("network-receive", NETWORK_RECEIVE);
         iconBundles.put("network-transmit", NETWORK_TRANSMIT);
         iconBundles.put("network-transmit-receive", NETWORK_TRANSMIT_RECEIVE);
+        iconBundles.put("network-wireless-encrypted", NETWORK_WIRELESS_ENCRYPTED);
         iconBundles.put("printer-error", PRINTER_ERROR);
         //iconBundles.put("printer-printing", PRINTER_PRINTING);
         //iconBundles.put("security-high", SECURITY_HIGH);
