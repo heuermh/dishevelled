@@ -39,7 +39,7 @@ import java.util.Collections;
  * @version $Revision$ $Date$
  */
 public final class ArgumentList
-    implements Iterable<Argument>
+    implements Iterable<Argument<?>>
 {
     /** Set of argument short names. */
     private Set<String> shortNames;
@@ -48,7 +48,7 @@ public final class ArgumentList
     private Set<String> longNames;
 
     /** List of arguments. */
-    private List<Argument> arguments;
+    private List<Argument<?>> arguments;
 
 
     /**
@@ -58,7 +58,7 @@ public final class ArgumentList
     {
         shortNames = new HashSet<String>();
         longNames = new HashSet<String>();
-        arguments = new ArrayList<Argument>();
+        arguments = new ArrayList<Argument<?>>();
     }
 
     /**
@@ -68,7 +68,7 @@ public final class ArgumentList
      *
      * @param arguments variable number of arguments, must not be null
      */
-    public ArgumentList(final Argument... arguments)
+    public ArgumentList(final Argument<?>... arguments)
     {
         this();
         if (arguments == null)
@@ -87,7 +87,7 @@ public final class ArgumentList
      *
      * @param arguments collection of arguments to add, must not be null
      */
-    public ArgumentList(final Collection<Argument> arguments)
+    public ArgumentList(final Collection<Argument<?>> arguments)
     {
         this();
         addAll(arguments);
@@ -103,7 +103,7 @@ public final class ArgumentList
      * @param argument argument to add, must not be null
      * @return true if this argument list changed as a result of the call
      */
-    public boolean add(final Argument argument)
+    public boolean add(final Argument<?> argument)
     {
         if (argument == null)
         {
@@ -138,7 +138,7 @@ public final class ArgumentList
      * @param arguments collection of arguments to add, must not be null
      * @return true if this argument list changed as a result of the call
      */
-    public boolean addAll(final Collection<Argument> arguments)
+    public boolean addAll(final Collection<Argument<?>> arguments)
     {
         if (arguments == null)
         {
@@ -146,7 +146,7 @@ public final class ArgumentList
         }
 
         boolean result = false;
-        for (Argument a : arguments)
+        for (Argument<?> a : arguments)
         {
             result = add(a) || result;
         }
@@ -164,7 +164,7 @@ public final class ArgumentList
     }
 
     /** {@inheritDoc} */
-    public Iterator<Argument> iterator()
+    public Iterator<Argument<?>> iterator()
     {
         return Collections.unmodifiableList(arguments).iterator();
     }

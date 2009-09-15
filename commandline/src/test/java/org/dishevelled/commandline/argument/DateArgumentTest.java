@@ -61,7 +61,7 @@ public class DateArgumentTest
         throws CommandLineParseException
     {
         Argument<Date> dateArgument = new DateArgument("d", "date-argument", "Date argument", true);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { dateArgument }));
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { dateArgument }));
         List<String> values = Arrays.asList(new String[] { "2001-07-04" });
 
         for (String value : values)
@@ -78,7 +78,7 @@ public class DateArgumentTest
         throws CommandLineParseException
     {
         Argument<Date> dateArgument = new DateArgument("d", "date-argument", "Date argument", true);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { dateArgument }));
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { dateArgument }));
         List<String> values = Arrays.asList(new String[] { "2001-07-04" });
 
         for (String value : values)
@@ -94,7 +94,7 @@ public class DateArgumentTest
     public void testInvalidArgumentShort()
     {
         Argument<Date> dateArgument = new DateArgument("d", "date-argument", "Date argument", true);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { dateArgument }));
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { dateArgument }));
         List<String> values = Arrays.asList(new String[] { "foo", "bar" });
 
         for (String value : values)
@@ -117,7 +117,7 @@ public class DateArgumentTest
     public void testInvalidArgumentLong()
     {
         Argument<Date> dateArgument = new DateArgument("d", "date-argument", "Date argument", true);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { dateArgument }));
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { dateArgument }));
         List<String> values = Arrays.asList(new String[] { "foo", "bar" });
 
         for (String value : values)
@@ -142,7 +142,7 @@ public class DateArgumentTest
         try
         {
             Argument<Date> dateArgument = new DateArgument("d", "date-argument", "Date argument", true);
-            ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { dateArgument }));
+            ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { dateArgument }));
 
             String[] args = new String[] { "not-an-argument", "not-a-date" };
             CommandLine commandLine = new CommandLine(args);
@@ -160,7 +160,7 @@ public class DateArgumentTest
         throws CommandLineParseException
     {
         Argument<Date> dateArgument = new DateArgument("d", "date-argument", "Date argument", false);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { dateArgument }));
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { dateArgument }));
 
         String[] args = new String[] { "not-an-argument", "not-a-date" };
         CommandLine commandLine = new CommandLine(args);

@@ -102,7 +102,7 @@ public final class SetsTest
 
         try
         {
-            Set<String> set = asSet((Iterator<String>) null);
+            asSet((Iterator<String>) null);
             fail("asSet((Iterator<String>) null) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
@@ -111,7 +111,7 @@ public final class SetsTest
         }
         try
         {
-            Set<String> set = asSet((Iterable<String>) null);
+            asSet((Iterable<String>) null);
             fail("asSet((Iterable<String>) null) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
@@ -162,7 +162,7 @@ public final class SetsTest
 
         try
         {
-            SortedSet<String> set = asSortedSet((Iterator<String>) null);
+            asSortedSet((Iterator<String>) null);
             fail("asSortedSet((Iterator<String>) null) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
@@ -171,7 +171,7 @@ public final class SetsTest
         }
         try
         {
-            SortedSet<String> set = asSortedSet((Iterable<String>) null);
+            asSortedSet((Iterable<String>) null);
             fail("asSortedSet((Iterable<String>) null) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
@@ -180,7 +180,7 @@ public final class SetsTest
         }
         try
         {
-            SortedSet<String> set = asSortedSet((Iterator<String>) null, COMPARATOR);
+            asSortedSet((Iterator<String>) null, COMPARATOR);
             fail("asSortedSet((Iterator<String>) null, COMPARATOR) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
@@ -189,7 +189,7 @@ public final class SetsTest
         }
         try
         {
-            SortedSet<String> set = asSortedSet((Iterable<String>) null, COMPARATOR);
+            asSortedSet((Iterable<String>) null, COMPARATOR);
             fail("asSortedSet((Iterable<String>) null, COMPARATOR) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
@@ -221,7 +221,7 @@ public final class SetsTest
 
         try
         {
-            Set<String> set = createSet((Collection<String>) null);
+            createSet((Collection<String>) null);
             fail("newSet((Collection<String>) null) expected IllegalArgumentException");
         }
         //catch (IllegalArgumentException e)
@@ -257,7 +257,7 @@ public final class SetsTest
 
         try
         {
-            SortedSet<String> set = createSortedSet((Collection<String>) null);
+            createSortedSet((Collection<String>) null);
             fail("newSortedSet((Collection<String>) null) expected IllegalArgumentException");
         }
         //catch (IllegalArgumentException e)
@@ -267,7 +267,7 @@ public final class SetsTest
         }
         try
         {
-            SortedSet<String> set = createSortedSet((SortedSet<String>) null);
+            createSortedSet((SortedSet<String>) null);
             fail("newSortedSet((SortedSet<String>) null) expected IllegalArgumentException");
         }
         //catch (IllegalArgumentException e)
@@ -277,7 +277,7 @@ public final class SetsTest
         }
         try
         {
-            SortedSet<String> set = createSortedSet((Collection<String>) null, COMPARATOR);
+            createSortedSet((Collection<String>) null, COMPARATOR);
             fail("newSortedSet((Collection<String>) null, COMPARATOR) expected IllegalArgumentException");
         }
         //catch (IllegalArgumentException e)
@@ -287,7 +287,7 @@ public final class SetsTest
         }
         try
         {
-            SortedSet<String> set = createSortedSet((SortedSet<String>) null, COMPARATOR);
+            createSortedSet((SortedSet<String>) null, COMPARATOR);
             fail("newSortedSet((SortedSet<String>) null, COMPARATOR) expected IllegalArgumentException");
         }
         //catch (IllegalArgumentException e)
@@ -324,7 +324,7 @@ public final class SetsTest
 
         try
         {
-            NavigableSet<String> set = createNavigableSet((Collection<String>) null);
+            createNavigableSet((Collection<String>) null);
             fail("newNavigableSet((Collection<String>) null) expected IllegalArgumentException");
         }
         //catch (IllegalArgumentException e)
@@ -334,7 +334,7 @@ public final class SetsTest
         }
         try
         {
-            NavigableSet<String> set = createNavigableSet((SortedSet<String>) null);
+            createNavigableSet((SortedSet<String>) null);
             fail("newNavigableSet((SortedSet<String>) null) expected IllegalArgumentException");
         }
         //catch (IllegalArgumentException e)
@@ -344,7 +344,7 @@ public final class SetsTest
         }
         try
         {
-            NavigableSet<String> set = createNavigableSet((Collection<String>) null, COMPARATOR);
+            createNavigableSet((Collection<String>) null, COMPARATOR);
             fail("newNavigableSet((Collection<String>) null, COMPARATOR) expected IllegalArgumentException");
         }
         //catch (IllegalArgumentException e)
@@ -354,7 +354,7 @@ public final class SetsTest
         }
         try
         {
-            NavigableSet<String> set = createNavigableSet((SortedSet<String>) null, COMPARATOR);
+            createNavigableSet((SortedSet<String>) null, COMPARATOR);
             fail("newNavigableSet((SortedSet<String>) null, COMPARATOR) expected IllegalArgumentException");
         }
         //catch (IllegalArgumentException e)
@@ -391,7 +391,7 @@ public final class SetsTest
 
         try
         {
-            ConcurrentSkipListSet<String> set = createConcurrentSkipListSet((Collection<String>) null);
+            createConcurrentSkipListSet((Collection<String>) null);
             fail("newConcurrentSkipListSet((Collection<String>) null) expected IllegalArgumentException");
         }
         //catch (IllegalArgumentException e)
@@ -401,7 +401,7 @@ public final class SetsTest
         }
         try
         {
-            ConcurrentSkipListSet<String> set = createConcurrentSkipListSet((SortedSet<String>) null);
+            createConcurrentSkipListSet((SortedSet<String>) null);
             fail("newConcurrentSkipListSet((SortedSet<String>) null) expected IllegalArgumentException");
         }
         //catch (IllegalArgumentException e)
@@ -411,7 +411,7 @@ public final class SetsTest
         }
         try
         {
-            ConcurrentSkipListSet<String> set = createConcurrentSkipListSet((Collection<String>) null, COMPARATOR);
+            createConcurrentSkipListSet((Collection<String>) null, COMPARATOR);
             fail("newConcurrentSkipListSet((Collection<String>) null, COMPARATOR) expected IllegalArgumentException");
         }
         //catch (IllegalArgumentException e)
@@ -421,7 +421,7 @@ public final class SetsTest
         }
         try
         {
-            ConcurrentSkipListSet<String> set = createConcurrentSkipListSet((SortedSet<String>) null, COMPARATOR);
+            createConcurrentSkipListSet((SortedSet<String>) null, COMPARATOR);
             fail("newConcurrentSkipListSet((SortedSet<String>) null, COMPARATOR) expected IllegalArgumentException");
         }
         //catch (IllegalArgumentException e)
@@ -442,7 +442,7 @@ public final class SetsTest
 
         try
         {
-            CopyOnWriteArraySet<String> set = createCopyOnWriteArraySet((Collection<String>) null);
+            createCopyOnWriteArraySet((Collection<String>) null);
             fail("newCopyOnWriteArraySet((Collection<String>) null) expected IllegalArgumentException");
         }
         //catch (IllegalArgumentException e)
@@ -463,7 +463,7 @@ public final class SetsTest
 
         try
         {
-            Set<String> set = createNonBlockingSet((Collection<String>) null);
+            createNonBlockingSet((Collection<String>) null);
             fail("newNonBlockingSet((Collection<String>) null) expected IllegalArgumentException");
         }
         //catch (IllegalArgumentException e)
@@ -482,7 +482,7 @@ public final class SetsTest
 
         try
         {
-            Set<String> set = unmodifiableSet((Set<String>) null);
+            unmodifiableSet((Set<String>) null);
             fail("unmodifiableSet((Set<String>) null) expected IllegalArgumentException");
         }
         //catch (IllegalArgumentException e)
@@ -501,7 +501,7 @@ public final class SetsTest
 
         try
         {
-            SortedSet<String> sortedSet = unmodifiableSortedSet((SortedSet<String>) null);
+            unmodifiableSortedSet((SortedSet<String>) null);
             fail("unmodifiableSortedSet((SortedSet<String>) null) expected IllegalArgumentException");
         }
         //catch (IllegalArgumentException e)
@@ -541,7 +541,7 @@ public final class SetsTest
 
         try
         {
-            Set<String> set3 = asImmutableSet((String) null);
+            asImmutableSet((String) null);
             fail("asImmutableSet((String) null) expected NullPointerException");
         }
         catch (NullPointerException e)
@@ -550,7 +550,7 @@ public final class SetsTest
         }
         try
         {
-            Set<String> set = asImmutableSet((Iterator<String>) null);
+            asImmutableSet((Iterator<String>) null);
             fail("asImmutableSet((Iterator<String>) null) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
@@ -559,7 +559,7 @@ public final class SetsTest
         }
         try
         {
-            Set<String> set = asImmutableSet((Iterable<String>) null);
+            asImmutableSet((Iterable<String>) null);
             fail("asImmutableSet((Iterable<String>) null) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
@@ -610,7 +610,7 @@ public final class SetsTest
 
         try
         {
-            SortedSet<String> set = asImmutableSortedSet((Iterator<String>) null);
+            asImmutableSortedSet((Iterator<String>) null);
             fail("asImmutableSortedSet((Iterator<String>) null) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
@@ -619,7 +619,7 @@ public final class SetsTest
         }
         try
         {
-            SortedSet<String> set = asImmutableSortedSet((Iterable<String>) null);
+            asImmutableSortedSet((Iterable<String>) null);
             fail("asImmutableSortedSet((Iterable<String>) null) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
@@ -628,7 +628,7 @@ public final class SetsTest
         }
         try
         {
-            SortedSet<String> set = asImmutableSortedSet((Iterator<String>) null, COMPARATOR);
+            asImmutableSortedSet((Iterator<String>) null, COMPARATOR);
             fail("asImmutableSortedSet((Iterator<String>) null, COMPARATOR) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
@@ -637,7 +637,7 @@ public final class SetsTest
         }
         try
         {
-            SortedSet<String> set = asImmutableSortedSet((Iterable<String>) null, COMPARATOR);
+            asImmutableSortedSet((Iterable<String>) null, COMPARATOR);
             fail("asImmutableSortedSet((Iterable<String>) null, COMPARATOR) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
@@ -655,7 +655,7 @@ public final class SetsTest
 
         try
         {
-            Set<String> set = immutableSet((Set<String>) null);
+            immutableSet((Set<String>) null);
             fail("immutableSet((Set<String>) null) expected IllegalArgumentException");
         }
         //catch (IllegalArgumentException e)
@@ -674,7 +674,7 @@ public final class SetsTest
 
         try
         {
-            SortedSet<String> sortedSet = immutableSortedSet((SortedSet<String>) null);
+            immutableSortedSet((SortedSet<String>) null);
             fail("immutableSortedSet((SortedSet<String>) null) expected IllegalArgumentException");
         }
         //catch (IllegalArgumentException e)

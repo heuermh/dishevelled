@@ -76,7 +76,7 @@ public class URLSetArgumentTest
         throws CommandLineParseException
     {
         Argument<Set<URL>> urlSetArgument = new URLSetArgument("u", "url-set", "URL set argument", true);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { urlSetArgument }));
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { urlSetArgument }));
         List<String> values = Arrays.asList(new String[] { "http://localhost", "http://localhost, http://127.0.0.1",
                                                            "http://localhost, http://127.0.0.1", " http://localhost , http://127.0.0.1 " });
 
@@ -96,7 +96,7 @@ public class URLSetArgumentTest
         throws CommandLineParseException
     {
         Argument<Set<URL>> urlSetArgument = new URLSetArgument("u", "url-set", "URL set argument", true);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { urlSetArgument }));
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { urlSetArgument }));
         List<String> values = Arrays.asList(new String[] { "http://localhost", "http://localhost, http://127.0.0.1",
                                                            "http://localhost, http://127.0.0.1", " http://localhost , http://127.0.0.1 " });
 
@@ -115,7 +115,7 @@ public class URLSetArgumentTest
     public void testInvalidArgumentShort()
     {
         Argument<Set<URL>> urlSetArgument = new URLSetArgument("u", "url-set", "URL set argument", true);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { urlSetArgument }));
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { urlSetArgument }));
         List<String> values = Arrays.asList(new String[] { "not-a-url" });
 
         for (String value : values)
@@ -138,7 +138,7 @@ public class URLSetArgumentTest
     public void testInvalidArgumentLong()
     {
         Argument<Set<URL>> urlSetArgument = new URLSetArgument("u", "url-set", "URL set argument", true);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { urlSetArgument }));
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { urlSetArgument }));
         List<String> values = Arrays.asList(new String[] { "not-a-url" });
 
         for (String value : values)
@@ -163,7 +163,7 @@ public class URLSetArgumentTest
         try
         {
             Argument<Set<URL>> urlSetArgument = new URLSetArgument("u", "url-set", "URL set argument", true);
-            ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { urlSetArgument }));
+            ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { urlSetArgument }));
 
             String[] args = new String[] { "not-an-argument", "not-a-url" };
             CommandLine commandLine = new CommandLine(args);
@@ -181,7 +181,7 @@ public class URLSetArgumentTest
         throws CommandLineParseException
     {
         Argument<Set<URL>> urlSetArgument = new URLSetArgument("u", "url-set", "URL set argument", false);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { urlSetArgument }));
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { urlSetArgument }));
 
         String[] args = new String[] { "not-an-argument", "not-a-url" };
         CommandLine commandLine = new CommandLine(args);

@@ -67,7 +67,7 @@ public final class CommandLineParser
             {
                 String s = commandLine.next();
 
-                for (Argument a : arguments)
+                for (Argument<?> a : arguments)
                 {
                     a.visit(s, commandLine);
                 }
@@ -78,7 +78,7 @@ public final class CommandLineParser
             throw new CommandLineParseException(e);
         }
 
-        for (Argument a : arguments)
+        for (Argument<?> a : arguments)
         {
             if (a.isRequired() && !(a.wasFound()))
             {

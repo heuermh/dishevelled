@@ -60,7 +60,7 @@ public class ByteListArgumentTest
         throws CommandLineParseException
     {
         Argument<List<Byte>> byteListArgument = new ByteListArgument("b", "byte-list", "Byte list argument", true);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { byteListArgument }));
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { byteListArgument }));
         List<String> values = Arrays.asList(new String[] { "127", "-128,-128", "-128, -128", "-1,-1,-1", "-1 , -1, -1 " });
 
         for (String value : values)
@@ -79,7 +79,7 @@ public class ByteListArgumentTest
         throws CommandLineParseException
     {
         Argument<List<Byte>> byteListArgument = new ByteListArgument("b", "byte-list", "Byte list argument", true);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { byteListArgument }));
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { byteListArgument }));
         List<String> values = Arrays.asList(new String[] { "127", "-128,-128", "-128, -128", "-1,-1,-1", "-1 , -1, -1 " });
 
         for (String value : values)
@@ -97,7 +97,7 @@ public class ByteListArgumentTest
     public void testInvalidArgumentLong()
     {
         Argument<List<Byte>> byteListArgument = new ByteListArgument("b", "byte-list", "Byte list argument", true);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { byteListArgument }));
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { byteListArgument }));
         List<String> values = Arrays.asList(new String[] { "not-a-byte", "128", "-129" });
 
         for (String value : values)
@@ -120,7 +120,7 @@ public class ByteListArgumentTest
     public void testInvalidArgumentShort()
     {
         Argument<List<Byte>> byteListArgument = new ByteListArgument("b", "byte-list", "Byte list argument", true);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { byteListArgument }));
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { byteListArgument }));
         List<String> values = Arrays.asList(new String[] { "not-a-byte", "128", "-129" });
 
         for (String value : values)
@@ -145,7 +145,7 @@ public class ByteListArgumentTest
         try
         {
             Argument<List<Byte>> byteListArgument = new ByteListArgument("b", "byte-list", "Byte list argument", true);
-            ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { byteListArgument }));
+            ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { byteListArgument }));
 
             String[] args = new String[] { "not-an-argument", "not-a-byte" };
             CommandLine commandLine = new CommandLine(args);
@@ -163,7 +163,7 @@ public class ByteListArgumentTest
         throws CommandLineParseException
     {
         Argument<List<Byte>> byteListArgument = new ByteListArgument("b", "byte-list", "Byte list argument", false);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { byteListArgument }));
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { byteListArgument }));
 
         String[] args = new String[] { "not-an-argument", "not-a-byte" };
         CommandLine commandLine = new CommandLine(args);

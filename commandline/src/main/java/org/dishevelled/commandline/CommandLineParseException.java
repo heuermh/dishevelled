@@ -32,6 +32,9 @@ package org.dishevelled.commandline;
 public final class CommandLineParseException
     extends Exception
 {
+    /** Default serial version UID. */
+    private static final long serialVersionUID = 1L;
+
 
     /**
      * Create a new command line parse exception with the

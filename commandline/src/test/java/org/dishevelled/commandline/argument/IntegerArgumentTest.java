@@ -59,7 +59,7 @@ public class IntegerArgumentTest
         throws CommandLineParseException
     {
         Argument<Integer> integerArgument = new IntegerArgument("i", "integer", "Integer argument", true);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { integerArgument }));
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { integerArgument }));
 
         String[] args = new String[] { "-i", "127" };
         CommandLine commandLine = new CommandLine(args);
@@ -72,7 +72,7 @@ public class IntegerArgumentTest
         throws CommandLineParseException
     {
         Argument<Integer> integerArgument = new IntegerArgument("i", "integer", "Integer argument", true);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { integerArgument }));
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { integerArgument }));
 
         String[] args = new String[] { "--integer", "127" };
         CommandLine commandLine = new CommandLine(args);
@@ -85,7 +85,7 @@ public class IntegerArgumentTest
         throws CommandLineParseException
     {
         Argument<Integer> integerArgument = new IntegerArgument("i", "integer", "Integer argument", true);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { integerArgument }));
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { integerArgument }));
 
         String[] args = new String[] { "-i", "-128" };
         CommandLine commandLine = new CommandLine(args);
@@ -98,7 +98,7 @@ public class IntegerArgumentTest
         throws CommandLineParseException
     {
         Argument<Integer> integerArgument = new IntegerArgument("i", "integer", "Integer argument", true);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { integerArgument }));
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { integerArgument }));
 
         String[] args = new String[] { "--integer", "-128" };
         CommandLine commandLine = new CommandLine(args);
@@ -112,7 +112,7 @@ public class IntegerArgumentTest
         try
         {
             Argument<Integer> integerArgument = new IntegerArgument("i", "integer", "Integer argument", true);
-            ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { integerArgument }));
+            ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { integerArgument }));
 
             String[] args = new String[] { "-i", "not-a-integer" };
             CommandLine commandLine = new CommandLine(args);
@@ -129,12 +129,23 @@ public class IntegerArgumentTest
     public void testMissingValueShort() throws CommandLineParseException
     {
         Argument<Integer> integerArgument = new IntegerArgument("i", "integer", "Integer argument", true);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { integerArgument }));
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { integerArgument }));
 
         String[] args = new String[] { "-i" };
         CommandLine commandLine = new CommandLine(args);
         CommandLineParser.parse(commandLine, arguments);
         Integer value = integerArgument.getValue();
+        assertEquals(null, value);
+        // note that unboxing a null value with throw NPE
+        try
+        {
+            int intValue = integerArgument.getValue();
+            fail("unboxing a null value expected NullPointerException, got " + intValue);
+        }
+        catch (NullPointerException e)
+        {
+            // expected
+        }
     }
 
     public void testInvalidArgumentLong()
@@ -142,7 +153,7 @@ public class IntegerArgumentTest
         try
         {
             Argument<Integer> integerArgument = new IntegerArgument("i", "integer", "Integer argument", true);
-            ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { integerArgument }));
+            ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { integerArgument }));
 
             String[] args = new String[] { "--integer", "not-a-integer" };
             CommandLine commandLine = new CommandLine(args);
@@ -161,7 +172,7 @@ public class IntegerArgumentTest
         try
         {
             Argument<Integer> integerArgument = new IntegerArgument("i", "integer", "Integer argument", true);
-            ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { integerArgument }));
+            ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { integerArgument }));
 
             String[] args = new String[] { "-i", "-2147483649" };
             CommandLine commandLine = new CommandLine(args);
@@ -180,7 +191,7 @@ public class IntegerArgumentTest
         try
         {
             Argument<Integer> integerArgument = new IntegerArgument("i", "integer", "Integer argument", true);
-            ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { integerArgument }));
+            ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { integerArgument }));
 
             String[] args = new String[] { "-i", "2147483648" };
             CommandLine commandLine = new CommandLine(args);
@@ -199,7 +210,7 @@ public class IntegerArgumentTest
         try
         {
             Argument<Integer> integerArgument = new IntegerArgument("i", "integer", "Integer argument", true);
-            ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { integerArgument }));
+            ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { integerArgument }));
 
             String[] args = new String[] { "--integer", "-2147483649" };
             CommandLine commandLine = new CommandLine(args);
@@ -218,7 +229,7 @@ public class IntegerArgumentTest
         try
         {
             Argument<Integer> integerArgument = new IntegerArgument("i", "integer", "Integer argument", true);
-            ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { integerArgument }));
+            ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { integerArgument }));
 
             String[] args = new String[] { "--integer", "2147483648" };
             CommandLine commandLine = new CommandLine(args);

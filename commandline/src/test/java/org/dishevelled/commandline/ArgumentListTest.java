@@ -44,13 +44,17 @@ public final class ArgumentListTest
     public void testConstructors()
     {
         ArgumentList arguments0 = new ArgumentList();
+        assertNotNull(arguments0);
         ArgumentList arguments1 = new ArgumentList(new Argument[0]);
+        assertNotNull(arguments1);
         ArgumentList arguments2 = new ArgumentList(new StringArgument("f", "foo", "foo", true), new StringArgument("b", "bar", "bar", true));
-        ArgumentList arguments3 = new ArgumentList(Collections.<Argument>emptyList());
+        assertNotNull(arguments2);
+        ArgumentList arguments3 = new ArgumentList(Collections.<Argument<?>>emptyList());
+        assertNotNull(arguments3);
 
         try
         {
-            ArgumentList argument = new ArgumentList((Argument) null);
+            new ArgumentList((Argument<?>) null);
             fail("ctr((Argument) null) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
@@ -60,7 +64,7 @@ public final class ArgumentListTest
 
         try
         {
-            ArgumentList argument = new ArgumentList((Argument[]) null);
+            new ArgumentList((Argument[]) null);
             fail("ctr((Argument[]) null) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
@@ -70,7 +74,7 @@ public final class ArgumentListTest
 
         try
         {
-            ArgumentList argument = new ArgumentList((Collection<Argument>) null);
+            new ArgumentList((Collection<Argument<?>>) null);
             fail("ctr((Collection<Argument>) null) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
@@ -141,7 +145,7 @@ public final class ArgumentListTest
 
         try
         {
-            arguments.addAll(Arrays.asList(new Argument[] { stringArgument, conflictingShortName }));
+            arguments.addAll(Arrays.asList(new Argument<?>[] { stringArgument, conflictingShortName }));
             fail("addAll(..., conflictingShortName) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
@@ -156,7 +160,7 @@ public final class ArgumentListTest
         arguments = new ArgumentList();
         try
         {
-            arguments.addAll(Arrays.asList(new Argument[] { stringArgument, conflictingLongName }));
+            arguments.addAll(Arrays.asList(new Argument<?>[] { stringArgument, conflictingLongName }));
             fail("addAll(..., conflictingLongName) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
@@ -167,7 +171,7 @@ public final class ArgumentListTest
         arguments = new ArgumentList();
         try
         {
-            arguments.addAll(Arrays.asList(new Argument[] { stringArgument, stringArgument }));
+            arguments.addAll(Arrays.asList(new Argument<?>[] { stringArgument, stringArgument }));
             fail("addAll(stringArgument, stringArgument) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
@@ -176,11 +180,11 @@ public final class ArgumentListTest
         }
 
         arguments = new ArgumentList();
-        arguments.addAll(Arrays.asList(new Argument[] { stringArgument, secondStringArgument }));
+        arguments.addAll(Arrays.asList(new Argument<?>[] { stringArgument, secondStringArgument }));
 
         boolean foundStringArgument = false;
         boolean foundSecondStringArgument = false;
-        for (Argument a : arguments)
+        for (Argument<?> a : arguments)
         {
             if (a.equals(stringArgument))
             {

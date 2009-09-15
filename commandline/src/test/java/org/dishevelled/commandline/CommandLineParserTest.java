@@ -40,7 +40,7 @@ public final class CommandLineParserTest
     public void testParse()
     {
         CommandLine commandLine = new CommandLine(new String[0]);
-        ArgumentList arguments = new ArgumentList(Collections.<Argument>emptyList());
+        ArgumentList arguments = new ArgumentList(Collections.<Argument<?>>emptyList());
 
         try
         {

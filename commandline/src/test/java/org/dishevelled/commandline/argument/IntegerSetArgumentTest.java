@@ -61,7 +61,7 @@ public class IntegerSetArgumentTest
         throws CommandLineParseException
     {
         Argument<Set<Integer>> integerSetArgument = new IntegerSetArgument("i", "integer-set", "Integer set argument", true);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { integerSetArgument }));
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { integerSetArgument }));
         List<String> values = Arrays.asList(new String[] { "1", "-1", "1, -1", "1,-1", " 1, -1 " });
 
         for (String value : values)
@@ -80,7 +80,7 @@ public class IntegerSetArgumentTest
         throws CommandLineParseException
     {
         Argument<Set<Integer>> integerSetArgument = new IntegerSetArgument("i", "integer-set", "Integer set argument", true);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { integerSetArgument }));
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { integerSetArgument }));
         List<String> values = Arrays.asList(new String[] { "1", "-1", "1, -1", "1,-1", " 1, -1 " });
 
         for (String value : values)
@@ -98,7 +98,7 @@ public class IntegerSetArgumentTest
     public void testInvalidArgumentShort()
     {
         Argument<Set<Integer>> integerSetArgument = new IntegerSetArgument("i", "integer-set", "Integer set argument", true);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { integerSetArgument }));
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { integerSetArgument }));
         List<String> values = Arrays.asList(new String[] { "not-a-integer" });
 
         for (String value : values)
@@ -121,7 +121,7 @@ public class IntegerSetArgumentTest
     public void testInvalidArgumentLong()
     {
         Argument<Set<Integer>> integerSetArgument = new IntegerSetArgument("i", "integer-set", "Integer set argument", true);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { integerSetArgument }));
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { integerSetArgument }));
         List<String> values = Arrays.asList(new String[] { "not-a-integer" });
 
         for (String value : values)
@@ -146,7 +146,7 @@ public class IntegerSetArgumentTest
         try
         {
             Argument<Set<Integer>> integerSetArgument = new IntegerSetArgument("i", "integer-set", "Integer set argument", true);
-            ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { integerSetArgument }));
+            ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { integerSetArgument }));
 
             String[] args = new String[] { "not-an-argument", "not-a-integer" };
             CommandLine commandLine = new CommandLine(args);
@@ -164,7 +164,7 @@ public class IntegerSetArgumentTest
         throws CommandLineParseException
     {
         Argument<Set<Integer>> integerSetArgument = new IntegerSetArgument("i", "integer-set", "Integer set argument", false);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { integerSetArgument }));
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { integerSetArgument }));
 
         String[] args = new String[] { "not-an-argument", "not-a-integer" };
         CommandLine commandLine = new CommandLine(args);

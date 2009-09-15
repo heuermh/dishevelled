@@ -40,8 +40,12 @@ public final class CommandLineParseExceptionTest
         Throwable cause = new Exception("message");
 
         CommandLineParseException clpe0 = new CommandLineParseException("message");
+        assertNotNull(clpe0);
         CommandLineParseException clpe1 = new CommandLineParseException(cause);
+        assertNotNull(clpe1);
         CommandLineParseException clpe2 = new CommandLineParseException("message");
+        assertNotNull(clpe2);
         CommandLineParseException clpe3 = new CommandLineParseException("message", cause);
+        assertNotNull(clpe3);
     }
 }

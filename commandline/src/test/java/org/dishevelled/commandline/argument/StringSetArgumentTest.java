@@ -74,7 +74,7 @@ public class StringSetArgumentTest
         throws CommandLineParseException
     {
         Argument<Set<String>> stringSetArgument = new StringSetArgument("s", "string-set", "String set argument", true);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { stringSetArgument }));
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { stringSetArgument }));
         List<String> values = Arrays.asList(new String[] { "foo,bar,baz" });
 
         for (String value : values)
@@ -93,7 +93,7 @@ public class StringSetArgumentTest
         throws CommandLineParseException
     {
         Argument<Set<String>> stringSetArgument = new StringSetArgument("s", "string-set", "String set argument", true);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { stringSetArgument }));
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { stringSetArgument }));
         List<String> values = Arrays.asList(new String[] { "foo,bar,baz" });
 
         for (String value : values)
@@ -113,7 +113,7 @@ public class StringSetArgumentTest
         try
         {
             Argument<Set<String>> stringSetArgument = new StringSetArgument("s", "string-set", "String set argument", true);
-            ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { stringSetArgument }));
+            ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { stringSetArgument }));
 
             String[] args = new String[] { "not-an-argument", "" };
             CommandLine commandLine = new CommandLine(args);
@@ -131,7 +131,7 @@ public class StringSetArgumentTest
         throws CommandLineParseException
     {
         Argument<Set<String>> stringSetArgument = new StringSetArgument("s", "string-set", "String set argument", false);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { stringSetArgument }));
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { stringSetArgument }));
 
         String[] args = new String[] { "not-an-argument", "" };
         CommandLine commandLine = new CommandLine(args);
