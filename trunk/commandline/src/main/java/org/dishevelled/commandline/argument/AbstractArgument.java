@@ -86,13 +86,11 @@ public abstract class AbstractArgument<E>
             return;
         }
 
-        String ignore;
         if (isValueString(current))
         {
             if (commandLine.hasPrevious())
             {
-                ignore = commandLine.previous();
-
+                commandLine.previous();
                 if (commandLine.hasPrevious())
                 {
                     String previous = commandLine.previous();
@@ -100,10 +98,9 @@ public abstract class AbstractArgument<E>
                     {
                         value = convert(current);
                     }
-                    ignore = commandLine.next();
+                    commandLine.next();
                 }
-
-                ignore = commandLine.next();
+                commandLine.next();
             }
         }
     }
