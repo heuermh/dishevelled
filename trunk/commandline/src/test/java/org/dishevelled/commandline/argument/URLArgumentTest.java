@@ -77,7 +77,7 @@ public class URLArgumentTest
         throws CommandLineParseException
     {
         Argument<URL> URLArgument = new URLArgument("u", "URL-argument", "URL argument", true);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { URLArgument }));
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { URLArgument }));
         List<String> values = Arrays.asList(new String[] { "http://localhost" });
 
         for (String value : values)
@@ -94,7 +94,7 @@ public class URLArgumentTest
         throws CommandLineParseException
     {
         Argument<URL> URLArgument = new URLArgument("u", "URL-argument", "URL argument", true);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { URLArgument }));
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { URLArgument }));
         List<String> values = Arrays.asList(new String[] { "http://localhost" });
 
         for (String value : values)
@@ -110,7 +110,7 @@ public class URLArgumentTest
     public void testInvalidArgumentShort()
     {
         Argument<URL> URLArgument = new URLArgument("u", "URL-argument", "URL argument", true);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { URLArgument }));
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { URLArgument }));
         List<String> values = Arrays.asList(new String[] { "not-a-URL" });
 
         for (String value : values)
@@ -133,7 +133,7 @@ public class URLArgumentTest
     public void testInvalidArgumentLong()
     {
         Argument<URL> URLArgument = new URLArgument("u", "URL-argument", "URL argument", true);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { URLArgument }));
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { URLArgument }));
         List<String> values = Arrays.asList(new String[] { "not-a-URL" });
 
         for (String value : values)
@@ -158,7 +158,7 @@ public class URLArgumentTest
         try
         {
             Argument<URL> URLArgument = new URLArgument("u", "URL-argument", "URL argument", true);
-            ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { URLArgument }));
+            ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { URLArgument }));
 
             String[] args = new String[] { "not-an-argument" };
             CommandLine commandLine = new CommandLine(args);
@@ -176,7 +176,7 @@ public class URLArgumentTest
         throws CommandLineParseException
     {
         Argument<URL> URLArgument = new URLArgument("u", "URL-argument", "URL argument", false);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { URLArgument }));
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { URLArgument }));
 
         String[] args = new String[] { "not-an-argument" };
         CommandLine commandLine = new CommandLine(args);

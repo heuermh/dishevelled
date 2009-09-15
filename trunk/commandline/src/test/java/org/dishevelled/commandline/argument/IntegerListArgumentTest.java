@@ -60,7 +60,7 @@ public class IntegerListArgumentTest
         throws CommandLineParseException
     {
         Argument<List<Integer>> integerListArgument = new IntegerListArgument("i", "integer-list", "Integer list argument", true);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { integerListArgument }));
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { integerListArgument }));
         List<String> values = Arrays.asList(new String[] { "1", "-1", "1, -1", "1,-1", " 1, -1 " });
 
         for (String value : values)
@@ -79,7 +79,7 @@ public class IntegerListArgumentTest
         throws CommandLineParseException
     {
         Argument<List<Integer>> integerListArgument = new IntegerListArgument("i", "integer-list", "Integer list argument", true);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { integerListArgument }));
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { integerListArgument }));
         List<String> values = Arrays.asList(new String[] { "1", "-1", "1, -1", "1,-1", " 1, -1 " });
 
         for (String value : values)
@@ -97,7 +97,7 @@ public class IntegerListArgumentTest
     public void testInvalidArgumentLong()
     {
         Argument<List<Integer>> integerListArgument = new IntegerListArgument("i", "integer-list", "Integer list argument", true);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { integerListArgument }));
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { integerListArgument }));
         List<String> values = Arrays.asList(new String[] { "not-a-integer" });
 
         for (String value : values)
@@ -120,7 +120,7 @@ public class IntegerListArgumentTest
     public void testInvalidArgumentShort()
     {
         Argument<List<Integer>> integerListArgument = new IntegerListArgument("i", "integer-list", "Integer list argument", true);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { integerListArgument }));
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { integerListArgument }));
         List<String> values = Arrays.asList(new String[] { "not-a-integer" });
 
         for (String value : values)
@@ -145,7 +145,7 @@ public class IntegerListArgumentTest
         try
         {
             Argument<List<Integer>> integerListArgument = new IntegerListArgument("i", "integer-list", "Integer list argument", true);
-            ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { integerListArgument }));
+            ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { integerListArgument }));
 
             String[] args = new String[] { "not-an-argument", "not-a-integer" };
             CommandLine commandLine = new CommandLine(args);
@@ -163,7 +163,7 @@ public class IntegerListArgumentTest
         throws CommandLineParseException
     {
         Argument<List<Integer>> integerListArgument = new IntegerListArgument("i", "integer-list", "Integer list argument", false);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { integerListArgument }));
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { integerListArgument }));
 
         String[] args = new String[] { "not-an-argument", "not-a-integer" };
         CommandLine commandLine = new CommandLine(args);

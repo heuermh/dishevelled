@@ -60,7 +60,7 @@ public class FloatListArgumentTest
         throws CommandLineParseException
     {
         Argument<List<Float>> floatListArgument = new FloatListArgument("f", "float-list", "Float list argument", true);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { floatListArgument }));
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { floatListArgument }));
         List<String> values = Arrays.asList(new String[] { "1", "-1", "1.0", "-1.0", "1.0f", "1,2", "1, 2", " 1,2 " });
 
         for (String value : values)
@@ -79,7 +79,7 @@ public class FloatListArgumentTest
         throws CommandLineParseException
     {
         Argument<List<Float>> floatListArgument = new FloatListArgument("f", "float-list", "Float list argument", true);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { floatListArgument }));
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { floatListArgument }));
         List<String> values = Arrays.asList(new String[] { "1", "-1", "1.0", "-1.0", "1.0f", "1,2", "1, 2", " 1,2 " });
 
         for (String value : values)
@@ -97,7 +97,7 @@ public class FloatListArgumentTest
     public void testInvalidArgumentLong()
     {
         Argument<List<Float>> floatListArgument = new FloatListArgument("f", "float-list", "Float list argument", true);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { floatListArgument }));
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { floatListArgument }));
         List<String> values = Arrays.asList(new String[] { "not-a-float" });
 
         for (String value : values)
@@ -120,7 +120,7 @@ public class FloatListArgumentTest
     public void testInvalidArgumentShort()
     {
         Argument<List<Float>> floatListArgument = new FloatListArgument("f", "float-list", "Float list argument", true);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { floatListArgument }));
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { floatListArgument }));
         List<String> values = Arrays.asList(new String[] { "not-a-float" });
 
         for (String value : values)
@@ -145,7 +145,7 @@ public class FloatListArgumentTest
         try
         {
             Argument<List<Float>> floatListArgument = new FloatListArgument("f", "float-list", "Float list argument", true);
-            ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { floatListArgument }));
+            ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { floatListArgument }));
 
             String[] args = new String[] { "not-an-argument", "not-a-float" };
             CommandLine commandLine = new CommandLine(args);
@@ -163,7 +163,7 @@ public class FloatListArgumentTest
         throws CommandLineParseException
     {
         Argument<List<Float>> floatListArgument = new FloatListArgument("f", "float-list", "Float list argument", false);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { floatListArgument }));
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { floatListArgument }));
 
         String[] args = new String[] { "not-an-argument", "not-a-float" };
         CommandLine commandLine = new CommandLine(args);

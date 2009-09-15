@@ -48,10 +48,10 @@ public final class UsageTest
         Throwable cause = new Exception("cause");
         CommandLine emptyCommandLine = new CommandLine(new String[0]);
         CommandLine fullCommandLine = new CommandLine(new String[] { "--foo" });
-        ArgumentList emptyArguments = new ArgumentList(Arrays.asList(new Argument[0]));
+        ArgumentList emptyArguments = new ArgumentList(Arrays.asList(new Argument<?>[0]));
         Argument<Integer> integerArgument = new IntegerArgument("f", "foo", "Foo", false);
         Argument<Integer> requiredIntegerArgument = new IntegerArgument("b", "bar", "Bar", true);
-        ArgumentList fullArguments = new ArgumentList(Arrays.asList(new Argument[] { integerArgument, requiredIntegerArgument }));
+        ArgumentList fullArguments = new ArgumentList(Arrays.asList(new Argument<?>[] { integerArgument, requiredIntegerArgument }));
 
         Usage.usage(null, null, null, null, out);
         Usage.usage(message, null, null, null, out);

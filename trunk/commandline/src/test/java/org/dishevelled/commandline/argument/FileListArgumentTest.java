@@ -62,7 +62,7 @@ public class FileListArgumentTest
         throws CommandLineParseException
     {
         Argument<List<File>> fileListArgument = new FileListArgument("f", "file-list", "File list argument", true);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { fileListArgument }));
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { fileListArgument }));
         List<String> values = Arrays.asList(new String[] { "foo", "foo,bar", "foo, bar", " foo , bar " });
 
         for (String value : values)
@@ -81,7 +81,7 @@ public class FileListArgumentTest
         throws CommandLineParseException
     {
         Argument<List<File>> fileListArgument = new FileListArgument("f", "file-list", "File list argument", true);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { fileListArgument }));
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { fileListArgument }));
         List<String> values = Arrays.asList(new String[] { "foo", "foo,bar", "foo, bar", " foo , bar " });
 
         for (String value : values)
@@ -101,7 +101,7 @@ public class FileListArgumentTest
         try
         {
             Argument<List<File>> fileListArgument = new FileListArgument("f", "file-list", "File list argument", true);
-            ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { fileListArgument }));
+            ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { fileListArgument }));
 
             String[] args = new String[] { "not-an-argument", "not-a-file" };
             CommandLine commandLine = new CommandLine(args);
@@ -119,7 +119,7 @@ public class FileListArgumentTest
         throws CommandLineParseException
     {
         Argument<List<File>> fileListArgument = new FileListArgument("f", "file-list", "File list argument", false);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { fileListArgument }));
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { fileListArgument }));
 
         String[] args = new String[] { "not-an-argument", "not-a-file" };
         CommandLine commandLine = new CommandLine(args);

@@ -60,7 +60,7 @@ public class DoubleArgumentTest
         throws CommandLineParseException
     {
         Argument<Double> doubleArgument = new DoubleArgument("d", "double-argument", "Double argument", true);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { doubleArgument }));
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { doubleArgument }));
         List<String> values = Arrays.asList(new String[] { "1.0d" });
 
         for (String value : values)
@@ -77,7 +77,7 @@ public class DoubleArgumentTest
         throws CommandLineParseException
     {
         Argument<Double> doubleArgument = new DoubleArgument("d", "double-argument", "Double argument", true);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { doubleArgument }));
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { doubleArgument }));
         List<String> values = Arrays.asList(new String[] { "1.0d" });
 
         for (String value : values)
@@ -93,7 +93,7 @@ public class DoubleArgumentTest
     public void testInvalidArgumentShort()
     {
         Argument<Double> doubleArgument = new DoubleArgument("d", "double-argument", "Double argument", true);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { doubleArgument }));
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { doubleArgument }));
         List<String> values = Arrays.asList(new String[] { "not-a-double" });
 
         for (String value : values)
@@ -116,7 +116,7 @@ public class DoubleArgumentTest
     public void testInvalidArgumentLong()
     {
         Argument<Double> doubleArgument = new DoubleArgument("d", "double-argument", "Double argument", true);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { doubleArgument }));
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { doubleArgument }));
         List<String> values = Arrays.asList(new String[] { "not-a-double" });
 
         for (String value : values)
@@ -141,7 +141,7 @@ public class DoubleArgumentTest
         try
         {
             Argument<Double> doubleArgument = new DoubleArgument("d", "double-argument", "Double argument", true);
-            ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { doubleArgument }));
+            ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { doubleArgument }));
 
             String[] args = new String[] { "not-an-argument", "not-a-double" };
             CommandLine commandLine = new CommandLine(args);
@@ -159,7 +159,7 @@ public class DoubleArgumentTest
         throws CommandLineParseException
     {
         Argument<Double> doubleArgument = new DoubleArgument("d", "double-argument", "Double argument", false);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { doubleArgument }));
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { doubleArgument }));
 
         String[] args = new String[] { "not-an-argument", "not-a-double" };
         CommandLine commandLine = new CommandLine(args);

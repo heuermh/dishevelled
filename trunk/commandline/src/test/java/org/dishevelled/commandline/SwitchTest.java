@@ -53,7 +53,7 @@ public class SwitchTest
         throws CommandLineParseException
     {
         Switch s = new Switch("s", "switch", "Switch");
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { s }));
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { s }));
 
         String[] args = new String[] { "-s" };
         CommandLine commandLine = new CommandLine(args);
@@ -66,7 +66,7 @@ public class SwitchTest
         throws CommandLineParseException
     {
         Switch s = new Switch("s", "switch", "Switch");
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { s }));
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { s }));
 
         String[] args = new String[] { "--switch" };
         CommandLine commandLine = new CommandLine(args);
@@ -79,7 +79,7 @@ public class SwitchTest
         throws CommandLineParseException
     {
         Switch s = new Switch("s", "switch", "Switch");
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { s }));
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { s }));
 
         String[] args = new String[] { "-n", "--not-a-switch" };
         CommandLine commandLine = new CommandLine(args);

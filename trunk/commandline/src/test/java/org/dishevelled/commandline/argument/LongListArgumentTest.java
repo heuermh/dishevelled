@@ -60,7 +60,7 @@ public class LongListArgumentTest
         throws CommandLineParseException
     {
         Argument<List<Long>> longListArgument = new LongListArgument("l", "long-list", "Long list argument", true);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { longListArgument }));
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { longListArgument }));
         List<String> values = Arrays.asList(new String[] { "1", "-1", "1,2", "1, 2", " 1,2 " });
 
         for (String value : values)
@@ -79,7 +79,7 @@ public class LongListArgumentTest
         throws CommandLineParseException
     {
         Argument<List<Long>> longListArgument = new LongListArgument("l", "long-list", "Long list argument", true);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { longListArgument }));
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { longListArgument }));
         List<String> values = Arrays.asList(new String[] { "1", "-1", "1,2", "1, 2", " 1,2 " });
 
         for (String value : values)
@@ -97,7 +97,7 @@ public class LongListArgumentTest
     public void testInvalidArgumentLong()
     {
         Argument<List<Long>> longListArgument = new LongListArgument("l", "long-list", "Long list argument", true);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { longListArgument }));
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { longListArgument }));
         List<String> values = Arrays.asList(new String[] { "not-a-long" });
 
         for (String value : values)
@@ -120,7 +120,7 @@ public class LongListArgumentTest
     public void testInvalidArgumentShort()
     {
         Argument<List<Long>> longListArgument = new LongListArgument("l", "long-list", "Long list argument", true);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { longListArgument }));
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { longListArgument }));
         List<String> values = Arrays.asList(new String[] { "not-a-long" });
 
         for (String value : values)
@@ -145,7 +145,7 @@ public class LongListArgumentTest
         try
         {
             Argument<List<Long>> longListArgument = new LongListArgument("l", "long-list", "Long list argument", true);
-            ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { longListArgument }));
+            ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { longListArgument }));
 
             String[] args = new String[] { "not-an-argument", "not-a-long" };
             CommandLine commandLine = new CommandLine(args);
@@ -163,7 +163,7 @@ public class LongListArgumentTest
         throws CommandLineParseException
     {
         Argument<List<Long>> longListArgument = new LongListArgument("l", "long-list", "Long list argument", false);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { longListArgument }));
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { longListArgument }));
 
         String[] args = new String[] { "not-an-argument", "not-a-long" };
         CommandLine commandLine = new CommandLine(args);

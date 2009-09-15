@@ -62,7 +62,7 @@ public class FileArgumentTest
         throws CommandLineParseException
     {
         Argument<File> fileArgument = new FileArgument("f", "file-argument", "File argument", true);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { fileArgument }));
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { fileArgument }));
         List<String> values = Arrays.asList(new String[] { "foo" });
 
         for (String value : values)
@@ -80,7 +80,7 @@ public class FileArgumentTest
         throws CommandLineParseException
     {
         Argument<File> fileArgument = new FileArgument("f", "file-argument", "File argument", true);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { fileArgument }));
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { fileArgument }));
         List<String> values = Arrays.asList(new String[] { "foo" });
 
         for (String value : values)
@@ -98,7 +98,7 @@ public class FileArgumentTest
     public void testInvalidArgumentShort()
     {
         Argument<File> fileArgument = new FileArgument("f", "file-argument", "File argument", true);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { fileArgument }));
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { fileArgument }));
         List<String> values = Arrays.asList(new String[] { ":" });
 
         for (String value : values)
@@ -121,7 +121,7 @@ public class FileArgumentTest
     public void testInvalidArgumentLong()
     {
         Argument<File> fileArgument = new FileArgument("f", "file-argument", "File argument", true);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { fileArgument }));
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { fileArgument }));
         List<String> values = Arrays.asList(new String[] { ":" });
 
         for (String value : values)
@@ -147,7 +147,7 @@ public class FileArgumentTest
         try
         {
             Argument<File> fileArgument = new FileArgument("f", "file-argument", "File argument", true);
-            ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { fileArgument }));
+            ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { fileArgument }));
 
             String[] args = new String[] { "not-an-argument" };
             CommandLine commandLine = new CommandLine(args);
@@ -165,7 +165,7 @@ public class FileArgumentTest
         throws CommandLineParseException
     {
         Argument<File> fileArgument = new FileArgument("f", "file-argument", "File argument", false);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { fileArgument }));
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { fileArgument }));
 
         String[] args = new String[] { "not-an-argument" };
         CommandLine commandLine = new CommandLine(args);

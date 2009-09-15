@@ -42,7 +42,7 @@ public final class CommandLineTest
     {
         try
         {
-            CommandLine cl = new CommandLine(null);
+            new CommandLine(null);
         }
         catch (IllegalArgumentException e)
         {
@@ -50,10 +50,15 @@ public final class CommandLineTest
         }
 
         CommandLine cl0 = new CommandLine(new String[0]);
+        assertNotNull(cl0);
         CommandLine cl1 = new CommandLine(Collections.emptyList().toArray(new String[0]));
+        assertNotNull(cl1);
         CommandLine cl2 = new CommandLine(new String[] { "--foo" });
+        assertNotNull(cl2);
         CommandLine cl3 = new CommandLine(Collections.singleton("--foo").toArray(new String[0]));
+        assertNotNull(cl3);
         CommandLine cl4 = new CommandLine(new String[] { "--foo", "foo-value", "--bar", "bar-value" });
+        assertNotNull(cl4);
     }
 
     public void testObjectContract()

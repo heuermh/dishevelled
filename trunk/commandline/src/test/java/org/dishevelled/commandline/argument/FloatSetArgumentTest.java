@@ -61,7 +61,7 @@ public class FloatSetArgumentTest
         throws CommandLineParseException
     {
         Argument<Set<Float>> floatSetArgument = new FloatSetArgument("f", "float-set", "Float set argument", true);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { floatSetArgument }));
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { floatSetArgument }));
         List<String> values = Arrays.asList(new String[] { "1", "-1", "1.0", "-1.0", "1.0f", "1,2", "1, 2", " 1,2 " });
 
         for (String value : values)
@@ -80,7 +80,7 @@ public class FloatSetArgumentTest
         throws CommandLineParseException
     {
         Argument<Set<Float>> floatSetArgument = new FloatSetArgument("f", "float-set", "Float set argument", true);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { floatSetArgument }));
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { floatSetArgument }));
         List<String> values = Arrays.asList(new String[] { "1", "-1", "1.0", "-1.0", "1.0f", "1,2", "1, 2", " 1,2 " });
 
         for (String value : values)
@@ -98,7 +98,7 @@ public class FloatSetArgumentTest
     public void testInvalidArgumentShort()
     {
         Argument<Set<Float>> floatSetArgument = new FloatSetArgument("f", "float-set", "Float set argument", true);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { floatSetArgument }));
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { floatSetArgument }));
         List<String> values = Arrays.asList(new String[] { "not-a-float" });
 
         for (String value : values)
@@ -121,7 +121,7 @@ public class FloatSetArgumentTest
     public void testInvalidArgumentLong()
     {
         Argument<Set<Float>> floatSetArgument = new FloatSetArgument("f", "float-set", "Float set argument", true);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { floatSetArgument }));
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { floatSetArgument }));
         List<String> values = Arrays.asList(new String[] { "not-a-float" });
 
         for (String value : values)
@@ -146,7 +146,7 @@ public class FloatSetArgumentTest
         try
         {
             Argument<Set<Float>> floatSetArgument = new FloatSetArgument("f", "float-set", "Float set argument", true);
-            ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { floatSetArgument }));
+            ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { floatSetArgument }));
 
             String[] args = new String[] { "not-an-argument", "not-a-float" };
             CommandLine commandLine = new CommandLine(args);
@@ -164,7 +164,7 @@ public class FloatSetArgumentTest
         throws CommandLineParseException
     {
         Argument<Set<Float>> floatSetArgument = new FloatSetArgument("f", "float-set", "Float set argument", false);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { floatSetArgument }));
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { floatSetArgument }));
 
         String[] args = new String[] { "not-an-argument", "not-a-float" };
         CommandLine commandLine = new CommandLine(args);

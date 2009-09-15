@@ -61,7 +61,7 @@ public class LongSetArgumentTest
         throws CommandLineParseException
     {
         Argument<Set<Long>> longSetArgument = new LongSetArgument("l", "long-set", "Long set argument", true);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { longSetArgument }));
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { longSetArgument }));
         List<String> values = Arrays.asList(new String[] { "1", "-1", "1,2", "1, 2", " 1,2 " });
 
         for (String value : values)
@@ -80,7 +80,7 @@ public class LongSetArgumentTest
         throws CommandLineParseException
     {
         Argument<Set<Long>> longSetArgument = new LongSetArgument("l", "long-set", "Long set argument", true);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { longSetArgument }));
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { longSetArgument }));
         List<String> values = Arrays.asList(new String[] { "1", "-1", "1,2", "1, 2", " 1,2 " });
 
         for (String value : values)
@@ -98,7 +98,7 @@ public class LongSetArgumentTest
     public void testInvalidArgumentShort()
     {
         Argument<Set<Long>> longSetArgument = new LongSetArgument("l", "long-set", "Long set argument", true);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { longSetArgument }));
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { longSetArgument }));
         List<String> values = Arrays.asList(new String[] { "not-a-long" });
 
         for (String value : values)
@@ -121,7 +121,7 @@ public class LongSetArgumentTest
     public void testInvalidArgumentLong()
     {
         Argument<Set<Long>> longSetArgument = new LongSetArgument("l", "long-set", "Long set argument", true);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { longSetArgument }));
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { longSetArgument }));
         List<String> values = Arrays.asList(new String[] { "not-a-long" });
 
         for (String value : values)
@@ -146,7 +146,7 @@ public class LongSetArgumentTest
         try
         {
             Argument<Set<Long>> longSetArgument = new LongSetArgument("l", "long-set", "Long set argument", true);
-            ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { longSetArgument }));
+            ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { longSetArgument }));
 
             String[] args = new String[] { "not-an-argument", "not-a-long" };
             CommandLine commandLine = new CommandLine(args);
@@ -164,7 +164,7 @@ public class LongSetArgumentTest
         throws CommandLineParseException
     {
         Argument<Set<Long>> longSetArgument = new LongSetArgument("l", "long-set", "Long set argument", false);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { longSetArgument }));
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { longSetArgument }));
 
         String[] args = new String[] { "not-an-argument", "not-a-long" };
         CommandLine commandLine = new CommandLine(args);

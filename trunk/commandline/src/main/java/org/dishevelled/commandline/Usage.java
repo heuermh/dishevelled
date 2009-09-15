@@ -88,7 +88,7 @@ public final class Usage
         {
             pw.println("arguments:");
 
-            for (Argument a : arguments)
+            for (Argument<?> a : arguments)
             {
                 StringBuffer sb = new StringBuffer();
                 sb.append("   -");

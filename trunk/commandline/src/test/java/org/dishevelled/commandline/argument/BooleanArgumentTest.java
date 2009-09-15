@@ -60,7 +60,7 @@ public class BooleanArgumentTest
         throws CommandLineParseException
     {
         Argument<Boolean> booleanArgument = new BooleanArgument("b", "boolean", "Boolean argument", true);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { booleanArgument }));
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { booleanArgument }));
         List<String> values = Arrays.asList(new String[] { "true", "TRUE", "TRue", "t", "T", "1" });
 
         for (String value : values)
@@ -77,7 +77,7 @@ public class BooleanArgumentTest
         throws CommandLineParseException
     {
         Argument<Boolean> booleanArgument = new BooleanArgument("b", "boolean", "Boolean argument", true);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { booleanArgument }));
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { booleanArgument }));
         List<String> values = Arrays.asList(new String[] { "true", "TRUE", "TRue", "t", "T", "1" });
 
         for (String value : values)
@@ -94,7 +94,7 @@ public class BooleanArgumentTest
         throws CommandLineParseException
     {
         Argument<Boolean> booleanArgument = new BooleanArgument("b", "boolean", "Boolean argument", true);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { booleanArgument }));
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { booleanArgument }));
         List<String> values = Arrays.asList(new String[] { "false", "FALSE", "FALse", "f", "F", "0" });
 
         for (String value : values)
@@ -111,7 +111,7 @@ public class BooleanArgumentTest
         throws CommandLineParseException
     {
         Argument<Boolean> booleanArgument = new BooleanArgument("b", "boolean", "Boolean argument", true);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { booleanArgument }));
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { booleanArgument }));
         List<String> values = Arrays.asList(new String[] { "false", "FALSE", "FALse", "f", "F", "0" });
 
         for (String value : values)
@@ -129,7 +129,7 @@ public class BooleanArgumentTest
         try
         {
             Argument<Boolean> booleanArgument = new BooleanArgument("b", "boolean", "Boolean argument", true);
-            ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { booleanArgument }));
+            ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { booleanArgument }));
 
             String[] args = new String[] { "-b", "not-a-boolean" };
             CommandLine commandLine = new CommandLine(args);
@@ -148,7 +148,7 @@ public class BooleanArgumentTest
         try
         {
             Argument<Boolean> booleanArgument = new BooleanArgument("b", "boolean", "Boolean argument", true);
-            ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { booleanArgument }));
+            ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { booleanArgument }));
 
             String[] args = new String[] { "--boolean", "not-a-boolean" };
             CommandLine commandLine = new CommandLine(args);
@@ -167,7 +167,7 @@ public class BooleanArgumentTest
         try
         {
             Argument<Boolean> booleanArgument = new BooleanArgument("b", "boolean", "Boolean argument", true);
-            ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { booleanArgument }));
+            ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { booleanArgument }));
 
             String[] args = new String[] { "not-an-argument", "not-a-boolean" };
             CommandLine commandLine = new CommandLine(args);
@@ -185,7 +185,7 @@ public class BooleanArgumentTest
         throws CommandLineParseException
     {
         Argument<Boolean> booleanArgument = new BooleanArgument("b", "boolean", "Boolean argument", false);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { booleanArgument }));
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { booleanArgument }));
 
         String[] args = new String[] { "not-an-argument", "not-a-boolean" };
         CommandLine commandLine = new CommandLine(args);

@@ -61,7 +61,7 @@ public class DoubleSetArgumentTest
         throws CommandLineParseException
     {
         Argument<Set<Double>> doubleSetArgument = new DoubleSetArgument("d", "double-set", "Double set argument", true);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { doubleSetArgument }));
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { doubleSetArgument }));
         List<String> values = Arrays.asList(new String[] { "1", "-1", "1.0", "-1.0", "1.0d", "1,2", "1, 2", " 1,2 " });
 
         for (String value : values)
@@ -80,7 +80,7 @@ public class DoubleSetArgumentTest
         throws CommandLineParseException
     {
         Argument<Set<Double>> doubleSetArgument = new DoubleSetArgument("d", "double-set", "Double set argument", true);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { doubleSetArgument }));
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { doubleSetArgument }));
         List<String> values = Arrays.asList(new String[] { "1", "-1", "1.0", "-1.0", "1.0d", "1,2", "1, 2", " 1,2 " });
 
         for (String value : values)
@@ -98,7 +98,7 @@ public class DoubleSetArgumentTest
     public void testInvalidArgumentShort()
     {
         Argument<Set<Double>> doubleSetArgument = new DoubleSetArgument("d", "double-set", "Double set argument", true);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { doubleSetArgument }));
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { doubleSetArgument }));
         List<String> values = Arrays.asList(new String[] { "not-a-double" });
 
         for (String value : values)
@@ -121,7 +121,7 @@ public class DoubleSetArgumentTest
     public void testInvalidArgumentLong()
     {
         Argument<Set<Double>> doubleSetArgument = new DoubleSetArgument("d", "double-set", "Double set argument", true);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { doubleSetArgument }));
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { doubleSetArgument }));
         List<String> values = Arrays.asList(new String[] { "not-a-double" });
 
         for (String value : values)
@@ -146,7 +146,7 @@ public class DoubleSetArgumentTest
         try
         {
             Argument<Set<Double>> doubleSetArgument = new DoubleSetArgument("d", "double-set", "Double set argument", true);
-            ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { doubleSetArgument }));
+            ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { doubleSetArgument }));
 
             String[] args = new String[] { "not-an-argument", "not-a-double" };
             CommandLine commandLine = new CommandLine(args);
@@ -164,7 +164,7 @@ public class DoubleSetArgumentTest
         throws CommandLineParseException
     {
         Argument<Set<Double>> doubleSetArgument = new DoubleSetArgument("d", "double-set", "Double set argument", false);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument[] { doubleSetArgument }));
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { doubleSetArgument }));
 
         String[] args = new String[] { "not-an-argument", "not-a-double" };
         CommandLine commandLine = new CommandLine(args);
