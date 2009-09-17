@@ -202,9 +202,9 @@ public abstract class AbstractStateMachineSprite
             throw new IllegalArgumentException("stateMachine must not be null");
         }
         // load animations for state ids
-        for (Iterator entries = stateMachine.getTargets().entrySet().iterator(); entries.hasNext(); )
+        for (Iterator<?> entries = stateMachine.getTargets().entrySet().iterator(); entries.hasNext(); )
         {
-            Map.Entry entry = (Map.Entry) entries.next();
+            Map.Entry<?, ?> entry = (Map.Entry<?, ?>) entries.next();
             String id = (String) entry.getKey();
             Object target = entry.getValue();
             if (target instanceof State)
@@ -310,7 +310,7 @@ public abstract class AbstractStateMachineSprite
      * @return the state machine resource with the specified name, or <code>null</code>
      *    if no such resource exists
      */
-    protected static final SCXML loadStateMachine(final Class cls, final String name)
+    protected static final <T> SCXML loadStateMachine(final Class<T> cls, final String name)
     {
         SCXML stateMachine = null;
         try
@@ -341,7 +341,7 @@ public abstract class AbstractStateMachineSprite
      * @return the image resource with the specified name, or <code>null</code> if no such
      *    resource exists
      */
-    protected static final BufferedImage loadImage(final Class cls, final String name)
+    protected static final <T> BufferedImage loadImage(final Class<T> cls, final String name)
     {
         BufferedImage image = null;
         try
