@@ -36,16 +36,16 @@ public interface ColorFactory
 
     /**
      * Create and return an instance of the color specified by <code>red</code>,
-     * <code>green</code>, <code>blue</code>, and <code>alpha</code> color
-     * components in integer format.
+     * <code>green</code>, and <code>blue</code> color components in integer
+     * format and <code>alpha</code> as a float.
      *
      * @param red red integer color component, must be <code>0 lt;= red lt;= 255</code>
      * @param green green integer color component, must be <code>0 lt;= green lt;= 255</code>
      * @param blue blue integer color component, must be <code>0 lt;= blue lt;= 255</code>
-     * @param alpha alpha integer color component, must be <code>0 lt;= alpha lt;= 255</code>
+     * @param alpha alpha value, must be <code>0.0 lt;= alpha lt;= 1.0</code>
      * @return an instance of the colored specified by <code>red</code>,
-     *    <code>green</code>, <code>blue</code>, and <code>alpha</code> color
-     *    components in integer format
+     *    <code>green</code>, and <code>blue</code> color components in integer
+     *    format and <code>alpha</code> as a float
      */
-    Color createColor(final int red, final int green, final int blue, final int alpha);
+    Color createColor(final int red, final int green, final int blue, final float alpha);
 }

@@ -27,8 +27,8 @@ For written permission, please contact Cynthia Brewer at cbrewer@psu.edu.
 -->
 <color-scheme name="PiYG" type="divergent">
   <colors>
-    <color red="233" blue="201" green="163" alpha="255"/>
-    <color red="247" blue="247" green="247" alpha="255"/>
-    <color red="161" blue="106" green="215" alpha="255"/>
+    <color red="233" blue="201" green="163" alpha="1.0"/>
+    <color red="247" blue="247" green="247" alpha="1.0"/>
+    <color red="161" blue="106" green="215" alpha="1.0"/>
   </colors>
 </color-scheme>

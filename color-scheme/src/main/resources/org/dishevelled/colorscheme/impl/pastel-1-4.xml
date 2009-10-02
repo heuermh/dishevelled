@@ -27,9 +27,9 @@ For written permission, please contact Cynthia Brewer at cbrewer@psu.edu.
 -->
 <color-scheme name="Pastel1" type="qualitative">
   <colors>
-    <color red="251" blue="174" green="180" alpha="255"/>
-    <color red="179" blue="227" green="205" alpha="255"/>
-    <color red="204" blue="197" green="235" alpha="255"/>
-    <color red="222" blue="228" green="203" alpha="255"/>
+    <color red="251" blue="174" green="180" alpha="1.0"/>
+    <color red="179" blue="227" green="205" alpha="1.0"/>
+    <color red="204" blue="197" green="235" alpha="1.0"/>
+    <color red="222" blue="228" green="203" alpha="1.0"/>
   </colors>
 </color-scheme>

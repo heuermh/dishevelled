@@ -24,12 +24,12 @@
 -->
 <color-scheme name="BuWhRd" type="divergent">
   <colors>
-    <color red="96" green="125" blue="254" alpha="255"/>
-    <color red="153" green="174" blue="254" alpha="255"/>
-    <color red="206" green="218" blue="254" alpha="255"/>
-    <color red="255" green="255" blue="255" alpha="255"/>
-    <color red="222" green="174" blue="206" alpha="255"/>
-    <color red="183" green="80" blue="113" alpha="255"/>
-    <color red="138" green="0" blue="0" alpha="255"/>
+    <color red="96" green="125" blue="254" alpha="1.0"/>
+    <color red="153" green="174" blue="254" alpha="1.0"/>
+    <color red="206" green="218" blue="254" alpha="1.0"/>
+    <color red="255" green="255" blue="255" alpha="1.0"/>
+    <color red="222" green="174" blue="206" alpha="1.0"/>
+    <color red="183" green="80" blue="113" alpha="1.0"/>
+    <color red="138" green="0" blue="0" alpha="1.0"/>
   </colors>
 </color-scheme>

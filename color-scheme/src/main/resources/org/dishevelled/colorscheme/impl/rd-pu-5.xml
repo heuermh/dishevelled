@@ -27,10 +27,10 @@ For written permission, please contact Cynthia Brewer at cbrewer@psu.edu.
 -->
 <color-scheme name="RdPu" type="sequential">
   <colors>
-    <color red="254" blue="226" green="235" alpha="255"/>
-    <color red="251" blue="185" green="180" alpha="255"/>
-    <color red="247" blue="161" green="104" alpha="255"/>
-    <color red="197" blue="138" green="27" alpha="255"/>
-    <color red="122" blue="119" green="1" alpha="255"/>
+    <color red="254" blue="226" green="235" alpha="1.0"/>
+    <color red="251" blue="185" green="180" alpha="1.0"/>
+    <color red="247" blue="161" green="104" alpha="1.0"/>
+    <color red="197" blue="138" green="27" alpha="1.0"/>
+    <color red="122" blue="119" green="1" alpha="1.0"/>
   </colors>
 </color-scheme>

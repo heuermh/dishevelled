@@ -27,12 +27,12 @@ For written permission, please contact Cynthia Brewer at cbrewer@psu.edu.
 -->
 <color-scheme name="PuBu" type="sequential">
   <colors>
-    <color red="241" blue="246" green="238" alpha="255"/>
-    <color red="208" blue="230" green="209" alpha="255"/>
-    <color red="166" blue="219" green="189" alpha="255"/>
-    <color red="116" blue="207" green="169" alpha="255"/>
-    <color red="54" blue="192" green="144" alpha="255"/>
-    <color red="5" blue="176" green="112" alpha="255"/>
-    <color red="3" blue="123" green="78" alpha="255"/>
+    <color red="241" blue="246" green="238" alpha="1.0"/>
+    <color red="208" blue="230" green="209" alpha="1.0"/>
+    <color red="166" blue="219" green="189" alpha="1.0"/>
+    <color red="116" blue="207" green="169" alpha="1.0"/>
+    <color red="54" blue="192" green="144" alpha="1.0"/>
+    <color red="5" blue="176" green="112" alpha="1.0"/>
+    <color red="3" blue="123" green="78" alpha="1.0"/>
   </colors>
 </color-scheme>

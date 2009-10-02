@@ -27,16 +27,16 @@ For written permission, please contact Cynthia Brewer at cbrewer@psu.edu.
 -->
 <color-scheme name="RdGy" type="divergent">
   <colors>
-    <color red="103" blue="31" green="0" alpha="255"/>
-    <color red="178" blue="43" green="24" alpha="255"/>
-    <color red="214" blue="77" green="96" alpha="255"/>
-    <color red="244" blue="130" green="165" alpha="255"/>
-    <color red="253" blue="199" green="219" alpha="255"/>
-    <color red="255" blue="255" green="255" alpha="255"/>
-    <color red="224" blue="224" green="224" alpha="255"/>
-    <color red="186" blue="186" green="186" alpha="255"/>
-    <color red="135" blue="135" green="135" alpha="255"/>
-    <color red="77" blue="77" green="77" alpha="255"/>
-    <color red="26" blue="26" green="26" alpha="255"/>
+    <color red="103" blue="31" green="0" alpha="1.0"/>
+    <color red="178" blue="43" green="24" alpha="1.0"/>
+    <color red="214" blue="77" green="96" alpha="1.0"/>
+    <color red="244" blue="130" green="165" alpha="1.0"/>
+    <color red="253" blue="199" green="219" alpha="1.0"/>
+    <color red="255" blue="255" green="255" alpha="1.0"/>
+    <color red="224" blue="224" green="224" alpha="1.0"/>
+    <color red="186" blue="186" green="186" alpha="1.0"/>
+    <color red="135" blue="135" green="135" alpha="1.0"/>
+    <color red="77" blue="77" green="77" alpha="1.0"/>
+    <color red="26" blue="26" green="26" alpha="1.0"/>
   </colors>
 </color-scheme>

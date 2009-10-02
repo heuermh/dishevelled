@@ -27,9 +27,9 @@ For written permission, please contact Cynthia Brewer at cbrewer@psu.edu.
 -->
 <color-scheme name="PRGn" type="divergent">
   <colors>
-    <color red="123" blue="148" green="50" alpha="255"/>
-    <color red="194" blue="207" green="165" alpha="255"/>
-    <color red="166" blue="160" green="219" alpha="255"/>
-    <color red="0" blue="55" green="136" alpha="255"/>
+    <color red="123" blue="148" green="50" alpha="1.0"/>
+    <color red="194" blue="207" green="165" alpha="1.0"/>
+    <color red="166" blue="160" green="219" alpha="1.0"/>
+    <color red="0" blue="55" green="136" alpha="1.0"/>
   </colors>
 </color-scheme>

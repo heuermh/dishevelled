@@ -301,7 +301,7 @@ public final class ColorSchemes
             int r = Integer.parseInt(attrs.getValue("red"));
             int g = Integer.parseInt(attrs.getValue("green"));
             int b = Integer.parseInt(attrs.getValue("blue"));
-            int a = Integer.parseInt(attrs.getValue("alpha"));
+            float a = Float.parseFloat(attrs.getValue("alpha"));
             this.color = COLOR_FACTORY.createColor(r, g, b, a);
         }
 
