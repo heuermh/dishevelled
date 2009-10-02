@@ -148,7 +148,7 @@ public final class ColorSchemes
         }
         catch (Exception e)
         {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
         finally
         {
@@ -191,7 +191,7 @@ public final class ColorSchemes
         }
         catch (Exception e)
         {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
         finally
         {
