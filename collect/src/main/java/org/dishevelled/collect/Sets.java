@@ -59,6 +59,16 @@ public final class Sets
     }
 
 
+    /**
+     * Create and return a new empty set.  Delegates to <code>Collections.emptySet()</code>.
+     *
+     * @return a new empty set
+     */
+    public static <T> Set<T> emptySet()
+    {
+        return Collections.<T>emptySet();
+    }
+
     //
     // asXxx methods, which accept elements as parameters
 

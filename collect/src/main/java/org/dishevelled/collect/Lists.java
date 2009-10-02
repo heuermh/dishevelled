@@ -253,7 +253,7 @@ public final class Lists
      *
      * @param <T> element type
      * @param elements elements to be added to the returned list, must not be null
-     * @return a new instance of CopyOnWriteArrayLIst containing the elements
+     * @return a new instance of CopyOnWriteArrayList containing the elements
      *    of the specified collection
      */
     public static <T> CopyOnWriteArrayList<T> createCopyOnWriteArrayList(final Collection<? extends T> elements)

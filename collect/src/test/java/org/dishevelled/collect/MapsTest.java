@@ -44,6 +44,26 @@ public final class MapsTest
     extends TestCase
 {
 
+    public void testEmptyMap()
+    {
+        Map<String, Double> empty = emptyMap();
+        assertNotNull(empty);
+        assertTrue(empty.isEmpty());
+        assertEquals(0, empty.size());
+
+        empty.clear();
+        try
+        {
+            empty.put("foo", Double.valueOf(1.0d));
+            fail("empty put expected UnsupportedOperationException");
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
+        // TODO:  add'l assertions
+    }
+
     public void testCreateMap()
     {
         Map<String, Double> map0 = createMap();

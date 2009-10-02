@@ -68,6 +68,26 @@ public final class SetsTest
             }
         };
 
+    public void testEmptySet()
+    {
+        Set<String> empty = emptySet();
+        assertNotNull(empty);
+        assertTrue(empty.isEmpty());
+        assertEquals(0, empty.size());
+
+        empty.clear();
+        try
+        {
+            empty.add("foo");
+            fail("empty add expected UnsupportedOperationException");
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
+        // TODO:  add'l assertions
+    }
+
     public void testAsSet()
     {
         Set<String> set0 = asSet("foo", "foo");
