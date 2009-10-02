@@ -65,7 +65,7 @@ import org.xml.sax.ContentHandler;
 public final class ColorSchemes
 {
     /** Color scheme pattern. */
-    private static final Pattern COLOR_SCHEME = Pattern.compile("^([a-z])-([a-z-])-([0-9])$");
+    private static final Pattern COLOR_SCHEME = Pattern.compile("^([a-z]+)-([a-z0-9-]+)-([0-9]+)$");
 
     /** Color factory. */
     private static final ColorFactory COLOR_FACTORY = new DefaultColorFactory();
@@ -88,6 +88,10 @@ public final class ColorSchemes
      */
     public static ColorScheme parseColorScheme(final String value)
     {
+        if (value == null)
+        {
+            throw new IllegalArgumentException("value must not be null");
+        }
         Matcher matcher = COLOR_SCHEME.matcher(value);
         if (!matcher.matches())
         {
