@@ -23,6 +23,10 @@
 */
 package org.dishevelled.colorscheme.impl;
 
+import org.dishevelled.colorscheme.ColorScheme;
+
+import org.dishevelled.colorscheme.interpolate.Interpolations;
+
 import junit.framework.TestCase;
 
 /**
@@ -31,22 +35,64 @@ import junit.framework.TestCase;
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public final class ColorSchemesTest
-    extends TestCase
+public class ColorSchemesTest extends TestCase
 {
 
     public void testParseColorScheme()
     {
-        // empty
+        ColorScheme continuousWhBl2 = ColorSchemes.parseColorScheme("continuous-wh-bl-2");
+        assertNotNull(continuousWhBl2);
+        ColorScheme discreteWhBl2 = ColorSchemes.parseColorScheme("discrete-wh-bl-2");
+        assertNotNull(discreteWhBl2);
+
+        try
+        {
+            ColorSchemes.parseColorScheme(null);
+            fail("parseColorScheme(null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+        try
+        {
+            ColorSchemes.parseColorScheme("not-a-color-scheme");
+            fail("parseColorScheme(not-a-color-scheme) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+        try
+        {
+            ColorSchemes.parseColorScheme("invalidtype-wh-bl-2");
+            fail("parseColorScheme(invalidtype-wh-bl-2) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
     }
 
     public void testGetDiscreteColorScheme()
     {
-        // empty
+        ColorScheme discreteWhBl2 = ColorSchemes.getDiscreteColorScheme("wh-bl", 2, Interpolations.LINEAR);
+        assertNotNull(discreteWhBl2);
+
+        ColorScheme discreteRdBlGr3 = ColorSchemes.getDiscreteColorScheme("rd-bl-gr", 3, Interpolations.LINEAR);
+        assertNotNull(discreteRdBlGr3);
+
+        assertNull(ColorSchemes.getDiscreteColorScheme("wh-bl", 99, Interpolations.LINEAR));
     }
 
     public void testGetContinuousColorScheme()
     {
-        // empty
+        ColorScheme continuousWhBl2 = ColorSchemes.getContinuousColorScheme("wh-bl", 2, Interpolations.valueOf("linear"));
+        assertNotNull(continuousWhBl2);
+
+        ColorScheme continuousRdBlGr3 = ColorSchemes.getContinuousColorScheme("rd-bl-gr", 3, Interpolations.valueOf("linear"));
+        assertNotNull(continuousRdBlGr3);
+
+        assertNull(ColorSchemes.getContinuousColorScheme("wh-bl", 99, Interpolations.valueOf("linear")));
     }
 }
