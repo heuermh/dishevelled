@@ -59,6 +59,16 @@ public final class Maps
 
 
     /**
+     * Create and return a new empty map.  Delegates to <code>Collections.emptyMap()</code>.
+     *
+     * @return a new empty map
+     */
+    public static <K, V> Map<K, V> emptyMap()
+    {
+        return Collections.<K, V>emptyMap();
+    }
+
+    /**
      * Create and return a new instance of Map.
      *
      * @param <K> key type
