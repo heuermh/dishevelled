@@ -53,6 +53,16 @@ public final class Lists
 
 
     /**
+     * Create and return a new empty list.  Delegates to <code>Collections.emptyList()</code>.
+     *
+     * @return a new empty list
+     */
+    public static <T> List<T> emptyList()
+    {
+        return Collections.<T>emptyList();
+    }
+
+    /**
      * Create and return a list containing the specified elements.
      *
      * @param <T> element type
