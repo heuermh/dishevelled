@@ -27,11 +27,11 @@ For written permission, please contact Cynthia Brewer at cbrewer@psu.edu.
 -->
 <color-scheme name="BuPu" type="sequential">
   <colors>
-    <color red="237" blue="251" green="248" alpha="255"/>
-    <color red="191" blue="230" green="211" alpha="255"/>
-    <color red="158" blue="218" green="188" alpha="255"/>
-    <color red="140" blue="198" green="150" alpha="255"/>
-    <color red="136" blue="167" green="86" alpha="255"/>
-    <color red="129" blue="124" green="15" alpha="255"/>
+    <color red="237" blue="251" green="248" alpha="1.0"/>
+    <color red="191" blue="230" green="211" alpha="1.0"/>
+    <color red="158" blue="218" green="188" alpha="1.0"/>
+    <color red="140" blue="198" green="150" alpha="1.0"/>
+    <color red="136" blue="167" green="86" alpha="1.0"/>
+    <color red="129" blue="124" green="15" alpha="1.0"/>
   </colors>
 </color-scheme>

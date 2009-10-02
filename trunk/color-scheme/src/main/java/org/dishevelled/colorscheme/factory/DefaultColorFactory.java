@@ -38,8 +38,8 @@ public final class DefaultColorFactory
 {
 
     /** {@inheritDoc} */
-    public Color createColor(final int red, final int green, final int blue, final int alpha)
+    public Color createColor(final int red, final int green, final int blue, final float alpha)
     {
-        return new Color(red, green, blue, alpha);
+        return new Color(red, green, blue, Math.min(255, Math.round(alpha * 255)));
     }
 }

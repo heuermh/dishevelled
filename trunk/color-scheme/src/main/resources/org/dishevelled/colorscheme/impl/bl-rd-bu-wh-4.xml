@@ -24,9 +24,9 @@
 -->
 <color-scheme name="BlRdBuWh" type="sequential">
   <colors>
-    <color red="0" blue="0" green="0" alpha="255"/>
-    <color red="255" blue="0" green="0" alpha="255"/>
-    <color red="0" blue="255" green="0" alpha="255"/>
-    <color red="255" blue="255" green="255" alpha="255"/>
+    <color red="0" blue="0" green="0" alpha="1.0"/>
+    <color red="255" blue="0" green="0" alpha="1.0"/>
+    <color red="0" blue="255" green="0" alpha="1.0"/>
+    <color red="255" blue="255" green="255" alpha="1.0"/>
   </colors>
 </color-scheme>

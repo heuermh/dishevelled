@@ -27,8 +27,8 @@ For written permission, please contact Cynthia Brewer at cbrewer@psu.edu.
 -->
 <color-scheme name="YlOrRd" type="sequential">
   <colors>
-    <color red="255" blue="160" green="237" alpha="255"/>
-    <color red="254" blue="76" green="178" alpha="255"/>
-    <color red="240" blue="32" green="59" alpha="255"/>
+    <color red="255" blue="160" green="237" alpha="1.0"/>
+    <color red="254" blue="76" green="178" alpha="1.0"/>
+    <color red="240" blue="32" green="59" alpha="1.0"/>
   </colors>
 </color-scheme>

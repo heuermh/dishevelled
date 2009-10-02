@@ -24,8 +24,8 @@
 -->
 <color-scheme name="RdBlGr" type="divergent">
   <colors>
-    <color red="255" blue="0" green="0" alpha="255"/>
-    <color red="0" blue="0" green="0" alpha="255"/>
-    <color red="0" blue="0" green="255" alpha="255"/>
+    <color red="255" blue="0" green="0" alpha="1.0"/>
+    <color red="0" blue="0" green="0" alpha="1.0"/>
+    <color red="0" blue="0" green="255" alpha="1.0"/>
   </colors>
 </color-scheme>

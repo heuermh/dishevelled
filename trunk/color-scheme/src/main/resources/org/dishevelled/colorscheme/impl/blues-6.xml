@@ -27,11 +27,11 @@ For written permission, please contact Cynthia Brewer at cbrewer@psu.edu.
 -->
 <color-scheme name="Blues" type="sequential">
   <colors>
-    <color red="239" blue="255" green="243" alpha="255"/>
-    <color red="198" blue="239" green="219" alpha="255"/>
-    <color red="158" blue="225" green="202" alpha="255"/>
-    <color red="107" blue="214" green="174" alpha="255"/>
-    <color red="49" blue="189" green="130" alpha="255"/>
-    <color red="8" blue="156" green="81" alpha="255"/>
+    <color red="239" blue="255" green="243" alpha="1.0"/>
+    <color red="198" blue="239" green="219" alpha="1.0"/>
+    <color red="158" blue="225" green="202" alpha="1.0"/>
+    <color red="107" blue="214" green="174" alpha="1.0"/>
+    <color red="49" blue="189" green="130" alpha="1.0"/>
+    <color red="8" blue="156" green="81" alpha="1.0"/>
   </colors>
 </color-scheme>

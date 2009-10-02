@@ -27,10 +27,10 @@ For written permission, please contact Cynthia Brewer at cbrewer@psu.edu.
 -->
 <color-scheme name="RdGy" type="divergent">
   <colors>
-    <color red="202" blue="32" green="0" alpha="255"/>
-    <color red="244" blue="130" green="165" alpha="255"/>
-    <color red="255" blue="255" green="255" alpha="255"/>
-    <color red="186" blue="186" green="186" alpha="255"/>
-    <color red="64" blue="64" green="64" alpha="255"/>
+    <color red="202" blue="32" green="0" alpha="1.0"/>
+    <color red="244" blue="130" green="165" alpha="1.0"/>
+    <color red="255" blue="255" green="255" alpha="1.0"/>
+    <color red="186" blue="186" green="186" alpha="1.0"/>
+    <color red="64" blue="64" green="64" alpha="1.0"/>
   </colors>
 </color-scheme>

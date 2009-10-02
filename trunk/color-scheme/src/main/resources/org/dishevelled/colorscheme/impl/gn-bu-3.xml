@@ -27,8 +27,8 @@ For written permission, please contact Cynthia Brewer at cbrewer@psu.edu.
 -->
 <color-scheme name="GnBu" type="sequential">
   <colors>
-    <color red="224" blue="219" green="243" alpha="255"/>
-    <color red="168" blue="181" green="221" alpha="255"/>
-    <color red="67" blue="202" green="162" alpha="255"/>
+    <color red="224" blue="219" green="243" alpha="1.0"/>
+    <color red="168" blue="181" green="221" alpha="1.0"/>
+    <color red="67" blue="202" green="162" alpha="1.0"/>
   </colors>
 </color-scheme>

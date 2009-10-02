@@ -27,14 +27,14 @@ For written permission, please contact Cynthia Brewer at cbrewer@psu.edu.
 -->
 <color-scheme name="OrRd" type="sequential">
   <colors>
-    <color red="255" blue="236" green="247" alpha="255"/>
-    <color red="254" blue="200" green="232" alpha="255"/>
-    <color red="253" blue="158" green="212" alpha="255"/>
-    <color red="253" blue="132" green="187" alpha="255"/>
-    <color red="252" blue="89" green="141" alpha="255"/>
-    <color red="239" blue="72" green="101" alpha="255"/>
-    <color red="215" blue="31" green="48" alpha="255"/>
-    <color red="179" blue="0" green="0" alpha="255"/>
-    <color red="127" blue="0" green="0" alpha="255"/>
+    <color red="255" blue="236" green="247" alpha="1.0"/>
+    <color red="254" blue="200" green="232" alpha="1.0"/>
+    <color red="253" blue="158" green="212" alpha="1.0"/>
+    <color red="253" blue="132" green="187" alpha="1.0"/>
+    <color red="252" blue="89" green="141" alpha="1.0"/>
+    <color red="239" blue="72" green="101" alpha="1.0"/>
+    <color red="215" blue="31" green="48" alpha="1.0"/>
+    <color red="179" blue="0" green="0" alpha="1.0"/>
+    <color red="127" blue="0" green="0" alpha="1.0"/>
   </colors>
 </color-scheme>

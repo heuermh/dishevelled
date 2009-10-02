@@ -27,9 +27,9 @@ For written permission, please contact Cynthia Brewer at cbrewer@psu.edu.
 -->
 <color-scheme name="BuGn" type="sequential">
   <colors>
-    <color red="237" blue="251" green="248" alpha="255"/>
-    <color red="178" blue="226" green="226" alpha="255"/>
-    <color red="102" blue="164" green="194" alpha="255"/>
-    <color red="35" blue="69" green="139" alpha="255"/>
+    <color red="237" blue="251" green="248" alpha="1.0"/>
+    <color red="178" blue="226" green="226" alpha="1.0"/>
+    <color red="102" blue="164" green="194" alpha="1.0"/>
+    <color red="35" blue="69" green="139" alpha="1.0"/>
   </colors>
 </color-scheme>
