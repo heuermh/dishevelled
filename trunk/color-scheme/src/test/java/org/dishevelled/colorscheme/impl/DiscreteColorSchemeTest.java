@@ -25,14 +25,11 @@ package org.dishevelled.colorscheme.impl;
 
 import java.awt.Color;
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import junit.framework.TestCase;
 
-//import static org.dishevelled.collect.Lists.*;
-import static com.google.common.collect.Lists.*;
+import static org.dishevelled.collect.Lists.*;
 
 import org.dishevelled.colorscheme.ColorFactory;
 import org.dishevelled.colorscheme.ColorScheme;
@@ -53,9 +50,9 @@ public final class DiscreteColorSchemeTest
 
     public void testConstructor()
     {
-        List<Color> emptyColors = Collections.emptyList();
-        List<Color> singletonColor = Arrays.asList(new Color[] { Color.WHITE });
-        List<Color> colors = Arrays.asList(new Color[] { Color.WHITE, Color.GRAY, Color.BLACK });
+        List<Color> emptyColors = emptyList();
+        List<Color> singletonColor = asList(Color.WHITE);
+        List<Color> colors = asList(Color.WHITE, Color.GRAY, Color.BLACK);
         ColorFactory colorFactory = new DefaultColorFactory();
         new DiscreteColorScheme("color-scheme", colors, 0.0d, 1.0d, colorFactory, Interpolations.LINEAR);
         new DiscreteColorScheme("color-scheme", colors, -1.0d, 1.0d, colorFactory, Interpolations.LINEAR);
@@ -115,8 +112,7 @@ public final class DiscreteColorSchemeTest
 
     public void testTwoColorScheme()
     {
-        //ColorScheme colorScheme = new DiscreteColorScheme("name", createList(Color.BLACK, Color.WHITE) 0.0d, 1.0d, new DefaultColorFactory(), Interpolations.LINEAR);
-        ColorScheme colorScheme = new DiscreteColorScheme("name", newArrayList(Color.BLACK, Color.WHITE), 0.0d, 1.0d, new DefaultColorFactory(), Interpolations.LINEAR);
+        ColorScheme colorScheme = new DiscreteColorScheme("name", asList(Color.BLACK, Color.WHITE), 0.0d, 1.0d, new DefaultColorFactory(), Interpolations.LINEAR);
         assertNotNull(colorScheme);
         //assertEquals("name", colorScheme.getName());
         // out of bounds
@@ -131,8 +127,7 @@ public final class DiscreteColorSchemeTest
 
     public void testEvenColorScheme()
     {
-        //ColorScheme colorScheme = new DiscreteColorScheme("name", createList(Color.BLACK, Color.RED, Color.BLUE, Color.WHITE), 0.0d, 1.0d, new DefaultColorFactory(), Interpolations.LINEAR);
-        ColorScheme colorScheme = new DiscreteColorScheme("name", newArrayList(Color.BLACK, Color.RED, Color.BLUE, Color.WHITE), 0.0d, 1.0d, new DefaultColorFactory(), Interpolations.LINEAR);
+        ColorScheme colorScheme = new DiscreteColorScheme("name", asList(Color.BLACK, Color.RED, Color.BLUE, Color.WHITE), 0.0d, 1.0d, new DefaultColorFactory(), Interpolations.LINEAR);
         assertNotNull(colorScheme);
         //assertEquals("name", colorScheme.getName());
         // out of bounds
@@ -152,8 +147,7 @@ public final class DiscreteColorSchemeTest
 
     public void testOddColorScheme()
     {
-        //ColorScheme colorScheme = new DiscreteColorScheme("name", createList(Color.BLACK, Color.RED, Color.WHITE), 0.0d, 1.0d, new DefaultColorFactory(), Interpolations.LINEAR);
-        ColorScheme colorScheme = new DiscreteColorScheme("name", newArrayList(Color.BLACK, Color.RED, Color.WHITE), 0.0d, 1.0d, new DefaultColorFactory(), Interpolations.LINEAR);
+        ColorScheme colorScheme = new DiscreteColorScheme("name", asList(Color.BLACK, Color.RED, Color.WHITE), 0.0d, 1.0d, new DefaultColorFactory(), Interpolations.LINEAR);
         assertNotNull(colorScheme);
         //assertEquals("name", colorScheme.getName());
         // out of bounds
@@ -171,7 +165,7 @@ public final class DiscreteColorSchemeTest
 
     public void testEvenDiscreteColorScheme()
     {
-        List<Color> colors = Arrays.asList(new Color[] { Color.WHITE, Color.BLACK });
+        List<Color> colors = asList(Color.WHITE, Color.BLACK);
         ColorFactory colorFactory = new DefaultColorFactory();
         DiscreteColorScheme colorScheme = new DiscreteColorScheme("color-scheme", colors, 0.0d, 1.0d, colorFactory, Interpolations.LINEAR);
         assertNotNull(colorScheme);
@@ -191,7 +185,7 @@ public final class DiscreteColorSchemeTest
 
     public void testOddDiscreteColorScheme()
     {
-        List<Color> colors = Arrays.asList(new Color[] { Color.WHITE, Color.RED, Color.BLACK });
+        List<Color> colors = asList(Color.WHITE, Color.RED, Color.BLACK);
         ColorFactory colorFactory = new DefaultColorFactory();
         DiscreteColorScheme colorScheme = new DiscreteColorScheme("color-scheme", colors, 0.0d, 1.0d, colorFactory, Interpolations.LINEAR);
         assertNotNull(colorScheme);
