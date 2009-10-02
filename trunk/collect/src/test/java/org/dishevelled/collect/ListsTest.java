@@ -44,6 +44,26 @@ public final class ListsTest
     extends TestCase
 {
 
+    public void testEmptyList()
+    {
+        List<String> empty = emptyList();
+        assertNotNull(empty);
+        assertTrue(empty.isEmpty());
+        assertEquals(0, empty.size());
+
+        empty.clear();
+        try
+        {
+            empty.add("foo");
+            fail("empty add expected UnsupportedOperationException");
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // expected
+        }
+        // TODO:  add'l assertions
+    }
+
     public void testAsList()
     {
         List<String> list0 = asList("foo");
