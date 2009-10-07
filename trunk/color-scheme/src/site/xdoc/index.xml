@@ -51,9 +51,9 @@ for a range of input values, <code>0.0d</code> to <code>1.0d</code>.
 </source>
 <p><object data="images/continuous-blues-4.svg" type="image/svg+xml" width="810" height="80"/></p>
 
-<p>A discrete color scheme returns only those colors defined in the color scheme.</p>
+<p>A discrete color scheme provides only those colors defined in the color scheme.</p>
 <source>
-// discrete accent color scheme, with seven colors, values interpolated linearly
+// discrete blues color scheme, with seven colors, values interpolated linearly
 <a href="apidocs/org/dishevelled/colorscheme/ColorScheme.html">ColorScheme</a> discreteBlues4 = <a href="apidocs/org/dishevelled/colorscheme/impl/ColorSchemes.html">ColorSchemes</a>.getDiscreteColorScheme("blues", 4, Interpolations.LINEAR);
 </source>
 <p><object data="images/discrete-blues-4.svg" type="image/svg+xml" width="810" height="80"/></p>

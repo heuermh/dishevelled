@@ -36,13 +36,13 @@ data values to dark colors for high data values.
 </p>
 <p>
 <a href="#Divergent">Divergent</a> schemes put equal emphasis on mid-range critical
-values and extremes at both ends of the data range.  The critical class or break in the middle of
-the legend is emphasized with light colors and low and high extremes are emphasized with dark
+values and extremes at both ends of the data range.  The critical value or break in the middle of
+the gradient is emphasized with light colors and low and high extremes are emphasized with dark
 colors that have contrasting hues.
 </p>
 <p>
 <a href="#Qualitative">Qualitative</a> schemes do not imply magnitude differences between
-legend classes, and hues are used to create the primary visual differences between classes.
+data ranges, and hues are used to create the primary visual differences between gradient colors.
 Qualitative schemes are best suited to representing nominal or categorical data.
 </p>
 
