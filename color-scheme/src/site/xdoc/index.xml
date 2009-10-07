@@ -31,14 +31,40 @@
 <section name="Summary">
 
 <p>
-dishevelled.org <b>color-scheme</b> provides color schemes.
-The color-scheme library requires java version 1.5 or later.
+dishevelled.org <b>color-scheme</b> provides color schemes, a means of mapping
+a range of numerical values to a discrete or continuous gradient of colors.  The color-scheme
+library requires java version 1.5 or later.
 </p>
+</section>
+
+<section name="Pre-defined color schemes">
+<p>
+The color-scheme library contains a suite of pre-defined color schemes, referenceable
+by name in discrete and continuous forms.  The images below show the gradient of colors
+for a range of input values, <code>0.0d</code> to <code>1.0d</code>.
+</p>
+
+<p>A continuous color scheme interpolates colors for all intermediate values.</p>
+<source>
+// continuous blues color scheme, with four colors, values interpolated linearly
+<a href="apidocs/org/dishevelled/colorscheme/ColorScheme.html">ColorScheme</a> continuousBlues4 = <a href="apidocs/org/dishevelled/colorscheme/impl/ColorSchemes.html">ColorSchemes</a>.getContinuousColorScheme("blues", 4, Interpolations.LINEAR);
+</source>
+<p><object data="images/continuous-blues-4.svg" type="image/svg+xml" width="810" height="80"/></p>
+
+<p>A discrete color scheme returns only those colors defined in the color scheme.</p>
+<source>
+// discrete accent color scheme, with seven colors, values interpolated linearly
+<a href="apidocs/org/dishevelled/colorscheme/ColorScheme.html">ColorScheme</a> discreteBlues4 = <a href="apidocs/org/dishevelled/colorscheme/impl/ColorSchemes.html">ColorSchemes</a>.getDiscreteColorScheme("blues", 4, Interpolations.LINEAR);
+</source>
+<p><object data="images/discrete-blues-4.svg" type="image/svg+xml" width="810" height="80"/></p>
+
+<p>A complete <a href="reference.html">color scheme reference</a> is available.  Color scheme
+names need to be converted to lowercase-with-dashes form before lookup where necessary, e.g. "RdYlBu" to "rd-yl-bu".</p>
 </section>
 
 <section name="Acknowledgements">
   <ul>
-    <li>This product includes color specifications and designs developed by Cynthia Brewer (http://colorbrewer.org/).</li>
+    <li>This product includes color specifications and designs developed by Cynthia Brewer (<a href="http://colorbrewer.org">http://colorbrewer.org/</a>).</li>
     <li>Powered by Apache <a href="http://maven.apache.org">Maven</a>.</li>
     <li>Project hosting by <a href="http://sourceforge.net">SourceForge.net</a>.</li>
   </ul>
