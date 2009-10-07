@@ -39,10 +39,10 @@ public interface ColorFactory
      * <code>green</code>, and <code>blue</code> color components in integer
      * format and <code>alpha</code> as a float.
      *
-     * @param red red integer color component, must be <code>0 lt;= red lt;= 255</code>
-     * @param green green integer color component, must be <code>0 lt;= green lt;= 255</code>
-     * @param blue blue integer color component, must be <code>0 lt;= blue lt;= 255</code>
-     * @param alpha alpha value, must be <code>0.0 lt;= alpha lt;= 1.0</code>
+     * @param red red integer color component, must be <code>0 &lt;= red &lt;= 255</code>
+     * @param green green integer color component, must be <code>0 &lt;= green &lt;= 255</code>
+     * @param blue blue integer color component, must be <code>0 &lt;= blue &lt;= 255</code>
+     * @param alpha alpha value, must be <code>0.0 &lt;= alpha &lt;= 1.0</code>
      * @return an instance of the colored specified by <code>red</code>,
      *    <code>green</code>, and <code>blue</code> color components in integer
      *    format and <code>alpha</code> as a float
