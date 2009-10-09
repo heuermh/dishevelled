@@ -59,7 +59,7 @@ for a range of input values, <code>0.0d</code> to <code>1.0d</code>.
 <p><object data="images/discrete-blues-4.svg" type="image/svg+xml" width="810" height="80"/></p>
 
 <p>A complete <a href="reference.html">color scheme reference</a> is available.  Color scheme
-names need to be converted to lowercase-with-dashes form before lookup where necessary, e.g. "RdYlBu" to "rd-yl-bu".</p>
+names must be converted to lowercase-with-dashes form before lookup, e.g. "RdYlBu" to "rd-yl-bu".</p>
 </section>
 
 <section name="Acknowledgements">
