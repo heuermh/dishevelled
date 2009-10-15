@@ -376,6 +376,10 @@ See <a href="http://colorbrewer.org">http://colorbrewer.org</a> for further deta
 <p><object data="images/continuous-br-b-g-11.svg" type="image/svg+xml" width="810" height="80"/></p>
 <p><object data="images/discrete-br-b-g-11.svg" type="image/svg+xml" width="810" height="80"/></p>
 </subsection>
+<subsection name="BuBlYl" id="bu-bl-yl">
+<p><object data="images/continuous-bu-bl-yl-3.svg" type="image/svg+xml" width="810" height="80"/></p>
+<p><object data="images/discrete-bu-bl-yl-3.svg" type="image/svg+xml" width="810" height="80"/></p>
+</subsection>
 <subsection name="BuWhRd" id="bu-wh-rd">
 <p><object data="images/continuous-bu-wh-rd-3.svg" type="image/svg+xml" width="810" height="80"/></p>
 <p><object data="images/discrete-bu-wh-rd-3.svg" type="image/svg+xml" width="810" height="80"/></p>
