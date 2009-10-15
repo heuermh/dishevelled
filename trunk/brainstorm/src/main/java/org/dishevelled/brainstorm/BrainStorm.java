@@ -25,13 +25,17 @@ package org.dishevelled.brainstorm;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Cursor;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GraphicsEnvironment;
 import java.awt.Paint;
+import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.Toolkit;
 
 import static java.awt.RenderingHints.*;
 
@@ -44,6 +48,8 @@ import java.awt.font.TextLayout;
 
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
+
+import java.awt.image.BufferedImage;
 
 import java.io.File;
 
@@ -63,9 +69,6 @@ import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
-
-import javax.swing.text.BadLocationException;
-import javax.swing.text.PlainDocument;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -96,6 +99,9 @@ public final class BrainStorm
     /** Text area. */
     private JTextArea textArea;
 
+    /** Hidden cursor. */
+    private Cursor hiddenCursor;
+
     /** Placeholder. */
     private Component placeholder;
 
@@ -121,6 +127,7 @@ public final class BrainStorm
     private void initComponents()
     {
         Font font = new Font(chooseFontName(), Font.PLAIN, 28);
+        hiddenCursor = createHiddenCursor();
         textArea = new JTextArea()
             {
                 /** {@inheritDoc} */
@@ -134,6 +141,7 @@ public final class BrainStorm
             };
         textArea.setFont(font);
         textArea.setOpaque(true);
+        textArea.setCursor(hiddenCursor);
         textArea.setBackground(Color.BLACK);
         textArea.setForeground(Color.LIGHT_GRAY);
         textArea.setRows(2);
@@ -314,6 +322,23 @@ public final class BrainStorm
         // empty
     }
 
+    /**
+     * Create and return a new hidden cursor, that is a fully transparent one pixel custom cursor.
+     *
+     * @return a new hidden cursor
+     */
+    private Cursor createHiddenCursor()
+    {
+        Toolkit toolkit = Toolkit.getDefaultToolkit();
+        Dimension size = toolkit.getBestCursorSize(1, 1);
+        BufferedImage image = new BufferedImage(size.width, size.height, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D graphics = image.createGraphics();
+        graphics.setBackground(new Color(0.0f, 0.0f, 0.0f, 0.0f));
+        graphics.clearRect(0, 0, size.width, size.height);
+        graphics.dispose();
+        return toolkit.createCustomCursor(image, new Point(0, 0), "hiddenCursor");
+    }
+
     /** {@inheritDoc} */
     public void paintComponent(final Graphics graphics)
     {
@@ -332,6 +357,10 @@ public final class BrainStorm
         f.getContentPane().add("Center", this);
         f.setResizable(false);
         f.setUndecorated(true);
+        // hide cursor on linux and windows platforms
+        f.setCursor(hiddenCursor);
+        // hide cursor on mac platform
+        System.setProperty("apple.awt.fullscreenhidecursor","true");
         GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().setFullScreenWindow(f);
         f.validate();
     }
