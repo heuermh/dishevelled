@@ -35,6 +35,7 @@ import java.util.Iterator;
 import java.util.Random;
 
 import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
@@ -68,6 +69,56 @@ public final class ParticleSystemActivityExample
 
     /** Source of randomness. */
     private final Random random;
+
+    /** Gravity action. */
+    private final Action gravity = new AbstractAction("Gravity")
+        {
+            /** {@inheritDoc} */
+            public void actionPerformed(final ActionEvent event)
+            {
+                gravity();
+            }
+        };
+
+    /** Anti-gravity action. */
+    private final Action antiGravity = new AbstractAction("Anti-gravity")
+        {
+            /** {@inheritDoc} */
+            public void actionPerformed(final ActionEvent event)
+            {
+                antiGravity();
+            }
+        };
+
+    /** Repulse action. */
+    private final Action repulse = new AbstractAction("Repulse")
+        {
+            /** {@inheritDoc} */
+            public void actionPerformed(final ActionEvent event)
+            {
+                repulse();
+            }
+        };
+
+    /** Attract action. */
+    private final Action attract = new AbstractAction("Attract")
+        {
+            /** {@inheritDoc} */
+            public void actionPerformed(final ActionEvent event)
+            {
+                attract();
+            }
+        };
+
+    /** Randomize action. */
+    private final Action randomize = new AbstractAction("Randomize")
+        {
+            /** {@inheritDoc} */
+            public void actionPerformed(final ActionEvent event)
+            {
+                randomize();
+            }
+        };
 
 
     /**
@@ -104,7 +155,6 @@ public final class ParticleSystemActivityExample
 
 
     // todo:  border at top of button panel
-    // todo:  pull out actions, disable the activity ones while any other one is running
 
     /**
      * Create and return a new button panel.
@@ -115,47 +165,36 @@ public final class ParticleSystemActivityExample
     {
         ButtonPanel buttonPanel = new ButtonPanel();
         buttonPanel.setBorder(new EmptyBorder(11, 11, 11, 11));
-        buttonPanel.add(new AbstractAction("Gravity")
-            {
-                /** {@inheritDoc} */
-                public void actionPerformed(final ActionEvent event)
-                {
-                    gravity();
-                }
-            });
-        buttonPanel.add(new AbstractAction("Anti-gravity")
-            {
-                /** {@inheritDoc} */
-                public void actionPerformed(final ActionEvent event)
-                {
-                    antiGravity();
-                }
-            });
-        buttonPanel.add(new AbstractAction("Repulse")
-            {
-                /** {@inheritDoc} */
-                public void actionPerformed(final ActionEvent event)
-                {
-                    repulse();
-                }
-            });
-        buttonPanel.add(new AbstractAction("Attract")
-            {
-                /** {@inheritDoc} */
-                public void actionPerformed(final ActionEvent event)
-                {
-                    attract();
-                }
-            });
-        buttonPanel.add(new AbstractAction("Randomize")
-            {
-                /** {@inheritDoc} */
-                public void actionPerformed(final ActionEvent event)
-                {
-                    randomize();
-                }
-            });
+        buttonPanel.add(gravity);
+        buttonPanel.add(antiGravity);
+        buttonPanel.add(repulse);
+        buttonPanel.add(attract);
+        buttonPanel.add(randomize);
         return buttonPanel;
+    }
+
+    /**
+     * Enable actions.
+     */
+    private void enableActions()
+    {
+        gravity.setEnabled(true);
+        antiGravity.setEnabled(true);
+        attract.setEnabled(true);
+        repulse.setEnabled(true);
+        randomize.setEnabled(true);
+    }
+
+    /**
+     * Disable actions.
+     */
+    private void disableActions()
+    {
+        gravity.setEnabled(false);
+        antiGravity.setEnabled(false);
+        attract.setEnabled(false);
+        repulse.setEnabled(false);
+        randomize.setEnabled(false);
     }
 
     /**
@@ -163,7 +202,17 @@ public final class ParticleSystemActivityExample
      */
     private void gravity()
     {
-        ParticleSystemActivity activity = new ParticleSystemActivity(5000L);
+        disableActions();
+
+        ParticleSystemActivity activity = new ParticleSystemActivity(5000L)
+            {
+                /** {@inheritDoc} */
+                protected void activityFinished()
+                {
+                    super.activityFinished();
+                    enableActions();
+                }
+            };
         activity.setGravity(0.04f);
         for (Iterator i = canvas.getLayer().getChildrenIterator(); i.hasNext(); )
         {
@@ -178,7 +227,17 @@ public final class ParticleSystemActivityExample
      */
     private void antiGravity()
     {
-        ParticleSystemActivity activity = new ParticleSystemActivity(5000L);
+        disableActions();
+
+        ParticleSystemActivity activity = new ParticleSystemActivity(5000L)
+            {
+                /** {@inheritDoc} */
+                protected void activityFinished()
+                {
+                    super.activityFinished();
+                    enableActions();
+                }
+            };
         activity.setGravity(-0.04f);
         for (Iterator i = canvas.getLayer().getChildrenIterator(); i.hasNext(); )
         {
@@ -193,9 +252,12 @@ public final class ParticleSystemActivityExample
      */
     private void repulse()
     {
-        // create invisible node at center
+        disableActions();
+
+        // create temporary node at center
         final PPath center = PPath.createEllipse(0.0f, 0.0f, 32.0f, 32.0f);
-        center.setPaint(Color.RED);
+        center.setPaint(new Color(180, 0, 0));
+        center.setStroke(null);
         center.setOffset(300.0d, 225.0d);
         canvas.getLayer().addChild(center);
 
@@ -206,6 +268,7 @@ public final class ParticleSystemActivityExample
                 {
                     super.activityFinished();
                     canvas.getLayer().removeChild(center);
+                    enableActions();
                 }
             };
         activity.setGravity(0.0f);
@@ -236,9 +299,12 @@ public final class ParticleSystemActivityExample
      */
     private void attract()
     {
-        // create invisible node at center
+        disableActions();
+
+        // create temporary node at center
         final PPath center = PPath.createEllipse(0.0f, 0.0f, 32.0f, 32.0f);
-        center.setPaint(Color.RED);
+        center.setPaint(new Color(180, 0, 0));
+        center.setStroke(null);
         center.setOffset(300.0d, 225.0d);
         canvas.getLayer().addChild(center);
 
@@ -249,6 +315,7 @@ public final class ParticleSystemActivityExample
                 {
                     super.activityFinished();
                     canvas.getLayer().removeChild(center);
+                    enableActions();
                 }
             };
         activity.setGravity(0.0f);
@@ -267,7 +334,7 @@ public final class ParticleSystemActivityExample
             PNode target = (PNode) i.next();
             if (!center.equals(target))
             {
-                activity.createAttraction(center, target, 300.0f, 30.0f);
+                activity.createAttraction(center, target, 400.0f, 30.0f);
             }
         }
 
