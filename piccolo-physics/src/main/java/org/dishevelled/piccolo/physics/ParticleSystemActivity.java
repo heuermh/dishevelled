@@ -35,9 +35,9 @@ import edu.umd.cs.piccolo.activities.PActivity;
 import edu.umd.cs.piccolo.util.PBounds;
 import edu.umd.cs.piccolo.util.PUtil;
 
-//import org.dishevelled.multimap.BinaryKeyMap;
+import org.dishevelled.multimap.BinaryKeyMap;
 
-//import org.dishevelled.multimap.impl.BinaryKeyHashMap;
+import org.dishevelled.multimap.impl.HashedBinaryKeyMap;
 
 import traer.physics.Attraction;
 import traer.physics.Particle;
@@ -57,13 +57,13 @@ public class ParticleSystemActivity
     private final ParticleSystem particleSystem;
 
     /** Map of attractions keyed by source and target nodes. */
-    //private final BinaryKeyMap<PNode, PNode, Attraction> attractions;
+    private final BinaryKeyMap<PNode, PNode, Attraction> attractions;
 
     /** Map of particles keyed by node. */
     private final Map<PNode, Particle> particles;
 
     /** Map of springs keyed by source and target nodes. */
-    //private final BinaryKeyMap<PNode, PNode, Spring> springs;
+    private final BinaryKeyMap<PNode, PNode, Spring> springs;
 
 
     /**
@@ -91,9 +91,9 @@ public class ParticleSystemActivity
             throw new IllegalArgumentException("duration must be at least 1 ms");
         }
         particleSystem = new ParticleSystem();
-        //attractions = new BinaryKeyHashMap<PNode, PNode, Particle>();
+        attractions = new HashedBinaryKeyMap<PNode, PNode, Attraction>();
         particles = new HashMap<PNode, Particle>();
-        //springs = new BinaryKeyHashMap<PNode, PNode, Particle>();
+        springs = new HashedBinaryKeyMap<PNode, PNode, Spring>();
     }
 
 
@@ -308,7 +308,7 @@ public class ParticleSystemActivity
                                                   strength,
                                                   damping,
                                                   restLength);
-        //springs.put(source, target, spring);
+        springs.put(source, target, spring);
     }
 
     /**
@@ -328,14 +328,12 @@ public class ParticleSystemActivity
         {
             throw new IllegalArgumentException("target node must not be null");
         }
-        /*
         if (!springs.containsKey(source, target))
         {
             throw new IllegalArgumentException("no spring exists between source node "
-            + source + " and target node " + target);
+                                               + source + " and target node " + target);
         }
         springs.get(source, target).turnOn();
-        */
     }
 
     /**
@@ -355,14 +353,12 @@ public class ParticleSystemActivity
         {
             throw new IllegalArgumentException("target node must not be null");
         }
-        /*
         if (!springs.containsKey(source, target))
         {
             throw new IllegalArgumentException("no spring exists between source node "
-            + source + " and target node " + target);
+                                               + source + " and target node " + target);
         }
         springs.get(source, target).turnOff();
-        */
     }
 
     /**
@@ -400,7 +396,7 @@ public class ParticleSystemActivity
                                                               particles.get(target),
                                                               strength,
                                                               minimumDistance);
-        //attractions.put(source, target, attraction);
+        attractions.put(source, target, attraction);
     }
 
     /**
@@ -420,14 +416,12 @@ public class ParticleSystemActivity
         {
             throw new IllegalArgumentException("target node must not be null");
         }
-        /*
         if (!attractions.containsKey(source, target))
         {
             throw new IllegalArgumentException("no attraction exists between source node "
-            + source + " and target node " + target);
+                                               + source + " and target node " + target);
         }
         attractions.get(source, target).turnOn();
-        */
     }
 
     /**
@@ -447,14 +441,12 @@ public class ParticleSystemActivity
         {
             throw new IllegalArgumentException("target node must not be null");
         }
-        /*
         if (!attractions.containsKey(source, target))
         {
             throw new IllegalArgumentException("no attraction exists between source node "
-            + source + " and target node " + target);
+                                               + source + " and target node " + target);
         }
         attractions.get(source, target).turnOff();
-        */
     }
 
     /**
@@ -488,9 +480,9 @@ public class ParticleSystemActivity
     {
         // todo:  is the call to super req'd?
         super.activityFinished();
-        //attractions.clear();
+        attractions.clear();
         particles.clear();
-        //springs.clear();
+        springs.clear();
         particleSystem.clear();
     }
 }
