@@ -83,6 +83,12 @@
   </build>
   <dependencies>
     <dependency>
+      <groupId>org.dishevelled</groupId>
+      <artifactId>dsh-multi-map</artifactId>
+      <version>1.0-SNAPSHOT</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
       <groupId>org.piccolo2d</groupId>
       <artifactId>piccolo2d-core</artifactId>
       <version>1.3-SNAPSHOT</version>
