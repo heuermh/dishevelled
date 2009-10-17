@@ -708,7 +708,6 @@ abstract class AbstractHashedMap<K, V>
     /**
      * Gets the entrySet view of the map.
      * Changes made to the view affect this map.
-     * To simply iterate through the entries, use {@link #mapIterator()}.
      *
      * @return the entrySet view
      */
@@ -793,7 +792,6 @@ abstract class AbstractHashedMap<K, V>
     /**
      * Gets the keySet view of the map.
      * Changes made to the view affect this map.
-     * To simply iterate through the keys, use {@link #mapIterator()}.
      *
      * @return the keySet view
      */
@@ -869,7 +867,6 @@ abstract class AbstractHashedMap<K, V>
     /**
      * Gets the values view of the map.
      * Changes made to the view affect this map.
-     * To simply iterate through the values, use {@link #mapIterator()}.
      *
      * @return the values view
      */
