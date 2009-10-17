@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<model>
+<project>
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.dishevelled</groupId>
   <artifactId>dsh-multi-map</artifactId>
@@ -44,20 +44,31 @@
   <licenses>
     <license>
       <name>GNU Lesser General Public License (LGPL)</name>
-      <url>http://www.gnu.org/copyleft/lesser.html</url>
+      <url>http://www.fsf.org/licensing/licenses/lgpl.html</url>
       <distribution>repo</distribution>
     </license>
   </licenses>
   <scm>
-    <connection>scm|svn|http://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/multi-map</connection>
-    <developerConnection>scm|svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/multi-map</developerConnection>
-    <url>http://svn.sourceforge.net/viewcvs.cgi/dishevelled/trunk/multi-map</url>
+    <connection>scm:svn|http://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/multi-map</connection>
+    <developerConnection>scm:svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/multi-map</developerConnection>
+    <url>http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/trunk/multi-map</url>
   </scm>
   <organization>
     <name>dishevelled.org</name>
     <url>http://www.dishevelled.org</url>
   </organization>
   <build>
+    <resources>
+      <resource>
+        <targetPath>META-INF</targetPath>
+        <filtering>false</filtering>
+        <directory>${basedir}</directory>
+        <includes>
+          <include>COPYING</include>
+          <include>COPYING.LESSER</include>
+        </includes>
+      </resource>
+    </resources>
     <pluginManagement>
       <plugins>
         <plugin>
@@ -91,13 +102,7 @@
         <artifactId>maven-javadoc-plugin</artifactId>
         <configuration>
           <!-- todo:  must manually update the copyright dates here -->
-          <bottom>Copyright (c) 2007 held jointly by the individual authors. Licensed under the &lt;a href="http://www.opensource.org/licenses/lgpl-license.php"&gt;GNU Lesser General Public License&lt;a&gt; (LGPL).</bottom>
-          <source>1.5</source>
-          <verbose>false</verbose>
-          <show>public</show>
-          <links>
-            <link>http://java.sun.com/j2se/1.5.0/docs/api</link>
-          </links>
+          <bottom>Copyright (c) 2007-2009 held jointly by the individual authors. Licensed under the &lt;a href="http://www.fsf.org/licensing/licenses/lgpl.html"&gt;GNU Lesser General Public License&lt;a&gt; (LGPL).</bottom>
         </configuration>
       </plugin>
       <plugin>
@@ -111,4 +116,4 @@
       </plugin>
     </plugins>
   </reporting>
-</model>
+</project>
