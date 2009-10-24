@@ -30,6 +30,9 @@ import java.awt.Paint;
 import java.awt.Stroke;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+
+import java.awt.geom.Point2D;
 
 import java.util.Iterator;
 import java.util.Random;
@@ -46,7 +49,15 @@ import edu.umd.cs.piccolo.PCanvas;
 import edu.umd.cs.piccolo.PLayer;
 import edu.umd.cs.piccolo.PNode;
 
+import edu.umd.cs.piccolo.activities.PActivity;
+import edu.umd.cs.piccolo.activities.PInterpolatingActivity;
+
+import edu.umd.cs.piccolo.event.PInputEvent;
+import edu.umd.cs.piccolo.event.PInputEventListener;
+import edu.umd.cs.piccolo.event.PBasicInputEventHandler;
+
 import edu.umd.cs.piccolo.nodes.PPath;
+import edu.umd.cs.piccolo.nodes.PText;
 
 import edu.umd.cs.piccolo.util.PPaintContext;
 
@@ -110,6 +121,16 @@ public final class ParticleSystemActivityExample
             }
         };
 
+    /** Input action. */
+    private final Action input = new AbstractAction("Input")
+        {
+            /** {@inheritDoc} */
+            public void actionPerformed(final ActionEvent event)
+            {
+                input();
+            }
+        };
+
     /** Randomize action. */
     private final Action randomize = new AbstractAction("Randomize")
         {
@@ -169,6 +190,7 @@ public final class ParticleSystemActivityExample
         buttonPanel.add(antiGravity);
         buttonPanel.add(repulse);
         buttonPanel.add(attract);
+        buttonPanel.add(input);
         buttonPanel.add(randomize);
         return buttonPanel;
     }
@@ -182,6 +204,7 @@ public final class ParticleSystemActivityExample
         antiGravity.setEnabled(true);
         attract.setEnabled(true);
         repulse.setEnabled(true);
+        input.setEnabled(true);
         randomize.setEnabled(true);
     }
 
@@ -194,6 +217,7 @@ public final class ParticleSystemActivityExample
         antiGravity.setEnabled(false);
         attract.setEnabled(false);
         repulse.setEnabled(false);
+        input.setEnabled(false);
         randomize.setEnabled(false);
     }
 
@@ -303,7 +327,7 @@ public final class ParticleSystemActivityExample
 
         // create temporary node at center
         final PPath center = PPath.createEllipse(0.0f, 0.0f, 32.0f, 32.0f);
-        center.setPaint(new Color(180, 0, 0));
+        center.setPaint(new Color(0, 180, 0));
         center.setStroke(null);
         center.setOffset(300.0d, 225.0d);
         canvas.getLayer().addChild(center);
@@ -338,6 +362,125 @@ public final class ParticleSystemActivityExample
             }
         }
 
+        canvas.getRoot().addActivity(activity);
+    }
+
+    /**
+     * Input.
+     */
+    private void input()
+    {
+        disableActions();
+
+        // create temporary node that follows mouse input
+        final PPath mouse = PPath.createEllipse(0.0f, 0.0f, 32.0f, 32.0f);
+        mouse.setPaint(new Color(0, 180, 0));
+        mouse.setStroke(null);
+        mouse.setOffset(300.0d, 185.0d);
+        canvas.getLayer().addChild(mouse);
+        final PInputEventListener mouseListener = new PBasicInputEventHandler()
+            {
+                /** {@inheritDoc} */
+                public void mouseMoved(final PInputEvent event)
+                {
+                    Point2D position = event.getPosition();
+                    mouse.setOffset(position.getX() - (mouse.getWidth() / 2.0d),
+                                    position.getY() - (mouse.getHeight() / 2.0d));
+                }
+            };
+        canvas.addInputEventListener(mouseListener);
+
+        // create temporary node that follows keyboard arrow key input
+        final PPath keys = PPath.createEllipse(0.0f, 0.0f, 32.0f, 32.0f);
+        keys.setPaint(new Color(180, 0, 0));
+        keys.setStroke(null);
+        keys.setOffset(300.0d, 265.0d);
+        canvas.getLayer().addChild(keys);
+        final PInputEventListener keysListener = new PBasicInputEventHandler()
+            {
+                /** {@inheritDoc} */
+                public void keyPressed(final PInputEvent event)
+                {
+                    switch (event.getKeyCode())
+                    {
+                    case KeyEvent.VK_RIGHT:
+                        keys.offset(20.0d, 0.0d);
+                        break;
+                    case KeyEvent.VK_LEFT:
+                        keys.offset(-20.0d, 0.0d);
+                        break;
+                    case KeyEvent.VK_UP:
+                        keys.offset(0.0d, -20.0d);
+                        break;
+                    case KeyEvent.VK_DOWN:
+                        keys.offset(0.0d, 20.0d);
+                        break;
+                    default:
+                        break;
+                    }
+                }
+            };
+        canvas.getRoot().getDefaultInputManager().setKeyboardFocus(keysListener);
+        keys.addInputEventListener(keysListener);
+
+        ParticleSystemActivity activity = new ParticleSystemActivity(10000L)
+            {
+                /** {@inheritDoc} */
+                protected void activityFinished()
+                {
+                    super.activityFinished();
+                    canvas.getLayer().removeChild(mouse);
+                    canvas.getLayer().removeChild(keys);
+                    canvas.removeInputEventListener(mouseListener);
+                    keys.removeInputEventListener(keysListener);
+                    enableActions();
+                }
+            };
+        activity.setGravity(0.0f);
+        for (Iterator i = canvas.getLayer().getChildrenIterator(); i.hasNext(); )
+        {
+            PNode node = (PNode) i.next();
+            activity.createParticle(node, 1.0f);
+        }
+
+        // clamp mouse and keys; this allows their
+        //    offsets to be translated into particle position
+        activity.clamp(mouse);
+        activity.clamp(keys);
+
+        // create attraction between mouse and other nodes
+        //    and repulsion between keys and other nodes
+        for (Iterator i = canvas.getLayer().getChildrenIterator(); i.hasNext(); )
+        {
+            PNode target = (PNode) i.next();
+            if (!mouse.equals(target) && !keys.equals(target))
+            {
+                activity.createAttraction(mouse, target, 200.0f, 30.0f);
+                activity.createAttraction(keys, target, -200.0f, 30.0f);
+            }
+        }
+
+        final PText instructions = new PText("Attract with mouse\nRepulse with arrow keys");
+        instructions.setOffset(500.0d - (instructions.getWidth() / 2.0d), 380.0d);
+        canvas.getLayer().addChild(instructions);
+
+        PActivity fade = new PInterpolatingActivity(500L, 20L, System.currentTimeMillis() + 4000L, -1, -1)
+            {
+                /** {@inheritDoc} */
+                public void setRelativeTargetValue(final float value) {
+                    instructions.setTransparency(1.0f - value);
+                }
+
+                /** {@inheritDoc} */
+                protected void activityFinished()
+                {
+                    super.activityFinished();
+                    canvas.getLayer().removeChild(instructions);
+                }
+            };
+
+        canvas.requestFocus();
+        canvas.getRoot().addActivity(fade);
         canvas.getRoot().addActivity(activity);
     }
 
