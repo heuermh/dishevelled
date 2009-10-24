@@ -465,7 +465,15 @@ public class ParticleSystemActivity
         {
             PNode node = entry.getKey();
             Particle particle = entry.getValue();
-            node.setOffset(particle.position().x(), particle.position().y());
+            if (particle.isFree())
+            {
+                node.setOffset(particle.position().x(), particle.position().y());
+            }
+            else
+            {
+                PBounds fullBounds = node.getFullBoundsReference();
+                particle.position().set((float) fullBounds.getX(), (float) fullBounds.getY(), 0.0f);
+            }
         }
     }
 
