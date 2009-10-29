@@ -232,7 +232,8 @@ public class ParticleSystemActivity
     /**
      * Clamp the velocity for the particle associated with the specified node
      * to <code>[0.0f, 0.0f]</code>.  A particle must have already been created
-     * for the specified node.
+     * for the specified node.  A clamped particle will receive updated position
+     * data from the full bounds of the specified node.
      *
      * @param node node, must not be null
      */
@@ -362,7 +363,7 @@ public class ParticleSystemActivity
     }
 
     /**
-     * Create a new attraction (or replusion) force between the specified source and target
+     * Create a new attraction (or repulsion) force between the specified source and target
      * nodes with the specified strength and minimum distance.  A particle must have already
      * been created for both the specified source and target nodes.
      *
@@ -465,6 +466,7 @@ public class ParticleSystemActivity
         {
             PNode node = entry.getKey();
             Particle particle = entry.getValue();
+            // todo:  use local bounds or full bounds?
             if (particle.isFree())
             {
                 node.setOffset(particle.position().x(), particle.position().y());
