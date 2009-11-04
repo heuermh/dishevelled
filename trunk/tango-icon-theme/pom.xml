@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <project>
   <modelVersion>4.0.0</modelVersion>
-  <groupId>org.freedesktop</groupId>
+  <groupId>org.freedesktop.tango</groupId>
   <artifactId>tango-icon-theme</artifactId>
   <packaging>jar</packaging>
   <name>freedesktop.org Tango icon theme</name>
