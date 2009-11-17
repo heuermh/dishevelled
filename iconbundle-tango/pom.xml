@@ -35,8 +35,8 @@
       <email>heuermh at users.sourceforge.net</email>
       <organization>dishevelled.org</organization>
       <roles>
-	<role>developer</role>
-	<role>project admin</role>
+        <role>developer</role>
+        <role>project admin</role>
       </roles>
       <timezone>6</timezone>
     </developer>
@@ -53,6 +53,12 @@
     <developerConnection>scm:svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/iconbundle-tango</developerConnection>
     <url>http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/trunk/iconbundle-tango</url>
   </scm>
+  <distributionManagement>
+    <site>
+      <id>dishevelled.sf.net</id>
+      <url>scp://shell.sourceforge.net/home/groups/d/di/dishevelled/htdocs/iconbundle-tango-${project.version}</url>
+    </site>
+  </distributionManagement>
   <organization>
     <name>dishevelled.org</name>
     <url>http://www.dishevelled.org</url>
