@@ -5,7 +5,7 @@
   <artifactId>dsh-vocabulary</artifactId>
   <packaging>jar</packaging>
   <name>dishevelled.org vocabulary</name>
-  <version>1.0-SNAPSHOT</version>
+  <version>1.1-SNAPSHOT</version>
   <description>A description of concepts and their relations in a domain.</description>
   <url>http://www.dishevelled.org/vocabulary</url>
   <inceptionYear>2002</inceptionYear>
