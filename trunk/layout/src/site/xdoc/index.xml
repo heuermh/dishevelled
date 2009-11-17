@@ -43,7 +43,7 @@ for the common case of two columns, one of labels and one of fields.
 </p>
 
 <p>
-A simple example:
+An example:
 <source>
 JPanel panel = new JPanel();
 LabelFieldLayout l = new LabelFieldLayout();
@@ -82,7 +82,10 @@ space left at the bottom of its container.  It can be either an empty
 component, such as <code>Box.createGlue()</code>, or a wide field,
 such as a <code>JList</code> in a <code>JScrollPane</code>:
 </p>
-<img src="images/gtk-look.png" alt="LabelFieldLayout example"/>
+
+<p>
+<img src="images/label-field-layout.png" alt="LabelFieldLayout example"/>
+</p>
 
 <p>
 See <a href="http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/trunk/layout-examples/src/main/java/org/dishevelled/layout/examples/LabelFieldLayoutExample.java?view=markup">LabelFieldLayoutExample.java</a> for a complete example.
@@ -98,6 +101,7 @@ methods to reduce the lines of code necessary to lay out components.  The exampl
 code above can be reduced to the following with LabelFieldPanel:
 </p>
 
+<p>
 <source>
 LabelFieldPanel panel = new LabelFieldPanel();
 panel.addField("Label label:", "Label field");
@@ -111,9 +115,37 @@ JList list = new JList(new Object[] { "Final field A",
                                       "Final field C" });
 panel.addFinalField(new JScrollPane(list));
 </source>
+</p>
 
 <p>
 See <a href="http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/trunk/layout-examples/src/main/java/org/dishevelled/layout/examples/LabelFieldPanelExample.java?view=markup">LabelFieldPanelExample.java</a> for a complete example.
+</p>
+</section>
+
+<section name="ButtonPanel">
+<p>
+<a href="apidocs/org/dishevelled/layout/ButtonPanel.html">ButtonPanel</a> is a JPanel whose layout manager is
+an instance of <a href="apidocs/org/dishevelled/layout/ButtonLayout.html">ButtonLayout</a>.  It overrides
+<code>add(JButton)</code> and <code>add(Action)</code> methods to provide appropriate spacing between
+adjacent buttons and between buttons and the sides of the container.
+</p>
+
+<p>
+<source>
+ButtonPanel buttonPanel = new ButtonPanel();
+buttonPanel.add(new JButton("Up"));
+buttonPanel.add(new JButton("Down"));
+buttonPanel.add(new AbstractAction("Left") { ... });
+buttonPanel.add(new AbstractAction("Right") { ... });
+</source>
+</p>
+
+<p>
+<img src="images/button-panel.png" alt="ButtonPanel example"/>
+</p>
+
+<p>
+See <a href="http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/trunk/layout-examples/src/main/java/org/dishevelled/layout/examples/ButtonPanelExample.java?view=markup">ButtonPanelExample.java</a> for a complete example.
 </p>
 </section>
 
