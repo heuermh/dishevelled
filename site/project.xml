@@ -58,5 +58,7 @@
     </developer>
   </developers>
 
-  <reports/>
+  <reports>
+    <report>maven-license-plugin</report>
+  </reports>
 </project>
