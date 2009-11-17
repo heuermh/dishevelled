@@ -53,6 +53,12 @@
     <developerConnection>scm:svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/piccolo-ease</developerConnection>
     <url>http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/trunk/piccolo-ease</url>
   </scm>
+  <distributionManagement>
+    <site>
+      <id>dishevelled.sf.net</id>
+      <url>scp://shell.sourceforge.net/home/groups/d/di/dishevelled/htdocs/piccolo-ease-${project.version}</url>
+    </site>
+  </distributionManagement>
   <organization>
     <name>dishevelled.org</name>
     <url>http://www.dishevelled.org</url>
@@ -91,7 +97,7 @@
     <dependency>
       <groupId>org.piccolo2d</groupId>
       <artifactId>piccolo2d-core</artifactId>
-      <version>1.2.1</version>
+      <version>1.3-SNAPSHOT</version>
       <scope>compile</scope>
     </dependency>
     <dependency>

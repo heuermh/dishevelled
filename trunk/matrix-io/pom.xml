@@ -53,6 +53,12 @@
     <developerConnection>scm:svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/matrix-io</developerConnection>
     <url>http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/trunk/matrix-io</url>
   </scm>
+  <distributionManagement>
+    <site>
+      <id>dishevelled.sf.net</id>
+      <url>scp://shell.sourceforge.net/home/groups/d/di/dishevelled/htdocs/matrix-io-${project.version}</url>
+    </site>
+  </distributionManagement>
   <organization>
     <name>dishevelled.org</name>
     <url>http://www.dishevelled.org</url>
