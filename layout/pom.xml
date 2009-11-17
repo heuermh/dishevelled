@@ -19,6 +19,12 @@
     <developerConnection>scm:svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/layout</developerConnection>
     <url>http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/trunk/layout</url>
   </scm>
+  <distributionManagement>
+    <site>
+      <id>dishevelled.sf.net</id>
+      <url>scp://shell.sourceforge.net/home/groups/d/di/dishevelled/htdocs/layout-${project.version}</url>
+    </site>
+  </distributionManagement>
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
