@@ -2,7 +2,7 @@
 <!--
 
     http://www.dishevelled.org site.
-    Copyright (c) 2003-2008 held jointly by the individual authors.
+    Copyright (c) 2003-2009 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
@@ -56,8 +56,23 @@ Runnable shell for the codegen library.<br/>
 </p>
 
 <p>
+Collection and map utility classes.<br/>
+&gt; <a href="collect">http://www.dishevelled.org/collect</a>
+</p>
+
+<p>
+Color schemes.<br/>
+&gt; <a href="color-scheme">http://www.dishevelled.org/color-scheme</a>
+</p>
+
+<p>
 Command line parser based on typed arguments.<br/>
 &gt; <a href="commandline">http://www.dishevelled.org/commandline</a>
+</p>
+
+<p>
+Interfaces for curating collections quickly.<br/>
+&gt; <a href="curate">http://www.dishevelled.org/curate</a>
 </p>
 
 <p>
@@ -101,8 +116,18 @@ Lightweight components for identifiable beans.<br/>
 </p>
 
 <p>
+Interpolation and easing functions.<br/>
+&gt; <a href="interpolate">http://www.dishevelled.org/interpolate</a>
+</p>
+
+<p>
 Layout managers for lightweight components.<br/>
 &gt; <a href="layout">http://www.dishevelled.org/layout</a>
+</p>
+
+<p>
+Multi-key map interfaces and implementation.<br/>
+&gt; <a href="multi-map">http://www.dishevelled.org/multi-map</a>
 </p>
 
 <p>
@@ -116,8 +141,18 @@ Observable decorators for graph interfaces.<br/>
 </p>
 
 <p>
+Piccolo2D easing activities and supporting classes.<br/>
+&gt; <a href="piccolo-ease">http://www.dishevelled.org/piccolo-ease</a>
+</p>
+
+<p>
 Piccolo2D nodes for identifiable beans.<br/>
 &gt; <a href="piccolo-identify">http://www.dishevelled.org/piccolo-identify</a>
+</p>
+
+<p>
+Piccolo2D particle system physics integration.<br/>
+&gt; <a href="piccolo-physics">http://www.dishevelled.org/piccolo-physics</a>
 </p>
 
 <p>
@@ -128,6 +163,11 @@ Piccolo2D ribbon nodes and supporting classes.<br/>
 <p>
 Piccolo2D sprite nodes and supporting classes.<br/>
 &gt; <a href="piccolo-sprite">http://www.dishevelled.org/piccolo-sprite</a>
+</p>
+
+<p>
+Piccolo2D state machine sprite and supporting classes.<br/>
+&gt; <a href="piccolo-state-machine-sprite">http://www.dishevelled.org/piccolo-state-machine-sprite</a>
 </p>
 
 <p>
@@ -152,7 +192,7 @@ Weighted map interface and implementation.<br/>
 </section>
 
 <section name="Metrics">
-  <script type="text/javascript" src="http://www.ohloh.net/projects/10932/widgets/project_cocomo"></script>
+  <script type="text/javascript" src="http://www.ohloh.net/p/10932/widgets/project_cocomo.xml"></script>
 </section>
 
 <section name="Acknowledgements">
