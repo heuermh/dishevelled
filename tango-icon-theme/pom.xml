@@ -21,6 +21,7 @@
   </organization>
   <scm>
     <connection>scm:cvs:pserver:anoncvs:@anoncvs.freedesktop.org:/cvs/tango:tango-icon-theme</connection>
+    <url>http://webcvs.freedesktop.org/tango/tango-icon-theme/</url>
   </scm>
   <build>
     <resources>
