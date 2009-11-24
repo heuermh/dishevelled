@@ -84,7 +84,7 @@
       <scope>compile</scope>
     </dependency>
     <dependency>
-      <groupId>org.freedesktop</groupId>
+      <groupId>org.freedesktop.tango</groupId>
       <artifactId>tango-icon-theme</artifactId>
       <version>0.8.90</version>
       <scope>runtime</scope>
