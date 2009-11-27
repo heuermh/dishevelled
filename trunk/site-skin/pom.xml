@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <project>
   <modelVersion>4.0.0</modelVersion>
-  <groupId>org.dishevelled</groupId>
+  <parent>
+    <groupId>org.dishevelled</groupId>
+    <artifactId>dsh-parent</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <relativePath>../parent/pom.xml</relativePath>
+  </parent>
   <artifactId>dsh-site-skin</artifactId>
   <packaging>jar</packaging>
   <name>dishevelled.org site-skin</name>
@@ -9,45 +14,6 @@
   <description>dishevelled.org maven 2 site plugin skin.</description>
   <url>http://www.dishevelled.org/site-skin</url>
   <inceptionYear>2006</inceptionYear>
-  <mailingLists>
-    <mailingList>
-      <name>dishevelled.org announce mailing list</name>
-      <subscribe>dishevelled-announce-subscribe@lists.sourceforge.net</subscribe>
-      <unsubscribe>dishevelled-announce-unsubscribe@lists.sourceforge.net</unsubscribe>
-    </mailingList>
-    <mailingList>
-      <name>dishevelled.org cvs commit mailing list</name>
-      <subscribe>dishevelled-cvs-subscribe@lists.sourceforge.net</subscribe>
-      <unsubscribe>dishevelled-cvs-unsubscribe@lists.sourceforge.net</unsubscribe>
-      <archive>http://sourceforge.net/mailarchive/forum.php?forum_id=46110</archive>
-    </mailingList>
-    <mailingList>
-      <name>dishevelled.org developer mailing list</name>
-      <subscribe>dishevelled-devel-subscribe@lists.sourceforge.net</subscribe>
-      <unsubscribe>dishevelled-devel-unsubscribe@lists.sourceforge.net</unsubscribe>
-      <archive>http://sourceforge.net/mailarchive/forum.php?forum_id=46111</archive>
-    </mailingList>
-  </mailingLists>
-  <developers>
-    <developer>
-      <id>heuermh</id>
-      <name>Michael L Heuer</name>
-      <email>heuermh at users.sourceforge.net</email>
-      <organization>dishevelled.org</organization>
-      <roles>
-	<role>developer</role>
-	<role>project admin</role>
-      </roles>
-      <timezone>6</timezone>
-    </developer>
-  </developers>
-  <licenses>
-    <license>
-      <name>GNU Lesser General Public License (LGPL)</name>
-      <url>http://www.fsf.org/licensing/licenses/lgpl.html</url>
-      <distribution>repo</distribution>
-    </license>
-  </licenses>
   <scm>
     <connection>scm:svn|http://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/site-skin</connection>
     <developerConnection>scm:svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/site-skin</developerConnection>
@@ -59,26 +25,4 @@
       <url>scp://shell.sourceforge.net/home/groups/d/di/dishevelled/htdocs/site-skin-${project.version}</url>
     </site>
   </distributionManagement>
-  <organization>
-    <name>dishevelled.org</name>
-    <url>http://www.dishevelled.org</url>
-  </organization>
-  <build>
-    <resources>
-      <resource>
-        <directory>src/main/resources</directory>
-        <filtering>false</filtering>
-      </resource>
-      <resource>
-        <targetPath>META-INF</targetPath>
-        <filtering>false</filtering>
-        <directory>${basedir}</directory>
-        <includes>
-          <include>COPYING</include>
-          <include>COPYING.LESSER</include>
-        </includes>
-      </resource>
-    </resources>
-  </build>
-  <dependencies/>
 </project>
