@@ -100,7 +100,7 @@ public final class EasingActivityExample
         layer.addChild(label);
         layer.addChild(currentEasingFunction);
 
-        Timer t = new Timer(6000L, new ActionListener()
+        Timer t = new Timer(6000, new ActionListener()
             {
                 /** Easing function index. */
                 private int index = 0;
@@ -120,7 +120,7 @@ public final class EasingActivityExample
                     }
                 }
             });
-        t.setInitialDelay(2500L);
+        t.setInitialDelay(2500);
         t.setRepeats(true);
         t.start();
 
