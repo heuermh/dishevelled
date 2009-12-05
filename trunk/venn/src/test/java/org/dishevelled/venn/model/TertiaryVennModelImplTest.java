@@ -1,6 +1,6 @@
 /*
 
-    dsh-venn  Models for venn diagrams.
+    dsh-venn  Lightweight components for venn diagrams.
     Copyright (c) 2009 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
@@ -21,12 +21,13 @@
     > http://www.opensource.org/licenses/lgpl-license.php
 
 */
-package org.dishevelled.venn.impl;
+package org.dishevelled.venn.model;
 
 import java.util.Set;
 
 import org.dishevelled.venn.AbstractTertiaryVennModelTest;
 import org.dishevelled.venn.TertiaryVennModel;
+import org.dishevelled.venn.model.TertiaryVennModelImpl;
 
 /**
  * Unit test for TertiaryVennModelImpl.
