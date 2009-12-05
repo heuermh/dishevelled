@@ -82,9 +82,9 @@ public interface TertiaryVennModel<E>
      * the two specified sets from this tertiary venn model.
      *
      * @param a first set to intersect, must be one of {@link #list0()},
-     *    {@link #list1()}, or {@link #link2()}
+     *    {@link #list1()}, or {@link #list2()}
      * @param b second set to intersect, must be one of {@link #list0()},
-     *    {@link #list1()}, or {@link #link2()}
+     *    {@link #list1()}, or {@link #list2()}
      * @return an immutable observable list view of the intersection of
      *    the the two specified sets from this tertiary venn model
      */
@@ -104,9 +104,9 @@ public interface TertiaryVennModel<E>
      * the two specified sets from this tertiary venn model.
      *
      * @param a first set to union, must be one of {@link #list0()},
-     *    {@link #list1()}, or {@link #link2()}
+     *    {@link #list1()}, or {@link #list2()}
      * @param b second set to union, must be one of {@link #list0()},
-     *    {@link #list1()}, or {@link #link2()}
+     *    {@link #list1()}, or {@link #list2()}
      * @return an immutable observable list view of the union of
      *    the two specified sets from this tertiary venn model
      */
