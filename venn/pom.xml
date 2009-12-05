@@ -11,7 +11,7 @@
   <packaging>jar</packaging>
   <name>dishevelled.org venn</name>
   <version>1.0-SNAPSHOT</version>
-  <description>Models for venn diagrams.</description>
+  <description>Lightweight components for venn diagrams.</description>
   <url>http://www.dishevelled.org/venn</url>
   <inceptionYear>2009</inceptionYear>
   <scm>
