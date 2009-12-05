@@ -41,49 +41,49 @@ public final class TertiaryVennModelImplTest
 
     /** {@inheritDoc} */
     protected <T> TertiaryVennModel<T> createTertiaryVennModel(final Set<? extends T> set0,
-							       final Set<? extends T> set1,
-							       final Set<? extends T> set2)
+            final Set<? extends T> set1,
+            final Set<? extends T> set2)
     {
-	return new TertiaryVennModelImpl(set0, set1, set2);
+        return new TertiaryVennModelImpl<T>(set0, set1, set2);
     }
 
     public void testConstructor()
     {
-	try
+        try
         {
-	    new TertiaryVennModelImpl(null, SET1, SET2);
-	    fail("ctr(null,,) expected IllegalArgumentException");
+            new TertiaryVennModelImpl<String>(null, SET1, SET2);
+            fail("ctr(null,,) expected IllegalArgumentException");
         }
-	catch (IllegalArgumentException e)
+        catch (IllegalArgumentException e)
         {
-	    // expected
+            // expected
         }
-	try
+        try
         {
-	    new TertiaryVennModelImpl(SET0, null, SET2);
-	    fail("ctr(,null,) expected IllegalArgumentException");
+            new TertiaryVennModelImpl<String>(SET0, null, SET2);
+            fail("ctr(,null,) expected IllegalArgumentException");
         }
-	catch (IllegalArgumentException e)
+        catch (IllegalArgumentException e)
         {
-	    // expected
+            // expected
         }
-	try
+        try
         {
-	    new TertiaryVennModelImpl(SET0, SET1, null);
-	    fail("ctr(,,null) expected IllegalArgumentException");
+            new TertiaryVennModelImpl<String>(SET0, SET1, null);
+            fail("ctr(,,null) expected IllegalArgumentException");
         }
-	catch (IllegalArgumentException e)
+        catch (IllegalArgumentException e)
         {
-	    // expected
+            // expected
         }
-	try
+        try
         {
-	    new TertiaryVennModelImpl(null, null, null);
-	    fail("ctr(null, null, null) expected IllegalArgumentException");
+            new TertiaryVennModelImpl<String>(null, null, null);
+            fail("ctr(null, null, null) expected IllegalArgumentException");
         }
-	catch (IllegalArgumentException e)
+        catch (IllegalArgumentException e)
         {
-	    // expected
+            // expected
         }
     }
 }

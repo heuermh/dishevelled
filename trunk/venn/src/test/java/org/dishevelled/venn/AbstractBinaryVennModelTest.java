@@ -41,10 +41,10 @@ public abstract class AbstractBinaryVennModelTest
     extends TestCase
 {
     /** First set. */
-    protected static final Set<String> SET0 = new HashSet(Arrays.asList(new String[] { "foo", "bar" }));
+    protected static final Set<String> SET0 = new HashSet<String>(Arrays.asList(new String[] { "foo", "bar" }));
 
     /** Second set. */
-    protected static final Set<String> SET1 = new HashSet(Arrays.asList(new String[] { "bar", "baz", "qux" }));
+    protected static final Set<String> SET1 = new HashSet<String>(Arrays.asList(new String[] { "bar", "baz", "qux" }));
 
 
     /**
@@ -60,98 +60,98 @@ public abstract class AbstractBinaryVennModelTest
 
     public void testCreateBinaryVennModel()
     {
-	BinaryVennModel<String> binaryVennModel = createBinaryVennModel(SET0, SET1);
-	assertNotNull(binaryVennModel);
+        BinaryVennModel<String> binaryVennModel = createBinaryVennModel(SET0, SET1);
+        assertNotNull(binaryVennModel);
     }
 
     public void testList0()
     {
-	BinaryVennModel<String> binaryVennModel = createBinaryVennModel(SET0, SET1);
-	EventList<String> list0 = binaryVennModel.list0();
-	assertNotNull(list0);
-	assertEquals(2, list0.size());
-	assertTrue(list0.contains("foo"));
-	assertTrue(list0.contains("bar"));
+        BinaryVennModel<String> binaryVennModel = createBinaryVennModel(SET0, SET1);
+        EventList<String> list0 = binaryVennModel.list0();
+        assertNotNull(list0);
+        assertEquals(2, list0.size());
+        assertTrue(list0.contains("foo"));
+        assertTrue(list0.contains("bar"));
 
-	list0.add("garply");
-	assertEquals(3, list0.size());
-	assertTrue(list0.contains("garply"));
+        list0.add("garply");
+        assertEquals(3, list0.size());
+        assertTrue(list0.contains("garply"));
 
-	list0.remove("garply");
-	assertEquals(2, list0.size());
-	assertFalse(list0.contains("garply"));
+        list0.remove("garply");
+        assertEquals(2, list0.size());
+        assertFalse(list0.contains("garply"));
     }
 
     public void testList1()
     {
-	BinaryVennModel<String> binaryVennModel = createBinaryVennModel(SET0, SET1);
-	EventList<String> list1 = binaryVennModel.list1();
-	assertNotNull(list1);
-	assertEquals(3, list1.size());
-	assertTrue(list1.contains("bar"));
-	assertTrue(list1.contains("baz"));
-	assertTrue(list1.contains("qux"));
+        BinaryVennModel<String> binaryVennModel = createBinaryVennModel(SET0, SET1);
+        EventList<String> list1 = binaryVennModel.list1();
+        assertNotNull(list1);
+        assertEquals(3, list1.size());
+        assertTrue(list1.contains("bar"));
+        assertTrue(list1.contains("baz"));
+        assertTrue(list1.contains("qux"));
 
-	list1.add("garply");
-	assertEquals(4, list1.size());
-	assertTrue(list1.contains("garply"));
+        list1.add("garply");
+        assertEquals(4, list1.size());
+        assertTrue(list1.contains("garply"));
 
-	list1.remove("garply");
-	assertEquals(3, list1.size());
-	assertFalse(list1.contains("garply"));
+        list1.remove("garply");
+        assertEquals(3, list1.size());
+        assertFalse(list1.contains("garply"));
     }
 
     public void testIntersection()
     {
-	BinaryVennModel<String> binaryVennModel = createBinaryVennModel(SET0, SET1);
-	EventList<String> intersection = binaryVennModel.intersection();
-	assertNotNull(intersection);
-	assertEquals(1, intersection.size());
-	assertTrue(intersection.contains("bar"));
+        BinaryVennModel<String> binaryVennModel = createBinaryVennModel(SET0, SET1);
+        EventList<String> intersection = binaryVennModel.intersection();
+        assertNotNull(intersection);
+        assertEquals(1, intersection.size());
+        assertTrue(intersection.contains("bar"));
 
-	binaryVennModel.list0().add("garply");
-	binaryVennModel.list1().add("garply");
-	assertEquals(2, intersection.size());
-	assertTrue(intersection.contains("garply"));
+        binaryVennModel.list0().add("garply");
+        binaryVennModel.list1().add("garply");
+        assertEquals(2, intersection.size());
+        assertTrue(intersection.contains("garply"));
 
-	binaryVennModel.list0().remove("garply");
-	binaryVennModel.list1().remove("garply");
-	assertEquals(1, intersection.size());
-	assertFalse(intersection.contains("garply"));
-   }
+        binaryVennModel.list0().remove("garply");
+        binaryVennModel.list1().remove("garply");
+        assertEquals(1, intersection.size());
+        assertFalse(intersection.contains("garply"));
+    }
 
     public void testIntersectionIsImmutable()
     {
-	// todo
+        // todo
     }
 
     public void testUnion()
     {
-	BinaryVennModel<String> binaryVennModel = createBinaryVennModel(SET0, SET1);
-	EventList<String> union = binaryVennModel.union();
-	assertNotNull(union);
-	assertEquals(5, union.size());
-	assertTrue(union.contains("foo"));
-	assertTrue(union.contains("bar"));
-	assertTrue(union.contains("baz"));
-	assertTrue(union.contains("qux"));
+        BinaryVennModel<String> binaryVennModel = createBinaryVennModel(SET0, SET1);
+        EventList<String> union = binaryVennModel.union();
+        assertNotNull(union);
+        assertEquals(5, union.size());
+        assertTrue(union.contains("foo"));
+        assertTrue(union.contains("bar"));
+        assertTrue(union.contains("baz"));
+        assertTrue(union.contains("qux"));
 
-	binaryVennModel.list0().add("garply");
-	assertEquals(6, union.size());
-	assertTrue(union.contains("garply"));
+        binaryVennModel.list0().add("garply");
+        assertEquals(6, union.size());
+        assertTrue(union.contains("garply"));
 
-	binaryVennModel.list1().add("garply");
-	assertEquals(7, union.size());
-	assertTrue(union.contains("garply"));
+        binaryVennModel.list1().add("garply");
+        assertEquals(7, union.size());
+        assertTrue(union.contains("garply"));
 
-	binaryVennModel.list0().remove("garply");
-	binaryVennModel.list1().remove("garply");
-	assertEquals(5, union.size());
-	assertFalse(union.contains("garply"));
+        binaryVennModel.list0().remove("garply");
+        binaryVennModel.list1().remove("garply");
+        assertEquals(5, union.size());
+        assertFalse(union.contains("garply"));
     }
 
     public void testUnionIsImmutable()
     {
-	// todo
+        // todo
     }
 }

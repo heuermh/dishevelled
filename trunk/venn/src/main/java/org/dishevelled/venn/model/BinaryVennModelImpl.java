@@ -66,60 +66,60 @@ public final class BinaryVennModelImpl<E>
      */
     public BinaryVennModelImpl(final Set<? extends E> set0, final Set<? extends E> set1)
     {
-	if (set0 == null)
+        if (set0 == null)
         {
             throw new IllegalArgumentException("set0 must not be null");
         }
-	if (set1 == null)
+        if (set1 == null)
         {
             throw new IllegalArgumentException("set1 must not be null");
         }
 
-	CompositeList<E> composite = new CompositeList<E>();
+        CompositeList<E> composite = new CompositeList<E>();
         list0 = composite.createMemberList();
-	composite.addMemberList(list0);
-	list1 = composite.createMemberList();
-	composite.addMemberList(list1);
+        composite.addMemberList(list0);
+        list1 = composite.createMemberList();
+        composite.addMemberList(list1);
 
         list0.addAll(set0);
-	list1.addAll(set1);
+        list1.addAll(set1);
 
-	FilterList<E> filter = new FilterList<E>(composite, new Matcher<E>()
-	    {
-		/** {@inheritDoc} */
+        FilterList<E> filter = new FilterList<E>(composite, new Matcher<E>()
+            {
+                /** {@inheritDoc} */
                 public boolean matches(final E item)
                 {
-	            return list0.contains(item) && list1.contains(item);
-		}
-	    });
-	UniqueList<E> unique = new UniqueList<E>(filter);
+                    return list0.contains(item) && list1.contains(item);
+                }
+            });
+        UniqueList<E> unique = new UniqueList<E>(filter);
 
-	union = GlazedLists.readOnlyList(composite);
-	intersection = GlazedLists.readOnlyList(unique);
+        union = GlazedLists.readOnlyList(composite);
+        intersection = GlazedLists.readOnlyList(unique);
     }
 
 
     /** {@inheritDoc} */
     public EventList<E> list0()
     {
-	return list0;
+        return list0;
     }
 
     /** {@inheritDoc} */
     public EventList<E> list1()
     {
-	return list1;
+        return list1;
     }
 
     /** {@inheritDoc} */
     public EventList<E> intersection()
     {
-	return intersection;
+        return intersection;
     }
 
     /** {@inheritDoc} */
     public EventList<E> union()
     {
-	return union;
+        return union;
     }
 }
