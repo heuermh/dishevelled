@@ -23,12 +23,10 @@
 */
 package org.dishevelled.venn.swing;
 
-import java.awt.BorderLayout;
-
 import java.util.List;
+import java.util.Set;
 
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 
 import ca.odell.glazedlists.event.ListEvent;
 import ca.odell.glazedlists.event.ListEventListener;
@@ -36,6 +34,8 @@ import ca.odell.glazedlists.event.ListEventListener;
 import org.dishevelled.layout.LabelFieldPanel;
 
 import org.dishevelled.venn.BinaryVennModel;
+
+import org.dishevelled.venn.model.BinaryVennModelImpl;
 
 /**
  * Binary venn diagram label.
@@ -45,19 +45,38 @@ import org.dishevelled.venn.BinaryVennModel;
  * @version $Revision$ $Date$
  */
 public final class BinaryVennLabel<E>
-    extends JPanel
+    extends LabelFieldPanel
 {
     /** Binary venn model. */
     private BinaryVennModel<E> model;
 
+    // todo:  list vs. set in this class?
+    /** Label text for the first list. */
+    private String list0LabelText = DEFAULT_LIST0_LABEL_TEXT;
+
+    /** Label text for the second list. */
+    private String list1LabelText = DEFAULT_LIST1_LABEL_TEXT;
+
+    /** Label text for the intersection. */
+    private String intersectionLabelText = DEFAULT_INTERSECTION_LABEL_TEXT;
+
+    /** Label text for the union. */
+    private String unionLabelText = DEFAULT_UNION_LABEL_TEXT;
+
+    /** True if labels should display sizes. */
+    private static final boolean SHOW_SIZES = true;
+
+    /** Number of list elements to display. */
+    private static final int LIST_ELEMENTS_TO_DISPLAY = 5;
+
     /** Label for the first list. */
-    private final JLabel label0;
+    private final JLabel list0Label;
 
     /** Contents of the first list. */
     private final JLabel list0;
 
     /** Label for the second list. */
-    private final JLabel label1;
+    private final JLabel list1Label;
 
     /** Contents of the second list. */
     private final JLabel list1;
@@ -74,6 +93,18 @@ public final class BinaryVennLabel<E>
     /** Contents of the union. */
     private final JLabel union;
 
+    /** Default label text for the first list, <code>"First set"</code>. */
+    public static final String DEFAULT_LIST0_LABEL_TEXT = "First set";
+
+    /** Default label text for the second list, <code>"Second set"</code>. */
+    public static final String DEFAULT_LIST1_LABEL_TEXT = "Second set";
+
+    /** Default label text for the intersection, <code>"Intersection"</code>. */
+    public static final String DEFAULT_INTERSECTION_LABEL_TEXT = "Intersection";
+
+    /** Default label text for the union, <code>"Union"</code>. */
+    public static final String DEFAULT_UNION_LABEL_TEXT = "Union";
+
 
     /**
      * Create a new binary venn label with the specified model.
@@ -83,17 +114,15 @@ public final class BinaryVennLabel<E>
     public BinaryVennLabel(final BinaryVennModel<E> model)
     {
         super();
-        setLayout(new BorderLayout());
-
         if (model == null)
         {
             throw new IllegalArgumentException("model must not be null");
         }
         this.model = model;
 
-        label0 = new JLabel();
+        list0Label = new JLabel();
         list0 = new JLabel();
-        label1 = new JLabel();
+        list1Label = new JLabel();
         list1 = new JLabel();
         intersectionLabel = new JLabel();
         intersection = new JLabel();
@@ -106,6 +135,37 @@ public final class BinaryVennLabel<E>
     }
 
     /**
+     * Create a new binary venn label with the specified model.
+     *
+     * @param list0LabelText label text for the first list
+     * @param set0 first set, must not be null
+     * @param list1LabelText label text for the second list
+     * @param set1 second set, must not be null
+     */
+    public BinaryVennLabel(final String list0LabelText, final Set<? extends E> set0,
+            final String list1LabelText, final Set<? extends E> set1)
+    {
+        super();
+        this.model = new BinaryVennModelImpl<E>(set0, set1);
+
+        this.list0LabelText = list0LabelText;
+        this.list1LabelText = list1LabelText;
+        list0Label = new JLabel();
+        list0 = new JLabel();
+        list1Label = new JLabel();
+        list1 = new JLabel();
+        intersectionLabel = new JLabel();
+        intersection = new JLabel();
+        unionLabel = new JLabel();
+        union = new JLabel();
+
+        installListeners();
+        initLabels();
+        layoutComponents();
+    }
+
+
+    /**
      * Install listeners.
      */
     private void installListeners()
@@ -115,7 +175,7 @@ public final class BinaryVennLabel<E>
                 /** {@inheritDoc} */
                 public void listChanged(final ListEvent<E> event)
                 {
-                    label0.setText(buildLabel("First set (", event.getSourceList().size(), "):"));
+                    list0Label.setText(buildLabel(list0LabelText, event.getSourceList().size()));
                     list0.setText(buildContent(event.getSourceList()));
                 }
             });
@@ -125,7 +185,7 @@ public final class BinaryVennLabel<E>
                 /** {@inheritDoc} */
                 public void listChanged(final ListEvent<E> event)
                 {
-                    label1.setText(buildLabel("Second set (", event.getSourceList().size(), "):"));
+                    list1Label.setText(buildLabel(list1LabelText, event.getSourceList().size()));
                     list1.setText(buildContent(event.getSourceList()));
                 }
             });
@@ -135,7 +195,7 @@ public final class BinaryVennLabel<E>
                 /** {@inheritDoc} */
                 public void listChanged(final ListEvent<E> event)
                 {
-                    intersectionLabel.setText(buildLabel("Intersection (", event.getSourceList().size(), "):"));
+                    intersectionLabel.setText(buildLabel(intersectionLabelText, event.getSourceList().size()));
                     intersection.setText(buildContent(event.getSourceList()));
                 }
             });
@@ -145,7 +205,7 @@ public final class BinaryVennLabel<E>
                 /** {@inheritDoc} */
                 public void listChanged(final ListEvent<E> event)
                 {
-                    unionLabel.setText(buildLabel("Union (", event.getSourceList().size(), "):"));
+                    unionLabel.setText(buildLabel(unionLabelText, event.getSourceList().size()));
                     union.setText(buildContent(event.getSourceList()));
                 }
             });
@@ -156,13 +216,13 @@ public final class BinaryVennLabel<E>
      */
     private void initLabels()
     {
-        label0.setText(buildLabel("First set (", model.list0().size(), "):"));
+        list0Label.setText(buildLabel(list0LabelText, model.list0().size()));
         list0.setText(buildContent(model.list0()));
-        label1.setText(buildLabel("Second set (", model.list1().size(), "):"));
+        list1Label.setText(buildLabel(list1LabelText, model.list1().size()));
         list1.setText(buildContent(model.list1()));
-        intersectionLabel.setText(buildLabel("Intersection (", model.intersection().size(), "):"));
+        intersectionLabel.setText(buildLabel(intersectionLabelText, model.intersection().size()));
         intersection.setText(buildContent(model.intersection()));
-        unionLabel.setText(buildLabel("Union (", model.union().size(), "):"));
+        unionLabel.setText(buildLabel(unionLabelText, model.union().size()));
         union.setText(buildContent(model.union()));
     }
 
@@ -171,13 +231,11 @@ public final class BinaryVennLabel<E>
      */
     private void layoutComponents()
     {
-        LabelFieldPanel panel = new LabelFieldPanel();
-        panel.addField(label0, list0);
-        panel.addField(label1, list1);
-        panel.addField(intersectionLabel, intersection);
-        panel.addField(unionLabel, union);
-        panel.addFinalSpacing();
-        add("Center", panel);
+        addField(list0Label, list0);
+        addField(list1Label, list1);
+        addField(intersectionLabel, intersection);
+        addField(unionLabel, union);
+        addFinalSpacing();
     }
 
     /**
@@ -188,12 +246,17 @@ public final class BinaryVennLabel<E>
      * @param suffix suffix
      * @return label text
      */
-    private static String buildLabel(final String prefix, final int size, final String suffix)
+    private String buildLabel(final String labelText, final int size)
     {
         StringBuilder sb = new StringBuilder();
-        sb.append(prefix);
-        sb.append(size);
-        sb.append(suffix);
+        sb.append(labelText);
+        if (SHOW_SIZES)
+        {
+            sb.append(" (");
+            sb.append(size);
+            sb.append(")");
+        }
+        sb.append(":");
         return sb.toString();
     }
 
@@ -211,15 +274,115 @@ public final class BinaryVennLabel<E>
         }
         StringBuilder sb = new StringBuilder();
         sb.append(list.get(0).toString());
-        for (int i = 1, size = Math.min(5, list.size()); i < size; i++)
+        for (int i = 1, size = Math.min(LIST_ELEMENTS_TO_DISPLAY, list.size()); i < size; i++)
         {
             sb.append(", ");
             sb.append(list.get(i).toString());
         }
-        if (list.size() > 5)
+        if (list.size() > LIST_ELEMENTS_TO_DISPLAY)
         {
             sb.append(", ...");
         }
         return sb.toString();
+    }
+
+    /**
+     * Return the label text for the first list.  Defaults to {@link #DEFAULT_LIST0_LABEL_TEXT}.
+     *
+     * @return the label text for the first list
+     */
+    public String getList0LabelText()
+    {
+        return list0LabelText;
+    }
+
+    /**
+     * Set the label text for the first list to <code>list0LabelText</code>.
+     *
+     * <p>This is a bound property.</p>
+     *
+     * @param list0LabelText label text for the first list
+     */
+    public void setList0LabelText(final String list0LabelText)
+    {
+        String oldList0LabelText = this.list0LabelText;
+        this.list0LabelText = list0LabelText;
+        list0Label.setText(buildLabel(this.list0LabelText, model.list0().size()));
+        firePropertyChange("list0LabelText", this.list0LabelText, oldList0LabelText);
+    }
+
+    /**
+     * Return the label text for the second list.  Defaults to {@link #DEFAULT_LIST1_LABEL_TEXT}.
+     *
+     * @return the label text for the second list
+     */
+    public String getList1LabelText()
+    {
+        return list1LabelText;
+    }
+
+    /**
+     * Set the label text for the second list to <code>list1LabelText</code>.
+     *
+     * <p>This is a bound property.</p>
+     *
+     * @param list1LabelText label text for the second list
+     */
+    public void setList1LabelText(final String list1LabelText)
+    {
+        String oldList1LabelText = this.list1LabelText;
+        this.list1LabelText = list1LabelText;
+        list1Label.setText(buildLabel(this.list1LabelText, model.list1().size()));
+        firePropertyChange("list1LabelText", this.list1LabelText, oldList1LabelText);
+    }
+
+    /**
+     * Return the label text for the intersection.  Defaults to {@link #DEFAULT_INTERSECTION_LABEL_TEXT}.
+     *
+     * @return the label text for the intersection
+     */
+    public String getIntersectionLabelText()
+    {
+        return intersectionLabelText;
+    }
+
+    /**
+     * Set the label text for the intersection to <code>intersectionLabelText</code>.
+     *
+     * <p>This is a bound property.</p>
+     *
+     * @param intersectionLabelText label text for the intersection
+     */
+    public void setIntersectionLabelText(final String intersectionLabelText)
+    {
+        String oldIntersectionLabelText = this.intersectionLabelText;
+        this.intersectionLabelText = intersectionLabelText;
+        intersectionLabel.setText(buildLabel(this.intersectionLabelText, model.intersection().size()));
+        firePropertyChange("intersectionLabelText", this.intersectionLabelText, oldIntersectionLabelText);
+    }
+
+    /**
+     * Return the label text for the union.  Defaults to {@link #DEFAULT_UNION_LABEL_TEXT}.
+     *
+     * @return the label text for the union
+     */
+    public String getUnionLabelText()
+    {
+        return unionLabelText;
+    }
+
+    /**
+     * Set the label text for the union to <code>unionLabelText</code>.
+     *
+     * <p>This is a bound property.</p>
+     *
+     * @param unionLabelText label text for the union
+     */
+    public void setUnionLabelText(final String unionLabelText)
+    {
+        String oldUnionLabelText = this.unionLabelText;
+        this.unionLabelText = unionLabelText;
+        unionLabel.setText(buildLabel(this.unionLabelText, model.union().size()));
+        firePropertyChange("unionLabelText", this.unionLabelText, oldUnionLabelText);
     }
 }
