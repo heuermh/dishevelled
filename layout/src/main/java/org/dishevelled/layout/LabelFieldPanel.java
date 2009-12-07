@@ -38,7 +38,7 @@ import javax.swing.UIManager;
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public final class LabelFieldPanel
+public class LabelFieldPanel
     extends JPanel
 {
     /** True if a final component has been added to this label field panel. */
@@ -69,7 +69,7 @@ public final class LabelFieldPanel
      * @return the percentage of the width of this label field panel
      *    to use for labels
      */
-    public float getLabelPercent()
+    public final float getLabelPercent()
     {
         return layout.getLabelPercent();
     }
@@ -83,7 +83,7 @@ public final class LabelFieldPanel
      * @param labelPercent the percentage of the width of this label field panel
      *    to use for labels, must be <code>&gt;= 0.0f</code> and <code>&lt;= 1.0f</code>
      */
-    public void setLabelPercent(final float labelPercent)
+    public final void setLabelPercent(final float labelPercent)
     {
         layout.setLabelPercent(labelPercent);
     }
@@ -95,7 +95,7 @@ public final class LabelFieldPanel
      * @return the percentage of the width of this label field panel
      *    to use for fields
      */
-    public float getFieldPercent()
+    public final float getFieldPercent()
     {
         return layout.getFieldPercent();
     }
@@ -109,7 +109,7 @@ public final class LabelFieldPanel
      * @param fieldPercent the percentage of the width of this label field panel
      *    to use for fields, must be <code>&gt;= 0.0f</code> and <code>&lt;= 1.0f</code>
      */
-    public void setFieldPercent(final float fieldPercent)
+    public final void setFieldPercent(final float fieldPercent)
     {
         layout.setFieldPercent(fieldPercent);
     }
@@ -119,7 +119,7 @@ public final class LabelFieldPanel
      *
      * @param text label text
      */
-    public void addLabel(final String text)
+    public final void addLabel(final String text)
     {
         JLabel label = new JLabel(text);
         addLabel(label);
@@ -130,7 +130,7 @@ public final class LabelFieldPanel
      *
      * @param label label to add, must not be null
      */
-    public void addLabel(final JLabel label)
+    public final void addLabel(final JLabel label)
     {
         if (label == null)
         {
@@ -145,7 +145,7 @@ public final class LabelFieldPanel
      *
      * @param field field to add, must not be null
      */
-    public void addField(final JComponent field)
+    public final void addField(final JComponent field)
     {
         if (field == null)
         {
@@ -161,7 +161,7 @@ public final class LabelFieldPanel
      * @param labelText label text
      * @param fieldText field text
      */
-    public void addField(final String labelText, final String fieldText)
+    public final void addField(final String labelText, final String fieldText)
     {
         addField(labelText, new JLabel(fieldText));
     }
@@ -172,7 +172,7 @@ public final class LabelFieldPanel
      * @param text label text
      * @param field field to add, must not be null
      */
-    public void addField(final String text, final JComponent field)
+    public final void addField(final String text, final JComponent field)
     {
         if (field == null)
         {
@@ -189,7 +189,7 @@ public final class LabelFieldPanel
      * @param label label to add, must not be null
      * @param field field to add, must not be null
      */
-    public void addField(final JLabel label, final JComponent field)
+    public final void addField(final JLabel label, final JComponent field)
     {
         if (label == null)
         {
@@ -234,7 +234,7 @@ public final class LabelFieldPanel
      *
      * @param spacing number of pixels, must be <code>&gt;= 0</code>
      */
-    public void addSpacing(final int spacing)
+    public final void addSpacing(final int spacing)
     {
         if (spacing < 0)
         {
@@ -253,7 +253,7 @@ public final class LabelFieldPanel
      * @throws IllegalStateException if a final component has already been
      *    added to this label field panel
      */
-    public void addFinalSpacing()
+    public final void addFinalSpacing()
     {
         if (hasFinal)
         {
@@ -273,7 +273,7 @@ public final class LabelFieldPanel
      * @throws IllegalStateException if a final component has already been
      *    added to this label field panel
      */
-    public void addFinalSpacing(final int spacing)
+    public final void addFinalSpacing(final int spacing)
     {
         if (hasFinal)
         {
@@ -298,7 +298,7 @@ public final class LabelFieldPanel
      * @throws IllegalStateException if a final component has already been
      *    added to this label field panel
      */
-    public void addFinalField(final JComponent field)
+    public final void addFinalField(final JComponent field)
     {
         if (hasFinal)
         {
@@ -315,31 +315,31 @@ public final class LabelFieldPanel
     // override JPanel methods
 
     /** {@inheritDoc} */
-    public Component add(final Component component)
+    public final Component add(final Component component)
     {
         throw new UnsupportedOperationException("add operation not supported by LabelFieldPanel");
     }
 
     /** {@inheritDoc} */
-    public Component add(final String name, final Component component)
+    public final Component add(final String name, final Component component)
     {
         throw new UnsupportedOperationException("add operation not supported by LabelFieldPanel");
     }
 
     /** {@inheritDoc} */
-    public Component add(final Component component, final int index)
+    public final Component add(final Component component, final int index)
     {
         throw new UnsupportedOperationException("add operation not supported by LabelFieldPanel");
     }
 
     /** {@inheritDoc} */
-    public void add(final Component component, final Object constraints)
+    public final void add(final Component component, final Object constraints)
     {
         throw new UnsupportedOperationException("add operation not supported by LabelFieldPanel");
     }
 
     /** {@inheritDoc} */
-    public void add(final Component component, final Object constraints, final int index)
+    public final void add(final Component component, final Object constraints, final int index)
     {
         throw new UnsupportedOperationException("add operation not supported by LabelFieldPanel");
     }

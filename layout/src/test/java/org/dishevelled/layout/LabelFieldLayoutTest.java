@@ -47,7 +47,7 @@ public class LabelFieldLayoutTest
 
         try
         {
-            LabelFieldLayout layout2 = new LabelFieldLayout(-1.0f, 1.0f);
+            new LabelFieldLayout(-1.0f, 1.0f);
             fail("ctr(-1.0f, 1.0f) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
@@ -57,7 +57,7 @@ public class LabelFieldLayoutTest
 
         try
         {
-            LabelFieldLayout layout3 = new LabelFieldLayout(1.0f, -1.0f);
+            new LabelFieldLayout(1.0f, -1.0f);
             fail("ctr(1.0f, -1.0f) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
@@ -67,7 +67,7 @@ public class LabelFieldLayoutTest
 
         try
         {
-            LabelFieldLayout layout4 = new LabelFieldLayout(-1.0f, -1.0f);
+            new LabelFieldLayout(-1.0f, -1.0f);
             fail("ctr(-1.0f, -1.0f) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
@@ -77,7 +77,7 @@ public class LabelFieldLayoutTest
 
         try
         {
-            LabelFieldLayout layout5 = new LabelFieldLayout(99.0f, 1.0f);
+            new LabelFieldLayout(99.0f, 1.0f);
             fail("ctr(99.0f, 1.0f) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
@@ -87,7 +87,7 @@ public class LabelFieldLayoutTest
 
         try
         {
-            LabelFieldLayout layout6 = new LabelFieldLayout(1.0f, 99.0f);
+            new LabelFieldLayout(1.0f, 99.0f);
             fail("ctr(1.0f, 99.0f) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
@@ -97,7 +97,7 @@ public class LabelFieldLayoutTest
 
         try
         {
-            LabelFieldLayout layout7 = new LabelFieldLayout(1.0f, 1.0f);
+            new LabelFieldLayout(1.0f, 1.0f);
             fail("ctr(1.0f, 1.0f) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
