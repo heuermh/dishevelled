@@ -61,8 +61,8 @@ public final class BinaryVennModelImpl<E>
     /**
      * Create a new binary venn model with the specified sets.
      *
-     * @param set0 first set
-     * @param set1 second set
+     * @param set0 first set, must not be null
+     * @param set1 second set, must not be null
      */
     public BinaryVennModelImpl(final Set<? extends E> set0, final Set<? extends E> set1)
     {
