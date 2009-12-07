@@ -46,10 +46,10 @@ public final class BinaryVennModelImpl<E>
     implements BinaryVennModel<E>
 {
     /** First list. */
-    private final EventList<E> list0;
+    private final EventList<E> first;
 
     /** Second list. */
-    private final EventList<E> list1;
+    private final EventList<E> second;
 
     /** Intersection. */
     private final EventList<E> intersection;
@@ -61,35 +61,35 @@ public final class BinaryVennModelImpl<E>
     /**
      * Create a new binary venn model with the specified sets.
      *
-     * @param set0 first set, must not be null
-     * @param set1 second set, must not be null
+     * @param first first set, must not be null
+     * @param second second set, must not be null
      */
-    public BinaryVennModelImpl(final Set<? extends E> set0, final Set<? extends E> set1)
+    public BinaryVennModelImpl(final Set<? extends E> first, final Set<? extends E> second)
     {
-        if (set0 == null)
+        if (first == null)
         {
-            throw new IllegalArgumentException("set0 must not be null");
+            throw new IllegalArgumentException("first must not be null");
         }
-        if (set1 == null)
+        if (second == null)
         {
-            throw new IllegalArgumentException("set1 must not be null");
+            throw new IllegalArgumentException("second must not be null");
         }
 
         CompositeList<E> composite = new CompositeList<E>();
-        list0 = composite.createMemberList();
-        composite.addMemberList(list0);
-        list1 = composite.createMemberList();
-        composite.addMemberList(list1);
+        this.first = composite.createMemberList();
+        composite.addMemberList(this.first);
+        this.second = composite.createMemberList();
+        composite.addMemberList(this.second);
 
-        list0.addAll(set0);
-        list1.addAll(set1);
+        this.first.addAll(first);
+        this.second.addAll(second);
 
         FilterList<E> filter = new FilterList<E>(composite, new Matcher<E>()
             {
                 /** {@inheritDoc} */
-                public boolean matches(final E item)
+                public boolean matches(final E element)
                 {
-                    return list0.contains(item) && list1.contains(item);
+                    return intersectionContains(element);
                 }
             });
         UniqueList<E> unique = new UniqueList<E>(filter);
@@ -99,16 +99,27 @@ public final class BinaryVennModelImpl<E>
     }
 
 
-    /** {@inheritDoc} */
-    public EventList<E> list0()
+    /**
+     * Return true if the specified element should be in the intersection.
+     *
+     * @param element element
+     * @return true if the specified element should be in the intersection
+     */
+    private boolean intersectionContains(final E element)
     {
-        return list0;
+        return first.contains(element) && second.contains(element);
     }
 
     /** {@inheritDoc} */
-    public EventList<E> list1()
+    public EventList<E> first()
     {
-        return list1;
+        return first;
+    }
+
+    /** {@inheritDoc} */
+    public EventList<E> second()
+    {
+        return second;
     }
 
     /** {@inheritDoc} */

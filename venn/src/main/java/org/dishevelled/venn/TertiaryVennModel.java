@@ -44,7 +44,7 @@ public interface TertiaryVennModel<E>
      * @return an observable list view of the first set for
      *    this tertiary venn model
      */
-    EventList<E> list0();
+    EventList<E> first();
 
     /**
      * Return a mutable observable list view of the second set for
@@ -55,7 +55,7 @@ public interface TertiaryVennModel<E>
      * @return an observable list view of the second set for
      *    this tertiary venn model
      */
-    EventList<E> list1();
+    EventList<E> second();
 
     /**
      * Return a mutable observable list view of the third set for
@@ -66,7 +66,7 @@ public interface TertiaryVennModel<E>
      * @return an observable list view of the third set for
      *    this tertiary venn model
      */
-    EventList<E> list2();
+    EventList<E> third();
 
     /**
      * Return an immutable observable list view of the intersection of

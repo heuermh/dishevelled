@@ -44,7 +44,7 @@ public interface BinaryVennModel<E>
      * @return an observable list view of the first set for
      *    this binary venn model
      */
-    EventList<E> list0();
+    EventList<E> first();
 
     /**
      * Return a mutable observable list view of the second set for
@@ -55,7 +55,7 @@ public interface BinaryVennModel<E>
      * @return an observable list view of the second set for
      *    this binary venn model
      */
-    EventList<E> list1();
+    EventList<E> second();
 
     /**
      * Return an immutable observable list view of the intersection of

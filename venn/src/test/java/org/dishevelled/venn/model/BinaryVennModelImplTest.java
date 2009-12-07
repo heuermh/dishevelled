@@ -40,16 +40,16 @@ public final class BinaryVennModelImplTest
 {
 
     /** {@inheritDoc} */
-    protected <T> BinaryVennModel<T> createBinaryVennModel(final Set<? extends T> set0, final Set<? extends T> set1)
+    protected <T> BinaryVennModel<T> createBinaryVennModel(final Set<? extends T> first, final Set<? extends T> second)
     {
-        return new BinaryVennModelImpl<T>(set0, set1);
+        return new BinaryVennModelImpl<T>(first, second);
     }
 
     public void testConstructor()
     {
         try
         {
-            new BinaryVennModelImpl<String>(null, SET1);
+            new BinaryVennModelImpl<String>(null, SECOND);
             fail("ctr(, null) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
@@ -58,7 +58,7 @@ public final class BinaryVennModelImplTest
         }
         try
         {
-            new BinaryVennModelImpl<String>(SET0, null);
+            new BinaryVennModelImpl<String>(FIRST, null);
             fail("ctr(null,) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)

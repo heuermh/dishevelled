@@ -40,18 +40,18 @@ public final class TertiaryVennModelImplTest
 {
 
     /** {@inheritDoc} */
-    protected <T> TertiaryVennModel<T> createTertiaryVennModel(final Set<? extends T> set0,
-            final Set<? extends T> set1,
-            final Set<? extends T> set2)
+    protected <T> TertiaryVennModel<T> createTertiaryVennModel(final Set<? extends T> first,
+            final Set<? extends T> second,
+            final Set<? extends T> third)
     {
-        return new TertiaryVennModelImpl<T>(set0, set1, set2);
+        return new TertiaryVennModelImpl<T>(first, second, third);
     }
 
     public void testConstructor()
     {
         try
         {
-            new TertiaryVennModelImpl<String>(null, SET1, SET2);
+            new TertiaryVennModelImpl<String>(null, SECOND, THIRD);
             fail("ctr(null,,) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
@@ -60,7 +60,7 @@ public final class TertiaryVennModelImplTest
         }
         try
         {
-            new TertiaryVennModelImpl<String>(SET0, null, SET2);
+            new TertiaryVennModelImpl<String>(FIRST, null, THIRD);
             fail("ctr(,null,) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
@@ -69,7 +69,7 @@ public final class TertiaryVennModelImplTest
         }
         try
         {
-            new TertiaryVennModelImpl<String>(SET0, SET1, null);
+            new TertiaryVennModelImpl<String>(FIRST, SECOND, null);
             fail("ctr(,,null) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
