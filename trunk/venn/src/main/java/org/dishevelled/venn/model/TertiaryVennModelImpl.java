@@ -55,13 +55,13 @@ import org.dishevelled.venn.TertiaryVennModel;
 public final class TertiaryVennModelImpl<E> implements TertiaryVennModel<E>
 {
     /** First list. */
-    private final EventList<E> list0;
+    private final EventList<E> first;
 
     /** Second list. */
-    private final EventList<E> list1;
+    private final EventList<E> second;
 
     /** Third list. */
-    private final EventList<E> list2;
+    private final EventList<E> third;
 
     /** List of lists. */
     private final List<EventList<E>> lists;
@@ -78,12 +78,13 @@ public final class TertiaryVennModelImpl<E> implements TertiaryVennModel<E>
     /** 2D matrix of unions indexed by list. */
     private final Matrix2D<EventList<E>> unions;
 
+
     /**
      * Create a new tertiary venn model with the specified sets.
      *
-     * @param set0 first set
-     * @param set1 second set
-     * @param set2 third set
+     * @param set0 first set, must not be null
+     * @param set1 second set, must not be null
+     * @param set2 third set, must not be null
      */
     public TertiaryVennModelImpl(final Set<? extends E> set0, final Set<? extends E> set1, final Set<? extends E> set2)
     {
@@ -101,37 +102,37 @@ public final class TertiaryVennModelImpl<E> implements TertiaryVennModel<E>
         }
 
         CompositeList<E> composite = new CompositeList<E>();
-        list0 = composite.createMemberList();
-        composite.addMemberList(list0);
-        list1 = composite.createMemberList();
-        composite.addMemberList(list1);
-        list2 = composite.createMemberList();
-        composite.addMemberList(list2);
+        first = composite.createMemberList();
+        composite.addMemberList(first);
+        second = composite.createMemberList();
+        composite.addMemberList(second);
+        third = composite.createMemberList();
+        composite.addMemberList(third);
 
         // todo:  refactor into a method
         ListEventPublisher publisher = composite.getPublisher();
         ReadWriteLock readWriteLock = composite.getReadWriteLock();
 
         CompositeList<E> composite01 = new CompositeList<E>(publisher, readWriteLock);
-        composite01.addMemberList(list0);
-        composite01.addMemberList(list1);
+        composite01.addMemberList(first);
+        composite01.addMemberList(second);
 
         CompositeList<E> composite02 = new CompositeList<E>(publisher, readWriteLock);
-        composite02.addMemberList(list0);
-        composite02.addMemberList(list2);
+        composite02.addMemberList(first);
+        composite02.addMemberList(third);
 
         CompositeList<E> composite12 = new CompositeList<E>(publisher, readWriteLock);
-        composite12.addMemberList(list1);
-        composite12.addMemberList(list2);
+        composite12.addMemberList(second);
+        composite12.addMemberList(third);
 
-        list0.addAll(set0);
-        list1.addAll(set1);
-        list2.addAll(set2);
+        first.addAll(set0);
+        second.addAll(set1);
+        third.addAll(set2);
 
         lists = new ArrayList<EventList<E>>(3);
-        lists.add(list0);
-        lists.add(list1);
-        lists.add(list2);
+        lists.add(first);
+        lists.add(second);
+        lists.add(third);
         // todo, make immutable?
 
         FilterList<E> filter = new FilterList<E>(composite, new Matcher<E>()
@@ -139,7 +140,7 @@ public final class TertiaryVennModelImpl<E> implements TertiaryVennModel<E>
                 /** {@inheritDoc} */
                 public boolean matches(final E item)
                 {
-                    return list0.contains(item) && list1.contains(item) && list2.contains(item);
+                    return first.contains(item) && second.contains(item) && third.contains(item);
                 }
             });
         UniqueList<E> unique = new UniqueList<E>(filter);
@@ -153,7 +154,7 @@ public final class TertiaryVennModelImpl<E> implements TertiaryVennModel<E>
                 /** {@inheritDoc} */
                 public boolean matches(final E item)
                 {
-                    return list0.contains(item) && list1.contains(item);
+                    return first.contains(item) && second.contains(item);
                 }
             });
         UniqueList<E> unique01 = new UniqueList<E>(filter01);
@@ -166,7 +167,7 @@ public final class TertiaryVennModelImpl<E> implements TertiaryVennModel<E>
                 /** {@inheritDoc} */
                 public boolean matches(final E item)
                 {
-                    return list0.contains(item) && list2.contains(item);
+                    return first.contains(item) && third.contains(item);
                 }
             });
         UniqueList<E> unique02 = new UniqueList<E>(filter02);
@@ -179,7 +180,7 @@ public final class TertiaryVennModelImpl<E> implements TertiaryVennModel<E>
                 /** {@inheritDoc} */
                 public boolean matches(final E item)
                 {
-                    return list1.contains(item) && list2.contains(item);
+                    return second.contains(item) && third.contains(item);
                 }
             });
         UniqueList<E> unique12 = new UniqueList<E>(filter12);
@@ -205,22 +206,23 @@ public final class TertiaryVennModelImpl<E> implements TertiaryVennModel<E>
         intersections.set(2L, 1L, intersection12);
     }
 
+
     /** {@inheritDoc} */
-    public EventList<E> list0()
+    public EventList<E> first()
     {
-        return list0;
+        return first;
     }
 
     /** {@inheritDoc} */
-    public EventList<E> list1()
+    public EventList<E> second()
     {
-        return list1;
+        return second;
     }
 
     /** {@inheritDoc} */
-    public EventList<E> list2()
+    public EventList<E> third()
     {
-        return list2;
+        return third;
     }
 
     /** {@inheritDoc} */
@@ -235,12 +237,12 @@ public final class TertiaryVennModelImpl<E> implements TertiaryVennModel<E>
         int i = lists.indexOf(a);
         if (i < 0)
         {
-            throw new IllegalArgumentException("a must be one of list0(), list1(), or list2()");
+            throw new IllegalArgumentException("a must be one of first(), second(), or third()");
         }
         int j = lists.indexOf(b);
         if (j < 0)
         {
-            throw new IllegalArgumentException("b must be one of list0(), list1(), or list2()");
+            throw new IllegalArgumentException("b must be one of first(), second(), or third()");
         }
         return intersections.get(i, j);
     }
@@ -257,12 +259,12 @@ public final class TertiaryVennModelImpl<E> implements TertiaryVennModel<E>
         int i = lists.indexOf(a);
         if (i < 0)
         {
-            throw new IllegalArgumentException("a must be one of list0(), list1(), or list2()");
+            throw new IllegalArgumentException("a must be one of first(), second(), or third()");
         }
         int j = lists.indexOf(b);
         if (j < 0)
         {
-            throw new IllegalArgumentException("b must be one of list0(), list1(), or list2()");
+            throw new IllegalArgumentException("b must be one of first(), second(), or third()");
         }
         return unions.get(i, j);
     }

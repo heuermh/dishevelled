@@ -41,81 +41,81 @@ public abstract class AbstractBinaryVennModelTest
     extends TestCase
 {
     /** First set. */
-    protected static final Set<String> SET0 = new HashSet<String>(Arrays.asList(new String[] { "foo", "bar" }));
+    protected static final Set<String> FIRST = new HashSet<String>(Arrays.asList(new String[] { "foo", "bar" }));
 
     /** Second set. */
-    protected static final Set<String> SET1 = new HashSet<String>(Arrays.asList(new String[] { "bar", "baz", "qux" }));
+    protected static final Set<String> SECOND = new HashSet<String>(Arrays.asList(new String[] { "bar", "baz", "qux" }));
 
 
     /**
      * Create and return a new instance of an implementation of BinaryVennModel
      * with the specified sets to test.
      *
-     * @param set0 first set
-     * @param set1 second set
+     * @param first first set, must not be null
+     * @param second second set, must not be null
      * @return a new instance of an implementation of BinaryVennModel with the
      *    specified sets to test
      */
-    protected abstract <T> BinaryVennModel<T> createBinaryVennModel(Set<? extends T> set0, Set<? extends T> set1);
+    protected abstract <T> BinaryVennModel<T> createBinaryVennModel(Set<? extends T> first, Set<? extends T> second);
 
     public void testCreateBinaryVennModel()
     {
-        BinaryVennModel<String> binaryVennModel = createBinaryVennModel(SET0, SET1);
+        BinaryVennModel<String> binaryVennModel = createBinaryVennModel(FIRST, SECOND);
         assertNotNull(binaryVennModel);
     }
 
-    public void testList0()
+    public void testFirst()
     {
-        BinaryVennModel<String> binaryVennModel = createBinaryVennModel(SET0, SET1);
-        EventList<String> list0 = binaryVennModel.list0();
-        assertNotNull(list0);
-        assertEquals(2, list0.size());
-        assertTrue(list0.contains("foo"));
-        assertTrue(list0.contains("bar"));
+        BinaryVennModel<String> binaryVennModel = createBinaryVennModel(FIRST, SECOND);
+        EventList<String> first = binaryVennModel.first();
+        assertNotNull(first);
+        assertEquals(2, first.size());
+        assertTrue(first.contains("foo"));
+        assertTrue(first.contains("bar"));
 
-        list0.add("garply");
-        assertEquals(3, list0.size());
-        assertTrue(list0.contains("garply"));
+        first.add("garply");
+        assertEquals(3, first.size());
+        assertTrue(first.contains("garply"));
 
-        list0.remove("garply");
-        assertEquals(2, list0.size());
-        assertFalse(list0.contains("garply"));
+        first.remove("garply");
+        assertEquals(2, first.size());
+        assertFalse(first.contains("garply"));
     }
 
-    public void testList1()
+    public void testSecond()
     {
-        BinaryVennModel<String> binaryVennModel = createBinaryVennModel(SET0, SET1);
-        EventList<String> list1 = binaryVennModel.list1();
-        assertNotNull(list1);
-        assertEquals(3, list1.size());
-        assertTrue(list1.contains("bar"));
-        assertTrue(list1.contains("baz"));
-        assertTrue(list1.contains("qux"));
+        BinaryVennModel<String> binaryVennModel = createBinaryVennModel(FIRST, SECOND);
+        EventList<String> second = binaryVennModel.second();
+        assertNotNull(second);
+        assertEquals(3, second.size());
+        assertTrue(second.contains("bar"));
+        assertTrue(second.contains("baz"));
+        assertTrue(second.contains("qux"));
 
-        list1.add("garply");
-        assertEquals(4, list1.size());
-        assertTrue(list1.contains("garply"));
+        second.add("garply");
+        assertEquals(4, second.size());
+        assertTrue(second.contains("garply"));
 
-        list1.remove("garply");
-        assertEquals(3, list1.size());
-        assertFalse(list1.contains("garply"));
+        second.remove("garply");
+        assertEquals(3, second.size());
+        assertFalse(second.contains("garply"));
     }
 
     public void testIntersection()
     {
-        BinaryVennModel<String> binaryVennModel = createBinaryVennModel(SET0, SET1);
+        BinaryVennModel<String> binaryVennModel = createBinaryVennModel(FIRST, SECOND);
         EventList<String> intersection = binaryVennModel.intersection();
         assertNotNull(intersection);
         assertEquals(1, intersection.size());
         assertTrue(intersection.contains("bar"));
 
-        binaryVennModel.list0().add("garply");
-        binaryVennModel.list1().add("garply");
+        binaryVennModel.first().add("garply");
+        binaryVennModel.second().add("garply");
         assertEquals(2, intersection.size());
         assertTrue(intersection.contains("garply"));
 
-        binaryVennModel.list0().remove("garply");
-        binaryVennModel.list1().remove("garply");
+        binaryVennModel.first().remove("garply");
+        binaryVennModel.second().remove("garply");
         assertEquals(1, intersection.size());
         assertFalse(intersection.contains("garply"));
     }
@@ -127,7 +127,7 @@ public abstract class AbstractBinaryVennModelTest
 
     public void testUnion()
     {
-        BinaryVennModel<String> binaryVennModel = createBinaryVennModel(SET0, SET1);
+        BinaryVennModel<String> binaryVennModel = createBinaryVennModel(FIRST, SECOND);
         EventList<String> union = binaryVennModel.union();
         assertNotNull(union);
         assertEquals(5, union.size());
@@ -136,16 +136,16 @@ public abstract class AbstractBinaryVennModelTest
         assertTrue(union.contains("baz"));
         assertTrue(union.contains("qux"));
 
-        binaryVennModel.list0().add("garply");
+        binaryVennModel.first().add("garply");
         assertEquals(6, union.size());
         assertTrue(union.contains("garply"));
 
-        binaryVennModel.list1().add("garply");
+        binaryVennModel.second().add("garply");
         assertEquals(7, union.size());
         assertTrue(union.contains("garply"));
 
-        binaryVennModel.list0().remove("garply");
-        binaryVennModel.list1().remove("garply");
+        binaryVennModel.first().remove("garply");
+        binaryVennModel.second().remove("garply");
         assertEquals(5, union.size());
         assertFalse(union.contains("garply"));
     }

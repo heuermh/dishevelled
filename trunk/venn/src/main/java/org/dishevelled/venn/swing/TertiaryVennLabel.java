@@ -33,28 +33,31 @@ import ca.odell.glazedlists.event.ListEventListener;
 
 import org.dishevelled.layout.LabelFieldPanel;
 
-import org.dishevelled.venn.BinaryVennModel;
+import org.dishevelled.venn.TertiaryVennModel;
 
-import org.dishevelled.venn.model.BinaryVennModelImpl;
+import org.dishevelled.venn.model.TertiaryVennModelImpl;
 
 /**
- * Binary venn diagram label.
+ * Tertiary venn diagram label.
  *
  * @param <E> value type
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public final class BinaryVennLabel<E>
+public final class TertiaryVennLabel<E>
     extends LabelFieldPanel
 {
-    /** Binary venn model. */
-    private BinaryVennModel<E> model;
+    /** Tertiary venn model. */
+    private TertiaryVennModel<E> model;
 
     /** Label text for the first list view. */
     private String firstLabelText = DEFAULT_FIRST_LABEL_TEXT;
 
     /** Label text for the second list view. */
     private String secondLabelText = DEFAULT_SECOND_LABEL_TEXT;
+
+    /** Label text for the third list view. */
+    private String thirdLabelText = DEFAULT_THIRD_LABEL_TEXT;
 
     /** Label text for the intersection. */
     private String intersectionLabelText = DEFAULT_INTERSECTION_LABEL_TEXT;
@@ -80,6 +83,12 @@ public final class BinaryVennLabel<E>
     /** Contents of the second list view. */
     private final JLabel second;
 
+    /** Label for the third list view. */
+    private final JLabel thirdLabel;
+
+    /** Contents of the third list view. */
+    private final JLabel third;
+
     /** Label for the intersection. */
     private final JLabel intersectionLabel;
 
@@ -98,6 +107,9 @@ public final class BinaryVennLabel<E>
     /** Default label text for the second list view, <code>"Second set"</code>. */
     public static final String DEFAULT_SECOND_LABEL_TEXT = "Second set";
 
+    /** Default label text for the third list view, <code>"Third set"</code>. */
+    public static final String DEFAULT_THIRD_LABEL_TEXT = "Third set";
+
     /** Default label text for the intersection, <code>"Intersection"</code>. */
     public static final String DEFAULT_INTERSECTION_LABEL_TEXT = "Intersection";
 
@@ -106,25 +118,28 @@ public final class BinaryVennLabel<E>
 
 
     /**
-     * Create a new binary venn label with the specified sets.
+     * Create a new tertiary venn label with the specified sets.
      *
      * @param firstLabelText label text for the first list view
      * @param first first set, must not be null
      * @param secondLabelText label text for the second list view
      * @param second second set, must not be null
+     * @param thirdLabelText label text for the third list view
+     * @param third third set, must not be null
      */
-    public BinaryVennLabel(final String firstLabelText, final Set<? extends E> first,
-            final String secondLabelText, final Set<? extends E> second)
+    public TertiaryVennLabel(final String firstLabelText, final Set<? extends E> first,
+                             final String secondLabelText, final Set<? extends E> second,
+                             final String thirdLabelText, final Set<? extends E> third)
     {
-        this(new BinaryVennModelImpl<E>(first, second));
+        this(new TertiaryVennModelImpl<E>(first, second, third));
     }
 
     /**
-     * Create a new binary venn label with the specified model.
+     * Create a new tertiary venn label with the specified model.
      *
-     * @param model model for this binary venn label, must not be null
+     * @param model model for this tertiary venn label, must not be null
      */
-    public BinaryVennLabel(final BinaryVennModel<E> model)
+    public TertiaryVennLabel(final TertiaryVennModel<E> model)
     {
         super();
         if (model == null)
@@ -137,6 +152,8 @@ public final class BinaryVennLabel<E>
         first = new JLabel();
         secondLabel = new JLabel();
         second = new JLabel();
+        thirdLabel = new JLabel();
+        third = new JLabel();
         intersectionLabel = new JLabel();
         intersection = new JLabel();
         unionLabel = new JLabel();
@@ -173,6 +190,16 @@ public final class BinaryVennLabel<E>
                 }
             });
 
+        model.third().addListEventListener(new ListEventListener<E>()
+            {
+                /** {@inheritDoc} */
+                public void listChanged(final ListEvent<E> event)
+                {
+                    thirdLabel.setText(buildLabel(thirdLabelText, event.getSourceList().size()));
+                    third.setText(buildContent(event.getSourceList()));
+                }
+            });
+
         model.intersection().addListEventListener(new ListEventListener<E>()
             {
                 /** {@inheritDoc} */
@@ -203,6 +230,8 @@ public final class BinaryVennLabel<E>
         first.setText(buildContent(model.first()));
         secondLabel.setText(buildLabel(secondLabelText, model.second().size()));
         second.setText(buildContent(model.second()));
+        thirdLabel.setText(buildLabel(thirdLabelText, model.third().size()));
+        third.setText(buildContent(model.third()));
         intersectionLabel.setText(buildLabel(intersectionLabelText, model.intersection().size()));
         intersection.setText(buildContent(model.intersection()));
         unionLabel.setText(buildLabel(unionLabelText, model.union().size()));
@@ -216,6 +245,7 @@ public final class BinaryVennLabel<E>
     {
         addField(firstLabel, first);
         addField(secondLabel, second);
+        addField(thirdLabel, third);
         addField(intersectionLabel, intersection);
         addField(unionLabel, union);
         addFinalSpacing();
@@ -319,6 +349,31 @@ public final class BinaryVennLabel<E>
         this.secondLabelText = secondLabelText;
         secondLabel.setText(buildLabel(this.secondLabelText, model.second().size()));
         firePropertyChange("secondLabelText", this.secondLabelText, oldSecondLabelText);
+    }
+
+    /**
+     * Return the label text for the third list view.  Defaults to {@link #DEFAULT_THIRD_LABEL_TEXT}.
+     *
+     * @return the label text for the third list view
+     */
+    public String getThirdLabelText()
+    {
+        return thirdLabelText;
+    }
+
+    /**
+     * Set the label text for the third list view to <code>thirdLabelText</code>.
+     *
+     * <p>This is a bound property.</p>
+     *
+     * @param thirdLabelText label text for the third list view
+     */
+    public void setThirdLabelText(final String thirdLabelText)
+    {
+        String oldThirdLabelText = this.thirdLabelText;
+        this.thirdLabelText = thirdLabelText;
+        thirdLabel.setText(buildLabel(this.thirdLabelText, model.third().size()));
+        firePropertyChange("thirdLabelText", this.thirdLabelText, oldThirdLabelText);
     }
 
     /**

@@ -32,7 +32,7 @@
         <configuration>
           <archive>
             <manifest>
-              <mainClass>org.dishevelled.venn.examples.BinaryVennLabelExample</mainClass>
+              <mainClass>org.dishevelled.venn.examples.VennLabelExample</mainClass>
             </manifest>
           </archive>
           <descriptorRefs>

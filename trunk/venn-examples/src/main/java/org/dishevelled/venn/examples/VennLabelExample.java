@@ -23,8 +23,6 @@
 */
 package org.dishevelled.venn.examples;
 
-import java.awt.BorderLayout;
-
 import java.util.HashSet;
 import java.util.Set;
 
@@ -34,30 +32,34 @@ import javax.swing.SwingUtilities;
 
 import javax.swing.border.EmptyBorder;
 
+import org.dishevelled.layout.LabelFieldPanel;
+
 import org.dishevelled.venn.BinaryVennModel;
+import org.dishevelled.venn.TertiaryVennModel;
 
 import org.dishevelled.venn.model.BinaryVennModelImpl;
+import org.dishevelled.venn.model.TertiaryVennModelImpl;
 
 import org.dishevelled.venn.swing.BinaryVennLabel;
+import org.dishevelled.venn.swing.TertiaryVennLabel;
 
 /**
- * Binary venn label example.
+ * Venn label example.
  *
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public final class BinaryVennLabelExample
-    extends JPanel
+public final class VennLabelExample
+    extends LabelFieldPanel
     implements Runnable
 {
 
     /**
-     * Create a new binary venn label example.
+     * Create a new venn label example.
      */
-    public BinaryVennLabelExample()
+    public VennLabelExample()
     {
         super();
-        setLayout(new BorderLayout());
 
         Set<String> set0 = new HashSet<String>();
         set0.add("foo");
@@ -70,9 +72,24 @@ public final class BinaryVennLabelExample
         set1.add("qux");
         set1.add("garply");
 
-        BinaryVennModel<String> model = new BinaryVennModelImpl<String>(set0, set1);
-        BinaryVennLabel label = new BinaryVennLabel(model);
-        add("Center", label);
+        Set<String> set2 = new HashSet<String>();
+        set2.add("bar");
+        set2.add("baz");
+        set2.add("garply");
+
+        BinaryVennModel<String> binaryModel = new BinaryVennModelImpl<String>(set0, set1);
+        BinaryVennLabel binaryLabel = new BinaryVennLabel(binaryModel);
+
+        TertiaryVennModel<String> tertiaryModel = new TertiaryVennModelImpl<String>(set0, set1, set2);
+        TertiaryVennLabel tertiaryLabel = new TertiaryVennLabel(tertiaryModel);
+
+        addLabel("Binary:");
+        addField(binaryLabel);
+        addSpacing(12);
+        addLabel("Tertiary:");
+        addField(tertiaryLabel);
+        addFinalSpacing();
+
         setBorder(new EmptyBorder(12, 12, 12, 12));
     }
 
@@ -80,12 +97,13 @@ public final class BinaryVennLabelExample
     /** {@inheritDoc} */
     public void run()
     {
-        final JFrame f = new JFrame("BinaryVennLabel example");
+        final JFrame f = new JFrame("VennLabel example");
         f.setContentPane(this);
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        f.setBounds(120, 120, 400, 200);
+        f.setBounds(120, 120, 500, 600);
         f.setVisible(true);
     }
+
 
     /**
      * Main.
@@ -94,6 +112,6 @@ public final class BinaryVennLabelExample
      */
     public static void main(final String[] args)
     {
-        SwingUtilities.invokeLater(new BinaryVennLabelExample());
+        SwingUtilities.invokeLater(new VennLabelExample());
     }
 }
