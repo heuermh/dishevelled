@@ -41,7 +41,7 @@ import org.dishevelled.venn.model.BinaryVennModelImpl;
 import org.dishevelled.venn.model.TertiaryVennModelImpl;
 
 import org.dishevelled.venn.swing.BinaryVennList;
-//import org.dishevelled.venn.swing.TertiaryVennLabel;
+import org.dishevelled.venn.swing.TertiaryVennList;
 
 /**
  * Venn list example.
@@ -80,15 +80,15 @@ public final class VennListExample
         BinaryVennModel<String> binaryModel = new BinaryVennModelImpl<String>(set0, set1);
         BinaryVennList binaryList = new BinaryVennList(binaryModel);
 
-        //TertiaryVennModel<String> tertiaryModel = new TertiaryVennModelImpl<String>(set0, set1, set2);
-        //TertiaryVennLabel tertiaryLabel = new TertiaryVennLabel(tertiaryModel);
+        TertiaryVennModel<String> tertiaryModel = new TertiaryVennModelImpl<String>(set0, set1, set2);
+        TertiaryVennList tertiaryList = new TertiaryVennList(tertiaryModel);
 
         addLabel("Binary:");
-        addFinalField(binaryList);
-        //addSpacing(12);
-        //addLabel("Tertiary:");
-        //addField(tertiaryLabel);
-        //addFinalSpacing();
+        addField(binaryList);
+        addSpacing(12);
+        addLabel("Tertiary:");
+        addField(tertiaryList);
+        addFinalSpacing();
 
         setBorder(new EmptyBorder(12, 12, 12, 12));
     }
