@@ -27,6 +27,10 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Shape;
 
+import java.awt.font.FontRenderContext;
+import java.awt.font.TextLayout;
+
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Area;
 import java.awt.geom.Rectangle2D;
 
@@ -98,6 +102,24 @@ public final class TertiaryVennNode<E>
     /** Label for the intersection's size. */
     private final PText intersectionSize;
 
+    /** Area node for the union of the first and second sets. */
+    private final AreaNode firstSecond;
+
+    /** Label for the union of the first and second sets. */
+    private final PText firstSecondSize;
+
+    /** Area node for the union of the first and third sets. */
+    private final AreaNode firstThird;
+
+    /** Label for the union of the first and third sets. */
+    private final PText firstThirdSize;
+
+    /** Area node for the union of the second and third sets. */
+    private final AreaNode secondThird;
+
+    /** Label for the union of the second and third sets. */
+    private final PText secondThirdSize;
+
     /** True if labels should display sizes. */
     private static final boolean SHOW_SIZES = true;
 
@@ -144,33 +166,47 @@ public final class TertiaryVennNode<E>
         this.model = model;
 
         firstLabel = new PText();
+        // todo:  match reference
+        //   using colors from wikipedia image, choose others or attribute correctly
         first = PPath.createEllipse(0.0f, 0.0f, 128.0f, 128.0f);
-        first.setPaint(new Color(80, 80, 80, 80));
+        first.setPaint(new Color(5, 37, 255, 50));
         first.setStroke(new BasicStroke(1.0f));
-        first.setStrokePaint(new Color(80, 80, 80, 128));
+        first.setStrokePaint(new Color(20, 20, 20));
         firstSize = new PText();
         secondLabel = new PText();
         second = PPath.createEllipse(((2.0f * 128.0f) / 3.0f), 0.0f, 128.0f, 128.0f);
-        second.setPaint(new Color(80, 80, 80, 80));
+        second.setPaint(new Color(255, 100, 5, 50));
         second.setStroke(new BasicStroke(1.0f));
-        second.setStrokePaint(new Color(80, 80, 80, 128));
+        second.setStrokePaint(new Color(20, 20, 20));
         secondSize = new PText();
         thirdLabel = new PText();
         third = PPath.createEllipse(128.0f / 3.0f, (2.0f * 128.0f) / 3.0f, 128.0f, 128.0f);
-        third.setPaint(new Color(80, 80, 80, 80));
+        third.setPaint(new Color(30, 30, 30, 50));
         third.setStroke(new BasicStroke(1.0f));
-        third.setStrokePaint(new Color(80, 80, 80, 128));
+        third.setStrokePaint(new Color(20, 20, 20));
         thirdSize = new PText();
         intersection = new AreaNode();
         intersectionSize = new PText();
+        firstSecond = new AreaNode();
+        firstSecondSize = new PText();
+        firstThird = new AreaNode();
+        firstThirdSize = new PText();
+        secondThird = new AreaNode();
+        secondThirdSize = new PText();
 
         addChild(third);
         addChild(second);
         addChild(first);
+        addChild(firstSecond);
+        addChild(firstThird);
+        addChild(secondThird);
         addChild(intersection);
         addChild(thirdSize);
         addChild(secondSize);
         addChild(firstSize);
+        addChild(firstSecondSize);
+        addChild(firstThirdSize);
+        addChild(secondThirdSize);
         addChild(intersectionSize);
         addChild(thirdLabel);
         addChild(secondLabel);
@@ -194,6 +230,8 @@ public final class TertiaryVennNode<E>
                 {
                     firstLabel.setText(buildLabel(firstLabelText, model.first().size()));
                     firstSize.setText(String.valueOf(model.first().size() - model.intersection().size()));
+                    firstSecondSize.setText(String.valueOf(model.union(model.first(), model.second()).size() - model.intersection().size()));
+                    firstThirdSize.setText(String.valueOf(model.union(model.first(), model.third()).size() - model.intersection().size()));
                 }
             });
 
@@ -204,6 +242,8 @@ public final class TertiaryVennNode<E>
                 {
                     secondLabel.setText(buildLabel(secondLabelText, model.second().size()));
                     secondSize.setText(String.valueOf(model.second().size() - model.intersection().size()));
+                    firstSecondSize.setText(String.valueOf(model.union(model.first(), model.second()).size() - model.intersection().size()));
+                    secondThirdSize.setText(String.valueOf(model.union(model.second(), model.third()).size() - model.intersection().size()));
                 }
             });
 
@@ -214,6 +254,8 @@ public final class TertiaryVennNode<E>
                 {
                     thirdLabel.setText(buildLabel(thirdLabelText, model.third().size()));
                     thirdSize.setText(String.valueOf(model.third().size() - model.intersection().size()));
+                    firstThirdSize.setText(String.valueOf(model.union(model.first(), model.third()).size() - model.intersection().size()));
+                    secondThirdSize.setText(String.valueOf(model.union(model.second(), model.third()).size() - model.intersection().size()));
                 }
             });
 
@@ -239,6 +281,9 @@ public final class TertiaryVennNode<E>
         thirdLabel.setText(buildLabel(thirdLabelText, model.third().size()));
         thirdSize.setText(String.valueOf(model.third().size() - model.intersection().size()));
         intersectionSize.setText(String.valueOf(model.intersection().size()));
+        firstSecondSize.setText(String.valueOf(model.union(model.first(), model.second()).size() - model.intersection().size()));
+        firstThirdSize.setText(String.valueOf(model.union(model.first(), model.third()).size() - model.intersection().size()));
+        secondThirdSize.setText(String.valueOf(model.union(model.second(), model.third()).size() - model.intersection().size()));
     }
 
     /**
@@ -264,10 +309,23 @@ public final class TertiaryVennNode<E>
         intersectionArea.intersect(new Area(thirdShape));
         intersection.setArea(intersectionArea);
 
+        Area firstSecondArea = new Area(firstShape);
+        firstSecondArea.intersect(new Area(secondShape));
+        firstSecondArea.subtract(intersectionArea);
+        Area firstThirdArea = new Area(firstShape);
+        firstThirdArea.intersect(new Area(thirdShape));
+        firstThirdArea.subtract(intersectionArea);
+        Area secondThirdArea = new Area(secondShape);
+        secondThirdArea.intersect(new Area(thirdShape));
+        secondThirdArea.subtract(intersectionArea);
+
         Rectangle2D firstBounds = firstArea.getBounds2D();
         Rectangle2D secondBounds = secondArea.getBounds2D();
         Rectangle2D thirdBounds = thirdArea.getBounds2D();
         Rectangle2D intersectionBounds = intersectionArea.getBounds2D();
+        Rectangle2D firstSecondBounds = firstSecondArea.getBounds2D();
+        Rectangle2D firstThirdBounds = firstThirdArea.getBounds2D();
+        Rectangle2D secondThirdBounds = secondThirdArea.getBounds2D();
 
         Rectangle2D firstLabelBounds = firstLabel.getFullBoundsReference();
         Rectangle2D secondLabelBounds = secondLabel.getFullBoundsReference();
@@ -276,6 +334,21 @@ public final class TertiaryVennNode<E>
         Rectangle2D secondSizeBounds = secondSize.getFullBoundsReference();
         Rectangle2D thirdSizeBounds = thirdSize.getFullBoundsReference();
         Rectangle2D intersectionSizeBounds = intersectionSize.getFullBoundsReference();
+        Rectangle2D firstSecondSizeBounds = firstSecondSize.getFullBoundsReference();
+        Rectangle2D firstThirdSizeBounds = firstThirdSize.getFullBoundsReference();
+        Rectangle2D secondThirdSizeBounds = secondThirdSize.getFullBoundsReference();
+        /*
+        Rectangle2D firstLabelBounds = calculateTextBounds(firstLabel);
+        Rectangle2D secondLabelBounds = calculateTextBounds(secondLabel);
+        Rectangle2D thirdLabelBounds = calculateTextBounds(thirdLabel);
+        Rectangle2D firstSizeBounds = calculateTextBounds(firstSize);
+        Rectangle2D secondSizeBounds = calculateTextBounds(secondSize);
+        Rectangle2D thirdSizeBounds = calculateTextBounds(thirdSize);
+        Rectangle2D intersectionSizeBounds = calculateTextBounds(intersectionSize);
+        Rectangle2D firstSecondSizeBounds = calculateTextBounds(firstSecondSize);
+        Rectangle2D firstThirdSizeBounds = calculateTextBounds(firstThirdSize);
+        Rectangle2D secondThirdSizeBounds = calculateTextBounds(secondThirdSize);
+        */
 
         firstLabel.setOffset(firstBounds.getX() + (firstBounds.getWidth() / 2.0d) - (firstLabelBounds.getWidth() / 2.0d),
                              -1.0d * firstLabelBounds.getHeight() - 4.0d);
@@ -293,6 +366,25 @@ public final class TertiaryVennNode<E>
         // todo:  this label seems to be misplaced +y a bit, maybe the full bounds calc is off
         intersectionSize.setOffset(intersectionBounds.getCenterX() - (intersectionSizeBounds.getWidth() / 2.0d),
                                    intersectionBounds.getCenterY() - (intersectionSizeBounds.getHeight() / 2.0d));
+
+        // this one is too -y
+        firstSecondSize.setOffset(firstSecondBounds.getCenterX() - (firstSecondSizeBounds.getWidth() / 2.0d),
+                                  firstSecondBounds.getCenterY() - (firstSecondSizeBounds.getHeight() / 2.0d));
+        // too +x
+        firstThirdSize.setOffset(firstThirdBounds.getCenterX() - (firstThirdSizeBounds.getWidth() / 2.0d),
+                                 firstThirdBounds.getCenterY() - (firstThirdSizeBounds.getHeight() / 2.0d));
+        // too -x
+        secondThirdSize.setOffset(secondThirdBounds.getCenterX() - (secondThirdSizeBounds.getWidth() / 2.0d),
+                                  secondThirdBounds.getCenterY() - (secondThirdSizeBounds.getHeight() / 2.0d));
+    }
+
+    private static final Rectangle2D calculateTextBounds(final PText textNode)
+    {
+        // unfortunately, the height of the text node is larger than it should be
+        // todo:  this doesn't support multi-line text nodes
+        FontRenderContext frc = new FontRenderContext(new AffineTransform(), true, true);
+        TextLayout textLayout = new TextLayout(textNode.getText(), textNode.getFont(), frc);
+        return textLayout.getBounds();
     }
 
     /**
@@ -398,7 +490,6 @@ public final class TertiaryVennNode<E>
     private class AreaNode
         extends PNode
     {
-
         // todo:  implement this to allow for mouse-over, picking, etc.
         private void setArea(final Area area)
         {
