@@ -27,10 +27,6 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Shape;
 
-import java.awt.font.FontRenderContext;
-import java.awt.font.TextLayout;
-
-import java.awt.geom.AffineTransform;
 import java.awt.geom.Area;
 import java.awt.geom.Rectangle2D;
 
@@ -295,6 +291,7 @@ public final class TertiaryVennNode<E>
         Shape firstShape = first.getPathReference();
         Shape secondShape = second.getPathReference();
         Shape thirdShape = third.getPathReference();
+
         Area firstArea = new Area(firstShape);
         Area secondArea = new Area(secondShape);
         Area thirdArea = new Area(thirdShape);
@@ -304,6 +301,7 @@ public final class TertiaryVennNode<E>
         secondArea.subtract(new Area(thirdShape));
         thirdArea.subtract(new Area(firstShape));
         thirdArea.subtract(new Area(secondShape));
+
         Area intersectionArea = new Area(firstShape);
         intersectionArea.intersect(new Area(secondShape));
         intersectionArea.intersect(new Area(thirdShape));
@@ -311,13 +309,18 @@ public final class TertiaryVennNode<E>
 
         Area firstSecondArea = new Area(firstShape);
         firstSecondArea.intersect(new Area(secondShape));
-        firstSecondArea.subtract(intersectionArea);
+        firstSecondArea.subtract(new Area(thirdShape));
+        firstSecond.setArea(firstSecondArea);
+
         Area firstThirdArea = new Area(firstShape);
         firstThirdArea.intersect(new Area(thirdShape));
-        firstThirdArea.subtract(intersectionArea);
+        firstThirdArea.subtract(new Area(secondShape));
+        firstThird.setArea(firstThirdArea);
+
         Area secondThirdArea = new Area(secondShape);
         secondThirdArea.intersect(new Area(thirdShape));
-        secondThirdArea.subtract(intersectionArea);
+        secondThirdArea.subtract(new Area(firstShape));
+        secondThird.setArea(secondThirdArea);
 
         Rectangle2D firstBounds = firstArea.getBounds2D();
         Rectangle2D secondBounds = secondArea.getBounds2D();
@@ -337,18 +340,6 @@ public final class TertiaryVennNode<E>
         Rectangle2D firstSecondSizeBounds = firstSecondSize.getFullBoundsReference();
         Rectangle2D firstThirdSizeBounds = firstThirdSize.getFullBoundsReference();
         Rectangle2D secondThirdSizeBounds = secondThirdSize.getFullBoundsReference();
-        /*
-        Rectangle2D firstLabelBounds = calculateTextBounds(firstLabel);
-        Rectangle2D secondLabelBounds = calculateTextBounds(secondLabel);
-        Rectangle2D thirdLabelBounds = calculateTextBounds(thirdLabel);
-        Rectangle2D firstSizeBounds = calculateTextBounds(firstSize);
-        Rectangle2D secondSizeBounds = calculateTextBounds(secondSize);
-        Rectangle2D thirdSizeBounds = calculateTextBounds(thirdSize);
-        Rectangle2D intersectionSizeBounds = calculateTextBounds(intersectionSize);
-        Rectangle2D firstSecondSizeBounds = calculateTextBounds(firstSecondSize);
-        Rectangle2D firstThirdSizeBounds = calculateTextBounds(firstThirdSize);
-        Rectangle2D secondThirdSizeBounds = calculateTextBounds(secondThirdSize);
-        */
 
         firstLabel.setOffset(firstBounds.getX() + (firstBounds.getWidth() / 2.0d) - (firstLabelBounds.getWidth() / 2.0d),
                              -1.0d * firstLabelBounds.getHeight() - 4.0d);
@@ -367,24 +358,12 @@ public final class TertiaryVennNode<E>
         intersectionSize.setOffset(intersectionBounds.getCenterX() - (intersectionSizeBounds.getWidth() / 2.0d),
                                    intersectionBounds.getCenterY() - (intersectionSizeBounds.getHeight() / 2.0d));
 
-        // this one is too -y
         firstSecondSize.setOffset(firstSecondBounds.getCenterX() - (firstSecondSizeBounds.getWidth() / 2.0d),
                                   firstSecondBounds.getCenterY() - (firstSecondSizeBounds.getHeight() / 2.0d));
-        // too +x
         firstThirdSize.setOffset(firstThirdBounds.getCenterX() - (firstThirdSizeBounds.getWidth() / 2.0d),
                                  firstThirdBounds.getCenterY() - (firstThirdSizeBounds.getHeight() / 2.0d));
-        // too -x
         secondThirdSize.setOffset(secondThirdBounds.getCenterX() - (secondThirdSizeBounds.getWidth() / 2.0d),
                                   secondThirdBounds.getCenterY() - (secondThirdSizeBounds.getHeight() / 2.0d));
-    }
-
-    private static final Rectangle2D calculateTextBounds(final PText textNode)
-    {
-        // unfortunately, the height of the text node is larger than it should be
-        // todo:  this doesn't support multi-line text nodes
-        FontRenderContext frc = new FontRenderContext(new AffineTransform(), true, true);
-        TextLayout textLayout = new TextLayout(textNode.getText(), textNode.getFont(), frc);
-        return textLayout.getBounds();
     }
 
     /**
@@ -490,10 +469,16 @@ public final class TertiaryVennNode<E>
     private class AreaNode
         extends PNode
     {
+        private PPath path = null;
+
         // todo:  implement this to allow for mouse-over, picking, etc.
         private void setArea(final Area area)
         {
-            // empty
+            Rectangle2D rect = area.getBounds2D();
+            path = PPath.createRectangle((float) rect.getX(), (float) rect.getY(), (float) rect.getWidth(), (float) rect.getHeight());
+            path.setPaint(new Color(80, 80, 80, 20));
+            path.setStrokePaint(new Color(80, 80, 80, 80));
+            addChild(path);
         }
     }
 }
