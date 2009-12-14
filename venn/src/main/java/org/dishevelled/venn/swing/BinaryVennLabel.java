@@ -117,6 +117,7 @@ public final class BinaryVennLabel<E>
             final String secondLabelText, final Set<? extends E> second)
     {
         this(new BinaryVennModelImpl<E>(first, second));
+        // todo:  not using firstLabelText, secondLabelText
     }
 
     /**
