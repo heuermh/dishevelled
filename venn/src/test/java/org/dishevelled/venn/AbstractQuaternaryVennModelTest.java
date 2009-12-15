@@ -30,6 +30,7 @@ import java.util.Set;
 import junit.framework.TestCase;
 
 import ca.odell.glazedlists.EventList;
+import ca.odell.glazedlists.GlazedLists;
 
 /**
  * Abstract unit test for implementations of QuaternaryVennModel.
@@ -213,6 +214,45 @@ public abstract class AbstractQuaternaryVennModelTest
         quaternaryVennModel.third().remove("garply");
         assertEquals(2, intersectSecondThird.size());
         assertFalse(intersectSecondThird.contains("garply"));
+
+        try
+        {
+            quaternaryVennModel.intersect(null, quaternaryVennModel.second());
+            fail("intersect(null,) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+        try
+        {
+            quaternaryVennModel.intersect(quaternaryVennModel.first(), null);
+            fail("intersect(,null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+
+        EventList<String> invalid = GlazedLists.eventListOf("foo");
+        try
+        {
+            quaternaryVennModel.intersect(invalid, quaternaryVennModel.second());
+            fail("intersect(invalid,) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+        try
+        {
+            quaternaryVennModel.intersect(quaternaryVennModel.first(), invalid);
+            fail("intersect(,invalid) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
     }
 
     public void testIntersectABIsImmutable()
@@ -236,6 +276,122 @@ public abstract class AbstractQuaternaryVennModelTest
         EventList<String> intersectThirdSecond = quaternaryVennModel.intersect(quaternaryVennModel.third(),
                 quaternaryVennModel.second());
         assertEquals(intersectSecondThird, intersectThirdSecond);
+    }
+
+    public void testIntersectABC()
+    {
+        QuaternaryVennModel<String> quaternaryVennModel = createQuaternaryVennModel(FIRST, SECOND, THIRD, FOURTH);
+
+        EventList<String> intersectFirstSecondThird = quaternaryVennModel.intersect(quaternaryVennModel.first(),
+                                                                                    quaternaryVennModel.second(),
+                                                                                    quaternaryVennModel.third());
+        assertNotNull(intersectFirstSecondThird);
+        assertEquals(1, intersectFirstSecondThird.size());
+        assertTrue(intersectFirstSecondThird.contains("bar"));
+
+        quaternaryVennModel.first().add("garply");
+        quaternaryVennModel.second().add("garply");
+        quaternaryVennModel.third().add("garply");
+        assertEquals(2, intersectFirstSecondThird.size());
+        assertTrue(intersectFirstSecondThird.contains("garply"));
+
+        quaternaryVennModel.first().remove("garply");
+        quaternaryVennModel.second().remove("garply");
+        quaternaryVennModel.third().remove("garply");
+        assertEquals(1, intersectFirstSecondThird.size());
+        assertFalse(intersectFirstSecondThird.contains("garply"));
+
+        try
+        {
+            quaternaryVennModel.intersect(null, quaternaryVennModel.second(), quaternaryVennModel.third());
+            fail("intersect(null,,) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+        try
+        {
+            quaternaryVennModel.intersect(quaternaryVennModel.first(), null, quaternaryVennModel.third());
+            fail("intersect(,null,) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+        try
+        {
+            quaternaryVennModel.intersect(quaternaryVennModel.first(), quaternaryVennModel.second(), null);
+            fail("intersect(,,null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+
+        EventList<String> invalid = GlazedLists.eventListOf("foo");
+        try
+        {
+            quaternaryVennModel.intersect(invalid, quaternaryVennModel.second(), quaternaryVennModel.third());
+            fail("intersect(invalid,,) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+        try
+        {
+            quaternaryVennModel.intersect(quaternaryVennModel.first(), invalid, quaternaryVennModel.third());
+            fail("intersect(,invalid,) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+        try
+        {
+            quaternaryVennModel.intersect(quaternaryVennModel.first(), quaternaryVennModel.second(), invalid);
+            fail("intersect(,,invalid) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+    }
+
+    public void testIntersectABCIsImmutable()
+    {
+        // todo
+    }
+
+    public void testIntersectABCIsCommutative()
+    {
+        QuaternaryVennModel<String> quaternaryVennModel = createQuaternaryVennModel(FIRST, SECOND, THIRD, FOURTH);
+
+        EventList<String> intersectFirstSecondThird = quaternaryVennModel.intersect(quaternaryVennModel.first(),
+                                                                                    quaternaryVennModel.second(),
+                                                                                    quaternaryVennModel.third());
+        EventList<String> intersectFirstThirdSecond = quaternaryVennModel.intersect(quaternaryVennModel.first(),
+                                                                                    quaternaryVennModel.third(),
+                                                                                    quaternaryVennModel.second());
+        EventList<String> intersectSecondFirstThird = quaternaryVennModel.intersect(quaternaryVennModel.second(),
+                                                                                    quaternaryVennModel.first(),
+                                                                                    quaternaryVennModel.third());
+        EventList<String> intersectSecondThirdFirst = quaternaryVennModel.intersect(quaternaryVennModel.second(),
+                                                                                    quaternaryVennModel.third(),
+                                                                                    quaternaryVennModel.first());
+        EventList<String> intersectThirdSecondFirst = quaternaryVennModel.intersect(quaternaryVennModel.third(),
+                                                                                    quaternaryVennModel.second(),
+                                                                                    quaternaryVennModel.first());
+        EventList<String> intersectThirdFirstSecond = quaternaryVennModel.intersect(quaternaryVennModel.third(),
+                                                                                    quaternaryVennModel.first(),
+                                                                                    quaternaryVennModel.second());
+
+        assertEquals(intersectFirstSecondThird, intersectFirstThirdSecond);
+        assertEquals(intersectFirstSecondThird, intersectSecondFirstThird);
+        assertEquals(intersectFirstSecondThird, intersectSecondThirdFirst);
+        assertEquals(intersectFirstSecondThird, intersectThirdSecondFirst);
+        assertEquals(intersectFirstSecondThird, intersectThirdFirstSecond);
     }
 
     public void testUnion()
@@ -318,6 +474,45 @@ public abstract class AbstractQuaternaryVennModelTest
         quaternaryVennModel.third().remove("garply");
         assertEquals(5, unionSecondThird.size());
         assertFalse(unionSecondThird.contains("garply"));
+
+        try
+        {
+            quaternaryVennModel.union(null, quaternaryVennModel.second());
+            fail("union(null,) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+        try
+        {
+            quaternaryVennModel.union(quaternaryVennModel.first(), null);
+            fail("union(,null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+
+        EventList<String> invalid = GlazedLists.eventListOf("foo");
+        try
+        {
+            quaternaryVennModel.union(invalid, quaternaryVennModel.second());
+            fail("union(invalid,) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+        try
+        {
+            quaternaryVennModel.union(quaternaryVennModel.first(), invalid);
+            fail("union(,invalid) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
     }
 
     public void testUnionABIsImmutable()
@@ -341,5 +536,130 @@ public abstract class AbstractQuaternaryVennModelTest
         EventList<String> unionThirdSecond = quaternaryVennModel.union(quaternaryVennModel.third(),
                 quaternaryVennModel.second());
         assertEquals(unionSecondThird, unionThirdSecond);
+    }
+
+    public void testUnionABC()
+    {
+        QuaternaryVennModel<String> quaternaryVennModel = createQuaternaryVennModel(FIRST, SECOND, THIRD, FOURTH);
+
+        EventList<String> unionFirstSecondThird = quaternaryVennModel.union(quaternaryVennModel.first(),
+                                                                            quaternaryVennModel.second(),
+                                                                            quaternaryVennModel.third());
+        assertNotNull(unionFirstSecondThird);
+        assertEquals(7, unionFirstSecondThird.size());
+        assertTrue(unionFirstSecondThird.contains("foo"));
+        assertTrue(unionFirstSecondThird.contains("bar"));
+        assertTrue(unionFirstSecondThird.contains("baz"));
+        assertTrue(unionFirstSecondThird.contains("qux"));
+
+        quaternaryVennModel.first().add("garply");
+        assertEquals(8, unionFirstSecondThird.size());
+        assertTrue(unionFirstSecondThird.contains("garply"));
+
+        quaternaryVennModel.second().add("garply");
+        assertEquals(9, unionFirstSecondThird.size());
+        assertTrue(unionFirstSecondThird.contains("garply"));
+
+        quaternaryVennModel.third().add("garply");
+        assertEquals(10, unionFirstSecondThird.size());
+        assertTrue(unionFirstSecondThird.contains("garply"));
+
+        quaternaryVennModel.first().remove("garply");
+        quaternaryVennModel.second().remove("garply");
+        quaternaryVennModel.third().remove("garply");
+        assertEquals(7, unionFirstSecondThird.size());
+        assertFalse(unionFirstSecondThird.contains("garply"));
+
+        try
+        {
+            quaternaryVennModel.union(null, quaternaryVennModel.second(), quaternaryVennModel.third());
+            fail("union(null,,) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+        try
+        {
+            quaternaryVennModel.union(quaternaryVennModel.first(), null, quaternaryVennModel.third());
+            fail("union(,null,) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+        try
+        {
+            quaternaryVennModel.union(quaternaryVennModel.first(), quaternaryVennModel.second(), null);
+            fail("union(,,null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+
+        EventList<String> invalid = GlazedLists.eventListOf("foo");
+        try
+        {
+            quaternaryVennModel.union(invalid, quaternaryVennModel.second(), quaternaryVennModel.third());
+            fail("union(invalid,,) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+        try
+        {
+            quaternaryVennModel.union(quaternaryVennModel.first(), invalid, quaternaryVennModel.third());
+            fail("union(,invalid,) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+        try
+        {
+            quaternaryVennModel.union(quaternaryVennModel.first(), quaternaryVennModel.second(), invalid);
+            fail("union(,,invalid) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+    }
+
+    public void testUnionABCIsImmutable()
+    {
+        // todo
+    }
+
+    public void testUnionABCIsCommutative()
+    {
+        QuaternaryVennModel<String> quaternaryVennModel = createQuaternaryVennModel(FIRST, SECOND, THIRD, FOURTH);
+
+        EventList<String> unionFirstSecondThird = quaternaryVennModel.union(quaternaryVennModel.first(),
+                                                                            quaternaryVennModel.second(),
+                                                                            quaternaryVennModel.third());
+        EventList<String> unionFirstThirdSecond = quaternaryVennModel.union(quaternaryVennModel.first(),
+                                                                            quaternaryVennModel.third(),
+                                                                            quaternaryVennModel.second());
+        EventList<String> unionSecondFirstThird = quaternaryVennModel.union(quaternaryVennModel.second(),
+                                                                            quaternaryVennModel.first(),
+                                                                            quaternaryVennModel.third());
+        EventList<String> unionSecondThirdFirst = quaternaryVennModel.union(quaternaryVennModel.second(),
+                                                                            quaternaryVennModel.third(),
+                                                                            quaternaryVennModel.first());
+        EventList<String> unionThirdSecondFirst = quaternaryVennModel.union(quaternaryVennModel.third(),
+                                                                            quaternaryVennModel.second(),
+                                                                            quaternaryVennModel.first());
+        EventList<String> unionThirdFirstSecond = quaternaryVennModel.union(quaternaryVennModel.third(),
+                                                                            quaternaryVennModel.first(),
+                                                                            quaternaryVennModel.second());
+
+        assertEquals(unionFirstSecondThird, unionFirstThirdSecond);
+        assertEquals(unionFirstSecondThird, unionSecondFirstThird);
+        assertEquals(unionFirstSecondThird, unionSecondThirdFirst);
+        assertEquals(unionFirstSecondThird, unionThirdSecondFirst);
+        assertEquals(unionFirstSecondThird, unionThirdFirstSecond);
     }
 }
