@@ -23,8 +23,6 @@
 */
 package org.dishevelled.venn.model;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 
 import ca.odell.glazedlists.CompositeList;
@@ -190,7 +188,10 @@ public final class QuaternaryVennModelImpl<E> implements QuaternaryVennModel<E>
                 /** {@inheritDoc} */
                 public boolean matches(final E item)
                 {
-                    return first.contains(item) && second.contains(item) && third.contains(item) && fourth.contains(item);
+                    return first.contains(item)
+                        && second.contains(item)
+                        && third.contains(item)
+                        && fourth.contains(item);
                 }
             });
         UniqueList<E> unique = new UniqueList<E>(filter);
