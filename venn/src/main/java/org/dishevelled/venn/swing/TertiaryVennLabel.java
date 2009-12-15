@@ -254,9 +254,8 @@ public final class TertiaryVennLabel<E>
     /**
      * Build and return label text.
      *
-     * @param prefix prefix
+     * @param labelText label text
      * @param size size
-     * @param suffix suffix
      * @return label text
      */
     private String buildLabel(final String labelText, final int size)
@@ -276,6 +275,7 @@ public final class TertiaryVennLabel<E>
     /**
      * Build and return content text.
      *
+     * @param <T> value type
      * @param list list
      * @return content text
      */

@@ -23,8 +23,6 @@
 */
 package org.dishevelled.venn.model;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 
 import ca.odell.glazedlists.CompositeList;

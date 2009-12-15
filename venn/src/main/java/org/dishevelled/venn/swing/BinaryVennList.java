@@ -236,9 +236,8 @@ public final class BinaryVennList<E>
     /**
      * Build and return label text.
      *
-     * @param prefix prefix
+     * @param labelText label text
      * @param size size
-     * @param suffix suffix
      * @return label text
      */
     private String buildLabel(final String labelText, final int size)
