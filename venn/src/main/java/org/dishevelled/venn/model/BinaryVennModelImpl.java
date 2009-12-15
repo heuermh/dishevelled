@@ -45,10 +45,10 @@ import org.dishevelled.venn.BinaryVennModel;
 public final class BinaryVennModelImpl<E>
     implements BinaryVennModel<E>
 {
-    /** First list. */
+    /** First list view. */
     private final EventList<E> first;
 
-    /** Second list. */
+    /** Second list view. */
     private final EventList<E> second;
 
     /** Intersection. */

@@ -50,7 +50,7 @@ public abstract class AbstractQuaternaryVennModelTest
     protected static final Set<String> THIRD = new HashSet<String>(Arrays.asList(new String[] { "bar", "baz", "qux" }));
 
     /** Fourth set. */
-    protected static final Set<String> FOURTH = new HashSet<String>(Arrays.asList(new String[] { }));
+    protected static final Set<String> FOURTH = new HashSet<String>(Arrays.asList(new String[] { "bar", "qux" }));
 
 
     /**
@@ -136,18 +136,19 @@ public abstract class AbstractQuaternaryVennModelTest
         QuaternaryVennModel<String> quaternaryVennModel = createQuaternaryVennModel(FIRST, SECOND, THIRD, FOURTH);
         EventList<String> fourth = quaternaryVennModel.fourth();
         assertNotNull(fourth);
-        assertEquals(0, fourth.size());
+        assertEquals(2, fourth.size());
+        assertTrue(fourth.contains("bar"));
+        assertTrue(fourth.contains("qux"));
 
         fourth.add("garply");
-        assertEquals(1, fourth.size());
+        assertEquals(3, fourth.size());
         assertTrue(fourth.contains("garply"));
 
         fourth.remove("garply");
-        assertEquals(0, fourth.size());
+        assertEquals(2, fourth.size());
         assertFalse(fourth.contains("garply"));
     }
 
-    /*
     public void testIntersection()
     {
         QuaternaryVennModel<String> quaternaryVennModel = createQuaternaryVennModel(FIRST, SECOND, THIRD, FOURTH);
@@ -159,12 +160,14 @@ public abstract class AbstractQuaternaryVennModelTest
         quaternaryVennModel.first().add("garply");
         quaternaryVennModel.second().add("garply");
         quaternaryVennModel.third().add("garply");
+        quaternaryVennModel.fourth().add("garply");
         assertEquals(2, intersection.size());
         assertTrue(intersection.contains("garply"));
 
         quaternaryVennModel.first().remove("garply");
         quaternaryVennModel.second().remove("garply");
         quaternaryVennModel.third().remove("garply");
+        quaternaryVennModel.fourth().remove("garply");
         assertEquals(1, intersection.size());
         assertFalse(intersection.contains("garply"));
     }
@@ -174,7 +177,7 @@ public abstract class AbstractQuaternaryVennModelTest
         // todo
     }
 
-    public void testIntersect()
+    public void testIntersectAB()
     {
         QuaternaryVennModel<String> quaternaryVennModel = createQuaternaryVennModel(FIRST, SECOND, THIRD, FOURTH);
 
@@ -212,12 +215,12 @@ public abstract class AbstractQuaternaryVennModelTest
         assertFalse(intersectSecondThird.contains("garply"));
     }
 
-    public void testIntersectIsImmutable()
+    public void testIntersectABIsImmutable()
     {
         // todo
     }
 
-    public void testIntersectIsCommutative()
+    public void testIntersectABIsCommutative()
     {
         QuaternaryVennModel<String> quaternaryVennModel = createQuaternaryVennModel(FIRST, SECOND, THIRD, FOURTH);
 
@@ -240,28 +243,28 @@ public abstract class AbstractQuaternaryVennModelTest
         QuaternaryVennModel<String> quaternaryVennModel = createQuaternaryVennModel(FIRST, SECOND, THIRD, FOURTH);
         EventList<String> union = quaternaryVennModel.union();
         assertNotNull(union);
-        assertEquals(7, union.size());
+        assertEquals(9, union.size());
         assertTrue(union.contains("foo"));
         assertTrue(union.contains("bar"));
         assertTrue(union.contains("baz"));
         assertTrue(union.contains("qux"));
 
         quaternaryVennModel.first().add("garply");
-        assertEquals(8, union.size());
+        assertEquals(10, union.size());
         assertTrue(union.contains("garply"));
 
         quaternaryVennModel.second().add("garply");
-        assertEquals(9, union.size());
+        assertEquals(11, union.size());
         assertTrue(union.contains("garply"));
 
         quaternaryVennModel.third().add("garply");
-        assertEquals(10, union.size());
+        assertEquals(12, union.size());
         assertTrue(union.contains("garply"));
 
         quaternaryVennModel.first().remove("garply");
         quaternaryVennModel.second().remove("garply");
         quaternaryVennModel.third().remove("garply");
-        assertEquals(7, union.size());
+        assertEquals(9, union.size());
         assertFalse(union.contains("garply"));
     }
 
@@ -339,5 +342,4 @@ public abstract class AbstractQuaternaryVennModelTest
                 quaternaryVennModel.second());
         assertEquals(unionSecondThird, unionThirdSecond);
     }
-    */
 }

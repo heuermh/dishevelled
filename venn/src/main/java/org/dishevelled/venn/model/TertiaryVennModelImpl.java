@@ -54,28 +54,28 @@ import org.dishevelled.venn.TertiaryVennModel;
  */
 public final class TertiaryVennModelImpl<E> implements TertiaryVennModel<E>
 {
-    /** First list. */
+    /** First list view. */
     private final EventList<E> first;
 
-    /** Second list. */
+    /** Second list view. */
     private final EventList<E> second;
 
-    /** Third list. */
+    /** Third list view. */
     private final EventList<E> third;
 
-    /** List of lists. */
-    private final List<EventList<E>> lists;
+    /** Array of list views. */
+    private final EventList[] lists;
 
     /** Intersection. */
     private final EventList<E> intersection;
 
-    /** 2D matrix of intersections indexed by list. */
+    /** 2D matrix of intersections indexed by list view. */
     private final Matrix2D<EventList<E>> intersections;
 
     /** Union. */
     private final EventList<E> union;
 
-    /** 2D matrix of unions indexed by list. */
+    /** 2D matrix of unions indexed by list view. */
     private final Matrix2D<EventList<E>> unions;
 
 
@@ -129,11 +129,7 @@ public final class TertiaryVennModelImpl<E> implements TertiaryVennModel<E>
         second.addAll(set1);
         third.addAll(set2);
 
-        lists = new ArrayList<EventList<E>>(3);
-        lists.add(first);
-        lists.add(second);
-        lists.add(third);
-        // todo, make immutable?
+        lists = new EventList[] { first, second, third };
 
         FilterList<E> filter = new FilterList<E>(composite, new Matcher<E>()
             {
@@ -234,12 +230,12 @@ public final class TertiaryVennModelImpl<E> implements TertiaryVennModel<E>
     /** {@inheritDoc} */
     public EventList<E> intersect(final EventList<E> a, final EventList<E> b)
     {
-        int i = lists.indexOf(a);
+        int i = indexOf(a);
         if (i < 0)
         {
             throw new IllegalArgumentException("a must be one of first(), second(), or third()");
         }
-        int j = lists.indexOf(b);
+        int j = indexOf(b);
         if (j < 0)
         {
             throw new IllegalArgumentException("b must be one of first(), second(), or third()");
@@ -256,16 +252,34 @@ public final class TertiaryVennModelImpl<E> implements TertiaryVennModel<E>
     /** {@inheritDoc} */
     public EventList<E> union(final EventList<E> a, final EventList<E> b)
     {
-        int i = lists.indexOf(a);
+        int i = indexOf(a);
         if (i < 0)
         {
             throw new IllegalArgumentException("a must be one of first(), second(), or third()");
         }
-        int j = lists.indexOf(b);
+        int j = indexOf(b);
         if (j < 0)
         {
             throw new IllegalArgumentException("b must be one of first(), second(), or third()");
         }
         return unions.get(i, j);
+    }
+
+    /**
+     * Return the index of the specified list view.
+     *
+     * @param list list view
+     * @return the index of the specified list
+     */
+    private int indexOf(final EventList<E> list)
+    {
+        for (int i = 0; i < lists.length; i++)
+        {
+            if (lists[i] == list)
+            {
+                return i;
+            }
+        }
+        return -1;
     }
 }
