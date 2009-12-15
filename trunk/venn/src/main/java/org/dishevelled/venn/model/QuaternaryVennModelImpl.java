@@ -56,38 +56,38 @@ import org.dishevelled.venn.QuaternaryVennModel;
  */
 public final class QuaternaryVennModelImpl<E> implements QuaternaryVennModel<E>
 {
-    /** First list. */
+    /** First list view. */
     private final EventList<E> first;
 
-    /** Second list. */
+    /** Second list view. */
     private final EventList<E> second;
 
-    /** Third list. */
+    /** Third list view. */
     private final EventList<E> third;
 
-    /** Fourth list. */
+    /** Fourth list view. */
     private final EventList<E> fourth;
 
-    /** List of lists. */
-    private final List<EventList<E>> lists;
+    /** Array of list views. */
+    private final EventList[] lists;
 
     /** Intersection. */
     private final EventList<E> intersection;
 
-    /** 2D matrix of binary intersections indexed by list. */
+    /** 2D matrix of binary intersections indexed by list view. */
     private final Matrix2D<EventList<E>> binaryIntersections;
 
-    /** 3D matrix of tertiary intersections indexed by list. */
-    //private final Matrix3D<EventList<E>> tertiaryIntersections;
+    /** 3D matrix of tertiary intersections indexed by list view. */
+    private final Matrix3D<EventList<E>> tertiaryIntersections;
 
     /** Union. */
     private final EventList<E> union;
 
-    /** 2D matrix of binary unions indexed by list. */
+    /** 2D matrix of binary unions indexed by list view. */
     private final Matrix2D<EventList<E>> binaryUnions;
 
-    /** 3D matrix of tertiary unions indexed by list. */
-    //private final Matrix3D<EventList<E>> tertiaryUnions;
+    /** 3D matrix of tertiary unions indexed by list view. */
+    private final Matrix3D<EventList<E>> tertiaryUnions;
 
 
     /**
@@ -158,19 +158,32 @@ public final class QuaternaryVennModelImpl<E> implements QuaternaryVennModel<E>
         composite23.addMemberList(second);
         composite23.addMemberList(third);
 
-        // todo: tertiary composites
+        CompositeList<E> composite012 = new CompositeList<E>(publisher, readWriteLock);
+        composite012.addMemberList(first);
+        composite012.addMemberList(second);
+        composite012.addMemberList(third);
+
+        CompositeList<E> composite023 = new CompositeList<E>(publisher, readWriteLock);
+        composite023.addMemberList(first);
+        composite023.addMemberList(third);
+        composite023.addMemberList(fourth);
+
+        CompositeList<E> composite013 = new CompositeList<E>(publisher, readWriteLock);
+        composite013.addMemberList(first);
+        composite013.addMemberList(second);
+        composite013.addMemberList(fourth);
+
+        CompositeList<E> composite123 = new CompositeList<E>(publisher, readWriteLock);
+        composite123.addMemberList(second);
+        composite123.addMemberList(third);
+        composite123.addMemberList(fourth);
 
         first.addAll(set0);
         second.addAll(set1);
         third.addAll(set2);
         fourth.addAll(set3);
 
-        lists = new ArrayList<EventList<E>>(3);
-        lists.add(first);
-        lists.add(second);
-        lists.add(third);
-        lists.add(fourth);
-        // todo, make immutable?
+        lists = new EventList[] { first, second, third, fourth };
 
         FilterList<E> filter = new FilterList<E>(composite, new Matcher<E>()
             {
@@ -293,7 +306,109 @@ public final class QuaternaryVennModelImpl<E> implements QuaternaryVennModel<E>
         binaryIntersections.set(2L, 3L, intersection23);
         binaryIntersections.set(3L, 2L, intersection23);
 
-        // todo:  tertiary unions and intersections
+        FilterList<E> filter012 = new FilterList<E>(composite012, new Matcher<E>()
+            {
+                /** {@inheritDoc} */
+                public boolean matches(final E item)
+                {
+                    return first.contains(item) && second.contains(item) && third.contains(item);
+                }
+            });
+        UniqueList<E> unique012 = new UniqueList<E>(filter012);
+
+        EventList<E> union012 = GlazedLists.readOnlyList(composite012);
+        EventList<E> intersection012 = GlazedLists.readOnlyList(unique012);
+
+        FilterList<E> filter023 = new FilterList<E>(composite023, new Matcher<E>()
+            {
+                /** {@inheritDoc} */
+                public boolean matches(final E item)
+                {
+                    return first.contains(item) && third.contains(item) && fourth.contains(item);
+                }
+            });
+        UniqueList<E> unique023 = new UniqueList<E>(filter023);
+
+        EventList<E> union023 = GlazedLists.readOnlyList(composite023);
+        EventList<E> intersection023 = GlazedLists.readOnlyList(unique023);
+
+        FilterList<E> filter013 = new FilterList<E>(composite013, new Matcher<E>()
+            {
+                /** {@inheritDoc} */
+                public boolean matches(final E item)
+                {
+                    return first.contains(item) && second.contains(item) && fourth.contains(item);
+                }
+            });
+        UniqueList<E> unique013 = new UniqueList<E>(filter013);
+
+        EventList<E> union013 = GlazedLists.readOnlyList(composite013);
+        EventList<E> intersection013 = GlazedLists.readOnlyList(unique013);
+
+        FilterList<E> filter123 = new FilterList<E>(composite123, new Matcher<E>()
+            {
+                /** {@inheritDoc} */
+                public boolean matches(final E item)
+                {
+                    return second.contains(item) && third.contains(item) && fourth.contains(item);
+                }
+            });
+        UniqueList<E> unique123 = new UniqueList<E>(filter123);
+
+        EventList<E> union123 = GlazedLists.readOnlyList(composite123);
+        EventList<E> intersection123 = GlazedLists.readOnlyList(unique123);
+
+        tertiaryUnions = new SparseMatrix3D<EventList<E>>(4L, 4L, 4L);
+        tertiaryUnions.set(0L, 1L, 2L, union012);
+        tertiaryUnions.set(0L, 2L, 1L, union012);
+        tertiaryUnions.set(1L, 0L, 2L, union012);
+        tertiaryUnions.set(1L, 2L, 0L, union012);
+        tertiaryUnions.set(2L, 0L, 1L, union012);
+        tertiaryUnions.set(2L, 1L, 0L, union012);
+        tertiaryUnions.set(0L, 2L, 3L, union023);
+        tertiaryUnions.set(0L, 3L, 2L, union023);
+        tertiaryUnions.set(2L, 0L, 3L, union023);
+        tertiaryUnions.set(2L, 3L, 0L, union023);
+        tertiaryUnions.set(3L, 0L, 2L, union023);
+        tertiaryUnions.set(3L, 2L, 0L, union023);
+        tertiaryUnions.set(0L, 1L, 3L, union013);
+        tertiaryUnions.set(0L, 3L, 1L, union013);
+        tertiaryUnions.set(1L, 0L, 3L, union013);
+        tertiaryUnions.set(1L, 3L, 0L, union013);
+        tertiaryUnions.set(3L, 0L, 1L, union013);
+        tertiaryUnions.set(3L, 1L, 0L, union013);
+        tertiaryUnions.set(1L, 2L, 3L, union123);
+        tertiaryUnions.set(1L, 3L, 2L, union123);
+        tertiaryUnions.set(2L, 1L, 3L, union123);
+        tertiaryUnions.set(2L, 3L, 1L, union123);
+        tertiaryUnions.set(3L, 1L, 2L, union123);
+        tertiaryUnions.set(3L, 2L, 1L, union123);
+
+        tertiaryIntersections = new SparseMatrix3D<EventList<E>>(4L, 4L, 4L);
+        tertiaryIntersections.set(0L, 1L, 2L, intersection012);
+        tertiaryIntersections.set(0L, 2L, 1L, intersection012);
+        tertiaryIntersections.set(1L, 0L, 2L, intersection012);
+        tertiaryIntersections.set(1L, 2L, 0L, intersection012);
+        tertiaryIntersections.set(2L, 0L, 1L, intersection012);
+        tertiaryIntersections.set(2L, 1L, 0L, intersection012);
+        tertiaryIntersections.set(0L, 2L, 3L, intersection023);
+        tertiaryIntersections.set(0L, 3L, 2L, intersection023);
+        tertiaryIntersections.set(2L, 0L, 3L, intersection023);
+        tertiaryIntersections.set(2L, 3L, 0L, intersection023);
+        tertiaryIntersections.set(3L, 0L, 2L, intersection023);
+        tertiaryIntersections.set(3L, 2L, 0L, intersection023);
+        tertiaryIntersections.set(0L, 1L, 3L, intersection013);
+        tertiaryIntersections.set(0L, 3L, 1L, intersection013);
+        tertiaryIntersections.set(1L, 0L, 3L, intersection013);
+        tertiaryIntersections.set(1L, 3L, 0L, intersection013);
+        tertiaryIntersections.set(3L, 0L, 1L, intersection013);
+        tertiaryIntersections.set(3L, 1L, 0L, intersection013);
+        tertiaryIntersections.set(1L, 2L, 3L, intersection123);
+        tertiaryIntersections.set(1L, 3L, 2L, intersection123);
+        tertiaryIntersections.set(2L, 1L, 3L, intersection123);
+        tertiaryIntersections.set(2L, 3L, 1L, intersection123);
+        tertiaryIntersections.set(3L, 1L, 2L, intersection123);
+        tertiaryIntersections.set(3L, 2L, 1L, intersection123);
     }
 
 
@@ -330,12 +445,12 @@ public final class QuaternaryVennModelImpl<E> implements QuaternaryVennModel<E>
     /** {@inheritDoc} */
     public EventList<E> intersect(final EventList<E> a, final EventList<E> b)
     {
-        int i = lists.indexOf(a);
+        int i = indexOf(a);
         if (i < 0)
         {
             throw new IllegalArgumentException("a must be one of first(), second(), or third()");
         }
-        int j = lists.indexOf(b);
+        int j = indexOf(b);
         if (j < 0)
         {
             throw new IllegalArgumentException("b must be one of first(), second(), or third()");
@@ -346,23 +461,22 @@ public final class QuaternaryVennModelImpl<E> implements QuaternaryVennModel<E>
     /** {@inheritDoc} */
     public EventList<E> intersect(final EventList<E> a, final EventList<E> b, final EventList<E> c)
     {
-        int i = lists.indexOf(a);
+        int i = indexOf(a);
         if (i < 0)
         {
             throw new IllegalArgumentException("a must be one of first(), second(), third(), or fourth()");
         }
-        int j = lists.indexOf(b);
+        int j = indexOf(b);
         if (j < 0)
         {
             throw new IllegalArgumentException("b must be one of first(), second(), third(), or fourth()");
         }
-        int k = lists.indexOf(c);
+        int k = indexOf(c);
         if (k < 0)
         {
             throw new IllegalArgumentException("c must be one of first(), second(), third(), or fourth()");
         }
-        return null;
-        //return tertiaryIntersections.get(i, j, k);
+        return tertiaryIntersections.get(i, j, k);
     }
 
     /** {@inheritDoc} */
@@ -374,12 +488,12 @@ public final class QuaternaryVennModelImpl<E> implements QuaternaryVennModel<E>
     /** {@inheritDoc} */
     public EventList<E> union(final EventList<E> a, final EventList<E> b)
     {
-        int i = lists.indexOf(a);
+        int i = indexOf(a);
         if (i < 0)
         {
             throw new IllegalArgumentException("a must be one of first(), second(), third(), or fourth()");
         }
-        int j = lists.indexOf(b);
+        int j = indexOf(b);
         if (j < 0)
         {
             throw new IllegalArgumentException("b must be one of first(), second(), third(), or fourth()");
@@ -390,22 +504,39 @@ public final class QuaternaryVennModelImpl<E> implements QuaternaryVennModel<E>
     /** {@inheritDoc} */
     public EventList<E> union(final EventList<E> a, final EventList<E> b, final EventList<E> c)
     {
-        int i = lists.indexOf(a);
+        int i = indexOf(a);
         if (i < 0)
         {
             throw new IllegalArgumentException("a must be one of first(), second(), third(), or fourth()");
         }
-        int j = lists.indexOf(b);
+        int j = indexOf(b);
         if (j < 0)
         {
             throw new IllegalArgumentException("b must be one of first(), second(), third(), or fourth()");
         }
-        int k = lists.indexOf(c);
+        int k = indexOf(c);
         if (k < 0)
         {
             throw new IllegalArgumentException("b must be one of first(), second(), third(), or fourth()");
         }
-        return null;
-        //return tertiaryUnions.get(i, j, k);
+        return tertiaryUnions.get(i, j, k);
+    }
+
+    /**
+     * Return the index of the specified list view.
+     *
+     * @param list list view
+     * @return the index of the specified list
+     */
+    private int indexOf(final EventList<E> list)
+    {
+        for (int i = 0; i < lists.length; i++)
+        {
+            if (lists[i] == list)
+            {
+                return i;
+            }
+        }
+        return -1;
     }
 }
