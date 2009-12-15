@@ -30,6 +30,7 @@ import java.util.Set;
 import junit.framework.TestCase;
 
 import ca.odell.glazedlists.EventList;
+import ca.odell.glazedlists.GlazedLists;
 
 /**
  * Abstract unit test for implementations of TertiaryVennModel.
@@ -186,6 +187,45 @@ public abstract class AbstractTertiaryVennModelTest
         tertiaryVennModel.third().remove("garply");
         assertEquals(2, intersectSecondThird.size());
         assertFalse(intersectSecondThird.contains("garply"));
+
+        try
+        {
+            tertiaryVennModel.intersect(null, tertiaryVennModel.second());
+            fail("intersect(null,) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+        try
+        {
+            tertiaryVennModel.intersect(tertiaryVennModel.first(), null);
+            fail("intersect(,null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+
+        EventList<String> invalid = GlazedLists.eventListOf("foo");
+        try
+        {
+            tertiaryVennModel.intersect(invalid, tertiaryVennModel.second());
+            fail("intersect(invalid,) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+        try
+        {
+            tertiaryVennModel.intersect(tertiaryVennModel.first(), invalid);
+            fail("intersect(,invalid) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
     }
 
     public void testIntersectIsImmutable()
@@ -239,6 +279,45 @@ public abstract class AbstractTertiaryVennModelTest
         tertiaryVennModel.third().remove("garply");
         assertEquals(7, union.size());
         assertFalse(union.contains("garply"));
+
+        try
+        {
+            tertiaryVennModel.union(null, tertiaryVennModel.second());
+            fail("union(null,) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+        try
+        {
+            tertiaryVennModel.union(tertiaryVennModel.first(), null);
+            fail("union(,null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+
+        EventList<String> invalid = GlazedLists.eventListOf("foo");
+        try
+        {
+            tertiaryVennModel.union(invalid, tertiaryVennModel.second());
+            fail("union(invalid,) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+        try
+        {
+            tertiaryVennModel.union(tertiaryVennModel.first(), invalid);
+            fail("union(,invalid) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
     }
 
     public void testUnionIsImmutable()
