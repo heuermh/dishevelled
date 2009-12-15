@@ -188,7 +188,7 @@ public final class QuaternaryVennNode<E>
         Ellipse2D ellipse = new Ellipse2D.Double(0.0d, 0.0d, 376.0d, 234.0d);
         Point2D center = new Point2D.Double(ellipse.getBounds2D().getCenterX(), ellipse.getBounds2D().getCenterY());
         Area firstArea = new Area(ellipse);
-        firstArea = firstArea.createTransformedArea(AffineTransform.getRotateInstance((-2.0d * Math.PI) / 9.0d, center.getX(), center.getY()));
+        firstArea = firstArea.createTransformedArea(AffineTransform.getRotateInstance((2.0d * Math.PI) / 9.0d, center.getX(), center.getY()));
         first = new PPath();
         first.setPathTo(firstArea);
 
@@ -199,8 +199,8 @@ public final class QuaternaryVennNode<E>
         firstSize = new PText();
 
         Area secondArea = new Area(ellipse);
-        secondArea = secondArea.createTransformedArea(AffineTransform.getRotateInstance((-2.0d * Math.PI) / 9.0d, center.getX(), center.getY()));
-        secondArea = secondArea.createTransformedArea(AffineTransform.getTranslateInstance(105.0d, 85.0d));
+        secondArea = secondArea.createTransformedArea(AffineTransform.getRotateInstance((2.0d * Math.PI) / 9.0d, center.getX(), center.getY()));
+        secondArea = secondArea.createTransformedArea(AffineTransform.getTranslateInstance(105.0d, -85.0d));
         second = new PPath();
         second.setPathTo(secondArea);
 
@@ -211,8 +211,8 @@ public final class QuaternaryVennNode<E>
         secondSize = new PText();
 
         Area thirdArea = new Area(ellipse);
-        thirdArea = thirdArea.createTransformedArea(AffineTransform.getRotateInstance((2.0d * Math.PI) / 9.0d, center.getX(), center.getY()));
-        thirdArea = thirdArea.createTransformedArea(AffineTransform.getTranslateInstance(-105.0d, 85.0d));
+        thirdArea = thirdArea.createTransformedArea(AffineTransform.getRotateInstance((-2.0d * Math.PI) / 9.0d, center.getX(), center.getY()));
+        thirdArea = thirdArea.createTransformedArea(AffineTransform.getTranslateInstance(210.0d, -85.0d));
         third = new PPath();
         third.setPathTo(thirdArea);
 
@@ -223,7 +223,8 @@ public final class QuaternaryVennNode<E>
         thirdSize = new PText();
 
         Area fourthArea = new Area(ellipse);
-        fourthArea = fourthArea.createTransformedArea(AffineTransform.getRotateInstance((2.0d * Math.PI) / 9.0d, center.getX(), center.getY()));
+        fourthArea = fourthArea.createTransformedArea(AffineTransform.getRotateInstance((-2.0d * Math.PI) / 9.0d, center.getX(), center.getY()));
+        fourthArea = fourthArea.createTransformedArea(AffineTransform.getTranslateInstance(210.0d, 0.0d));
         fourth = new PPath();
         fourth.setPathTo(fourthArea);
 
@@ -336,13 +337,13 @@ public final class QuaternaryVennNode<E>
     private void initLabels()
     {
         firstLabel.setText(buildLabel(firstLabelText, model.first().size()));
-        firstSize.setText(String.valueOf(model.first().size() - model.intersection().size()));
+        firstSize.setText("first=" + String.valueOf(model.first().size() - model.intersection().size()));
         secondLabel.setText(buildLabel(secondLabelText, model.second().size()));
-        secondSize.setText(String.valueOf(model.second().size() - model.intersection().size()));
+        secondSize.setText("second=" + String.valueOf(model.second().size() - model.intersection().size()));
         thirdLabel.setText(buildLabel(thirdLabelText, model.third().size()));
-        thirdSize.setText(String.valueOf(model.third().size() - model.intersection().size()));
+        thirdSize.setText("third=" + String.valueOf(model.third().size() - model.intersection().size()));
         fourthLabel.setText(buildLabel(fourthLabelText, model.fourth().size()));
-        fourthSize.setText(String.valueOf(model.fourth().size() - model.intersection().size()));
+        fourthSize.setText("fourth=" + String.valueOf(model.fourth().size() - model.intersection().size()));
         intersectionSize.setText(String.valueOf(model.intersection().size()));
         firstSecondSize.setText(String.valueOf(model.union(model.first(), model.second()).size() - model.intersection().size()));
         firstThirdSize.setText(String.valueOf(model.union(model.first(), model.third()).size() - model.intersection().size()));
