@@ -200,7 +200,7 @@ public final class QuaternaryVennNode<E>
 
         Area secondArea = new Area(ellipse);
         secondArea = secondArea.createTransformedArea(AffineTransform.getRotateInstance((2.0d * Math.PI) / 9.0d, center.getX(), center.getY()));
-        secondArea = secondArea.createTransformedArea(AffineTransform.getTranslateInstance(105.0d, -85.0d));
+        secondArea = secondArea.createTransformedArea(AffineTransform.getTranslateInstance(72.0d, -85.0d));
         second = new PPath();
         second.setPathTo(secondArea);
 
@@ -212,7 +212,7 @@ public final class QuaternaryVennNode<E>
 
         Area thirdArea = new Area(ellipse);
         thirdArea = thirdArea.createTransformedArea(AffineTransform.getRotateInstance((-2.0d * Math.PI) / 9.0d, center.getX(), center.getY()));
-        thirdArea = thirdArea.createTransformedArea(AffineTransform.getTranslateInstance(210.0d, -85.0d));
+        thirdArea = thirdArea.createTransformedArea(AffineTransform.getTranslateInstance(72.0d, -85.0d));
         third = new PPath();
         third.setPathTo(thirdArea);
 
@@ -224,7 +224,7 @@ public final class QuaternaryVennNode<E>
 
         Area fourthArea = new Area(ellipse);
         fourthArea = fourthArea.createTransformedArea(AffineTransform.getRotateInstance((-2.0d * Math.PI) / 9.0d, center.getX(), center.getY()));
-        fourthArea = fourthArea.createTransformedArea(AffineTransform.getTranslateInstance(210.0d, 0.0d));
+        fourthArea = fourthArea.createTransformedArea(AffineTransform.getTranslateInstance(144.0d, 0.0d));
         fourth = new PPath();
         fourth.setPathTo(fourthArea);
 
@@ -421,20 +421,26 @@ public final class QuaternaryVennNode<E>
         Rectangle2D firstThirdSizeBounds = firstThirdSize.getFullBoundsReference();
         Rectangle2D secondThirdSizeBounds = secondThirdSize.getFullBoundsReference();
 
-        firstLabel.setOffset(firstBounds.getX() + (firstBounds.getWidth() / 2.0d) - (firstLabelBounds.getWidth() / 2.0d),
-                             -1.0d * firstLabelBounds.getHeight() - 4.0d);
-        secondLabel.setOffset(secondBounds.getX() + (secondBounds.getWidth() / 2.0d) - (secondLabelBounds.getWidth() / 2.0d),
+
+        firstLabel.setOffset(firstBounds.getX() + (firstBounds.getWidth() / 4.0d) - (firstLabelBounds.getWidth() / 2.0d),
+                             firstBounds.getY() - firstBounds.getHeight() - firstLabelBounds.getHeight() - 4.0d);
+        secondLabel.setOffset(secondBounds.getX() + (secondBounds.getWidth() / 4.0d) - (secondLabelBounds.getWidth() / 2.0d),
                               -1.0d * secondLabelBounds.getHeight() - 24.0d);
-        thirdLabel.setOffset(thirdBounds.getX() + (thirdBounds.getWidth() / 2.0d) - (thirdLabelBounds.getWidth() / 2.0d),
+        thirdLabel.setOffset(thirdBounds.getX() + (3.0d * thirdBounds.getWidth() / 4.0d) - (thirdLabelBounds.getWidth() / 2.0d),
                              -1.0d * thirdLabelBounds.getHeight() - 24.0d);
-        fourthLabel.setOffset(fourthBounds.getX() + (fourthBounds.getWidth() / 2.0d) - (fourthLabelBounds.getWidth() / 2.0d),
+        fourthLabel.setOffset(fourthBounds.getX() + (3.0d * fourthBounds.getWidth() / 4.0d) - (fourthLabelBounds.getWidth() / 2.0d),
                              -1.0d * fourthLabelBounds.getHeight() - 4.0d);
+
+        // todo:  move to upper 1/4th and outer 1/4th
         firstSize.setOffset(firstBounds.getCenterX() - (firstSizeBounds.getWidth() / 2.0d),
                             firstBounds.getCenterY() - (firstSizeBounds.getHeight() / 2.0d));
+        // todo:  up and out a bit
         secondSize.setOffset(secondBounds.getCenterX() - (secondSizeBounds.getWidth() / 2.0d),
                             secondBounds.getCenterY() - (secondSizeBounds.getHeight() / 2.0d));
+        // todo:  up and out a bit
         thirdSize.setOffset(thirdBounds.getCenterX() - (thirdSizeBounds.getWidth() / 2.0d),
                             thirdBounds.getCenterY() - (thirdSizeBounds.getHeight() / 2.0d));
+        // todo:  move to upper 1/4th and outer 1/4th
         fourthSize.setOffset(fourthBounds.getCenterX() - (fourthSizeBounds.getWidth() / 2.0d),
                              fourthBounds.getCenterY() - (fourthSizeBounds.getHeight() / 2.0d));
 

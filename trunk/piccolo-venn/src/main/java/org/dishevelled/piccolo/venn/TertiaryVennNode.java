@@ -166,19 +166,19 @@ public final class TertiaryVennNode<E>
         //   using colors from wikipedia image, choose others or attribute correctly
         first = PPath.createEllipse(0.0f, 0.0f, 128.0f, 128.0f);
         first.setPaint(new Color(5, 37, 255, 50));
-        first.setStroke(new BasicStroke(1.0f));
+        first.setStroke(new BasicStroke(0.5f));
         first.setStrokePaint(new Color(20, 20, 20));
         firstSize = new PText();
         secondLabel = new PText();
         second = PPath.createEllipse(((2.0f * 128.0f) / 3.0f), 0.0f, 128.0f, 128.0f);
         second.setPaint(new Color(255, 100, 5, 50));
-        second.setStroke(new BasicStroke(1.0f));
+        second.setStroke(new BasicStroke(0.5f));
         second.setStrokePaint(new Color(20, 20, 20));
         secondSize = new PText();
         thirdLabel = new PText();
         third = PPath.createEllipse(128.0f / 3.0f, (2.0f * 128.0f) / 3.0f, 128.0f, 128.0f);
         third.setPaint(new Color(30, 30, 30, 50));
-        third.setStroke(new BasicStroke(1.0f));
+        third.setStroke(new BasicStroke(0.5f));
         third.setStrokePaint(new Color(20, 20, 20));
         thirdSize = new PText();
         intersection = new AreaNode();
@@ -356,7 +356,7 @@ public final class TertiaryVennNode<E>
 
         // todo:  this label seems to be misplaced +y a bit, maybe the full bounds calc is off
         intersectionSize.setOffset(intersectionBounds.getCenterX() - (intersectionSizeBounds.getWidth() / 2.0d),
-                                   intersectionBounds.getCenterY() - (intersectionSizeBounds.getHeight() / 2.0d));
+                                   intersectionBounds.getCenterY() - (2.0d * intersectionSizeBounds.getHeight() / 3.0d));
 
         firstSecondSize.setOffset(firstSecondBounds.getCenterX() - (firstSecondSizeBounds.getWidth() / 2.0d),
                                   firstSecondBounds.getCenterY() - (firstSecondSizeBounds.getHeight() / 2.0d));
