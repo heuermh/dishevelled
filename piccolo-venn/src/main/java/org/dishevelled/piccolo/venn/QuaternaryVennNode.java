@@ -337,13 +337,13 @@ public final class QuaternaryVennNode<E>
     private void initLabels()
     {
         firstLabel.setText(buildLabel(firstLabelText, model.first().size()));
-        firstSize.setText("first=" + String.valueOf(model.first().size() - model.intersection().size()));
+        firstSize.setText(String.valueOf(model.first().size() - model.intersection().size()));
         secondLabel.setText(buildLabel(secondLabelText, model.second().size()));
-        secondSize.setText("second=" + String.valueOf(model.second().size() - model.intersection().size()));
+        secondSize.setText(String.valueOf(model.second().size() - model.intersection().size()));
         thirdLabel.setText(buildLabel(thirdLabelText, model.third().size()));
-        thirdSize.setText("third=" + String.valueOf(model.third().size() - model.intersection().size()));
+        thirdSize.setText(String.valueOf(model.third().size() - model.intersection().size()));
         fourthLabel.setText(buildLabel(fourthLabelText, model.fourth().size()));
-        fourthSize.setText("fourth=" + String.valueOf(model.fourth().size() - model.intersection().size()));
+        fourthSize.setText(String.valueOf(model.fourth().size() - model.intersection().size()));
         intersectionSize.setText(String.valueOf(model.intersection().size()));
         firstSecondSize.setText(String.valueOf(model.union(model.first(), model.second()).size() - model.intersection().size()));
         firstThirdSize.setText(String.valueOf(model.union(model.first(), model.third()).size() - model.intersection().size()));
@@ -432,17 +432,32 @@ public final class QuaternaryVennNode<E>
                              -1.0d * fourthLabelBounds.getHeight() - 4.0d);
 
         // todo:  move to upper 1/4th and outer 1/4th
-        firstSize.setOffset(firstBounds.getCenterX() - (firstSizeBounds.getWidth() / 2.0d),
-                            firstBounds.getCenterY() - (firstSizeBounds.getHeight() / 2.0d));
+        Point2D firstCentroid = Centers.centroidOf(firstArea);
+        //firstSize.setOffset(firstBounds.getCenterX() - (firstSizeBounds.getWidth() / 2.0d),
+        //                    firstBounds.getCenterY() - (firstSizeBounds.getHeight() / 2.0d));
+        firstSize.setOffset(firstCentroid.getX() - (firstSizeBounds.getWidth() / 2.0d),
+                            firstCentroid.getY() - (firstSizeBounds.getHeight() / 2.0d));
+
         // todo:  up and out a bit
-        secondSize.setOffset(secondBounds.getCenterX() - (secondSizeBounds.getWidth() / 2.0d),
-                            secondBounds.getCenterY() - (secondSizeBounds.getHeight() / 2.0d));
+        Point2D secondCentroid = Centers.centroidOf(secondArea);
+        //secondSize.setOffset(secondBounds.getCenterX() - (secondSizeBounds.getWidth() / 2.0d),
+        //                    secondBounds.getCenterY() - (secondSizeBounds.getHeight() / 2.0d));
+        secondSize.setOffset(secondCentroid.getX() - (secondSizeBounds.getWidth() / 2.0d),
+                            secondCentroid.getY() - (secondSizeBounds.getHeight() / 2.0d));
+
         // todo:  up and out a bit
-        thirdSize.setOffset(thirdBounds.getCenterX() - (thirdSizeBounds.getWidth() / 2.0d),
-                            thirdBounds.getCenterY() - (thirdSizeBounds.getHeight() / 2.0d));
+        Point2D thirdCentroid = Centers.centroidOf(thirdArea);
+        //thirdSize.setOffset(thirdBounds.getCenterX() - (thirdSizeBounds.getWidth() / 2.0d),
+        //                    thirdBounds.getCenterY() - (thirdSizeBounds.getHeight() / 2.0d));
+        thirdSize.setOffset(thirdCentroid.getX() - (thirdSizeBounds.getWidth() / 2.0d),
+                            thirdCentroid.getY() - (thirdSizeBounds.getHeight() / 2.0d));
+
         // todo:  move to upper 1/4th and outer 1/4th
-        fourthSize.setOffset(fourthBounds.getCenterX() - (fourthSizeBounds.getWidth() / 2.0d),
-                             fourthBounds.getCenterY() - (fourthSizeBounds.getHeight() / 2.0d));
+        Point2D fourthCentroid = Centers.centroidOf(fourthArea);
+        //fourthSize.setOffset(fourthBounds.getCenterX() - (fourthSizeBounds.getWidth() / 2.0d),
+        //                     fourthBounds.getCenterY() - (fourthSizeBounds.getHeight() / 2.0d));
+        fourthSize.setOffset(fourthCentroid.getX() - (fourthSizeBounds.getWidth() / 2.0d),
+                             fourthCentroid.getY() - (fourthSizeBounds.getHeight() / 2.0d));
 
         // todo:  this label seems to be misplaced +y a bit, maybe the full bounds calc is off
         intersectionSize.setOffset(intersectionBounds.getCenterX() - (intersectionSizeBounds.getWidth() / 2.0d),
