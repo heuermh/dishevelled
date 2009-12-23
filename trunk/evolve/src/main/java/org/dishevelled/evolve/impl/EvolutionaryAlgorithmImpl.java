@@ -25,6 +25,7 @@ package org.dishevelled.evolve.impl;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 
 import javax.swing.event.EventListenerList;
 
@@ -109,6 +110,16 @@ public final class EvolutionaryAlgorithmImpl<I>
             // select individuals for next generation
             population = selection.select(mutated, scores);
             fireSelected(mutated, population, scores);
+
+            // remove last generation from scores
+            for (Iterator<I> keys = scores.keySet().iterator(); keys.hasNext(); )
+            {
+                I i = keys.next();
+                if (!population.contains(i))
+                {
+                    keys.remove();
+                }
+            }
 
             time++;
         }
