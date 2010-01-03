@@ -1,7 +1,7 @@
 /*
 
     dsh-brainstorm  Brain storm, a fit of mental confusion or excitement.
-    Copyright (c) 2008-2009 held jointly by the individual authors.
+    Copyright (c) 2008-2010 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
@@ -508,7 +508,7 @@ public final class BrainStorm
 
             if (help.wasFound())
             {
-                System.out.println("Brain storm, a fit of mental confusion or excitement.\n\nCopyright (c) 2008-2009 held jointly by the individual authors.\nLicensed under the GNU Lesser General Public License (LGPL). \n");
+                System.out.println("Brain storm, a fit of mental confusion or excitement.\n\nCopyright (c) 2008-2010 held jointly by the individual authors.\nLicensed under the GNU Lesser General Public License (LGPL). \n");
                 Usage.usage("java BrainStorm [args]", null, commandLine, arguments, System.out);
             }
             else
