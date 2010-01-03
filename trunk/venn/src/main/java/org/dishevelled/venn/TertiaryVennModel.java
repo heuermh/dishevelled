@@ -79,14 +79,14 @@ public interface TertiaryVennModel<E>
 
     /**
      * Return an immutable observable list view of the intersection of
-     * the two specified sets from this tertiary venn model.
+     * the two specified set list views from this tertiary venn model.
      *
-     * @param a first set to intersect, must be one of {@link #first()},
+     * @param a first set list view to intersect, must be one of {@link #first()},
      *    {@link #second()}, or {@link #third()}
-     * @param b second set to intersect, must be one of {@link #first()},
+     * @param b second set list view to intersect, must be one of {@link #first()},
      *    {@link #second()}, or {@link #third()}
      * @return an immutable observable list view of the intersection of
-     *    the the two specified sets from this tertiary venn model
+     *    the the two specified set list views from this tertiary venn model
      */
     EventList<E> intersect(EventList<E> a, EventList<E> b);
 
@@ -101,14 +101,14 @@ public interface TertiaryVennModel<E>
 
     /**
      * Return an immutable observable list view of the union of
-     * the two specified sets from this tertiary venn model.
+     * the two specified set list views from this tertiary venn model.
      *
-     * @param a first set to union, must be one of {@link #first()},
+     * @param a first set list view to union, must be one of {@link #first()},
      *    {@link #second()}, or {@link #third()}
-     * @param b second set to union, must be one of {@link #first()},
+     * @param b second set list view to union, must be one of {@link #first()},
      *    {@link #second()}, or {@link #third()}
      * @return an immutable observable list view of the union of
-     *    the two specified sets from this tertiary venn model
+     *    the two specified set list views from this tertiary venn model
      */
     EventList<E> union(EventList<E> a, EventList<E> b);
 }

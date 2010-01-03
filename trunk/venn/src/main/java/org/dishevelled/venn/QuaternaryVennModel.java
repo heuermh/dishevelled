@@ -90,29 +90,29 @@ public interface QuaternaryVennModel<E>
 
     /**
      * Return an immutable observable list view of the intersection of
-     * the two specified sets from this quaternary venn model.
+     * the two specified set list views from this quaternary venn model.
      *
-     * @param a first set to intersect, must be one of {@link #first()},
+     * @param a first set list view to intersect, must be one of {@link #first()},
      *    {@link #second()}, {@link #third()}, or {@link #fourth()}
-     * @param b second set to intersect, must be one of {@link #first()},
+     * @param b second set list view to intersect, must be one of {@link #first()},
      *    {@link #second()}, {@link #third()}, or {@link #fourth()}
      * @return an immutable observable list view of the intersection of
-     *    the the two specified sets from this quaternary venn model
+     *    the the two specified set list views from this quaternary venn model
      */
     EventList<E> intersect(EventList<E> a, EventList<E> b);
 
     /**
      * Return an immutable observable list view of the intersection of
-     * the three specified sets from this quaternary venn model.
+     * the three specified set list views from this quaternary venn model.
      *
-     * @param a first set to intersect, must be one of {@link #first()},
+     * @param a first set list view to intersect, must be one of {@link #first()},
      *    {@link #second()}, {@link #third()}, or {@link #fourth()}
-     * @param b second set to intersect, must be one of {@link #first()},
+     * @param b second set list view to intersect, must be one of {@link #first()},
      *    {@link #second()}, {@link #third()}, or {@link #fourth()}
-     * @param c third set to intersect, must be one of {@link #first()},
+     * @param c third set list view to intersect, must be one of {@link #first()},
      *    {@link #second()}, {@link #third()}, or {@link #fourth()}
      * @return an immutable observable list view of the intersection of
-     *    the the three specified sets from this quaternary venn model
+     *    the the three specified set list views from this quaternary venn model
      */
     EventList<E> intersect(EventList<E> a, EventList<E> b, EventList<E> c);
 
@@ -127,29 +127,29 @@ public interface QuaternaryVennModel<E>
 
     /**
      * Return an immutable observable list view of the union of
-     * the two specified sets from this quaternary venn model.
+     * the two specified set list views from this quaternary venn model.
      *
-     * @param a first set to union, must be one of {@link #first()},
+     * @param a first set list view to union, must be one of {@link #first()},
      *    {@link #second()}, {@link #third()}, or {@link #fourth()}
-     * @param b second set to union, must be one of {@link #first()},
+     * @param b second set list view to union, must be one of {@link #first()},
      *    {@link #second()}, {@link #third()}, or {@link #fourth()}
      * @return an immutable observable list view of the union of
-     *    the two specified sets from this quaternary venn model
+     *    the two specified set list views from this quaternary venn model
      */
     EventList<E> union(EventList<E> a, EventList<E> b);
 
     /**
      * Return an immutable observable list view of the union of
-     * the three specified sets from this quaternary venn model.
+     * the three specified set list views from this quaternary venn model.
      *
-     * @param a first set to union, must be one of {@link #first()},
+     * @param a first set list view to union, must be one of {@link #first()},
      *    {@link #second()}, {@link #third()}, or {@link #fourth()}
-     * @param b second set to union, must be one of {@link #first()},
+     * @param b second set list view to union, must be one of {@link #first()},
      *    {@link #second()}, {@link #third()}, or {@link #fourth()}
-     * @param c third set to union, must be one of {@link #first()},
+     * @param c third set list view to union, must be one of {@link #first()},
      *    {@link #second()}, {@link #third()}, or {@link #fourth()}
      * @return an immutable observable list view of the union of
-     *    the three specified sets from this quaternary venn model
+     *    the three specified set list views from this quaternary venn model
      */
     EventList<E> union(EventList<E> a, EventList<E> b, EventList<E> c);
 }
