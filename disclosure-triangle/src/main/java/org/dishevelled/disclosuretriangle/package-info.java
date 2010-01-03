@@ -1,7 +1,7 @@
 /*
 
     dsh-disclosure-triangle  Disclosure triangle container.
-    Copyright (c) 2007-2009 held jointly by the individual authors.
+    Copyright (c) 2007-2010 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
