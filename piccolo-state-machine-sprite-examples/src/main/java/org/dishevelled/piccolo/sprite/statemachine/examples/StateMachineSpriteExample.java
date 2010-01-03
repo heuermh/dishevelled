@@ -1,7 +1,7 @@
 /*
 
     dsh-piccolo-state-machine-sprite-examples  Piccolo2D state machine sprite node examples.
-    Copyright (c) 2009 held jointly by the individual authors.
+    Copyright (c) 2009-2010 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
@@ -29,15 +29,11 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import java.io.IOException;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
-import java.util.Set;
 
 import java.util.concurrent.CopyOnWriteArrayList;
 
