@@ -27,7 +27,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import javax.swing.border.EmptyBorder;
