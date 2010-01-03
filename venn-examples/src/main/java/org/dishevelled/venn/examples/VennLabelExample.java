@@ -27,7 +27,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import javax.swing.border.EmptyBorder;
@@ -78,10 +77,10 @@ public final class VennLabelExample
         set2.add("garply");
 
         BinaryVennModel<String> binaryModel = new BinaryVennModelImpl<String>(set0, set1);
-        BinaryVennLabel binaryLabel = new BinaryVennLabel(binaryModel);
+        BinaryVennLabel<String> binaryLabel = new BinaryVennLabel<String>(binaryModel);
 
         TertiaryVennModel<String> tertiaryModel = new TertiaryVennModelImpl<String>(set0, set1, set2);
-        TertiaryVennLabel tertiaryLabel = new TertiaryVennLabel(tertiaryModel);
+        TertiaryVennLabel<String> tertiaryLabel = new TertiaryVennLabel<String>(tertiaryModel);
 
         addLabel("Binary:");
         addField(binaryLabel);

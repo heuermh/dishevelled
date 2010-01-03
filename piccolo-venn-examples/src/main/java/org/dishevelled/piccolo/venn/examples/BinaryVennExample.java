@@ -33,7 +33,6 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import edu.umd.cs.piccolo.PCanvas;
-import edu.umd.cs.piccolo.PLayer;
 
 import edu.umd.cs.piccolo.util.PPaintContext;
 
