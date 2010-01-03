@@ -1,7 +1,7 @@
 /*
 
     dsh-interpolate  Interpolation and easing functions.
-    Copyright (c) 2009 held jointly by the individual authors.
+    Copyright (c) 2009-2010 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
@@ -24,5 +24,14 @@
 
 /**
  * Interpolation and easing functions.
+ *
+ * <p>
+ * TODO:
+ * <ul>
+ * <li>Support interpolation in color-scheme</li>
+ * <li>Spline-based interpolation</li>
+ * <li>Snapshot/discrete/path? based interpolation</li>
+ * </ul>
+ * </p>
  */
 package org.dishevelled.interpolate;
