@@ -55,7 +55,7 @@
         </configuration>
       </plugin>
       <plugin>
-        <artifactId>jxr-maven-plugin</artifactId>
+        <artifactId>maven-jxr-plugin</artifactId>
       </plugin>
 <!--
 
