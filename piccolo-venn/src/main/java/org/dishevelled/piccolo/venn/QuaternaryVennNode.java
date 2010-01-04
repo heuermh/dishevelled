@@ -107,29 +107,94 @@ public final class QuaternaryVennNode<E>
     /** Label for the fourth list view's size. */
     private final PText fourthSize;
 
+    /*
+    Areas/labels:
+
+    1 - 2 - 3 - 4  first
+    2 - 1 - 3 - 4 second
+    3 - 1 - 2 - 4 third
+    4 - 1 - 2 - 3 fourth
+
+    (1 n 2) - 3 - 4 firstSecond
+    (1 n 3) - 2 - 4 firstThird
+    (1 n 4) - 2 - 3 firstFourth
+    (2 n 3) - 1 - 4 secondThird
+    (2 n 4) - 1 - 3 secondFourth
+    (3 n 4) - 1 - 2 thirdFourth
+
+    (1 n 2 n 3) - 4 firstSecondThird
+    (1 n 2 n 4) - 3 firstSecondFourth
+    (1 n 3 n 4) - 2 firstThirdFourth
+    (2 n 3 n 4) - 1secondThirdFourth
+
+    1 n 2 n 3 n 4 intersection
+     */
+
+    /** Area node for the intersection of the first and second sets. */
+    private final AreaNode firstSecond;
+
+    /** Label for the intersection of the first and second sets. */
+    private final PText firstSecondSize;
+
+    /** Area node for the intersection of the first and third sets. */
+    private final AreaNode firstThird;
+
+    /** Label for the intersection of the first and third sets. */
+    private final PText firstThirdSize;
+
+    /** Area node for the intersection of the first and fourth sets. */
+    private final AreaNode firstFourth;
+
+    /** Label for the intersection of the first and fourth sets. */
+    private final PText firstFourthSize;
+
+    /** Area node for the intersection of the second and third sets. */
+    private final AreaNode secondThird;
+
+    /** Label for the intersection of the second and third sets. */
+    private final PText secondThirdSize;
+
+    /** Area node for the intersection of the second and fourth sets. */
+    private final AreaNode secondFourth;
+
+    /** Label for the intersection of the second and fourth sets. */
+    private final PText secondFourthSize;
+
+    /** Area node for the intersection of the third and fourth sets. */
+    private final AreaNode thirdFourth;
+
+    /** Label for the intersection of the third and fourth sets. */
+    private final PText thirdFourthSize;
+
+    /** Area node for the intersection of the first, second, and third sets. */
+    private final AreaNode firstSecondThird;
+
+    /** Label for the intersection of the first, second, and third sets. */
+    private final PText firstSecondThirdSize;
+
+    /** Area node for the intersection of the first, second, and fourth sets. */
+    private final AreaNode firstSecondFourth;
+
+    /** Label for the intersection of the first, second, and fourth sets. */
+    private final PText firstSecondFourthSize;
+
+    /** Area node for the intersection of the first, third, and fourth sets. */
+    private final AreaNode firstThirdFourth;
+
+    /** Label for the intersection of the first, third, and fourth sets. */
+    private final PText firstThirdFourthSize;
+
+    /** Area node for the intersection of the second, third, and fourth sets. */
+    private final AreaNode secondThirdFourth;
+
+    /** Label for the intersection of the second, third, and fourth sets. */
+    private final PText secondThirdFourthSize;
+
     /** Area node for the intersection. */
     private final AreaNode intersection;
 
     /** Label for the intersection's size. */
     private final PText intersectionSize;
-
-    /** Area node for the union of the first and second sets. */
-    private final AreaNode firstSecond;
-
-    /** Label for the union of the first and second sets. */
-    private final PText firstSecondSize;
-
-    /** Area node for the union of the first and third sets. */
-    private final AreaNode firstThird;
-
-    /** Label for the union of the first and third sets. */
-    private final PText firstThirdSize;
-
-    /** Area node for the union of the second and third sets. */
-    private final AreaNode secondThird;
-
-    /** Label for the union of the second and third sets. */
-    private final PText secondThirdSize;
 
     /** True if labels should display sizes. */
     private static final boolean SHOW_SIZES = true;
@@ -236,12 +301,28 @@ public final class QuaternaryVennNode<E>
 
         intersection = new AreaNode();
         intersectionSize = new PText();
+
         firstSecond = new AreaNode();
         firstSecondSize = new PText();
         firstThird = new AreaNode();
         firstThirdSize = new PText();
+        firstFourth = new AreaNode();
+        firstFourthSize = new PText();
         secondThird = new AreaNode();
         secondThirdSize = new PText();
+        secondFourth = new AreaNode();
+        secondFourthSize = new PText();
+        thirdFourth = new AreaNode();
+        thirdFourthSize = new PText();
+
+        firstSecondThird = new AreaNode();
+        firstSecondThirdSize = new PText();
+        firstSecondFourth = new AreaNode();
+        firstSecondFourthSize = new PText();
+        firstThirdFourth = new AreaNode();
+        firstThirdFourthSize = new PText();
+        secondThirdFourth = new AreaNode();
+        secondThirdFourthSize = new PText();
 
         addChild(fourth);
         addChild(third);
@@ -249,7 +330,14 @@ public final class QuaternaryVennNode<E>
         addChild(first);
         addChild(firstSecond);
         addChild(firstThird);
+        addChild(firstFourth);
         addChild(secondThird);
+        addChild(secondFourth);
+        addChild(thirdFourth);
+        addChild(firstSecondThird);
+        addChild(firstSecondFourth);
+        addChild(firstThirdFourth);
+        addChild(secondThirdFourth);
         addChild(intersection);
         addChild(fourthSize);
         addChild(thirdSize);
@@ -257,7 +345,14 @@ public final class QuaternaryVennNode<E>
         addChild(firstSize);
         addChild(firstSecondSize);
         addChild(firstThirdSize);
+        addChild(firstFourthSize);
         addChild(secondThirdSize);
+        addChild(secondFourthSize);
+        addChild(thirdFourthSize);
+        addChild(firstSecondThirdSize);
+        addChild(firstSecondFourthSize);
+        addChild(firstThirdFourthSize);
+        addChild(secondThirdFourthSize);
         addChild(intersectionSize);
         addChild(fourthLabel);
         addChild(thirdLabel);
@@ -265,9 +360,9 @@ public final class QuaternaryVennNode<E>
         addChild(firstLabel);
 
         installListeners();
-        initLabels();
+        updateLabels();
         layoutNodes();
-   }
+    }
 
 
     /**
@@ -280,10 +375,7 @@ public final class QuaternaryVennNode<E>
                 /** {@inheritDoc} */
                 public void listChanged(final ListEvent<E> event)
                 {
-                    firstLabel.setText(buildLabel(firstLabelText, model.first().size()));
-                    firstSize.setText(String.valueOf(model.first().size() - model.intersection().size()));
-                    firstSecondSize.setText(String.valueOf(model.union(model.first(), model.second()).size() - model.intersection().size()));
-                    firstThirdSize.setText(String.valueOf(model.union(model.first(), model.third()).size() - model.intersection().size()));
+                    updateLabels();
                 }
             });
 
@@ -292,10 +384,7 @@ public final class QuaternaryVennNode<E>
                 /** {@inheritDoc} */
                 public void listChanged(final ListEvent<E> event)
                 {
-                    secondLabel.setText(buildLabel(secondLabelText, model.second().size()));
-                    secondSize.setText(String.valueOf(model.second().size() - model.intersection().size()));
-                    firstSecondSize.setText(String.valueOf(model.union(model.first(), model.second()).size() - model.intersection().size()));
-                    secondThirdSize.setText(String.valueOf(model.union(model.second(), model.third()).size() - model.intersection().size()));
+                    updateLabels();
                 }
             });
 
@@ -304,10 +393,7 @@ public final class QuaternaryVennNode<E>
                 /** {@inheritDoc} */
                 public void listChanged(final ListEvent<E> event)
                 {
-                    thirdLabel.setText(buildLabel(thirdLabelText, model.third().size()));
-                    thirdSize.setText(String.valueOf(model.third().size() - model.intersection().size()));
-                    firstThirdSize.setText(String.valueOf(model.union(model.first(), model.third()).size() - model.intersection().size()));
-                    secondThirdSize.setText(String.valueOf(model.union(model.second(), model.third()).size() - model.intersection().size()));
+                    updateLabels();
                 }
             });
 
@@ -316,38 +402,56 @@ public final class QuaternaryVennNode<E>
                 /** {@inheritDoc} */
                 public void listChanged(final ListEvent<E> event)
                 {
-                    fourthLabel.setText(buildLabel(fourthLabelText, model.fourth().size()));
-                    fourthSize.setText(String.valueOf(model.fourth().size() - model.intersection().size()));
-                }
-            });
-
-        model.intersection().addListEventListener(new ListEventListener<E>()
-            {
-                /** {@inheritDoc} */
-                public void listChanged(final ListEvent<E> event)
-                {
-                    intersectionSize.setText(String.valueOf(model.intersection().size()));
+                    updateLabels();
                 }
             });
     }
 
     /**
-     * Initialize labels.
+     * Update labels.
      */
-    private void initLabels()
+    private void updateLabels()
     {
-        firstLabel.setText(buildLabel(firstLabelText, model.first().size()));
-        firstSize.setText(String.valueOf(model.first().size() - model.intersection().size()));
-        secondLabel.setText(buildLabel(secondLabelText, model.second().size()));
-        secondSize.setText(String.valueOf(model.second().size() - model.intersection().size()));
-        thirdLabel.setText(buildLabel(thirdLabelText, model.third().size()));
-        thirdSize.setText(String.valueOf(model.third().size() - model.intersection().size()));
-        fourthLabel.setText(buildLabel(fourthLabelText, model.fourth().size()));
-        fourthSize.setText(String.valueOf(model.fourth().size() - model.intersection().size()));
-        intersectionSize.setText(String.valueOf(model.intersection().size()));
-        firstSecondSize.setText(String.valueOf(model.union(model.first(), model.second()).size() - model.intersection().size()));
-        firstThirdSize.setText(String.valueOf(model.union(model.first(), model.third()).size() - model.intersection().size()));
-        secondThirdSize.setText(String.valueOf(model.union(model.second(), model.third()).size() - model.intersection().size()));
+        int f = model.first().size();
+        int s = model.second().size();
+        int t = model.third().size();
+        int r = model.fourth().size();
+        int i = model.intersection().size();
+
+        firstLabel.setText(buildLabel(firstLabelText, f));
+        secondLabel.setText(buildLabel(secondLabelText, s));
+        thirdLabel.setText(buildLabel(thirdLabelText, t));
+        fourthLabel.setText(buildLabel(fourthLabelText, r));
+        intersectionSize.setText(String.valueOf(i));
+
+        int fst = model.intersect(model.first(), model.second(), model.third()).size() - i;
+        int fsr = model.intersect(model.first(), model.second(), model.fourth()).size() - i;
+        int ftr = model.intersect(model.first(), model.third(), model.fourth()).size() - i;
+        int str = model.intersect(model.second(), model.third(), model.fourth()).size() - i;
+
+        firstSecondThirdSize.setText(String.valueOf(fst));
+        firstSecondFourthSize.setText(String.valueOf(fsr));
+        firstThirdFourthSize.setText(String.valueOf(ftr));
+        secondThirdFourthSize.setText(String.valueOf(str));
+
+        int fs = model.intersect(model.first(), model.second()).size() - fst - fsr - i;
+        int ft = model.intersect(model.first(), model.third()).size() - fst - ftr - i;
+        int fr = model.intersect(model.first(), model.fourth()).size() - fsr - ftr - i;
+        int st = model.intersect(model.second(), model.third()).size() - fst - str - i;
+        int sr = model.intersect(model.second(), model.fourth()).size() - fsr - str - i;
+        int tr = model.intersect(model.third(), model.fourth()).size() - ftr - str - i;
+
+        firstSecondSize.setText(String.valueOf(fs));
+        firstThirdSize.setText(String.valueOf(ft));
+        firstFourthSize.setText(String.valueOf(fr));
+        secondThirdSize.setText(String.valueOf(st));
+        secondFourthSize.setText(String.valueOf(sr));
+        thirdFourthSize.setText(String.valueOf(tr));
+
+        firstSize.setText(String.valueOf(f - fs - ft - fr - fst - fsr - ftr - i));
+        secondSize.setText(String.valueOf(s - st - sr - fst - fsr - str - i));
+        thirdSize.setText(String.valueOf(t - ft - st - tr - fst - ftr - str - i));
+        fourthSize.setText(String.valueOf(r - fr - sr - fsr - ftr - str - i));
     }
 
     /**
@@ -356,119 +460,161 @@ public final class QuaternaryVennNode<E>
     // todo:  need to make some of this layout dynamic
     private void layoutNodes()
     {
-        Shape firstShape = first.getPathReference();
-        Shape secondShape = second.getPathReference();
-        Shape thirdShape = third.getPathReference();
-        Shape fourthShape = fourth.getPathReference();
+        Area f = new Area(first.getPathReference());
+        Area s = new Area(second.getPathReference());
+        Area t = new Area(third.getPathReference());
+        Area r = new Area(fourth.getPathReference());
+        Area fs = new Area();
+        Area ft = new Area();
+        Area fr = new Area();
+        Area st = new Area();
+        Area sr = new Area();
+        Area tr = new Area();
+        Area fst = new Area();
+        Area fsr = new Area();
+        Area ftr = new Area();
+        Area str = new Area();
+        Area i = new Area();
 
-        Area firstArea = new Area(firstShape);
-        Area secondArea = new Area(secondShape);
-        Area thirdArea = new Area(thirdShape);
-        Area fourthArea = new Area(fourthShape);
-        firstArea.subtract(new Area(secondShape));
-        firstArea.subtract(new Area(thirdShape));
-        firstArea.subtract(new Area(fourthShape));
-        secondArea.subtract(new Area(firstShape));
-        secondArea.subtract(new Area(thirdShape));
-        secondArea.subtract(new Area(fourthShape));
-        thirdArea.subtract(new Area(firstShape));
-        thirdArea.subtract(new Area(secondShape));
-        thirdArea.subtract(new Area(fourthShape));
-        fourthArea.subtract(new Area(firstShape));
-        fourthArea.subtract(new Area(secondShape));
-        fourthArea.subtract(new Area(thirdShape));
+        fs.add(f);
+        fs.intersect(s);
+        fs.subtract(t);
+        fs.subtract(r);
 
-        Area intersectionArea = new Area(firstShape);
-        intersectionArea.intersect(new Area(secondShape));
-        intersectionArea.intersect(new Area(thirdShape));
-        intersectionArea.intersect(new Area(fourthShape));
-        intersection.setArea(intersectionArea);
+        ft.add(f);
+        ft.intersect(t);
+        ft.subtract(s);
+        ft.subtract(r);
 
-        Area firstSecondArea = new Area(firstShape);
-        firstSecondArea.intersect(new Area(secondShape));
-        firstSecondArea.subtract(new Area(thirdShape));
-        firstSecond.setArea(firstSecondArea);
+        fr.add(f);
+        fr.intersect(r);
+        fr.subtract(s);
+        fr.subtract(t);
 
-        Area firstThirdArea = new Area(firstShape);
-        firstThirdArea.intersect(new Area(thirdShape));
-        firstThirdArea.subtract(new Area(secondShape));
-        firstThird.setArea(firstThirdArea);
+        st.add(s);
+        st.intersect(t);
+        st.subtract(f);
+        st.subtract(r);
 
-        Area secondThirdArea = new Area(secondShape);
-        secondThirdArea.intersect(new Area(thirdShape));
-        secondThirdArea.subtract(new Area(firstShape));
-        secondThird.setArea(secondThirdArea);
+        sr.add(s);
+        sr.intersect(r);
+        sr.subtract(f);
+        sr.subtract(t);
 
-        Rectangle2D firstBounds = firstArea.getBounds2D();
-        Rectangle2D secondBounds = secondArea.getBounds2D();
-        Rectangle2D thirdBounds = thirdArea.getBounds2D();
-        Rectangle2D fourthBounds = fourthArea.getBounds2D();
-        Rectangle2D intersectionBounds = intersectionArea.getBounds2D();
-        Rectangle2D firstSecondBounds = firstSecondArea.getBounds2D();
-        Rectangle2D firstThirdBounds = firstThirdArea.getBounds2D();
-        Rectangle2D secondThirdBounds = secondThirdArea.getBounds2D();
+        tr.add(t);
+        tr.intersect(r);
+        tr.subtract(f);
+        tr.subtract(s);
 
-        Rectangle2D firstLabelBounds = firstLabel.getFullBoundsReference();
-        Rectangle2D secondLabelBounds = secondLabel.getFullBoundsReference();
-        Rectangle2D thirdLabelBounds = thirdLabel.getFullBoundsReference();
-        Rectangle2D fourthLabelBounds = fourthLabel.getFullBoundsReference();
-        Rectangle2D firstSizeBounds = firstSize.getFullBoundsReference();
-        Rectangle2D secondSizeBounds = secondSize.getFullBoundsReference();
-        Rectangle2D thirdSizeBounds = thirdSize.getFullBoundsReference();
-        Rectangle2D fourthSizeBounds = fourthSize.getFullBoundsReference();
-        Rectangle2D intersectionSizeBounds = intersectionSize.getFullBoundsReference();
-        Rectangle2D firstSecondSizeBounds = firstSecondSize.getFullBoundsReference();
-        Rectangle2D firstThirdSizeBounds = firstThirdSize.getFullBoundsReference();
-        Rectangle2D secondThirdSizeBounds = secondThirdSize.getFullBoundsReference();
+        fst.add(f);
+        fst.intersect(s);
+        fst.intersect(t);
+        fst.subtract(r);
 
+        fsr.add(f);
+        fsr.intersect(s);
+        fsr.intersect(r);
+        fsr.subtract(t);
+        
+        ftr.add(f);
+        ftr.intersect(t);
+        ftr.intersect(r);
+        ftr.subtract(s);
 
-        firstLabel.setOffset(firstBounds.getX() + (firstBounds.getWidth() / 4.0d) - (firstLabelBounds.getWidth() / 2.0d),
-                             firstBounds.getY() - firstBounds.getHeight() - firstLabelBounds.getHeight() - 4.0d);
-        secondLabel.setOffset(secondBounds.getX() + (secondBounds.getWidth() / 4.0d) - (secondLabelBounds.getWidth() / 2.0d),
-                              -1.0d * secondLabelBounds.getHeight() - 24.0d);
-        thirdLabel.setOffset(thirdBounds.getX() + (3.0d * thirdBounds.getWidth() / 4.0d) - (thirdLabelBounds.getWidth() / 2.0d),
-                             -1.0d * thirdLabelBounds.getHeight() - 24.0d);
-        fourthLabel.setOffset(fourthBounds.getX() + (3.0d * fourthBounds.getWidth() / 4.0d) - (fourthLabelBounds.getWidth() / 2.0d),
-                             -1.0d * fourthLabelBounds.getHeight() - 4.0d);
+        str.add(s);
+        str.intersect(t);
+        str.intersect(r);
+        str.subtract(f);
 
-        // todo:  move to upper 1/4th and outer 1/4th
-        Point2D firstCentroid = Centers.centroidOf(firstArea);
-        //firstSize.setOffset(firstBounds.getCenterX() - (firstSizeBounds.getWidth() / 2.0d),
-        //                    firstBounds.getCenterY() - (firstSizeBounds.getHeight() / 2.0d));
-        firstSize.setOffset(firstCentroid.getX() - (firstSizeBounds.getWidth() / 2.0d),
-                            firstCentroid.getY() - (firstSizeBounds.getHeight() / 2.0d));
+        i.add(f);
+        i.intersect(s);
+        i.intersect(t);
+        i.intersect(r);
 
-        // todo:  up and out a bit
-        Point2D secondCentroid = Centers.centroidOf(secondArea);
-        //secondSize.setOffset(secondBounds.getCenterX() - (secondSizeBounds.getWidth() / 2.0d),
-        //                    secondBounds.getCenterY() - (secondSizeBounds.getHeight() / 2.0d));
-        secondSize.setOffset(secondCentroid.getX() - (secondSizeBounds.getWidth() / 2.0d),
-                            secondCentroid.getY() - (secondSizeBounds.getHeight() / 2.0d));
+        Area _f = new Area(f);
+        _f.subtract(s);
+        _f.subtract(t);
+        _f.subtract(r);
 
-        // todo:  up and out a bit
-        Point2D thirdCentroid = Centers.centroidOf(thirdArea);
-        //thirdSize.setOffset(thirdBounds.getCenterX() - (thirdSizeBounds.getWidth() / 2.0d),
-        //                    thirdBounds.getCenterY() - (thirdSizeBounds.getHeight() / 2.0d));
-        thirdSize.setOffset(thirdCentroid.getX() - (thirdSizeBounds.getWidth() / 2.0d),
-                            thirdCentroid.getY() - (thirdSizeBounds.getHeight() / 2.0d));
+        Area _s = new Area(s);
+        _s.subtract(f);
+        _s.subtract(t);
+        _s.subtract(r);
 
-        // todo:  move to upper 1/4th and outer 1/4th
-        Point2D fourthCentroid = Centers.centroidOf(fourthArea);
-        //fourthSize.setOffset(fourthBounds.getCenterX() - (fourthSizeBounds.getWidth() / 2.0d),
-        //                     fourthBounds.getCenterY() - (fourthSizeBounds.getHeight() / 2.0d));
-        fourthSize.setOffset(fourthCentroid.getX() - (fourthSizeBounds.getWidth() / 2.0d),
-                             fourthCentroid.getY() - (fourthSizeBounds.getHeight() / 2.0d));
+        Area _t = new Area(t);
+        _t.subtract(f);
+        _t.subtract(s);
+        _t.subtract(r);
 
-        // todo:  this label seems to be misplaced +y a bit, maybe the full bounds calc is off
-        intersectionSize.setOffset(intersectionBounds.getCenterX() - (intersectionSizeBounds.getWidth() / 2.0d),
-                                   intersectionBounds.getCenterY() - (intersectionSizeBounds.getHeight() / 2.0d));
+        Area _r = new Area(r);
+        _r.subtract(f);
+        _r.subtract(s);
+        _r.subtract(t);
 
-        firstSecondSize.setOffset(firstSecondBounds.getCenterX() - (firstSecondSizeBounds.getWidth() / 2.0d),
-                                  firstSecondBounds.getCenterY() - (firstSecondSizeBounds.getHeight() / 2.0d));
-        firstThirdSize.setOffset(firstThirdBounds.getCenterX() - (firstThirdSizeBounds.getWidth() / 2.0d),
-                                 firstThirdBounds.getCenterY() - (firstThirdSizeBounds.getHeight() / 2.0d));
-        secondThirdSize.setOffset(secondThirdBounds.getCenterX() - (secondThirdSizeBounds.getWidth() / 2.0d),
-                                  secondThirdBounds.getCenterY() - (secondThirdSizeBounds.getHeight() / 2.0d));
+        f = _f;
+        s = _s;
+        t = _t;
+        r = _r;
+
+        firstSecond.setArea(fs);
+        firstThird.setArea(ft);
+        firstFourth.setArea(fr);
+        secondThird.setArea(st);
+        secondFourth.setArea(sr);
+        thirdFourth.setArea(tr);
+        firstSecondThird.setArea(fst);
+        firstSecondFourth.setArea(fsr);
+        firstThirdFourth.setArea(ftr);
+        secondThirdFourth.setArea(str);
+        intersection.setArea(i);
+
+        offset(f, firstSize);
+        offset(s, secondSize);
+        offset(t, thirdSize);
+        offset(r, fourthSize);
+        offset(fs, firstSecondSize);
+        offset(ft, firstThirdSize);
+        offset(fr, firstFourthSize);
+        offset(st, secondThirdSize);
+        offset(sr, secondFourthSize);
+        offset(tr, thirdFourthSize);
+        offset(fst, firstSecondThirdSize);
+        offset(fsr, firstSecondFourthSize);
+        offset(ftr, firstThirdFourthSize);
+        offset(str, secondThirdFourthSize);
+        offset(i, intersectionSize);
+
+        labelLeft(f, firstLabel);
+        labelLeft(s, secondLabel);
+        labelRight(t, thirdLabel);
+        labelRight(r, fourthLabel);
+    }
+
+    private Rectangle2D a = new Rectangle2D.Double();
+    private Rectangle2D b = new Rectangle2D.Double();
+    private Point2D c = new Point2D.Double();
+
+    private void offset(final Area area, final PText size)
+    {
+        b = size.getFullBoundsReference();
+        c = Centers.centroidOf(area, c);
+        size.setOffset(c.getX() - (b.getWidth() / 2.0d), c.getY() - (b.getHeight() / 2.0d));
+    }
+
+    private void labelLeft(final Area area, final PText label)
+    {
+        a = area.getBounds2D();
+        b = label.getFullBoundsReference();
+        c = Centers.centroidOf(area, c);
+        label.setOffset(c.getX() - ((2.0d * b.getWidth()) / 3.0d) - 28.0d, a.getY() - b.getHeight() - 8.0d);
+    }
+
+    private void labelRight(final Area area, final PText label)
+    {
+        a = area.getBounds2D();
+        b = label.getFullBoundsReference();
+        c = Centers.centroidOf(area, c);
+        label.setOffset(c.getX() - (b.getWidth() / 3.0d) + 28.0d, a.getY() - b.getHeight() - 8.0d);
     }
 
     /**
@@ -598,16 +744,16 @@ public final class QuaternaryVennNode<E>
     private class AreaNode
         extends PNode
     {
-        private PPath path = null;
+        //private PPath path = null;
 
         // todo:  implement this to allow for mouse-over, picking, etc.
         private void setArea(final Area area)
         {
-            Rectangle2D rect = area.getBounds2D();
-            path = PPath.createRectangle((float) rect.getX(), (float) rect.getY(), (float) rect.getWidth(), (float) rect.getHeight());
-            path.setPaint(new Color(80, 80, 80, 20));
-            path.setStrokePaint(new Color(80, 80, 80, 80));
-            addChild(path);
+            //Rectangle2D rect = area.getBounds2D();
+            //path = PPath.createRectangle((float) rect.getX(), (float) rect.getY(), (float) rect.getWidth(), (float) rect.getHeight());
+            //path.setPaint(new Color(80, 80, 80, 20));
+            //path.setStrokePaint(new Color(80, 80, 80, 80));
+            //addChild(path);
         }
     }
 }
