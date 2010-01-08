@@ -43,9 +43,9 @@ import edu.umd.cs.piccolo.PNode;
 import edu.umd.cs.piccolo.nodes.PPath;
 import edu.umd.cs.piccolo.nodes.PText;
 
-import org.dishevelled.venn.QuaternaryVennModel;
+import org.dishevelled.venn.QuaternaryVennModel2;
 
-import org.dishevelled.venn.model.QuaternaryVennModelImpl;
+import org.dishevelled.venn.model.QuaternaryVennModelImpl2;
 
 /**
  * Quaternary venn diagram node.
@@ -53,11 +53,23 @@ import org.dishevelled.venn.model.QuaternaryVennModelImpl;
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public final class QuaternaryVennNode<E>
+public final class QuaternaryVennNode2<E>
     extends PNode
 {
     /** Quaternary venn model. */
-    private QuaternaryVennModel<E> model;
+    private QuaternaryVennModel2<E> model;
+
+    /** Original first set size. */
+    private final int firstSetSize;
+
+    /** Original second set size. */
+    private final int secondSetSize;
+
+    /** Original third set size. */
+    private final int thirdSetSize;
+
+    /** Original fourth set size. */
+    private final int fourthSetSize;
 
     /** Label text for the first list view. */
     private String firstLabelText = DEFAULT_FIRST_LABEL_TEXT;
@@ -216,41 +228,29 @@ public final class QuaternaryVennNode<E>
      * Create a new quaternary venn node with the specified sets.
      *
      * @param firstLabelText label text for the first list view
-     * @param first first set, must not be null
+     * @param f first set, must not be null
      * @param secondLabelText label text for the second list view
-     * @param second second set, must not be null
+     * @param s second set, must not be null
      * @param thirdLabelText label text for the third list view
-     * @param third third set, must not be null
+     * @param t third set, must not be null
      * @param fourthLabelText label text for the fourth list view
-     * @param fourth fourth set, must not be null
+     * @param f fourth set, must not be null
      */
-    public QuaternaryVennNode(final String firstLabelText, final Set<? extends E> first,
-                              final String secondLabelText, final Set<? extends E> second,
-                              final String thirdLabelText, final Set<? extends E> third,
-                              final String fourthLabelText, final Set<? extends E> fourth)
+    public QuaternaryVennNode2(final String firstLabelText, final Set<E> f,
+                              final String secondLabelText, final Set<E> s,
+                              final String thirdLabelText, final Set<E> t,
+                              final String fourthLabelText, final Set<E> r)
     {
-        this(new QuaternaryVennModelImpl<E>(first, second, third, fourth));
-
+        super();
+        model = new QuaternaryVennModelImpl2<E>(f, s, t, r);
+        firstSetSize = f.size();
+        secondSetSize = s.size();
+        thirdSetSize = t.size();
+        fourthSetSize = r.size();
         this.firstLabelText = firstLabelText;
         this.secondLabelText = secondLabelText;
         this.thirdLabelText = thirdLabelText;
         this.fourthLabelText = fourthLabelText;
-        updateLabels();
-    }
-
-    /**
-     * Create a new quaternary venn node with the specified model.
-     *
-     * @param model model for this quaternary venn node, must not be null
-     */
-    public QuaternaryVennNode(final QuaternaryVennModel<E> model)
-    {
-        super();
-        if (model == null)
-        {
-            throw new IllegalArgumentException("model must not be null");
-        }
-        this.model = model;
 
         // todo:  match reference
         //   using colors from wikipedia image, choose others or attribute correctly
@@ -364,99 +364,36 @@ public final class QuaternaryVennNode<E>
         addChild(secondLabel);
         addChild(firstLabel);
 
-        installListeners();
         updateLabels();
         layoutNodes();
     }
 
 
     /**
-     * Install listeners.
-     */
-    private void installListeners()
-    {
-        model.first().addListEventListener(new ListEventListener<E>()
-            {
-                /** {@inheritDoc} */
-                public void listChanged(final ListEvent<E> event)
-                {
-                    updateLabels();
-                }
-            });
-
-        model.second().addListEventListener(new ListEventListener<E>()
-            {
-                /** {@inheritDoc} */
-                public void listChanged(final ListEvent<E> event)
-                {
-                    updateLabels();
-                }
-            });
-
-        model.third().addListEventListener(new ListEventListener<E>()
-            {
-                /** {@inheritDoc} */
-                public void listChanged(final ListEvent<E> event)
-                {
-                    updateLabels();
-                }
-            });
-
-        model.fourth().addListEventListener(new ListEventListener<E>()
-            {
-                /** {@inheritDoc} */
-                public void listChanged(final ListEvent<E> event)
-                {
-                    updateLabels();
-                }
-            });
-    }
-
-    /**
      * Update labels.
      */
     private void updateLabels()
     {
-        int f = model.first().size();
-        int s = model.second().size();
-        int t = model.third().size();
-        int r = model.fourth().size();
-        int i = model.intersection().size();
-
-        firstLabel.setText(buildLabel(firstLabelText, f));
-        secondLabel.setText(buildLabel(secondLabelText, s));
-        thirdLabel.setText(buildLabel(thirdLabelText, t));
-        fourthLabel.setText(buildLabel(fourthLabelText, r));
-        intersectionSize.setText(String.valueOf(i));
-
-        int fst = model.intersect(model.first(), model.second(), model.third()).size() - i;
-        int fsr = model.intersect(model.first(), model.second(), model.fourth()).size() - i;
-        int ftr = model.intersect(model.first(), model.third(), model.fourth()).size() - i;
-        int str = model.intersect(model.second(), model.third(), model.fourth()).size() - i;
-
-        firstSecondThirdSize.setText(String.valueOf(fst));
-        firstSecondFourthSize.setText(String.valueOf(fsr));
-        firstThirdFourthSize.setText(String.valueOf(ftr));
-        secondThirdFourthSize.setText(String.valueOf(str));
-
-        int fs = model.intersect(model.first(), model.second()).size() - fst - fsr - i;
-        int ft = model.intersect(model.first(), model.third()).size() - fst - ftr - i;
-        int fr = model.intersect(model.first(), model.fourth()).size() - fsr - ftr - i;
-        int st = model.intersect(model.second(), model.third()).size() - fst - str - i;
-        int sr = model.intersect(model.second(), model.fourth()).size() - fsr - str - i;
-        int tr = model.intersect(model.third(), model.fourth()).size() - ftr - str - i;
-
-        firstSecondSize.setText(String.valueOf(fs));
-        firstThirdSize.setText(String.valueOf(ft));
-        firstFourthSize.setText(String.valueOf(fr));
-        secondThirdSize.setText(String.valueOf(st));
-        secondFourthSize.setText(String.valueOf(sr));
-        thirdFourthSize.setText(String.valueOf(tr));
-
-        firstSize.setText(String.valueOf(f - fs - ft - fr - fst - fsr - ftr - i));
-        secondSize.setText(String.valueOf(s - st - sr - fst - fsr - str - i));
-        thirdSize.setText(String.valueOf(t - ft - st - tr - fst - ftr - str - i));
-        fourthSize.setText(String.valueOf(r - fr - sr - fsr - ftr - str - i));
+        firstLabel.setText(buildLabel(firstLabelText, firstSetSize));
+        secondLabel.setText(buildLabel(secondLabelText, secondSetSize));
+        thirdLabel.setText(buildLabel(thirdLabelText, thirdSetSize));
+        fourthLabel.setText(buildLabel(fourthLabelText, fourthSetSize));
+        // create a new class SetSizeNode
+        firstSize.setText(String.valueOf(model.first().size()));
+        secondSize.setText(String.valueOf(model.second().size()));
+        thirdSize.setText(String.valueOf(model.third().size()));
+        fourthSize.setText(String.valueOf(model.fourth().size()));
+        firstSecondThirdSize.setText(String.valueOf(model.firstSecondThird().size()));
+        firstSecondFourthSize.setText(String.valueOf(model.firstSecondFourth().size()));
+        firstThirdFourthSize.setText(String.valueOf(model.firstThirdFourth().size()));
+        secondThirdFourthSize.setText(String.valueOf(model.secondThirdFourth().size()));
+        firstSecondSize.setText(String.valueOf(model.firstSecond().size()));
+        firstThirdSize.setText(String.valueOf(model.firstThird().size()));
+        firstFourthSize.setText(String.valueOf(model.firstFourth().size()));
+        secondThirdSize.setText(String.valueOf(model.secondThird().size()));
+        secondFourthSize.setText(String.valueOf(model.secondFourth().size()));
+        thirdFourthSize.setText(String.valueOf(model.thirdFourth().size()));
+        intersectionSize.setText(String.valueOf(model.intersection().size()));
     }
 
     /**
@@ -743,7 +680,7 @@ public final class QuaternaryVennNode<E>
         firePropertyChange(-1, "fourthLabelText", this.fourthLabelText, oldFourthLabelText);
     }
 
-    public QuaternaryVennModel<E> getModel()
+    public QuaternaryVennModel2<E> getModel()
     {
         return model;
     }

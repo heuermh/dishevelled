@@ -25,20 +25,24 @@ package org.dishevelled.piccolo.venn.examples;
 
 import java.awt.BorderLayout;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.IOException;
+
 import java.util.HashSet;
 import java.util.Set;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+import javax.swing.Timer;
 
 import edu.umd.cs.piccolo.PCanvas;
 
 import edu.umd.cs.piccolo.util.PPaintContext;
-
-import org.dishevelled.venn.QuaternaryVennModel;
-
-import org.dishevelled.venn.model.QuaternaryVennModelImpl;
 
 import org.dishevelled.piccolo.venn.QuaternaryVennNode;
 
@@ -52,6 +56,9 @@ public final class QuaternaryVennExample
     extends JPanel
     implements Runnable
 {
+    /** Venn node. */
+    private final QuaternaryVennNode<String> node;
+
 
     /**
      * Create a new quaternary venn example.
@@ -64,28 +71,15 @@ public final class QuaternaryVennExample
         canvas.setAnimatingRenderQuality(PPaintContext.HIGH_QUALITY_RENDERING);
         canvas.setInteractingRenderQuality(PPaintContext.HIGH_QUALITY_RENDERING);
 
-        Set<String> set0 = new HashSet<String>();
-        set0.add("foo");
-        set0.add("bar");
-        set0.add("baz");
+        Set<String> set0 = read("the_pioneers.txt");
+        Set<String> set1 = read("the_pathfinder.txt");
+        Set<String> set2 = read("last_of_the_mohicans.txt");
+        Set<String> set3 = read("the_deerslayer.txt");
 
-        Set<String> set1 = new HashSet<String>();
-        set1.add("bar");
-        set1.add("baz");
-        set1.add("qux");
-        set1.add("garply");
-
-        Set<String> set2 = new HashSet<String>();
-        set2.add("bar");
-        set2.add("baz");
-        set2.add("garply");
-
-        Set<String> set3 = new HashSet<String>();
-        set3.add("bar");
-        set3.add("baz");
-
-        QuaternaryVennModel<String> model = new QuaternaryVennModelImpl<String>(set0, set1, set2, set3);
-        QuaternaryVennNode<String> node = new QuaternaryVennNode<String>(model);
+        node = new QuaternaryVennNode<String>("The Pioneers", set0,
+                                              "The Pathfinder", set1,
+                                              "Last of the\nMohicans", set2,
+                                              "The Deerslayer", set3);
         node.offset(75.0d, 75.0d);
         canvas.getLayer().addChild(node);
 
@@ -102,8 +96,49 @@ public final class QuaternaryVennExample
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.setBounds(100, 100, 600, 600);
         f.setVisible(true);
+
+        Timer t = new Timer(1000, new ActionListener()
+            {
+                /** {@inheritDoc} */
+                public void actionPerformed(final ActionEvent event)
+                {
+                    node.getModel().first().remove(0);
+                }
+            });
+        t.setRepeats(true);
+        t.start();
     }
 
+
+    private static Set<String> read(final String name)
+    {
+        BufferedReader reader = null;
+        Set<String> result = new HashSet<String>(12000);
+        try
+        {
+            reader = new BufferedReader(new InputStreamReader(QuaternaryVennExample.class.getResourceAsStream(name)));
+            while (reader.ready())
+            {
+                result.add(reader.readLine().trim());
+            }
+        }
+        catch (IOException e)
+        {
+            // ignore
+        }
+        finally
+        {
+            try
+            {
+                reader.close();
+            }
+            catch (Exception e)
+            {
+                // ignore
+            }
+        }
+        return result;
+    }
 
     /**
      * Main.

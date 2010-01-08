@@ -44,25 +44,26 @@ import edu.umd.cs.piccolo.PCanvas;
 
 import edu.umd.cs.piccolo.util.PPaintContext;
 
-import org.dishevelled.piccolo.venn.TertiaryVennNode;
+import org.dishevelled.piccolo.venn.QuaternaryVennNode2;
 
 /**
- * Tertiary venn node example.
+ * Quaternary venn node example.
  *
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public final class TertiaryVennExample
+public final class QuaternaryVennExample2
     extends JPanel
     implements Runnable
 {
     /** Venn node. */
-    private final TertiaryVennNode<String> node;
+    private final QuaternaryVennNode2<String> node;
+
 
     /**
-     * Create a new tertiary venn example.
+     * Create a new quaternary venn example.
      */
-    public TertiaryVennExample()
+    public QuaternaryVennExample2()
     {
         super();
         PCanvas canvas = new PCanvas();
@@ -70,13 +71,18 @@ public final class TertiaryVennExample
         canvas.setAnimatingRenderQuality(PPaintContext.HIGH_QUALITY_RENDERING);
         canvas.setInteractingRenderQuality(PPaintContext.HIGH_QUALITY_RENDERING);
 
+        System.out.println("reading from classpath...");
         Set<String> set0 = read("the_pioneers.txt");
         Set<String> set1 = read("the_pathfinder.txt");
-        Set<String> set2 = read("the_deerslayer.txt");
+        Set<String> set2 = read("last_of_the_mohicans.txt");
+        Set<String> set3 = read("the_deerslayer.txt");
 
-        node = new TertiaryVennNode<String>("The Pioneers", set0,
-                                            "The Pathfinder", set1,
-                                            "The Deerslayer", set2);
+        System.out.println("initializing node...");
+        node = new QuaternaryVennNode2<String>("The Pioneers", set0,
+                                              "The Pathfinder", set1,
+                                              "Last of the\nMohicans", set2,
+                                              "The Deerslayer", set3);
+        System.out.println("done");
         node.offset(75.0d, 75.0d);
         canvas.getLayer().addChild(node);
 
@@ -88,10 +94,10 @@ public final class TertiaryVennExample
     /** {@inheritDoc} */
     public void run()
     {
-        JFrame f = new JFrame("Tertiary Venn Example");
+        JFrame f = new JFrame("Quaternary Venn Example 2");
         f.setContentPane(this);
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        f.setBounds(100, 100, 400, 400);
+        f.setBounds(100, 100, 600, 600);
         f.setVisible(true);
 
         Timer t = new Timer(1000, new ActionListener()
@@ -99,7 +105,7 @@ public final class TertiaryVennExample
                 /** {@inheritDoc} */
                 public void actionPerformed(final ActionEvent event)
                 {
-                    //node.getModel().first().remove(0);
+                    node.getModel().first().remove(0);
                 }
             });
         t.setRepeats(true);
@@ -109,11 +115,12 @@ public final class TertiaryVennExample
 
     private static Set<String> read(final String name)
     {
+        System.out.println("reading " + name + "...");
         BufferedReader reader = null;
         Set<String> result = new HashSet<String>(12000);
         try
         {
-            reader = new BufferedReader(new InputStreamReader(TertiaryVennExample.class.getResourceAsStream(name)));
+            reader = new BufferedReader(new InputStreamReader(QuaternaryVennExample2.class.getResourceAsStream(name)));
             while (reader.ready())
             {
                 result.add(reader.readLine().trim());
@@ -134,6 +141,7 @@ public final class TertiaryVennExample
                 // ignore
             }
         }
+        System.out.println("done");
         return result;
     }
 
@@ -144,6 +152,7 @@ public final class TertiaryVennExample
      */
     public static void main(final String[] args)
     {
-        SwingUtilities.invokeLater(new TertiaryVennExample());
+        System.out.println("invoking later...");
+        SwingUtilities.invokeLater(new QuaternaryVennExample2());
     }
 }
