@@ -25,6 +25,10 @@ package org.dishevelled.piccolo.venn.examples;
 
 import java.awt.BorderLayout;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.IOException;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -35,10 +39,6 @@ import javax.swing.SwingUtilities;
 import edu.umd.cs.piccolo.PCanvas;
 
 import edu.umd.cs.piccolo.util.PPaintContext;
-
-import org.dishevelled.venn.BinaryVennModel;
-
-import org.dishevelled.venn.model.BinaryVennModelImpl;
 
 import org.dishevelled.piccolo.venn.BinaryVennNode;
 
@@ -64,19 +64,10 @@ public final class BinaryVennExample
         canvas.setAnimatingRenderQuality(PPaintContext.HIGH_QUALITY_RENDERING);
         canvas.setInteractingRenderQuality(PPaintContext.HIGH_QUALITY_RENDERING);
 
-        Set<String> set0 = new HashSet<String>();
-        set0.add("foo");
-        set0.add("bar");
-        set0.add("baz");
+        Set<String> set0 = read("the_pioneers.txt");
+        Set<String> set1 = read("the_deerslayer.txt");
 
-        Set<String> set1 = new HashSet<String>();
-        set1.add("bar");
-        set1.add("baz");
-        set1.add("qux");
-        set1.add("garply");
-
-        BinaryVennModel<String> model = new BinaryVennModelImpl<String>(set0, set1);
-        BinaryVennNode<String> node = new BinaryVennNode<String>(model);
+        BinaryVennNode<String> node = new BinaryVennNode<String>("The Pioneers", set0, "The Deerslayer", set1);
         node.offset(150.0d, 150.0d);
         canvas.getLayer().addChild(node);
 
@@ -93,6 +84,37 @@ public final class BinaryVennExample
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.setBounds(100, 100, 400, 400);
         f.setVisible(true);
+    }
+
+
+    private static Set<String> read(final String name)
+    {
+        BufferedReader reader = null;
+        Set<String> result = new HashSet<String>(12000);
+        try
+        {
+            reader = new BufferedReader(new InputStreamReader(BinaryVennExample.class.getResourceAsStream(name)));
+            while (reader.ready())
+            {
+                result.add(reader.readLine().trim());
+            }
+        }
+        catch (IOException e)
+        {
+            // ignore
+        }
+        finally
+        {
+            try
+            {
+                reader.close();
+            }
+            catch (Exception e)
+            {
+                // ignore
+            }
+        }
+        return result;
     }
 
 

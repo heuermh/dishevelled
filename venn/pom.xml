@@ -39,6 +39,11 @@
       <scope>compile</scope>
     </dependency>
     <dependency>
+      <groupId>com.google.collections</groupId>
+      <artifactId>google-collections</artifactId>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
       <groupId>net.java.dev.glazedlists</groupId>
       <artifactId>glazedlists_java15</artifactId>
       <scope>compile</scope>
