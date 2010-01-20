@@ -94,7 +94,7 @@ public interface TertiaryVennModel3<E>
 
     /**
      * Return an immutable view of the elements unique to the third
-     * set for this tertiary venn model.  The first only view will reflect changes
+     * set for this tertiary venn model.  The third only view will reflect changes
      * made to the first, second, and third views (i.e. {@link #first()},
      * {@link #second()}, and {@link #third()}).
      *
@@ -121,7 +121,7 @@ public interface TertiaryVennModel3<E>
      * {@link #second()}, and {@link #third()}).
      *
      * @return an immutable view of the elements unique to the intersection
-     *    of the first and second sets for this tertiary venn model
+     *    of the second and third sets for this tertiary venn model
      */
     Set<E> secondThird();
 
