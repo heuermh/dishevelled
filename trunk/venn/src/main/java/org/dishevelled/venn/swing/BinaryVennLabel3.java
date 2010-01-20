@@ -132,7 +132,7 @@ public final class BinaryVennLabel3<E>
     public BinaryVennLabel3()
     {
         super();
-        model = new BinaryVennModelImpl3();
+        model = new BinaryVennModelImpl3<E>();
 
         installListeners();
         initLabels();
@@ -150,10 +150,10 @@ public final class BinaryVennLabel3<E>
     public BinaryVennLabel3(final String firstLabelText, final Set<? extends E> first,
         final String secondLabelText, final Set<? extends E> second)
     {
-	super();
-	model = new BinaryVennModelImpl3(first, second);
-	this.firstLabelText = firstLabelText;
-	this.secondLabelText = secondLabelText;
+        super();
+        model = new BinaryVennModelImpl3(first, second);
+        this.firstLabelText = firstLabelText;
+        this.secondLabelText = secondLabelText;
 
         installListeners();
         initLabels();
@@ -185,7 +185,7 @@ public final class BinaryVennLabel3<E>
      */
     private void installListeners()
     {
-	// empty
+        // empty
     }
 
     /**
@@ -214,6 +214,8 @@ public final class BinaryVennLabel3<E>
     {
         addField(firstLabel, first);
         addField(secondLabel, second);
+        addField(firstOnlyLabel, firstOnly);
+        addField(secondOnlyLabel, secondOnly);
         addField(intersectionLabel, intersection);
         addField(unionLabel, union);
         addFinalSpacing();
@@ -254,19 +256,19 @@ public final class BinaryVennLabel3<E>
             return null;
         }
         StringBuilder sb = new StringBuilder();
-	Iterator<T> iterator = set.iterator();
-	sb.append(iterator.next().toString());
-	int count = 1;
-	while (iterator.hasNext())
+        Iterator<T> iterator = set.iterator();
+        sb.append(iterator.next().toString());
+        int count = 1;
+        while (iterator.hasNext())
         {
             sb.append(", ");
-	    sb.append(iterator.next().toString());
-	    if (count++ > SET_ELEMENTS_TO_DISPLAY)
+            sb.append(iterator.next().toString());
+            if (count++ > SET_ELEMENTS_TO_DISPLAY)
             {
-		break;
-	    }
+                break;
+            }
         }
-	if (set.size() > SET_ELEMENTS_TO_DISPLAY)
+        if (set.size() > SET_ELEMENTS_TO_DISPLAY)
         {
             sb.append(", ...");
         }
