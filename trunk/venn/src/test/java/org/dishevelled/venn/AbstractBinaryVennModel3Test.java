@@ -280,7 +280,6 @@ public abstract class AbstractBinaryVennModel3Test
         assertTrue(selection.contains("qux"));
 
         // selection reflects changes to first, second views
-        /*
         first.remove("foo");
         assertEquals(1, selection.size());
         assertFalse(selection.contains("foo"));
@@ -288,6 +287,9 @@ public abstract class AbstractBinaryVennModel3Test
         second.remove("qux");
         assertEquals(0, selection.size());
         assertFalse(selection.contains("qux"));
+
+        first.add("foo");
+        second.add("qux");
 
         // cannot add something to selection not in union
         try
@@ -308,7 +310,6 @@ public abstract class AbstractBinaryVennModel3Test
         {
             // expected
         }
-        */
     }
 
     public void testSelectionListener()

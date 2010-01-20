@@ -80,7 +80,7 @@ public final class BinaryVennModelImpl3<E>
      * @param first first set, must not be null
      * @param second second set, must not be null
      */
-    public BinaryVennModelImpl3(final Set<? extends E> first, final Set<? extends E> second)
+    public BinaryVennModelImpl3(final Set<E> first, final Set<E> second)
     {
         if (first == null)
         {
@@ -91,13 +91,14 @@ public final class BinaryVennModelImpl3<E>
             throw new IllegalArgumentException("second must not be null");
         }
 
-        this.first = new ObservableSetImpl(first);
-        this.second = new ObservableSetImpl(second);
+        // todo  defensive copy would allow <? extends E> params
+        this.first = new ObservableSetImpl<E>(first);
+        this.second = new ObservableSetImpl<E>(second);
         firstOnly = Sets.difference(this.first, this.second);
         secondOnly = Sets.difference(this.second, this.first);
         intersection = Sets.intersection(this.first, this.second);
         union = Sets.union(this.first, this.second);
-        selection = new ObservableSetImpl(new HashSet<E>(Math.max(16, union.size())));
+        selection = new SelectionView<E>(union, this.first, this.second);
     }
 
 

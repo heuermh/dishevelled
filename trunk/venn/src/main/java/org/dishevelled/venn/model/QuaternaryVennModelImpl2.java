@@ -81,7 +81,7 @@ public final class QuaternaryVennModelImpl2<E>
         firstFourth = Sets.difference(Sets.difference(Sets.intersection(f, r), s), t); // f n r - s - t
         secondThird = Sets.difference(Sets.difference(Sets.intersection(s, t), f), r); // s n t - f - r
         secondFourth = Sets.difference(Sets.difference(Sets.intersection(s, r), f), t); // s n r - f - t
-        thirdFourth = Sets.difference(Sets.difference(Sets.intersection(t, f), f), s); // t n r - f - s
+        thirdFourth = Sets.difference(Sets.difference(Sets.intersection(t, r), f), s); // t n r - f - s
         firstSecondThird = Sets.difference(Sets.intersection(f, Sets.intersection(s, t)), r); // f u s u t - r
         firstSecondFourth = Sets.difference(Sets.intersection(f, Sets.intersection(s, r)), t); // f u s u r - t
         firstThirdFourth = Sets.difference(Sets.intersection(f, Sets.intersection(t, r)), s); // f u t u r - s
