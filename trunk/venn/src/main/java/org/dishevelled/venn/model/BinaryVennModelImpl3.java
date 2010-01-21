@@ -91,7 +91,7 @@ public final class BinaryVennModelImpl3<E>
             throw new IllegalArgumentException("second must not be null");
         }
 
-	// todo  defensive copy?
+        // todo  defensive copy?
         this.first = new ObservableSetImpl(first);
         this.second = new ObservableSetImpl(second);
         firstOnly = Sets.difference(this.first, this.second);

@@ -93,7 +93,9 @@ public final class TertiaryVennModelImpl3<E>
      * @param second second set, must not be null
      * @param third third set, must not be null
      */
-    public TertiaryVennModelImpl3(final Set<? extends E> first, final Set<? extends E> second, final Set<? extends E> third)
+    public TertiaryVennModelImpl3(final Set<? extends E> first,
+                                  final Set<? extends E> second,
+                                  final Set<? extends E> third)
     {
         if (first == null)
         {
