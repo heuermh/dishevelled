@@ -36,12 +36,16 @@ import org.dishevelled.observable.impl.ObservableSetImpl;
 /**
  * Selection view.
  *
+ * @param <E> value type
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
 final class SelectionView<E>
     extends ObservableSetImpl<E>
 {
+    /** Default size. */
+    private static final int DEFAULT_SIZE = 16;
+
     /** Union view. */
     private final Set<E> union;
 
@@ -65,7 +69,7 @@ final class SelectionView<E>
     SelectionView(final Set<E> union, final ObservableSet<E>... views)
     {
         // todo  null check parameters
-        super(new HashSet<E>(Math.max(16, union == null ? 16 : union.size())));
+        super(new HashSet<E>(Math.max(DEFAULT_SIZE, union == null ? DEFAULT_SIZE : union.size())));
         this.union = union;
         for (ObservableSet<E> view : views)
         {
@@ -79,7 +83,7 @@ final class SelectionView<E>
      */
     private void purgeSelection()
     {
-        Set<E> toRemove = new HashSet<E>(size());
+        Set<E> toRemove = new HashSet<E>(Math.max(DEFAULT_SIZE, (int) (size() / 10)));
         for (E e : this)
         {
             if (!union.contains(e))

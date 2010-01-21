@@ -124,7 +124,10 @@ public final class QuaternaryVennModelImpl3<E>
      * @param third third set, must not be null
      * @param fourth fourth set, must not be null
      */
-    public QuaternaryVennModelImpl3(final Set<? extends E> first, final Set<? extends E> second, final Set<? extends E> third, final Set<? extends E> fourth)
+    public QuaternaryVennModelImpl3(final Set<? extends E> first,
+                                    final Set<? extends E> second,
+                                    final Set<? extends E> third,
+                                    final Set<? extends E> fourth)
     {
         if (first == null)
         {
@@ -155,7 +158,7 @@ public final class QuaternaryVennModelImpl3<E>
         ObservableSet<E> t = this.third;
         ObservableSet<E> r = this.fourth;
         firstOnly = Sets.difference(Sets.difference(Sets.difference(f, s), t), r); // f - s - t - f
-        secondOnly = Sets.difference(Sets.difference(Sets.difference(s, f), t), r); // s - f - t - f
+        secondOnly = Sets.difference(Sets.difference(Sets.difference(s, f), t), r); // s - f - t - r
         thirdOnly = Sets.difference(Sets.difference(Sets.difference(t, f), s), r); // t - f - s - t
         fourthOnly = Sets.difference(Sets.difference(Sets.difference(r, f), s), t); // r - f - s - t
         firstSecond = Sets.difference(Sets.difference(Sets.intersection(f, s), t), r); // f n s - t - r
