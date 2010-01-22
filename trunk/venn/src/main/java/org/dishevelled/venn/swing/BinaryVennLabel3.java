@@ -28,14 +28,7 @@ import java.util.Set;
 
 import javax.swing.JLabel;
 
-import org.dishevelled.layout.LabelFieldPanel;
-
-import org.dishevelled.observable.event.SetChangeEvent;
-import org.dishevelled.observable.event.SetChangeListener;
-
 import org.dishevelled.venn.BinaryVennModel3;
-
-import org.dishevelled.venn.model.BinaryVennModelImpl3;
 
 /**
  * Binary venn diagram label 3.
