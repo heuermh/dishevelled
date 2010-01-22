@@ -29,6 +29,7 @@ import java.util.Iterator;
 import java.util.Set;
 
 import javax.swing.JList;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import org.dishevelled.layout.LabelFieldPanel;
@@ -124,27 +125,37 @@ public final class BinaryVennList3<E>
      */
     private void layoutComponents()
     {
-        setLayout(new GridLayout(1, 4, 12, 0));
+        addFinalField(createMainPanel());
+    }
+
+    /**
+     * Create main panel.
+     */
+    private JPanel createMainPanel()
+    {
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridLayout(1, 4, 12, 0));
 
         LabelFieldPanel f = new LabelFieldPanel();
         f.addLabel(getFirstLabel());
         f.addFinalField(new JScrollPane(first));
-        add(f);
+        panel.add(f);
 
         LabelFieldPanel s = new LabelFieldPanel();
         s.addLabel(getSecondLabel());
         s.addFinalField(new JScrollPane(second));
-        add(s);
+        panel.add(s);
 
         LabelFieldPanel t = new LabelFieldPanel();
         t.addLabel(getIntersectionLabel());
         t.addFinalField(new JScrollPane(intersection));
-        add(t);
+        panel.add(t);
 
         LabelFieldPanel r = new LabelFieldPanel();
         r.addLabel(getUnionLabel());
         r.addFinalField(new JScrollPane(union));
-        add(r);
+        panel.add(r);
+        return panel;
     }
 
     // todo:  sync selection
