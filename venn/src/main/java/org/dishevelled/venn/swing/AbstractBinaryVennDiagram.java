@@ -92,7 +92,7 @@ public abstract class AbstractBinaryVennDiagram<E>
     private final SetChangeListener<E> update = new SetChangeListener<E>()
         {
             /** {@inheritDoc} */
-            public void setChanged(final SetChangeEvent event)
+            public void setChanged(final SetChangeEvent<E> event)
             {
                 updateLabels();
                 updateContents();
@@ -142,7 +142,7 @@ public abstract class AbstractBinaryVennDiagram<E>
         final String secondLabelText, final Set<? extends E> second)
     {
         super();
-        model = new BinaryVennModelImpl3(first, second);
+        model = new BinaryVennModelImpl3<E>(first, second);
         this.firstLabelText = firstLabelText;
         this.secondLabelText = secondLabelText;
 
