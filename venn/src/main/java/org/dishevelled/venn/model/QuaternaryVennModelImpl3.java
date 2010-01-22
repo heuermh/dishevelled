@@ -157,9 +157,9 @@ public final class QuaternaryVennModelImpl3<E>
         ObservableSet<E> s = this.second;
         ObservableSet<E> t = this.third;
         ObservableSet<E> r = this.fourth;
-        firstOnly = Sets.difference(Sets.difference(Sets.difference(f, s), t), r); // f - s - t - f
+        firstOnly = Sets.difference(Sets.difference(Sets.difference(f, s), t), r); // f - s - t - r
         secondOnly = Sets.difference(Sets.difference(Sets.difference(s, f), t), r); // s - f - t - r
-        thirdOnly = Sets.difference(Sets.difference(Sets.difference(t, f), s), r); // t - f - s - t
+        thirdOnly = Sets.difference(Sets.difference(Sets.difference(t, f), s), r); // t - f - s - r
         fourthOnly = Sets.difference(Sets.difference(Sets.difference(r, f), s), t); // r - f - s - t
         firstSecond = Sets.difference(Sets.difference(Sets.intersection(f, s), t), r); // f n s - t - r
         firstThird = Sets.difference(Sets.difference(Sets.intersection(f, t), s), r); // f n t - s - r
