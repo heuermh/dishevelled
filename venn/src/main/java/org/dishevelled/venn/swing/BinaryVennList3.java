@@ -25,18 +25,23 @@ package org.dishevelled.venn.swing;
 
 import java.awt.GridLayout;
 
-import java.util.Iterator;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+
 import java.util.Set;
 
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+import ca.odell.glazedlists.swing.EventListModel;
+
 import org.dishevelled.layout.LabelFieldPanel;
 
-import org.dishevelled.venn.BinaryVennModel3;
+import org.dishevelled.observable.event.SetChangeEvent;
+import org.dishevelled.observable.event.SetChangeListener;
 
-import org.dishevelled.venn.model.BinaryVennModelImpl3;
+import org.dishevelled.venn.BinaryVennModel3;
 
 /**
  * Binary venn diagram list 3.
@@ -66,6 +71,39 @@ public final class BinaryVennList3<E>
     /** Contents of the union view. */
     private final JList union = new JList();
 
+    /** Adapter for the first list model. */
+    private ObservableSetEventListAdapter<E> firstAdapter;
+
+    /** Adapter for the second list model. */
+    private ObservableSetEventListAdapter<E> secondAdapter;
+
+    /** Adapter for the intersection list model. */
+    private SetEventListAdapter<E> intersectionAdapter;
+
+    /** Adapter for the union list model. */
+    private SetEventListAdapter<E> unionAdapter;
+
+    /** Model change listener. */
+    private final PropertyChangeListener modelChange = new PropertyChangeListener()
+    {
+        /** {@inheritDoc} */
+        public void propertyChange(final PropertyChangeEvent event)
+        {
+            uninstallListModels((BinaryVennModel3<E>) event.getOldValue());
+            installListModels();
+        }
+    };
+
+    /** Update list models. */
+    private final SetChangeListener<E> updateListModels = new SetChangeListener<E>()
+    {
+        /** {@inheritDoc} */
+        public void setChanged(final SetChangeEvent<E> event)
+        {
+            updateListModels();
+        }
+    };
+
 
     /**
      * Create a new empty binary venn list.
@@ -73,8 +111,9 @@ public final class BinaryVennList3<E>
     public BinaryVennList3()
     {
         super();
-        updateContents();
+        installListModels();
         layoutComponents();
+        addPropertyChangeListener("model", modelChange);
     }
 
     /**
@@ -89,8 +128,9 @@ public final class BinaryVennList3<E>
         final String secondLabelText, final Set<? extends E> second)
     {
         super(firstLabelText, first, secondLabelText, second);
-        updateContents();
+        installListModels();
         layoutComponents();
+        addPropertyChangeListener("model", modelChange);
     }
 
     /**
@@ -101,23 +141,61 @@ public final class BinaryVennList3<E>
     public BinaryVennList3(final BinaryVennModel3<E> model)
     {
         super(model);
-        updateContents();
+        installListModels();
         layoutComponents();
+        addPropertyChangeListener("model", modelChange);
     }
 
+
+    /**
+     * Install list models.
+     */
+    private void installListModels()
+    {
+        firstAdapter = new ObservableSetEventListAdapter<E>(getModel().first());
+        first.setModel(new EventListModel<E>(firstAdapter));
+        secondAdapter = new ObservableSetEventListAdapter<E>(getModel().second());
+        second.setModel(new EventListModel<E>(secondAdapter));
+
+        intersectionAdapter = new SetEventListAdapter<E>(getModel().intersection());
+        unionAdapter = new SetEventListAdapter<E>(getModel().union());
+        intersection.setModel(new EventListModel<E>(intersectionAdapter));
+        union.setModel(new EventListModel<E>(unionAdapter));
+
+        getModel().first().addSetChangeListener(updateListModels);
+        getModel().second().addSetChangeListener(updateListModels);
+    }
+
+    /**
+     * Update list models.
+     */
+    private void updateListModels()
+    {
+        intersectionAdapter.updateEventList();
+        unionAdapter.updateEventList();
+    }
+
+    /**
+     * Uninstall list models.
+     *
+     * @param oldModel old model
+     */
+    private void uninstallListModels(final BinaryVennModel3<E> oldModel)
+    {
+        firstAdapter.dispose();
+        secondAdapter.dispose();
+        ((EventListModel<E>) first.getModel()).dispose();
+        ((EventListModel<E>) second.getModel()).dispose();
+        ((EventListModel<E>) intersection.getModel()).dispose();
+        ((EventListModel<E>) union.getModel()).dispose();
+        oldModel.first().removeSetChangeListener(updateListModels);
+        oldModel.second().removeSetChangeListener(updateListModels);
+    }
 
     /** {@inheritDoc} */
     protected void updateContents()
     {
-        // todo:  expensive
-        //    add hook for model change, create list models at that
-        //    point, and fire model changed events here
-        first.setListData(getModel().first().toArray());
-        second.setListData(getModel().second().toArray());
-        //firstOnly.setListData(getModel().firstOnly().toArray());
-        //secondOnly.setListData(getModel().secondOnly().toArray());
-        intersection.setListData(getModel().intersection().toArray());
-        union.setListData(getModel().union().toArray());
+        // empty
     }
 
     /**
