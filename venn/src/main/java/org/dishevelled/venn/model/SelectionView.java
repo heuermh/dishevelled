@@ -50,10 +50,10 @@ final class SelectionView<E>
     private final Set<E> union;
 
     /** Purge selection. */
-    private final SetChangeListener<E> purgeSelection = new SetChangeListener()
+    private final SetChangeListener<E> purgeSelection = new SetChangeListener<E>()
         {
             /** {@inheritDoc} */
-            public void setChanged(final SetChangeEvent event)
+            public void setChanged(final SetChangeEvent<E> event)
             {
                 purgeSelection();
             }
