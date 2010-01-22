@@ -372,6 +372,8 @@ public abstract class AbstractQuaternaryVennModel3Test
         // todo
     }
 
+
+
     public void testIntersection()
     {
         QuaternaryVennModel3<String> quaternaryVennModel = createQuaternaryVennModel3(FIRST, SECOND, THIRD, FOURTH);
@@ -446,6 +448,7 @@ public abstract class AbstractQuaternaryVennModel3Test
         Set<String> first = quaternaryVennModel.first();
         Set<String> second = quaternaryVennModel.second();
         Set<String> third = quaternaryVennModel.third();
+        Set<String> fourth = quaternaryVennModel.fourth();
         Set<String> selection = quaternaryVennModel.selection();
         assertNotNull(selection);
         assertTrue(selection.isEmpty());
@@ -461,31 +464,34 @@ public abstract class AbstractQuaternaryVennModel3Test
         selection.add("f - s - t - r");
         selection.add("s - f - t - r");
         selection.add("t - f - s - r");
-        assertEquals(3, selection.size());
+        selection.add("r - f - s - t");
+        assertEquals(4, selection.size());
         assertTrue(selection.contains("f - s - t - r"));
         assertTrue(selection.contains("s - f - t - r"));
         assertTrue(selection.contains("t - f - s - r"));
+        assertTrue(selection.contains("r - f - s - t"));
 
-        // selection reflects changes to first, second, third views
+        // selection reflects changes to first, second, third, and fourth views
         first.remove("f - s - t - r");
-        assertEquals(2, selection.size());
+        assertEquals(3, selection.size());
         assertFalse(selection.contains("f - s - t - r"));
 
-        first.remove("s - f - t - r");
         second.remove("s - f - t - r");
-        third.remove("s - f - t - r");
-        assertEquals(1, selection.size());
+        assertEquals(2, selection.size());
         assertFalse(selection.contains("s - f - t - r"));
 
         third.remove("t - f - s - r");
-        assertEquals(0, selection.size());
+        assertEquals(1, selection.size());
         assertFalse(selection.contains("t - f - s - r"));
 
+        fourth.remove("r - f - s - t");
+        assertEquals(0, selection.size());
+        assertFalse(selection.contains("r - f - s - t"));
+
         first.add("f - s - t - r");
-        first.add("s - f - t - r");
         second.add("s - f - t - r");
-        third.add("s - f - t - r");
         third.add("t - f - s - r");
+        fourth.add("r - f - s - t");
 
         // cannot add something to selection not in union
         try
