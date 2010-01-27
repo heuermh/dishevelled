@@ -58,6 +58,11 @@
       <scope>compile</scope>
     </dependency>
     <dependency>
+      <groupId>net.java.dev.glazedlists</groupId>
+      <artifactId>glazedlists_java15</artifactId>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
       <groupId>org.piccolo2d</groupId>
       <artifactId>piccolo2d-core</artifactId>
       <scope>compile</scope>
