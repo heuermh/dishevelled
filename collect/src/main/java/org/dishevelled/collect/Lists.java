@@ -55,6 +55,7 @@ public final class Lists
     /**
      * Create and return a new empty list.  Delegates to <code>Collections.emptyList()</code>.
      *
+     * @param <T> element type
      * @return a new empty list
      */
     public static <T> List<T> emptyList()
@@ -170,7 +171,7 @@ public final class Lists
         }
         return ImmutableList.copyOf(iterable);
     }
-    
+
     /**
      * Create and return a new instance of List.
      *
