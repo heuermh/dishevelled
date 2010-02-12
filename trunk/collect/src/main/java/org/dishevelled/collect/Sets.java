@@ -62,6 +62,7 @@ public final class Sets
     /**
      * Create and return a new empty set.  Delegates to <code>Collections.emptySet()</code>.
      *
+     * @param <T> element type
      * @return a new empty set
      */
     public static <T> Set<T> emptySet()

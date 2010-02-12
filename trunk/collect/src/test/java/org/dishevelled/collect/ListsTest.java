@@ -262,14 +262,14 @@ public final class ListsTest
     public void testImmutableList()
     {
         List<String> toCopy = asList("foo", "bar", "baz");
-        List<String> immutableList = unmodifiableList(toCopy);
+        List<String> immutableList = immutableList(toCopy);
         assertNotNull(immutableList);
         // TODO:  add'l assertions
 
         try
         {
-            unmodifiableList((List<String>) null);
-            fail("unmodifiableList((List<String>) null) expected IllegalArgumentException");
+            immutableList((List<String>) null);
+            fail("immutableList((List<String>) null) expected IllegalArgumentException");
         }
         //catch (IllegalArgumentException e)
         catch (NullPointerException e)
