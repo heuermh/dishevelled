@@ -196,7 +196,7 @@
         <!-- must download manually -->
         <groupId>org.cliffc</groupId>
         <artifactId>high-scale-lib</artifactId>
-        <version>1.1.1</version>
+        <version>1.1.2</version>
       </dependency>
       <dependency>
         <groupId>org.piccolo2d</groupId>
