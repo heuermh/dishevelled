@@ -69,7 +69,7 @@ public class ParticleSystemActivity
     /**
      * Create a new particle system activity with the specified duration in milliseconds.
      *
-     * @param duration duration in milliseconds, must be at least <code>1</code> ms
+     * @param duration duration in milliseconds, or <code>-1</code> ms for an infinite duration
      */
     public ParticleSystemActivity(final long duration)
     {
@@ -79,17 +79,13 @@ public class ParticleSystemActivity
     /**
      * Create a new particle system activity with the specified duration, step rate, and start time in milliseconds.
      *
-     * @param duration duration in milliseconds, must be at least <code>1</code> ms
+     * @param duration duration in milliseconds, or <code>-1</code> ms for an infinite duration
      * @param stepRate step rate in milliseconds
      * @param startTime start time in milliseconds
      */
     public ParticleSystemActivity(final long duration, final long stepRate, final long startTime)
     {
         super(duration, stepRate, startTime);
-        if (duration < 1L)
-        {
-            throw new IllegalArgumentException("duration must be at least 1 ms");
-        }
         particleSystem = new ParticleSystem();
         attractions = new HashedBinaryKeyMap<PNode, PNode, Attraction>();
         particles = new HashMap<PNode, Particle>();
