@@ -287,7 +287,7 @@ public final class MapsTest
         toCopy.put("foo", Double.valueOf(1.0d));
         toCopy.put("bar", Double.valueOf(2.0d));
 
-        ConcurrentMap<String, Double> immutableMap = immutableMap(toCopy);
+        Map<String, Double> immutableMap = immutableMap(toCopy);
         assertNotNull(immutableMap);
 
         try
