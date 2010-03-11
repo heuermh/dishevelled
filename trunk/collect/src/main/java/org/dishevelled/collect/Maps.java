@@ -573,7 +573,7 @@ public final class Maps
      * @param map map to copy, must not be null
      * @return an immutable map containing the same mappings as the specified map
      */
-    public static <K, V> ConcurrentMap<K, V> immutableMap(final Map<? extends K, ? extends V> map)
+    public static <K, V> Map<K, V> immutableMap(final Map<? extends K, ? extends V> map)
     {
         return ImmutableMap.copyOf(map);
     }
