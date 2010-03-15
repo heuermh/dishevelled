@@ -64,8 +64,8 @@
       <scope>compile</scope>
     </dependency>
     <dependency>
-      <groupId>commons-collections</groupId>
-      <artifactId>commons-collections</artifactId>
+      <groupId>com.google.collections</groupId>
+      <artifactId>google-collections</artifactId>
       <scope>compile</scope>
     </dependency>
     <dependency>
