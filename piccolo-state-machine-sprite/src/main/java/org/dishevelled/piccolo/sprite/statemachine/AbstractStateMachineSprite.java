@@ -159,6 +159,12 @@ public abstract class AbstractStateMachineSprite
     /** State machine support. */
     private StateMachineSupport stateMachineSupport;
 
+    /** Number of frames skipped. */
+    private int skipped;
+
+    /** Number of frames to skip, default <code>0</code>. */
+    private int frameSkip;
+
     /** Current animation. */
     private Animation currentAnimation;
 
@@ -263,6 +269,20 @@ public abstract class AbstractStateMachineSprite
         }
     }
 
+    /**
+     * Set the number of frames to skip to <code>frameSkip</code>.
+     *
+     * @param frameSkip number of frames to skip, must be <code>&gt;= 0</code>
+     */
+    protected void setFrameSkip(final int frameSkip)
+    {
+        if (frameSkip < 0)
+        {
+            throw new IllegalArgumentException("frameSkip must be at least zero");
+        }
+        this.frameSkip = frameSkip;
+    }
+
     //protected final State currentState() {} ?
 
     /**
@@ -270,7 +290,11 @@ public abstract class AbstractStateMachineSprite
      */
     public final void advance()
     {
-        if (currentAnimation != null)
+        if (skipped < frameSkip)
+        {
+            skipped++;
+        }
+        else
         {
             // advance the current animation
             if (currentAnimation.advance())
@@ -278,6 +302,7 @@ public abstract class AbstractStateMachineSprite
                 // and schedule a repaint
                 repaint();
             }
+            skipped = 0;
         }
     }
 

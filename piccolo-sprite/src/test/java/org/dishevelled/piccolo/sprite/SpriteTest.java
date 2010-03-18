@@ -55,11 +55,19 @@ public class SpriteTest
         Animation animation = new SingleFrameAnimation(image);
         Set<Animation> animations = Collections.singleton(animation);
         Sprite sprite0 = new Sprite(animation);
+        assertNotNull(sprite0);
         Sprite sprite1 = new Sprite(animation, animations);
+        assertNotNull(sprite1);
+        Sprite sprite2 = new Sprite(animation, animations, 0);
+        assertNotNull(sprite2);
+        Sprite sprite3 = new Sprite(animation, animations, 100);
+        assertNotNull(sprite3);
+        Sprite sprite4 = new Sprite(animation, animations, -1);
+        assertNotNull(sprite4);
 
         try
         {
-            Sprite sprite = new Sprite(null);
+            new Sprite(null);
             fail("ctr(null) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
@@ -68,7 +76,7 @@ public class SpriteTest
         }
         try
         {
-            Sprite sprite = new Sprite(null, animations);
+            new Sprite(null, animations);
             fail("ctr(null,) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
@@ -78,7 +86,7 @@ public class SpriteTest
 
         try
         {
-            Sprite sprite = new Sprite(animation, null);
+            new Sprite(animation, null);
             fail("ctr(,null) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
@@ -89,7 +97,7 @@ public class SpriteTest
         try
         {
             Set<Animation> empty = Collections.emptySet();
-            Sprite sprite = new Sprite(animation, empty);
+            new Sprite(animation, empty);
             fail("ctr(,empty) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
@@ -103,11 +111,12 @@ public class SpriteTest
 
         animations1.add(animation1);
         animations1.add(animation2);
-        Sprite sprite2 = new Sprite(animation1, animations1);
+        Sprite sprite5 = new Sprite(animation1, animations1);
+        assertNotNull(sprite5);
 
         try
         {
-            Sprite sprite = new Sprite(animation, animations1);
+            new Sprite(animation, animations1);
             fail("animation not in animations expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
