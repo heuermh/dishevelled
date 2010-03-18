@@ -44,10 +44,16 @@ import edu.umd.cs.piccolo.util.PPaintContext;
 public class Sprite
     extends PNode
 {
-    /** The current animation for this piccolo sprite node. */
+    /** Number of frames skipped. */
+    private int skipped;
+
+    /** Number of frames to skip, default <code>0</code>. */
+    private final int frameSkip;
+
+    /** Current animation for this piccolo sprite node. */
     private Animation currentAnimation;
 
-    /** The set of animations for this piccolo sprite node. */
+    /** Set of animations for this piccolo sprite node. */
     private final Set<Animation> animations;
 
 
@@ -81,6 +87,31 @@ public class Sprite
     public Sprite(final Animation currentAnimation,
                   final Set<Animation> animations)
     {
+        this(currentAnimation, animations, 0);
+    }
+
+    /**
+     * Create a new piccolo sprite node from the specified required parameters.
+     *
+     * <p>The specified current animation must be contained in the set of animations for this piccolo
+     * sprite node.</p>
+     *
+     * <p>The specified set of animations must contain at least one animation.
+     * The animations in <code>animations</code> are copied defensively
+     * into this class.</p>
+     *
+     * @param currentAnimation current animation for this piccolo sprite node, must not be null
+     *    and must be contained in the set of animations for this piccolo sprite node
+     * @param animations set of animations, must not be null and must
+     *    contain at least one animation
+     * @param frameSkip number of frames to skip
+     *
+     * @throws IllegalArgumentException if <code>animations.size() &lt; 1</code>
+     */
+    public Sprite(final Animation currentAnimation,
+                  final Set<Animation> animations,
+                  final int frameSkip)
+    {
         super();
 
         if (currentAnimation == null)
@@ -96,6 +127,7 @@ public class Sprite
             throw new IllegalArgumentException("animations must contain at least one animation");
         }
         this.animations = new HashSet<Animation>(animations);
+        this.frameSkip = frameSkip;
         setCurrentAnimation(currentAnimation);
     }
 
@@ -105,11 +137,19 @@ public class Sprite
      */
     public final void advance()
     {
-        // advance the current animation
-        if (currentAnimation.advance())
+        if (skipped < frameSkip)
         {
-            // and schedule a repaint
-            repaint();
+            skipped++;
+        }
+        else
+        {
+            // advance the current animation
+            if (currentAnimation.advance())
+            {
+                // and schedule a repaint
+                repaint();
+            }
+            skipped = 0;
         }
     }
 
