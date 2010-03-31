@@ -122,6 +122,23 @@ public final class Animations
     }
 
     /**
+     * Create and return a new multiple frames animation containing all the frame images
+     * specified from <code>baseImage</code>.
+     *
+     * @param baseImage base image file
+     * @param suffix image suffix
+     * @param frames number of frames
+     * @return a new multiple frames animation containing all the frame images
+     *    specified from <code>baseImage</code>
+     * @throws IOException if an IO error occurs
+     */
+    public static MultipleFramesAnimation createAnimation(final File baseImage, final String suffix, final int frames)
+        throws IOException
+    {
+        return new MultipleFramesAnimation(createFrameList(baseImage, suffix, frames));
+    }
+
+    /**
      * Create and return a new looped frames animation containing all the frame images
      * specified from <code>baseImage</code>.
      *
@@ -132,7 +149,7 @@ public final class Animations
      *    specified from <code>baseImage</code>
      * @throws IOException if an IO error occurs
      */
-    public static LoopedFramesAnimation createAnimation(final File baseImage, final String suffix, final int frames)
+    public static LoopedFramesAnimation createLoopedAnimation(final File baseImage, final String suffix, final int frames)
         throws IOException
     {
         return new LoopedFramesAnimation(createFrameList(baseImage, suffix, frames));
@@ -165,6 +182,23 @@ public final class Animations
     }
 
     /**
+     * Create and return a new multiple frames animation containing all the frame images
+     * specified from <code>baseImage</code>.
+     *
+     * @param baseImage base image URL
+     * @param suffix image suffix
+     * @param frames number of frames
+     * @return a new multiple frames animation containing all the frame images
+     *    specified from <code>baseImage</code>
+     * @throws IOException if an IO error occurs
+     */
+    public static MultipleFramesAnimation createAnimation(final URL baseImage, final String suffix, final int frames)
+        throws IOException
+    {
+        return new MultipleFramesAnimation(createFrameList(baseImage, suffix, frames));
+    }
+
+    /**
      * Create and return a new looped frames animation containing all the frame images
      * specified from <code>baseImage</code>.
      *
@@ -175,7 +209,7 @@ public final class Animations
      *    specified from <code>baseImage</code>
      * @throws IOException if an IO error occurs
      */
-    public static LoopedFramesAnimation createAnimation(final URL baseImage, final String suffix, final int frames)
+    public static LoopedFramesAnimation createLoopedAnimation(final URL baseImage, final String suffix, final int frames)
         throws IOException
     {
         return new LoopedFramesAnimation(createFrameList(baseImage, suffix, frames));
@@ -205,6 +239,29 @@ public final class Animations
     }
 
     /**
+     * Create and return a new multiple frames animation containing all the frame images
+     * from <code>spriteSheet</code> as specified by the starting location <code>(x, y)</code>
+     * and read horizontally the specified number of frames.
+     *
+     * @param spriteSheet sprite sheet file
+     * @param x starting location x
+     * @param y starting location y
+     * @param width frame width
+     * @param height frame height
+     * @param frames number of frames
+     * @return a new multiple frames animation containing all the frame images
+     *    from <code>spriteSheet</code> as specified by the starting location <code>(x, y)</code>
+     *    and read horizontally the specified number of frames
+     * @throws IOException if an IO error occurs
+     */
+    public static MultipleFramesAnimation createAnimation(final File spriteSheet, final int x, final int y,
+                                                        final int width, final int height, final int frames)
+        throws IOException
+    {
+        return new MultipleFramesAnimation(createFrameList(spriteSheet, x, y, width, height, frames));
+    }
+
+    /**
      * Create and return a new looped frames animation containing all the frame images
      * from <code>spriteSheet</code> as specified by the starting location <code>(x, y)</code>
      * and read horizontally the specified number of frames.
@@ -220,7 +277,7 @@ public final class Animations
      *    and read horizontally the specified number of frames
      * @throws IOException if an IO error occurs
      */
-    public static LoopedFramesAnimation createAnimation(final File spriteSheet, final int x, final int y,
+    public static LoopedFramesAnimation createLoopedAnimation(final File spriteSheet, final int x, final int y,
                                                         final int width, final int height, final int frames)
         throws IOException
     {
@@ -251,6 +308,29 @@ public final class Animations
     }
 
     /**
+     * Create and return a new multiple frames animation containing all the frame images
+     * from <code>spriteSheet</code> as specified by the starting location <code>(x, y)</code>
+     * and read horizontally the specified number of frames.
+     *
+     * @param spriteSheet sprite sheet URL
+     * @param x starting location x
+     * @param y starting location y
+     * @param width frame width
+     * @param height frame height
+     * @param frames number of frames
+     * @return a new multiple frames animation containing all the frame images
+     *    from <code>spriteSheet</code> as specified by the starting location <code>(x, y)</code>
+     *    and read horizontally the specified number of frames
+     * @throws IOException if an IO error occurs
+     */
+    public static MultipleFramesAnimation createAnimation(final URL spriteSheet, final int x, final int y,
+                                                        final int width, final int height, final int frames)
+        throws IOException
+    {
+        return new MultipleFramesAnimation(createFrameList(spriteSheet, x, y, width, height, frames));
+    }
+
+    /**
      * Create and return a new looped frames animation containing all the frame images
      * from <code>spriteSheet</code> as specified by the starting location <code>(x, y)</code>
      * and read horizontally the specified number of frames.
@@ -266,7 +346,7 @@ public final class Animations
      *    and read horizontally the specified number of frames
      * @throws IOException if an IO error occurs
      */
-    public static LoopedFramesAnimation createAnimation(final URL spriteSheet, final int x, final int y,
+    public static LoopedFramesAnimation createLoopedAnimation(final URL spriteSheet, final int x, final int y,
                                                         final int width, final int height, final int frames)
         throws IOException
     {
@@ -305,6 +385,38 @@ public final class Animations
     }
 
     /**
+     * Create and return a new multiple frames animation containing all the frame images
+     * from <code>spriteSheet</code> as specified by the starting location <code>(x, y)</code>
+     * and read horizontally the specified number of frames.
+     *
+     * @param spriteSheet sprite sheet image
+     * @param x starting location x
+     * @param y starting location y
+     * @param width frame width
+     * @param height frame height
+     * @param frames number of frames
+     * @return a new multiple frames animation containing all the frame images
+     *    from <code>spriteSheet</code> as specified by the starting location <code>(x, y)</code>
+     *    and read horizontally the specified number of frames
+     */
+    public static MultipleFramesAnimation createAnimation(final BufferedImage spriteSheet, final int x, final int y,
+                                                        final int width, final int height, final int frames)
+    {
+        return new MultipleFramesAnimation(createFrameList(spriteSheet, x, y, width, height, frames));
+    }
+
+    /**
+     * Create and return a new multiple frames animation containing the specified frame images.
+     *
+     * @param images list of frame images, must not be null
+     * @return a new multiple frames animation containing the specified frame images
+     */
+    public static MultipleFramesAnimation createAnimation(final List<Image> images)
+    {
+        return new MultipleFramesAnimation(images);
+    }
+
+    /**
      * Create and return a new looped frames animation containing all the frame images
      * from <code>spriteSheet</code> as specified by the starting location <code>(x, y)</code>
      * and read horizontally the specified number of frames.
@@ -319,7 +431,7 @@ public final class Animations
      *    from <code>spriteSheet</code> as specified by the starting location <code>(x, y)</code>
      *    and read horizontally the specified number of frames
      */
-    public static LoopedFramesAnimation createAnimation(final BufferedImage spriteSheet, final int x, final int y,
+    public static LoopedFramesAnimation createLoopedAnimation(final BufferedImage spriteSheet, final int x, final int y,
                                                         final int width, final int height, final int frames)
     {
         return new LoopedFramesAnimation(createFrameList(spriteSheet, x, y, width, height, frames));
@@ -331,7 +443,7 @@ public final class Animations
      * @param images list of frame images, must not be null
      * @return a new looped frames animation containing the specified frame images
      */
-    public static LoopedFramesAnimation createAnimation(final List<Image> images)
+    public static LoopedFramesAnimation createLoopedAnimation(final List<Image> images)
     {
         return new LoopedFramesAnimation(images);
     }

@@ -154,6 +154,16 @@ public class Sprite
     }
 
     /**
+     * Return the number of frames to skip.  Defaults to <code>0</code>.
+     *
+     * @return the number of frames to skip
+     */
+    public final int getFrameSkip()
+    {
+        return frameSkip;
+    }
+
+    /**
      * Return the current animation for this piccolo sprite node.
      * The current animation will not be null.
      *
