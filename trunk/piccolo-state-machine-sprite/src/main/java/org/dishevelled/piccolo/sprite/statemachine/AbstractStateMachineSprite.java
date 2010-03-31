@@ -117,12 +117,15 @@ import org.xml.sax.SAXException;
  *   // walking activity
  *   private final WalkingActivity walkingActivity = ...;
  *   // load the state machine backing all instances of this MySprite
- *   private static final SCXML stateMachine = loadStateMachine(MySprite.class, "stateMachine.xml");
+ *   private static final SCXML STATE_MACHINE = loadStateMachine(MySprite.class, "stateMachine.xml");
  *
  *   MySprite() {
  *     super();
  *     // initialize the state machine
- *     initializeStateMachine(stateMachine);
+ *     initializeStateMachine(STATE_MACHINE);
+ *     // sprites have no bounds by default
+ *     setWidth(14.0d);
+ *     setHeight(24.0d);
  *   }
  *
  *   protected Animation createAnimation(final String id) {
@@ -270,17 +273,37 @@ public abstract class AbstractStateMachineSprite
     }
 
     /**
+     * Return the number of frames to skip.  Defaults to <code>0</code>.
+     *
+     * @return the number of frames to skip
+     */
+    protected final int getFrameSkip()
+    {
+        return frameSkip;
+    }
+
+    /**
      * Set the number of frames to skip to <code>frameSkip</code>.
      *
      * @param frameSkip number of frames to skip, must be <code>&gt;= 0</code>
      */
-    protected void setFrameSkip(final int frameSkip)
+    protected final void setFrameSkip(final int frameSkip)
     {
         if (frameSkip < 0)
         {
             throw new IllegalArgumentException("frameSkip must be at least zero");
         }
         this.frameSkip = frameSkip;
+    }
+
+    /**
+     * Return the current animation for this state machine sprite.
+     *
+     * @return the current animation for this state machine sprite
+     */
+    protected final Animation getCurrentAnimation()
+    {
+        return currentAnimation;
     }
 
     //protected final State currentState() {} ?
