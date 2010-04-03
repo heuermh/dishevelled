@@ -80,8 +80,8 @@
     <dependency>
       <groupId>commons-jexl</groupId>
       <artifactId>commons-jexl</artifactId>
-      <!-- todo: should this be <scope>runtime</scope>? -->
-      <optional>runtime</optional>
+      <optional>true</optional>
+      <scope>runtime</scope>
     </dependency>
     <dependency>
       <groupId>junit</groupId>
