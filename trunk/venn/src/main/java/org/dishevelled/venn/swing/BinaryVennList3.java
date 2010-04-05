@@ -60,10 +60,10 @@ public final class BinaryVennList3<E>
     private final JList second = new JList();
 
     /** Contents of the first only view. */
-    //private final JList firstOnly = new JList();
+    private final JList firstOnly = new JList();
 
     /** Contents for the second only view. */
-    //private final JList secondOnly = new JList();
+    private final JList secondOnly = new JList();
 
     /** Contents of the intersection view. */
     private final JList intersection = new JList();
@@ -76,6 +76,12 @@ public final class BinaryVennList3<E>
 
     /** Adapter for the second list model. */
     private ObservableSetEventListAdapter<E> secondAdapter;
+
+    /** Adapter for the first only list model. */
+    private SetEventListAdapter<E> firstOnlyAdapter;
+
+    /** Adapter for the second only list model. */
+    private SetEventListAdapter<E> secondOnlyAdapter;
 
     /** Adapter for the intersection list model. */
     private SetEventListAdapter<E> intersectionAdapter;
@@ -157,9 +163,13 @@ public final class BinaryVennList3<E>
         secondAdapter = new ObservableSetEventListAdapter<E>(getModel().second());
         second.setModel(new EventListModel<E>(secondAdapter));
 
+        firstOnlyAdapter = new SetEventListAdapter<E>(getModel().firstOnly());
+        firstOnly.setModel(new EventListModel<E>(firstOnlyAdapter));
+        secondOnlyAdapter = new SetEventListAdapter<E>(getModel().secondOnly());
+        secondOnly.setModel(new EventListModel<E>(secondOnlyAdapter));
         intersectionAdapter = new SetEventListAdapter<E>(getModel().intersection());
-        unionAdapter = new SetEventListAdapter<E>(getModel().union());
         intersection.setModel(new EventListModel<E>(intersectionAdapter));
+        unionAdapter = new SetEventListAdapter<E>(getModel().union());
         union.setModel(new EventListModel<E>(unionAdapter));
 
         getModel().first().addSetChangeListener(updateListModels);
@@ -171,6 +181,8 @@ public final class BinaryVennList3<E>
      */
     private void updateListModels()
     {
+        firstOnlyAdapter.updateEventList();
+        secondOnlyAdapter.updateEventList();
         intersectionAdapter.updateEventList();
         unionAdapter.updateEventList();
     }
@@ -186,6 +198,8 @@ public final class BinaryVennList3<E>
         secondAdapter.dispose();
         ((EventListModel<E>) first.getModel()).dispose();
         ((EventListModel<E>) second.getModel()).dispose();
+        ((EventListModel<E>) firstOnly.getModel()).dispose();
+        ((EventListModel<E>) secondOnly.getModel()).dispose();
         ((EventListModel<E>) intersection.getModel()).dispose();
         ((EventListModel<E>) union.getModel()).dispose();
         oldModel.first().removeSetChangeListener(updateListModels);
@@ -223,6 +237,16 @@ public final class BinaryVennList3<E>
         s.addLabel(getSecondLabel());
         s.addFinalField(new JScrollPane(second));
         panel.add(s);
+
+        LabelFieldPanel fo = new LabelFieldPanel();
+        fo.addLabel(getFirstOnlyLabel());
+        fo.addFinalField(new JScrollPane(firstOnly));
+        panel.add(fo);
+
+        LabelFieldPanel so = new LabelFieldPanel();
+        so.addLabel(getSecondOnlyLabel());
+        so.addFinalField(new JScrollPane(secondOnly));
+        panel.add(so);
 
         LabelFieldPanel t = new LabelFieldPanel();
         t.addLabel(getIntersectionLabel());
