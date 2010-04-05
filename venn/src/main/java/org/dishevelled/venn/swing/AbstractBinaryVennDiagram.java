@@ -145,6 +145,8 @@ public abstract class AbstractBinaryVennDiagram<E>
         model = new BinaryVennModelImpl3<E>(first, second);
         this.firstLabelText = firstLabelText;
         this.secondLabelText = secondLabelText;
+        this.firstOnlyLabelText = firstLabelText + " only";
+        this.secondOnlyLabelText = secondLabelText + " only";
 
         installListeners();
         updateLabels();

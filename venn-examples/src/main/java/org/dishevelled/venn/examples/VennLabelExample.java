@@ -33,14 +33,14 @@ import javax.swing.border.EmptyBorder;
 
 import org.dishevelled.layout.LabelFieldPanel;
 
-import org.dishevelled.venn.BinaryVennModel;
-import org.dishevelled.venn.TertiaryVennModel;
+import org.dishevelled.venn.BinaryVennModel3;
+import org.dishevelled.venn.TertiaryVennModel3;
 
-import org.dishevelled.venn.model.BinaryVennModelImpl;
-import org.dishevelled.venn.model.TertiaryVennModelImpl;
+import org.dishevelled.venn.model.BinaryVennModelImpl3;
+import org.dishevelled.venn.model.TertiaryVennModelImpl3;
 
-import org.dishevelled.venn.swing.BinaryVennLabel;
-import org.dishevelled.venn.swing.TertiaryVennLabel;
+import org.dishevelled.venn.swing.BinaryVennLabel3;
+import org.dishevelled.venn.swing.TertiaryVennLabel3;
 
 /**
  * Venn label example.
@@ -76,11 +76,11 @@ public final class VennLabelExample
         set2.add("baz");
         set2.add("garply");
 
-        BinaryVennModel<String> binaryModel = new BinaryVennModelImpl<String>(set0, set1);
-        BinaryVennLabel<String> binaryLabel = new BinaryVennLabel<String>(binaryModel);
+        BinaryVennModel3<String> binaryModel = new BinaryVennModelImpl3<String>(set0, set1);
+        BinaryVennLabel3<String> binaryLabel = new BinaryVennLabel3<String>(binaryModel);
 
-        TertiaryVennModel<String> tertiaryModel = new TertiaryVennModelImpl<String>(set0, set1, set2);
-        TertiaryVennLabel<String> tertiaryLabel = new TertiaryVennLabel<String>(tertiaryModel);
+        TertiaryVennModel3<String> tertiaryModel = new TertiaryVennModelImpl3<String>(set0, set1, set2);
+        TertiaryVennLabel3<String> tertiaryLabel = new TertiaryVennLabel3<String>(tertiaryModel);
 
         addLabel("Binary:");
         addField(binaryLabel);
