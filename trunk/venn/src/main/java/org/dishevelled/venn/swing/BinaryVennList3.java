@@ -248,15 +248,15 @@ public final class BinaryVennList3<E>
         so.addFinalField(new JScrollPane(secondOnly));
         panel.add(so);
 
-        LabelFieldPanel t = new LabelFieldPanel();
-        t.addLabel(getIntersectionLabel());
-        t.addFinalField(new JScrollPane(intersection));
-        panel.add(t);
+        LabelFieldPanel n = new LabelFieldPanel();
+        n.addLabel(getIntersectionLabel());
+        n.addFinalField(new JScrollPane(intersection));
+        panel.add(n);
 
-        LabelFieldPanel r = new LabelFieldPanel();
-        r.addLabel(getUnionLabel());
-        r.addFinalField(new JScrollPane(union));
-        panel.add(r);
+        LabelFieldPanel u = new LabelFieldPanel();
+        u.addLabel(getUnionLabel());
+        u.addFinalField(new JScrollPane(union));
+        panel.add(u);
         return panel;
     }
 
