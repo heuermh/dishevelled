@@ -28,6 +28,7 @@ import java.awt.GridLayout;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+import java.util.List;
 import java.util.Set;
 
 import javax.swing.JList;
@@ -104,13 +105,22 @@ public final class BinaryVennList3<E>
         }
     };
 
-    /** Update list models and list selection from model. */
+    /** Update list models from model. */
     private final SetChangeListener<E> updateListModels = new SetChangeListener<E>()
     {
         /** {@inheritDoc} */
         public void setChanged(final SetChangeEvent<E> event)
         {
             updateListModels();
+        }
+    };
+
+    /** Update list selection from model. */
+    private final SetChangeListener<E> updateSelection = new SetChangeListener<E>()
+    {
+        /** {@inheritDoc} */
+        public void setChanged(final SetChangeEvent<E> event)
+        {
             updateSelection();
         }
     };
@@ -162,47 +172,6 @@ public final class BinaryVennList3<E>
 
 
     /**
-     * Install selection listeners.
-     */
-    private void installSelectionListeners()
-    {
-        first.getSelectionModel().addListSelectionListener(new ListSelectionListener()
-            {
-                /** {@inheritDoc} */
-                public void valueChanged(final ListSelectionEvent event)
-                {
-                    //if (!event.getValueIsAdjusting())
-                    //{
-                        ListSelectionModel selectionModel = (ListSelectionModel) event.getSource();
-                        for (int index = event.getFirstIndex(); index < event.getLastIndex(); index++)
-                        {
-                            E e = firstAdapter.get(index);
-                            System.out.println("considering " + e);
-                            if (selectionModel.isSelectedIndex(index))
-                            {
-                                System.out.println(e + " is selected index");
-                                if (!getModel().selection().contains(e))
-                                {
-                                    System.out.println("adding " + e + " to selection view");
-                                    getModel().selection().add(e);  // add later?
-                                }
-                            }
-                            else
-                            {
-                                System.out.println(e + " is not selected index");
-                                if (getModel().selection().contains(e))
-                                {
-                                    System.out.println("removing " + e + " from selection view");
-                                    getModel().selection().remove(e);  // remove later?
-                                }
-                            }
-                        }
-                        //}
-                }
-            });
-    }
-
-    /**
      * Install list models.
      */
     private void installListModels()
@@ -222,7 +191,10 @@ public final class BinaryVennList3<E>
         union.setModel(new EventListModel<E>(unionAdapter));
 
         getModel().first().addSetChangeListener(updateListModels);
+        getModel().first().addSetChangeListener(updateSelection);
         getModel().second().addSetChangeListener(updateListModels);
+        getModel().second().addSetChangeListener(updateSelection);
+        getModel().selection().addSetChangeListener(updateSelection);
     }
 
     /**
@@ -252,53 +224,23 @@ public final class BinaryVennList3<E>
         ((EventListModel<E>) intersection.getModel()).dispose();
         ((EventListModel<E>) union.getModel()).dispose();
         oldModel.first().removeSetChangeListener(updateListModels);
+        oldModel.first().removeSetChangeListener(updateSelection);
         oldModel.second().removeSetChangeListener(updateListModels);
+        oldModel.second().removeSetChangeListener(updateSelection);
+        oldModel.selection().removeSetChangeListener(updateSelection);
     }
 
     /**
-     * Update list selection from the selection view in the model.
+     * Install selection listeners.
      */
-    private void updateSelection()
+    private void installSelectionListeners()
     {
-        if (getModel().selection().isEmpty())
-        {
-            System.out.println("clearing list selection");
-            first.clearSelection();
-            second.clearSelection();
-            intersection.clearSelection();
-            union.clearSelection();
-        }
-        else
-        {
-            for (E e : getModel().selection())
-            {
-                if (getModel().first().contains(e))
-                {
-                    int index = firstAdapter.indexOf(e);
-                    System.out.println("adding selection interval (" + index + ", " + (index + 1) + ") to first");
-                    first.getSelectionModel().addSelectionInterval(index, index + 1);
-                }
-                if (getModel().second().contains(e))
-                {
-                    int index = secondAdapter.indexOf(e);
-                    System.out.println("adding selection interval (" + index + ", " + (index + 1) + ") to second");
-                    second.getSelectionModel().addSelectionInterval(index, index + 1);
-                }
-                if (getModel().intersection().contains(e))
-                {
-                    int index = intersectionAdapter.indexOf(e);
-                    System.out.println("adding selection interval (" + index + ", " + (index + 1) + ") to intersection");
-                    intersection.getSelectionModel().addSelectionInterval(index, index + 1);
-                }
-                if (getModel().union().contains(e))
-                {
-                    int index = unionAdapter.indexOf(e);
-                    System.out.println("adding selection interval (" + index + ", " + (index + 1) + ") to union");
-                    union.getSelectionModel().addSelectionInterval(index, index + 1);
-                }
-            }
-            // remove selection intervals for those no longer in selection()
-        }
+        first.addListSelectionListener(new UpdateSelectionView());
+        second.addListSelectionListener(new UpdateSelectionView());
+        firstOnly.addListSelectionListener(new UpdateSelectionView());
+        secondOnly.addListSelectionListener(new UpdateSelectionView());
+        intersection.addListSelectionListener(new UpdateSelectionView());
+        union.addListSelectionListener(new UpdateSelectionView());
     }
 
     /** {@inheritDoc} */
@@ -355,5 +297,129 @@ public final class BinaryVennList3<E>
         return panel;
     }
 
-    // todo:  sync selection
+    /**
+     * Update list selection from the selection view in the model.
+     */
+    private void updateSelection()
+    {
+        if (getModel().selection().isEmpty())
+        {
+            clearSelection(first);
+            clearSelection(second);
+            clearSelection(firstOnly);
+            clearSelection(secondOnly);
+            clearSelection(intersection);
+            clearSelection(union);
+        }
+        else
+        {
+            for (E e : getModel().selection())
+            {
+                addToSelection(getModel().first(), first, firstAdapter, e);
+                addToSelection(getModel().second(), second, secondAdapter, e);
+                addToSelection(getModel().firstOnly(), firstOnly, firstOnlyAdapter, e);
+                addToSelection(getModel().secondOnly(), secondOnly, secondOnlyAdapter, e);
+                addToSelection(getModel().intersection(), intersection, intersectionAdapter, e);
+                addToSelection(getModel().union(), union, unionAdapter, e);
+            }
+
+            removeFromSelection(getModel().first(), first, firstAdapter);
+            removeFromSelection(getModel().second(), second, secondAdapter);
+            removeFromSelection(getModel().firstOnly(), firstOnly, firstOnlyAdapter);
+            removeFromSelection(getModel().secondOnly(), secondOnly, secondOnlyAdapter);
+            removeFromSelection(getModel().intersection(), intersection, intersectionAdapter);
+            removeFromSelection(getModel().union(), union, unionAdapter);
+        }
+    }
+
+    /**
+     * Clear the selection for the specified list if it is not a focus owner.
+     *
+     * @param list list
+     */
+    private void clearSelection(final JList list)
+    {
+        if (!list.isFocusOwner())
+        {
+            list.clearSelection();
+        }
+    }
+
+    /**
+     * Add the specified element to the list selection if it is contained
+     * in the specified model and the list is not a focus owner.
+     *
+     * @param model model
+     * @param list list
+     * @param adapter adapter
+     * @param e element
+     */
+    private void addToSelection(final Set<E> model, final JList list, final List<E> adapter, final E e)
+    {
+        if (!list.isFocusOwner() && model.contains(e))
+        {
+            int index = adapter.indexOf(e);
+            list.getSelectionModel().addSelectionInterval(index, index);
+        }
+    }
+
+    /**
+     * Remove elements from the list selection if they are not present in
+     * the specified model and the list is not a focus owner.
+     *
+     * @param model model
+     * @param list list
+     * @param adapter adapter
+     */
+    private void removeFromSelection(final Set<E> model, final JList list, final List<E> adapter)
+    {
+        if (!list.isFocusOwner())
+        {
+            for (E e : model)
+            {
+                if (!getModel().selection().contains(e))
+                {
+                    int index = adapter.indexOf(e);
+                    list.getSelectionModel().removeSelectionInterval(index, index);
+                }
+            }
+        }
+    }
+
+    /**
+     * Update selection view.
+     */
+    private class UpdateSelectionView implements ListSelectionListener
+    {
+        /** {@inheritDoc} */
+        public void valueChanged(final ListSelectionEvent event)
+        {
+            JList list = (JList) event.getSource();
+            if (list.isFocusOwner() && !event.getValueIsAdjusting())
+            {
+                ListSelectionModel selectionModel = list.getSelectionModel();
+                for (int index = event.getFirstIndex(); index < (event.getLastIndex() + 1); index++)
+                {
+                    E e = (E) list.getModel().getElementAt(index);
+                    if (selectionModel.isSelectedIndex(index))
+                    {
+                        if (!getModel().selection().contains(e))
+                        {
+                            getModel().selection().add(e);
+                        }
+                    }
+                    else
+                    {
+                        if (getModel().selection().contains(e))
+                        {
+                            getModel().selection().remove(e);
+                        }
+                    }
+                }
+            }
+            // todo:  may need to remove from selection view those
+            //    elements not present in model for focused list
+            //    e.g.  say "bar" is selected, select "foo" in First only
+        }
+    }
 }
