@@ -33,6 +33,10 @@ import java.util.Set;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.ListSelectionModel;
+
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import ca.odell.glazedlists.swing.EventListModel;
 
@@ -100,13 +104,14 @@ public final class BinaryVennList3<E>
         }
     };
 
-    /** Update list models. */
+    /** Update list models and list selection from model. */
     private final SetChangeListener<E> updateListModels = new SetChangeListener<E>()
     {
         /** {@inheritDoc} */
         public void setChanged(final SetChangeEvent<E> event)
         {
             updateListModels();
+            updateSelection();
         }
     };
 
@@ -118,6 +123,7 @@ public final class BinaryVennList3<E>
     {
         super();
         installListModels();
+        installSelectionListeners();
         layoutComponents();
         addPropertyChangeListener("model", modelChange);
     }
@@ -135,6 +141,7 @@ public final class BinaryVennList3<E>
     {
         super(firstLabelText, first, secondLabelText, second);
         installListModels();
+        installSelectionListeners();
         layoutComponents();
         addPropertyChangeListener("model", modelChange);
     }
@@ -148,10 +155,52 @@ public final class BinaryVennList3<E>
     {
         super(model);
         installListModels();
+        installSelectionListeners();
         layoutComponents();
         addPropertyChangeListener("model", modelChange);
     }
 
+
+    /**
+     * Install selection listeners.
+     */
+    private void installSelectionListeners()
+    {
+        first.getSelectionModel().addListSelectionListener(new ListSelectionListener()
+            {
+                /** {@inheritDoc} */
+                public void valueChanged(final ListSelectionEvent event)
+                {
+                    //if (!event.getValueIsAdjusting())
+                    //{
+                        ListSelectionModel selectionModel = (ListSelectionModel) event.getSource();
+                        for (int index = event.getFirstIndex(); index < event.getLastIndex(); index++)
+                        {
+                            E e = firstAdapter.get(index);
+                            System.out.println("considering " + e);
+                            if (selectionModel.isSelectedIndex(index))
+                            {
+                                System.out.println(e + " is selected index");
+                                if (!getModel().selection().contains(e))
+                                {
+                                    System.out.println("adding " + e + " to selection view");
+                                    getModel().selection().add(e);  // add later?
+                                }
+                            }
+                            else
+                            {
+                                System.out.println(e + " is not selected index");
+                                if (getModel().selection().contains(e))
+                                {
+                                    System.out.println("removing " + e + " from selection view");
+                                    getModel().selection().remove(e);  // remove later?
+                                }
+                            }
+                        }
+                        //}
+                }
+            });
+    }
 
     /**
      * Install list models.
@@ -204,6 +253,52 @@ public final class BinaryVennList3<E>
         ((EventListModel<E>) union.getModel()).dispose();
         oldModel.first().removeSetChangeListener(updateListModels);
         oldModel.second().removeSetChangeListener(updateListModels);
+    }
+
+    /**
+     * Update list selection from the selection view in the model.
+     */
+    private void updateSelection()
+    {
+        if (getModel().selection().isEmpty())
+        {
+            System.out.println("clearing list selection");
+            first.clearSelection();
+            second.clearSelection();
+            intersection.clearSelection();
+            union.clearSelection();
+        }
+        else
+        {
+            for (E e : getModel().selection())
+            {
+                if (getModel().first().contains(e))
+                {
+                    int index = firstAdapter.indexOf(e);
+                    System.out.println("adding selection interval (" + index + ", " + (index + 1) + ") to first");
+                    first.getSelectionModel().addSelectionInterval(index, index + 1);
+                }
+                if (getModel().second().contains(e))
+                {
+                    int index = secondAdapter.indexOf(e);
+                    System.out.println("adding selection interval (" + index + ", " + (index + 1) + ") to second");
+                    second.getSelectionModel().addSelectionInterval(index, index + 1);
+                }
+                if (getModel().intersection().contains(e))
+                {
+                    int index = intersectionAdapter.indexOf(e);
+                    System.out.println("adding selection interval (" + index + ", " + (index + 1) + ") to intersection");
+                    intersection.getSelectionModel().addSelectionInterval(index, index + 1);
+                }
+                if (getModel().union().contains(e))
+                {
+                    int index = unionAdapter.indexOf(e);
+                    System.out.println("adding selection interval (" + index + ", " + (index + 1) + ") to union");
+                    union.getSelectionModel().addSelectionInterval(index, index + 1);
+                }
+            }
+            // remove selection intervals for those no longer in selection()
+        }
     }
 
     /** {@inheritDoc} */
