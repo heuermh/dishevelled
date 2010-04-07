@@ -97,9 +97,9 @@ public final class TertiaryVennLabel3<E>
      * @param thirdLabelText label text for the third set
      * @param third third set, must not be null
      */
-    protected TertiaryVennLabel3(final String firstLabelText, final Set<? extends E> first,
-                                 final String secondLabelText, final Set<? extends E> second,
-                                 final String thirdLabelText, final Set<? extends E> third)
+    public TertiaryVennLabel3(final String firstLabelText, final Set<? extends E> first,
+                              final String secondLabelText, final Set<? extends E> second,
+                              final String thirdLabelText, final Set<? extends E> third)
     {
         super(firstLabelText, first, secondLabelText, second, thirdLabelText, third);
         updateContents();
