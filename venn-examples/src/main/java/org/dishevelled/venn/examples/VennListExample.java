@@ -23,13 +23,24 @@
 */
 package org.dishevelled.venn.examples;
 
+import java.awt.event.ActionEvent;
+
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
 import javax.swing.SwingUtilities;
 
 import javax.swing.border.EmptyBorder;
+
+import org.dishevelled.iconbundle.tango.TangoProject;
+
+import org.dishevelled.identify.IdentifiableAction;
+import org.dishevelled.identify.IdMenuItem;
 
 import org.dishevelled.layout.LabelFieldPanel;
 
@@ -52,6 +63,18 @@ public final class VennListExample
     extends LabelFieldPanel
     implements Runnable
 {
+    /** Clear selection action. */
+    private final Action clearSelection;
+
+    /** Select all action. */
+    private final IdentifiableAction selectAll;
+
+    /** Exit action. */
+    private final Action exit;
+
+    /** Binary venn list. */
+    private final BinaryVennList3 binaryList;
+
 
     /**
      * Create a new venn list example.
@@ -77,7 +100,7 @@ public final class VennListExample
         set2.add("garply");
 
         BinaryVennModel3<String> binaryModel = new BinaryVennModelImpl3<String>(set0, set1);
-        BinaryVennList3 binaryList = new BinaryVennList3(binaryModel);
+        binaryList = new BinaryVennList3(binaryModel);
 
         TertiaryVennModel3<String> tertiaryModel = new TertiaryVennModelImpl3<String>(set0, set1, set2);
         TertiaryVennList3 tertiaryList = new TertiaryVennList3(tertiaryModel);
@@ -85,11 +108,56 @@ public final class VennListExample
         addLabel("Binary:");
         addField(binaryList);
         addSpacing(12);
-        addLabel("Tertiary:");
-        addField(tertiaryList);
+        //addLabel("Tertiary:");
+        //addField(tertiaryList);
         addFinalSpacing();
 
+        exit = new AbstractAction("Exit")
+            {
+                /** {@inheritDoc} */
+                public void actionPerformed(final ActionEvent event)
+                {
+                    System.exit(0);
+                }
+            };
+        clearSelection = new AbstractAction("Clear Selection")
+            {
+                /** {@inheritDoc} */
+                public void actionPerformed(final ActionEvent e)
+                {
+                    binaryList.clearSelection();
+                }
+            };
+        selectAll = new IdentifiableAction("Select All", TangoProject.EDIT_SELECT_ALL)
+            {
+                /** {@inheritDoc} */
+                public void actionPerformed(final ActionEvent e)
+                {
+                    binaryList.selectAll();
+                }
+            };
+
         setBorder(new EmptyBorder(12, 12, 12, 12));
+    }
+
+    /**
+     * Create and return a new menu bar.
+     *
+     * @return a new menu bar
+     */
+    private JMenuBar createMenuBar()
+    {
+        JMenu file = new JMenu("File");
+        file.add(exit);
+
+        JMenu edit = new JMenu("Edit");
+        edit.add(clearSelection);
+        edit.add(new IdMenuItem(selectAll, TangoProject.EXTRA_SMALL));
+
+        JMenuBar menuBar = new JMenuBar();
+        menuBar.add(file);
+        menuBar.add(edit);
+        return menuBar;
     }
 
 
@@ -99,6 +167,7 @@ public final class VennListExample
         final JFrame f = new JFrame("VennList example");
         f.setContentPane(this);
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        f.setJMenuBar(createMenuBar());
         f.setBounds(120, 120, 800, 600);
         f.setVisible(true);
     }
