@@ -185,4 +185,76 @@ public final class BinaryVennLabel3<E>
         this.elementsToDisplay = elementsToDisplay;
         firePropertyChange("elementsToDisplay", oldElementsToDisplay, this.elementsToDisplay);
     }
+
+    /**
+     * Return the contents of the first set.  The text for the returned JLabel
+     * should not be changed, as the current text is synchronized to the
+     * binary venn model backing this venn diagram.
+     *
+     * @return the contents of the first set
+     */
+    public JLabel getFirst()
+    {
+        return first;
+    }
+
+    /**
+     * Return the contents of the second set.  The text for the returned JLabel
+     * should not be changed, as the current text is synchronized to the
+     * binary venn model backing this venn diagram.
+     *
+     * @return the contents of the second set
+     */
+    public JLabel getSecond()
+    {
+        return second;
+    }
+
+    /**
+     * Return the contents of the first only view.  The text for the returned JLabel
+     * should not be changed, as the current text is synchronized to the
+     * binary venn model backing this venn diagram.
+     *
+     * @return the contents of the first only view
+     */
+    public JLabel getFirstOnly()
+    {
+        return firstOnly;
+    }
+
+    /**
+     * Return the contents of the second only view.  The text for the returned JLabel
+     * should not be changed, as the current text is synchronized to the
+     * binary venn model backing this venn diagram.
+     *
+     * @return the contents of the second only view
+     */
+    public JLabel getSecondOnly()
+    {
+        return secondOnly;
+    }
+
+    /**
+     * Return the contents of the intersection view.  The text for the returned JLabel
+     * should not be changed, as the current text is synchronized to the
+     * binary venn model backing this venn diagram.
+     *
+     * @return the contents of the intersection view
+     */
+    public JLabel getIntersection()
+    {
+        return intersection;
+    }
+
+    /**
+     * Return the contents of the union view.  The text for the returned JLabel
+     * should not be changed, as the current text is synchronized to the
+     * binary venn model backing this venn diagram.
+     *
+     * @return the contents of the union view
+     */
+    public JLabel getUnion()
+    {
+        return union;
+    }
 }
