@@ -31,6 +31,7 @@ import java.beans.PropertyChangeListener;
 import java.util.List;
 import java.util.Set;
 
+import javax.swing.Box;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -171,6 +172,26 @@ public final class BinaryVennList3<E>
     }
 
 
+    // todo:  keyboard copy & paste does not work as expected always
+
+    /**
+     * Clear selection.
+     */
+    public void clearSelection()
+    {
+        union.requestFocusInWindow();
+        getModel().selection().clear();
+    }
+
+    /**
+     * Select all.
+     */
+    public void selectAll()
+    {
+        union.requestFocusInWindow();
+        getModel().selection().addAll(getModel().union());
+    }
+
     /**
      * Install list models.
      */
@@ -263,7 +284,7 @@ public final class BinaryVennList3<E>
     private JPanel createMainPanel()
     {
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(1, 4, 12, 0));
+        panel.setLayout(new GridLayout(2, 3, 12, 12));
 
         LabelFieldPanel f = new LabelFieldPanel();
         f.addLabel(getFirstLabel());
@@ -274,6 +295,11 @@ public final class BinaryVennList3<E>
         s.addLabel(getSecondLabel());
         s.addFinalField(new JScrollPane(second));
         panel.add(s);
+
+        LabelFieldPanel u = new LabelFieldPanel();
+        u.addLabel(getUnionLabel());
+        u.addFinalField(new JScrollPane(union));
+        panel.add(u);
 
         LabelFieldPanel fo = new LabelFieldPanel();
         fo.addLabel(getFirstOnlyLabel());
@@ -290,10 +316,6 @@ public final class BinaryVennList3<E>
         n.addFinalField(new JScrollPane(intersection));
         panel.add(n);
 
-        LabelFieldPanel u = new LabelFieldPanel();
-        u.addLabel(getUnionLabel());
-        u.addFinalField(new JScrollPane(union));
-        panel.add(u);
         return panel;
     }
 

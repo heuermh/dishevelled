@@ -26,6 +26,8 @@ package org.dishevelled.venn.model;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.google.common.base.Joiner;
+
 import org.dishevelled.observable.ObservableSet;
 
 import org.dishevelled.observable.event.SetChangeEvent;
@@ -102,5 +104,15 @@ final class SelectionView<E>
             throw new IllegalArgumentException("can not select an element not in union");
         }
         return super.preAdd(e);
+    }
+
+    /** {@inheritDoc} */
+    public String toString()
+    {
+        StringBuilder sb = new StringBuilder();
+        sb.append("[");
+        Joiner.on(", ").appendTo(sb, this);
+        sb.append("]");
+        return sb.toString();
     }
 }
