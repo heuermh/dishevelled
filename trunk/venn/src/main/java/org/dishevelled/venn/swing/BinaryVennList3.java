@@ -196,7 +196,7 @@ public final class BinaryVennList3<E>
     /**
      * Return the contents of the first set.  The model for the returned
      * JList should not be changed, as the current model implementation is
-     * synchronized to the binary venn model underlying this venn diagram.
+     * synchronized to the binary venn model backing this venn diagram.
      *
      * @return the contents of the first set
      */
@@ -208,7 +208,7 @@ public final class BinaryVennList3<E>
     /**
      * Return the contents of the second set.  The model for the returned
      * JList should not be changed, as the current model implementation is
-     * synchronized to the binary venn model underlying this venn diagram.
+     * synchronized to the binary venn model backing this venn diagram.
      *
      * @return the contents of the second set
      */
@@ -220,7 +220,7 @@ public final class BinaryVennList3<E>
     /**
      * Return the contents of the first only view.  The model for the returned
      * JList should not be changed, as the current model implementation is
-     * synchronized to the binary venn model underlying this venn diagram.
+     * synchronized to the binary venn model backing this venn diagram.
      *
      * @return the contents of the first only view
      */
@@ -232,7 +232,7 @@ public final class BinaryVennList3<E>
     /**
      * Return the contents of the second only view.  The model for the returned
      * JList should not be changed, as the current model implementation is
-     * synchronized to the binary venn model underlying this venn diagram.
+     * synchronized to the binary venn model backing this venn diagram.
      *
      * @return the contents of the second only view
      */
@@ -244,7 +244,7 @@ public final class BinaryVennList3<E>
     /**
      * Return the contents of the intersection view.  The model for the returned
      * JList should not be changed, as the current model implementation is
-     * synchronized to the binary venn model underlying this venn diagram.
+     * synchronized to the binary venn model backing this venn diagram.
      *
      * @return the contents of the intersection view
      */
@@ -256,7 +256,7 @@ public final class BinaryVennList3<E>
     /**
      * Return the contents of the union view.  The model for the returned
      * JList should not be changed, as the current model implementation is
-     * synchronized to the binary venn model underlying this venn diagram.
+     * synchronized to the binary venn model backing this venn diagram.
      *
      * @return the contents of the union view
      */

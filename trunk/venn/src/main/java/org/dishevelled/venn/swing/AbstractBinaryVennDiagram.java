@@ -210,7 +210,7 @@ public abstract class AbstractBinaryVennDiagram<E>
     /**
      * Return the label for the first set.  The text for the returned JLabel
      * should not be changed, as the text is synchronized to the binary
-     * venn model underlying this venn diagram.  Use methods
+     * venn model backing this venn diagram.  Use methods
      * {@link #setFirstLabelText(String)} and {@link setDisplaySizes(boolean)}
      * to set the label text and whether to display sizes respectively.
      *
@@ -224,7 +224,7 @@ public abstract class AbstractBinaryVennDiagram<E>
     /**
      * Return the label for the second set.  The text for the returned JLabel
      * should not be changed, as the text is synchronized to the binary
-     * venn model underlying this venn diagram.  Use methods
+     * venn model backing this venn diagram.  Use methods
      * {@link #setSecondLabelText(String)} and {@link setDisplaySizes(boolean)}
      * to set the label text and whether to display sizes respectively.
      *
@@ -238,7 +238,7 @@ public abstract class AbstractBinaryVennDiagram<E>
     /**
      * Return the label for the first only view.  The text for the returned JLabel
      * should not be changed, as the text is synchronized to the binary
-     * venn model underlying this venn diagram.  Use methods
+     * venn model backing this venn diagram.  Use methods
      * {@link #setFirstOnlyLabelText(String)} and {@link setDisplaySizes(boolean)}
      * to set the label text and whether to display sizes respectively.
      *
@@ -252,7 +252,7 @@ public abstract class AbstractBinaryVennDiagram<E>
     /**
      * Return the label for the second only view.  The text for the returned JLabel
      * should not be changed, as the text is synchronized to the binary
-     * venn model underlying this venn diagram.  Use methods
+     * venn model backing this venn diagram.  Use methods
      * {@link #setSecondOnlyLabelText(String)} and {@link setDisplaySizes(boolean)}
      * to set the label text and whether to display sizes respectively.
      *
@@ -266,7 +266,7 @@ public abstract class AbstractBinaryVennDiagram<E>
     /**
      * Return the label for the intersection view.  The text for the returned JLabel
      * should not be changed, as the text is synchronized to the binary
-     * venn model underlying this venn diagram.  Use methods
+     * venn model backing this venn diagram.  Use methods
      * {@link #setIntersectionLabelText(String)} and {@link setDisplaySizes(boolean)}
      * to set the label text and whether to display sizes respectively.
      *
@@ -280,7 +280,7 @@ public abstract class AbstractBinaryVennDiagram<E>
     /**
      * Return the label for the union view.  The text for the returned JLabel
      * should not be changed, as the text is synchronized to the binary
-     * venn model underlying this venn diagram.  Use methods
+     * venn model backing this venn diagram.  Use methods
      * {@link #setUnionLabelText(String)} and {@link setDisplaySizes(boolean)}
      * to set the label text and whether to display sizes respectively.
      *
