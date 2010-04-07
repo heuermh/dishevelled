@@ -28,11 +28,17 @@ import java.awt.GridLayout;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+import java.util.List;
 import java.util.Set;
 
+import javax.swing.Box;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.ListSelectionModel;
+
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import ca.odell.glazedlists.swing.EventListModel;
 
@@ -124,13 +130,23 @@ public final class TertiaryVennList3<E>
         }
     };
 
-    /** Update list models. */
+    /** Update list models from model. */
     private final SetChangeListener<E> updateListModels = new SetChangeListener<E>()
     {
         /** {@inheritDoc} */
         public void setChanged(final SetChangeEvent<E> event)
         {
             updateListModels();
+        }
+    };
+
+    /** Update list selection from model. */
+    private final SetChangeListener<E> updateSelection = new SetChangeListener<E>()
+    {
+        /** {@inheritDoc} */
+        public void setChanged(final SetChangeEvent<E> event)
+        {
+            updateSelection();
         }
     };
 
@@ -142,6 +158,7 @@ public final class TertiaryVennList3<E>
     {
         super();
         installListModels();
+        installSelectionListeners();
         layoutComponents();
         addPropertyChangeListener("model", modelChange);
     }
@@ -162,6 +179,7 @@ public final class TertiaryVennList3<E>
     {
         super(firstLabelText, first, secondLabelText, second, thirdLabelText, third);
         installListModels();
+        installSelectionListeners();
         layoutComponents();
         addPropertyChangeListener("model", modelChange);
     }
@@ -175,10 +193,30 @@ public final class TertiaryVennList3<E>
     {
         super(model);
         installListModels();
+        installSelectionListeners();
         layoutComponents();
         addPropertyChangeListener("model", modelChange);
     }
 
+
+    /**
+     * Clear selection.
+     */
+    public void clearSelection()
+    {
+        union.requestFocusInWindow();
+        getModel().selection().clear();
+    }
+
+    /**
+     * Select all.
+     */
+    public void selectAll()
+    {
+        union.requestFocusInWindow();
+        // todo:  dreadfully inefficient
+        getModel().selection().addAll(getModel().union());
+    }
 
     /**
      * Install list models.
@@ -250,7 +288,24 @@ public final class TertiaryVennList3<E>
         oldModel.third().removeSetChangeListener(updateListModels);
     }
 
-    /** {@inheritDoc} */
+     /**
+     * Install selection listeners.
+     */
+    private void installSelectionListeners()
+    {
+        first.addListSelectionListener(new UpdateSelectionView());
+        second.addListSelectionListener(new UpdateSelectionView());
+        third.addListSelectionListener(new UpdateSelectionView());
+        firstOnly.addListSelectionListener(new UpdateSelectionView());
+        secondOnly.addListSelectionListener(new UpdateSelectionView());
+        thirdOnly.addListSelectionListener(new UpdateSelectionView());
+        firstSecond.addListSelectionListener(new UpdateSelectionView());
+        secondThird.addListSelectionListener(new UpdateSelectionView());
+        intersection.addListSelectionListener(new UpdateSelectionView());
+        union.addListSelectionListener(new UpdateSelectionView());
+    }
+
+   /** {@inheritDoc} */
     protected void updateContents()
     {
         // empty
@@ -270,7 +325,7 @@ public final class TertiaryVennList3<E>
     private JPanel createMainPanel()
     {
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(1, 4, 12, 0));
+        panel.setLayout(new GridLayout(2, 7, 12, 12));
 
         LabelFieldPanel f = new LabelFieldPanel();
         f.addLabel(getFirstLabel());
@@ -286,6 +341,11 @@ public final class TertiaryVennList3<E>
         t.addLabel(getThirdLabel());
         t.addFinalField(new JScrollPane(third));
         panel.add(t);
+
+        panel.add(Box.createGlue());
+        panel.add(Box.createGlue());
+        panel.add(Box.createGlue());
+        panel.add(Box.createGlue());
 
         LabelFieldPanel fo = new LabelFieldPanel();
         fo.addLabel(getFirstOnlyLabel());
@@ -324,5 +384,262 @@ public final class TertiaryVennList3<E>
         return panel;
     }
 
-    // todo:  sync selection
+    /**
+     * Return the contents of the first set.  The model for the returned
+     * JList should not be changed, as the current model implementation is
+     * synchronized to the tertiary venn model backing this venn diagram.
+     *
+     * @return the contents of the first set
+     */
+    public JList getFirst()
+    {
+        return first;
+    }
+
+    /**
+     * Return the contents of the second set.  The model for the returned
+     * JList should not be changed, as the current model implementation is
+     * synchronized to the tertiary venn model backing this venn diagram.
+     *
+     * @return the contents of the second set
+     */
+    public JList getSecond()
+    {
+        return second;
+    }
+
+    /**
+     * Return the contents of the third set.  The model for the returned
+     * JList should not be changed, as the current model implementation is
+     * synchronized to the tertiary venn model backing this venn diagram.
+     *
+     * @return the contents of the thid set
+     */
+    public JList getThird()
+    {
+        return third;
+    }
+
+    /**
+     * Return the contents of the first only view.  The model for the returned
+     * JList should not be changed, as the current model implementation is
+     * synchronized to the tertiary venn model backing this venn diagram.
+     *
+     * @return the contents of the first only view
+     */
+    public JList getFirstOnly()
+    {
+        return firstOnly;
+    }
+
+    /**
+     * Return the contents of the second only view.  The model for the returned
+     * JList should not be changed, as the current model implementation is
+     * synchronized to the tertiary venn model backing this venn diagram.
+     *
+     * @return the contents of the second only view
+     */
+    public JList getSecondOnly()
+    {
+        return secondOnly;
+    }
+
+    /**
+     * Return the contents of the third only view.  The model for the returned
+     * JList should not be changed, as the current model implementation is
+     * synchronized to the tertiary venn model backing this venn diagram.
+     *
+     * @return the contents of the third only view
+     */
+    public JList getThirdOnly()
+    {
+        return thirdOnly;
+    }
+
+    /**
+     * Return the contents of the first second view.  The model for the returned
+     * JList should not be changed, as the current model implementation is
+     * synchronized to the tertiary venn model backing this venn diagram.
+     *
+     * @return the contents of the first second view
+     */
+    public JList getFirstSecond()
+    {
+        return firstSecond;
+    }
+
+    /**
+     * Return the contents of the second third view.  The model for the returned
+     * JList should not be changed, as the current model implementation is
+     * synchronized to the tertiary venn model backing this venn diagram.
+     *
+     * @return the contents of the second third view
+     */
+    public JList getSecondThird()
+    {
+        return secondThird;
+    }
+
+    /**
+     * Return the contents of the intersection view.  The model for the returned
+     * JList should not be changed, as the current model implementation is
+     * synchronized to the tertiary venn model backing this venn diagram.
+     *
+     * @return the contents of the intersection view
+     */
+    public JList getIntersection()
+    {
+        return intersection;
+    }
+
+    /**
+     * Return the contents of the union view.  The model for the returned
+     * JList should not be changed, as the current model implementation is
+     * synchronized to the tertiary venn model backing this venn diagram.
+     *
+     * @return the contents of the union view
+     */
+    public JList getUnion()
+    {
+        return union;
+    }
+
+    /**
+     * Update list selection from the selection view in the model.
+     */
+    private void updateSelection()
+    {
+        if (getModel().selection().isEmpty())
+        {
+            clearSelection(first);
+            clearSelection(second);
+            clearSelection(third);
+            clearSelection(firstOnly);
+            clearSelection(secondOnly);
+            clearSelection(thirdOnly);
+            clearSelection(firstSecond);
+            clearSelection(secondThird);
+            clearSelection(intersection);
+            clearSelection(union);
+        }
+        else
+        {
+            // todo:  need element(s) that were added from set change event
+            for (E e : getModel().selection())
+            {
+                addToSelection(getModel().first(), first, firstAdapter, e);
+                addToSelection(getModel().second(), second, secondAdapter, e);
+                addToSelection(getModel().third(), third, thirdAdapter, e);
+                addToSelection(getModel().firstOnly(), firstOnly, firstOnlyAdapter, e);
+                addToSelection(getModel().secondOnly(), secondOnly, secondOnlyAdapter, e);
+                addToSelection(getModel().thirdOnly(), thirdOnly, thirdOnlyAdapter, e);
+                addToSelection(getModel().firstSecond(), firstSecond, firstSecondAdapter, e);
+                addToSelection(getModel().secondThird(), secondThird, secondThirdAdapter, e);
+                addToSelection(getModel().intersection(), intersection, intersectionAdapter, e);
+                addToSelection(getModel().union(), union, unionAdapter, e);
+            }
+
+            removeFromSelection(getModel().first(), first, firstAdapter);
+            removeFromSelection(getModel().second(), second, secondAdapter);
+            removeFromSelection(getModel().third(), third, thirdAdapter);
+            removeFromSelection(getModel().firstOnly(), firstOnly, firstOnlyAdapter);
+            removeFromSelection(getModel().secondOnly(), secondOnly, secondOnlyAdapter);
+            removeFromSelection(getModel().firstSecond(), firstSecond, firstSecondAdapter);
+            removeFromSelection(getModel().secondThird(), secondThird, secondThirdAdapter);
+            removeFromSelection(getModel().intersection(), intersection, intersectionAdapter);
+            removeFromSelection(getModel().union(), union, unionAdapter);
+        }
+    }
+
+    /**
+     * Clear the selection for the specified list if it is not a focus owner.
+     *
+     * @param list list
+     */
+    private void clearSelection(final JList list)
+    {
+        if (!list.isFocusOwner())
+        {
+            list.clearSelection();
+        }
+    }
+
+    /**
+     * Add the specified element to the list selection if it is contained
+     * in the specified model and the list is not a focus owner.
+     *
+     * @param model model
+     * @param list list
+     * @param adapter adapter
+     * @param e element
+     */
+    private void addToSelection(final Set<E> model, final JList list, final List<E> adapter, final E e)
+    {
+        if (!list.isFocusOwner() && model.contains(e))
+        {
+            int index = adapter.indexOf(e);
+            list.getSelectionModel().addSelectionInterval(index, index);
+        }
+    }
+
+    /**
+     * Remove elements from the list selection if they are not present in
+     * the specified model and the list is not a focus owner.
+     *
+     * @param model model
+     * @param list list
+     * @param adapter adapter
+     */
+    private void removeFromSelection(final Set<E> model, final JList list, final List<E> adapter)
+    {
+        if (!list.isFocusOwner())
+        {
+            // todo:  need element(s) that were removed from set change event
+            for (E e : model)
+            {
+                if (!getModel().selection().contains(e))
+                {
+                    int index = adapter.indexOf(e);
+                    list.getSelectionModel().removeSelectionInterval(index, index);
+                }
+            }
+        }
+    }
+
+    /**
+     * Update selection view.
+     */
+    private class UpdateSelectionView implements ListSelectionListener
+    {
+        /** {@inheritDoc} */
+        public void valueChanged(final ListSelectionEvent event)
+        {
+            JList list = (JList) event.getSource();
+            if (list.isFocusOwner() && !event.getValueIsAdjusting())
+            {
+                ListSelectionModel selectionModel = list.getSelectionModel();
+                for (int index = event.getFirstIndex(); index < (event.getLastIndex() + 1); index++)
+                {
+                    E e = (E) list.getModel().getElementAt(index);
+                    if (selectionModel.isSelectedIndex(index))
+                    {
+                        if (!getModel().selection().contains(e))
+                        {
+                            getModel().selection().add(e);
+                        }
+                    }
+                    else
+                    {
+                        if (getModel().selection().contains(e))
+                        {
+                            getModel().selection().remove(e);
+                        }
+                    }
+                }
+            }
+            // todo:  may need to remove from selection view those
+            //    elements not present in model for focused list
+            //    e.g.  say "bar" is selected, select "foo" in First only
+        }
+    }
 }
