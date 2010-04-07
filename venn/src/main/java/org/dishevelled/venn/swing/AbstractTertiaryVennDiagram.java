@@ -153,7 +153,7 @@ public abstract class AbstractTertiaryVennDiagram<E>
     /** Default label text for the union view, <code>"Union"</code>. */
     public static final String DEFAULT_UNION_LABEL_TEXT = "Union";
 
-
+7
     /**
      * Create a new empty abstract tertiary venn diagram.
      */
@@ -261,6 +261,7 @@ public abstract class AbstractTertiaryVennDiagram<E>
      *
      * @return the label for the first set
      */
+    // todo:  make public?
     protected final JLabel getFirstLabel()
     {
         return firstLabel;

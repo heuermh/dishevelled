@@ -189,7 +189,80 @@ public final class BinaryVennList3<E>
     public void selectAll()
     {
         union.requestFocusInWindow();
+        // todo:  dreadfully inefficient
         getModel().selection().addAll(getModel().union());
+    }
+
+    /**
+     * Return the contents of the first set.  The model for the returned
+     * JList should not be changed, as the current model implementation is
+     * synchronized to the binary venn model underlying this venn diagram.
+     *
+     * @return the contents of the first set
+     */
+    public JList getFirst()
+    {
+        return first;
+    }
+
+    /**
+     * Return the contents of the second set.  The model for the returned
+     * JList should not be changed, as the current model implementation is
+     * synchronized to the binary venn model underlying this venn diagram.
+     *
+     * @return the contents of the second set
+     */
+    public JList getSecond()
+    {
+        return second;
+    }
+
+    /**
+     * Return the contents of the first only view.  The model for the returned
+     * JList should not be changed, as the current model implementation is
+     * synchronized to the binary venn model underlying this venn diagram.
+     *
+     * @return the contents of the first only view
+     */
+    public JList getFirstOnly()
+    {
+        return firstOnly;
+    }
+
+    /**
+     * Return the contents of the second only view.  The model for the returned
+     * JList should not be changed, as the current model implementation is
+     * synchronized to the binary venn model underlying this venn diagram.
+     *
+     * @return the contents of the second only view
+     */
+    public JList getSecondOnly()
+    {
+        return secondOnly;
+    }
+
+    /**
+     * Return the contents of the intersection view.  The model for the returned
+     * JList should not be changed, as the current model implementation is
+     * synchronized to the binary venn model underlying this venn diagram.
+     *
+     * @return the contents of the intersection view
+     */
+    public JList getIntersection()
+    {
+        return intersection;
+    }
+
+    /**
+     * Return the contents of the union view.  The model for the returned
+     * JList should not be changed, as the current model implementation is
+     * synchronized to the binary venn model underlying this venn diagram.
+     *
+     * @return the contents of the union view
+     */
+    public JList getUnion()
+    {
+        return union;
     }
 
     /**
@@ -284,7 +357,7 @@ public final class BinaryVennList3<E>
     private JPanel createMainPanel()
     {
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(2, 3, 12, 12));
+        panel.setLayout(new GridLayout(2, 4, 12, 12));
 
         LabelFieldPanel f = new LabelFieldPanel();
         f.addLabel(getFirstLabel());
@@ -296,10 +369,8 @@ public final class BinaryVennList3<E>
         s.addFinalField(new JScrollPane(second));
         panel.add(s);
 
-        LabelFieldPanel u = new LabelFieldPanel();
-        u.addLabel(getUnionLabel());
-        u.addFinalField(new JScrollPane(union));
-        panel.add(u);
+        panel.add(Box.createGlue());
+        panel.add(Box.createGlue());
 
         LabelFieldPanel fo = new LabelFieldPanel();
         fo.addLabel(getFirstOnlyLabel());
@@ -315,6 +386,11 @@ public final class BinaryVennList3<E>
         n.addLabel(getIntersectionLabel());
         n.addFinalField(new JScrollPane(intersection));
         panel.add(n);
+
+        LabelFieldPanel u = new LabelFieldPanel();
+        u.addLabel(getUnionLabel());
+        u.addFinalField(new JScrollPane(union));
+        panel.add(u);
 
         return panel;
     }
@@ -335,6 +411,7 @@ public final class BinaryVennList3<E>
         }
         else
         {
+            // todo:  need element(s) that were added from set change event
             for (E e : getModel().selection())
             {
                 addToSelection(getModel().first(), first, firstAdapter, e);
@@ -397,6 +474,7 @@ public final class BinaryVennList3<E>
     {
         if (!list.isFocusOwner())
         {
+            // todo:  need element(s) that were removed from set change event
             for (E e : model)
             {
                 if (!getModel().selection().contains(e))
