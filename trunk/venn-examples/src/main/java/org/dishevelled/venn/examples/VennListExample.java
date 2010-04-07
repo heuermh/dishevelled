@@ -24,6 +24,7 @@
 package org.dishevelled.venn.examples;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -34,6 +35,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.SwingUtilities;
+import javax.swing.Timer;
 
 import javax.swing.border.EmptyBorder;
 
@@ -136,6 +138,28 @@ public final class VennListExample
                     binaryList.selectAll();
                 }
             };
+
+        Timer t1 = new Timer(5000, new ActionListener()
+            {
+                /** {@inheritDoc} */
+                public void actionPerformed(final ActionEvent e)
+                {
+                    binaryList.getModel().first().add("waldo" + binaryList.getModel().first().size());
+                }
+            });
+        t1.setRepeats(true);
+        t1.start();
+
+        Timer t2 = new Timer(8000, new ActionListener()
+            {
+                /** {@inheritDoc} */
+                public void actionPerformed(final ActionEvent e)
+                {
+                    binaryList.getModel().second().add("waldo" + binaryList.getModel().second().size());
+                }
+            });
+        t2.setRepeats(true);
+        t2.start();
 
         setBorder(new EmptyBorder(12, 12, 12, 12));
     }
