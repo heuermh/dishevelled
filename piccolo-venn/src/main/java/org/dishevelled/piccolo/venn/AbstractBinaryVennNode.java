@@ -208,90 +208,6 @@ public abstract class AbstractBinaryVennNode<E>
     protected abstract void updateContents();
 
     /**
-     * Return the label for the first set.  The text for the returned PText
-     * should not be changed, as the text is synchronized to the binary
-     * venn model backing this venn diagram.  Use methods
-     * {@link #setFirstLabelText(String)} and {@link setDisplaySizes(boolean)}
-     * to set the label text and whether to display sizes respectively.
-     *
-     * @return the label for the first set
-     */
-    public final PText getFirstLabel()
-    {
-        return firstLabel;
-    }
-
-    /**
-     * Return the label for the second set.  The text for the returned PText
-     * should not be changed, as the text is synchronized to the binary
-     * venn model backing this venn diagram.  Use methods
-     * {@link #setSecondLabelText(String)} and {@link setDisplaySizes(boolean)}
-     * to set the label text and whether to display sizes respectively.
-     *
-     * @return the label for the second set
-     */
-    public final PText getSecondLabel()
-    {
-        return secondLabel;
-    }
-
-    /**
-     * Return the label for the first only view.  The text for the returned PText
-     * should not be changed, as the text is synchronized to the binary
-     * venn model backing this venn diagram.  Use methods
-     * {@link #setFirstOnlyLabelText(String)} and {@link setDisplaySizes(boolean)}
-     * to set the label text and whether to display sizes respectively.
-     *
-     * @return the label for the first only view
-     */
-    public final PText getFirstOnlyLabel()
-    {
-        return firstOnlyLabel;
-    }
-
-    /**
-     * Return the label for the second only view.  The text for the returned PText
-     * should not be changed, as the text is synchronized to the binary
-     * venn model backing this venn diagram.  Use methods
-     * {@link #setSecondOnlyLabelText(String)} and {@link setDisplaySizes(boolean)}
-     * to set the label text and whether to display sizes respectively.
-     *
-     * @return the label for the second only view
-     */
-    public final PText getSecondOnlyLabel()
-    {
-        return secondOnlyLabel;
-    }
-
-    /**
-     * Return the label for the intersection view.  The text for the returned PText
-     * should not be changed, as the text is synchronized to the binary
-     * venn model backing this venn diagram.  Use methods
-     * {@link #setIntersectionLabelText(String)} and {@link setDisplaySizes(boolean)}
-     * to set the label text and whether to display sizes respectively.
-     *
-     * @return the label for the intersection view
-     */
-    public final PText getIntersectionLabel()
-    {
-        return intersectionLabel;
-    }
-
-    /**
-     * Return the label for the union view.  The text for the returned PText
-     * should not be changed, as the text is synchronized to the binary
-     * venn model backing this venn diagram.  Use methods
-     * {@link #setUnionLabelText(String)} and {@link setDisplaySizes(boolean)}
-     * to set the label text and whether to display sizes respectively.
-     *
-     * @return the label for the union view
-     */
-    public final PText getUnionLabel()
-    {
-        return unionLabel;
-    }
-
-    /**
      * Build and return label text.
      *
      * @param labelText label text
@@ -516,5 +432,89 @@ public abstract class AbstractBinaryVennNode<E>
         this.unionLabelText = unionLabelText;
         unionLabel.setText(buildLabel(this.unionLabelText, model.union().size()));
         firePropertyChange(-1, "unionLabelText", this.unionLabelText, oldUnionLabelText);
+    }
+
+    /**
+     * Return the label for the first set.  The text for the returned PText
+     * should not be changed, as the text is synchronized to the binary
+     * venn model backing this venn diagram.  Use methods
+     * {@link #setFirstLabelText(String)} and {@link setDisplaySizes(boolean)}
+     * to set the label text and whether to display sizes respectively.
+     *
+     * @return the label for the first set
+     */
+    public final PText getFirstLabel()
+    {
+        return firstLabel;
+    }
+
+    /**
+     * Return the label for the second set.  The text for the returned PText
+     * should not be changed, as the text is synchronized to the binary
+     * venn model backing this venn diagram.  Use methods
+     * {@link #setSecondLabelText(String)} and {@link setDisplaySizes(boolean)}
+     * to set the label text and whether to display sizes respectively.
+     *
+     * @return the label for the second set
+     */
+    public final PText getSecondLabel()
+    {
+        return secondLabel;
+    }
+
+    /**
+     * Return the label for the first only view.  The text for the returned PText
+     * should not be changed, as the text is synchronized to the binary
+     * venn model backing this venn diagram.  Use methods
+     * {@link #setFirstOnlyLabelText(String)} and {@link setDisplaySizes(boolean)}
+     * to set the label text and whether to display sizes respectively.
+     *
+     * @return the label for the first only view
+     */
+    public final PText getFirstOnlyLabel()
+    {
+        return firstOnlyLabel;
+    }
+
+    /**
+     * Return the label for the second only view.  The text for the returned PText
+     * should not be changed, as the text is synchronized to the binary
+     * venn model backing this venn diagram.  Use methods
+     * {@link #setSecondOnlyLabelText(String)} and {@link setDisplaySizes(boolean)}
+     * to set the label text and whether to display sizes respectively.
+     *
+     * @return the label for the second only view
+     */
+    public final PText getSecondOnlyLabel()
+    {
+        return secondOnlyLabel;
+    }
+
+    /**
+     * Return the label for the intersection view.  The text for the returned PText
+     * should not be changed, as the text is synchronized to the binary
+     * venn model backing this venn diagram.  Use methods
+     * {@link #setIntersectionLabelText(String)} and {@link setDisplaySizes(boolean)}
+     * to set the label text and whether to display sizes respectively.
+     *
+     * @return the label for the intersection view
+     */
+    public final PText getIntersectionLabel()
+    {
+        return intersectionLabel;
+    }
+
+    /**
+     * Return the label for the union view.  The text for the returned PText
+     * should not be changed, as the text is synchronized to the binary
+     * venn model backing this venn diagram.  Use methods
+     * {@link #setUnionLabelText(String)} and {@link setDisplaySizes(boolean)}
+     * to set the label text and whether to display sizes respectively.
+     *
+     * @return the label for the union view
+     */
+    public final PText getUnionLabel()
+    {
+        return unionLabel;
     }
 }
