@@ -65,6 +65,9 @@ public final class TertiaryVennModelImpl3<E>
     /** First second view. */
     private final Set<E> firstSecond;
 
+    /** First third view. */
+    private final Set<E> firstThird;
+
     /** Second third view. */
     private final Set<E> secondThird;
 
@@ -123,6 +126,7 @@ public final class TertiaryVennModelImpl3<E>
         secondOnly = Sets.difference(Sets.difference(s, f), t); // s - f - t
         thirdOnly = Sets.difference(Sets.difference(t, f), s); // t - f - s
         firstSecond = Sets.difference(Sets.intersection(f, s), t); // f n s - t
+        firstThird = Sets.difference(Sets.intersection(f, t), s); // f n t - s
         secondThird = Sets.difference(Sets.intersection(s, t), f); // s n t - f
         intersection = Sets.intersection(f, Sets.intersection(s, t)); // f n s n t
         union = Sets.union(f, Sets.union(s, t)); // f u s u t
@@ -170,6 +174,12 @@ public final class TertiaryVennModelImpl3<E>
     public Set<E> firstSecond()
     {
         return firstSecond;
+    }
+
+    /** {@inheritDoc} */
+    public Set<E> firstThird()
+    {
+        return firstThird;
     }
 
     /** {@inheritDoc} */
