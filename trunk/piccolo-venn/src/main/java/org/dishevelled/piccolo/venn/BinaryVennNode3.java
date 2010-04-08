@@ -28,6 +28,7 @@ import java.awt.Color;
 import java.awt.Shape;
 
 import java.awt.geom.Area;
+import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
 import java.util.Set;
@@ -72,6 +73,30 @@ public class BinaryVennNode3<E>
 
     /** Label for the size of the intersection view. */
     private final PText intersectionSize = new PText();
+
+    /** Cached area. */
+    private Area f;
+
+    /** Cached area. */
+    private Area s;
+
+    /** Cached area. */
+    private final Area area = new Area();
+
+    /** Cached rectangle. */
+    private Rectangle2D a = new Rectangle2D.Double();
+
+    /** Cached area. */
+    private Rectangle2D b = new Rectangle2D.Double();
+
+    /** Cached point. */
+    private Point2D c = new Point2D.Double();
+
+    /** Label gap, <code>8.0d</code>. */
+    private static final double LABEL_GAP = 8.0d;
+
+    /** Adjust label gap, <code>10.0d</code>. */
+    private static final double ADJUST_LABEL_GAP = 10.0d;
 
 
     /**
@@ -119,26 +144,13 @@ public class BinaryVennNode3<E>
     private void initNodes()
     {
         first.setPathToEllipse(0.0f, 0.0f, 128.0f, 128.0f);
-        first.setPaint(new Color(80, 80, 80, 80));
-        first.setStroke(new BasicStroke(1.0f));
-        first.setStrokePaint(new Color(80, 80, 80, 128));
+        first.setPaint(new Color(30, 30, 30, 50));
+        first.setStroke(new BasicStroke(0.5f));
+        first.setStrokePaint(new Color(20, 20, 20));
         second.setPathToEllipse(((2.0f * 128.0f) / 3.0f), 0.0f, 128.0f, 128.0f);
-        second.setPaint(new Color(80, 80, 80, 80));
-        second.setStroke(new BasicStroke(1.0f));
-        second.setStrokePaint(new Color(80, 80, 80, 128));
-
-        // or do tihs in layoutChildren()?
-        Shape firstShape = first.getPathReference();
-        Shape secondShape = second.getPathReference();
-        Area firstArea = new Area(firstShape);
-        Area secondArea = new Area(secondShape);
-        firstArea.subtract(new Area(secondShape));
-        firstOnly.setArea(firstArea);
-        secondArea.subtract(new Area(firstShape));
-        secondOnly.setArea(secondArea);
-        Area intersectionArea = new Area(firstShape);
-        intersectionArea.intersect(new Area(secondShape));
-        intersection.setArea(intersectionArea);
+        second.setPaint(new Color(5, 37, 255, 50));
+        second.setStroke(new BasicStroke(0.5f));
+        second.setStrokePaint(new Color(20, 20, 20));
 
         addChild(first);
         addChild(second);
@@ -146,6 +158,7 @@ public class BinaryVennNode3<E>
         addChild(firstOnlySize);
         addChild(secondOnlySize);
         addChild(intersectionSize);
+        // todo:  use firstOnlyLabel and secondOnlyLabel as mouseovers?
         addChild(getFirstLabel());
         addChild(getSecondLabel());
     }
@@ -161,27 +174,96 @@ public class BinaryVennNode3<E>
     /** {@inheritDoc} */
     protected void layoutChildren()
     {
-        Rectangle2D firstBounds = firstOnly.getArea().getBounds2D();
-        Rectangle2D secondBounds = secondOnly.getArea().getBounds2D();
-        Rectangle2D intersectionBounds = intersection.getArea().getBounds2D();
+        //System.out.println("layoutChildren");
+        f = new Area(first.getPathReference());
+        s = new Area(second.getPathReference());
 
-        Rectangle2D firstLabelBounds = getFirstLabel().getFullBoundsReference();
-        Rectangle2D secondLabelBounds = getSecondLabel().getFullBoundsReference();
-        Rectangle2D firstOnlySizeBounds = firstOnlySize.getFullBoundsReference();
-        Rectangle2D secondOnlySizeBounds = secondOnlySize.getFullBoundsReference();
-        Rectangle2D intersectionSizeBounds = intersectionSize.getFullBoundsReference();
+        area.reset();
+        area.add(f);
+        area.subtract(s);
+        firstOnly.setArea(area);
 
-        getFirstLabel().setOffset(firstBounds.getX() + (firstBounds.getWidth() / 2.0d) - (firstLabelBounds.getWidth() / 2.0d),
-                                  -1.0d * firstLabelBounds.getHeight() - 4.0d);
-        getSecondLabel().setOffset(secondBounds.getX() + (secondBounds.getWidth() / 2.0d) - (secondLabelBounds.getWidth() / 2.0d),
-                                   -1.0d * secondLabelBounds.getHeight() - 4.0d);
-        firstOnlySize.setOffset(firstBounds.getCenterX() - (firstOnlySizeBounds.getWidth() / 2.0d),
-                                firstBounds.getCenterY() - (firstOnlySizeBounds.getHeight() / 2.0d));
-        secondOnlySize.setOffset(secondBounds.getCenterX() - (secondOnlySizeBounds.getWidth() / 2.0d),
-                                 secondBounds.getCenterY() - (secondOnlySizeBounds.getHeight() / 2.0d));
-        intersectionSize.setOffset(intersectionBounds.getCenterX() - (intersectionSizeBounds.getWidth() / 2.0d),
-                                   intersectionBounds.getCenterY() - (intersectionSizeBounds.getHeight() / 2.0d));
+        area.reset();
+        area.add(s);
+        area.subtract(f);
+        secondOnly.setArea(area);
+
+        area.reset();
+        area.add(f);
+        area.intersect(s);
+        intersection.setArea(area);
+
+        offset(firstOnly.getArea(), firstOnlySize);
+        offset(secondOnly.getArea(), secondOnlySize);
+        offset(intersection.getArea(), intersectionSize);
+
+        labelLeft(firstOnly.getArea(), getFirstLabel());
+        labelRight(secondOnly.getArea(), getSecondLabel());
+        adjustLabels(getFirstLabel(), getSecondLabel());
     }
+
+    /**
+     * Offset the specified size label to the center of the specified area.
+     *
+     * @param area area
+     * @param size size label
+     */
+    private void offset(final Area area, final PText size)
+    {
+        b = size.getFullBoundsReference();
+        c = Centers.centerOf(area, c);
+        size.setOffset(c.getX() - (b.getWidth() / 2.0d), c.getY() - (b.getHeight() / 2.0d));
+    }
+
+    /**
+     * Offset the specified label to the top and left of the center of the specified area.
+     *
+     * @param area area
+     * @param label label
+     */
+    private void labelLeft(final Area area, final PText label)
+    {
+        a = area.getBounds2D();
+        b = label.getFullBoundsReference();
+        c = Centers.centerOf(area, c);
+        label.setOffset(c.getX() - ((2.0d * b.getWidth()) / 3.0d), a.getY() - b.getHeight() - LABEL_GAP);
+    }
+
+    /**
+     * Offset the specified label to the top and right of the center of the specified area.
+     *
+     * @param area area
+     * @param label label
+     */
+    private void labelRight(final Area area, final PText label)
+    {
+        a = area.getBounds2D();
+        b = label.getFullBoundsReference();
+        c = Centers.centerOf(area, c);
+        label.setOffset(c.getX() - (b.getWidth() / 3.0d), a.getY() - b.getHeight() - LABEL_GAP);
+    }
+
+    /**
+     * Adjust the horizontal offsets for the specified pair of labels if their bounds overlap.
+     *
+     * @param leftLabel left label
+     * @param rightLabel right label
+     */
+    private void adjustLabels(final PText leftLabel, final PText rightLabel)
+    {
+        a = leftLabel.getFullBoundsReference();
+        b = rightLabel.getFullBoundsReference();
+        Rectangle2D.intersect(a, b, a);
+        if (a.getWidth() > 0.0d)
+        {
+            leftLabel.offset(-1.0 * a.getWidth() / 2.0d - ADJUST_LABEL_GAP, 0.0d);
+            rightLabel.offset(a.getWidth() / 2.0d + ADJUST_LABEL_GAP, 0.0d);
+        }
+    }
+
+    // todo:  allow getters for nodes, or alternatively getters/setters for paint, stroke, strokePaint
+    //    allowing reference to first, second paths would allow clients to change the path/shape and offset
+
 
     /**
      * Area node.
@@ -195,7 +277,7 @@ public class BinaryVennNode3<E>
         // todo:  implement this to allow for mouse-over, picking, etc.
         private void setArea(final Area area)
         {
-            this.area = area;
+            this.area = (Area) area.clone();
         }
 
         private Area getArea()
