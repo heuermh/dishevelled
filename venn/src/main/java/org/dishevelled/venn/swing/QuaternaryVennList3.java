@@ -47,17 +47,17 @@ import org.dishevelled.layout.LabelFieldPanel;
 import org.dishevelled.observable.event.SetChangeEvent;
 import org.dishevelled.observable.event.SetChangeListener;
 
-import org.dishevelled.venn.TertiaryVennModel3;
+import org.dishevelled.venn.QuaternaryVennModel3;
 
 /**
- * Tertiary venn diagram list 3.
+ * Quaternary venn diagram list 3.
  *
  * @param <E> value type
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public final class TertiaryVennList3<E>
-    extends AbstractTertiaryVennDiagram<E>
+public final class QuaternaryVennList3<E>
+    extends AbstractQuaternaryVennDiagram<E>
 {
     /** Contents of the first set. */
     private final JList first = new JList();
@@ -68,6 +68,9 @@ public final class TertiaryVennList3<E>
     /** Contents of the third set. */
     private final JList third = new JList();
 
+    /** Contents of the fourth set. */
+    private final JList fourth = new JList();
+
     /** Contents of the first only view. */
     private final JList firstOnly = new JList();
 
@@ -77,6 +80,9 @@ public final class TertiaryVennList3<E>
     /** Contents for the third only view. */
     private final JList thirdOnly = new JList();
 
+    /** Contents for the fourth only view. */
+    private final JList fourthOnly = new JList();
+
     /** Contents for the first second view. */
     private final JList firstSecond = new JList();
 
@@ -85,6 +91,27 @@ public final class TertiaryVennList3<E>
 
     /** Contents for the second third view. */
     private final JList secondThird = new JList();
+
+    /** Contents for the first fourth view. */
+    private final JList firstFourth = new JList();
+
+    /** Contents for the second fourth view. */
+    private final JList secondFourth = new JList();
+
+    /** Contents for the third fourth view. */
+    private final JList thirdFourth = new JList();
+
+    /** Contents for the first second third view. */
+    private final JList firstSecondThird = new JList();
+
+    /** Contents for the first second fourth view. */
+    private final JList firstSecondFourth = new JList();
+
+    /** Contents for the first third fourth view. */
+    private final JList firstThirdFourth = new JList();
+
+    /** Contents for the second third fourth view. */
+    private final JList secondThirdFourth = new JList();
 
     /** Contents of the intersection view. */
     private final JList intersection = new JList();
@@ -101,6 +128,9 @@ public final class TertiaryVennList3<E>
     /** Adapter for the third list model. */
     private ObservableSetEventListAdapter<E> thirdAdapter;
 
+    /** Adapter for the fourth list model. */
+    private ObservableSetEventListAdapter<E> fourthAdapter;
+
     /** Adapter for the first only list model. */
     private SetEventListAdapter<E> firstOnlyAdapter;
 
@@ -110,6 +140,9 @@ public final class TertiaryVennList3<E>
     /** Adapter for the third only list model. */
     private SetEventListAdapter<E> thirdOnlyAdapter;
 
+    /** Adapter for the fourth only list model. */
+    private SetEventListAdapter<E> fourthOnlyAdapter;
+
     /** Adapter for the first second list model. */
     private SetEventListAdapter<E> firstSecondAdapter;
 
@@ -118,6 +151,27 @@ public final class TertiaryVennList3<E>
 
     /** Adapter for the second third list model. */
     private SetEventListAdapter<E> secondThirdAdapter;
+
+    /** Adapter for the first fourth list model. */
+    private SetEventListAdapter<E> firstFourthAdapter;
+
+    /** Adapter for the second fourth list model. */
+    private SetEventListAdapter<E> secondFourthAdapter;
+
+    /** Adapter for the third fourth list model. */
+    private SetEventListAdapter<E> thirdFourthAdapter;
+
+    /** Adapter for the first second third list model. */
+    private SetEventListAdapter<E> firstSecondThirdAdapter;
+
+    /** Adapter for the first second fourth list model. */
+    private SetEventListAdapter<E> firstSecondFourthAdapter;
+
+    /** Adapter for the first third fourth list model. */
+    private SetEventListAdapter<E> firstThirdFourthAdapter;
+
+    /** Adapter for the second third fourth list model. */
+    private SetEventListAdapter<E> secondThirdFourthAdapter;
 
     /** Adapter for the intersection list model. */
     private SetEventListAdapter<E> intersectionAdapter;
@@ -131,7 +185,7 @@ public final class TertiaryVennList3<E>
         /** {@inheritDoc} */
         public void propertyChange(final PropertyChangeEvent event)
         {
-            uninstallListModels((TertiaryVennModel3<E>) event.getOldValue());
+            uninstallListModels((QuaternaryVennModel3<E>) event.getOldValue());
             installListModels();
         }
     };
@@ -158,9 +212,9 @@ public final class TertiaryVennList3<E>
 
 
     /**
-     * Create a new empty tertiary venn list.
+     * Create a new empty quaternary venn list.
      */
-    public TertiaryVennList3()
+    public QuaternaryVennList3()
     {
         super();
         installListModels();
@@ -170,7 +224,7 @@ public final class TertiaryVennList3<E>
     }
 
     /**
-     * Create a new tertiary venn list with the specified sets.
+     * Create a new quaternary venn list with the specified sets.
      *
      * @param firstLabelText label text for the first set
      * @param first first set, must not be null
@@ -178,12 +232,15 @@ public final class TertiaryVennList3<E>
      * @param second second set, must not be null
      * @param thirdLabelText label text for the third set
      * @param third third set, must not be null
+     * @param thirdLabelText label text for the fourth set
+     * @param fourth fourth set, must not be null
      */
-    public TertiaryVennList3(final String firstLabelText, final Set<? extends E> first,
-                             final String secondLabelText, final Set<? extends E> second,
-                             final String thirdLabelText, final Set<? extends E> third)
+    public QuaternaryVennList3(final String firstLabelText, final Set<? extends E> first,
+                               final String secondLabelText, final Set<? extends E> second,
+                               final String thirdLabelText, final Set<? extends E> third,
+                               final String fourthLabelText, final Set<? extends E> fourth)
     {
-        super(firstLabelText, first, secondLabelText, second, thirdLabelText, third);
+        super(firstLabelText, first, secondLabelText, second, thirdLabelText, third, fourthLabelText, fourth);
         installListModels();
         installSelectionListeners();
         layoutComponents();
@@ -191,11 +248,11 @@ public final class TertiaryVennList3<E>
     }
 
     /**
-     * Create a new tertiary venn list with the specified model.
+     * Create a new quaternary venn list with the specified model.
      *
-     * @param model model for this tertiary venn list, must not be null
+     * @param model model for this quaternary venn list, must not be null
      */
-    public TertiaryVennList3(final TertiaryVennModel3<E> model)
+    public QuaternaryVennList3(final QuaternaryVennModel3<E> model)
     {
         super(model);
         installListModels();
@@ -235,6 +292,8 @@ public final class TertiaryVennList3<E>
         second.setModel(new EventListModel<E>(secondAdapter));
         thirdAdapter = new ObservableSetEventListAdapter<E>(getModel().third());
         third.setModel(new EventListModel<E>(thirdAdapter));
+        fourthAdapter = new ObservableSetEventListAdapter<E>(getModel().fourth());
+        fourth.setModel(new EventListModel<E>(fourthAdapter));
 
         firstOnlyAdapter = new SetEventListAdapter<E>(getModel().firstOnly());
         firstOnly.setModel(new EventListModel<E>(firstOnlyAdapter));
@@ -242,12 +301,28 @@ public final class TertiaryVennList3<E>
         secondOnly.setModel(new EventListModel<E>(secondOnlyAdapter));
         thirdOnlyAdapter = new SetEventListAdapter<E>(getModel().thirdOnly());
         thirdOnly.setModel(new EventListModel<E>(thirdOnlyAdapter));
+        fourthOnlyAdapter = new SetEventListAdapter<E>(getModel().fourthOnly());
+        fourthOnly.setModel(new EventListModel<E>(fourthOnlyAdapter));
         firstSecondAdapter = new SetEventListAdapter<E>(getModel().firstSecond());
         firstSecond.setModel(new EventListModel<E>(firstSecondAdapter));
         firstThirdAdapter = new SetEventListAdapter<E>(getModel().firstThird());
         firstThird.setModel(new EventListModel<E>(firstThirdAdapter));
         secondThirdAdapter = new SetEventListAdapter<E>(getModel().secondThird());
         secondThird.setModel(new EventListModel<E>(secondThirdAdapter));
+        firstFourthAdapter = new SetEventListAdapter<E>(getModel().firstFourth());
+        firstFourth.setModel(new EventListModel<E>(firstFourthAdapter));
+        secondFourthAdapter = new SetEventListAdapter<E>(getModel().secondFourth());
+        secondFourth.setModel(new EventListModel<E>(secondFourthAdapter));
+        thirdFourthAdapter = new SetEventListAdapter<E>(getModel().thirdFourth());
+        thirdFourth.setModel(new EventListModel<E>(thirdFourthAdapter));
+        firstSecondThirdAdapter = new SetEventListAdapter<E>(getModel().firstSecondThird());
+        firstSecondThird.setModel(new EventListModel<E>(firstSecondThirdAdapter));
+        firstSecondFourthAdapter = new SetEventListAdapter<E>(getModel().firstSecondFourth());
+        firstSecondFourth.setModel(new EventListModel<E>(firstSecondFourthAdapter));
+        firstThirdFourthAdapter = new SetEventListAdapter<E>(getModel().firstThirdFourth());
+        firstThirdFourth.setModel(new EventListModel<E>(firstThirdFourthAdapter));
+        secondThirdFourthAdapter = new SetEventListAdapter<E>(getModel().secondThirdFourth());
+        secondThirdFourth.setModel(new EventListModel<E>(secondThirdFourthAdapter));
         intersectionAdapter = new SetEventListAdapter<E>(getModel().intersection());
         intersection.setModel(new EventListModel<E>(intersectionAdapter));
         unionAdapter = new SetEventListAdapter<E>(getModel().union());
@@ -256,6 +331,7 @@ public final class TertiaryVennList3<E>
         getModel().first().addSetChangeListener(updateListModels);
         getModel().second().addSetChangeListener(updateListModels);
         getModel().third().addSetChangeListener(updateListModels);
+        getModel().fourth().addSetChangeListener(updateListModels);
     }
 
     /**
@@ -266,9 +342,17 @@ public final class TertiaryVennList3<E>
         firstOnlyAdapter.updateEventList();
         secondOnlyAdapter.updateEventList();
         thirdOnlyAdapter.updateEventList();
+        fourthOnlyAdapter.updateEventList();
         firstSecondAdapter.updateEventList();
         firstThirdAdapter.updateEventList();
         secondThirdAdapter.updateEventList();
+        firstFourthAdapter.updateEventList();
+        secondFourthAdapter.updateEventList();
+        thirdFourthAdapter.updateEventList();
+        firstSecondThirdAdapter.updateEventList();
+        firstSecondFourthAdapter.updateEventList();
+        firstThirdFourthAdapter.updateEventList();
+        secondThirdFourthAdapter.updateEventList();
         intersectionAdapter.updateEventList();
         unionAdapter.updateEventList();
     }
@@ -278,25 +362,36 @@ public final class TertiaryVennList3<E>
      *
      * @param oldModel old model
      */
-    private void uninstallListModels(final TertiaryVennModel3<E> oldModel)
+    private void uninstallListModels(final QuaternaryVennModel3<E> oldModel)
     {
         firstAdapter.dispose();
         secondAdapter.dispose();
         thirdAdapter.dispose();
+        fourthAdapter.dispose();
         ((EventListModel<E>) first.getModel()).dispose();
         ((EventListModel<E>) second.getModel()).dispose();
         ((EventListModel<E>) third.getModel()).dispose();
+        ((EventListModel<E>) fourth.getModel()).dispose();
         ((EventListModel<E>) firstOnly.getModel()).dispose();
         ((EventListModel<E>) secondOnly.getModel()).dispose();
         ((EventListModel<E>) thirdOnly.getModel()).dispose();
+        ((EventListModel<E>) fourthOnly.getModel()).dispose();
         ((EventListModel<E>) firstSecond.getModel()).dispose();
         ((EventListModel<E>) firstThird.getModel()).dispose();
         ((EventListModel<E>) secondThird.getModel()).dispose();
+        ((EventListModel<E>) firstFourth.getModel()).dispose();
+        ((EventListModel<E>) secondFourth.getModel()).dispose();
+        ((EventListModel<E>) thirdFourth.getModel()).dispose();
+        ((EventListModel<E>) firstSecondThird.getModel()).dispose();
+        ((EventListModel<E>) firstSecondFourth.getModel()).dispose();
+        ((EventListModel<E>) firstThirdFourth.getModel()).dispose();
+        ((EventListModel<E>) secondThirdFourth.getModel()).dispose();
         ((EventListModel<E>) intersection.getModel()).dispose();
         ((EventListModel<E>) union.getModel()).dispose();
         oldModel.first().removeSetChangeListener(updateListModels);
         oldModel.second().removeSetChangeListener(updateListModels);
         oldModel.third().removeSetChangeListener(updateListModels);
+        oldModel.fourth().removeSetChangeListener(updateListModels);
     }
 
      /**
@@ -307,12 +402,21 @@ public final class TertiaryVennList3<E>
         first.addListSelectionListener(new UpdateSelectionView());
         second.addListSelectionListener(new UpdateSelectionView());
         third.addListSelectionListener(new UpdateSelectionView());
+        fourth.addListSelectionListener(new UpdateSelectionView());
         firstOnly.addListSelectionListener(new UpdateSelectionView());
         secondOnly.addListSelectionListener(new UpdateSelectionView());
         thirdOnly.addListSelectionListener(new UpdateSelectionView());
+        fourthOnly.addListSelectionListener(new UpdateSelectionView());
         firstSecond.addListSelectionListener(new UpdateSelectionView());
         firstThird.addListSelectionListener(new UpdateSelectionView());
         secondThird.addListSelectionListener(new UpdateSelectionView());
+        firstFourth.addListSelectionListener(new UpdateSelectionView());
+        secondFourth.addListSelectionListener(new UpdateSelectionView());
+        thirdFourth.addListSelectionListener(new UpdateSelectionView());
+        firstSecondThird.addListSelectionListener(new UpdateSelectionView());
+        firstSecondFourth.addListSelectionListener(new UpdateSelectionView());
+        firstThirdFourth.addListSelectionListener(new UpdateSelectionView());
+        secondThirdFourth.addListSelectionListener(new UpdateSelectionView());
         intersection.addListSelectionListener(new UpdateSelectionView());
         union.addListSelectionListener(new UpdateSelectionView());
     }
@@ -337,7 +441,7 @@ public final class TertiaryVennList3<E>
     private JPanel createMainPanel()
     {
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(2, 8, 12, 12));
+        panel.setLayout(new GridLayout(4, 6, 12, 12));
 
         LabelFieldPanel f = new LabelFieldPanel();
         f.addLabel(getFirstLabel());
@@ -354,9 +458,11 @@ public final class TertiaryVennList3<E>
         t.addFinalField(new JScrollPane(third));
         panel.add(t);
 
-        panel.add(Box.createGlue());
-        panel.add(Box.createGlue());
-        panel.add(Box.createGlue());
+        LabelFieldPanel r = new LabelFieldPanel();
+        r.addLabel(getFourthLabel());
+        r.addFinalField(new JScrollPane(fourth));
+        panel.add(r);
+
         panel.add(Box.createGlue());
         panel.add(Box.createGlue());
 
@@ -375,6 +481,14 @@ public final class TertiaryVennList3<E>
         to.addFinalField(new JScrollPane(thirdOnly));
         panel.add(to);
 
+        LabelFieldPanel ro = new LabelFieldPanel();
+        ro.addLabel(getFourthOnlyLabel());
+        ro.addFinalField(new JScrollPane(fourthOnly));
+        panel.add(ro);
+
+        panel.add(Box.createGlue());
+        panel.add(Box.createGlue());
+
         LabelFieldPanel fs = new LabelFieldPanel();
         fs.addLabel(getFirstSecondLabel());
         fs.addFinalField(new JScrollPane(firstSecond));
@@ -389,6 +503,41 @@ public final class TertiaryVennList3<E>
         st.addLabel(getSecondThirdLabel());
         st.addFinalField(new JScrollPane(secondThird));
         panel.add(st);
+
+        LabelFieldPanel fr = new LabelFieldPanel();
+        fr.addLabel(getFirstFourthLabel());
+        fr.addFinalField(new JScrollPane(firstFourth));
+        panel.add(fr);
+
+        LabelFieldPanel sr = new LabelFieldPanel();
+        sr.addLabel(getSecondFourthLabel());
+        sr.addFinalField(new JScrollPane(secondFourth));
+        panel.add(sr);
+
+        LabelFieldPanel tr = new LabelFieldPanel();
+        tr.addLabel(getThirdFourthLabel());
+        tr.addFinalField(new JScrollPane(thirdFourth));
+        panel.add(tr);
+
+        LabelFieldPanel fst = new LabelFieldPanel();
+        fst.addLabel(getFirstSecondThirdLabel());
+        fst.addFinalField(new JScrollPane(firstSecondThird));
+        panel.add(fst);
+
+        LabelFieldPanel fsr = new LabelFieldPanel();
+        fsr.addLabel(getFirstSecondFourthLabel());
+        fsr.addFinalField(new JScrollPane(firstSecondFourth));
+        panel.add(fsr);
+
+        LabelFieldPanel ftr = new LabelFieldPanel();
+        ftr.addLabel(getFirstThirdFourthLabel());
+        ftr.addFinalField(new JScrollPane(firstThirdFourth));
+        panel.add(ftr);
+
+        LabelFieldPanel str = new LabelFieldPanel();
+        str.addLabel(getSecondThirdFourthLabel());
+        str.addFinalField(new JScrollPane(secondThirdFourth));
+        panel.add(str);
 
         LabelFieldPanel n = new LabelFieldPanel();
         n.addLabel(getIntersectionLabel());
@@ -412,9 +561,11 @@ public final class TertiaryVennList3<E>
             clearSelection(first);
             clearSelection(second);
             clearSelection(third);
+            clearSelection(fourth);
             clearSelection(firstOnly);
             clearSelection(secondOnly);
             clearSelection(thirdOnly);
+            clearSelection(fourthOnly);
             clearSelection(firstSecond);
             clearSelection(firstThird);
             clearSelection(secondThird);
@@ -429,9 +580,11 @@ public final class TertiaryVennList3<E>
                 addToSelection(getModel().first(), first, firstAdapter, e);
                 addToSelection(getModel().second(), second, secondAdapter, e);
                 addToSelection(getModel().third(), third, thirdAdapter, e);
+                addToSelection(getModel().fourth(), fourth, fourthAdapter, e);
                 addToSelection(getModel().firstOnly(), firstOnly, firstOnlyAdapter, e);
                 addToSelection(getModel().secondOnly(), secondOnly, secondOnlyAdapter, e);
                 addToSelection(getModel().thirdOnly(), thirdOnly, thirdOnlyAdapter, e);
+                addToSelection(getModel().fourthOnly(), fourthOnly, fourthOnlyAdapter, e);
                 addToSelection(getModel().firstSecond(), firstSecond, firstSecondAdapter, e);
                 addToSelection(getModel().firstThird(), firstThird, firstThirdAdapter, e);
                 addToSelection(getModel().secondThird(), secondThird, secondThirdAdapter, e);
@@ -442,9 +595,11 @@ public final class TertiaryVennList3<E>
             removeFromSelection(getModel().first(), first, firstAdapter);
             removeFromSelection(getModel().second(), second, secondAdapter);
             removeFromSelection(getModel().third(), third, thirdAdapter);
+            removeFromSelection(getModel().fourth(), fourth, fourthAdapter);
             removeFromSelection(getModel().firstOnly(), firstOnly, firstOnlyAdapter);
             removeFromSelection(getModel().secondOnly(), secondOnly, secondOnlyAdapter);
             removeFromSelection(getModel().thirdOnly(), thirdOnly, thirdOnlyAdapter);
+            removeFromSelection(getModel().fourthOnly(), fourthOnly, fourthOnlyAdapter);
             removeFromSelection(getModel().firstSecond(), firstSecond, firstSecondAdapter);
             removeFromSelection(getModel().firstThird(), firstThird, firstThirdAdapter);
             removeFromSelection(getModel().secondThird(), secondThird, secondThirdAdapter);
@@ -511,7 +666,7 @@ public final class TertiaryVennList3<E>
     /**
      * Return the contents of the first set.  The model for the returned
      * JList should not be changed, as the current model implementation is
-     * synchronized to the tertiary venn model backing this venn diagram.
+     * synchronized to the quaternary venn model backing this venn diagram.
      *
      * @return the contents of the first set
      */
@@ -523,7 +678,7 @@ public final class TertiaryVennList3<E>
     /**
      * Return the contents of the second set.  The model for the returned
      * JList should not be changed, as the current model implementation is
-     * synchronized to the tertiary venn model backing this venn diagram.
+     * synchronized to the quaternary venn model backing this venn diagram.
      *
      * @return the contents of the second set
      */
@@ -535,9 +690,9 @@ public final class TertiaryVennList3<E>
     /**
      * Return the contents of the third set.  The model for the returned
      * JList should not be changed, as the current model implementation is
-     * synchronized to the tertiary venn model backing this venn diagram.
+     * synchronized to the quaternary venn model backing this venn diagram.
      *
-     * @return the contents of the thid set
+     * @return the contents of the third set
      */
     public JList getThird()
     {
@@ -545,9 +700,21 @@ public final class TertiaryVennList3<E>
     }
 
     /**
+     * Return the contents of the fourth set.  The model for the returned
+     * JList should not be changed, as the current model implementation is
+     * synchronized to the quaternary venn model backing this venn diagram.
+     *
+     * @return the contents of the fourth set
+     */
+    public JList getFourth()
+    {
+        return fourth;
+    }
+
+    /**
      * Return the contents of the first only view.  The model for the returned
      * JList should not be changed, as the current model implementation is
-     * synchronized to the tertiary venn model backing this venn diagram.
+     * synchronized to the quaternary venn model backing this venn diagram.
      *
      * @return the contents of the first only view
      */
@@ -559,7 +726,7 @@ public final class TertiaryVennList3<E>
     /**
      * Return the contents of the second only view.  The model for the returned
      * JList should not be changed, as the current model implementation is
-     * synchronized to the tertiary venn model backing this venn diagram.
+     * synchronized to the quaternary venn model backing this venn diagram.
      *
      * @return the contents of the second only view
      */
@@ -571,7 +738,7 @@ public final class TertiaryVennList3<E>
     /**
      * Return the contents of the third only view.  The model for the returned
      * JList should not be changed, as the current model implementation is
-     * synchronized to the tertiary venn model backing this venn diagram.
+     * synchronized to the quaternary venn model backing this venn diagram.
      *
      * @return the contents of the third only view
      */
@@ -581,9 +748,21 @@ public final class TertiaryVennList3<E>
     }
 
     /**
+     * Return the contents of the fourth only view.  The model for the returned
+     * JList should not be changed, as the current model implementation is
+     * synchronized to the quaternary venn model backing this venn diagram.
+     *
+     * @return the contents of the fourth only view
+     */
+    public JList getFourthOnly()
+    {
+        return fourthOnly;
+    }
+
+    /**
      * Return the contents of the first second view.  The model for the returned
      * JList should not be changed, as the current model implementation is
-     * synchronized to the tertiary venn model backing this venn diagram.
+     * synchronized to the quaternary venn model backing this venn diagram.
      *
      * @return the contents of the first second view
      */
@@ -595,7 +774,7 @@ public final class TertiaryVennList3<E>
     /**
      * Return the contents of the first third view.  The model for the returned
      * JList should not be changed, as the current model implementation is
-     * synchronized to the tertiary venn model backing this venn diagram.
+     * synchronized to the quaternary venn model backing this venn diagram.
      *
      * @return the contents of the first third view
      */
@@ -607,7 +786,7 @@ public final class TertiaryVennList3<E>
     /**
      * Return the contents of the second third view.  The model for the returned
      * JList should not be changed, as the current model implementation is
-     * synchronized to the tertiary venn model backing this venn diagram.
+     * synchronized to the quaternary venn model backing this venn diagram.
      *
      * @return the contents of the second third view
      */
@@ -617,9 +796,93 @@ public final class TertiaryVennList3<E>
     }
 
     /**
+     * Return the contents of the first fourth view.  The model for the returned
+     * JList should not be changed, as the current model implementation is
+     * synchronized to the quaternary venn model backing this venn diagram.
+     *
+     * @return the contents of the first fourth view
+     */
+    public JList getFirstFourth()
+    {
+        return firstFourth;
+    }
+
+    /**
+     * Return the contents of the second fourth view.  The model for the returned
+     * JList should not be changed, as the current model implementation is
+     * synchronized to the quaternary venn model backing this venn diagram.
+     *
+     * @return the contents of the second fourth view
+     */
+    public JList getSecondFourth()
+    {
+        return secondFourth;
+    }
+
+    /**
+     * Return the contents of the third fourth view.  The model for the returned
+     * JList should not be changed, as the current model implementation is
+     * synchronized to the quaternary venn model backing this venn diagram.
+     *
+     * @return the contents of the third fourth view
+     */
+    public JList getThirdFourth()
+    {
+        return thirdFourth;
+    }
+
+    /**
+     * Return the contents of the first second third view.  The model for the returned
+     * JList should not be changed, as the current model implementation is
+     * synchronized to the quaternary venn model backing this venn diagram.
+     *
+     * @return the contents of the first second third view
+     */
+    public JList getFirstSecondThird()
+    {
+        return firstSecondThird;
+    }
+
+    /**
+     * Return the contents of the first second fourth view.  The model for the returned
+     * JList should not be changed, as the current model implementation is
+     * synchronized to the quaternary venn model backing this venn diagram.
+     *
+     * @return the contents of the first second fourth view
+     */
+    public JList getFirstSecondFourth()
+    {
+        return firstSecondFourth;
+    }
+
+    /**
+     * Return the contents of the first third fourth view.  The model for the returned
+     * JList should not be changed, as the current model implementation is
+     * synchronized to the quaternary venn model backing this venn diagram.
+     *
+     * @return the contents of the first third fourth view
+     */
+    public JList getFirstThirdFourth()
+    {
+        return firstThirdFourth;
+    }
+
+    /**
+     * Return the contents of the second third fourth view.  The model for the returned
+     * JList should not be changed, as the current model implementation is
+     * synchronized to the quaternary venn model backing this venn diagram.
+     *
+     * @return the contents of the second third fourth view
+     */
+    public JList getSecondThirdFourth()
+    {
+        return secondThirdFourth;
+    }
+
+    /**
      * Return the contents of the intersection view.  The model for the returned
      * JList should not be changed, as the current model implementation is
-     * synchronized to the tertiary venn model backing this venn diagram.
+     * synchronized to the quaternary venn model backing this venn diagram.
      *
      * @return the contents of the intersection view
      */
@@ -631,7 +894,7 @@ public final class TertiaryVennList3<E>
     /**
      * Return the contents of the union view.  The model for the returned
      * JList should not be changed, as the current model implementation is
-     * synchronized to the tertiary venn model backing this venn diagram.
+     * synchronized to the quaternary venn model backing this venn diagram.
      *
      * @return the contents of the union view
      */

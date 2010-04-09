@@ -32,22 +32,22 @@ import org.dishevelled.layout.LabelFieldPanel;
 import org.dishevelled.observable.event.SetChangeEvent;
 import org.dishevelled.observable.event.SetChangeListener;
 
-import org.dishevelled.venn.TertiaryVennModel3;
+import org.dishevelled.venn.QuaternaryVennModel3;
 
-import org.dishevelled.venn.model.TertiaryVennModelImpl3;
+import org.dishevelled.venn.model.QuaternaryVennModelImpl3;
 
 /**
- * Abstract tertiary venn diagram.
+ * Abstract quaternary venn diagram.
  *
  * @param <E> value type
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public abstract class AbstractTertiaryVennDiagram<E>
+public abstract class AbstractQuaternaryVennDiagram<E>
     extends LabelFieldPanel
 {
-    /** Tertiary venn model. */
-    private TertiaryVennModel3<E> model;
+    /** Quaternary venn model. */
+    private QuaternaryVennModel3<E> model;
 
     /** Label text for the first set. */
     private String firstLabelText = DEFAULT_FIRST_LABEL_TEXT;
@@ -58,6 +58,9 @@ public abstract class AbstractTertiaryVennDiagram<E>
     /** Label text for the third set. */
     private String thirdLabelText = DEFAULT_THIRD_LABEL_TEXT;
 
+    /** Label text for the fourth set. */
+    private String fourthLabelText = DEFAULT_FOURTH_LABEL_TEXT;
+
     /** Label text for the first only view. */
     private String firstOnlyLabelText = DEFAULT_FIRST_ONLY_LABEL_TEXT;
 
@@ -67,6 +70,9 @@ public abstract class AbstractTertiaryVennDiagram<E>
     /** Label text for the third only view. */
     private String thirdOnlyLabelText = DEFAULT_THIRD_ONLY_LABEL_TEXT;
 
+    /** Label text for the fourth only view. */
+    private String fourthOnlyLabelText = DEFAULT_FOURTH_ONLY_LABEL_TEXT;
+
     /** Label text for the first second view. */
     private String firstSecondLabelText = DEFAULT_FIRST_SECOND_LABEL_TEXT;
 
@@ -75,6 +81,27 @@ public abstract class AbstractTertiaryVennDiagram<E>
 
     /** Label text for the second third view. */
     private String secondThirdLabelText = DEFAULT_SECOND_THIRD_LABEL_TEXT;
+
+    /** Label text for the first fourth view. */
+    private String firstFourthLabelText = DEFAULT_FIRST_FOURTH_LABEL_TEXT;
+
+    /** Label text for the second fourth view. */
+    private String secondFourthLabelText = DEFAULT_SECOND_FOURTH_LABEL_TEXT;
+
+    /** Label text for the third fourth view. */
+    private String thirdFourthLabelText = DEFAULT_THIRD_FOURTH_LABEL_TEXT;
+
+    /** Label text for the first second third view. */
+    private String firstSecondThirdLabelText = DEFAULT_FIRST_SECOND_THIRD_LABEL_TEXT;
+
+    /** Label text for the first second fourth view. */
+    private String firstSecondFourthLabelText = DEFAULT_FIRST_SECOND_FOURTH_LABEL_TEXT;
+
+    /** Label text for the first third fourth view. */
+    private String firstThirdFourthLabelText = DEFAULT_FIRST_THIRD_FOURTH_LABEL_TEXT;
+
+    /** Label text for the second third fourth view. */
+    private String secondThirdFourthLabelText = DEFAULT_SECOND_THIRD_FOURTH_LABEL_TEXT;
 
     /** Label text for the intersection view. */
     private String intersectionLabelText = DEFAULT_INTERSECTION_LABEL_TEXT;
@@ -94,6 +121,9 @@ public abstract class AbstractTertiaryVennDiagram<E>
     /** Label for the third set. */
     private final JLabel thirdLabel = new JLabel();
 
+    /** Label for the fourth set. */
+    private final JLabel fourthLabel = new JLabel();
+
     /** Label for the first only view. */
     private final JLabel firstOnlyLabel = new JLabel();
 
@@ -103,6 +133,9 @@ public abstract class AbstractTertiaryVennDiagram<E>
     /** Label for the third only view. */
     private final JLabel thirdOnlyLabel = new JLabel();
 
+    /** Label for the fourth only view. */
+    private final JLabel fourthOnlyLabel = new JLabel();
+
     /** Label for the first second view. */
     private final JLabel firstSecondLabel = new JLabel();
 
@@ -111,6 +144,27 @@ public abstract class AbstractTertiaryVennDiagram<E>
 
     /** Label for the second third view. */
     private final JLabel secondThirdLabel = new JLabel();
+
+    /** Label for the first fourth view. */
+    private final JLabel firstFourthLabel = new JLabel();
+
+    /** Label for the second fourth view. */
+    private final JLabel secondFourthLabel = new JLabel();
+
+    /** Label for the third fourth view. */
+    private final JLabel thirdFourthLabel = new JLabel();
+
+    /** Label for the first second third view. */
+    private final JLabel firstSecondThirdLabel = new JLabel();
+
+    /** Label for the first second fourth view. */
+    private final JLabel firstSecondFourthLabel = new JLabel();
+
+    /** Label for the first third fourth view. */
+    private final JLabel firstThirdFourthLabel = new JLabel();
+
+    /** Label for the second third fourth view. */
+    private final JLabel secondThirdFourthLabel = new JLabel();
 
     /** Label for the intersection view. */
     private final JLabel intersectionLabel = new JLabel();
@@ -138,6 +192,9 @@ public abstract class AbstractTertiaryVennDiagram<E>
     /** Default label text for the third set, <code>"Third set"</code>. */
     public static final String DEFAULT_THIRD_LABEL_TEXT = "Third set";
 
+    /** Default label text for the fourth set, <code>"Fourth set"</code>. */
+    public static final String DEFAULT_FOURTH_LABEL_TEXT = "Fourth set";
+
     /** Default label text for the first only view, <code>"First only"</code>. */
     public static final String DEFAULT_FIRST_ONLY_LABEL_TEXT = "First only";
 
@@ -146,6 +203,9 @@ public abstract class AbstractTertiaryVennDiagram<E>
 
     /** Default label text for the third only view, <code>"Third only"</code>. */
     public static final String DEFAULT_THIRD_ONLY_LABEL_TEXT = "Third only";
+
+    /** Default label text for the fourth only view, <code>"Fourth only"</code>. */
+    public static final String DEFAULT_FOURTH_ONLY_LABEL_TEXT = "Fourth only";
 
     /** Default label text for the first second view, <code>"First and second only"</code>. */
     public static final String DEFAULT_FIRST_SECOND_LABEL_TEXT = "First and second only";
@@ -156,6 +216,27 @@ public abstract class AbstractTertiaryVennDiagram<E>
     /** Default label text for the second third view, <code>"Second and third only"</code>. */
     public static final String DEFAULT_SECOND_THIRD_LABEL_TEXT = "Second and third only";
 
+    /** Default label text for the first fourth view, <code>"First and fourth only"</code>. */
+    public static final String DEFAULT_FIRST_FOURTH_LABEL_TEXT = "First and fourth only";
+
+    /** Default label text for the second fourth view, <code>"Second and fourth only"</code>. */
+    public static final String DEFAULT_SECOND_FOURTH_LABEL_TEXT = "Second and fourth only";
+
+    /** Default label text for the third fourth view, <code>"Third and fourth only"</code>. */
+    public static final String DEFAULT_THIRD_FOURTH_LABEL_TEXT = "Third and fourth only";
+
+    /** Default label text for the first second third view, <code>"First, second, and third only"</code>. */
+    public static final String DEFAULT_FIRST_SECOND_THIRD_LABEL_TEXT = "First, second, and third only";
+
+    /** Default label text for the first second fourth view, <code>"First, second, and fourth only"</code>. */
+    public static final String DEFAULT_FIRST_SECOND_FOURTH_LABEL_TEXT = "First, second, and fourth only";
+
+    /** Default label text for the first third fourth view, <code>"First, third, and fourth only"</code>. */
+    public static final String DEFAULT_FIRST_THIRD_FOURTH_LABEL_TEXT = "First, third, and fourth only";
+
+    /** Default label text for the second third fourth view, <code>"Second, third, and fourth only"</code>. */
+    public static final String DEFAULT_SECOND_THIRD_FOURTH_LABEL_TEXT = "Second, third, and fourth only";
+
     /** Default label text for the intersection view, <code>"Intersection"</code>. */
     public static final String DEFAULT_INTERSECTION_LABEL_TEXT = "Intersection";
 
@@ -164,19 +245,19 @@ public abstract class AbstractTertiaryVennDiagram<E>
 
 
     /**
-     * Create a new empty abstract tertiary venn diagram.
+     * Create a new empty abstract quaternary venn diagram.
      */
-    protected AbstractTertiaryVennDiagram()
+    protected AbstractQuaternaryVennDiagram()
     {
         super();
-        model = new TertiaryVennModelImpl3<E>();
+        model = new QuaternaryVennModelImpl3<E>();
 
         installListeners();
         updateLabels();
     }
 
     /**
-     * Create a new abstract tertiary venn diagram with the specified sets.
+     * Create a new abstract quaternary venn diagram with the specified sets.
      *
      * @param firstLabelText label text for the first set
      * @param first first set, must not be null
@@ -184,33 +265,45 @@ public abstract class AbstractTertiaryVennDiagram<E>
      * @param second second set, must not be null
      * @param thirdLabelText label text for the third set
      * @param third third set, must not be null
+     * @param fourthLabelText label text for the fourth set
+     * @param fourth fourth set, must not be null
      */
-    protected AbstractTertiaryVennDiagram(final String firstLabelText, final Set<? extends E> first,
-                                          final String secondLabelText, final Set<? extends E> second,
-                                          final String thirdLabelText, final Set<? extends E> third)
+    protected AbstractQuaternaryVennDiagram(final String firstLabelText, final Set<? extends E> first,
+                                            final String secondLabelText, final Set<? extends E> second,
+                                            final String thirdLabelText, final Set<? extends E> third,
+                                            final String fourthLabelText, final Set<? extends E> fourth)
     {
         super();
-        model = new TertiaryVennModelImpl3<E>(first, second, third);
+        model = new QuaternaryVennModelImpl3<E>(first, second, third);
         this.firstLabelText = firstLabelText;
         this.secondLabelText = secondLabelText;
         this.thirdLabelText = thirdLabelText;
+        this.fourthLabelText = fourthLabelText;
         this.firstOnlyLabelText = firstLabelText + " only";
         this.secondOnlyLabelText = secondLabelText + " only";
         this.thirdOnlyLabelText = thirdLabelText + " only";
+        this.fourthOnlyLabelText = fourthLabelText + " only";
         this.firstSecondLabelText = firstLabelText + " and " + secondLabelText + " only";
         this.firstThirdLabelText = firstLabelText + " and " + thirdLabelText + " only";
         this.secondThirdLabelText = secondLabelText + " and " + thirdLabelText + " only";
+        this.firstFourthLabelText = firstLabelText + " and " + fourthLabelText + " only";
+        this.secondFourthLabelText = secondLabelText + " and " + fourthLabelText + " only";
+        this.thirdFourthLabelText = thirdLabelText + " and " + fourthLabelText + " only";
+        this.firstSecondThirdLabelText = firstLabelText + ", " + secondLabelText + ", and " + thirdLabelText + " only";
+        this.firstSecondFourthLabelText = firstLabelText + ", " + secondLabelText + ", and " + fourthLabelText + " only";
+        this.firstThirdFourthLabelText = firstLabelText + ", " + thirdLabelText + ", and " + fourthLabelText + " only";
+        this.secondThirdFourthLabelText = secondLabelText + ", " + thirdLabelText + ", and " + fourthLabelText + " only";
 
         installListeners();
         updateLabels();
     }
 
     /**
-     * Create a new abstract tertiary venn diagram with the specified model.
+     * Create a new abstract quaternary venn diagram with the specified model.
      *
-     * @param model model for this abstract tertiary venn diagram, must not be null
+     * @param model model for this abstract quaternary venn diagram, must not be null
      */
-    protected AbstractTertiaryVennDiagram(final TertiaryVennModel3<E> model)
+    protected AbstractQuaternaryVennDiagram(final QuaternaryVennModel3<E> model)
     {
         super();
         if (model == null)
@@ -232,6 +325,7 @@ public abstract class AbstractTertiaryVennDiagram<E>
         model.first().addSetChangeListener(update);
         model.second().addSetChangeListener(update);
         model.third().addSetChangeListener(update);
+        model.fourth().addSetChangeListener(update);
     }
 
     /**
@@ -242,6 +336,7 @@ public abstract class AbstractTertiaryVennDiagram<E>
         model.first().removeSetChangeListener(update);
         model.second().removeSetChangeListener(update);
         model.third().removeSetChangeListener(update);
+        model.fourth().removeSetChangeListener(update);
     }
 
     /**
@@ -252,12 +347,21 @@ public abstract class AbstractTertiaryVennDiagram<E>
         firstLabel.setText(buildLabel(firstLabelText, model.first().size()));
         secondLabel.setText(buildLabel(secondLabelText, model.second().size()));
         thirdLabel.setText(buildLabel(thirdLabelText, model.third().size()));
+        fourthLabel.setText(buildLabel(fourthLabelText, model.fourth().size()));
         firstOnlyLabel.setText(buildLabel(firstOnlyLabelText, model.firstOnly().size()));
         secondOnlyLabel.setText(buildLabel(secondOnlyLabelText, model.secondOnly().size()));
         thirdOnlyLabel.setText(buildLabel(thirdOnlyLabelText, model.thirdOnly().size()));
+        fourthOnlyLabel.setText(buildLabel(fourthOnlyLabelText, model.fourthOnly().size()));
         firstSecondLabel.setText(buildLabel(firstSecondLabelText, model.firstSecond().size()));
         firstThirdLabel.setText(buildLabel(firstThirdLabelText, model.firstThird().size()));
         secondThirdLabel.setText(buildLabel(secondThirdLabelText, model.secondThird().size()));
+        firstFourthLabel.setText(buildLabel(firstFourthLabelText, model.firstFourth().size()));
+        secondFourthLabel.setText(buildLabel(secondFourthLabelText, model.secondFourth().size()));
+        thirdFourthLabel.setText(buildLabel(thirdFourthLabelText, model.thirdFourth().size()));
+        firstSecondThirdLabel.setText(buildLabel(firstSecondThirdLabelText, model.firstSecondThird().size()));
+        firstSecondFourthLabel.setText(buildLabel(firstSecondFourthLabelText, model.firstSecondFourth().size()));
+        firstThirdFourthLabel.setText(buildLabel(firstThirdFourthLabelText, model.firstThirdFourth().size()));
+        secondThirdFourthLabel.setText(buildLabel(secondThirdFourthLabelText, model.secondThirdFourth().size()));
         intersectionLabel.setText(buildLabel(intersectionLabelText, model.intersection().size()));
         unionLabel.setText(buildLabel(unionLabelText, model.union().size()));
     }
@@ -290,29 +394,29 @@ public abstract class AbstractTertiaryVennDiagram<E>
 
 
     /**
-     * Return the model for this tertiary venn label.  The model will not be null.
+     * Return the model for this quaternary venn label.  The model will not be null.
      *
-     * @return the model for this tertiary venn label
+     * @return the model for this quaternary venn label
      */
-    public final TertiaryVennModel3<E> getModel()
+    public final QuaternaryVennModel3<E> getModel()
     {
         return model;
     }
 
     /**
-     * Set the model for this tertiary venn label to <code>model</code>.
+     * Set the model for this quaternary venn label to <code>model</code>.
      *
      * <p>This is a bound property.</p>
      *
-     * @param model model for this tertiary venn label, must not be null
+     * @param model model for this quaternary venn label, must not be null
      */
-    public final void setModel(final TertiaryVennModel3<E> model)
+    public final void setModel(final QuaternaryVennModel3<E> model)
     {
         if (model == null)
         {
             throw new IllegalArgumentException("model must not be null");
         }
-        TertiaryVennModel3<E> oldModel = this.model;
+        QuaternaryVennModel3<E> oldModel = this.model;
         uninstallListeners();
         this.model = model;
         installListeners();
@@ -420,6 +524,31 @@ public abstract class AbstractTertiaryVennDiagram<E>
     }
 
     /**
+     * Return the label text for the fourth set.  Defaults to {@link #DEFAULT_FOURTH_LABEL_TEXT}.
+     *
+     * @return the label text for the fourth set
+     */
+    public final String getFourthLabelText()
+    {
+        return fourthLabelText;
+    }
+
+    /**
+     * Set the label text for the fourth set to <code>fourthLabelText</code>.
+     *
+     * <p>This is a bound property.</p>
+     *
+     * @param fourthLabelText label text for the fourth set
+     */
+    public final void setFourthLabelText(final String fourthLabelText)
+    {
+        String oldFourthLabelText = this.fourthLabelText;
+        this.fourthLabelText = fourthLabelText;
+        fourthLabel.setText(buildLabel(this.fourthLabelText, model.fourth().size()));
+        firePropertyChange("fourthLabelText", this.fourthLabelText, oldFourthLabelText);
+    }
+
+    /**
      * Return the label text for the first only view.  Defaults to {@link #DEFAULT_FIRST_ONLY_LABEL_TEXT}.
      *
      * @return the label text for the first only view
@@ -492,6 +621,31 @@ public abstract class AbstractTertiaryVennDiagram<E>
         this.thirdOnlyLabelText = thirdOnlyLabelText;
         thirdOnlyLabel.setText(buildLabel(this.thirdOnlyLabelText, model.thirdOnly().size()));
         firePropertyChange("thirdOnlyLabelText", this.thirdOnlyLabelText, oldThirdOnlyLabelText);
+    }
+
+    /**
+     * Return the label text for the fourth only view.  Defaults to {@link #DEFAULT_FOURTH_ONLY_LABEL_TEXT}.
+     *
+     * @return the label text for the fourth only view
+     */
+    public final String getFourthOnlyLabelText()
+    {
+        return fourthOnlyLabelText;
+    }
+
+    /**
+     * Set the label text for the fourth only view to <code>fourthOnlyLabelText</code>.
+     *
+     * <p>This is a bound property.</p>
+     *
+     * @param fourthOnlyLabelText label text for the fourth only view
+     */
+    public final void setFourthOnlyLabelText(final String fourthOnlyLabelText)
+    {
+        String oldFourthOnlyLabelText = this.fourthOnlyLabelText;
+        this.fourthOnlyLabelText = fourthOnlyLabelText;
+        fourthOnlyLabel.setText(buildLabel(this.fourthOnlyLabelText, model.fourthOnly().size()));
+        firePropertyChange("fourthOnlyLabelText", this.fourthOnlyLabelText, oldFourthOnlyLabelText);
     }
 
     /**
@@ -621,7 +775,7 @@ public abstract class AbstractTertiaryVennDiagram<E>
 
     /**
      * Return the label for the first set.  The text for the returned JLabel
-     * should not be changed, as the text is synchronized to the tertiary
+     * should not be changed, as the text is synchronized to the quaternary
      * venn model backing this venn diagram.  Use methods
      * {@link #setFirstLabelText(String)} and {@link setDisplaySizes(boolean)}
      * to set the label text and whether to display sizes respectively.
@@ -635,7 +789,7 @@ public abstract class AbstractTertiaryVennDiagram<E>
 
     /**
      * Return the label for the second set.  The text for the returned JLabel
-     * should not be changed, as the text is synchronized to the tertiary
+     * should not be changed, as the text is synchronized to the quaternary
      * venn model backing this venn diagram.  Use methods
      * {@link #setSecondLabelText(String)} and {@link setDisplaySizes(boolean)}
      * to set the label text and whether to display sizes respectively.
@@ -649,7 +803,7 @@ public abstract class AbstractTertiaryVennDiagram<E>
 
     /**
      * Return the label for the third set.  The text for the returned JLabel
-     * should not be changed, as the text is synchronized to the tertiary
+     * should not be changed, as the text is synchronized to the quaternary
      * venn model backing this venn diagram.  Use methods
      * {@link #setThirdLabelText(String)} and {@link setDisplaySizes(boolean)}
      * to set the label text and whether to display sizes respectively.
@@ -663,7 +817,7 @@ public abstract class AbstractTertiaryVennDiagram<E>
 
     /**
      * Return the label for the first only view.  The text for the returned JLabel
-     * should not be changed, as the text is synchronized to the tertiary
+     * should not be changed, as the text is synchronized to the quaternary
      * venn model backing this venn diagram.  Use methods
      * {@link #setFirstOnlyLabelText(String)} and {@link setDisplaySizes(boolean)}
      * to set the label text and whether to display sizes respectively.
@@ -677,7 +831,7 @@ public abstract class AbstractTertiaryVennDiagram<E>
 
     /**
      * Return the label for the second only view.  The text for the returned JLabel
-     * should not be changed, as the text is synchronized to the tertiary
+     * should not be changed, as the text is synchronized to the quaternary
      * venn model backing this venn diagram.  Use methods
      * {@link #setSecondOnlyLabelText(String)} and {@link setDisplaySizes(boolean)}
      * to set the label text and whether to display sizes respectively.
@@ -691,7 +845,7 @@ public abstract class AbstractTertiaryVennDiagram<E>
 
     /**
      * Return the label for the third only view.  The text for the returned JLabel
-     * should not be changed, as the text is synchronized to the tertiary
+     * should not be changed, as the text is synchronized to the quaternary
      * venn model backing this venn diagram.  Use methods
      * {@link #setThirdOnlyLabelText(String)} and {@link setDisplaySizes(boolean)}
      * to set the label text and whether to display sizes respectively.
@@ -705,7 +859,7 @@ public abstract class AbstractTertiaryVennDiagram<E>
 
     /**
      * Return the label for the first second view.  The text for the returned JLabel
-     * should not be changed, as the text is synchronized to the tertiary
+     * should not be changed, as the text is synchronized to the quaternary
      * venn model backing this venn diagram.  Use methods
      * {@link #setFirstSecondLabelText(String)} and {@link setDisplaySizes(boolean)}
      * to set the label text and whether to display sizes respectively.
@@ -719,7 +873,7 @@ public abstract class AbstractTertiaryVennDiagram<E>
 
     /**
      * Return the label for the first third view.  The text for the returned JLabel
-     * should not be changed, as the text is synchronized to the tertiary
+     * should not be changed, as the text is synchronized to the quaternary
      * venn model backing this venn diagram.  Use methods
      * {@link #setFirstThirdLabelText(String)} and {@link setDisplaySizes(boolean)}
      * to set the label text and whether to display sizes respectively.
@@ -733,7 +887,7 @@ public abstract class AbstractTertiaryVennDiagram<E>
 
     /**
      * Return the label for the second third view.  The text for the returned JLabel
-     * should not be changed, as the text is synchronized to the tertiary
+     * should not be changed, as the text is synchronized to the quaternary
      * venn model backing this venn diagram.  Use methods
      * {@link #setSecondThirdLabelText(String)} and {@link setDisplaySizes(boolean)}
      * to set the label text and whether to display sizes respectively.
@@ -747,7 +901,7 @@ public abstract class AbstractTertiaryVennDiagram<E>
 
     /**
      * Return the label for the intersection view.  The text for the returned JLabel
-     * should not be changed, as the text is synchronized to the tertiary
+     * should not be changed, as the text is synchronized to the quaternary
      * venn model backing this venn diagram.  Use methods
      * {@link #setIntersectionLabelText(String)} and {@link setDisplaySizes(boolean)}
      * to set the label text and whether to display sizes respectively.
@@ -761,7 +915,7 @@ public abstract class AbstractTertiaryVennDiagram<E>
 
     /**
      * Return the label for the union view.  The text for the returned JLabel
-     * should not be changed, as the text is synchronized to the tertiary
+     * should not be changed, as the text is synchronized to the quaternary
      * venn model backing this venn diagram.  Use methods
      * {@link #setUnionLabelText(String)} and {@link setDisplaySizes(boolean)}
      * to set the label text and whether to display sizes respectively.
@@ -771,5 +925,278 @@ public abstract class AbstractTertiaryVennDiagram<E>
     public final JLabel getUnionLabel()
     {
         return unionLabel;
+    }
+
+    /**
+     * Return the label text for the first fourth view.  Defaults to {@link #DEFAULT_FIRST_FOURTH_LABEL_TEXT}.
+     *
+     * @return the label text for the first fourth view
+     */
+    public final String getFirstFourthLabelText()
+    {
+        return firstFourthLabelText;
+    }
+
+    /**
+     * Set the label text for the first fourth view to <code>firstFourthLabelText</code>.
+     *
+     * <p>This is a bound property.</p>
+     *
+     * @param firstFourthLabelText label text for the first fourth view
+     */
+    public final void setFirstFourthLabelText(final String firstFourthLabelText)
+    {
+        String oldFirstFourthLabelText = this.firstFourthLabelText;
+        this.firstFourthLabelText = firstFourthLabelText;
+        firstFourthLabel.setText(buildLabel(this.firstFourthLabelText, model.firstFourth().size()));
+        firePropertyChange("firstFourthLabelText", this.firstFourthLabelText, oldFirstFourthLabelText);
+    }
+
+    /**
+     * Return the label for the first fourth view.  The text for the returned JLabel
+     * should not be changed, as the text is synchronized to the quaternary
+     * venn model backing this venn diagram.  Use methods
+     * {@link #setFirstFourthLabelText(String)} and {@link setDisplaySizes(boolean)}
+     * to set the label text and whether to display sizes respectively.
+     *
+     * @return the label for the first fourth view
+     */
+    public final JLabel getFirstFourthLabel()
+    {
+        return firstFourthLabel;
+    }
+
+    /**
+     * Return the label text for the second fourth view.  Defaults to {@link #DEFAULT_SECOND_FOURTH_LABEL_TEXT}.
+     *
+     * @return the label text for the second fourth view
+     */
+    public final String getSecondFourthLabelText()
+    {
+        return secondFourthLabelText;
+    }
+
+    /**
+     * Set the label text for the second fourth view to <code>secondFourthLabelText</code>.
+     *
+     * <p>This is a bound property.</p>
+     *
+     * @param secondFourthLabelText label text for the second fourth view
+     */
+    public final void setSecondFourthLabelText(final String secondFourthLabelText)
+    {
+        String oldSecondFourthLabelText = this.secondFourthLabelText;
+        this.secondFourthLabelText = secondFourthLabelText;
+        secondFourthLabel.setText(buildLabel(this.secondFourthLabelText, model.secondFourth().size()));
+        firePropertyChange("secondFourthLabelText", this.secondFourthLabelText, oldSecondFourthLabelText);
+    }
+
+    /**
+     * Return the label for the second fourth view.  The text for the returned JLabel
+     * should not be changed, as the text is synchronized to the quaternary
+     * venn model backing this venn diagram.  Use methods
+     * {@link #setSecondFourthLabelText(String)} and {@link setDisplaySizes(boolean)}
+     * to set the label text and whether to display sizes respectively.
+     *
+     * @return the label for the second fourth view
+     */
+    public final JLabel getSecondFourthLabel()
+    {
+        return secondFourthLabel;
+    }
+
+    /**
+     * Return the label text for the third fourth view.  Defaults to {@link #DEFAULT_THIRD_FOURTH_LABEL_TEXT}.
+     *
+     * @return the label text for the third fourth view
+     */
+    public final String getThirdFourthLabelText()
+    {
+        return thirdFourthLabelText;
+    }
+
+    /**
+     * Set the label text for the third fourth view to <code>thirdFourthLabelText</code>.
+     *
+     * <p>This is a bound property.</p>
+     *
+     * @param thirdFourthLabelText label text for the third fourth view
+     */
+    public final void setThirdFourthLabelText(final String thirdFourthLabelText)
+    {
+        String oldThirdFourthLabelText = this.thirdFourthLabelText;
+        this.thirdFourthLabelText = thirdFourthLabelText;
+        thirdFourthLabel.setText(buildLabel(this.thirdFourthLabelText, model.thirdFourth().size()));
+        firePropertyChange("thirdFourthLabelText", this.thirdFourthLabelText, oldThirdFourthLabelText);
+    }
+
+    /**
+     * Return the label for the third fourth view.  The text for the returned JLabel
+     * should not be changed, as the text is synchronized to the quaternary
+     * venn model backing this venn diagram.  Use methods
+     * {@link #setThirdFourthLabelText(String)} and {@link setDisplaySizes(boolean)}
+     * to set the label text and whether to display sizes respectively.
+     *
+     * @return the label for the third fourth view
+     */
+    public final JLabel getThirdFourthLabel()
+    {
+        return thirdFourthLabel;
+    }
+
+    /**
+     * Return the label text for the first second third view.  Defaults to {@link #DEFAULT_FIRST_SECOND_THIRD_LABEL_TEXT}.
+     *
+     * @return the label text for the first second third view
+     */
+    public final String getFirstSecondThirdLabelText()
+    {
+        return firstSecondThirdLabelText;
+    }
+
+    /**
+     * Set the label text for the first second third view to <code>firstSecondThirdLabelText</code>.
+     *
+     * <p>This is a bound property.</p>
+     *
+     * @param firstSecondThirdLabelText label text for the first second third view
+     */
+    public final void setFirstSecondThirdLabelText(final String firstSecondThirdLabelText)
+    {
+        String oldFirstSecondThirdLabelText = this.firstSecondThirdLabelText;
+        this.firstSecondThirdLabelText = firstSecondThirdLabelText;
+        firstSecondThirdLabel.setText(buildLabel(this.firstSecondThirdLabelText, model.firstSecondThird().size()));
+        firePropertyChange("firstSecondThirdLabelText", this.firstSecondThirdLabelText, oldFirstSecondThirdLabelText);
+    }
+
+    /**
+     * Return the label for the first second third view.  The text for the returned JLabel
+     * should not be changed, as the text is synchronized to the quaternary
+     * venn model backing this venn diagram.  Use methods
+     * {@link #setFirstSecondThirdLabelText(String)} and {@link setDisplaySizes(boolean)}
+     * to set the label text and whether to display sizes respectively.
+     *
+     * @return the label for the first second third view
+     */
+    public final JLabel getFirstSecondThirdLabel()
+    {
+        return firstSecondThirdLabel;
+    }
+
+    /**
+     * Return the label text for the first second fourth view.  Defaults to {@link #DEFAULT_FIRST_SECOND_FOURTH_LABEL_TEXT}.
+     *
+     * @return the label text for the first second fourth view
+     */
+    public final String getFirstSecondFourthLabelText()
+    {
+        return firstSecondFourthLabelText;
+    }
+
+    /**
+     * Set the label text for the first second fourth view to <code>firstSecondFourthLabelText</code>.
+     *
+     * <p>This is a bound property.</p>
+     *
+     * @param firstSecondFourthLabelText label text for the first second fourth view
+     */
+    public final void setFirstSecondFourthLabelText(final String firstSecondFourthLabelText)
+    {
+        String oldFirstSecondFourthLabelText = this.firstSecondFourthLabelText;
+        this.firstSecondFourthLabelText = firstSecondFourthLabelText;
+        firstSecondFourthLabel.setText(buildLabel(this.firstSecondFourthLabelText, model.firstSecondFourth().size()));
+        firePropertyChange("firstSecondFourthLabelText", this.firstSecondFourthLabelText, oldFirstSecondFourthLabelText);
+    }
+
+    /**
+     * Return the label for the first second fourth view.  The text for the returned JLabel
+     * should not be changed, as the text is synchronized to the quaternary
+     * venn model backing this venn diagram.  Use methods
+     * {@link #setFirstSecondFourthLabelText(String)} and {@link setDisplaySizes(boolean)}
+     * to set the label text and whether to display sizes respectively.
+     *
+     * @return the label for the first second fourth view
+     */
+    public final JLabel getFirstSecondFourthLabel()
+    {
+        return firstSecondFourthLabel;
+    }
+
+    /**
+     * Return the label text for the first third fourth view.  Defaults to {@link #DEFAULT_FIRST_THIRD_FOURTH_LABEL_TEXT}.
+     *
+     * @return the label text for the first third fourth view
+     */
+    public final String getFirstThirdFourthLabelText()
+    {
+        return firstThirdFourthLabelText;
+    }
+
+    /**
+     * Set the label text for the first third fourth view to <code>firstThirdFourthLabelText</code>.
+     *
+     * <p>This is a bound property.</p>
+     *
+     * @param firstThirdFourthLabelText label text for the first third fourth view
+     */
+    public final void setFirstThirdFourthLabelText(final String firstThirdFourthLabelText)
+    {
+        String oldFirstThirdFourthLabelText = this.firstThirdFourthLabelText;
+        this.firstThirdFourthLabelText = firstThirdFourthLabelText;
+        firstThirdFourthLabel.setText(buildLabel(this.firstThirdFourthLabelText, model.firstThirdFourth().size()));
+        firePropertyChange("firstThirdFourthLabelText", this.firstThirdFourthLabelText, oldFirstThirdFourthLabelText);
+    }
+
+    /**
+     * Return the label for the first third fourth view.  The text for the returned JLabel
+     * should not be changed, as the text is synchronized to the quaternary
+     * venn model backing this venn diagram.  Use methods
+     * {@link #setFirstThirdFourthLabelText(String)} and {@link setDisplaySizes(boolean)}
+     * to set the label text and whether to display sizes respectively.
+     *
+     * @return the label for the first third fourth view
+     */
+    public final JLabel getFirstThirdFourthLabel()
+    {
+        return firstThirdFourthLabel;
+    }
+
+    /**
+     * Return the label text for the second third fourth view.  Defaults to {@link #DEFAULT_SECOND_THIRD_FOURTH_LABEL_TEXT}.
+     *
+     * @return the label text for the second third fourth view
+     */
+    public final String getSecondThirdFourthLabelText()
+    {
+        return secondThirdFourthLabelText;
+    }
+
+    /**
+     * Set the label text for the second third fourth view to <code>secondThirdFourthLabelText</code>.
+     *
+     * <p>This is a bound property.</p>
+     *
+     * @param secondThirdFourthLabelText label text for the second third fourth view
+     */
+    public final void setSecondThirdFourthLabelText(final String secondThirdFourthLabelText)
+    {
+        String oldSecondThirdFourthLabelText = this.secondThirdFourthLabelText;
+        this.secondThirdFourthLabelText = secondThirdFourthLabelText;
+        secondThirdFourthLabel.setText(buildLabel(this.secondThirdFourthLabelText, model.secondThirdFourth().size()));
+        firePropertyChange("secondThirdFourthLabelText", this.secondThirdFourthLabelText, oldSecondThirdFourthLabelText);
+    }
+
+    /**
+     * Return the label for the second third fourth view.  The text for the returned JLabel
+     * should not be changed, as the text is synchronized to the quaternary
+     * venn model backing this venn diagram.  Use methods
+     * {@link #setSecondThirdFourthLabelText(String)} and {@link setDisplaySizes(boolean)}
+     * to set the label text and whether to display sizes respectively.
+     *
+     * @return the label for the second third fourth view
+     */
+    public final JLabel getSecondThirdFourthLabel()
+    {
+        return secondThirdFourthLabel;
     }
 }
