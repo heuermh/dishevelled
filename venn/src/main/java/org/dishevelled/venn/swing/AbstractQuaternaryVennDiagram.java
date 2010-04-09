@@ -274,7 +274,7 @@ public abstract class AbstractQuaternaryVennDiagram<E>
                                             final String fourthLabelText, final Set<? extends E> fourth)
     {
         super();
-        model = new QuaternaryVennModelImpl3<E>(first, second, third);
+        model = new QuaternaryVennModelImpl3<E>(first, second, third, fourth);
         this.firstLabelText = firstLabelText;
         this.secondLabelText = secondLabelText;
         this.thirdLabelText = thirdLabelText;
@@ -816,6 +816,20 @@ public abstract class AbstractQuaternaryVennDiagram<E>
     }
 
     /**
+     * Return the label for the fourth set.  The text for the returned JLabel
+     * should not be changed, as the text is synchronized to the quaternary
+     * venn model backing this venn diagram.  Use methods
+     * {@link #setThirdLabelText(String)} and {@link setDisplaySizes(boolean)}
+     * to set the label text and whether to display sizes respectively.
+     *
+     * @return the label for the fourth set
+     */
+    public final JLabel getFourthLabel()
+    {
+        return fourthLabel;
+    }
+
+    /**
      * Return the label for the first only view.  The text for the returned JLabel
      * should not be changed, as the text is synchronized to the quaternary
      * venn model backing this venn diagram.  Use methods
@@ -855,6 +869,20 @@ public abstract class AbstractQuaternaryVennDiagram<E>
     public final JLabel getThirdOnlyLabel()
     {
         return thirdOnlyLabel;
+    }
+
+    /**
+     * Return the label for the fourth only view.  The text for the returned JLabel
+     * should not be changed, as the text is synchronized to the quaternary
+     * venn model backing this venn diagram.  Use methods
+     * {@link #setThirdOnlyLabelText(String)} and {@link setDisplaySizes(boolean)}
+     * to set the label text and whether to display sizes respectively.
+     *
+     * @return the label for the fourth only view
+     */
+    public final JLabel getFourthOnlyLabel()
+    {
+        return fourthOnlyLabel;
     }
 
     /**
