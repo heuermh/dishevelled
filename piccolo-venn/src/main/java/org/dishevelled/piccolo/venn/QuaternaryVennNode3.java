@@ -27,7 +27,9 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Shape;
 
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Area;
+import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
@@ -38,17 +40,17 @@ import edu.umd.cs.piccolo.PNode;
 import edu.umd.cs.piccolo.nodes.PPath;
 import edu.umd.cs.piccolo.nodes.PText;
 
-import org.dishevelled.venn.TertiaryVennModel3;
+import org.dishevelled.venn.QuaternaryVennModel3;
 
 /**
- * Tertiary venn diagram node 3.
+ * Quaternary venn diagram node 3.
  *
  * @param <E> value type
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public class TertiaryVennNode3<E>
-    extends AbstractTertiaryVennNode<E>
+public class QuaternaryVennNode3<E>
+    extends AbstractQuaternaryVennNode<E>
 {
     /** Path node for the first set. */
     private final PPath first = new PPath();
@@ -77,6 +79,15 @@ public class TertiaryVennNode3<E>
     /** Label for the size of the third only view. */
     private final PText thirdOnlySize = new PText();
 
+    /** Path node for the fourth set. */
+    private final PPath fourth = new PPath();
+
+    /** Area node for the fourth only view. */
+    private final AreaNode fourthOnly = new AreaNode();
+
+    /** Label for the size of the fourth only view. */
+    private final PText fourthOnlySize = new PText();
+
     /** Area node for the first second view. */
     private final AreaNode firstSecond = new AreaNode();
 
@@ -95,6 +106,48 @@ public class TertiaryVennNode3<E>
     /** Label for the size of the second third view. */
     private final PText secondThirdSize = new PText();
 
+    /** Area node for the first fourth view. */
+    private final AreaNode firstFourth = new AreaNode();
+
+    /** Label for the size of the first fourth view. */
+    private final PText firstFourthSize = new PText();
+
+    /** Area node for the second fourth view. */
+    private final AreaNode secondFourth = new AreaNode();
+
+    /** Label for the size of the second fourth view. */
+    private final PText secondFourthSize = new PText();
+
+    /** Area node for the third fourth view. */
+    private final AreaNode thirdFourth = new AreaNode();
+
+    /** Label for the size of the third fourth view. */
+    private final PText thirdFourthSize = new PText();
+
+    /** Area node for the first second third view. */
+    private final AreaNode firstSecondThird = new AreaNode();
+
+    /** Label for the size of the first second third view. */
+    private final PText firstSecondThirdSize = new PText();
+
+    /** Area node for the first second fourth view. */
+    private final AreaNode firstSecondFourth = new AreaNode();
+
+    /** Label for the size of the first second fourth view. */
+    private final PText firstSecondFourthSize = new PText();
+
+    /** Area node for the first third fourth view. */
+    private final AreaNode firstThirdFourth = new AreaNode();
+
+    /** Label for the size of the first third fourth view. */
+    private final PText firstThirdFourthSize = new PText();
+
+    /** Area node for the second third fourth view. */
+    private final AreaNode secondThirdFourth = new AreaNode();
+
+    /** Label for the size of the second third fourth view. */
+    private final PText secondThirdFourthSize = new PText();
+
     /** Area node for the intersection view. */
     private final AreaNode intersection = new AreaNode();
 
@@ -111,6 +164,9 @@ public class TertiaryVennNode3<E>
     private Area t;
 
     /** Cached area. */
+    private Area r;
+
+    /** Cached area. */
     private final Area area = new Area();
 
     /** Cached rectangle. */
@@ -125,14 +181,11 @@ public class TertiaryVennNode3<E>
     /** Label gap, <code>8.0d</code>. */
     private static final double LABEL_GAP = 8.0d;
 
-    /** Adjust label gap, <code>10.0d</code>. */
-    private static final double ADJUST_LABEL_GAP = 10.0d;
-
 
     /**
-     * Create a new empty tertiary venn node.
+     * Create a new empty quaternary venn node.
      */
-    public TertiaryVennNode3()
+    public QuaternaryVennNode3()
     {
         super();
         initNodes();
@@ -140,7 +193,7 @@ public class TertiaryVennNode3<E>
     }
 
     /**
-     * Create a new tertiary venn node with the specified sets.
+     * Create a new quaternary venn node with the specified sets.
      *
      * @param firstLabelText label text for the first set
      * @param first first set, must not be null
@@ -148,22 +201,25 @@ public class TertiaryVennNode3<E>
      * @param second second set, must not be null
      * @param thirdLabelText label text for the third set
      * @param third third set, must not be null
+     * @param fourthLabelText label text for the fourth set
+     * @param fourth fourth set, must not be null
      */
-    public TertiaryVennNode3(final String firstLabelText, final Set<? extends E> first,
-                             final String secondLabelText, final Set<? extends E> second,
-                             final String thirdLabelText, final Set<? extends E> third)
+    public QuaternaryVennNode3(final String firstLabelText, final Set<? extends E> first,
+                               final String secondLabelText, final Set<? extends E> second,
+                               final String thirdLabelText, final Set<? extends E> third,
+                               final String fourthLabelText, final Set<? extends E> fourth)
     {
-        super(firstLabelText, first, secondLabelText, second, thirdLabelText, third);
+        super(firstLabelText, first, secondLabelText, second, thirdLabelText, third, fourthLabelText, fourth);
         initNodes();
         updateContents();
     }
 
     /**
-     * Create a new tertiary venn node with the specified model.
+     * Create a new quaternary venn node with the specified model.
      *
-     * @param model model for this tertiary venn node, must not be null
+     * @param model model for this quaternary venn node, must not be null
      */
-    public TertiaryVennNode3(final TertiaryVennModel3<E> model)
+    public QuaternaryVennNode3(final QuaternaryVennModel3<E> model)
     {
         super(model);
         initNodes();
@@ -176,37 +232,75 @@ public class TertiaryVennNode3<E>
      */
     private void initNodes()
     {
-        first.setPathToEllipse(0.0f, 0.0f, 128.0f, 128.0f);
+        Ellipse2D ellipse = new Ellipse2D.Double(0.0d, 0.0d, 376.0d, 234.0d);
+        c.setLocation(ellipse.getBounds2D().getCenterX(), ellipse.getBounds2D().getCenterY());
+
+        f = new Area(ellipse);
+        f = f.createTransformedArea(AffineTransform.getRotateInstance((2.0d * Math.PI) / 9.0d, c.getX(), c.getY()));
+        first.setPathTo(f);
         first.setPaint(new Color(30, 30, 30, 50));
         first.setStroke(new BasicStroke(0.5f));
         first.setStrokePaint(new Color(20, 20, 20));
-        second.setPathToEllipse(((2.0f * 128.0f) / 3.0f), 0.0f, 128.0f, 128.0f);
+
+        s = new Area(ellipse);
+        s = s.createTransformedArea(AffineTransform.getRotateInstance((2.0d * Math.PI) / 9.0d, c.getX(), c.getY()));
+        s = s.createTransformedArea(AffineTransform.getTranslateInstance(72.0d, -85.0d));
+        second.setPathTo(s);
         second.setPaint(new Color(5, 37, 255, 50));
         second.setStroke(new BasicStroke(0.5f));
         second.setStrokePaint(new Color(20, 20, 20));
-        third.setPathToEllipse(128.0f / 3.0f, (2.0f * 128.0f) / 3.0f, 128.0f, 128.0f);
+
+        t = new Area(ellipse);
+        t = t.createTransformedArea(AffineTransform.getRotateInstance((-2.0d * Math.PI) / 9.0d, c.getX(), c.getY()));
+        t = t.createTransformedArea(AffineTransform.getTranslateInstance(72.0d, -85.0d));
+        third.setPathTo(t);
         third.setPaint(new Color(255, 100, 5, 50));
         third.setStroke(new BasicStroke(0.5f));
         third.setStrokePaint(new Color(20, 20, 20));
 
+        r = new Area(ellipse);
+        r = r.createTransformedArea(AffineTransform.getRotateInstance((-2.0d * Math.PI) / 9.0d, c.getX(), c.getY()));
+        r = r.createTransformedArea(AffineTransform.getTranslateInstance(144.0d, 0.0d));
+        fourth.setPathTo(r);
+        fourth.setPaint(new Color(11, 255, 5, 50));
+        fourth.setStroke(new BasicStroke(0.5f));
+        fourth.setStrokePaint(new Color(20, 20, 20));
+
         addChild(first);
         addChild(second);
         addChild(third);
+        addChild(fourth);
         addChild(firstSecond);
         addChild(firstThird);
         addChild(secondThird);
+        addChild(firstFourth);
+        addChild(secondFourth);
+        addChild(thirdFourth);
+        addChild(firstSecondThird);
+        addChild(firstSecondFourth);
+        addChild(firstThirdFourth);
+        addChild(secondThirdFourth);
         addChild(intersection);
         addChild(firstOnlySize);
         addChild(secondOnlySize);
         addChild(thirdOnlySize);
+        addChild(fourthOnlySize);
         addChild(firstSecondSize);
         addChild(firstThirdSize);
         addChild(secondThirdSize);
+        addChild(firstFourthSize);
+        addChild(secondFourthSize);
+        addChild(thirdFourthSize);
+        addChild(firstSecondThirdSize);
+        addChild(firstSecondFourthSize);
+        addChild(firstThirdFourthSize);
+        addChild(secondThirdFourthSize);
         addChild(intersectionSize);
         // todo:  use firstOnlyLabel and secondOnlyLabel as mouseovers?
         addChild(getFirstLabel());
         addChild(getSecondLabel());
         addChild(getThirdLabel());
+        addChild(getFourthLabel());
     }
 
     /** {@inheritDoc} */
@@ -215,9 +309,17 @@ public class TertiaryVennNode3<E>
         firstOnlySize.setText(String.valueOf(getModel().firstOnly().size()));
         secondOnlySize.setText(String.valueOf(getModel().secondOnly().size()));
         thirdOnlySize.setText(String.valueOf(getModel().thirdOnly().size()));
+        fourthOnlySize.setText(String.valueOf(getModel().fourthOnly().size()));
         firstSecondSize.setText(String.valueOf(getModel().firstSecond().size()));
         firstThirdSize.setText(String.valueOf(getModel().firstThird().size()));
         secondThirdSize.setText(String.valueOf(getModel().secondThird().size()));
+        firstFourthSize.setText(String.valueOf(getModel().firstFourth().size()));
+        secondFourthSize.setText(String.valueOf(getModel().secondFourth().size()));
+        thirdFourthSize.setText(String.valueOf(getModel().thirdFourth().size()));
+        firstSecondThirdSize.setText(String.valueOf(getModel().firstSecondThird().size()));
+        firstSecondFourthSize.setText(String.valueOf(getModel().firstSecondFourth().size()));
+        firstThirdFourthSize.setText(String.valueOf(getModel().firstThirdFourth().size()));
+        secondThirdFourthSize.setText(String.valueOf(getModel().secondThirdFourth().size()));
         intersectionSize.setText(String.valueOf(getModel().intersection().size()));
     }
 
@@ -228,62 +330,138 @@ public class TertiaryVennNode3<E>
         f = new Area(first.getPathReference());
         s = new Area(second.getPathReference());
         t = new Area(third.getPathReference());
+        r = new Area(fourth.getPathReference());
 
         area.reset();
         area.add(f);
         area.subtract(s);
         area.subtract(t);
+        area.subtract(r);
         firstOnly.setArea(area);
 
         area.reset();
         area.add(s);
         area.subtract(f);
         area.subtract(t);
+        area.subtract(r);
         secondOnly.setArea(area);
 
         area.reset();
         area.add(t);
         area.subtract(f);
         area.subtract(s);
+        area.subtract(r);
         thirdOnly.setArea(area);
+
+        area.reset();
+        area.add(r);
+        area.subtract(f);
+        area.subtract(s);
+        area.subtract(t);
+        fourthOnly.setArea(area);
 
         area.reset();
         area.add(f);
         area.intersect(s);
         area.subtract(t);
+        area.subtract(r);
         firstSecond.setArea(area);
 
         area.reset();
         area.add(f);
         area.intersect(t);
         area.subtract(s);
+        area.subtract(r);
         firstThird.setArea(area);
+
+        area.reset();
+        area.add(f);
+        area.intersect(r);
+        area.subtract(s);
+        area.subtract(t);
+        firstFourth.setArea(area);
 
         area.reset();
         area.add(s);
         area.intersect(t);
         area.subtract(f);
+        area.subtract(r);
         secondThird.setArea(area);
+
+        area.reset();
+        area.add(s);
+        area.intersect(r);
+        area.subtract(f);
+        area.subtract(t);
+        secondFourth.setArea(area);
+
+        area.reset();
+        area.add(t);
+        area.intersect(r);
+        area.subtract(f);
+        area.subtract(s);
+        thirdFourth.setArea(area);
 
         area.reset();
         area.add(f);
         area.intersect(s);
         area.intersect(t);
+        area.subtract(r);
+        firstSecondThird.setArea(area);
+
+        area.reset();
+        area.add(f);
+        area.intersect(s);
+        area.intersect(r);
+        area.subtract(t);
+        firstSecondFourth.setArea(area);
+        
+        area.reset();
+        area.add(f);
+        area.intersect(t);
+        area.intersect(r);
+        area.subtract(s);
+        firstThirdFourth.setArea(area);
+
+        area.reset();
+        area.add(s);
+        area.intersect(t);
+        area.intersect(r);
+        area.subtract(f);
+        secondThirdFourth.setArea(area);
+
+        area.reset();
+        area.add(f);
+        area.intersect(s);
+        area.intersect(t);
+        area.intersect(r);
         intersection.setArea(area);
 
         offset(firstOnly.getArea(), firstOnlySize);
         offset(secondOnly.getArea(), secondOnlySize);
         offset(thirdOnly.getArea(), thirdOnlySize);
+        offset(fourthOnly.getArea(), fourthOnlySize);
         offset(firstSecond.getArea(), firstSecondSize);
         offset(firstThird.getArea(), firstThirdSize);
         offset(secondThird.getArea(), secondThirdSize);
+        offset(firstFourth.getArea(), firstFourthSize);
+        offset(secondFourth.getArea(), secondFourthSize);
+        offset(thirdFourth.getArea(), thirdFourthSize);
+        offset(firstSecondThird.getArea(), firstSecondThirdSize);
+        offset(firstSecondFourth.getArea(), firstSecondFourthSize);
+        offset(firstThirdFourth.getArea(), firstThirdFourthSize);
+        offset(secondThirdFourth.getArea(), secondThirdFourthSize);
         offset(intersection.getArea(), intersectionSize);
 
         labelLeft(firstOnly.getArea(), getFirstLabel());
-        labelRight(secondOnly.getArea(), getSecondLabel());
-        labelCenter(thirdOnly.getArea(), getThirdLabel());
-        adjustLabels(getFirstLabel(), getSecondLabel());
+        labelLeft(secondOnly.getArea(), getSecondLabel());
+        labelRight(thirdOnly.getArea(), getThirdLabel());
+        labelRight(fourthOnly.getArea(), getFourthLabel());
     }
+
+    // todo:  use centroids selectively?
+    // todo:  add labelFarLeft, labelFarRight
+    // todo:     or prevent overlap with first, second, third, fourth
 
     /**
      * Offset the specified size label to the center of the specified area.
@@ -324,38 +502,6 @@ public class TertiaryVennNode3<E>
         b = label.getFullBoundsReference();
         c = Centers.centerOf(area, c);
         label.setOffset(c.getX() - (b.getWidth() / 3.0d), a.getY() - b.getHeight() - LABEL_GAP);
-    }
-
-    /**
-     * Offset the specified label to the bottom and center of the specified area.
-     *
-     * @param area area
-     * @param label label
-     */
-    private void labelCenter(final Area area, final PText label)
-    {
-        a = area.getBounds2D();
-        b = label.getFullBoundsReference();
-        c = Centers.centerOf(area, c);
-        label.setOffset(c.getX() - (b.getWidth() / 2.0d), a.getY() + a.getHeight() + LABEL_GAP);
-    }
-
-    /**
-     * Adjust the horizontal offsets for the specified pair of labels if their bounds overlap.
-     *
-     * @param leftLabel left label
-     * @param rightLabel right label
-     */
-    private void adjustLabels(final PText leftLabel, final PText rightLabel)
-    {
-        a = leftLabel.getFullBoundsReference();
-        b = rightLabel.getFullBoundsReference();
-        Rectangle2D.intersect(a, b, a);
-        if (a.getWidth() > 0.0d)
-        {
-            leftLabel.offset(-1.0 * a.getWidth() / 2.0d - ADJUST_LABEL_GAP, 0.0d);
-            rightLabel.offset(a.getWidth() / 2.0d + ADJUST_LABEL_GAP, 0.0d);
-        }
     }
 
     // todo:  allow getters for nodes, or alternatively getters/setters for paint, stroke, strokePaint

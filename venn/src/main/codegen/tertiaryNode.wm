@@ -1,0 +1,15 @@
+
+    /** Area node for the ${lower0} ${lower1} ${lower2} view. */
+    private final AreaNode ${lower0}${Upper1}${Upper2} = new AreaNode();
+
+    /** Label for the size of the ${lower0} ${lower1} ${lower2} view. */
+    private final PText ${lower0}${Upper1}${Upper2}Size = new PText();
+
+        addChild(${lower0}${Upper1}${Upper2});
+
+        addChild(${lower0}${Upper1}${Upper2}Size);
+
+        ${lower0}${Upper1}${Upper2}Size.setText(String.valueOf(getModel().${lower0}${Upper1}${Upper2}().size()));
+
+        offset(${lower0}${Upper1}${Upper2}.getArea(), ${lower0}${Upper1}${Upper2}Size);
+
