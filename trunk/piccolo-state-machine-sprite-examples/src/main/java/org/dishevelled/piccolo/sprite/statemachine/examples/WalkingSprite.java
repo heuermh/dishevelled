@@ -90,11 +90,11 @@ public final class WalkingSprite
     {
         if ("normal".equals(id))
         {
-            return Animations.createAnimation(NORMAL);
+            return Animations.createLoopedAnimation(NORMAL);
         }
         else if ("walking".equals(id))
         {
-            return Animations.createAnimation(WALKING);
+            return Animations.createLoopedAnimation(WALKING);
         }
         return null;
     }
