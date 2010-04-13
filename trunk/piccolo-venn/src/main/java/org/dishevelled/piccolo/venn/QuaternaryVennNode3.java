@@ -35,6 +35,11 @@ import java.awt.geom.Rectangle2D;
 
 import java.util.Set;
 
+import java.util.concurrent.Executors;
+import java.util.concurrent.ExecutorService;
+
+import javax.swing.SwingWorker;
+
 import edu.umd.cs.piccolo.PNode;
 
 import edu.umd.cs.piccolo.nodes.PPath;
@@ -181,6 +186,9 @@ public class QuaternaryVennNode3<E>
     /** Label gap, <code>8.0d</code>. */
     private static final double LABEL_GAP = 8.0d;
 
+    /** Thread pool executor service. */
+    private static final ExecutorService EXECUTOR_SERVICE = Executors.newCachedThreadPool();
+
 
     /**
      * Create a new empty quaternary venn node.
@@ -326,7 +334,7 @@ public class QuaternaryVennNode3<E>
     /** {@inheritDoc} */
     protected void layoutChildren()
     {
-        //System.out.println("layoutChildren");
+        System.out.println("layoutChildren");
         f = new Area(first.getPathReference());
         s = new Area(second.getPathReference());
         t = new Area(third.getPathReference());
@@ -437,6 +445,7 @@ public class QuaternaryVennNode3<E>
         area.intersect(r);
         intersection.setArea(area);
 
+        // offset to center now
         offset(firstOnly.getArea(), firstOnlySize);
         offset(secondOnly.getArea(), secondOnlySize);
         offset(thirdOnly.getArea(), thirdOnlySize);
@@ -453,13 +462,31 @@ public class QuaternaryVennNode3<E>
         offset(secondThirdFourth.getArea(), secondThirdFourthSize);
         offset(intersection.getArea(), intersectionSize);
 
+        // delay offset to centroids
+        /*
+        EXECUTOR_SERVICE.submit(new LayoutWorker(firstOnly.getArea(), firstOnlySize));
+        EXECUTOR_SERVICE.submit(new LayoutWorker(secondOnly.getArea(), secondOnlySize));
+        EXECUTOR_SERVICE.submit(new LayoutWorker(thirdOnly.getArea(), thirdOnlySize));
+        EXECUTOR_SERVICE.submit(new LayoutWorker(fourthOnly.getArea(), fourthOnlySize));
+        EXECUTOR_SERVICE.submit(new LayoutWorker(firstSecond.getArea(), firstSecondSize));
+        EXECUTOR_SERVICE.submit(new LayoutWorker(firstThird.getArea(), firstThirdSize));
+        EXECUTOR_SERVICE.submit(new LayoutWorker(secondThird.getArea(), secondThirdSize));
+        EXECUTOR_SERVICE.submit(new LayoutWorker(firstFourth.getArea(), firstFourthSize));
+        EXECUTOR_SERVICE.submit(new LayoutWorker(secondFourth.getArea(), secondFourthSize));
+        EXECUTOR_SERVICE.submit(new LayoutWorker(thirdFourth.getArea(), thirdFourthSize));
+        EXECUTOR_SERVICE.submit(new LayoutWorker(firstSecondThird.getArea(), firstSecondThirdSize));
+        EXECUTOR_SERVICE.submit(new LayoutWorker(firstSecondFourth.getArea(), firstSecondFourthSize));
+        EXECUTOR_SERVICE.submit(new LayoutWorker(firstThirdFourth.getArea(), firstThirdFourthSize));
+        EXECUTOR_SERVICE.submit(new LayoutWorker(secondThirdFourth.getArea(), secondThirdFourthSize));
+        EXECUTOR_SERVICE.submit(new LayoutWorker(intersection.getArea(), intersectionSize));
+        */
+
         labelLeft(firstOnly.getArea(), getFirstLabel());
         labelLeft(secondOnly.getArea(), getSecondLabel());
         labelRight(thirdOnly.getArea(), getThirdLabel());
         labelRight(fourthOnly.getArea(), getFourthLabel());
     }
 
-    // todo:  use centroids selectively?
     // todo:  add labelFarLeft, labelFarRight
     // todo:     or prevent overlap with first, second, third, fourth
 
@@ -526,6 +553,56 @@ public class QuaternaryVennNode3<E>
         private Area getArea()
         {
             return area;
+        }
+    }
+
+    /**
+     * Layout worker.
+     */
+    private class LayoutWorker
+        extends SwingWorker<Point2D, Object>
+    {
+        /** Area for this layout worker. */
+        private Area area;
+
+        /** Size label for this layout worker. */
+        private PText size;
+
+
+        /**
+         * Create a new layout worker for the specified area and size label.
+         *
+         * @param area area
+         * @param size size label
+         */
+        private LayoutWorker(final Area area, final PText size)
+        {
+            this.area = area;
+            this.size = size;
+        }
+
+
+        /** {@inheritDoc} */
+        public Point2D doInBackground()
+        {
+            return Centers.centroidOf(area);
+        }
+
+        /** {@inheritDoc} */
+        protected void done()
+        {
+            try
+            {
+                Rectangle2D b = size.getFullBoundsReference();
+                Point2D c = get();
+                // or animate to bounds
+                size.setOffset(c.getX() - (b.getWidth() / 2.0d), c.getY() - (b.getHeight() / 2.0d));
+                System.out.println("done");
+            }
+            catch (Exception e)
+            {
+                // ignore
+            }
         }
     }
 }
