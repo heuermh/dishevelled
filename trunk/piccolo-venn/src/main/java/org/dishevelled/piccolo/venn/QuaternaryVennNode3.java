@@ -187,7 +187,7 @@ public class QuaternaryVennNode3<E>
     private static final double LABEL_GAP = 8.0d;
 
     /** Thread pool executor service. */
-    private static final ExecutorService EXECUTOR_SERVICE = Executors.newCachedThreadPool();
+    private static final ExecutorService EXECUTOR_SERVICE = Executors.newFixedThreadPool(2);
 
 
     /**
@@ -329,12 +329,16 @@ public class QuaternaryVennNode3<E>
         firstThirdFourthSize.setText(String.valueOf(getModel().firstThirdFourth().size()));
         secondThirdFourthSize.setText(String.valueOf(getModel().secondThirdFourth().size()));
         intersectionSize.setText(String.valueOf(getModel().intersection().size()));
+
+        layoutNodes();
     }
 
-    /** {@inheritDoc} */
-    protected void layoutChildren()
+    /**
+     * Run layout separately from <code>layoutChildren</code> to prevent
+     * soft infinite loop.
+     */
+    private void layoutNodes()
     {
-        System.out.println("layoutChildren");
         f = new Area(first.getPathReference());
         s = new Area(second.getPathReference());
         t = new Area(third.getPathReference());
@@ -463,7 +467,6 @@ public class QuaternaryVennNode3<E>
         offset(intersection.getArea(), intersectionSize);
 
         // delay offset to centroids
-        /*
         EXECUTOR_SERVICE.submit(new LayoutWorker(firstOnly.getArea(), firstOnlySize));
         EXECUTOR_SERVICE.submit(new LayoutWorker(secondOnly.getArea(), secondOnlySize));
         EXECUTOR_SERVICE.submit(new LayoutWorker(thirdOnly.getArea(), thirdOnlySize));
@@ -479,16 +482,12 @@ public class QuaternaryVennNode3<E>
         EXECUTOR_SERVICE.submit(new LayoutWorker(firstThirdFourth.getArea(), firstThirdFourthSize));
         EXECUTOR_SERVICE.submit(new LayoutWorker(secondThirdFourth.getArea(), secondThirdFourthSize));
         EXECUTOR_SERVICE.submit(new LayoutWorker(intersection.getArea(), intersectionSize));
-        */
 
-        labelLeft(firstOnly.getArea(), getFirstLabel());
+        labelFarLeft(firstOnly.getArea(), secondOnly.getArea(), getFirstLabel());
         labelLeft(secondOnly.getArea(), getSecondLabel());
         labelRight(thirdOnly.getArea(), getThirdLabel());
-        labelRight(fourthOnly.getArea(), getFourthLabel());
+        labelFarRight(fourthOnly.getArea(), thirdOnly.getArea(), getFourthLabel());
     }
-
-    // todo:  add labelFarLeft, labelFarRight
-    // todo:     or prevent overlap with first, second, third, fourth
 
     /**
      * Offset the specified size label to the center of the specified area.
@@ -531,9 +530,48 @@ public class QuaternaryVennNode3<E>
         label.setOffset(c.getX() - (b.getWidth() / 3.0d), a.getY() - b.getHeight() - LABEL_GAP);
     }
 
+    /**
+     * Offset the specified label to the top and left of the center of the first
+     * specified area and to the right of the second specified area.
+     *
+     * @param area0 first area
+     * @param area1 second area
+     * @param label label
+     */
+    private void labelFarLeft(final Area area0, final Area area1, final PText label)
+    {
+        a = area0.getBounds2D();
+        b = label.getFullBoundsReference();
+        c = Centers.centerOf(area0, c);
+        double y = a.getY() - b.getHeight() - LABEL_GAP;
+        a = area1.getBounds2D();
+        double left = c.getX() - ((2.0d * b.getWidth()) / 3.0d);
+        double farLeft = a.getX() - b.getWidth() - LABEL_GAP;
+        label.setOffset(Math.min(left, farLeft), y);
+    }
+
+    /**
+     * Offset the specified label to the top and right of the center of the first
+     * specified area and to the right of the second specified area.
+     *
+     * @param area0 first area
+     * @param area1 second area
+     * @param label label
+     */
+    private void labelFarRight(final Area area0, final Area area1, final PText label)
+    {
+        a = area0.getBounds2D();
+        b = label.getFullBoundsReference();
+        c = Centers.centerOf(area0, c);
+        double y = a.getY() - b.getHeight() - LABEL_GAP;
+        a = area1.getBounds2D();
+        double right = c.getX() - ((2.0d * b.getWidth()) / 3.0d);
+        double farRight = a.getX() + a.getWidth() + LABEL_GAP;
+        label.setOffset(Math.max(right, farRight), y);
+    }
+
     // todo:  allow getters for nodes, or alternatively getters/setters for paint, stroke, strokePaint
     //    allowing reference to first, second paths would allow clients to change the path/shape and offset
-
 
     /**
      * Area node.
@@ -595,9 +633,8 @@ public class QuaternaryVennNode3<E>
             {
                 Rectangle2D b = size.getFullBoundsReference();
                 Point2D c = get();
-                // or animate to bounds
-                size.setOffset(c.getX() - (b.getWidth() / 2.0d), c.getY() - (b.getHeight() / 2.0d));
-                System.out.println("done");
+                size.animateToPositionScaleRotation(c.getX() - (b.getWidth() / 2.0d),
+                                                    c.getY() - (b.getHeight() / 2.0d), 1.0d, 0.0d, 2000);
             }
             catch (Exception e)
             {

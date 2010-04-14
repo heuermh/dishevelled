@@ -186,7 +186,7 @@ final class Centers
             double y = bounds.getY() + random.nextDouble() * bounds.getHeight();
             individuals.add(new Point2D.Double(x, y));                                               
         }
-        ExitStrategy<Point2D> exitStrategy = new TimeLimitExitStrategy<Point2D>(25);
+        ExitStrategy<Point2D> exitStrategy = new TimeLimitExitStrategy<Point2D>(75);
         Selection<Point2D> selection = new FitnessProportionalSelection<Point2D>();
 
         Recombination<Point2D> recombination = new SexualRecombination<Point2D>()
