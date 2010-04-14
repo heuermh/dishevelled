@@ -261,6 +261,33 @@ public final class QuaternaryVennList3<E>
         addPropertyChangeListener("model", modelChange);
     }
 
+    /**
+     * Create a new quaternary venn list with the specified model.
+     *
+     * @param firstLabelText label text for the first set
+     * @param secondLabelText label text for the second set
+     * @param thirdLabelText label text for the third set
+     * @param fourthLabelText label text for the fourth set
+     * @param model model for this abstract quaternary venn diagram, must not be null
+     */
+    public QuaternaryVennList3(final String firstLabelText,
+                               final String secondLabelText,
+                               final String thirdLabelText,
+                               final String fourthLabelText,
+                               final QuaternaryVennModel3<E> model)
+    {
+        super(firstLabelText,
+              secondLabelText,
+              thirdLabelText,
+              fourthLabelText,
+              model);
+
+        installListModels();
+        installSelectionListeners();
+        layoutComponents();
+        addPropertyChangeListener("model", modelChange);
+    }
+
 
     /**
      * Clear selection.

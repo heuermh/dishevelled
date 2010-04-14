@@ -273,8 +273,52 @@ public abstract class AbstractQuaternaryVennDiagram<E>
                                             final String thirdLabelText, final Set<? extends E> third,
                                             final String fourthLabelText, final Set<? extends E> fourth)
     {
+        this(firstLabelText,
+             secondLabelText,
+             thirdLabelText,
+             fourthLabelText,
+             new QuaternaryVennModelImpl3<E>(first, second, third, fourth));
+    }
+
+    /**
+     * Create a new abstract quaternary venn diagram with the specified model.
+     *
+     * @param model model for this abstract quaternary venn diagram, must not be null
+     */
+    protected AbstractQuaternaryVennDiagram(final QuaternaryVennModel3<E> model)
+    {
         super();
-        model = new QuaternaryVennModelImpl3<E>(first, second, third, fourth);
+        if (model == null)
+        {
+            throw new IllegalArgumentException("model must not be null");
+        }
+        this.model = model;
+
+        installListeners();
+        updateLabels();
+    }
+
+    /**
+     * Create a new abstract quaternary venn diagram with the specified sets.
+     *
+     * @param firstLabelText label text for the first set
+     * @param secondLabelText label text for the second set
+     * @param thirdLabelText label text for the third set
+     * @param fourthLabelText label text for the fourth set
+     * @param model model for this abstract quaternary venn diagram, must not be null
+     */
+    protected AbstractQuaternaryVennDiagram(final String firstLabelText,
+                                            final String secondLabelText,
+                                            final String thirdLabelText,
+                                            final String fourthLabelText,
+                                            final QuaternaryVennModel3<E> model)
+    {
+        super();
+        if (model == null)
+        {
+            throw new IllegalArgumentException("model must not be null");
+        }
+        this.model = model;
         this.firstLabelText = firstLabelText;
         this.secondLabelText = secondLabelText;
         this.thirdLabelText = thirdLabelText;
@@ -297,25 +341,6 @@ public abstract class AbstractQuaternaryVennDiagram<E>
         installListeners();
         updateLabels();
     }
-
-    /**
-     * Create a new abstract quaternary venn diagram with the specified model.
-     *
-     * @param model model for this abstract quaternary venn diagram, must not be null
-     */
-    protected AbstractQuaternaryVennDiagram(final QuaternaryVennModel3<E> model)
-    {
-        super();
-        if (model == null)
-        {
-            throw new IllegalArgumentException("model must not be null");
-        }
-        this.model = model;
-
-        installListeners();
-        updateLabels();
-    }
-
 
     /**
      * Install listeners.
@@ -391,7 +416,6 @@ public abstract class AbstractQuaternaryVennDiagram<E>
         sb.append(":");
         return sb.toString();
     }
-
 
     /**
      * Return the model for this quaternary venn label.  The model will not be null.
