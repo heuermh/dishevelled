@@ -223,6 +223,31 @@ public class ParticleSystemActivity
         particle.velocity().set((float) velocity.getX(), (float) velocity.getY(), 0.0f);
     }
 
+    private void checkParticleArgs(final PNode node)
+    {
+        if (node == null)
+        {
+            throw new IllegalArgumentException("node must not be null");
+        }
+        Particle particle = particles.get(node);
+        if (particle == null)
+        {
+            throw new IllegalArgumentException("no particle exists for node " + node);
+        }
+    }
+
+    public float getParticleMass(final PNode node)
+    {
+        checkParticleArgs(node);
+        return particles.get(node).mass();
+    }
+
+    public void setParticleMass(final PNode node, final float mass)
+    {
+        checkParticleArgs(node);
+        particles.get(node).setMass(mass);
+    }
+
     // todo:  fix/free, clamp/release, affix?
 
     /**
@@ -317,19 +342,7 @@ public class ParticleSystemActivity
      */
     public void enableSpring(final PNode source, final PNode target)
     {
-        if (source == null)
-        {
-            throw new IllegalArgumentException("source node must not be null");
-        }
-        if (target == null)
-        {
-            throw new IllegalArgumentException("target node must not be null");
-        }
-        if (!springs.containsKey(source, target))
-        {
-            throw new IllegalArgumentException("no spring exists between source node "
-                                               + source + " and target node " + target);
-        }
+        checkSpringArgs(source, target);
         springs.get(source, target).turnOn();
     }
 
@@ -341,6 +354,12 @@ public class ParticleSystemActivity
      * @param target target node, must not be null
      */
     public void disableSpring(final PNode source, final PNode target)
+    {
+        checkSpringArgs(source, target);
+        springs.get(source, target).turnOff();
+    }
+
+    private void checkSpringArgs(final PNode source, final PNode target)
     {
         if (source == null)
         {
@@ -355,7 +374,42 @@ public class ParticleSystemActivity
             throw new IllegalArgumentException("no spring exists between source node "
                                                + source + " and target node " + target);
         }
-        springs.get(source, target).turnOff();
+    }
+
+    public float getSpringRestLength(final PNode source, final PNode target)
+    {
+        checkSpringArgs(source, target);
+        return springs.get(source, target).restLength();
+    }
+
+    public void setSpringRestLength(final PNode source, final PNode target, final float restLength)
+    {
+        checkSpringArgs(source, target);
+        springs.get(source, target).setRestLength(restLength);
+    }
+
+    public float getSpringStrength(final PNode source, final PNode target)
+    {
+        checkSpringArgs(source, target);
+        return springs.get(source, target).strength();
+    }
+
+    public void setSpringStrength(final PNode source, final PNode target, final float strength)
+    {
+        checkSpringArgs(source, target);
+        springs.get(source, target).setStrength(strength);
+    }
+
+    public float getSpringDamping(final PNode source, final PNode target)
+    {
+        checkSpringArgs(source, target);
+        return springs.get(source, target).damping();
+    }
+
+    public void setSpringDamping(final PNode source, final PNode target, final float damping)
+    {
+        checkSpringArgs(source, target);
+        springs.get(source, target).setDamping(damping);
     }
 
     /**
@@ -405,30 +459,11 @@ public class ParticleSystemActivity
      */
     public void enableAttraction(final PNode source, final PNode target)
     {
-        if (source == null)
-        {
-            throw new IllegalArgumentException("source node must not be null");
-        }
-        if (target == null)
-        {
-            throw new IllegalArgumentException("target node must not be null");
-        }
-        if (!attractions.containsKey(source, target))
-        {
-            throw new IllegalArgumentException("no attraction exists between source node "
-                                               + source + " and target node " + target);
-        }
+        checkAttractionArgs(source, target);
         attractions.get(source, target).turnOn();
     }
 
-    /**
-     * Disable the attraction between the specified source and target nodes.  An attraction
-     * must have already been created for the specified source and target nodes.
-     *
-     * @param source source node, must not be null
-     * @param target target node, must not be null
-     */
-    public void disableAttraction(final PNode source, final PNode target)
+    private void checkAttractionArgs(final PNode source, final PNode target)
     {
         if (source == null)
         {
@@ -443,7 +478,43 @@ public class ParticleSystemActivity
             throw new IllegalArgumentException("no attraction exists between source node "
                                                + source + " and target node " + target);
         }
+    }
+
+    /**
+     * Disable the attraction between the specified source and target nodes.  An attraction
+     * must have already been created for the specified source and target nodes.
+     *
+     * @param source source node, must not be null
+     * @param target target node, must not be null
+     */
+    public void disableAttraction(final PNode source, final PNode target)
+    {
+        checkAttractionArgs(source, target);
         attractions.get(source, target).turnOff();
+    }
+
+    public float getAttractionStrength(final PNode source, final PNode target)
+    {
+        checkAttractionArgs(source, target);
+        return attractions.get(source, target).getStrength();
+    }
+
+    public void setAttractionStrength(final PNode source, final PNode target, final float strength)
+    {
+        checkAttractionArgs(source, target);
+        attractions.get(source, target).setStrength(strength);
+    }
+
+    public float getAttractionMinimumDistance(final PNode source, final PNode target)
+    {
+        checkAttractionArgs(source, target);
+        return attractions.get(source, target).getMinimumDistance();
+    }
+
+    public void setAttractionMinimumDistance(final PNode source, final PNode target, final float minimumDistance)
+    {
+        checkAttractionArgs(source, target);
+        attractions.get(source, target).setMinimumDistance(minimumDistance);
     }
 
     /**
