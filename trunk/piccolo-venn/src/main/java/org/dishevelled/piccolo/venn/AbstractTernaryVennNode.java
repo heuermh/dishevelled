@@ -32,22 +32,22 @@ import edu.umd.cs.piccolo.nodes.PText;
 import org.dishevelled.observable.event.SetChangeEvent;
 import org.dishevelled.observable.event.SetChangeListener;
 
-import org.dishevelled.venn.TertiaryVennModel3;
+import org.dishevelled.venn.TernaryVennModel3;
 
-import org.dishevelled.venn.model.TertiaryVennModelImpl3;
+import org.dishevelled.venn.model.TernaryVennModelImpl3;
 
 /**
- * Abstract tertiary venn diagram node.
+ * Abstract ternary venn diagram node.
  *
  * @param <E> value type
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public abstract class AbstractTertiaryVennNode<E>
+public abstract class AbstractTernaryVennNode<E>
     extends PNode
 {
-    /** Tertiary venn model. */
-    private TertiaryVennModel3<E> model;
+    /** Ternary venn model. */
+    private TernaryVennModel3<E> model;
 
     /** Label text for the first set. */
     private String firstLabelText = DEFAULT_FIRST_LABEL_TEXT;
@@ -164,19 +164,19 @@ public abstract class AbstractTertiaryVennNode<E>
 
 
     /**
-     * Create a new empty abstract tertiary venn diagram node.
+     * Create a new empty abstract ternary venn diagram node.
      */
-    protected AbstractTertiaryVennNode()
+    protected AbstractTernaryVennNode()
     {
         super();
-        model = new TertiaryVennModelImpl3<E>();
+        model = new TernaryVennModelImpl3<E>();
 
         installListeners();
         updateLabels();
     }
 
     /**
-     * Create a new abstract tertiary venn diagram node with the specified sets.
+     * Create a new abstract ternary venn diagram node with the specified sets.
      *
      * @param firstLabelText label text for the first set
      * @param first first set, must not be null
@@ -185,12 +185,12 @@ public abstract class AbstractTertiaryVennNode<E>
      * @param thirdLabelText label text for the third set
      * @param third third set, must not be null
      */
-    protected AbstractTertiaryVennNode(final String firstLabelText, final Set<? extends E> first,
+    protected AbstractTernaryVennNode(final String firstLabelText, final Set<? extends E> first,
                                        final String secondLabelText, final Set<? extends E> second,
                                        final String thirdLabelText, final Set<? extends E> third)
     {
         super();
-        model = new TertiaryVennModelImpl3<E>(first, second, third);
+        model = new TernaryVennModelImpl3<E>(first, second, third);
         this.firstLabelText = firstLabelText;
         this.secondLabelText = secondLabelText;
         this.thirdLabelText = thirdLabelText;
@@ -206,11 +206,11 @@ public abstract class AbstractTertiaryVennNode<E>
     }
 
     /**
-     * Create a new abstract tertiary venn diagram node with the specified model.
+     * Create a new abstract ternary venn diagram node with the specified model.
      *
-     * @param model model for this abstract tertiary venn diagram node, must not be null
+     * @param model model for this abstract ternary venn diagram node, must not be null
      */
-    protected AbstractTertiaryVennNode(final TertiaryVennModel3<E> model)
+    protected AbstractTernaryVennNode(final TernaryVennModel3<E> model)
     {
         super();
         if (model == null)
@@ -290,29 +290,29 @@ public abstract class AbstractTertiaryVennNode<E>
 
 
     /**
-     * Return the model for this tertiary venn label.  The model will not be null.
+     * Return the model for this ternary venn label.  The model will not be null.
      *
-     * @return the model for this tertiary venn label
+     * @return the model for this ternary venn label
      */
-    public final TertiaryVennModel3<E> getModel()
+    public final TernaryVennModel3<E> getModel()
     {
         return model;
     }
 
     /**
-     * Set the model for this tertiary venn label to <code>model</code>.
+     * Set the model for this ternary venn label to <code>model</code>.
      *
      * <p>This is a bound property.</p>
      *
-     * @param model model for this tertiary venn label, must not be null
+     * @param model model for this ternary venn label, must not be null
      */
-    public final void setModel(final TertiaryVennModel3<E> model)
+    public final void setModel(final TernaryVennModel3<E> model)
     {
         if (model == null)
         {
             throw new IllegalArgumentException("model must not be null");
         }
-        TertiaryVennModel3<E> oldModel = this.model;
+        TernaryVennModel3<E> oldModel = this.model;
         uninstallListeners();
         this.model = model;
         installListeners();
@@ -621,7 +621,7 @@ public abstract class AbstractTertiaryVennNode<E>
 
     /**
      * Return the label for the first set.  The text for the returned PText
-     * should not be changed, as the text is synchronized to the tertiary
+     * should not be changed, as the text is synchronized to the ternary
      * venn model backing this venn diagram.  Use methods
      * {@link #setFirstLabelText(String)} and {@link setDisplaySizes(boolean)}
      * to set the label text and whether to display sizes respectively.
@@ -635,7 +635,7 @@ public abstract class AbstractTertiaryVennNode<E>
 
     /**
      * Return the label for the second set.  The text for the returned PText
-     * should not be changed, as the text is synchronized to the tertiary
+     * should not be changed, as the text is synchronized to the ternary
      * venn model backing this venn diagram.  Use methods
      * {@link #setSecondLabelText(String)} and {@link setDisplaySizes(boolean)}
      * to set the label text and whether to display sizes respectively.
@@ -649,7 +649,7 @@ public abstract class AbstractTertiaryVennNode<E>
 
     /**
      * Return the label for the third set.  The text for the returned PText
-     * should not be changed, as the text is synchronized to the tertiary
+     * should not be changed, as the text is synchronized to the ternary
      * venn model backing this venn diagram.  Use methods
      * {@link #setThirdLabelText(String)} and {@link setDisplaySizes(boolean)}
      * to set the label text and whether to display sizes respectively.
@@ -663,7 +663,7 @@ public abstract class AbstractTertiaryVennNode<E>
 
     /**
      * Return the label for the first only view.  The text for the returned PText
-     * should not be changed, as the text is synchronized to the tertiary
+     * should not be changed, as the text is synchronized to the ternary
      * venn model backing this venn diagram.  Use methods
      * {@link #setFirstOnlyLabelText(String)} and {@link setDisplaySizes(boolean)}
      * to set the label text and whether to display sizes respectively.
@@ -677,7 +677,7 @@ public abstract class AbstractTertiaryVennNode<E>
 
     /**
      * Return the label for the second only view.  The text for the returned PText
-     * should not be changed, as the text is synchronized to the tertiary
+     * should not be changed, as the text is synchronized to the ternary
      * venn model backing this venn diagram.  Use methods
      * {@link #setSecondOnlyLabelText(String)} and {@link setDisplaySizes(boolean)}
      * to set the label text and whether to display sizes respectively.
@@ -691,7 +691,7 @@ public abstract class AbstractTertiaryVennNode<E>
 
     /**
      * Return the label for the third only view.  The text for the returned PText
-     * should not be changed, as the text is synchronized to the tertiary
+     * should not be changed, as the text is synchronized to the ternary
      * venn model backing this venn diagram.  Use methods
      * {@link #setThirdOnlyLabelText(String)} and {@link setDisplaySizes(boolean)}
      * to set the label text and whether to display sizes respectively.
@@ -705,7 +705,7 @@ public abstract class AbstractTertiaryVennNode<E>
 
     /**
      * Return the label for the first second view.  The text for the returned PText
-     * should not be changed, as the text is synchronized to the tertiary
+     * should not be changed, as the text is synchronized to the ternary
      * venn model backing this venn diagram.  Use methods
      * {@link #setFirstSecondLabelText(String)} and {@link setDisplaySizes(boolean)}
      * to set the label text and whether to display sizes respectively.
@@ -719,7 +719,7 @@ public abstract class AbstractTertiaryVennNode<E>
 
     /**
      * Return the label for the first third view.  The text for the returned PText
-     * should not be changed, as the text is synchronized to the tertiary
+     * should not be changed, as the text is synchronized to the ternary
      * venn model backing this venn diagram.  Use methods
      * {@link #setFirstThirdLabelText(String)} and {@link setDisplaySizes(boolean)}
      * to set the label text and whether to display sizes respectively.
@@ -733,7 +733,7 @@ public abstract class AbstractTertiaryVennNode<E>
 
     /**
      * Return the label for the second third view.  The text for the returned PText
-     * should not be changed, as the text is synchronized to the tertiary
+     * should not be changed, as the text is synchronized to the ternary
      * venn model backing this venn diagram.  Use methods
      * {@link #setSecondThirdLabelText(String)} and {@link setDisplaySizes(boolean)}
      * to set the label text and whether to display sizes respectively.
@@ -747,7 +747,7 @@ public abstract class AbstractTertiaryVennNode<E>
 
     /**
      * Return the label for the intersection view.  The text for the returned PText
-     * should not be changed, as the text is synchronized to the tertiary
+     * should not be changed, as the text is synchronized to the ternary
      * venn model backing this venn diagram.  Use methods
      * {@link #setIntersectionLabelText(String)} and {@link setDisplaySizes(boolean)}
      * to set the label text and whether to display sizes respectively.
@@ -761,7 +761,7 @@ public abstract class AbstractTertiaryVennNode<E>
 
     /**
      * Return the label for the union view.  The text for the returned PText
-     * should not be changed, as the text is synchronized to the tertiary
+     * should not be changed, as the text is synchronized to the ternary
      * venn model backing this venn diagram.  Use methods
      * {@link #setUnionLabelText(String)} and {@link setDisplaySizes(boolean)}
      * to set the label text and whether to display sizes respectively.
