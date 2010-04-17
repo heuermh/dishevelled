@@ -38,17 +38,17 @@ import edu.umd.cs.piccolo.PNode;
 import edu.umd.cs.piccolo.nodes.PPath;
 import edu.umd.cs.piccolo.nodes.PText;
 
-import org.dishevelled.venn.TertiaryVennModel3;
+import org.dishevelled.venn.TernaryVennModel3;
 
 /**
- * Tertiary venn diagram node 3.
+ * Ternary venn diagram node 3.
  *
  * @param <E> value type
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public class TertiaryVennNode3<E>
-    extends AbstractTertiaryVennNode<E>
+public class TernaryVennNode3<E>
+    extends AbstractTernaryVennNode<E>
 {
     /** Path node for the first set. */
     private final PPath first = new PPath();
@@ -130,9 +130,9 @@ public class TertiaryVennNode3<E>
 
 
     /**
-     * Create a new empty tertiary venn node.
+     * Create a new empty ternary venn node.
      */
-    public TertiaryVennNode3()
+    public TernaryVennNode3()
     {
         super();
         initNodes();
@@ -140,7 +140,7 @@ public class TertiaryVennNode3<E>
     }
 
     /**
-     * Create a new tertiary venn node with the specified sets.
+     * Create a new ternary venn node with the specified sets.
      *
      * @param firstLabelText label text for the first set
      * @param first first set, must not be null
@@ -149,7 +149,7 @@ public class TertiaryVennNode3<E>
      * @param thirdLabelText label text for the third set
      * @param third third set, must not be null
      */
-    public TertiaryVennNode3(final String firstLabelText, final Set<? extends E> first,
+    public TernaryVennNode3(final String firstLabelText, final Set<? extends E> first,
                              final String secondLabelText, final Set<? extends E> second,
                              final String thirdLabelText, final Set<? extends E> third)
     {
@@ -159,11 +159,11 @@ public class TertiaryVennNode3<E>
     }
 
     /**
-     * Create a new tertiary venn node with the specified model.
+     * Create a new ternary venn node with the specified model.
      *
-     * @param model model for this tertiary venn node, must not be null
+     * @param model model for this ternary venn node, must not be null
      */
-    public TertiaryVennNode3(final TertiaryVennModel3<E> model)
+    public TernaryVennNode3(final TernaryVennModel3<E> model)
     {
         super(model);
         initNodes();
