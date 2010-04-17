@@ -34,8 +34,8 @@ import org.dishevelled.functor.UnaryPredicate;
 import org.dishevelled.functor.UnaryProcedure;
 import org.dishevelled.functor.UnaryFunction;
 import org.dishevelled.functor.BinaryFunction;
-import org.dishevelled.functor.TertiaryPredicate;
-import org.dishevelled.functor.TertiaryProcedure;
+import org.dishevelled.functor.TernaryPredicate;
+import org.dishevelled.functor.TernaryProcedure;
 
 /**
  * Abstract implementation of Matrix2D.
@@ -185,7 +185,7 @@ abstract class AbstractMatrix2D<E>
     /** {@inheritDoc} */
     public void clear()
     {
-        forEach(new TertiaryProcedure<Long, Long, E>()
+        forEach(new TernaryProcedure<Long, Long, E>()
             {
                 public void run(final Long row, final Long column, final E e)
                     {
@@ -258,7 +258,7 @@ abstract class AbstractMatrix2D<E>
     /** {@inheritDoc} */
     public Matrix2D<E> assign(final E e)
     {
-        forEach(new TertiaryProcedure<Long, Long, E>()
+        forEach(new TernaryProcedure<Long, Long, E>()
             {
                 public void run(final Long row, final Long column, final E ignore)
                 {
@@ -277,7 +277,7 @@ abstract class AbstractMatrix2D<E>
             throw new IllegalArgumentException("function must not be null");
         }
 
-        forEach(new TertiaryProcedure<Long, Long, E>()
+        forEach(new TernaryProcedure<Long, Long, E>()
             {
                 public void run(final Long row, final Long column, final E e)
                 {
@@ -300,7 +300,7 @@ abstract class AbstractMatrix2D<E>
             throw new IllegalArgumentException("this and other must have the same dimensions");
         }
 
-        forEach(new TertiaryProcedure<Long, Long, E>()
+        forEach(new TernaryProcedure<Long, Long, E>()
             {
                 public void run(final Long row, final Long column, final E ignore)
                 {
@@ -327,7 +327,7 @@ abstract class AbstractMatrix2D<E>
             throw new IllegalArgumentException("function must not be null");
         }
 
-        forEach(new TertiaryProcedure<Long, Long, E>()
+        forEach(new TernaryProcedure<Long, Long, E>()
             {
                 public void run(final Long row, final Long column, final E e)
                 {
@@ -666,7 +666,7 @@ abstract class AbstractMatrix2D<E>
     }
 
     /** {@inheritDoc} */
-    public void forEach(final TertiaryProcedure<Long, Long, ? super E> procedure)
+    public void forEach(final TernaryProcedure<Long, Long, ? super E> procedure)
     {
         if (procedure == null)
         {
@@ -684,8 +684,8 @@ abstract class AbstractMatrix2D<E>
     }
 
     /** {@inheritDoc} */
-    public void forEach(final TertiaryPredicate<Long, Long, ? super E> predicate,
-                        final TertiaryProcedure<Long, Long, ? super E> procedure)
+    public void forEach(final TernaryPredicate<Long, Long, ? super E> predicate,
+                        final TernaryProcedure<Long, Long, ? super E> procedure)
     {
         if (predicate == null)
         {
@@ -718,7 +718,7 @@ abstract class AbstractMatrix2D<E>
         sb.append(columns);
         sb.append(" matrix\n");
 
-        forEach(new TertiaryProcedure<Long, Long, E>() {
+        forEach(new TernaryProcedure<Long, Long, E>() {
             public void run(final Long row, final Long column, final E e)
                 {
                     sb.append((e == null) ? "null" : e.toString());

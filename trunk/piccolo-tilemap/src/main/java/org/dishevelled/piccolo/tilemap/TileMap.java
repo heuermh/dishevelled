@@ -28,7 +28,7 @@ import edu.umd.cs.piccolo.PNode;
 import edu.umd.cs.piccolo.util.PPaintContext;
 
 import org.dishevelled.functor.UnaryProcedure;
-import org.dishevelled.functor.TertiaryProcedure;
+import org.dishevelled.functor.TernaryProcedure;
 
 import org.dishevelled.matrix.Matrix2D;
 
@@ -77,8 +77,8 @@ public final class TileMap
         };
 
     /** Create proxy procedure. */
-    private final TertiaryProcedure<Long, Long, Sprite> createProxyProcedure =
-        new TertiaryProcedure<Long, Long, Sprite>()
+    private final TernaryProcedure<Long, Long, Sprite> createProxyProcedure =
+        new TernaryProcedure<Long, Long, Sprite>()
             {
                 /** {@inheritDoc} */
                 public void run(final Long row, final Long column, final Sprite tile)

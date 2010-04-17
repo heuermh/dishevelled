@@ -31,8 +31,8 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 
-import org.dishevelled.functor.TertiaryPredicate;
-import org.dishevelled.functor.TertiaryProcedure;
+import org.dishevelled.functor.TernaryPredicate;
+import org.dishevelled.functor.TernaryProcedure;
 
 import org.dishevelled.matrix.Matrix2D;
 
@@ -53,7 +53,7 @@ public final class MatrixMarketWriter
     // allow for specifying the number format to use when writing values
 
     /** Not null predicate. */
-    private static final TertiaryPredicate<Long, Long, Object> NOT_NULL = new TertiaryPredicate<Long, Long, Object>()
+    private static final TernaryPredicate<Long, Long, Object> NOT_NULL = new TernaryPredicate<Long, Long, Object>()
         {
             /** {@inheritDoc} */
             public boolean test(final Long row, final Long column, final Object value)
@@ -88,7 +88,7 @@ public final class MatrixMarketWriter
         appendable.append("\n");
 
         // append non-null values
-        matrix.forEach(NOT_NULL, new TertiaryProcedure<Long, Long, Object>()
+        matrix.forEach(NOT_NULL, new TernaryProcedure<Long, Long, Object>()
             {
                 /** {@inheritDoc} */
                 public void run(final Long row, final Long column, final Object value)

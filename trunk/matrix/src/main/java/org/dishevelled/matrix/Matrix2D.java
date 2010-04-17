@@ -29,8 +29,8 @@ import org.dishevelled.functor.UnaryFunction;
 import org.dishevelled.functor.UnaryPredicate;
 import org.dishevelled.functor.UnaryProcedure;
 import org.dishevelled.functor.BinaryFunction;
-import org.dishevelled.functor.TertiaryPredicate;
-import org.dishevelled.functor.TertiaryProcedure;
+import org.dishevelled.functor.TernaryPredicate;
+import org.dishevelled.functor.TernaryProcedure;
 
 /**
  * Typed fixed size matrix of objects in two dimensions, indexed
@@ -422,7 +422,7 @@ public interface Matrix2D<E>
      * <p>For example:
      * <pre>
      * Matrix2D&lt;String&gt; m;
-     * m.forEach(new TertiaryProcedure&lt;Long, Long, String&gt;()
+     * m.forEach(new TernaryProcedure&lt;Long, Long, String&gt;()
      *     {
      *         public void run(final Long row, final Long column, final String value)
      *         {
@@ -433,7 +433,7 @@ public interface Matrix2D<E>
      *
      * @param procedure procedure, must not be null
      */
-    void forEach(TertiaryProcedure<Long, Long, ? super E> procedure);
+    void forEach(TernaryProcedure<Long, Long, ? super E> procedure);
 
     /**
      * Apply the specified procedures to each row and column
@@ -442,13 +442,13 @@ public interface Matrix2D<E>
      * <p>For example:
      * <pre>
      * Matrix2D&lt;String&gt; m;
-     * m.forEach(new TertiaryPredicate&lt;Long, Long, String&gt;()
+     * m.forEach(new TernaryPredicate&lt;Long, Long, String&gt;()
      *     {
      *         public boolean test(final Long row, final Long column, final String value)
      *         {
      *             return (value != null);
      *         }
-     *     }, new TertiaryProcedure&lt;Long, Long, String&gt;()
+     *     }, new TernaryProcedure&lt;Long, Long, String&gt;()
      *     {
      *         public void run(final Long row, final Long column, final String value)
      *         {
@@ -460,6 +460,6 @@ public interface Matrix2D<E>
      * @param predicate predicate, must not be null
      * @param procedure procedure, must not be null
      */
-    void forEach(TertiaryPredicate<Long, Long, ? super E> predicate,
-                 TertiaryProcedure<Long, Long, ? super E> procedure);
+    void forEach(TernaryPredicate<Long, Long, ? super E> predicate,
+                 TernaryProcedure<Long, Long, ? super E> procedure);
 }

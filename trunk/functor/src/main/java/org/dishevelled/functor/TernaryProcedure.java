@@ -24,8 +24,7 @@
 package org.dishevelled.functor;
 
 /**
- * Typed functor that takes three arguments and returns a <code>boolean</code>
- * value.
+ * Typed functor that takes three arguments and returns no value.
  *
  * @param <E> first argument type
  * @param <F> second argument type
@@ -33,16 +32,15 @@ package org.dishevelled.functor;
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public interface TertiaryPredicate<E, F, G>
+public interface TernaryProcedure<E, F, G>
 {
 
     /**
-     * Evaluate this predicate for the specified arguments.
+     * Execute this procedure with the specified arguments.
      *
-     * @param e first argument to this evaluation
-     * @param f second argument to this evaluation
-     * @param g third argument to this evaluation
-     * @return the result of this evaluation
+     * @param e first argument to this execution
+     * @param f second argument to this execution
+     * @param g third argument to this execution
      */
-    boolean test(E e, F f, G g);
+    void run(E e, F f, G g);
 }

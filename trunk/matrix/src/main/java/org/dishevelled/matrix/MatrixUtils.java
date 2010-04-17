@@ -30,8 +30,8 @@ import org.dishevelled.functor.BinaryPredicate;
 import org.dishevelled.functor.BinaryProcedure;
 import org.dishevelled.functor.QuaternaryPredicate;
 import org.dishevelled.functor.QuaternaryProcedure;
-import org.dishevelled.functor.TertiaryPredicate;
-import org.dishevelled.functor.TertiaryProcedure;
+import org.dishevelled.functor.TernaryPredicate;
+import org.dishevelled.functor.TernaryProcedure;
 import org.dishevelled.functor.UnaryFunction;
 import org.dishevelled.functor.UnaryPredicate;
 import org.dishevelled.functor.UnaryProcedure;
@@ -381,14 +381,14 @@ public final class MatrixUtils
         }
 
         /** {@inheritDoc} */
-        public void forEach(final TertiaryPredicate<Long, Long, ? super E> predicate,
-                            final TertiaryProcedure<Long, Long, ? super E> procedure)
+        public void forEach(final TernaryPredicate<Long, Long, ? super E> predicate,
+                            final TernaryProcedure<Long, Long, ? super E> procedure)
         {
             matrix.forEach(predicate, procedure);
         }
 
         /** {@inheritDoc} */
-        public void forEach(final TertiaryProcedure<Long, Long, ? super E> procedure)
+        public void forEach(final TernaryProcedure<Long, Long, ? super E> procedure)
         {
             matrix.forEach(procedure);
         }

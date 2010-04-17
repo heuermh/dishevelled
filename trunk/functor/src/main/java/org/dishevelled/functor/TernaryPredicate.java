@@ -24,27 +24,25 @@
 package org.dishevelled.functor;
 
 /**
- * Typed functor that takes three arguments of types <code>E</code>,
- * <code>F</code>, and <code>G</code> and returns a value of type
- * <code>RV</code>.
+ * Typed functor that takes three arguments and returns a <code>boolean</code>
+ * value.
  *
  * @param <E> first argument type
  * @param <F> second argument type
  * @param <G> third argument type
- * @param <RV> return value type
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public interface TertiaryFunction<E, F, G, RV>
+public interface TernaryPredicate<E, F, G>
 {
 
     /**
-     * Evaluate this function with the specified arguments.
+     * Evaluate this predicate for the specified arguments.
      *
      * @param e first argument to this evaluation
      * @param f second argument to this evaluation
      * @param g third argument to this evaluation
      * @return the result of this evaluation
      */
-    RV evaluate(E e, F f, G g);
+    boolean test(E e, F f, G g);
 }

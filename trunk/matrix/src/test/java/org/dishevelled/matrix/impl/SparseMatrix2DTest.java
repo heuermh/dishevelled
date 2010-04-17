@@ -29,7 +29,7 @@ import java.io.ObjectOutputStream;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 
-import org.dishevelled.functor.TertiaryProcedure;
+import org.dishevelled.functor.TernaryProcedure;
 
 import org.dishevelled.matrix.Matrix2D;
 import org.dishevelled.matrix.AbstractMatrix2DTest;
@@ -81,7 +81,7 @@ public class SparseMatrix2DTest
         assertEquals("m1 size == m0 size", m0.size(), m1.size());
         assertEquals("m1 cardinality == m0 cardinality", m0.cardinality(), m1.cardinality());
 
-        m1.forEach(new TertiaryProcedure<Long, Long, String>()
+        m1.forEach(new TernaryProcedure<Long, Long, String>()
              {
                 public void run(final Long row, final Long column, final String ignore)
                 {
@@ -97,7 +97,7 @@ public class SparseMatrix2DTest
         final SparseMatrix2D<String> m0 = new SparseMatrix2D<String>(10, 10);
         assertNotNull("m0 not null", m0);
 
-        m0.forEach(new TertiaryProcedure<Long, Long, String>()
+        m0.forEach(new TernaryProcedure<Long, Long, String>()
             {
                 public void run(final Long row, final Long column, final String ignore)
                 {
@@ -126,7 +126,7 @@ public class SparseMatrix2DTest
         assertEquals("m1 size == m0 size", m0.size(), m1.size());
         assertEquals("m1 cardinality == m0 cardinality", m0.cardinality(), m1.size());
 
-        m1.forEach(new TertiaryProcedure<Long, Long, String>()
+        m1.forEach(new TernaryProcedure<Long, Long, String>()
              {
                 public void run(final Long row, final Long column, final String ignore)
                 {
@@ -162,7 +162,7 @@ public class SparseMatrix2DTest
         assertEquals("m1 size == m0 size", m0.size(), m1.size());
         assertEquals("m1 cardinality == m0 cardinality", m0.cardinality(), m1.cardinality());
 
-        m1.forEach(new TertiaryProcedure<Long, Long, String>()
+        m1.forEach(new TernaryProcedure<Long, Long, String>()
              {
                 public void run(final Long row, final Long column, final String ignore)
                 {
@@ -208,7 +208,7 @@ public class SparseMatrix2DTest
         assertEquals("m1 size == m0 size", m0.size(), m1.size());
         assertEquals("m1 cardinality == m0 cardinality", m0.cardinality(), m1.cardinality());
 
-        m1.forEach(new TertiaryProcedure<Long, Long, String>()
+        m1.forEach(new TernaryProcedure<Long, Long, String>()
              {
                 public void run(final Long row, final Long column, final String ignore)
                 {

@@ -24,23 +24,27 @@
 package org.dishevelled.functor;
 
 /**
- * Typed functor that takes three arguments and returns no value.
+ * Typed functor that takes three arguments of types <code>E</code>,
+ * <code>F</code>, and <code>G</code> and returns a value of type
+ * <code>RV</code>.
  *
  * @param <E> first argument type
  * @param <F> second argument type
  * @param <G> third argument type
+ * @param <RV> return value type
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public interface TertiaryProcedure<E, F, G>
+public interface TernaryFunction<E, F, G, RV>
 {
 
     /**
-     * Execute this procedure with the specified arguments.
+     * Evaluate this function with the specified arguments.
      *
-     * @param e first argument to this execution
-     * @param f second argument to this execution
-     * @param g third argument to this execution
+     * @param e first argument to this evaluation
+     * @param f second argument to this evaluation
+     * @param g third argument to this evaluation
+     * @return the result of this evaluation
      */
-    void run(E e, F f, G g);
+    RV evaluate(E e, F f, G g);
 }
