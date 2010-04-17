@@ -31,8 +31,8 @@ import org.dishevelled.functor.UnaryFunction;
 import org.dishevelled.functor.UnaryPredicate;
 import org.dishevelled.functor.UnaryProcedure;
 import org.dishevelled.functor.BinaryFunction;
-import org.dishevelled.functor.TertiaryPredicate;
-import org.dishevelled.functor.TertiaryProcedure;
+import org.dishevelled.functor.TernaryPredicate;
+import org.dishevelled.functor.TernaryProcedure;
 
 /**
  * Abstract unit test for implementations of Matrix2D.
@@ -768,7 +768,7 @@ public abstract class AbstractMatrix2DTest
                   });
 
         m.assign((String) null);
-        m.forEach(new TertiaryProcedure<Long, Long, String>()
+        m.forEach(new TernaryProcedure<Long, Long, String>()
             {
                 public void run(final Long row, final Long column, final String s)
                 {
@@ -781,7 +781,7 @@ public abstract class AbstractMatrix2DTest
             });
 
         m.assign("foo");
-        m.forEach(new TertiaryProcedure<Long, Long, String>()
+        m.forEach(new TernaryProcedure<Long, Long, String>()
             {
                 public void run(final Long row, final Long column, final String s)
                 {
@@ -795,14 +795,14 @@ public abstract class AbstractMatrix2DTest
 
         m.set(0, 0, "bar");
         m.set(0, 1, null);
-        m.forEach(new TertiaryPredicate<Long, Long, String>()
+        m.forEach(new TernaryPredicate<Long, Long, String>()
                   {
                       public boolean test(final Long row, final Long column, final String s)
                           {
                               return ( ((0L == row.longValue()) && (0L == column.longValue())) || ("foo".equals(s)) ); 
                           }
                   },
-                  new TertiaryProcedure<Long, Long, String>()
+                  new TernaryProcedure<Long, Long, String>()
                   {
                       public void run(final Long row, final Long column, final String s)
                           {
@@ -848,8 +848,8 @@ public abstract class AbstractMatrix2DTest
 
         try
         {
-            m.forEach((TertiaryProcedure<Long, Long, String>) null);
-            fail("forEach((TertiaryProcedure<Long, Long, String>) null) expected IllegalArgumentException");
+            m.forEach((TernaryProcedure<Long, Long, String>) null);
+            fail("forEach((TernaryProcedure<Long, Long, String>) null) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
         {
@@ -858,8 +858,8 @@ public abstract class AbstractMatrix2DTest
 
         try
         {
-            m.forEach((TertiaryPredicate<Long, Long, String>) null, (TertiaryProcedure<Long, Long, String>) null);
-            fail("forEach((TertiaryPredicate<Long, Long, String>) null, (TertiaryProcedure<Long, Long, String>) null) expected IllegalArgumentException");
+            m.forEach((TernaryPredicate<Long, Long, String>) null, (TernaryProcedure<Long, Long, String>) null);
+            fail("forEach((TernaryPredicate<Long, Long, String>) null, (TernaryProcedure<Long, Long, String>) null) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
         {
@@ -868,14 +868,14 @@ public abstract class AbstractMatrix2DTest
 
         try
         {
-            m.forEach(new TertiaryPredicate<Long, Long, String>()
+            m.forEach(new TernaryPredicate<Long, Long, String>()
                   {
                       public boolean test(final Long row, final Long column, final String s)
                       {
                           return ((0L == row.longValue()) || ("foo".equals(s)));
                       }
-                  }, (TertiaryProcedure<Long, Long, String>) null);
-            fail("forEach(,(TertiaryProcedure<Long, Long, String>) null) expected IllegalArgumentException");
+                  }, (TernaryProcedure<Long, Long, String>) null);
+            fail("forEach(,(TernaryProcedure<Long, Long, String>) null) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
         {
@@ -887,7 +887,7 @@ public abstract class AbstractMatrix2DTest
     {
         final Matrix2D<String> m = createMatrix2D(10, 10);
 
-        m.forEach(new TertiaryProcedure<Long, Long, String>()
+        m.forEach(new TernaryProcedure<Long, Long, String>()
             {
                 public void run(final Long row, final Long column, final String s)
                 {
@@ -945,7 +945,7 @@ public abstract class AbstractMatrix2DTest
     {
         final Matrix2D<String> m = createMatrix2D(10, 10);
 
-        m.forEach(new TertiaryProcedure<Long, Long, String>()
+        m.forEach(new TernaryProcedure<Long, Long, String>()
             {
                 public void run(final Long row, final Long column, final String s)
                 {
@@ -1008,7 +1008,7 @@ public abstract class AbstractMatrix2DTest
     {
         final Matrix2D<String> m = createMatrix2D(10, 10);
 
-        m.forEach(new TertiaryProcedure<Long, Long, String>()
+        m.forEach(new TernaryProcedure<Long, Long, String>()
             {
                 public void run(final Long row, final Long column, final String s)
                 {
@@ -1072,7 +1072,7 @@ public abstract class AbstractMatrix2DTest
     {
         final Matrix2D<String> m = createMatrix2D(10, 10);
 
-        m.forEach(new TertiaryProcedure<Long, Long, String>()
+        m.forEach(new TernaryProcedure<Long, Long, String>()
             {
                 public void run(final Long row, final Long column, final String s)
                 {
@@ -1136,7 +1136,7 @@ public abstract class AbstractMatrix2DTest
     {
         final Matrix2D<String> m = createMatrix2D(10, 10);
 
-        m.forEach(new TertiaryProcedure<Long, Long, String>()
+        m.forEach(new TernaryProcedure<Long, Long, String>()
             {
                 public void run(final Long row, final Long column, final String s)
                 {
@@ -1295,7 +1295,7 @@ public abstract class AbstractMatrix2DTest
     {
         final Matrix2D<String> m = createMatrix2D(100, 100);
 
-        m.forEach(new TertiaryProcedure<Long, Long, String>()
+        m.forEach(new TernaryProcedure<Long, Long, String>()
             {
                 public void run(final Long row, final Long column, final String s)
                 {

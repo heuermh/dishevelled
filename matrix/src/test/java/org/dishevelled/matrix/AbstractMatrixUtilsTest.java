@@ -30,8 +30,8 @@ import org.dishevelled.functor.BinaryPredicate;
 import org.dishevelled.functor.BinaryProcedure;
 import org.dishevelled.functor.QuaternaryPredicate;
 import org.dishevelled.functor.QuaternaryProcedure;
-import org.dishevelled.functor.TertiaryPredicate;
-import org.dishevelled.functor.TertiaryProcedure;
+import org.dishevelled.functor.TernaryPredicate;
+import org.dishevelled.functor.TernaryProcedure;
 import org.dishevelled.functor.UnaryFunction;
 import org.dishevelled.functor.UnaryPredicate;
 import org.dishevelled.functor.UnaryProcedure;
@@ -96,7 +96,7 @@ public abstract class AbstractMatrixUtilsTest
     };
 
     /** Tertiary predicate. */
-    TertiaryPredicate<Long, Long, String> tertiaryPredicate = new TertiaryPredicate<Long, Long, String>()
+    TernaryPredicate<Long, Long, String> ternaryPredicate = new TernaryPredicate<Long, Long, String>()
     {
         /** {@inheritDoc} */
         public boolean test(final Long row, final Long column, final String string)
@@ -106,7 +106,7 @@ public abstract class AbstractMatrixUtilsTest
     };
 
     /** Tertiary procedure. */
-    TertiaryProcedure<Long, Long, String> tertiaryProcedure = new TertiaryProcedure<Long, Long, String>()
+    TernaryProcedure<Long, Long, String> ternaryProcedure = new TernaryProcedure<Long, Long, String>()
     {
         /** {@inheritDoc} */
         public void run(final Long row, final Long column, final String string)
@@ -297,8 +297,8 @@ public abstract class AbstractMatrixUtilsTest
 
         assertEquals(matrix.cardinality(), unmodifiableView.cardinality());
 
-        unmodifiableView.forEach(tertiaryPredicate, tertiaryProcedure);
-        unmodifiableView.forEach(tertiaryProcedure);
+        unmodifiableView.forEach(ternaryPredicate, ternaryProcedure);
+        unmodifiableView.forEach(ternaryProcedure);
         unmodifiableView.forEach(unaryPredicate, unaryProcedure);
         unmodifiableView.forEach(unaryProcedure);
 

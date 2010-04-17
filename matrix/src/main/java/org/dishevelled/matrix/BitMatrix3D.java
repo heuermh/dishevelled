@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.BitSet;
 import java.util.ArrayList;
 
-import org.dishevelled.functor.TertiaryProcedure;
+import org.dishevelled.functor.TernaryProcedure;
 
 /**
  * Fixed size bit matrix in three dimensions, indexed by
@@ -606,7 +606,7 @@ public final class BitMatrix3D
      * @param procedure procedure, must not be null
      */
     public void forEach(final boolean value,
-                        final TertiaryProcedure<Long, Long, Long> procedure)
+                        final TernaryProcedure<Long, Long, Long> procedure)
     {
         if (procedure == null)
         {
