@@ -25,7 +25,6 @@ package org.dishevelled.piccolo.venn;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
-import java.awt.Shape;
 
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Area;
