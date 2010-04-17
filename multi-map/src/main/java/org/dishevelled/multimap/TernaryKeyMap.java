@@ -26,7 +26,7 @@ package org.dishevelled.multimap;
 import java.util.Map;
 
 /**
- * Tertiary key map.
+ * Ternary key map.
  *
  * @param <K1> first key type
  * @param <K2> second key type
@@ -35,53 +35,53 @@ import java.util.Map;
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public interface TertiaryKeyMap<K1, K2, K3, V>
-    extends Map<TertiaryKey<K1, K2, K3>, V>
+public interface TernaryKeyMap<K1, K2, K3, V>
+    extends Map<TernaryKey<K1, K2, K3>, V>
 {
 
     /**
-     * Return true if this map contains a tertiary key of {<code>key1, key2, key3</code>}.
+     * Return true if this map contains a ternary key of {<code>key1, key2, key3</code>}.
      *
      * @param key1 first key
      * @param key2 second key
      * @param key3 third key
-     * @return true if this map contains a tertiary key of {<code>key1, key2, key3</code>}
+     * @return true if this map contains a ternary key of {<code>key1, key2, key3</code>}
      */
     boolean containsKey(K1 key1, K2 key2, K3 key3);
 
     /**
-     * Return the value mapped to a tertiary key of {<code>key1, key2, key3</code>}, if any.
+     * Return the value mapped to a ternary key of {<code>key1, key2, key3</code>}, if any.
      *
      * @param key1 first key
      * @param key2 second key
      * @param key3 third key
-     * @return the value mapped to a tertiary key of {<code>key1, key2, key3</code>}, or
+     * @return the value mapped to a ternary key of {<code>key1, key2, key3</code>}, or
      *    <code>null</code> if no such mapping exists
      */
     V get(K1 key1, K2 key2, K3 key3);
 
     /**
-     * Remove the mapping for a tertiary key of {<code>key1, key2, key3</code>} from this map
+     * Remove the mapping for a ternary key of {<code>key1, key2, key3</code>} from this map
      * if one exists (optional operation).
      *
      * @param key1 first key
      * @param key2 second key
      * @param key3 third key
-     * @return the value previously mapped to a tertiary key of {<code>key1, key2, key3</code>},
+     * @return the value previously mapped to a ternary key of {<code>key1, key2, key3</code>},
      *    or <code>null</code> if no such mapping exists
      * @throws UnsupportedOperationException if the remove operation is not supported by this map
      */
     V remove(K1 key1, K2 key2, K3 key3);
 
     /**
-     * Map a tertiary key of {<code>key1, key2, key3</code>} to the specified value
+     * Map a ternary key of {<code>key1, key2, key3</code>} to the specified value
      * (optional operation).
      *
      * @param key1 first key
      * @param key2 second key
      * @param key3 third key
      * @param value value
-     * @return the value previously mapped to a tertiary key of {<code>key1, key2, key3</code>},
+     * @return the value previously mapped to a ternary key of {<code>key1, key2, key3</code>},
      *    or <code>null</code> if no such mapping exists
      * @throws UnsupportedOperationException if the put operation is not supported by this map
      */

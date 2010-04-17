@@ -25,35 +25,35 @@ package org.dishevelled.multimap.impl;
 
 import junit.framework.TestCase;
 
-import org.dishevelled.multimap.TertiaryKeyMap;
+import org.dishevelled.multimap.TernaryKeyMap;
 
-import static org.dishevelled.multimap.impl.TertiaryKeyMaps.*;
+import static org.dishevelled.multimap.impl.TernaryKeyMaps.*;
 
 /**
- * Unit test for TertiaryKeyMaps.
+ * Unit test for TernaryKeyMaps.
  *
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public final class TertiaryKeyMapsTest
+public final class TernaryKeyMapsTest
     extends TestCase
 {
 
-    public void testCreateTertiaryKeyMap()
+    public void testCreateTernaryKeyMap()
     {
-        TertiaryKeyMap<Float, Object, String, Integer> tertiaryKeyMap = createTertiaryKeyMap();
-        assertNotNull(tertiaryKeyMap);
+        TernaryKeyMap<Float, Object, String, Integer> ternaryKeyMap = createTernaryKeyMap();
+        assertNotNull(ternaryKeyMap);
     }
 
-    public void testCreateTertiaryKeyMapInitialCapacity()
+    public void testCreateTernaryKeyMapInitialCapacity()
     {
-        TertiaryKeyMap<Float, Object, String, Integer> tertiaryKeyMap = createTertiaryKeyMap(32);
-        assertNotNull(tertiaryKeyMap);
+        TernaryKeyMap<Float, Object, String, Integer> ternaryKeyMap = createTernaryKeyMap(32);
+        assertNotNull(ternaryKeyMap);
     }
 
-    public void testCreateTertiaryKeyMapInitialCapacityLoadFactorThreshold()
+    public void testCreateTernaryKeyMapInitialCapacityLoadFactorThreshold()
     {
-        TertiaryKeyMap<Float, Object, String, Integer> tertiaryKeyMap = createTertiaryKeyMap(32, 0.5f, 16);
-        assertNotNull(tertiaryKeyMap);
+        TernaryKeyMap<Float, Object, String, Integer> ternaryKeyMap = createTernaryKeyMap(32, 0.5f, 16);
+        assertNotNull(ternaryKeyMap);
     }
 }

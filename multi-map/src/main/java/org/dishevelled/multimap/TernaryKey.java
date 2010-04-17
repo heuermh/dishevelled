@@ -24,7 +24,7 @@
 package org.dishevelled.multimap;
 
 /**
- * Tertiary key.
+ * Ternary key.
  *
  * @param <K1> first key type
  * @param <K2> second key type
@@ -32,7 +32,7 @@ package org.dishevelled.multimap;
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public final class TertiaryKey<K1, K2, K3>
+public final class TernaryKey<K1, K2, K3>
 {
     /** First key. */
     private final K1 key1;
@@ -48,16 +48,16 @@ public final class TertiaryKey<K1, K2, K3>
 
 
     /**
-     * Create a new tertiary key with the specified keys.
+     * Create a new ternary key with the specified keys.
      *
      * <p>The keys should be immutable.  If they are not then they must not be
-     * modified after adding to this tertiary key.</p>
+     * modified after adding to this ternary key.</p>
      *
      * @param key1 first key
      * @param key2 second key
      * @param key3 third key
      */
-    public TertiaryKey(final K1 key1,
+    public TernaryKey(final K1 key1,
                        final K2 key2,
                        final K3 key3)
     {
@@ -74,9 +74,9 @@ public final class TertiaryKey<K1, K2, K3>
 
 
     /**
-     * Return the first key from this tertiary key.
+     * Return the first key from this ternary key.
      *
-     * @return the first key from this tertiary key
+     * @return the first key from this ternary key
      */
     public K1 getFirstKey()
     {
@@ -84,9 +84,9 @@ public final class TertiaryKey<K1, K2, K3>
     }
 
     /**
-     * Return the second key from this tertiary key.
+     * Return the second key from this ternary key.
      *
-     * @return the second key from this tertiary key
+     * @return the second key from this ternary key
      */
     public K2 getSecondKey()
     {
@@ -94,9 +94,9 @@ public final class TertiaryKey<K1, K2, K3>
     }
 
     /**
-     * Return the third key from this tertiary key.
+     * Return the third key from this ternary key.
      *
-     * @return the third key from this tertiary key
+     * @return the third key from this ternary key
      */
     public K3 getThirdKey()
     {
@@ -110,12 +110,12 @@ public final class TertiaryKey<K1, K2, K3>
         {
             return true;
         }
-        if (other instanceof TertiaryKey)
+        if (other instanceof TernaryKey)
         {
-            TertiaryKey tertiaryKey = (TertiaryKey) other;
-            return (key1 == null ? tertiaryKey.key1 == null : key1.equals(tertiaryKey.key1))
-                    && (key2 == null ? tertiaryKey.key2 == null : key2.equals(tertiaryKey.key2))
-                    && (key3 == null ? tertiaryKey.key3 == null : key3.equals(tertiaryKey.key3));
+            TernaryKey ternaryKey = (TernaryKey) other;
+            return (key1 == null ? ternaryKey.key1 == null : key1.equals(ternaryKey.key1))
+                    && (key2 == null ? ternaryKey.key2 == null : key2.equals(ternaryKey.key2))
+                    && (key3 == null ? ternaryKey.key3 == null : key3.equals(ternaryKey.key3));
         }
         return false;
     }

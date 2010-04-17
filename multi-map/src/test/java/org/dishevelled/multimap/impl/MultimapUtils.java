@@ -25,7 +25,7 @@ package org.dishevelled.multimap.impl;
 
 import org.dishevelled.multimap.BinaryKeyMap;
 import org.dishevelled.multimap.QuaternaryKeyMap;
-import org.dishevelled.multimap.TertiaryKeyMap;
+import org.dishevelled.multimap.TernaryKeyMap;
 
 /**
  * Static utility methods for multimaps.
@@ -59,17 +59,17 @@ public final class MultimapUtils
     }
 
     /**
-     * Create and return a new instance of TertiaryKeyMap.
+     * Create and return a new instance of TernaryKeyMap.
      *
      * @param <K1> first key type
      * @param <K2> second key type
      * @param <K3> third key type
      * @param <V> value type
-     * @return a new instance of TertiaryKeyMap
+     * @return a new instance of TernaryKeyMap
      */
-    public static <K1, K2, K3, V> TertiaryKeyMap<K1, K2, K3, V> createTertiaryKeyMap()
+    public static <K1, K2, K3, V> TernaryKeyMap<K1, K2, K3, V> createTernaryKeyMap()
     {
-        return new HashedTertiaryKeyMap<K1, K2, K3, V>();
+        return new HashedTernaryKeyMap<K1, K2, K3, V>();
     }
 
     /**

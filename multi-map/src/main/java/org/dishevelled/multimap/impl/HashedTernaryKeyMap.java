@@ -25,11 +25,11 @@ package org.dishevelled.multimap.impl;
 
 import java.util.Map;
 
-import org.dishevelled.multimap.TertiaryKey;
-import org.dishevelled.multimap.TertiaryKeyMap;
+import org.dishevelled.multimap.TernaryKey;
+import org.dishevelled.multimap.TernaryKeyMap;
 
 /**
- * Hashed implementation of TertiaryKeyMap.
+ * Hashed implementation of TernaryKeyMap.
  *
  * @param <K1> first key type
  * @param <K2> second key type
@@ -38,28 +38,28 @@ import org.dishevelled.multimap.TertiaryKeyMap;
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public final class HashedTertiaryKeyMap<K1, K2, K3, V>
-    extends AbstractHashedMap<TertiaryKey<K1, K2, K3>, V>
-    implements TertiaryKeyMap<K1, K2, K3, V>
+public final class HashedTernaryKeyMap<K1, K2, K3, V>
+    extends AbstractHashedMap<TernaryKey<K1, K2, K3>, V>
+    implements TernaryKeyMap<K1, K2, K3, V>
 {
 
     /**
-     * Create a new empty HashedTertiaryKeyMap.
+     * Create a new empty HashedTernaryKeyMap.
      */
-    public HashedTertiaryKeyMap()
+    public HashedTernaryKeyMap()
     {
         super(DEFAULT_CAPACITY, DEFAULT_LOAD_FACTOR, DEFAULT_THRESHOLD);
     }
 
     /**
-     * Create a new empty HashedTertiaryKeyMap with the specified
+     * Create a new empty HashedTernaryKeyMap with the specified
      * initial capacity, load factor, and threshold.
      *
      * @param initialCapacity initial capacity
      * @param loadFactor load factor
      * @param threshold threshold
      */
-    public HashedTertiaryKeyMap(final int initialCapacity,
+    public HashedTernaryKeyMap(final int initialCapacity,
                                 final float loadFactor,
                                 final int threshold)
     {
@@ -67,12 +67,12 @@ public final class HashedTertiaryKeyMap<K1, K2, K3, V>
     }
 
     /**
-     * Create a new HashedTertiaryKeyMap with the same mappings as
+     * Create a new HashedTernaryKeyMap with the same mappings as
      * the specified map (copy constructor).
      *
      * @param map map, must not be null
      */
-    public HashedTertiaryKeyMap(final Map<? extends TertiaryKey<K1, K2, K3>, ? extends V> map)
+    public HashedTernaryKeyMap(final Map<? extends TernaryKey<K1, K2, K3>, ? extends V> map)
     {
         super(map);
     }
@@ -117,12 +117,12 @@ public final class HashedTertiaryKeyMap<K1, K2, K3, V>
      * @param key3 third key
      * @return true if the keys in the specified entry are equal to the specified keys
      */
-    private boolean isEqualKey(final HashEntry<TertiaryKey<K1, K2, K3>, V> entry,
+    private boolean isEqualKey(final HashEntry<TernaryKey<K1, K2, K3>, V> entry,
                                final K1 key1,
                                final K2 key2,
                                final K3 key3)
     {
-        TertiaryKey<K1, K2, K3> key = entry.getKey();
+        TernaryKey<K1, K2, K3> key = entry.getKey();
         return (key1 == null ? key.getFirstKey() == null : key1.equals(key.getFirstKey()))
             && (key2 == null ? key.getSecondKey() == null : key2.equals(key.getSecondKey()))
             && (key3 == null ? key.getThirdKey() == null : key3.equals(key.getThirdKey()));
@@ -132,7 +132,7 @@ public final class HashedTertiaryKeyMap<K1, K2, K3, V>
     public boolean containsKey(final K1 key1, final K2 key2, final K3 key3)
     {
         int hashCode = hash(key1, key2, key3);
-        HashEntry<TertiaryKey<K1, K2, K3>, V> entry = data[hashIndex(hashCode, data.length)];
+        HashEntry<TernaryKey<K1, K2, K3>, V> entry = data[hashIndex(hashCode, data.length)];
         while (entry != null)
         {
             if (entry.hashCode == hashCode && isEqualKey(entry, key1, key2, key3))
@@ -148,7 +148,7 @@ public final class HashedTertiaryKeyMap<K1, K2, K3, V>
     public V get(final K1 key1, final K2 key2, final K3 key3)
     {
         int hashCode = hash(key1, key2, key3);
-        HashEntry<TertiaryKey<K1, K2, K3>, V> entry = data[hashIndex(hashCode, data.length)];
+        HashEntry<TernaryKey<K1, K2, K3>, V> entry = data[hashIndex(hashCode, data.length)];
         while (entry != null)
         {
             if (entry.hashCode == hashCode && isEqualKey(entry, key1, key2, key3))
@@ -165,7 +165,7 @@ public final class HashedTertiaryKeyMap<K1, K2, K3, V>
     {
         int hashCode = hash(key1, key2, key3);
         int index = hashIndex(hashCode, data.length);
-        HashEntry<TertiaryKey<K1, K2, K3>, V> entry = data[index];
+        HashEntry<TernaryKey<K1, K2, K3>, V> entry = data[index];
         while (entry != null)
         {
             if (entry.hashCode == hashCode && isEqualKey(entry, key1, key2, key3))
@@ -176,12 +176,12 @@ public final class HashedTertiaryKeyMap<K1, K2, K3, V>
             }
             entry = entry.next;
         }
-        addMapping(index, hashCode, new TertiaryKey<K1, K2, K3>(key1, key2, key3), value);
+        addMapping(index, hashCode, new TernaryKey<K1, K2, K3>(key1, key2, key3), value);
         return null;
     }
 
     /** {@inheritDoc} */
-    public V put(final TertiaryKey<K1, K2, K3> key, final V value)
+    public V put(final TernaryKey<K1, K2, K3> key, final V value)
     {
         if (key == null)
         {
@@ -195,8 +195,8 @@ public final class HashedTertiaryKeyMap<K1, K2, K3, V>
     {
         int hashCode = hash(key1, key2, key3);
         int index = hashIndex(hashCode, data.length);
-        HashEntry<TertiaryKey<K1, K2, K3>, V> entry = data[index];
-        HashEntry<TertiaryKey<K1, K2, K3>, V> previous = null;
+        HashEntry<TernaryKey<K1, K2, K3>, V> entry = data[index];
+        HashEntry<TernaryKey<K1, K2, K3>, V> previous = null;
         while (entry != null)
         {
             if (entry.hashCode == hashCode && isEqualKey(entry, key1, key2, key3))
