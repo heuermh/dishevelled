@@ -285,8 +285,8 @@ public final class BinaryVennList3<E>
         union.setModel(new EventListModel<E>(unionAdapter));
 
         getModel().first().addSetChangeListener(updateListModels);
-        getModel().first().addSetChangeListener(updateSelection);
         getModel().second().addSetChangeListener(updateListModels);
+        getModel().first().addSetChangeListener(updateSelection);
         getModel().second().addSetChangeListener(updateSelection);
         getModel().selection().addSetChangeListener(updateSelection);
     }
@@ -318,8 +318,8 @@ public final class BinaryVennList3<E>
         ((EventListModel<E>) intersection.getModel()).dispose();
         ((EventListModel<E>) union.getModel()).dispose();
         oldModel.first().removeSetChangeListener(updateListModels);
-        oldModel.first().removeSetChangeListener(updateSelection);
         oldModel.second().removeSetChangeListener(updateListModels);
+        oldModel.first().removeSetChangeListener(updateSelection);
         oldModel.second().removeSetChangeListener(updateSelection);
         oldModel.selection().removeSetChangeListener(updateSelection);
     }

@@ -52,7 +52,7 @@ public final class QuaternaryVennModelImpl3Test
     public void testConstructor()
     {
         new QuaternaryVennModelImpl3();
-        new QuaternaryVennModelImpl3(FIRST, SECOND, THIRD, FOURTH);
+        new QuaternaryVennModelImpl3<String>(FIRST, SECOND, THIRD, FOURTH);
 
         try
         {
