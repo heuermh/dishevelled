@@ -359,6 +359,11 @@ public final class QuaternaryVennList3<E>
         getModel().second().addSetChangeListener(updateListModels);
         getModel().third().addSetChangeListener(updateListModels);
         getModel().fourth().addSetChangeListener(updateListModels);
+        getModel().first().addSetChangeListener(updateSelection);
+        getModel().second().addSetChangeListener(updateSelection);
+        getModel().third().addSetChangeListener(updateSelection);
+        getModel().fourth().addSetChangeListener(updateSelection);
+        getModel().selection().addSetChangeListener(updateSelection);
     }
 
     /**
@@ -419,6 +424,10 @@ public final class QuaternaryVennList3<E>
         oldModel.second().removeSetChangeListener(updateListModels);
         oldModel.third().removeSetChangeListener(updateListModels);
         oldModel.fourth().removeSetChangeListener(updateListModels);
+        oldModel.first().removeSetChangeListener(updateSelection);
+        oldModel.second().removeSetChangeListener(updateSelection);
+        oldModel.third().removeSetChangeListener(updateSelection);
+        oldModel.selection().removeSetChangeListener(updateSelection);
     }
 
      /**

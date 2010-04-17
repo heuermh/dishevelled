@@ -256,6 +256,10 @@ public final class TernaryVennList3<E>
         getModel().first().addSetChangeListener(updateListModels);
         getModel().second().addSetChangeListener(updateListModels);
         getModel().third().addSetChangeListener(updateListModels);
+        getModel().first().addSetChangeListener(updateSelection);
+        getModel().second().addSetChangeListener(updateSelection);
+        getModel().third().addSetChangeListener(updateSelection);
+        getModel().selection().addSetChangeListener(updateSelection);
     }
 
     /**
@@ -297,6 +301,10 @@ public final class TernaryVennList3<E>
         oldModel.first().removeSetChangeListener(updateListModels);
         oldModel.second().removeSetChangeListener(updateListModels);
         oldModel.third().removeSetChangeListener(updateListModels);
+        oldModel.first().removeSetChangeListener(updateSelection);
+        oldModel.second().removeSetChangeListener(updateSelection);
+        oldModel.third().removeSetChangeListener(updateSelection);
+        oldModel.selection().removeSetChangeListener(updateSelection);
     }
 
      /**

@@ -51,7 +51,7 @@ public final class TernaryVennModelImpl3Test
     public void testConstructor()
     {
         new TernaryVennModelImpl3();
-        new TernaryVennModelImpl3(FIRST, SECOND, THIRD);
+        new TernaryVennModelImpl3<String>(FIRST, SECOND, THIRD);
 
         try
         {
