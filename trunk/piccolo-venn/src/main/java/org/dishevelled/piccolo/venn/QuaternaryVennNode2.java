@@ -25,7 +25,6 @@ package org.dishevelled.piccolo.venn;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
-import java.awt.Shape;
 
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Area;
@@ -34,9 +33,6 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
 import java.util.Set;
-
-import ca.odell.glazedlists.event.ListEvent;
-import ca.odell.glazedlists.event.ListEventListener;
 
 import edu.umd.cs.piccolo.PNode;
 
