@@ -26,33 +26,33 @@ package org.dishevelled.multimap;
 import junit.framework.TestCase;
 
 /**
- * Abstract unit test for implementations of TertiaryKeyMap.
+ * Abstract unit test for implementations of TernaryKeyMap.
  *
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public abstract class AbstractTertiaryKeyMapTest
+public abstract class AbstractTernaryKeyMapTest
     extends TestCase
 {
 
     /**
-     * Create and return a new instance of an implementation of TertiaryKeyMap to test.
+     * Create and return a new instance of an implementation of TernaryKeyMap to test.
      *
      * @param <K1> first key type
      * @param <K2> second key type
      * @param <K3> third key type
      * @param <V> valute type
-     * @return a new instance of an implementation of TertiaryKeyMap to test
+     * @return a new instance of an implementation of TernaryKeyMap to test
      */
-    protected abstract <K1, K2, K3, V> TertiaryKeyMap<K1, K2, K3, V> createTertiaryKeyMap();
+    protected abstract <K1, K2, K3, V> TernaryKeyMap<K1, K2, K3, V> createTernaryKeyMap();
 
 
-    public void testCreateTertiaryKeyMap()
+    public void testCreateTernaryKeyMap()
     {
-        TertiaryKeyMap<Float, Integer, String, Double> map0 = createTertiaryKeyMap();
+        TernaryKeyMap<Float, Integer, String, Double> map0 = createTernaryKeyMap();
         assertNotNull(map0);
 
-        TertiaryKeyMap<Float, Integer, String, Double> map1 = createTertiaryKeyMap();
+        TernaryKeyMap<Float, Integer, String, Double> map1 = createTernaryKeyMap();
         assertNotNull(map1);
 
         assertTrue(map0 != map1);

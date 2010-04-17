@@ -23,59 +23,59 @@
 */
 package org.dishevelled.multimap.impl;
 
-import org.dishevelled.multimap.TertiaryKeyMap;
+import org.dishevelled.multimap.TernaryKeyMap;
 
 /**
- * Static utility methods for TertiaryKeyMaps.
+ * Static utility methods for TernaryKeyMaps.
  *
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public final class TertiaryKeyMaps
+public final class TernaryKeyMaps
 {
 
     /**
      * Private no-arg constructor.
      */
-    private TertiaryKeyMaps()
+    private TernaryKeyMaps()
     {
         // empty
     }
 
 
     /**
-     * Create and return a new instance of TertiaryKeyMap.
+     * Create and return a new instance of TernaryKeyMap.
      *
      * @param <K1> first key type
      * @param <K2> second key type
      * @param <K3> third key type
      * @param <V> value type
-     * @return a new instance of TertiaryKeyMap
+     * @return a new instance of TernaryKeyMap
      */
-    public static <K1, K2, K3, V> TertiaryKeyMap<K1, K2, K3, V> createTertiaryKeyMap()
+    public static <K1, K2, K3, V> TernaryKeyMap<K1, K2, K3, V> createTernaryKeyMap()
     {
-        return new HashedTertiaryKeyMap<K1, K2, K3, V>();
+        return new HashedTernaryKeyMap<K1, K2, K3, V>();
     }
 
     /**
-     * Create and return a new instance of TertiaryKeyMap with the specified initial capacity.
+     * Create and return a new instance of TernaryKeyMap with the specified initial capacity.
      *
      * @param <K1> first key type
      * @param <K2> second key type
      * @param <K3> third key type
      * @param <V> value type
      * @param initialCapacity initial capacity
-     * @return a new instance of TertiaryKeyMap with the specified initial capacity
+     * @return a new instance of TernaryKeyMap with the specified initial capacity
      */
-    public static <K1, K2, K3, V> TertiaryKeyMap<K1, K2, K3, V> createTertiaryKeyMap(final int initialCapacity)
+    public static <K1, K2, K3, V> TernaryKeyMap<K1, K2, K3, V> createTernaryKeyMap(final int initialCapacity)
     {
-        return new HashedTertiaryKeyMap<K1, K2, K3, V>(initialCapacity,
-                                                 HashedTertiaryKeyMap.DEFAULT_LOAD_FACTOR,
-                                                 HashedTertiaryKeyMap.DEFAULT_THRESHOLD);
+        return new HashedTernaryKeyMap<K1, K2, K3, V>(initialCapacity,
+                                                 HashedTernaryKeyMap.DEFAULT_LOAD_FACTOR,
+                                                 HashedTernaryKeyMap.DEFAULT_THRESHOLD);
     }
 
     /**
-     * Create and return a new instance of TertiaryKeyMap with the specified initial capacity,
+     * Create and return a new instance of TernaryKeyMap with the specified initial capacity,
      * load factor, and threshold.
      *
      * @param <K1> first key type
@@ -85,13 +85,13 @@ public final class TertiaryKeyMaps
      * @param initialCapacity initial capacity
      * @param loadFactor load factor
      * @param threshold threshold
-     * @return a new instance of TertiaryKeyMap with the specified initial capacity,
+     * @return a new instance of TernaryKeyMap with the specified initial capacity,
      *    load factor, and threshold
      */
-    public static <K1, K2, K3, V> TertiaryKeyMap<K1, K2, K3, V> createTertiaryKeyMap(final int initialCapacity,
+    public static <K1, K2, K3, V> TernaryKeyMap<K1, K2, K3, V> createTernaryKeyMap(final int initialCapacity,
                                                                          final float loadFactor,
                                                                          final int threshold)
     {
-        return new HashedTertiaryKeyMap<K1, K2, K3, V>(initialCapacity, loadFactor, threshold);
+        return new HashedTernaryKeyMap<K1, K2, K3, V>(initialCapacity, loadFactor, threshold);
     }
 }
