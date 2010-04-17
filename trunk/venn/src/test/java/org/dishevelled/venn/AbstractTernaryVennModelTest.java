@@ -33,12 +33,12 @@ import ca.odell.glazedlists.EventList;
 import ca.odell.glazedlists.GlazedLists;
 
 /**
- * Abstract unit test for implementations of TertiaryVennModel.
+ * Abstract unit test for implementations of TernaryVennModel.
  *
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public abstract class AbstractTertiaryVennModelTest
+public abstract class AbstractTernaryVennModelTest
     extends TestCase
 {
     /** First set. */
@@ -51,29 +51,29 @@ public abstract class AbstractTertiaryVennModelTest
     protected static final Set<String> THIRD = new HashSet<String>(Arrays.asList(new String[] { "bar", "baz", "qux" }));
 
     /**
-     * Create and return a new instance of an implementation of TertiaryVennModel
+     * Create and return a new instance of an implementation of TernaryVennModel
      * with the specified sets to test.
      *
      * @param first first set, must not be null
      * @param second second set, must not be null
      * @param third third set, must not be null
-     * @return a new instance of an implementation of TertiaryVennModel with the
+     * @return a new instance of an implementation of TernaryVennModel with the
      *    specified sets to test
      */
-    protected abstract <T> TertiaryVennModel<T> createTertiaryVennModel(Set<? extends T> first,
+    protected abstract <T> TernaryVennModel<T> createTertiaryVennModel(Set<? extends T> first,
             Set<? extends T> second,
             Set<? extends T> third);
 
     public void testCreateTertiaryVennModel()
     {
-        TertiaryVennModel<String> tertiaryVennModel = createTertiaryVennModel(FIRST, SECOND, THIRD);
-        assertNotNull(tertiaryVennModel);
+        TernaryVennModel<String> ternaryVennModel = createTertiaryVennModel(FIRST, SECOND, THIRD);
+        assertNotNull(ternaryVennModel);
     }
 
     public void testFirst()
     {
-        TertiaryVennModel<String> tertiaryVennModel = createTertiaryVennModel(FIRST, SECOND, THIRD);
-        EventList<String> first = tertiaryVennModel.first();
+        TernaryVennModel<String> ternaryVennModel = createTertiaryVennModel(FIRST, SECOND, THIRD);
+        EventList<String> first = ternaryVennModel.first();
         assertNotNull(first);
         assertEquals(2, first.size());
         assertTrue(first.contains("foo"));
@@ -90,8 +90,8 @@ public abstract class AbstractTertiaryVennModelTest
 
     public void testSecond()
     {
-        TertiaryVennModel<String> tertiaryVennModel = createTertiaryVennModel(FIRST, SECOND, THIRD);
-        EventList<String> second = tertiaryVennModel.second();
+        TernaryVennModel<String> ternaryVennModel = createTertiaryVennModel(FIRST, SECOND, THIRD);
+        EventList<String> second = ternaryVennModel.second();
         assertNotNull(second);
         assertEquals(2, second.size());
         assertTrue(second.contains("bar"));
@@ -108,8 +108,8 @@ public abstract class AbstractTertiaryVennModelTest
 
     public void testThird()
     {
-        TertiaryVennModel<String> tertiaryVennModel = createTertiaryVennModel(FIRST, SECOND, THIRD);
-        EventList<String> third = tertiaryVennModel.third();
+        TernaryVennModel<String> ternaryVennModel = createTertiaryVennModel(FIRST, SECOND, THIRD);
+        EventList<String> third = ternaryVennModel.third();
         assertNotNull(third);
         assertEquals(3, third.size());
         assertTrue(third.contains("bar"));
@@ -127,21 +127,21 @@ public abstract class AbstractTertiaryVennModelTest
 
     public void testIntersection()
     {
-        TertiaryVennModel<String> tertiaryVennModel = createTertiaryVennModel(FIRST, SECOND, THIRD);
-        EventList<String> intersection = tertiaryVennModel.intersection();
+        TernaryVennModel<String> ternaryVennModel = createTertiaryVennModel(FIRST, SECOND, THIRD);
+        EventList<String> intersection = ternaryVennModel.intersection();
         assertNotNull(intersection);
         assertEquals(1, intersection.size());
         assertTrue(intersection.contains("bar"));
 
-        tertiaryVennModel.first().add("garply");
-        tertiaryVennModel.second().add("garply");
-        tertiaryVennModel.third().add("garply");
+        ternaryVennModel.first().add("garply");
+        ternaryVennModel.second().add("garply");
+        ternaryVennModel.third().add("garply");
         assertEquals(2, intersection.size());
         assertTrue(intersection.contains("garply"));
 
-        tertiaryVennModel.first().remove("garply");
-        tertiaryVennModel.second().remove("garply");
-        tertiaryVennModel.third().remove("garply");
+        ternaryVennModel.first().remove("garply");
+        ternaryVennModel.second().remove("garply");
+        ternaryVennModel.third().remove("garply");
         assertEquals(1, intersection.size());
         assertFalse(intersection.contains("garply"));
     }
@@ -153,44 +153,44 @@ public abstract class AbstractTertiaryVennModelTest
 
     public void testIntersect()
     {
-        TertiaryVennModel<String> tertiaryVennModel = createTertiaryVennModel(FIRST, SECOND, THIRD);
+        TernaryVennModel<String> ternaryVennModel = createTertiaryVennModel(FIRST, SECOND, THIRD);
 
-        EventList<String> intersectFirstSecond = tertiaryVennModel.intersect(tertiaryVennModel.first(),
-                tertiaryVennModel.second());
+        EventList<String> intersectFirstSecond = ternaryVennModel.intersect(ternaryVennModel.first(),
+                ternaryVennModel.second());
         assertNotNull(intersectFirstSecond);
         assertEquals(1, intersectFirstSecond.size());
         assertTrue(intersectFirstSecond.contains("bar"));
 
-        tertiaryVennModel.first().add("garply");
-        tertiaryVennModel.second().add("garply");
+        ternaryVennModel.first().add("garply");
+        ternaryVennModel.second().add("garply");
         assertEquals(2, intersectFirstSecond.size());
         assertTrue(intersectFirstSecond.contains("garply"));
 
-        tertiaryVennModel.first().remove("garply");
-        tertiaryVennModel.second().remove("garply");
+        ternaryVennModel.first().remove("garply");
+        ternaryVennModel.second().remove("garply");
         assertEquals(1, intersectFirstSecond.size());
         assertFalse(intersectFirstSecond.contains("garply"));
 
-        EventList<String> intersectSecondThird = tertiaryVennModel.intersect(tertiaryVennModel.second(),
-                tertiaryVennModel.third());
+        EventList<String> intersectSecondThird = ternaryVennModel.intersect(ternaryVennModel.second(),
+                ternaryVennModel.third());
         assertNotNull(intersectSecondThird);
         assertEquals(2, intersectSecondThird.size());
         assertTrue(intersectSecondThird.contains("bar"));
         assertTrue(intersectSecondThird.contains("baz"));
 
-        tertiaryVennModel.second().add("garply");
-        tertiaryVennModel.third().add("garply");
+        ternaryVennModel.second().add("garply");
+        ternaryVennModel.third().add("garply");
         assertEquals(3, intersectSecondThird.size());
         assertTrue(intersectSecondThird.contains("garply"));
 
-        tertiaryVennModel.second().remove("garply");
-        tertiaryVennModel.third().remove("garply");
+        ternaryVennModel.second().remove("garply");
+        ternaryVennModel.third().remove("garply");
         assertEquals(2, intersectSecondThird.size());
         assertFalse(intersectSecondThird.contains("garply"));
 
         try
         {
-            tertiaryVennModel.intersect(null, tertiaryVennModel.second());
+            ternaryVennModel.intersect(null, ternaryVennModel.second());
             fail("intersect(null,) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
@@ -199,7 +199,7 @@ public abstract class AbstractTertiaryVennModelTest
         }
         try
         {
-            tertiaryVennModel.intersect(tertiaryVennModel.first(), null);
+            ternaryVennModel.intersect(ternaryVennModel.first(), null);
             fail("intersect(,null) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
@@ -210,7 +210,7 @@ public abstract class AbstractTertiaryVennModelTest
         EventList<String> invalid = GlazedLists.eventListOf("foo");
         try
         {
-            tertiaryVennModel.intersect(invalid, tertiaryVennModel.second());
+            ternaryVennModel.intersect(invalid, ternaryVennModel.second());
             fail("intersect(invalid,) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
@@ -219,7 +219,7 @@ public abstract class AbstractTertiaryVennModelTest
         }
         try
         {
-            tertiaryVennModel.intersect(tertiaryVennModel.first(), invalid);
+            ternaryVennModel.intersect(ternaryVennModel.first(), invalid);
             fail("intersect(,invalid) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
@@ -235,26 +235,26 @@ public abstract class AbstractTertiaryVennModelTest
 
     public void testIntersectIsCommutative()
     {
-        TertiaryVennModel<String> tertiaryVennModel = createTertiaryVennModel(FIRST, SECOND, THIRD);
+        TernaryVennModel<String> ternaryVennModel = createTertiaryVennModel(FIRST, SECOND, THIRD);
 
-        EventList<String> intersectFirstSecond = tertiaryVennModel.intersect(tertiaryVennModel.first(),
-                tertiaryVennModel.second());
-        EventList<String> intersectSecondFirst = tertiaryVennModel.intersect(tertiaryVennModel.second(),
-                tertiaryVennModel.first());
+        EventList<String> intersectFirstSecond = ternaryVennModel.intersect(ternaryVennModel.first(),
+                ternaryVennModel.second());
+        EventList<String> intersectSecondFirst = ternaryVennModel.intersect(ternaryVennModel.second(),
+                ternaryVennModel.first());
         assertEquals(intersectFirstSecond, intersectSecondFirst);
         // todo:  assertSame?
 
-        EventList<String> intersectSecondThird = tertiaryVennModel.intersect(tertiaryVennModel.second(),
-                tertiaryVennModel.third());
-        EventList<String> intersectThirdSecond = tertiaryVennModel.intersect(tertiaryVennModel.third(),
-                tertiaryVennModel.second());
+        EventList<String> intersectSecondThird = ternaryVennModel.intersect(ternaryVennModel.second(),
+                ternaryVennModel.third());
+        EventList<String> intersectThirdSecond = ternaryVennModel.intersect(ternaryVennModel.third(),
+                ternaryVennModel.second());
         assertEquals(intersectSecondThird, intersectThirdSecond);
     }
 
     public void testUnion()
     {
-        TertiaryVennModel<String> tertiaryVennModel = createTertiaryVennModel(FIRST, SECOND, THIRD);
-        EventList<String> union = tertiaryVennModel.union();
+        TernaryVennModel<String> ternaryVennModel = createTertiaryVennModel(FIRST, SECOND, THIRD);
+        EventList<String> union = ternaryVennModel.union();
         assertNotNull(union);
         assertEquals(7, union.size());
         assertTrue(union.contains("foo"));
@@ -262,27 +262,27 @@ public abstract class AbstractTertiaryVennModelTest
         assertTrue(union.contains("baz"));
         assertTrue(union.contains("qux"));
 
-        tertiaryVennModel.first().add("garply");
+        ternaryVennModel.first().add("garply");
         assertEquals(8, union.size());
         assertTrue(union.contains("garply"));
 
-        tertiaryVennModel.second().add("garply");
+        ternaryVennModel.second().add("garply");
         assertEquals(9, union.size());
         assertTrue(union.contains("garply"));
 
-        tertiaryVennModel.third().add("garply");
+        ternaryVennModel.third().add("garply");
         assertEquals(10, union.size());
         assertTrue(union.contains("garply"));
 
-        tertiaryVennModel.first().remove("garply");
-        tertiaryVennModel.second().remove("garply");
-        tertiaryVennModel.third().remove("garply");
+        ternaryVennModel.first().remove("garply");
+        ternaryVennModel.second().remove("garply");
+        ternaryVennModel.third().remove("garply");
         assertEquals(7, union.size());
         assertFalse(union.contains("garply"));
 
         try
         {
-            tertiaryVennModel.union(null, tertiaryVennModel.second());
+            ternaryVennModel.union(null, ternaryVennModel.second());
             fail("union(null,) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
@@ -291,7 +291,7 @@ public abstract class AbstractTertiaryVennModelTest
         }
         try
         {
-            tertiaryVennModel.union(tertiaryVennModel.first(), null);
+            ternaryVennModel.union(ternaryVennModel.first(), null);
             fail("union(,null) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
@@ -302,7 +302,7 @@ public abstract class AbstractTertiaryVennModelTest
         EventList<String> invalid = GlazedLists.eventListOf("foo");
         try
         {
-            tertiaryVennModel.union(invalid, tertiaryVennModel.second());
+            ternaryVennModel.union(invalid, ternaryVennModel.second());
             fail("union(invalid,) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
@@ -311,7 +311,7 @@ public abstract class AbstractTertiaryVennModelTest
         }
         try
         {
-            tertiaryVennModel.union(tertiaryVennModel.first(), invalid);
+            ternaryVennModel.union(ternaryVennModel.first(), invalid);
             fail("union(,invalid) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
@@ -327,47 +327,47 @@ public abstract class AbstractTertiaryVennModelTest
 
     public void testUnionAB()
     {
-        TertiaryVennModel<String> tertiaryVennModel = createTertiaryVennModel(FIRST, SECOND, THIRD);
+        TernaryVennModel<String> ternaryVennModel = createTertiaryVennModel(FIRST, SECOND, THIRD);
 
-        EventList<String> unionFirstSecond = tertiaryVennModel.union(tertiaryVennModel.first(),
-                tertiaryVennModel.second());
+        EventList<String> unionFirstSecond = ternaryVennModel.union(ternaryVennModel.first(),
+                ternaryVennModel.second());
         assertNotNull(unionFirstSecond);
         assertEquals(4, unionFirstSecond.size());
         assertTrue(unionFirstSecond.contains("foo"));
         assertTrue(unionFirstSecond.contains("bar"));
         assertTrue(unionFirstSecond.contains("baz"));
 
-        tertiaryVennModel.first().add("garply");
+        ternaryVennModel.first().add("garply");
         assertEquals(5, unionFirstSecond.size());
         assertTrue(unionFirstSecond.contains("garply"));
 
-        tertiaryVennModel.second().add("garply");
+        ternaryVennModel.second().add("garply");
         assertEquals(6, unionFirstSecond.size());
         assertTrue(unionFirstSecond.contains("garply"));
 
-        tertiaryVennModel.first().remove("garply");
-        tertiaryVennModel.second().remove("garply");
+        ternaryVennModel.first().remove("garply");
+        ternaryVennModel.second().remove("garply");
         assertEquals(4, unionFirstSecond.size());
         assertFalse(unionFirstSecond.contains("garply"));
 
-        EventList<String> unionSecondThird = tertiaryVennModel.union(tertiaryVennModel.second(),
-                tertiaryVennModel.third());
+        EventList<String> unionSecondThird = ternaryVennModel.union(ternaryVennModel.second(),
+                ternaryVennModel.third());
         assertNotNull(unionSecondThird);
         assertEquals(5, unionSecondThird.size());
         assertTrue(unionSecondThird.contains("bar"));
         assertTrue(unionSecondThird.contains("baz"));
         assertTrue(unionSecondThird.contains("qux"));
 
-        tertiaryVennModel.second().add("garply");
+        ternaryVennModel.second().add("garply");
         assertEquals(6, unionSecondThird.size());
         assertTrue(unionSecondThird.contains("garply"));
 
-        tertiaryVennModel.third().add("garply");
+        ternaryVennModel.third().add("garply");
         assertEquals(7, unionSecondThird.size());
         assertTrue(unionSecondThird.contains("garply"));
 
-        tertiaryVennModel.second().remove("garply");
-        tertiaryVennModel.third().remove("garply");
+        ternaryVennModel.second().remove("garply");
+        ternaryVennModel.third().remove("garply");
         assertEquals(5, unionSecondThird.size());
         assertFalse(unionSecondThird.contains("garply"));
     }
@@ -379,19 +379,19 @@ public abstract class AbstractTertiaryVennModelTest
 
     public void testUnionABIsCommutative()
     {
-        TertiaryVennModel<String> tertiaryVennModel = createTertiaryVennModel(FIRST, SECOND, THIRD);
+        TernaryVennModel<String> ternaryVennModel = createTertiaryVennModel(FIRST, SECOND, THIRD);
 
-        EventList<String> unionFirstSecond = tertiaryVennModel.union(tertiaryVennModel.first(),
-                tertiaryVennModel.second());
-        EventList<String> unionSecondFirst = tertiaryVennModel.union(tertiaryVennModel.second(),
-                tertiaryVennModel.first());
+        EventList<String> unionFirstSecond = ternaryVennModel.union(ternaryVennModel.first(),
+                ternaryVennModel.second());
+        EventList<String> unionSecondFirst = ternaryVennModel.union(ternaryVennModel.second(),
+                ternaryVennModel.first());
         assertEquals(unionFirstSecond, unionSecondFirst);
         // todo:  assertSame?
 
-        EventList<String> unionSecondThird = tertiaryVennModel.union(tertiaryVennModel.second(),
-                tertiaryVennModel.third());
-        EventList<String> unionThirdSecond = tertiaryVennModel.union(tertiaryVennModel.third(),
-                tertiaryVennModel.second());
+        EventList<String> unionSecondThird = ternaryVennModel.union(ternaryVennModel.second(),
+                ternaryVennModel.third());
+        EventList<String> unionThirdSecond = ternaryVennModel.union(ternaryVennModel.third(),
+                ternaryVennModel.second());
         assertEquals(unionSecondThird, unionThirdSecond);
     }
 }

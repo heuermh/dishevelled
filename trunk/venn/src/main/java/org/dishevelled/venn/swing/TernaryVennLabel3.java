@@ -28,7 +28,7 @@ import java.util.Set;
 
 import javax.swing.JLabel;
 
-import org.dishevelled.venn.TertiaryVennModel3;
+import org.dishevelled.venn.TernaryVennModel3;
 
 /**
  * Tertiary venn diagram label 3.
@@ -37,8 +37,8 @@ import org.dishevelled.venn.TertiaryVennModel3;
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public final class TertiaryVennLabel3<E>
-    extends AbstractTertiaryVennDiagram<E>
+public final class TernaryVennLabel3<E>
+    extends AbstractTernaryVennDiagram<E>
 {
     /** Number of elements to display. */
     private int elementsToDisplay = DEFAULT_ELEMENTS_TO_DISPLAY;
@@ -81,9 +81,9 @@ public final class TertiaryVennLabel3<E>
 
 
     /**
-     * Create a new empty tertiary venn label.
+     * Create a new empty ternary venn label.
      */
-    public TertiaryVennLabel3()
+    public TernaryVennLabel3()
     {
         super();
         updateContents();
@@ -91,7 +91,7 @@ public final class TertiaryVennLabel3<E>
     }
 
     /**
-     * Create a new tertiary venn label with the specified sets.
+     * Create a new ternary venn label with the specified sets.
      *
      * @param firstLabelText label text for the first set
      * @param first first set, must not be null
@@ -100,7 +100,7 @@ public final class TertiaryVennLabel3<E>
      * @param thirdLabelText label text for the third set
      * @param third third set, must not be null
      */
-    public TertiaryVennLabel3(final String firstLabelText, final Set<? extends E> first,
+    public TernaryVennLabel3(final String firstLabelText, final Set<? extends E> first,
                               final String secondLabelText, final Set<? extends E> second,
                               final String thirdLabelText, final Set<? extends E> third)
     {
@@ -110,11 +110,11 @@ public final class TertiaryVennLabel3<E>
     }
 
     /**
-     * Create a new tertiary venn label with the specified model.
+     * Create a new ternary venn label with the specified model.
      *
-     * @param model model for this tertiary venn label, must not be null
+     * @param model model for this ternary venn label, must not be null
      */
-    public TertiaryVennLabel3(final TertiaryVennModel3<E> model)
+    public TernaryVennLabel3(final TernaryVennModel3<E> model)
     {
         super(model);
         updateContents();
@@ -217,7 +217,7 @@ public final class TertiaryVennLabel3<E>
     /**
      * Return the contents of the first set.  The text for the returned JLabel
      * should not be changed, as the current text is synchronized to the
-     * tertiary venn model backing this venn diagram.
+     * ternary venn model backing this venn diagram.
      *
      * @return the contents of the first set
      */
@@ -229,7 +229,7 @@ public final class TertiaryVennLabel3<E>
     /**
      * Return the contents of the second set.  The text for the returned JLabel
      * should not be changed, as the current text is synchronized to the
-     * tertiary venn model backing this venn diagram.
+     * ternary venn model backing this venn diagram.
      *
      * @return the contents of the second set
      */
@@ -241,7 +241,7 @@ public final class TertiaryVennLabel3<E>
     /**
      * Return the contents of the third set.  The text for the returned JLabel
      * should not be changed, as the current text is synchronized to the
-     * tertiary venn model backing this venn diagram.
+     * ternary venn model backing this venn diagram.
      *
      * @return the contents of the third set
      */
@@ -253,7 +253,7 @@ public final class TertiaryVennLabel3<E>
     /**
      * Return the contents of the first only view.  The text for the returned JLabel
      * should not be changed, as the current text is synchronized to the
-     * tertiary venn model backing this venn diagram.
+     * ternary venn model backing this venn diagram.
      *
      * @return the contents of the first only view
      */
@@ -265,7 +265,7 @@ public final class TertiaryVennLabel3<E>
     /**
      * Return the contents of the second only view.  The text for the returned JLabel
      * should not be changed, as the current text is synchronized to the
-     * tertiary venn model backing this venn diagram.
+     * ternary venn model backing this venn diagram.
      *
      * @return the contents of the second only view
      */
@@ -277,7 +277,7 @@ public final class TertiaryVennLabel3<E>
     /**
      * Return the contents of the third only view.  The text for the returned JLabel
      * should not be changed, as the current text is synchronized to the
-     * tertiary venn model backing this venn diagram.
+     * ternary venn model backing this venn diagram.
      *
      * @return the contents of the third only view
      */
@@ -289,7 +289,7 @@ public final class TertiaryVennLabel3<E>
     /**
      * Return the contents of the first second view.  The text for the returned JLabel
      * should not be changed, as the current text is synchronized to the
-     * tertiary venn model backing this venn diagram.
+     * ternary venn model backing this venn diagram.
      *
      * @return the contents of the first second view
      */
@@ -301,7 +301,7 @@ public final class TertiaryVennLabel3<E>
     /**
      * Return the contents of the second third view.  The text for the returned JLabel
      * should not be changed, as the current text is synchronized to the
-     * tertiary venn model backing this venn diagram.
+     * ternary venn model backing this venn diagram.
      *
      * @return the contents of the second third view
      */
@@ -313,7 +313,7 @@ public final class TertiaryVennLabel3<E>
     /**
      * Return the contents of the first third view.  The text for the returned JLabel
      * should not be changed, as the current text is synchronized to the
-     * tertiary venn model backing this venn diagram.
+     * ternary venn model backing this venn diagram.
      *
      * @return the contents of the first third view
      */
@@ -325,7 +325,7 @@ public final class TertiaryVennLabel3<E>
     /**
      * Return the contents of the intersection view.  The text for the returned JLabel
      * should not be changed, as the current text is synchronized to the
-     * tertiary venn model backing this venn diagram.
+     * ternary venn model backing this venn diagram.
      *
      * @return the contents of the intersection view
      */
@@ -337,7 +337,7 @@ public final class TertiaryVennLabel3<E>
     /**
      * Return the contents of the union view.  The text for the returned JLabel
      * should not be changed, as the current text is synchronized to the
-     * tertiary venn model backing this venn diagram.
+     * ternary venn model backing this venn diagram.
      *
      * @return the contents of the union view
      */

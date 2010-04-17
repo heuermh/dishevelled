@@ -32,83 +32,83 @@ import ca.odell.glazedlists.EventList;
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public interface TertiaryVennModel<E>
+public interface TernaryVennModel<E>
 {
 
     /**
      * Return a mutable observable list view of the first set for
-     * this tertiary venn model.  Changes made to this list view are
+     * this ternary venn model.  Changes made to this list view are
      * reflected in the other views provided by this venn model.
      * Changes made to the original set are not.
      *
      * @return an observable list view of the first set for
-     *    this tertiary venn model
+     *    this ternary venn model
      */
     EventList<E> first();
 
     /**
      * Return a mutable observable list view of the second set for
-     * this tertiary venn model.  Changes made to this list view are
+     * this ternary venn model.  Changes made to this list view are
      * reflected in the other views provided by this venn model.
      * Changes made to the original set are not.
      *
      * @return an observable list view of the second set for
-     *    this tertiary venn model
+     *    this ternary venn model
      */
     EventList<E> second();
 
     /**
      * Return a mutable observable list view of the third set for
-     * this tertiary venn model.  Changes made to this list view are
+     * this ternary venn model.  Changes made to this list view are
      * reflected in the other views provided by this venn model.
      * Changes made to the original set are not.
      *
      * @return an observable list view of the third set for
-     *    this tertiary venn model
+     *    this ternary venn model
      */
     EventList<E> third();
 
     /**
      * Return an immutable observable list view of the intersection of
-     * the first, second, and third sets for this tertiary venn model.
+     * the first, second, and third sets for this ternary venn model.
      *
      * @return an immutable observable list view of the intersection of
-     *    the first, second, and third sets for this tertiary venn model
+     *    the first, second, and third sets for this ternary venn model
      */
     EventList<E> intersection();
 
     /**
      * Return an immutable observable list view of the intersection of
-     * the two specified set list views from this tertiary venn model.
+     * the two specified set list views from this ternary venn model.
      *
      * @param a first set list view to intersect, must be one of {@link #first()},
      *    {@link #second()}, or {@link #third()}
      * @param b second set list view to intersect, must be one of {@link #first()},
      *    {@link #second()}, or {@link #third()}
      * @return an immutable observable list view of the intersection of
-     *    the the two specified set list views from this tertiary venn model
+     *    the the two specified set list views from this ternary venn model
      */
     EventList<E> intersect(EventList<E> a, EventList<E> b);
 
     /**
      * Return an immutable observable list view of the union of
-     * the first, second, and third sets for this tertiary venn model.
+     * the first, second, and third sets for this ternary venn model.
      *
      * @return an immutable observable list view of the union of
-     *    the first, second, and third sets for this tertiary venn model
+     *    the first, second, and third sets for this ternary venn model
      */
     EventList<E> union();
 
     /**
      * Return an immutable observable list view of the union of
-     * the two specified set list views from this tertiary venn model.
+     * the two specified set list views from this ternary venn model.
      *
      * @param a first set list view to union, must be one of {@link #first()},
      *    {@link #second()}, or {@link #third()}
      * @param b second set list view to union, must be one of {@link #first()},
      *    {@link #second()}, or {@link #third()}
      * @return an immutable observable list view of the union of
-     *    the two specified set list views from this tertiary venn model
+     *    the two specified set list views from this ternary venn model
      */
     EventList<E> union(EventList<E> a, EventList<E> b);
 }

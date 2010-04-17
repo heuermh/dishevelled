@@ -33,9 +33,9 @@ import ca.odell.glazedlists.event.ListEventListener;
 
 import org.dishevelled.layout.LabelFieldPanel;
 
-import org.dishevelled.venn.TertiaryVennModel;
+import org.dishevelled.venn.TernaryVennModel;
 
-import org.dishevelled.venn.model.TertiaryVennModelImpl;
+import org.dishevelled.venn.model.TernaryVennModelImpl;
 
 /**
  * Tertiary venn diagram label.
@@ -44,11 +44,11 @@ import org.dishevelled.venn.model.TertiaryVennModelImpl;
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public final class TertiaryVennLabel<E>
+public final class TernaryVennLabel<E>
     extends LabelFieldPanel
 {
     /** Tertiary venn model. */
-    private TertiaryVennModel<E> model;
+    private TernaryVennModel<E> model;
 
     /** Label text for the first list view. */
     private String firstLabelText = DEFAULT_FIRST_LABEL_TEXT;
@@ -118,7 +118,7 @@ public final class TertiaryVennLabel<E>
 
 
     /**
-     * Create a new tertiary venn label with the specified sets.
+     * Create a new ternary venn label with the specified sets.
      *
      * @param firstLabelText label text for the first list view
      * @param first first set, must not be null
@@ -127,19 +127,19 @@ public final class TertiaryVennLabel<E>
      * @param thirdLabelText label text for the third list view
      * @param third third set, must not be null
      */
-    public TertiaryVennLabel(final String firstLabelText, final Set<? extends E> first,
+    public TernaryVennLabel(final String firstLabelText, final Set<? extends E> first,
                              final String secondLabelText, final Set<? extends E> second,
                              final String thirdLabelText, final Set<? extends E> third)
     {
-        this(new TertiaryVennModelImpl<E>(first, second, third));
+        this(new TernaryVennModelImpl<E>(first, second, third));
     }
 
     /**
-     * Create a new tertiary venn label with the specified model.
+     * Create a new ternary venn label with the specified model.
      *
-     * @param model model for this tertiary venn label, must not be null
+     * @param model model for this ternary venn label, must not be null
      */
-    public TertiaryVennLabel(final TertiaryVennModel<E> model)
+    public TernaryVennLabel(final TernaryVennModel<E> model)
     {
         super();
         if (model == null)
