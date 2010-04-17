@@ -25,37 +25,37 @@ package org.dishevelled.venn.model;
 
 import java.util.Set;
 
-import org.dishevelled.venn.AbstractTertiaryVennModel3Test;
-import org.dishevelled.venn.TertiaryVennModel3;
+import org.dishevelled.venn.AbstractTernaryVennModel3Test;
+import org.dishevelled.venn.TernaryVennModel3;
 
-import org.dishevelled.venn.model.TertiaryVennModelImpl3;
+import org.dishevelled.venn.model.TernaryVennModelImpl3;
 
 /**
- * Unit test for TertiaryVennModelImpl3.
+ * Unit test for TernaryVennModelImpl3.
  *
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public final class TertiaryVennModelImpl3Test
-    extends AbstractTertiaryVennModel3Test
+public final class TernaryVennModelImpl3Test
+    extends AbstractTernaryVennModel3Test
 {
 
     /** {@inheritDoc} */
-    protected <T> TertiaryVennModel3<T> createTertiaryVennModel3(final Set<? extends T> first,
+    protected <T> TernaryVennModel3<T> createTertiaryVennModel3(final Set<? extends T> first,
             final Set<? extends T> second,
             final Set<? extends T> third)
     {
-        return new TertiaryVennModelImpl3<T>(first, second, third);
+        return new TernaryVennModelImpl3<T>(first, second, third);
     }
 
     public void testConstructor()
     {
-        new TertiaryVennModelImpl3();
-        new TertiaryVennModelImpl3(FIRST, SECOND, THIRD);
+        new TernaryVennModelImpl3();
+        new TernaryVennModelImpl3(FIRST, SECOND, THIRD);
 
         try
         {
-            new TertiaryVennModelImpl3<String>(null, SECOND, THIRD);
+            new TernaryVennModelImpl3<String>(null, SECOND, THIRD);
             fail("ctr(null,,) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
@@ -64,7 +64,7 @@ public final class TertiaryVennModelImpl3Test
         }
         try
         {
-            new TertiaryVennModelImpl3<String>(FIRST, null, THIRD);
+            new TernaryVennModelImpl3<String>(FIRST, null, THIRD);
             fail("ctr(,null,) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
@@ -73,7 +73,7 @@ public final class TertiaryVennModelImpl3Test
         }
         try
         {
-            new TertiaryVennModelImpl3<String>(FIRST, SECOND, null);
+            new TernaryVennModelImpl3<String>(FIRST, SECOND, null);
             fail("ctr(,,null) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
@@ -82,7 +82,7 @@ public final class TertiaryVennModelImpl3Test
         }
         try
         {
-            new TertiaryVennModelImpl3<String>(null, null, null);
+            new TernaryVennModelImpl3<String>(null, null, null);
             fail("ctr(null, null, null) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)

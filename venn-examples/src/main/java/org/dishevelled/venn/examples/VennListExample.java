@@ -47,13 +47,13 @@ import org.dishevelled.identify.IdMenuItem;
 import org.dishevelled.layout.LabelFieldPanel;
 
 import org.dishevelled.venn.BinaryVennModel3;
-import org.dishevelled.venn.TertiaryVennModel3;
+import org.dishevelled.venn.TernaryVennModel3;
 
 import org.dishevelled.venn.model.BinaryVennModelImpl3;
-import org.dishevelled.venn.model.TertiaryVennModelImpl3;
+import org.dishevelled.venn.model.TernaryVennModelImpl3;
 
 import org.dishevelled.venn.swing.BinaryVennList3;
-import org.dishevelled.venn.swing.TertiaryVennList3;
+import org.dishevelled.venn.swing.TernaryVennList3;
 
 /**
  * Venn list example.
@@ -104,14 +104,14 @@ public final class VennListExample
         BinaryVennModel3<String> binaryModel = new BinaryVennModelImpl3<String>(set0, set1);
         binaryList = new BinaryVennList3(binaryModel);
 
-        TertiaryVennModel3<String> tertiaryModel = new TertiaryVennModelImpl3<String>(set0, set1, set2);
-        TertiaryVennList3 tertiaryList = new TertiaryVennList3(tertiaryModel);
+        TernaryVennModel3<String> ternaryModel = new TernaryVennModelImpl3<String>(set0, set1, set2);
+        TernaryVennList3 ternaryList = new TernaryVennList3(ternaryModel);
 
         addLabel("Binary:");
         addField(binaryList);
         addSpacing(12);
-        //addLabel("Tertiary:");
-        //addField(tertiaryList);
+        //addLabel("Ternary:");
+        //addField(ternaryList);
         addFinalSpacing();
 
         exit = new AbstractAction("Exit")

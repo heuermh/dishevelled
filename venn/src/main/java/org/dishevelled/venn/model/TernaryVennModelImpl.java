@@ -41,7 +41,7 @@ import org.dishevelled.matrix.Matrix2D;
 
 import org.dishevelled.matrix.impl.SparseMatrix2D;
 
-import org.dishevelled.venn.TertiaryVennModel;
+import org.dishevelled.venn.TernaryVennModel;
 
 /**
  * Tertiary venn model implementation.
@@ -50,7 +50,7 @@ import org.dishevelled.venn.TertiaryVennModel;
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public final class TertiaryVennModelImpl<E> implements TertiaryVennModel<E>
+public final class TernaryVennModelImpl<E> implements TernaryVennModel<E>
 {
     /** First list view. */
     private final EventList<E> first;
@@ -78,13 +78,13 @@ public final class TertiaryVennModelImpl<E> implements TertiaryVennModel<E>
 
 
     /**
-     * Create a new tertiary venn model with the specified sets.
+     * Create a new ternary venn model with the specified sets.
      *
      * @param set0 first set, must not be null
      * @param set1 second set, must not be null
      * @param set2 third set, must not be null
      */
-    public TertiaryVennModelImpl(final Set<? extends E> set0, final Set<? extends E> set1, final Set<? extends E> set2)
+    public TernaryVennModelImpl(final Set<? extends E> set0, final Set<? extends E> set1, final Set<? extends E> set2)
     {
         if (set0 == null)
         {

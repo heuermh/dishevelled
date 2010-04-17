@@ -34,139 +34,139 @@ import org.dishevelled.observable.ObservableSet;
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public interface TertiaryVennModel3<E>
+public interface TernaryVennModel3<E>
 {
 
     /**
      * Return a mutable observable view of the first set for
-     * this tertiary venn model.  Changes made to this view are
+     * this ternary venn model.  Changes made to this view are
      * reflected in the other views provided by this venn model.
      * Changes made to the original set are not.
      *
      * @return an observable view of the first set for
-     *    this tertiary venn model
+     *    this ternary venn model
      */
     ObservableSet<E> first();
 
     /**
      * Return a mutable observable view of the second set for
-     * this tertiary venn model.  Changes made to this view are
+     * this ternary venn model.  Changes made to this view are
      * reflected in the other views provided by this venn model.
      * Changes made to the original set are not.
      *
      * @return an observable view of the second set for
-     *    this tertiary venn model
+     *    this ternary venn model
      */
     ObservableSet<E> second();
 
     /**
      * Return a mutable observable view of the third set for
-     * this tertiary venn model.  Changes made to this view are
+     * this ternary venn model.  Changes made to this view are
      * reflected in the other views provided by this venn model.
      * Changes made to the original set are not.
      *
      * @return an observable view of the third set for
-     *    this tertiary venn model
+     *    this ternary venn model
      */
     ObservableSet<E> third();
 
     /**
      * Return an immutable view of the elements unique to the first
-     * set for this tertiary venn model.  The first only view will reflect changes
+     * set for this ternary venn model.  The first only view will reflect changes
      * made to the first, second, and third views (i.e. {@link #first()},
      * {@link #second()}, and {@link #third()}).
      *
      * @return an immutable view of the elements unique to the first
-     *    set for this tertiary venn model
+     *    set for this ternary venn model
      */
     Set<E> firstOnly();
 
     /**
      * Return an immutable view of the elements unique to the second
-     * set for this tertiary venn model.  The second only view will reflect changes
+     * set for this ternary venn model.  The second only view will reflect changes
      * made to the first, second, and third views (i.e. {@link #first()},
      * {@link #second()}, and {@link #third()}).
      *
      * @return an immutable view of the elements unique to the second
-     *    set for this tertiary venn model
+     *    set for this ternary venn model
      */
     Set<E> secondOnly();
 
     /**
      * Return an immutable view of the elements unique to the third
-     * set for this tertiary venn model.  The third only view will reflect changes
+     * set for this ternary venn model.  The third only view will reflect changes
      * made to the first, second, and third views (i.e. {@link #first()},
      * {@link #second()}, and {@link #third()}).
      *
      * @return an immutable view of the elements unique to the third
-     *    set for this tertiary venn model
+     *    set for this ternary venn model
      */
     Set<E> thirdOnly();
 
     /**
      * Return an immutable view of the elements unique to the intersection
-     * of the first and second sets for this tertiary venn model.  The first and second
+     * of the first and second sets for this ternary venn model.  The first and second
      * view will reflect changes made to the first, second, and third views (i.e. {@link #first()},
      * {@link #second()}, and {@link #third()}).
      *
      * @return an immutable view of the elements unique to the intersection
-     *    of the first and second sets for this tertiary venn model
+     *    of the first and second sets for this ternary venn model
      */
     Set<E> firstSecond();
 
     /**
      * Return an immutable view of the elements unique to the intersection
-     * of the first and third sets for this tertiary venn model.  The first and third
+     * of the first and third sets for this ternary venn model.  The first and third
      * view will reflect changes made to the first, second, and third views (i.e. {@link #first()},
      * {@link #second()}, and {@link #third()}).
      *
      * @return an immutable view of the elements unique to the intersection
-     *    of the first and third sets for this tertiary venn model
+     *    of the first and third sets for this ternary venn model
      */
     Set<E> firstThird();
 
     /**
      * Return an immutable view of the elements unique to the intersection
-     * of the second and third sets for this tertiary venn model.  The second and third
+     * of the second and third sets for this ternary venn model.  The second and third
      * view will reflect changes made to the first, second, and third views (i.e. {@link #first()},
      * {@link #second()}, and {@link #third()}).
      *
      * @return an immutable view of the elements unique to the intersection
-     *    of the second and third sets for this tertiary venn model
+     *    of the second and third sets for this ternary venn model
      */
     Set<E> secondThird();
 
     /**
      * Return an immutable view of the intersection of the first, second, and third
-     * sets for this tertiary venn model.  The intersection view will reflect changes
+     * sets for this ternary venn model.  The intersection view will reflect changes
      * made to the first, second, and third views (i.e. {@link #first()},
      * {@link #second()}, and {@link #third()}).
      *
      * @return an immutable view of the intersection of the first, second, and third
-     *    sets for this tertiary venn model
+     *    sets for this ternary venn model
      */
     Set<E> intersection();
 
     /**
      * Return an immutable view of the union of the first, second, and third
-     * sets for this tertiary venn model.  The union view will reflect changes
+     * sets for this ternary venn model.  The union view will reflect changes
      * made to the first, second, and third views (i.e. {@link #first()},
      * {@link #second()}, and {@link #third()}).
      *
      * @return an immutable view of the union of the first, second, and third
-     *    sets for this tertiary venn model
+     *    sets for this ternary venn model
      */
     Set<E> union();
 
     /**
      * Return a mutable observable view of the selection for this
-     * tertiary venn model.  The selection view will reflect changes
+     * ternary venn model.  The selection view will reflect changes
      * made to the first, second, and third views (i.e. {@link #first()},
      * {@link #second()}, and {@link #third()}), and may not contain any elements
      * not present in the union ({@link #union()}).
      *
      * @return an observable view of the selection for
-     *    this tertiary venn model
+     *    this ternary venn model
      */
     ObservableSet<E> selection();
 }

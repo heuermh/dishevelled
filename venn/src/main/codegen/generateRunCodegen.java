@@ -6,10 +6,10 @@ public class generateRunCodegen
 
     public static void main(final String[] args)
     {
-        tertiary(0, 1, 2);
-        tertiary(0, 1, 3);
-        tertiary(0, 2, 3);
-        tertiary(1, 2, 3);
+        ternary(0, 1, 2);
+        ternary(0, 1, 3);
+        ternary(0, 2, 3);
+        ternary(1, 2, 3);
 
         for (int i = 0; i < 3; i++)
         {
@@ -20,7 +20,7 @@ public class generateRunCodegen
         }
     }
 
-    private static void tertiary(final int i, final int j, final int k)
+    private static void ternary(final int i, final int j, final int k)
     {
         StringBuilder sb = new StringBuilder();
         sb.append("velocity.sh --properties \"");
@@ -33,7 +33,7 @@ public class generateRunCodegen
         sb.append(",UPPER0=" + UPPER[i]);
         sb.append(",UPPER1=" + UPPER[j]);
         sb.append(",UPPER2=" + UPPER[k]);
-        sb.append("\" --template tertiaryView.wm");
+        sb.append("\" --template ternaryView.wm");
         System.out.println(sb.toString());
     }
 

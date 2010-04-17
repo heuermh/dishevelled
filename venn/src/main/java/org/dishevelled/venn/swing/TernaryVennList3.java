@@ -47,7 +47,7 @@ import org.dishevelled.layout.LabelFieldPanel;
 import org.dishevelled.observable.event.SetChangeEvent;
 import org.dishevelled.observable.event.SetChangeListener;
 
-import org.dishevelled.venn.TertiaryVennModel3;
+import org.dishevelled.venn.TernaryVennModel3;
 
 /**
  * Tertiary venn diagram list 3.
@@ -56,8 +56,8 @@ import org.dishevelled.venn.TertiaryVennModel3;
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public final class TertiaryVennList3<E>
-    extends AbstractTertiaryVennDiagram<E>
+public final class TernaryVennList3<E>
+    extends AbstractTernaryVennDiagram<E>
 {
     /** Contents of the first set. */
     private final JList first = new JList();
@@ -131,7 +131,7 @@ public final class TertiaryVennList3<E>
         /** {@inheritDoc} */
         public void propertyChange(final PropertyChangeEvent event)
         {
-            uninstallListModels((TertiaryVennModel3<E>) event.getOldValue());
+            uninstallListModels((TernaryVennModel3<E>) event.getOldValue());
             installListModels();
         }
     };
@@ -158,9 +158,9 @@ public final class TertiaryVennList3<E>
 
 
     /**
-     * Create a new empty tertiary venn list.
+     * Create a new empty ternary venn list.
      */
-    public TertiaryVennList3()
+    public TernaryVennList3()
     {
         super();
         installListModels();
@@ -170,7 +170,7 @@ public final class TertiaryVennList3<E>
     }
 
     /**
-     * Create a new tertiary venn list with the specified sets.
+     * Create a new ternary venn list with the specified sets.
      *
      * @param firstLabelText label text for the first set
      * @param first first set, must not be null
@@ -179,7 +179,7 @@ public final class TertiaryVennList3<E>
      * @param thirdLabelText label text for the third set
      * @param third third set, must not be null
      */
-    public TertiaryVennList3(final String firstLabelText, final Set<? extends E> first,
+    public TernaryVennList3(final String firstLabelText, final Set<? extends E> first,
                              final String secondLabelText, final Set<? extends E> second,
                              final String thirdLabelText, final Set<? extends E> third)
     {
@@ -191,11 +191,11 @@ public final class TertiaryVennList3<E>
     }
 
     /**
-     * Create a new tertiary venn list with the specified model.
+     * Create a new ternary venn list with the specified model.
      *
-     * @param model model for this tertiary venn list, must not be null
+     * @param model model for this ternary venn list, must not be null
      */
-    public TertiaryVennList3(final TertiaryVennModel3<E> model)
+    public TernaryVennList3(final TernaryVennModel3<E> model)
     {
         super(model);
         installListModels();
@@ -278,7 +278,7 @@ public final class TertiaryVennList3<E>
      *
      * @param oldModel old model
      */
-    private void uninstallListModels(final TertiaryVennModel3<E> oldModel)
+    private void uninstallListModels(final TernaryVennModel3<E> oldModel)
     {
         firstAdapter.dispose();
         secondAdapter.dispose();
@@ -511,7 +511,7 @@ public final class TertiaryVennList3<E>
     /**
      * Return the contents of the first set.  The model for the returned
      * JList should not be changed, as the current model implementation is
-     * synchronized to the tertiary venn model backing this venn diagram.
+     * synchronized to the ternary venn model backing this venn diagram.
      *
      * @return the contents of the first set
      */
@@ -523,7 +523,7 @@ public final class TertiaryVennList3<E>
     /**
      * Return the contents of the second set.  The model for the returned
      * JList should not be changed, as the current model implementation is
-     * synchronized to the tertiary venn model backing this venn diagram.
+     * synchronized to the ternary venn model backing this venn diagram.
      *
      * @return the contents of the second set
      */
@@ -535,7 +535,7 @@ public final class TertiaryVennList3<E>
     /**
      * Return the contents of the third set.  The model for the returned
      * JList should not be changed, as the current model implementation is
-     * synchronized to the tertiary venn model backing this venn diagram.
+     * synchronized to the ternary venn model backing this venn diagram.
      *
      * @return the contents of the thid set
      */
@@ -547,7 +547,7 @@ public final class TertiaryVennList3<E>
     /**
      * Return the contents of the first only view.  The model for the returned
      * JList should not be changed, as the current model implementation is
-     * synchronized to the tertiary venn model backing this venn diagram.
+     * synchronized to the ternary venn model backing this venn diagram.
      *
      * @return the contents of the first only view
      */
@@ -559,7 +559,7 @@ public final class TertiaryVennList3<E>
     /**
      * Return the contents of the second only view.  The model for the returned
      * JList should not be changed, as the current model implementation is
-     * synchronized to the tertiary venn model backing this venn diagram.
+     * synchronized to the ternary venn model backing this venn diagram.
      *
      * @return the contents of the second only view
      */
@@ -571,7 +571,7 @@ public final class TertiaryVennList3<E>
     /**
      * Return the contents of the third only view.  The model for the returned
      * JList should not be changed, as the current model implementation is
-     * synchronized to the tertiary venn model backing this venn diagram.
+     * synchronized to the ternary venn model backing this venn diagram.
      *
      * @return the contents of the third only view
      */
@@ -583,7 +583,7 @@ public final class TertiaryVennList3<E>
     /**
      * Return the contents of the first second view.  The model for the returned
      * JList should not be changed, as the current model implementation is
-     * synchronized to the tertiary venn model backing this venn diagram.
+     * synchronized to the ternary venn model backing this venn diagram.
      *
      * @return the contents of the first second view
      */
@@ -595,7 +595,7 @@ public final class TertiaryVennList3<E>
     /**
      * Return the contents of the first third view.  The model for the returned
      * JList should not be changed, as the current model implementation is
-     * synchronized to the tertiary venn model backing this venn diagram.
+     * synchronized to the ternary venn model backing this venn diagram.
      *
      * @return the contents of the first third view
      */
@@ -607,7 +607,7 @@ public final class TertiaryVennList3<E>
     /**
      * Return the contents of the second third view.  The model for the returned
      * JList should not be changed, as the current model implementation is
-     * synchronized to the tertiary venn model backing this venn diagram.
+     * synchronized to the ternary venn model backing this venn diagram.
      *
      * @return the contents of the second third view
      */
@@ -619,7 +619,7 @@ public final class TertiaryVennList3<E>
     /**
      * Return the contents of the intersection view.  The model for the returned
      * JList should not be changed, as the current model implementation is
-     * synchronized to the tertiary venn model backing this venn diagram.
+     * synchronized to the ternary venn model backing this venn diagram.
      *
      * @return the contents of the intersection view
      */
@@ -631,7 +631,7 @@ public final class TertiaryVennList3<E>
     /**
      * Return the contents of the union view.  The model for the returned
      * JList should not be changed, as the current model implementation is
-     * synchronized to the tertiary venn model backing this venn diagram.
+     * synchronized to the ternary venn model backing this venn diagram.
      *
      * @return the contents of the union view
      */

@@ -75,8 +75,8 @@ public final class QuaternaryVennModelImpl<E> implements QuaternaryVennModel<E>
     /** 2D matrix of binary intersections indexed by list view. */
     private final Matrix2D<EventList<E>> binaryIntersections;
 
-    /** 3D matrix of tertiary intersections indexed by list view. */
-    private final Matrix3D<EventList<E>> tertiaryIntersections;
+    /** 3D matrix of ternary intersections indexed by list view. */
+    private final Matrix3D<EventList<E>> ternaryIntersections;
 
     /** Union. */
     private final EventList<E> union;
@@ -84,8 +84,8 @@ public final class QuaternaryVennModelImpl<E> implements QuaternaryVennModel<E>
     /** 2D matrix of binary unions indexed by list view. */
     private final Matrix2D<EventList<E>> binaryUnions;
 
-    /** 3D matrix of tertiary unions indexed by list view. */
-    private final Matrix3D<EventList<E>> tertiaryUnions;
+    /** 3D matrix of ternary unions indexed by list view. */
+    private final Matrix3D<EventList<E>> ternaryUnions;
 
 
     /**
@@ -359,57 +359,57 @@ public final class QuaternaryVennModelImpl<E> implements QuaternaryVennModel<E>
         EventList<E> union123 = GlazedLists.readOnlyList(composite123);
         EventList<E> intersection123 = GlazedLists.readOnlyList(unique123);
 
-        tertiaryUnions = new SparseMatrix3D<EventList<E>>(4L, 4L, 4L);
-        tertiaryUnions.set(0L, 1L, 2L, union012);
-        tertiaryUnions.set(0L, 2L, 1L, union012);
-        tertiaryUnions.set(1L, 0L, 2L, union012);
-        tertiaryUnions.set(1L, 2L, 0L, union012);
-        tertiaryUnions.set(2L, 0L, 1L, union012);
-        tertiaryUnions.set(2L, 1L, 0L, union012);
-        tertiaryUnions.set(0L, 2L, 3L, union023);
-        tertiaryUnions.set(0L, 3L, 2L, union023);
-        tertiaryUnions.set(2L, 0L, 3L, union023);
-        tertiaryUnions.set(2L, 3L, 0L, union023);
-        tertiaryUnions.set(3L, 0L, 2L, union023);
-        tertiaryUnions.set(3L, 2L, 0L, union023);
-        tertiaryUnions.set(0L, 1L, 3L, union013);
-        tertiaryUnions.set(0L, 3L, 1L, union013);
-        tertiaryUnions.set(1L, 0L, 3L, union013);
-        tertiaryUnions.set(1L, 3L, 0L, union013);
-        tertiaryUnions.set(3L, 0L, 1L, union013);
-        tertiaryUnions.set(3L, 1L, 0L, union013);
-        tertiaryUnions.set(1L, 2L, 3L, union123);
-        tertiaryUnions.set(1L, 3L, 2L, union123);
-        tertiaryUnions.set(2L, 1L, 3L, union123);
-        tertiaryUnions.set(2L, 3L, 1L, union123);
-        tertiaryUnions.set(3L, 1L, 2L, union123);
-        tertiaryUnions.set(3L, 2L, 1L, union123);
+        ternaryUnions = new SparseMatrix3D<EventList<E>>(4L, 4L, 4L);
+        ternaryUnions.set(0L, 1L, 2L, union012);
+        ternaryUnions.set(0L, 2L, 1L, union012);
+        ternaryUnions.set(1L, 0L, 2L, union012);
+        ternaryUnions.set(1L, 2L, 0L, union012);
+        ternaryUnions.set(2L, 0L, 1L, union012);
+        ternaryUnions.set(2L, 1L, 0L, union012);
+        ternaryUnions.set(0L, 2L, 3L, union023);
+        ternaryUnions.set(0L, 3L, 2L, union023);
+        ternaryUnions.set(2L, 0L, 3L, union023);
+        ternaryUnions.set(2L, 3L, 0L, union023);
+        ternaryUnions.set(3L, 0L, 2L, union023);
+        ternaryUnions.set(3L, 2L, 0L, union023);
+        ternaryUnions.set(0L, 1L, 3L, union013);
+        ternaryUnions.set(0L, 3L, 1L, union013);
+        ternaryUnions.set(1L, 0L, 3L, union013);
+        ternaryUnions.set(1L, 3L, 0L, union013);
+        ternaryUnions.set(3L, 0L, 1L, union013);
+        ternaryUnions.set(3L, 1L, 0L, union013);
+        ternaryUnions.set(1L, 2L, 3L, union123);
+        ternaryUnions.set(1L, 3L, 2L, union123);
+        ternaryUnions.set(2L, 1L, 3L, union123);
+        ternaryUnions.set(2L, 3L, 1L, union123);
+        ternaryUnions.set(3L, 1L, 2L, union123);
+        ternaryUnions.set(3L, 2L, 1L, union123);
 
-        tertiaryIntersections = new SparseMatrix3D<EventList<E>>(4L, 4L, 4L);
-        tertiaryIntersections.set(0L, 1L, 2L, intersection012);
-        tertiaryIntersections.set(0L, 2L, 1L, intersection012);
-        tertiaryIntersections.set(1L, 0L, 2L, intersection012);
-        tertiaryIntersections.set(1L, 2L, 0L, intersection012);
-        tertiaryIntersections.set(2L, 0L, 1L, intersection012);
-        tertiaryIntersections.set(2L, 1L, 0L, intersection012);
-        tertiaryIntersections.set(0L, 2L, 3L, intersection023);
-        tertiaryIntersections.set(0L, 3L, 2L, intersection023);
-        tertiaryIntersections.set(2L, 0L, 3L, intersection023);
-        tertiaryIntersections.set(2L, 3L, 0L, intersection023);
-        tertiaryIntersections.set(3L, 0L, 2L, intersection023);
-        tertiaryIntersections.set(3L, 2L, 0L, intersection023);
-        tertiaryIntersections.set(0L, 1L, 3L, intersection013);
-        tertiaryIntersections.set(0L, 3L, 1L, intersection013);
-        tertiaryIntersections.set(1L, 0L, 3L, intersection013);
-        tertiaryIntersections.set(1L, 3L, 0L, intersection013);
-        tertiaryIntersections.set(3L, 0L, 1L, intersection013);
-        tertiaryIntersections.set(3L, 1L, 0L, intersection013);
-        tertiaryIntersections.set(1L, 2L, 3L, intersection123);
-        tertiaryIntersections.set(1L, 3L, 2L, intersection123);
-        tertiaryIntersections.set(2L, 1L, 3L, intersection123);
-        tertiaryIntersections.set(2L, 3L, 1L, intersection123);
-        tertiaryIntersections.set(3L, 1L, 2L, intersection123);
-        tertiaryIntersections.set(3L, 2L, 1L, intersection123);
+        ternaryIntersections = new SparseMatrix3D<EventList<E>>(4L, 4L, 4L);
+        ternaryIntersections.set(0L, 1L, 2L, intersection012);
+        ternaryIntersections.set(0L, 2L, 1L, intersection012);
+        ternaryIntersections.set(1L, 0L, 2L, intersection012);
+        ternaryIntersections.set(1L, 2L, 0L, intersection012);
+        ternaryIntersections.set(2L, 0L, 1L, intersection012);
+        ternaryIntersections.set(2L, 1L, 0L, intersection012);
+        ternaryIntersections.set(0L, 2L, 3L, intersection023);
+        ternaryIntersections.set(0L, 3L, 2L, intersection023);
+        ternaryIntersections.set(2L, 0L, 3L, intersection023);
+        ternaryIntersections.set(2L, 3L, 0L, intersection023);
+        ternaryIntersections.set(3L, 0L, 2L, intersection023);
+        ternaryIntersections.set(3L, 2L, 0L, intersection023);
+        ternaryIntersections.set(0L, 1L, 3L, intersection013);
+        ternaryIntersections.set(0L, 3L, 1L, intersection013);
+        ternaryIntersections.set(1L, 0L, 3L, intersection013);
+        ternaryIntersections.set(1L, 3L, 0L, intersection013);
+        ternaryIntersections.set(3L, 0L, 1L, intersection013);
+        ternaryIntersections.set(3L, 1L, 0L, intersection013);
+        ternaryIntersections.set(1L, 2L, 3L, intersection123);
+        ternaryIntersections.set(1L, 3L, 2L, intersection123);
+        ternaryIntersections.set(2L, 1L, 3L, intersection123);
+        ternaryIntersections.set(2L, 3L, 1L, intersection123);
+        ternaryIntersections.set(3L, 1L, 2L, intersection123);
+        ternaryIntersections.set(3L, 2L, 1L, intersection123);
     }
 
 
@@ -477,7 +477,7 @@ public final class QuaternaryVennModelImpl<E> implements QuaternaryVennModel<E>
         {
             throw new IllegalArgumentException("c must be one of first(), second(), third(), or fourth()");
         }
-        return tertiaryIntersections.get(i, j, k);
+        return ternaryIntersections.get(i, j, k);
     }
 
     /** {@inheritDoc} */
@@ -520,7 +520,7 @@ public final class QuaternaryVennModelImpl<E> implements QuaternaryVennModel<E>
         {
             throw new IllegalArgumentException("b must be one of first(), second(), third(), or fourth()");
         }
-        return tertiaryUnions.get(i, j, k);
+        return ternaryUnions.get(i, j, k);
     }
 
     /**
