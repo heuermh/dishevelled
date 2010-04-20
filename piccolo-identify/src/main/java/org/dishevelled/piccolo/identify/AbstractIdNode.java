@@ -527,7 +527,7 @@ public abstract class AbstractIdNode
         NameTextNode()
         {
             super();
-            setJustification(Component.CENTER_ALIGNMENT);
+            setHorizontalAlignment(Component.CENTER_ALIGNMENT);
             update();
             AbstractIdNode.this.addPropertyChangeListener("value", this);
             //AbstractIdNode.this.addPropertyChangeListener("iconTextDirection", this);
