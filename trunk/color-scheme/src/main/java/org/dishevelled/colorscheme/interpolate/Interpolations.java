@@ -41,8 +41,14 @@ public final class Interpolations
     /** Linear interpolation. */
     public static final Interpolation LINEAR = new LinearInterpolation();
 
+    /** Log base 2 interpolation. */
+    public static final Interpolation LOG_2 = new Log2Interpolation();
+
+    /** Log base 10 interpolation. */
+    public static final Interpolation LOG_10 = new Log10Interpolation();
+
     /** Array of interpolation values. */
-    private static final Interpolation[] values = new Interpolation[] { LINEAR };
+    private static final Interpolation[] values = new Interpolation[] { LINEAR, LOG_2, LOG_10 };
 
     /** List of interpolation values. */
     public static final List<Interpolation> VALUES = Arrays.asList(values);
@@ -53,6 +59,10 @@ public final class Interpolations
     static
     {
         KEYED_BY_NAME.put("linear", LINEAR);
+        KEYED_BY_NAME.put("log2", LOG_2);
+        KEYED_BY_NAME.put("log-2", LOG_2);
+        KEYED_BY_NAME.put("log10", LOG_10);
+        KEYED_BY_NAME.put("log-10", LOG_10);
     }
 
 
