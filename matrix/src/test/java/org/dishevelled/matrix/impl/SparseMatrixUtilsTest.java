@@ -28,9 +28,10 @@ import org.dishevelled.matrix.Matrix1D;
 import org.dishevelled.matrix.Matrix2D;
 import org.dishevelled.matrix.Matrix3D;
 
+import static org.dishevelled.matrix.impl.SparseMatrixUtils.*;
 
 /**
- * Unit test for MatrixUtils with sparse object matrix implementations.
+ * Unit test for MatrixUtils with sparse matrix implementations.
  *
  * @author  Michael Heuer
  * @version $Revision$ $Date$
@@ -40,20 +41,53 @@ public final class SparseMatrixUtilsTest
 {
 
     /** {@inheritDoc} */
-    protected <T> Matrix1D<T> createObjectMatrix1D()
+    protected <T> Matrix1D<T> createMatrix1D()
     {
-        return new SparseMatrix1D<T>(100L);
+        return createSparseMatrix1D(100L);
     }
 
     /** {@inheritDoc} */
-    protected <T> Matrix2D<T> createObjectMatrix2D()
+    protected <T> Matrix2D<T> createMatrix2D()
     {
-        return new SparseMatrix2D<T>(100L, 100L);
+        return createSparseMatrix2D(100L, 100L);
     }
 
     /** {@inheritDoc} */
-    protected <T> Matrix3D<T> createObjectMatrix3D()
+    protected <T> Matrix3D<T> createMatrix3D()
     {
-        return new SparseMatrix3D<T>(100L, 100L, 100L);
+        return createSparseMatrix3D(100L, 100L, 100L);
+    }
+
+    public void testCreateSparseMatrix1D()
+    {
+        Matrix1D<String> matrix0 = createSparseMatrix1D(100L);
+        assertNotNull(matrix0);
+        assertEquals(100L, matrix0.size());
+
+        Matrix1D<String> matrix1 = createSparseMatrix1D(100L, 10, 0.75f);
+        assertNotNull(matrix1);
+        assertEquals(100L, matrix1.size());
+    }
+
+    public void testCreateSparseMatrix2D()
+    {
+        Matrix2D<String> matrix0 = createSparseMatrix2D(100L, 100L);
+        assertNotNull(matrix0);
+        assertEquals(100L * 100L, matrix0.size());
+
+        Matrix2D<String> matrix1 = createSparseMatrix2D(100L, 100L, 10, 0.75f);
+        assertNotNull(matrix1);
+        assertEquals(100L * 100L, matrix1.size());
+    }
+
+    public void testCreateSparseMatrix3D()
+    {
+        Matrix3D<String> matrix0 = createSparseMatrix3D(100L, 100L, 100L);
+        assertNotNull(matrix0);
+        assertEquals(100L * 100L * 100L, matrix0.size());
+
+        Matrix3D<String> matrix1 = createSparseMatrix3D(100L, 100L, 100L, 10, 0.75f);
+        assertNotNull(matrix1);
+        assertEquals(100L * 100L * 100L, matrix1.size());
     }
 }

@@ -152,7 +152,7 @@ public abstract class AbstractMatrixUtilsTest
      * @param <T> 1D object matrix type
      * @return a new instance of an implementation of Matrix1D<T> to test
      */
-    protected abstract <T> Matrix1D<T> createObjectMatrix1D();
+    protected abstract <T> Matrix1D<T> createMatrix1D();
 
     /**
      * Create and return a new instance of an implementation of Matrix2D<T> to test.
@@ -160,7 +160,7 @@ public abstract class AbstractMatrixUtilsTest
      * @param <T> 2D object matrix type
      * @return a new instance of an implementation of Matrix2D<T> to test
      */
-    protected abstract <T> Matrix2D<T> createObjectMatrix2D();
+    protected abstract <T> Matrix2D<T> createMatrix2D();
 
     /**
      * Create and return a new instance of an implementation of Matrix3D<T> to test.
@@ -168,13 +168,13 @@ public abstract class AbstractMatrixUtilsTest
      * @param <T> 3D object matrix type
      * @return a new instance of an implementation of Matrix3D<T> to test
      */
-    protected abstract <T> Matrix3D<T> createObjectMatrix3D();
+    protected abstract <T> Matrix3D<T> createMatrix3D();
 
 
     public void testUnmodifiableObjectMatrix1D()
     {
-        Matrix1D<String> matrix = createObjectMatrix1D();
-        Matrix1D<String> other = createObjectMatrix1D();
+        Matrix1D<String> matrix = createMatrix1D();
+        Matrix1D<String> other = createMatrix1D();
         Matrix1D<String> unmodifiableView = MatrixUtils.unmodifiableMatrix(matrix);
         assertNotNull("unmodifiableView not null", unmodifiableView);
 
@@ -284,8 +284,8 @@ public abstract class AbstractMatrixUtilsTest
 
     public void testUnmodifiableObjectMatrix2D()
     {
-        Matrix2D<String> matrix = createObjectMatrix2D();
-        Matrix2D<String> other = createObjectMatrix2D();
+        Matrix2D<String> matrix = createMatrix2D();
+        Matrix2D<String> other = createMatrix2D();
         Matrix2D<String> unmodifiableView = MatrixUtils.unmodifiableMatrix(matrix);
         assertNotNull("unmodifiableView not null", unmodifiableView);
 
@@ -401,8 +401,8 @@ public abstract class AbstractMatrixUtilsTest
 
     public void testUnmodifiableObjectMatrix3D()
     {
-        Matrix3D<String> matrix = createObjectMatrix3D();
-        Matrix3D<String> other = createObjectMatrix3D();
+        Matrix3D<String> matrix = createMatrix3D();
+        Matrix3D<String> other = createMatrix3D();
         Matrix3D<String> unmodifiableView = MatrixUtils.unmodifiableMatrix(matrix);
         assertNotNull("unmodifiableView not null", unmodifiableView);
 
