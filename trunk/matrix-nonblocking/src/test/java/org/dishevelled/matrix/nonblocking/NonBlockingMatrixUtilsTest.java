@@ -23,8 +23,7 @@
 */
 package org.dishevelled.matrix.nonblocking;
 
-import junit.framework.TestCase;
-
+import org.dishevelled.matrix.AbstractMatrixUtilsTest;
 import org.dishevelled.matrix.Matrix1D;
 import org.dishevelled.matrix.Matrix2D;
 import org.dishevelled.matrix.Matrix3D;
@@ -38,8 +37,26 @@ import static org.dishevelled.matrix.nonblocking.NonBlockingMatrixUtils.*;
  * @version $Revision$ $Date$
  */
 public final class NonBlockingMatrixUtilsTest
-    extends TestCase
+    extends AbstractMatrixUtilsTest
 {
+
+    /** {@inheritDoc} */
+    protected <T> Matrix1D<T> createMatrix1D()
+    {
+        return createNonBlockingSparseMatrix1D(100L, 10);
+    }
+
+    /** {@inheritDoc} */
+    protected <T> Matrix2D<T> createMatrix2D()
+    {
+        return createNonBlockingSparseMatrix2D(100L, 100L, 10);
+    }
+
+    /** {@inheritDoc} */
+    protected <T> Matrix3D<T> createMatrix3D()
+    {
+        return createNonBlockingSparseMatrix3D(100L, 100L, 100L, 10);
+    }
 
     public void testCreateNonBlockingSparseMatrix1D()
     {

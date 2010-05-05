@@ -28,7 +28,7 @@ import org.dishevelled.matrix.Matrix2D;
 import org.dishevelled.matrix.Matrix3D;
 
 /**
- * Static utility methods on non-blocking matrix implementations.
+ * Static utility methods on non-blocking matrices.
  *
  * @author  Michael Heuer
  * @version $Revision$ $Date$
