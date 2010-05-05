@@ -539,6 +539,36 @@ abstract class AbstractMatrix1D<E>
         }
     }
 
+    /**
+     * Return the index of the first element.
+     *
+     * @return the index of the first element
+     */
+    protected long zero()
+    {
+        return zero;
+    }
+
+    /**
+     * Return the number of indices between any two elements.
+     *
+     * @return the number of indices between any two elements
+     */
+    protected long stride()
+    {
+        return stride;
+    }
+
+    /**
+     * Return true if this instance is a view.
+     *
+     * @return true if this instance is a view
+     */
+    protected boolean isView()
+    {
+        return isView;
+    }
+
     /** {@inheritDoc} */
     public String toString()
     {

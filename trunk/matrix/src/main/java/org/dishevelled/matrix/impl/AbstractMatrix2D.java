@@ -709,6 +709,56 @@ abstract class AbstractMatrix2D<E>
         }
     }
 
+    /**
+     * Return the row of the first element.
+     *
+     * @return the row of the first element
+     */
+    protected long rowZero()
+    {
+        return rowZero;
+    }
+
+    /**
+     * Return the column of the first element.
+     *
+     * @return the column of this first element
+     */
+    protected long columnZero()
+    {
+        return columnZero;
+    }
+
+    /**
+     * Return the number of rows between two elements.
+     *
+     * @return the number of rows between two elements
+     */
+    protected long rowStride()
+    {
+        return rowStride;
+    }
+
+    /**
+     * Return the number of columns between two elements.
+     *
+     * @return the number of columns between two elements
+     */
+    protected long columnStride()
+    {
+        return columnStride;
+    }
+
+    /**
+     * Return true if this instance is a view.
+     *
+     * @return true if this instance is a view
+     */
+    protected boolean isView()
+    {
+        return isView;
+    }
+
     /** {@inheritDoc} */
     public String toString()
     {

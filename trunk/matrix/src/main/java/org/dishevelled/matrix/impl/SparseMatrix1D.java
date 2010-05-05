@@ -67,7 +67,7 @@ public class SparseMatrix1D<E>
     }
 
     /**
-     * Create a new abstract 1D matrix with the specified size.
+     * Create a new sparse 1D matrix with the specified size.
      *
      * @param size size, must be <code>&gt;= 0</code>
      * @throws IllegalArgumentException if <code>size</code> is negative
@@ -78,7 +78,7 @@ public class SparseMatrix1D<E>
     }
 
     /**
-     * Create a new abstract 1D matrix with the specified size,
+     * Create a new sparse 1D matrix with the specified size,
      * initial capacity, and load factor.
      *
      * @param size size, must be <code>&gt;= 0</code>
@@ -180,6 +180,16 @@ public class SparseMatrix1D<E>
                 procedure.run(e);
             }
         }
+    }
+
+    /**
+     * Return a reference to the map backing this sparse 1D matrix.
+     *
+     * @return a reference to the map backing this sparse 1D matrix
+     */
+    protected Map<Long, E> elements()
+    {
+        return elements;
     }
 
     /**

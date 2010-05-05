@@ -791,6 +791,76 @@ abstract class AbstractMatrix3D<E>
     }
 
     /**
+     * Return the slice of the first element.
+     *
+     * @return the slice of the first element
+     */
+    protected long sliceZero()
+    {
+        return sliceZero;
+    }
+
+    /**
+     * Return the row of the first element.
+     *
+     * @return the row of the first element
+     */
+    protected long rowZero()
+    {
+        return rowZero;
+    }
+
+    /**
+     * Return the column of the first element.
+     *
+     * @return the column of this first element
+     */
+    protected long columnZero()
+    {
+        return columnZero;
+    }
+
+    /**
+     * Return the number of slices between two elements.
+     *
+     * @return the number of slices between two elements
+     */
+    protected long sliceStride()
+    {
+        return sliceStride;
+    }
+
+    /**
+     * Return the number of rows between two elements.
+     *
+     * @return the number of rows between two elements
+     */
+    protected long rowStride()
+    {
+        return rowStride;
+    }
+
+    /**
+     * Return the number of columns between two elements.
+     *
+     * @return the number of columns between two elements
+     */
+    protected long columnStride()
+    {
+        return columnStride;
+    }
+
+    /**
+     * Return true if this instance is a view.
+     *
+     * @return true if this instance is a view
+     */
+    protected boolean isView()
+    {
+        return isView;
+    }
+
+    /**
      * Matrix3D iterator.
      */
     private class ObjectMatrix3DIterator
