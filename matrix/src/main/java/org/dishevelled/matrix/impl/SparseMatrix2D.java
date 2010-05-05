@@ -231,6 +231,16 @@ public class SparseMatrix2D<E>
     }
 
     /**
+     * Return a reference to the map backing this sparse 2D matrix.
+     *
+     * @return a reference to the map backing this sparse 2D matrix
+     */
+    protected Map<Long, E> elements()
+    {
+        return elements;
+    }
+
+    /**
      * Write this 2D matrix to the specified object output stream.
      *
      * @see java.io.ObjectOutputStream

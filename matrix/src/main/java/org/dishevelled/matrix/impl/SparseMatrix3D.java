@@ -122,17 +122,17 @@ public class SparseMatrix3D<E>
      * @param isView true if this instance is a view
      * @param elements map of elements
      */
-    private SparseMatrix3D(final long slices,
-                                 final long rows,
-                                 final long columns,
-                                 final long sliceZero,
-                                 final long rowZero,
-                                 final long columnZero,
-                                 final long sliceStride,
-                                 final long rowStride,
-                                 final long columnStride,
-                                 final boolean isView,
-                                 final Map<Long, E> elements)
+    protected SparseMatrix3D(final long slices,
+                             final long rows,
+                             final long columns,
+                             final long sliceZero,
+                             final long rowZero,
+                             final long columnZero,
+                             final long sliceStride,
+                             final long rowStride,
+                             final long columnStride,
+                             final boolean isView,
+                             final Map<Long, E> elements)
     {
         super(slices, rows, columns,
               sliceZero, rowZero, columnZero,
@@ -233,6 +233,16 @@ public class SparseMatrix3D<E>
     public Matrix2D<E> viewColumn(final long column)
     {
         return new ColumnView(column);
+    }
+
+    /**
+     * Return a reference to the map backing this sparse 3D matrix.
+     *
+     * @return a reference to the map backing this sparse 3D matrix
+     */
+    protected Map<Long, E> elements()
+    {
+        return elements;
     }
 
     /**
