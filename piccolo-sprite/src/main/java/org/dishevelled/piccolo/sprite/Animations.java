@@ -23,6 +23,7 @@
 */
 package org.dishevelled.piccolo.sprite;
 
+import java.awt.Graphics2D;
 import java.awt.Image;
 
 import java.awt.image.BufferedImage;
@@ -213,6 +214,80 @@ public final class Animations
         throws IOException
     {
         return new LoopedFramesAnimation(createFrameList(baseImage, suffix, frames));
+    }
+
+    /**
+     * Create and return a new sprite sheet image containing all of the specified frame images
+     * assembled horizontally.
+     *
+     * @param frameImages frame images, must not be null
+     * @return a new sprite sheet image containing all of the specified frame images
+     *    assembled horizontally
+     */
+    public static BufferedImage createSpriteSheet(final List<Image> frameImages)
+    {
+        if (frameImages == null)
+        {
+            throw new IllegalArgumentException("frameImages must not be null");
+        }
+        int width = 0;
+        int height = 0;
+        for (Image image : frameImages)
+        {
+            if (image.getWidth(null) > width)
+            {
+                width = image.getWidth(null);
+            }
+            if (image.getHeight(null) > height)
+            {
+                height = image.getHeight(null);
+            }
+        }
+        BufferedImage spriteSheet = new BufferedImage(width * frameImages.size(), height, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D graphics = spriteSheet.createGraphics();
+        for (int i = 0, size = frameImages.size(); i < size; i++)
+        {
+            Image image = frameImages.get(i);
+            int x = width * i + (width / 2) - (image.getWidth(null) / 2);
+            int y = (height / 2) - (image.getHeight(null) / 2);
+            graphics.drawImage(image, x, y, null);
+        }
+        graphics.dispose();
+        return spriteSheet;
+    }
+
+    /**
+     * Create and return a new sprite sheet image containing all of the specified frame images
+     * specified from <code>baseImage</code> assembled horizontally.
+     *
+     * @param baseImage base image file
+     * @param suffix image suffix
+     * @param frames number of frames
+     * @return a new sprite sheet image containing all of the specified frame images
+     *    specified from <code>baseImage</code> assembled horizontally
+     * @throws IOException if an IO error occurs
+     */
+    public static BufferedImage createSpriteSheet(final File baseImage, final String suffix, final int frames)
+        throws IOException
+    {
+        return createSpriteSheet(createFrameList(baseImage, suffix, frames));
+    }
+
+    /**
+     * Create and return a new sprite sheet image containing all of the specified frame images
+     * specified from <code>baseImage</code> assembled horizontally.
+     *
+     * @param baseImage base image URL
+     * @param suffix image suffix
+     * @param frames number of frames
+     * @return a new sprite sheet image containing all of the specified frame images
+     *    specified from <code>baseImage</code> assembled horizontally
+     * @throws IOException if an IO error occurs
+     */
+    public static BufferedImage createSpriteSheet(final URL baseImage, final String suffix, final int frames)
+        throws IOException
+    {
+        return createSpriteSheet(createFrameList(baseImage, suffix, frames));
     }
 
     /**
