@@ -30,10 +30,10 @@ import java.awt.geom.Rectangle2D;
 
 import java.awt.image.BufferedImage;
 
-import edu.umd.cs.piccolo.PNode;
+import org.piccolo2d.PNode;
 
-import edu.umd.cs.piccolo.util.PBounds;
-import edu.umd.cs.piccolo.util.PPaintContext;
+import org.piccolo2d.util.PBounds;
+import org.piccolo2d.util.PPaintContext;
 
 /**
  * Vertical ribbon.

@@ -34,13 +34,13 @@ import java.beans.PropertyChangeListener;
 
 import java.net.URL;
 
-import edu.umd.cs.piccolo.PNode;
+import org.piccolo2d.PNode;
 
-import edu.umd.cs.piccolo.event.PInputEvent;
-import edu.umd.cs.piccolo.event.PDragSequenceEventHandler;
+import org.piccolo2d.event.PInputEvent;
+import org.piccolo2d.event.PDragSequenceEventHandler;
 
-import edu.umd.cs.piccolo.nodes.PImage;
-import edu.umd.cs.piccolo.nodes.PText;
+import org.piccolo2d.nodes.PImage;
+import org.piccolo2d.nodes.PText;
 
 import org.apache.commons.scxml.env.SimpleErrorHandler;
 

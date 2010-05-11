@@ -23,11 +23,11 @@
 */
 package org.dishevelled.piccolo.transition;
 
-import edu.umd.cs.piccolo.PNode;
+import org.piccolo2d.PNode;
 
-import edu.umd.cs.piccolo.activities.PInterpolatingActivity;
+import org.piccolo2d.activities.PInterpolatingActivity;
 
-import edu.umd.cs.piccolo.util.PUtil;
+import org.piccolo2d.util.PUtil;
 
 /**
  * Dim transition.

@@ -25,7 +25,7 @@ package org.dishevelled.piccolo.transition;
 
 import junit.framework.TestCase;
 
-import edu.umd.cs.piccolo.PNode;
+import org.piccolo2d.PNode;
 
 /**
  * Unit test for DimTransition.

@@ -39,13 +39,13 @@ import javax.swing.Timer;
 
 import javax.imageio.ImageIO;
 
-import edu.umd.cs.piccolo.PCanvas;
-import edu.umd.cs.piccolo.PLayer;
-import edu.umd.cs.piccolo.PRoot;
+import org.piccolo2d.PCanvas;
+import org.piccolo2d.PLayer;
+import org.piccolo2d.PRoot;
 
-import edu.umd.cs.piccolo.activities.PActivity;
+import org.piccolo2d.activities.PActivity;
 
-import edu.umd.cs.piccolo.util.PPaintContext;
+import org.piccolo2d.util.PPaintContext;
 
 import org.dishevelled.piccolo.ribbon.VerticalRibbon;
 import org.dishevelled.piccolo.ribbon.HorizontalRibbon;

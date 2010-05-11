@@ -31,7 +31,7 @@ import java.awt.image.BufferedImage;
 import java.util.Set;
 import java.util.Collections;
 
-import edu.umd.cs.piccolo.util.PPaintContext;
+import org.piccolo2d.util.PPaintContext;
 
 import junit.framework.TestCase;
 
