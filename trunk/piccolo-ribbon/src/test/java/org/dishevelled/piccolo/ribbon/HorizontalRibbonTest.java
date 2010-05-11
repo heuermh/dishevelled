@@ -27,7 +27,7 @@ import java.awt.Graphics2D;
 
 import java.awt.image.BufferedImage;
 
-import edu.umd.cs.piccolo.util.PPaintContext;
+import org.piccolo2d.util.PPaintContext;
 
 import junit.framework.TestCase;
 

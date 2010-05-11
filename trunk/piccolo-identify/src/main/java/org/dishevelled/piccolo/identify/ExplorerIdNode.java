@@ -34,11 +34,11 @@ import java.beans.PropertyChangeListener;
 
 import javax.swing.UIManager;
 
-import edu.umd.cs.piccolo.nodes.PPath;
+import org.piccolo2d.nodes.PPath;
 
-import edu.umd.cs.piccolo.util.PBounds;
+import org.piccolo2d.util.PBounds;
 
-import edu.umd.cs.piccolox.nodes.PShadow;
+import org.piccolo2d.extras.nodes.PShadow;
 
 import org.dishevelled.iconbundle.IconSize;
 import org.dishevelled.iconbundle.IconState;

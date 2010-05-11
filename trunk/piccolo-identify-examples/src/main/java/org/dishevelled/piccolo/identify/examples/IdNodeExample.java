@@ -40,18 +40,18 @@ import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
 
-import edu.umd.cs.piccolo.PCanvas;
-import edu.umd.cs.piccolo.PNode;
+import org.piccolo2d.PCanvas;
+import org.piccolo2d.PNode;
 
-import edu.umd.cs.piccolo.event.PBasicInputEventHandler;
-import edu.umd.cs.piccolo.event.PInputEvent;
+import org.piccolo2d.event.PBasicInputEventHandler;
+import org.piccolo2d.event.PInputEvent;
 
-import edu.umd.cs.piccolo.nodes.PImage;
-import edu.umd.cs.piccolo.nodes.PText;
+import org.piccolo2d.nodes.PImage;
+import org.piccolo2d.nodes.PText;
 
-import edu.umd.cs.piccolo.util.PPaintContext;
+import org.piccolo2d.util.PPaintContext;
 
-import edu.umd.cs.piccolox.swing.PScrollPane;
+import org.piccolo2d.extras.swing.PScrollPane;
 
 import org.dishevelled.iconbundle.IconBundle;
 import org.dishevelled.iconbundle.IconSize;

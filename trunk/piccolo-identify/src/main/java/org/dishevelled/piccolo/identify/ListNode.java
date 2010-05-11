@@ -35,12 +35,12 @@ import ca.odell.glazedlists.ListSelection;
 import ca.odell.glazedlists.event.ListEvent;
 import ca.odell.glazedlists.event.ListEventListener;
 
-import edu.umd.cs.piccolo.PNode;
+import org.piccolo2d.PNode;
 
-import edu.umd.cs.piccolo.event.PInputEvent;
-import edu.umd.cs.piccolo.event.PBasicInputEventHandler;
+import org.piccolo2d.event.PInputEvent;
+import org.piccolo2d.event.PBasicInputEventHandler;
 
-import edu.umd.cs.piccolo.nodes.PText;
+import org.piccolo2d.nodes.PText;
 
 /**
  * List node.

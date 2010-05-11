@@ -37,9 +37,9 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RoundRectangle2D;
 
-import edu.umd.cs.piccolo.nodes.PPath;
+import org.piccolo2d.nodes.PPath;
 
-import edu.umd.cs.piccolo.util.PBounds;
+import org.piccolo2d.util.PBounds;
 
 import org.dishevelled.iconbundle.IconSize;
 import org.dishevelled.iconbundle.IconState;

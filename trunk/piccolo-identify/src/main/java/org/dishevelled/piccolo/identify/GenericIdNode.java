@@ -25,7 +25,7 @@ package org.dishevelled.piccolo.identify;
 
 import java.awt.geom.Point2D;
 
-import edu.umd.cs.piccolo.util.PBounds;
+import org.piccolo2d.util.PBounds;
 
 import org.dishevelled.iconbundle.IconSize;
 

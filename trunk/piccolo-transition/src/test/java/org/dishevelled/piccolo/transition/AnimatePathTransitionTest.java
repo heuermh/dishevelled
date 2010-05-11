@@ -27,7 +27,7 @@ import java.awt.geom.Path2D;
 
 import junit.framework.TestCase;
 
-import edu.umd.cs.piccolo.PNode;
+import org.piccolo2d.PNode;
 
 /**
  * Unit test for AnimatePathTransition.
