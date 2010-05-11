@@ -35,13 +35,13 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
-import edu.umd.cs.piccolo.PCanvas;
-import edu.umd.cs.piccolo.PLayer;
+import org.piccolo2d.PCanvas;
+import org.piccolo2d.PLayer;
 
-import edu.umd.cs.piccolo.nodes.PPath;
-import edu.umd.cs.piccolo.nodes.PText;
+import org.piccolo2d.nodes.PPath;
+import org.piccolo2d.nodes.PText;
 
-import edu.umd.cs.piccolo.util.PPaintContext;
+import org.piccolo2d.util.PPaintContext;
 
 import org.dishevelled.interpolate.EasingFunction;
 import org.dishevelled.interpolate.EasingFunctions;

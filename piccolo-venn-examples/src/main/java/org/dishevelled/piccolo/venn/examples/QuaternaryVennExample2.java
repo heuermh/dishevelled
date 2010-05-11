@@ -40,9 +40,9 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
-import edu.umd.cs.piccolo.PCanvas;
+import org.piccolo2d.PCanvas;
 
-import edu.umd.cs.piccolo.util.PPaintContext;
+import org.piccolo2d.util.PPaintContext;
 
 import org.dishevelled.piccolo.venn.QuaternaryVennNode2;
 

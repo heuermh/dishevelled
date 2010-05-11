@@ -28,12 +28,12 @@ import java.awt.geom.Point2D;
 import java.util.HashMap;
 import java.util.Map;
 
-import edu.umd.cs.piccolo.PNode;
+import org.piccolo2d.PNode;
 
-import edu.umd.cs.piccolo.activities.PActivity;
+import org.piccolo2d.activities.PActivity;
 
-import edu.umd.cs.piccolo.util.PBounds;
-import edu.umd.cs.piccolo.util.PUtil;
+import org.piccolo2d.util.PBounds;
+import org.piccolo2d.util.PUtil;
 
 import org.dishevelled.multimap.BinaryKeyMap;
 

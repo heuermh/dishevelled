@@ -36,10 +36,10 @@ import java.util.Map;
 
 import javax.imageio.ImageIO;
 
-import edu.umd.cs.piccolo.PNode;
+import org.piccolo2d.PNode;
 
-import edu.umd.cs.piccolo.util.PBounds;
-import edu.umd.cs.piccolo.util.PPaintContext;
+import org.piccolo2d.util.PBounds;
+import org.piccolo2d.util.PPaintContext;
 
 import org.apache.commons.scxml.env.AbstractSCXMLListener;
 import org.apache.commons.scxml.env.SimpleErrorHandler;

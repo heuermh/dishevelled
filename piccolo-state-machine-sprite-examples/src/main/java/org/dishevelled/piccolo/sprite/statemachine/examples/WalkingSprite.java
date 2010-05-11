@@ -29,10 +29,10 @@ import java.awt.image.BufferedImage;
 
 import java.util.List;
 
-import edu.umd.cs.piccolo.event.PBasicInputEventHandler;
-import edu.umd.cs.piccolo.event.PInputEvent;
+import org.piccolo2d.event.PBasicInputEventHandler;
+import org.piccolo2d.event.PInputEvent;
 
-import edu.umd.cs.piccolo.activities.PActivity;
+import org.piccolo2d.activities.PActivity;
 
 import org.apache.commons.scxml.model.SCXML;
 
