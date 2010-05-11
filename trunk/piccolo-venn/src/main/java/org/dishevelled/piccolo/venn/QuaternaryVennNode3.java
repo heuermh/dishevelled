@@ -39,10 +39,10 @@ import java.util.concurrent.ExecutorService;
 
 import javax.swing.SwingWorker;
 
-import edu.umd.cs.piccolo.PNode;
+import org.piccolo2d.PNode;
 
-import edu.umd.cs.piccolo.nodes.PPath;
-import edu.umd.cs.piccolo.nodes.PText;
+import org.piccolo2d.nodes.PPath;
+import org.piccolo2d.nodes.PText;
 
 import org.dishevelled.venn.QuaternaryVennModel3;
 

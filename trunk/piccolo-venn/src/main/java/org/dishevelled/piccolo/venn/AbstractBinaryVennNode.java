@@ -25,9 +25,9 @@ package org.dishevelled.piccolo.venn;
 
 import java.util.Set;
 
-import edu.umd.cs.piccolo.PNode;
+import org.piccolo2d.PNode;
 
-import edu.umd.cs.piccolo.nodes.PText;
+import org.piccolo2d.nodes.PText;
 
 import org.dishevelled.observable.event.SetChangeEvent;
 import org.dishevelled.observable.event.SetChangeListener;

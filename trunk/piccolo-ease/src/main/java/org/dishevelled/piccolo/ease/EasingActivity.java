@@ -23,9 +23,9 @@
 */
 package org.dishevelled.piccolo.ease;
 
-import edu.umd.cs.piccolo.activities.PInterpolatingActivity;
+import org.piccolo2d.activities.PInterpolatingActivity;
 
-import edu.umd.cs.piccolo.util.PUtil;
+import org.piccolo2d.util.PUtil;
 
 import org.dishevelled.interpolate.EasingFunction;
 

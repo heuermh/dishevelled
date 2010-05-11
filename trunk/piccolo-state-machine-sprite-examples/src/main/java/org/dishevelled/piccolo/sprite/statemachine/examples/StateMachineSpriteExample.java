@@ -42,10 +42,10 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 import javax.swing.SwingUtilities;
 
-import edu.umd.cs.piccolo.PCanvas;
-import edu.umd.cs.piccolo.PLayer;
+import org.piccolo2d.PCanvas;
+import org.piccolo2d.PLayer;
 
-import edu.umd.cs.piccolo.util.PPaintContext;
+import org.piccolo2d.util.PPaintContext;
 
 /**
  * State machine sprite example.

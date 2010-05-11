@@ -44,14 +44,14 @@ import javax.swing.UIManager;
 
 import javax.swing.border.EmptyBorder;
 
-import edu.umd.cs.piccolo.PCanvas;
+import org.piccolo2d.PCanvas;
 
-import edu.umd.cs.piccolo.event.PBasicInputEventHandler;
-import edu.umd.cs.piccolo.event.PInputEvent;
+import org.piccolo2d.event.PBasicInputEventHandler;
+import org.piccolo2d.event.PInputEvent;
 
-import edu.umd.cs.piccolo.nodes.PText;
+import org.piccolo2d.nodes.PText;
 
-import edu.umd.cs.piccolo.util.PPaintContext;
+import org.piccolo2d.util.PPaintContext;
 
 import org.dishevelled.piccolo.venn.QuaternaryVennNode3;
 
