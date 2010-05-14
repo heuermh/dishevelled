@@ -29,6 +29,7 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 
 import java.io.File;
+import java.io.InputStream;
 import java.io.IOException;
 
 import java.net.URL;
@@ -37,6 +38,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import javax.imageio.IIOException;
 import javax.imageio.ImageIO;
 
 /**
@@ -56,6 +58,20 @@ public final class Animations
         // empty
     }
 
+
+    /**
+     * Create and return a new single frame animation from the specified image input stream.
+     *
+     * @param image image input stream
+     * @return a new single frame animation from the specified image
+     * @throws IOException if an IO error occurs
+     */
+    public static SingleFrameAnimation createAnimation(final InputStream inputStream)
+        throws IOException
+    {
+        BufferedImage bufferedImage = ImageIO.read(inputStream);
+        return createAnimation(bufferedImage);
+    }
 
     /**
      * Create and return a new single frame animation from the specified image file.
@@ -96,6 +112,12 @@ public final class Animations
         return new SingleFrameAnimation(image);
     }
 
+    // todo:
+    // create flipped & rotated frame lists
+    // add missing methods for input streams
+    // add methods that accept string baseImage param, e.g.
+    // public static List<Image> createFrameList(final String baseImage, final String suffix, final int frames) throws IOException;
+
     /**
      * Create and return an unmodifiable list of images containing all the frame images
      * specified from <code>baseImage</code>.
@@ -116,8 +138,16 @@ public final class Animations
         for (int frame = 0; frame < frames; frame++)
         {
             File file = new File(String.format(format, new Object[] { baseImage.getPath(), frame, suffix }));
-            Image image = ImageIO.read(file);
-            images.add(image);
+            try
+            {
+                Image image = ImageIO.read(file);
+                images.add(image);
+            }
+            catch (IIOException e)
+            {
+                System.err.println("failed to read frame image " + file.toString());
+                throw e;
+            }
         }
         return Collections.unmodifiableList(images);
     }
@@ -295,6 +325,29 @@ public final class Animations
      * from <code>spriteSheet</code> as specified by the starting location <code>(x, y)</code>
      * and read horizontally the specified number of frames.
      *
+     * @param spriteSheet sprite sheet input stream
+     * @param x starting location x
+     * @param y starting location y
+     * @param width frame width
+     * @param height frame height
+     * @param frames number of frames
+     * @return an unmodifiable list of frame images containing all the frame images
+     *    from <code>spriteSheet</code> as specified by the starting location <code>(x, y)</code>
+     *    and read horizontally the specified number of frames
+     */
+    public static List<Image> createFrameList(final InputStream spriteSheet, final int x, final int y,
+                                              final int width, final int height, final int frames)
+        throws IOException
+    {
+        BufferedImage bufferedImage = ImageIO.read(spriteSheet);
+        return createFrameList(bufferedImage, x, y, width, height, frames);
+    }
+
+    /**
+     * Create and return an unmodifiable list of frame images containing all the frame images
+     * from <code>spriteSheet</code> as specified by the starting location <code>(x, y)</code>
+     * and read horizontally the specified number of frames.
+     *
      * @param spriteSheet sprite sheet file
      * @param x starting location x
      * @param y starting location y
@@ -334,6 +387,29 @@ public final class Animations
         throws IOException
     {
         return new MultipleFramesAnimation(createFrameList(spriteSheet, x, y, width, height, frames));
+    }
+
+    /**
+     * Create and return a new looped frames animation containing all the frame images
+     * from <code>spriteSheet</code> as specified by the starting location <code>(x, y)</code>
+     * and read horizontally the specified number of frames.
+     *
+     * @param spriteSheet sprite sheet input stream
+     * @param x starting location x
+     * @param y starting location y
+     * @param width frame width
+     * @param height frame height
+     * @param frames number of frames
+     * @return a new looped frames animation containing all the frame images
+     *    from <code>spriteSheet</code> as specified by the starting location <code>(x, y)</code>
+     *    and read horizontally the specified number of frames
+     * @throws IOException if an IO error occurs
+     */
+    public static LoopedFramesAnimation createLoopedAnimation(final InputStream spriteSheet, final int x, final int y,
+                                                        final int width, final int height, final int frames)
+        throws IOException
+    {
+        return new LoopedFramesAnimation(createFrameList(spriteSheet, x, y, width, height, frames));
     }
 
     /**
