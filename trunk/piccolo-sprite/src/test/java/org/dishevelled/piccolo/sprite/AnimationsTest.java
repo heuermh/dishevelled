@@ -25,6 +25,8 @@ package org.dishevelled.piccolo.sprite;
 
 import junit.framework.TestCase;
 
+import static org.dishevelled.piccolo.sprite.Animations.*;
+
 /**
  * Unit test for Animations.
  *
@@ -34,6 +36,10 @@ import junit.framework.TestCase;
 public final class AnimationsTest
     extends TestCase
 {
+
+    public void testCreateAnimationInputStream()
+    {
+    }
 
     public void testCreateAnimationFile()
     {
@@ -47,11 +53,40 @@ public final class AnimationsTest
     {
     }
 
+
+    // multiple frame animations from base image
+
+    public void testCreateAnimationBaseImageString()
+    {
+    }
+
     public void testCreateAnimationBaseImageFile()
     {
     }
 
     public void testCreateAnimationBaseImageURL()
+    {
+    }
+
+
+    // looped frame animations from base image
+
+    public void testCreateLoopedAnimationBaseImageString()
+    {
+    }
+
+    public void testCreateLoopedAnimationBaseImageFile()
+    {
+    }
+
+    public void testCreateLoopedAnimationBaseImageURL()
+    {
+    }
+
+
+    // multiple frame animations from sprite sheet
+
+    public void testCreateAnimationSpriteSheetInputStream()
     {
     }
 
@@ -66,4 +101,25 @@ public final class AnimationsTest
     public void testCreateAnimationSpriteSheetImage()
     {
     }
+
+
+    // looped frame animations from sprite sheet
+
+    public void testCreateLoopedAnimationSpriteSheetInputStream()
+    {
+    }
+
+    public void testCreateLoopedAnimationSpriteSheetFile()
+    {
+    }
+
+    public void testCreateLoopedAnimationSpriteSheetURL()
+    {
+    }
+
+    public void testCreateLoopedAnimationSpriteSheetImage()
+    {
+    }
+
+
 }
