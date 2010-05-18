@@ -25,6 +25,7 @@ package org.dishevelled.piccolo.sprite;
 
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.RenderingHints;
 
 import java.awt.image.BufferedImage;
 
@@ -70,10 +71,10 @@ public final class Animations
      * @return a new single frame animation from the specified image
      * @throws IOException if an IO error occurs
      */
-    public static SingleFrameAnimation createAnimation(final InputStream inputStream)
+    public static SingleFrameAnimation createAnimation(final InputStream image)
         throws IOException
     {
-        BufferedImage bufferedImage = ImageIO.read(inputStream);
+        BufferedImage bufferedImage = ImageIO.read(image);
         return createAnimation(bufferedImage);
     }
 
@@ -184,7 +185,9 @@ public final class Animations
      *    specified from <code>baseImage</code>
      * @throws IOException if an IO error occurs
      */
-    public static LoopedFramesAnimation createLoopedAnimation(final String baseImage, final String suffix, final int frames)
+    public static LoopedFramesAnimation createLoopedAnimation(final String baseImage,
+                                                              final String suffix,
+                                                              final int frames)
         throws IOException
     {
         return new LoopedFramesAnimation(createFrameList(baseImage, suffix, frames));
@@ -201,7 +204,9 @@ public final class Animations
      *    specified from <code>baseImage</code>
      * @throws IOException if an IO error occurs
      */
-    public static LoopedFramesAnimation createLoopedAnimation(final File baseImage, final String suffix, final int frames)
+    public static LoopedFramesAnimation createLoopedAnimation(final File baseImage,
+                                                              final String suffix,
+                                                              final int frames)
         throws IOException
     {
         return new LoopedFramesAnimation(createFrameList(baseImage, suffix, frames));
@@ -218,7 +223,9 @@ public final class Animations
      *    specified from <code>baseImage</code>
      * @throws IOException if an IO error occurs
      */
-    public static LoopedFramesAnimation createLoopedAnimation(final URL baseImage, final String suffix, final int frames)
+    public static LoopedFramesAnimation createLoopedAnimation(final URL baseImage,
+                                                              final String suffix,
+                                                              final int frames)
         throws IOException
     {
         return new LoopedFramesAnimation(createFrameList(baseImage, suffix, frames));
@@ -244,7 +251,7 @@ public final class Animations
      * @throws IOException if an IO error occurs
      */
     public static MultipleFramesAnimation createAnimation(final InputStream spriteSheet, final int x, final int y,
-                                                        final int width, final int height, final int frames)
+                                                          final int width, final int height, final int frames)
         throws IOException
     {
         return new MultipleFramesAnimation(createFrameList(spriteSheet, x, y, width, height, frames));
@@ -545,6 +552,7 @@ public final class Animations
      * @return an unmodifiable list of frame images containing all the frame images
      *    from <code>spriteSheet</code> as specified by the starting location <code>(x, y)</code>
      *    and read horizontally the specified number of frames
+     * @throws IOException if an IO error occurs
      */
     public static List<Image> createFrameList(final InputStream spriteSheet, final int x, final int y,
                                               final int width, final int height, final int frames)
@@ -568,6 +576,7 @@ public final class Animations
      * @return an unmodifiable list of frame images containing all the frame images
      *    from <code>spriteSheet</code> as specified by the starting location <code>(x, y)</code>
      *    and read horizontally the specified number of frames
+     * @throws IOException if an IO error occurs
      */
     public static List<Image> createFrameList(final File spriteSheet, final int x, final int y,
                                               final int width, final int height, final int frames)
@@ -591,6 +600,7 @@ public final class Animations
      * @return an unmodifiable list of frame images containing all the frame images
      *    from <code>spriteSheet</code> as specified by the starting location <code>(x, y)</code>
      *    and read horizontally the specified number of frames
+     * @throws IOException if an IO error occurs
      */
     public static List<Image> createFrameList(final URL spriteSheet, final int x, final int y,
                                               final int width, final int height, final int frames)
@@ -633,7 +643,6 @@ public final class Animations
 
 
     // sprite sheet utility methods
-    // todo:  rendering hints?
 
     /**
      * Create and return a new sprite sheet image containing all of the specified frame images
@@ -664,6 +673,7 @@ public final class Animations
         }
         BufferedImage spriteSheet = new BufferedImage(width * frameImages.size(), height, BufferedImage.TYPE_INT_ARGB);
         Graphics2D graphics = spriteSheet.createGraphics();
+        graphics.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
         for (int i = 0, size = frameImages.size(); i < size; i++)
         {
             Image image = frameImages.get(i);
@@ -710,7 +720,7 @@ public final class Animations
     }
 
     /**
-     * Create a return an unmodifiable list of frame images containing all the frame images
+     * Create and return an unmodifiable list of frame images containing all the frame images
      * from <code>frameImages</code> in the same order flipped horizontally.
      *
      * @param frameImages list of frame images, must not be null
@@ -738,22 +748,28 @@ public final class Animations
         }
         BufferedImage spriteSheet = new BufferedImage(width * frameImages.size(), height, BufferedImage.TYPE_INT_ARGB);
         Graphics2D graphics = spriteSheet.createGraphics();
+        graphics.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
         for (int i = 0, size = frameImages.size(); i < size; i++)
         {
             Image image = frameImages.get(i);
-            double x = width * i + (width / 2.0d) - (image.getWidth(null) / 2.0d);
-            double y = (height / 2.0d) - (image.getHeight(null) / 2.0d);
-            // todo:  this transform is not correct
-            AffineTransform rotate = AffineTransform.getRotateInstance(Math.PI, x, y);
+            double cx = image.getWidth(null) / 2.0d;
+            double cy = image.getHeight(null) / 2.0d;
+            double x = width * i + (width / 2.0d) - cx;
+            double y = (height / 2.0d) - cy;
+
+            AffineTransform rotate = new AffineTransform();
+            rotate.translate(cx, cy);
+            rotate.concatenate(new AffineTransform(new double[] { 1.0d, 0.0d, 0.0d, -1.0d }));
+            rotate.translate(-cx, -cy);
             graphics.setTransform(rotate);
-            //graphics.drawImage(image, x, y, null);
+            graphics.drawImage(image, (int) x, (int) y, null);
         }
         graphics.dispose();
         return createFrameList(spriteSheet, 0, 0, width, height, frameImages.size());
     }
- 
+
     /**
-     * Create a return an unmodifiable list of frame images containing all the frame images
+     * Create and return an unmodifiable list of frame images containing all the frame images
      * from <code>frameImages</code> in the same order flipped vertically.
      *
      * @param frameImages list of frame images, must not be null
@@ -781,20 +797,35 @@ public final class Animations
         }
         BufferedImage spriteSheet = new BufferedImage(width * frameImages.size(), height, BufferedImage.TYPE_INT_ARGB);
         Graphics2D graphics = spriteSheet.createGraphics();
+        graphics.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
         for (int i = 0, size = frameImages.size(); i < size; i++)
         {
             Image image = frameImages.get(i);
-            double x = width * i + (width / 2.0d) - (image.getWidth(null) / 2.0d);
-            double y = (height / 2.0d) - (image.getHeight(null) / 2.0d);
-            // todo:  this transform is not correct
-            AffineTransform rotate = AffineTransform.getRotateInstance(Math.PI, x, y);
+            double cx = image.getWidth(null) / 2.0d;
+            double cy = image.getHeight(null) / 2.0d;
+            double x = width * i + (width / 2.0d) - cx;
+            double y = (height / 2.0d) - cy;
+
+            AffineTransform rotate = new AffineTransform();
+            rotate.translate(cx, cy);
+            rotate.concatenate(new AffineTransform(new double[] { -1.0d, 0.0d, 0.0d, 1.0d }));
+            rotate.translate(-cx, -cy);
             graphics.setTransform(rotate);
-            //graphics.drawImage(image, x, y, null);
+            graphics.drawImage(image, (int) x, (int) y, null);
         }
         graphics.dispose();
         return createFrameList(spriteSheet, 0, 0, width, height, frameImages.size());
     }
 
+    /**
+     * Create and return an unmodifiable list of frame images created by
+     * rotating around the center of specified image 2&#960;/steps times.
+     *
+     * @param image image to rotate, must not be null
+     * @param steps number of steps
+     * @return an unmodifiable list of frame images created by
+     *   rotating around the center of specified image 2&#960;/steps times
+     */
     public static List<Image> rotate(final BufferedImage image, final int steps)
     {
         if (image == null)
@@ -803,18 +834,21 @@ public final class Animations
         }
         int width = image.getWidth(null);
         int height = image.getHeight(null);
-        BufferedImage spriteSheet = new BufferedImage(width * steps, height, BufferedImage.TYPE_INT_ARGB);
+        int size = Math.max(width, height);
+        BufferedImage spriteSheet = new BufferedImage(size * steps, size, BufferedImage.TYPE_INT_ARGB);
         Graphics2D graphics = spriteSheet.createGraphics();
+        graphics.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
         double x = width / 2.0d;
         double y = height / 2.0d;
         double r = (2.0d / (double) steps) * Math.PI;
         for (int i = 0; i < steps; i++)
         {
-            AffineTransform rotate = AffineTransform.getRotateInstance(Math.PI, x, y);
-            graphics.setTransform(rotate);
-            //graphics.drawImage(image, x, y, null);
+            AffineTransform rotate = new AffineTransform();
+            rotate.translate(size * i, 0.0d);
+            rotate.rotate(i * r, x, y);
+            graphics.drawRenderedImage(image, rotate);
         }
         graphics.dispose();
-        return createFrameList(spriteSheet, 0, 0, width, height, steps);
+        return createFrameList(spriteSheet, 0, 0, size, size, steps);
     }
 }
