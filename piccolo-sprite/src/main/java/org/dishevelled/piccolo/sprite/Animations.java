@@ -689,6 +689,23 @@ public final class Animations
      * Create and return a new sprite sheet image containing all of the specified frame images
      * specified from <code>baseImage</code> assembled horizontally.
      *
+     * @param baseImage base image file or URL name
+     * @param suffix image suffix
+     * @param frames number of frames
+     * @return a new sprite sheet image containing all of the specified frame images
+     *    specified from <code>baseImage</code> assembled horizontally
+     * @throws IOException if an IO error occurs
+     */
+    public static BufferedImage createSpriteSheet(final String baseImage, final String suffix, final int frames)
+        throws IOException
+    {
+        return createSpriteSheet(createFrameList(baseImage, suffix, frames));
+    }
+
+    /**
+     * Create and return a new sprite sheet image containing all of the specified frame images
+     * specified from <code>baseImage</code> assembled horizontally.
+     *
      * @param baseImage base image file
      * @param suffix image suffix
      * @param frames number of frames

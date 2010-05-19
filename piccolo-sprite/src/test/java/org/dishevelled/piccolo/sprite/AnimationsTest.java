@@ -35,6 +35,7 @@ import java.awt.geom.GeneralPath;
 
 import java.io.InputStream;
 import java.io.File;
+import java.io.FileInputStream;
 
 import java.net.URL;
 
@@ -57,6 +58,27 @@ import static org.dishevelled.piccolo.sprite.Animations.*;
 public final class AnimationsTest
     extends TestCase
 {
+    /** File to test. */
+    private File file;
+
+    /** URL to test. */
+    private URL url;
+
+
+    /** {@inheritDoc} */
+    protected void setUp() throws Exception
+    {
+        file = File.createTempFile("animationsTest", ".png");
+        ImageIO.write(createTestSprite(10, 20), "png", file);
+        url = file.toURL();
+    }
+
+    /** {@inheritDoc} */
+    protected void tearDown() throws Exception
+    {
+        file.delete();
+    }
+
 
     /**
      * Create and return a test sprite image for test.
@@ -81,8 +103,26 @@ public final class AnimationsTest
         return image;
     }
 
+    /**
+     * Create and return a list of frame images to test.
+     *
+     * @return a list of frame images to test
+     */
+    public List<Image> createTestFrameImages()
+    {
+        List<Image> frameImages = new ArrayList<Image>();
+        for (int i = 0; i < 10; i++)
+        {
+            frameImages.add(createTestSprite(10 + (i % 2), 20 + (i % 2)));
+        }
+        return frameImages;
+    }
+
     public void testCreateAnimationInputStream() throws Exception
     {
+        SingleFrameAnimation animation = createAnimation(new FileInputStream(file));
+        assertNotNull(animation);
+
         try
         {
             createAnimation((InputStream) null);
@@ -96,6 +136,9 @@ public final class AnimationsTest
 
     public void testCreateAnimationFile() throws Exception
     {
+        SingleFrameAnimation animation = createAnimation(file);
+        assertNotNull(animation);
+
         try
         {
             createAnimation((File) null);
@@ -109,6 +152,9 @@ public final class AnimationsTest
 
     public void testCreateAnimationURL() throws Exception
     {
+        SingleFrameAnimation animation = createAnimation(url);
+        assertNotNull(animation);
+
         try
         {
             createAnimation((URL) null);
@@ -215,6 +261,9 @@ public final class AnimationsTest
 
     public void testCreateAnimationSpriteSheetInputStream() throws Exception
     {
+        MultipleFramesAnimation animation = createAnimation(new FileInputStream(file), 0, 0, 1, 20, 10);
+        assertNotNull(animation);
+
         try
         {
             createAnimation((InputStream) null, 0, 0, 10, 20, 50);
@@ -228,6 +277,9 @@ public final class AnimationsTest
 
     public void testCreateAnimationSpriteSheetFile() throws Exception
     {
+        MultipleFramesAnimation animation = createAnimation(file, 0, 0, 1, 20, 10);
+        assertNotNull(animation);
+
         try
         {
             createAnimation((File) null, 0, 0, 10, 20, 50);
@@ -241,6 +293,9 @@ public final class AnimationsTest
 
     public void testCreateAnimationSpriteSheetURL() throws Exception
     {
+        MultipleFramesAnimation animation = createAnimation(url, 0, 0, 1, 20, 10);
+        assertNotNull(animation);
+
         try
         {
             createAnimation((URL) null, 0, 0, 10, 20, 50);
@@ -263,6 +318,9 @@ public final class AnimationsTest
 
     public void testCreateLoopedAnimationSpriteSheetInputStream() throws Exception
     {
+        LoopedFramesAnimation animation = createLoopedAnimation(new FileInputStream(file), 0, 0, 1, 20, 10);
+        assertNotNull(animation);
+
         try
         {
             createLoopedAnimation((InputStream) null, 0, 0, 10, 20, 50);
@@ -276,6 +334,9 @@ public final class AnimationsTest
 
     public void testCreateLoopedAnimationSpriteSheetFile() throws Exception
     {
+        LoopedFramesAnimation animation = createLoopedAnimation(file, 0, 0, 1, 20, 10);
+        assertNotNull(animation);
+
         try
         {
             createLoopedAnimation((File) null, 0, 0, 10, 20, 50);
@@ -289,6 +350,9 @@ public final class AnimationsTest
 
     public void testCreateLoopedAnimationSpriteSheetURL() throws Exception
     {
+        LoopedFramesAnimation animation = createLoopedAnimation(url, 0, 0, 1, 20, 10);
+        assertNotNull(animation);
+
         try
         {
             createLoopedAnimation((URL) null, 0, 0, 10, 20, 50);
@@ -311,12 +375,7 @@ public final class AnimationsTest
 
     public void testCreateAnimationFrameList()
     {
-        List<Image> frameImages = new ArrayList<Image>();
-        for (int i = 0; i < 10; i++)
-        {
-            frameImages.add(createTestSprite(10 + i, 20));
-        }
-        MultipleFramesAnimation animation = createAnimation(frameImages);
+        MultipleFramesAnimation animation = createAnimation(createTestFrameImages());
         assertNotNull(animation);
 
         try
@@ -330,16 +389,12 @@ public final class AnimationsTest
         }
     }
 
+
     // looped frame animations from frame list
 
     public void testCreateLoopedAnimationFrameList()
     {
-        List<Image> frameImages = new ArrayList<Image>();
-        for (int i = 0; i < 10; i++)
-        {
-            frameImages.add(createTestSprite(10 + i, 20));
-        }
-        LoopedFramesAnimation animation = createLoopedAnimation(frameImages);
+        LoopedFramesAnimation animation = createLoopedAnimation(createTestFrameImages());
         assertNotNull(animation);
 
         try
@@ -353,18 +408,83 @@ public final class AnimationsTest
         }
     }
 
+
     // create frame lists
+
+    public void testCreateFrameList()
+    {
+        try
+        {
+            createFrameList((BufferedImage) null, 0, 0, 10, 20, 50);
+            fail("createFrameList((BufferedImage) null,) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+    }
+
 
     // sprite sheet utility methods
 
+    public void testCreateSpriteSheet()
+    {
+        BufferedImage spriteSheet = createSpriteSheet(createTestFrameImages());
+        assertNotNull(spriteSheet);
+
+        try
+        {
+            createSpriteSheet(null);
+            fail("createSpriteSheet(null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+    }
+
+    public void testCreateSpriteSheetString() throws Exception
+    {
+        try
+        {
+            createSpriteSheet((String) null, ".png", 10);
+            fail("createSpriteSheet((String) null,) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+    }
+
+    public void testCreateSpriteSheetFile() throws Exception
+    {
+        try
+        {
+            createSpriteSheet((File) null, ".png", 10);
+            fail("createSpriteSheet((File) null,) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+    }
+
+    public void testCreateSpriteSheetURL() throws Exception
+    {
+        try
+        {
+            createSpriteSheet((URL) null, ".png", 10);
+            fail("createSpriteSheet((URL) null,) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+    }
+
     public void testFlipHorizontally() throws Exception
     {
-        List<Image> frameImages = new ArrayList<Image>();
-        for (int i = 0; i < 10; i++)
-        {
-            frameImages.add(createTestSprite(10 + i, 20));
-        }
-        List<Image> flippedHorizontally = flipHorizontally(frameImages);
+        List<Image> flippedHorizontally = flipHorizontally(createTestFrameImages());
         assertNotNull(flippedHorizontally);
         assertEquals(10, flippedHorizontally.size());
 
@@ -381,12 +501,7 @@ public final class AnimationsTest
 
     public void testFlipVertically() throws Exception
     {
-        List<Image> frameImages = new ArrayList<Image>();
-        for (int i = 0; i < 10; i++)
-        {
-            frameImages.add(createTestSprite(10, 20 + i));
-        }
-        List<Image> flippedVertically = flipVertically(frameImages);
+        List<Image> flippedVertically = flipVertically(createTestFrameImages());
         assertNotNull(flippedVertically);
         assertEquals(10, flippedVertically.size());
 
