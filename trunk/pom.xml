@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <project>
   <modelVersion>4.0.0</modelVersion>
   <parent>
@@ -17,8 +17,8 @@
     <developerConnection>scm:svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk</developerConnection>
     <url>http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/trunk</url>
   </scm>
-  <build />
-  <reporting />
+  <build/>
+  <reporting/>
   <modules>
     <module>affinity</module>
     <module>archetype</module>
@@ -49,6 +49,7 @@
     <module>layout-examples</module>
     <module>matrix</module>
     <module>matrix-io</module>
+    <module>matrix-nonblocking</module>
     <module>multi-map</module>
     <module>observable</module>
     <module>observable-graph</module>
@@ -74,6 +75,7 @@
     <module>timer</module>
     <module>venn</module>
     <module>venn-examples</module>
+    <module>venn-tools</module>
     <module>vocabulary</module>
     <module>weighted</module>
   </modules>
