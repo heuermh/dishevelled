@@ -175,4 +175,88 @@ public class FileArgumentTest
         assertFalse("fileArgument wasFound == false", fileArgument.wasFound());
         assertEquals("fileArgument value == null", null, fileArgument.getValue());
     }
+
+    public void testMissingArgumentValueShort()
+        throws CommandLineParseException
+    {
+        Argument<File> fileArgument = new FileArgument("f", "file-argument", "File argument", false);
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { fileArgument }));
+
+        String[] args = new String[] { "-f" };
+        CommandLine commandLine = new CommandLine(args);
+        CommandLineParser.parse(commandLine, arguments);
+
+        assertTrue(fileArgument.wasFound());
+        assertEquals(null, fileArgument.getValue());
+    }
+
+    public void testMissingArgumentValueLong()
+        throws CommandLineParseException
+    {
+        Argument<File> fileArgument = new FileArgument("f", "file-argument", "File argument", false);
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { fileArgument }));
+
+        String[] args = new String[] { "--file-argument" };
+        CommandLine commandLine = new CommandLine(args);
+        CommandLineParser.parse(commandLine, arguments);
+
+        assertTrue(fileArgument.wasFound());
+        assertEquals(null, fileArgument.getValue());
+    }
+
+    public void testMissingArgumentValueMultipleArgumentsShort()
+        throws CommandLineParseException
+    {
+        Argument<File> fileArgument = new FileArgument("f", "file-argument", "File argument", false);
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { fileArgument }));
+
+        String[] args = new String[] { "-f", "-s" };
+        CommandLine commandLine = new CommandLine(args);
+        CommandLineParser.parse(commandLine, arguments);
+
+        assertTrue(fileArgument.wasFound());
+        assertEquals(null, fileArgument.getValue());
+    }
+
+    public void testMissingArgumentValueMultipleArgumentsShortAndLong()
+        throws CommandLineParseException
+    {
+        Argument<File> fileArgument = new FileArgument("f", "file-argument", "File argument", false);
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { fileArgument }));
+
+        String[] args = new String[] { "-f", "--some-other-argument" };
+        CommandLine commandLine = new CommandLine(args);
+        CommandLineParser.parse(commandLine, arguments);
+
+        assertTrue(fileArgument.wasFound());
+        assertEquals(null, fileArgument.getValue());
+    }
+
+    public void testMissingArgumentValueMultipleArgumentsLongAndShort()
+        throws CommandLineParseException
+    {
+        Argument<File> fileArgument = new FileArgument("f", "file-argument", "File argument", false);
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { fileArgument }));
+
+        String[] args = new String[] { "--file-argument", "-s" };
+        CommandLine commandLine = new CommandLine(args);
+        CommandLineParser.parse(commandLine, arguments);
+
+        assertTrue(fileArgument.wasFound());
+        assertEquals(null, fileArgument.getValue());
+    }
+
+    public void testMissingArgumentValueMultipleArgumentsLong()
+        throws CommandLineParseException
+    {
+        Argument<File> fileArgument = new FileArgument("f", "file-argument", "File argument", false);
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { fileArgument }));
+
+        String[] args = new String[] { "--file-argument", "--some-other-argument" };
+        CommandLine commandLine = new CommandLine(args);
+        CommandLineParser.parse(commandLine, arguments);
+
+        assertTrue(fileArgument.wasFound());
+        assertEquals(null, fileArgument.getValue());
+    }
 }
