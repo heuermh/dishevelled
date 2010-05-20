@@ -113,8 +113,20 @@ public abstract class AbstractArgument<E>
      */
     protected boolean isArgumentString(final String s)
     {
-        return (("-" + getShortName()).equals(s))
-            || (("--" + getLongName()).equals(s));
+        if (s.startsWith("-"))
+        {
+            char next = s.charAt(1);
+            if ('-' == next)
+            {
+                return true;
+            }
+            if (Character.isDigit(next))
+            {
+                return false;
+            }
+            return true;
+        }
+        return false;
     }
 
     /**
