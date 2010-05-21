@@ -33,6 +33,12 @@
       <scope>compile</scope>
     </dependency>
     <dependency>
+      <groupId>org.dishevelled</groupId>
+      <artifactId>dsh-venn</artifactId>
+      <version>${project.version}</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <scope>test</scope>
