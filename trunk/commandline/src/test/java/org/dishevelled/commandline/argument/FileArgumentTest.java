@@ -260,6 +260,20 @@ public class FileArgumentTest
         assertEquals(null, fileArgument.getValue());
     }
 
+    public void testMissingArgumentValueMultipleArgumentsLaterShort()
+        throws CommandLineParseException
+    {
+        Argument<File> fileArgument = new FileArgument("f", "file-argument", "File argument", false);
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { fileArgument }));
+
+        String[] args = new String[] { "-f", "-s", "some-other-value" };
+        CommandLine commandLine = new CommandLine(args);
+        CommandLineParser.parse(commandLine, arguments);
+
+        assertTrue(fileArgument.wasFound());
+        assertEquals(null, fileArgument.getValue());
+    }
+
     public void testMissingArgumentValueMultipleArgumentsLaterLong()
         throws CommandLineParseException
     {
