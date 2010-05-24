@@ -47,17 +47,17 @@ import org.dishevelled.commandline.Usage;
 
 import org.dishevelled.commandline.argument.FileArgument;
 
-import org.dishevelled.venn.BinaryVennModel3;
+import org.dishevelled.venn.QuaternaryVennModel3;
 
-import org.dishevelled.venn.swing.BinaryVennLabel3;
+import org.dishevelled.venn.swing.QuaternaryVennLabel3;
 
 /**
- * Venn2.
+ * Venn4.
  *
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public final class Venn2
+public final class Venn4
     implements Runnable
 {
     /** True to output count(s) only. */
@@ -72,11 +72,29 @@ public final class Venn2
     /** Second input file. */
     private final File second;
 
+    /** Third input file. */
+    private final File third;
+
+    /** Fourth input file. */
+    private final File fourth;
+
     /** First only output file, if any. */
     private final File firstOnly;
 
     /** Second only output file, if any. */
     private final File secondOnly;
+
+    /** Third only output file, if any. */
+    private final File thirdOnly;
+
+    /** Fourth only output file, if any. */
+    private final File fourthOnly;
+
+    /** First second output file, if any. */
+    private final File firstSecond;
+
+    /** Second third output file, if any. */
+    private final File secondThird;
 
     /** Intersection output file, if any. */
     private final File intersection;
@@ -85,30 +103,42 @@ public final class Venn2
     private final File union;
 
     /** Usage string. */
-    private static final String USAGE = "java Venn2 [args] first second";
+    private static final String USAGE = "java Venn4 [args] first second third fourth";
 
     /** Marker file, write to stdout. */
     private static final File STDOUT = new File(".");
 
 
     /**
-     * Create a new venn 2 with the specified arguments.
+     * Create a new venn 4 with the specified arguments.
      *
      * @param count true to output count(s) only
      * @param header true to ouput header(s)
      * @param first first input file
      * @param second second input file
+     * @param third third input file
+     * @param fourth fourth input file
      * @param firstOnly first only output file
      * @param secondOnly second only output file
+     * @param thirdOnly third only output file
+     * @param fourthOnly fourth only output file
+     * @param firstSecond first second output file
+     * @param secondThird second third output file
      * @param intersection intersection output file
      * @param union union output file
      */
-    private Venn2(final boolean count,
+    private Venn4(final boolean count,
                   final boolean header,
                   final File first,
                   final File second,
+                  final File third,
+                  final File fourth,
                   final File firstOnly,
                   final File secondOnly,
+                  final File thirdOnly,
+                  final File fourthOnly,
+                  final File firstSecond,
+                  final File secondThird,
                   final File intersection,
                   final File union)
     {
@@ -116,8 +146,14 @@ public final class Venn2
         this.header = header;
         this.first = first;
         this.second = second;
+        this.third = third;
+        this.fourth = fourth;
         this.firstOnly = firstOnly;
         this.secondOnly = secondOnly;
+        this.thirdOnly = thirdOnly;
+        this.fourthOnly = fourthOnly;
+        this.firstSecond = firstSecond;
+        this.secondThird = secondThird;
         this.intersection = intersection;
         this.union = union;
     }
@@ -126,94 +162,80 @@ public final class Venn2
     /** {@inheritDoc} */
     public void run()
     {
-        BinaryVennLabel3<String> label = new BinaryVennLabel3<String>(first.getName(), read(first), second.getName(), read(second));
-        BinaryVennModel3<String> model = label.getModel();
+        QuaternaryVennLabel3<String> label = new QuaternaryVennLabel3<String>(first.getName(), read(first), second.getName(), read(second), third.getName(), read(third), fourth.getName(), read(fourth));
+        QuaternaryVennModel3<String> model = label.getModel();
 
         // write individually to output files first
         write(label.getFirstOnlyLabelText(), model.firstOnly(), firstOnly);
         write(label.getSecondOnlyLabelText(), model.secondOnly(), secondOnly);
+        write(label.getThirdOnlyLabelText(), model.thirdOnly(), thirdOnly);
+        write(label.getFourthOnlyLabelText(), model.fourthOnly(), fourthOnly);
+        write(label.getFirstSecondLabelText(), model.firstSecond(), firstSecond);
+        write(label.getSecondThirdLabelText(), model.secondThird(), secondThird);
         write(label.getIntersectionLabelText(), model.intersection(), intersection);
         write(label.getUnionLabelText(), model.union(), union);
 
         // write collectively to stdout next
-        boolean writeFirstOnly = (firstOnly != null);
-        boolean writeSecondOnly = (secondOnly != null);
-        boolean writeIntersection = (intersection != null);
-        boolean writeUnion = (union != null);
+        boolean fo = (firstOnly != null);
+        boolean so = (secondOnly != null);
+        boolean to = (thirdOnly != null);
+        boolean ro = (fourthOnly != null);
+        boolean fs = (firstSecond != null);
+        boolean st = (secondThird != null);
+        boolean i = (intersection != null);
+        boolean u = (union != null);
 
         PrintWriter stdout = null;
         stdout = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));
         if (header)
         {
-            if (writeFirstOnly)
-            {
-                stdout.print(label.getFirstOnlyLabelText() + "\t");
-            }
-            if (writeSecondOnly)
-            {
-                stdout.print(label.getSecondOnlyLabelText() + "\t");
-            }
-            if (writeIntersection)
-            {
-                stdout.print(label.getIntersectionLabelText() + "\t");
-            }
-            if (writeUnion)
-            {
-                stdout.print(label.getUnionLabelText() + "\t");
-            }
+            write(fo, label.getFirstOnlyLabelText(), stdout);
+            write(so, label.getSecondOnlyLabelText(), stdout);
+            write(to, label.getThirdOnlyLabelText(), stdout);
+            write(ro, label.getFourthOnlyLabelText(), stdout);
+            write(fs, label.getFirstSecondLabelText(), stdout);
+            write(st, label.getSecondThirdLabelText(), stdout);
+            write(i, label.getIntersectionLabelText(), stdout);
+            write(u, label.getUnionLabelText(), stdout);
             // todo trim extra \t
             stdout.print("\n");
         }
 
         if (count)
         {
-            if (writeFirstOnly)
-            {
-                stdout.print(model.firstOnly().size() + "\t");
-            }
-            if (writeSecondOnly)
-            {
-                stdout.print(model.secondOnly().size() + "\t");
-            }
-            if (writeIntersection)
-            {
-                stdout.print(model.intersection().size() + "\t");
-            }
-            if (writeUnion)
-            {
-                stdout.print(model.union().size() + "\t");
-            }
+            write(fo, model.firstOnly().size(), stdout);
+            write(so, model.secondOnly().size(), stdout);
+            write(to, model.thirdOnly().size(), stdout);
+            write(ro, model.fourthOnly().size(), stdout);
+            write(fs, model.firstSecond().size(), stdout);
+            write(st, model.secondThird().size(), stdout);
+            write(i, model.intersection().size(), stdout);
+            write(u, model.union().size(), stdout);
             // todo trim extra \t
             stdout.print("\n");
         }
         else
         {
-            boolean remaining = writeFirstOnly || writeSecondOnly || writeIntersection || writeUnion;
-            Iterator<String> fo = model.firstOnly().iterator();
-            Iterator<String> so = model.secondOnly().iterator();
-            Iterator<String> i = model.intersection().iterator();
-            Iterator<String> u = model.union().iterator();
-
+            boolean remaining = fo || so || to || ro || fs || st || i || u;
+            Iterator<String> foit = model.firstOnly().iterator();
+            Iterator<String> soit = model.secondOnly().iterator();
+            Iterator<String> toit = model.thirdOnly().iterator();
+            Iterator<String> roit = model.fourthOnly().iterator();
+            Iterator<String> fsit = model.firstSecond().iterator();
+            Iterator<String> stit = model.secondThird().iterator();
+            Iterator<String> iit = model.intersection().iterator();
+            Iterator<String> uit = model.union().iterator();
             while (remaining)
             {
-                if (writeFirstOnly && fo.hasNext())
-                {
-                    stdout.print(fo.next() + "\t");
-                }
-                if (writeSecondOnly && so.hasNext())
-                {
-                    stdout.print(so.next() + "\t");
-                }
-                if (writeIntersection && i.hasNext())
-                {
-                    stdout.print(i.next() + "\t");
-                }
-                if (writeUnion && u.hasNext())
-                {
-                    stdout.print(u.next() + "\t");
-                }
-                remaining = fo.hasNext() || so.hasNext() || i.hasNext() || u.hasNext();
-
+                write(fo, foit, stdout);
+                write(so, soit, stdout);
+                write(to, toit, stdout);
+                write(ro, foit, stdout);
+                write(fs, fsit, stdout);
+                write(st, stit, stdout);
+                write(i, iit, stdout);
+                write(u, uit, stdout);
+                remaining = foit.hasNext() || soit.hasNext() || toit.hasNext() || roit.hasNext() || fsit.hasNext() || stit.hasNext() || iit.hasNext() || uit.hasNext();
                 // todo trim extra \t
                 stdout.print("\n");
             }
@@ -225,6 +247,36 @@ public final class Venn2
         catch (Exception e)
         {
             // ignore
+        }
+    }
+
+    private void write(final boolean write, final String labelText, final PrintWriter stdout)
+    {
+        if (write)
+        {
+            stdout.print(labelText);
+            stdout.print("\t");
+        }
+    }
+
+    private void write(final boolean write, final int size, final PrintWriter stdout)
+    {
+        if (write)
+        {
+            stdout.print(size);
+            stdout.print("\t");
+        }
+    }
+
+    private void write(final boolean write, final Iterator<String> it, final PrintWriter stdout)
+    {
+        if (write)
+        {
+            if (it.hasNext())
+            {
+                stdout.print(it.next());
+            }
+            stdout.print("\t");
         }
     }
 
@@ -332,10 +384,14 @@ public final class Venn2
             Switch header = new Switch("e", "header", "output header(s)");
             FileArgument firstOnly = new FileArgument("f", "first-only", "first only output file", false);
             FileArgument secondOnly = new FileArgument("s", "second-only", "second only output file", false);
+            FileArgument thirdOnly = new FileArgument("t", "third-only", "third only output file", false);
+            FileArgument fourthOnly = new FileArgument("r", "fourth-only", "fourth only output file", false);
+            FileArgument firstSecond = new FileArgument("j", "first-second", "first second output file", false);
+            FileArgument secondThird = new FileArgument("k", "second-third", "second third output file", false);
             FileArgument intersection = new FileArgument("i", "intersection", "intersection output file", false);
             FileArgument union = new FileArgument("u", "union", "union output file", false);
 
-            arguments = new ArgumentList(help, count, header, firstOnly, secondOnly, intersection, union);
+            arguments = new ArgumentList(help, count, header, firstOnly, secondOnly, thirdOnly, fourthOnly, firstSecond, secondThird, intersection, union);
             commandLine = new CommandLine(args);
             CommandLineParser.parse(commandLine, arguments);
 
@@ -345,21 +401,27 @@ public final class Venn2
             }
             else
             {
-                if (args.length < 2)
+                if (args.length < 4)
                 {
-                    throw new IllegalArgumentException("must have at least two file arguments, first and second input files");
+                    throw new IllegalArgumentException("must have at least two file arguments, first, second, third and fourth input files");
                 }
-                File first = new File(args[args.length - 2]);
-                File second = new File(args[args.length - 1]);
-                if (first.getName().startsWith("-") || second.getName().startsWith("-"))
+                File first = new File(args[args.length - 4]);
+                File second = new File(args[args.length - 3]);
+                File third = new File(args[args.length - 2]);
+                File fourth = new File(args[args.length - 1]);
+                if (first.getName().startsWith("-") || second.getName().startsWith("-") || third.getName().startsWith("-") || fourth.getName().startsWith("-"))
                 {
-                    throw new IllegalArgumentException("must have at least two file arguments, first and second input files");
+                    throw new IllegalArgumentException("must have at least two file arguments, first, second, third and fourth input files");
                 }
-                File f = defaultIfFound(firstOnly, first, second, STDOUT);
-                File s = defaultIfFound(secondOnly, first, second, STDOUT);
-                File i = defaultIfFound(intersection, first, second, STDOUT);
-                File u = defaultIfFound(union, first, second, STDOUT);
-                new Venn2(count.wasFound(), header.wasFound(), first, second, f, s, i, u).run();
+                File f = defaultIfFound(firstOnly, first, second, third, fourth, STDOUT);
+                File s = defaultIfFound(secondOnly, first, second, third, fourth, STDOUT);
+                File t = defaultIfFound(thirdOnly, first, second, third, fourth, STDOUT);
+                File r = defaultIfFound(fourthOnly, first, second, third, fourth, STDOUT);
+                File j = defaultIfFound(firstSecond, first, second, third, fourth, STDOUT);
+                File k = defaultIfFound(secondThird, first, second, third, fourth, STDOUT);
+                File i = defaultIfFound(intersection, first, second, third,  fourth, STDOUT);
+                File u = defaultIfFound(union, first, second, third, fourth, STDOUT);
+                new Venn4(count.wasFound(), header.wasFound(), first, second, third, fourth, f, s, t, r, j, k, i, u).run();
             }
         }
         catch (CommandLineParseException e)
@@ -374,17 +436,21 @@ public final class Venn2
 
     /**
      * Default to the specified default value if the argument was found and has a null
-     * value or if the value matches either of <code>value0</code> or <code>value1</code>.
+     * value or if the value matches either of <code>value0</code>, <code>value1</code>,
+     * <code>value2</code>, or <code>value3</code>.
      *
      * @param <T> argument type
      * @param argument argument
      * @param value0 first value
      * @param value1 second value
+     * @param value2 third value
+     * @param value3 fourth value
      * @param defaultValue default value
      * @return the specified default value if the argument was found and has a null
-     *    value or if the value matches either of <code>value0</code> or <code>value1</code>
+     *    value or if the value matches either of <code>value0</code>, <code>value1</code>,
+     *    <code>value2</code>, or <code>value3</code>
      */
-    private static <T> T defaultIfFound(final Argument<T> argument, final T value0, final T value1, final T defaultValue)
+    private static <T> T defaultIfFound(final Argument<T> argument, final T value0, final T value1, final T value2, final T value3, final T defaultValue)
     {
         if (argument.wasFound())
         {
@@ -394,7 +460,7 @@ public final class Venn2
             }
             else
             {
-                if (value0.equals(argument.getValue()) || value1.equals(argument.getValue()))
+                if (value0.equals(argument.getValue()) || value1.equals(argument.getValue()) || value2.equals(argument.getValue()) || value3.equals(argument.getValue()))
                 {
                     return defaultValue;
                 }

@@ -169,7 +169,7 @@ public final class Venn3
         boolean writeFirstSecond = (firstSecond != null);
         boolean writeSecondThird = (secondThird != null);
         boolean writeIntersection = (intersection != null);
-        boolean writeUnion = (intersection != null);
+        boolean writeUnion = (union != null);
 
         PrintWriter stdout = null;
         stdout = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));
