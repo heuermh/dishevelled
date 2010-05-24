@@ -93,8 +93,32 @@ public final class Venn4
     /** First second output file, if any. */
     private final File firstSecond;
 
+    /** First third output file, if any. */
+    private final File firstThird;
+
+    /** First fourth output file, if any. */
+    private final File firstFourth;
+
     /** Second third output file, if any. */
     private final File secondThird;
+
+    /** Second fourth output file, if any. */
+    private final File secondFourth;
+
+    /** Third fourth output file, if any. */
+    private final File thirdFourth;
+
+    /** First second third output file, if any. */
+    private final File firstSecondThird;
+
+    /** First second fourth output file, if any. */
+    private final File firstSecondFourth;
+
+    /** First third fourth output file, if any. */
+    private final File firstThirdFourth;
+
+    /** Second third fourth output file, if any. */
+    private final File secondThirdFourth;
 
     /** Intersection output file, if any. */
     private final File intersection;
@@ -123,7 +147,15 @@ public final class Venn4
      * @param thirdOnly third only output file
      * @param fourthOnly fourth only output file
      * @param firstSecond first second output file
+     * @param firstThird first third output file
+     * @param firstFourth first fourth output file
      * @param secondThird second third output file
+     * @param secondFourth second fourth output file
+     * @param thirdFourth third fourth output
+     * @param firstSecondThird first second third output file
+     * @param firstSecondFourth first second fourth output file
+     * @param firstThirdFourth first third fourth output file
+     * @param secondThirdFourth second third fourth output file
      * @param intersection intersection output file
      * @param union union output file
      */
@@ -138,7 +170,15 @@ public final class Venn4
                   final File thirdOnly,
                   final File fourthOnly,
                   final File firstSecond,
+                  final File firstThird,
+                  final File firstFourth,
                   final File secondThird,
+                  final File secondFourth,
+                  final File firstSecondThird,
+                  final File firstSecondFourth,
+                  final File firstThirdFourth,
+                  final File secondThirdFourth,
+                  final File thirdFourth,
                   final File intersection,
                   final File union)
     {
@@ -153,7 +193,15 @@ public final class Venn4
         this.thirdOnly = thirdOnly;
         this.fourthOnly = fourthOnly;
         this.firstSecond = firstSecond;
+        this.firstThird = firstThird;
+        this.firstFourth = firstFourth;
         this.secondThird = secondThird;
+        this.secondFourth = secondFourth;
+        this.thirdFourth = thirdFourth;
+        this.firstSecondThird = firstSecondThird;
+        this.firstSecondFourth = firstSecondFourth;
+        this.firstThirdFourth = firstThirdFourth;
+        this.secondThirdFourth = secondThirdFourth;
         this.intersection = intersection;
         this.union = union;
     }
@@ -171,7 +219,15 @@ public final class Venn4
         write(label.getThirdOnlyLabelText(), model.thirdOnly(), thirdOnly);
         write(label.getFourthOnlyLabelText(), model.fourthOnly(), fourthOnly);
         write(label.getFirstSecondLabelText(), model.firstSecond(), firstSecond);
+        write(label.getFirstThirdLabelText(), model.firstThird(), firstThird);
+        write(label.getFirstFourthLabelText(), model.firstFourth(), firstFourth);
         write(label.getSecondThirdLabelText(), model.secondThird(), secondThird);
+        write(label.getSecondFourthLabelText(), model.secondFourth(), secondFourth);
+        write(label.getThirdFourthLabelText(), model.thirdFourth(), thirdFourth);
+        write(label.getFirstSecondThirdLabelText(), model.firstSecondThird(), firstSecondThird);
+        write(label.getFirstSecondFourthLabelText(), model.firstSecondFourth(), firstSecondFourth);
+        write(label.getFirstThirdFourthLabelText(), model.firstThirdFourth(), firstThirdFourth);
+        write(label.getSecondThirdFourthLabelText(), model.secondThirdFourth(), secondThirdFourth);
         write(label.getIntersectionLabelText(), model.intersection(), intersection);
         write(label.getUnionLabelText(), model.union(), union);
 
@@ -181,7 +237,15 @@ public final class Venn4
         boolean to = STDOUT.equals(thirdOnly);
         boolean ro = STDOUT.equals(fourthOnly);
         boolean fs = STDOUT.equals(firstSecond);
+        boolean ft = STDOUT.equals(firstThird);
+        boolean fr = STDOUT.equals(firstFourth);
         boolean st = STDOUT.equals(secondThird);
+        boolean sr = STDOUT.equals(secondFourth);
+        boolean tr = STDOUT.equals(thirdFourth);
+        boolean fst = STDOUT.equals(firstSecondThird);
+        boolean fsr = STDOUT.equals(firstSecondFourth);
+        boolean ftr = STDOUT.equals(firstThirdFourth);
+        boolean str = STDOUT.equals(secondThirdFourth);
         boolean i = STDOUT.equals(intersection);
         boolean u = STDOUT.equals(union);
 
@@ -194,7 +258,15 @@ public final class Venn4
             write(to, label.getThirdOnlyLabelText(), stdout);
             write(ro, label.getFourthOnlyLabelText(), stdout);
             write(fs, label.getFirstSecondLabelText(), stdout);
+            write(ft, label.getFirstThirdLabelText(), stdout);
+            write(fr, label.getFirstFourthLabelText(), stdout);
             write(st, label.getSecondThirdLabelText(), stdout);
+            write(sr, label.getSecondFourthLabelText(), stdout);
+            write(tr, label.getThirdFourthLabelText(), stdout);
+            write(fst, label.getFirstSecondThirdLabelText(), stdout);
+            write(fsr, label.getFirstSecondFourthLabelText(), stdout);
+            write(ftr, label.getFirstThirdFourthLabelText(), stdout);
+            write(str, label.getSecondThirdFourthLabelText(), stdout);
             write(i, label.getIntersectionLabelText(), stdout);
             write(u, label.getUnionLabelText(), stdout);
             // todo trim extra \t
@@ -208,7 +280,15 @@ public final class Venn4
             write(to, model.thirdOnly().size(), stdout);
             write(ro, model.fourthOnly().size(), stdout);
             write(fs, model.firstSecond().size(), stdout);
+            write(ft, model.firstThird().size(), stdout);
+            write(fr, model.firstFourth().size(), stdout);
             write(st, model.secondThird().size(), stdout);
+            write(sr, model.secondFourth().size(), stdout);
+            write(tr, model.thirdFourth().size(), stdout);
+            write(fst, model.firstSecondThird().size(), stdout);
+            write(fsr, model.firstSecondFourth().size(), stdout);
+            write(ftr, model.firstThirdFourth().size(), stdout);
+            write(str, model.secondThirdFourth().size(), stdout);
             write(i, model.intersection().size(), stdout);
             write(u, model.union().size(), stdout);
             // todo trim extra \t
@@ -216,13 +296,21 @@ public final class Venn4
         }
         else
         {
-            boolean remaining = fo || so || to || ro || fs || st || i || u;
+            boolean remaining = fo || so || to || ro || fs || ft || fr || st || sr || tr || fst || fsr || ftr || str || i || u;
             Iterator<String> foit = model.firstOnly().iterator();
             Iterator<String> soit = model.secondOnly().iterator();
             Iterator<String> toit = model.thirdOnly().iterator();
             Iterator<String> roit = model.fourthOnly().iterator();
             Iterator<String> fsit = model.firstSecond().iterator();
+            Iterator<String> ftit = model.firstThird().iterator();
+            Iterator<String> frit = model.firstFourth().iterator();
             Iterator<String> stit = model.secondThird().iterator();
+            Iterator<String> srit = model.secondFourth().iterator();
+            Iterator<String> trit = model.thirdFourth().iterator();
+            Iterator<String> fstit = model.firstSecondThird().iterator();
+            Iterator<String> fsrit = model.firstSecondFourth().iterator();
+            Iterator<String> ftrit = model.firstThirdFourth().iterator();
+            Iterator<String> strit = model.secondThirdFourth().iterator();
             Iterator<String> iit = model.intersection().iterator();
             Iterator<String> uit = model.union().iterator();
             while (remaining)
@@ -232,7 +320,15 @@ public final class Venn4
                 write(to, toit, stdout);
                 write(ro, foit, stdout);
                 write(fs, fsit, stdout);
+                write(ft, ftit, stdout);
+                write(fr, frit, stdout);
                 write(st, stit, stdout);
+                write(sr, srit, stdout);
+                write(tr, trit, stdout);
+                write(fst, fstit, stdout);
+                write(fsr, fsrit, stdout);
+                write(ftr, ftrit, stdout);
+                write(str, strit, stdout);
                 write(i, iit, stdout);
                 write(u, uit, stdout);
                 remaining = (fo && foit.hasNext())
@@ -240,7 +336,15 @@ public final class Venn4
                     || (to && toit.hasNext())
                     || (ro && roit.hasNext())
                     || (fs && fsit.hasNext())
+                    || (ft && ftit.hasNext())
+                    || (fr && frit.hasNext())
                     || (st && stit.hasNext())
+                    || (sr && srit.hasNext())
+                    || (tr && trit.hasNext())
+                    || (fst && fstit.hasNext())
+                    || (fsr && fsrit.hasNext())
+                    || (ftr && ftrit.hasNext())
+                    || (str && strit.hasNext())
                     || (i && iit.hasNext())
                     || (u && uit.hasNext());
 
@@ -395,11 +499,21 @@ public final class Venn4
             FileArgument thirdOnly = new FileArgument("t", "third-only", "third only output file", false);
             FileArgument fourthOnly = new FileArgument("r", "fourth-only", "fourth only output file", false);
             FileArgument firstSecond = new FileArgument("j", "first-second", "first second output file", false);
-            FileArgument secondThird = new FileArgument("k", "second-third", "second third output file", false);
+            FileArgument firstThird = new FileArgument("k", "first-third", "first third output file", false);
+            FileArgument firstFourth = new FileArgument("l", "first-fourth", "first fourth output file", false);
+            FileArgument secondThird = new FileArgument("m", "second-third", "second third output file", false);
+            FileArgument secondFourth = new FileArgument("n", "second-fourth", "second fourth output file", false);
+            FileArgument thirdFourth = new FileArgument("o", "third-fourth", "third fourth output file", false);
+            FileArgument firstSecondThird = new FileArgument("p", "first-second-third", "first second third output file", false);
+            FileArgument firstSecondFourth = new FileArgument("q", "first-second-fourth", "first second fourth output file", false);
+            FileArgument firstThirdFourth = new FileArgument("v", "first-third-fourth", "first third fourth output file", false);
+            FileArgument secondThirdFourth = new FileArgument("w", "second-third-fourth", "second third fourth output file", false);
             FileArgument intersection = new FileArgument("i", "intersection", "intersection output file", false);
             FileArgument union = new FileArgument("u", "union", "union output file", false);
 
-            arguments = new ArgumentList(help, count, header, firstOnly, secondOnly, thirdOnly, fourthOnly, firstSecond, secondThird, intersection, union);
+            arguments = new ArgumentList(help, count, header, firstOnly, secondOnly, thirdOnly, fourthOnly,
+                                         firstSecond, firstThird, firstFourth, secondThird, secondFourth, thirdFourth,
+                                         firstSecondThird, firstSecondFourth, firstThirdFourth, secondThirdFourth, intersection, union);
             commandLine = new CommandLine(args);
             CommandLineParser.parse(commandLine, arguments);
 
@@ -426,10 +540,18 @@ public final class Venn4
                 File t = defaultIfFound(thirdOnly, first, second, third, fourth, STDOUT);
                 File r = defaultIfFound(fourthOnly, first, second, third, fourth, STDOUT);
                 File j = defaultIfFound(firstSecond, first, second, third, fourth, STDOUT);
-                File k = defaultIfFound(secondThird, first, second, third, fourth, STDOUT);
+                File k = defaultIfFound(firstThird, first, second, third, fourth, STDOUT);
+                File l = defaultIfFound(firstFourth, first, second, third, fourth, STDOUT);
+                File m = defaultIfFound(secondThird, first, second, third, fourth, STDOUT);
+                File n = defaultIfFound(secondFourth, first, second, third, fourth, STDOUT);
+                File o = defaultIfFound(thirdFourth, first, second, third, fourth, STDOUT);
+                File p = defaultIfFound(firstSecondThird, first, second, third, fourth, STDOUT);
+                File q = defaultIfFound(firstSecondFourth, first, second, third, fourth, STDOUT);
+                File v = defaultIfFound(firstThirdFourth, first, second, third, fourth, STDOUT);
+                File w = defaultIfFound(secondThirdFourth, first, second, third, fourth, STDOUT);
                 File i = defaultIfFound(intersection, first, second, third,  fourth, STDOUT);
                 File u = defaultIfFound(union, first, second, third, fourth, STDOUT);
-                new Venn4(count.wasFound(), header.wasFound(), first, second, third, fourth, f, s, t, r, j, k, i, u).run();
+                new Venn4(count.wasFound(), header.wasFound(), first, second, third, fourth, f, s, t, r, j, k, l, m, n, o, p, q, v, w, i, u).run();
             }
         }
         catch (CommandLineParseException e)
