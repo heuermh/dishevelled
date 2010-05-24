@@ -163,125 +163,67 @@ public final class Venn3
         write(label.getUnionLabelText(), model.union(), union);
 
         // write collectively to stdout next
-        boolean writeFirstOnly = (firstOnly != null);
-        boolean writeSecondOnly = (secondOnly != null);
-        boolean writeThirdOnly = (thirdOnly != null);
-        boolean writeFirstSecond = (firstSecond != null);
-        boolean writeSecondThird = (secondThird != null);
-        boolean writeIntersection = (intersection != null);
-        boolean writeUnion = (union != null);
+        boolean fo = STDOUT.equals(firstOnly);
+        boolean so = STDOUT.equals(secondOnly);
+        boolean to = STDOUT.equals(thirdOnly);
+        boolean fs = STDOUT.equals(firstSecond);
+        boolean st = STDOUT.equals(secondThird);
+        boolean i = STDOUT.equals(intersection);
+        boolean u = STDOUT.equals(union);
 
         PrintWriter stdout = null;
         stdout = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));
         if (header)
         {
-            if (writeFirstOnly)
-            {
-                stdout.print(label.getFirstOnlyLabelText() + "\t");
-            }
-            if (writeSecondOnly)
-            {
-                stdout.print(label.getSecondOnlyLabelText() + "\t");
-            }
-            if (writeThirdOnly)
-            {
-                stdout.print(label.getThirdOnlyLabelText() + "\t");
-            }
-            if (writeFirstSecond)
-            {
-                stdout.print(label.getFirstSecondLabelText() + "\t");
-            }
-            if (writeSecondThird)
-            {
-                stdout.print(label.getSecondThirdLabelText() + "\t");
-            }
-            if (writeIntersection)
-            {
-                stdout.print(label.getIntersectionLabelText() + "\t");
-            }
-            if (writeUnion)
-            {
-                stdout.print(label.getUnionLabelText() + "\t");
-            }
+            write(fo, label.getFirstOnlyLabelText(), stdout);
+            write(so, label.getSecondOnlyLabelText(), stdout);
+            write(to, label.getThirdOnlyLabelText(), stdout);
+            write(fs, label.getFirstSecondLabelText(), stdout);
+            write(st, label.getSecondThirdLabelText(), stdout);
+            write(i, label.getIntersectionLabelText(), stdout);
+            write(u, label.getUnionLabelText(), stdout);
             // todo trim extra \t
             stdout.print("\n");
         }
 
         if (count)
         {
-            if (writeFirstOnly)
-            {
-                stdout.print(model.firstOnly().size() + "\t");
-            }
-            if (writeSecondOnly)
-            {
-                stdout.print(model.secondOnly().size() + "\t");
-            }
-            if (writeThirdOnly)
-            {
-                stdout.print(model.thirdOnly().size() + "\t");
-            }
-            if (writeFirstSecond)
-            {
-                stdout.print(model.firstSecond().size() + "\t");
-            }
-            if (writeSecondThird)
-            {
-                stdout.print(model.secondThird().size() + "\t");
-            }
-            if (writeIntersection)
-            {
-                stdout.print(model.intersection().size() + "\t");
-            }
-            if (writeUnion)
-            {
-                stdout.print(model.union().size() + "\t");
-            }
+            write(fo, model.firstOnly().size(), stdout);
+            write(so, model.secondOnly().size(), stdout);
+            write(to, model.thirdOnly().size(), stdout);
+            write(fs, model.firstSecond().size(), stdout);
+            write(st, model.secondThird().size(), stdout);
+            write(i, model.intersection().size(), stdout);
+            write(u, model.union().size(), stdout);
             // todo trim extra \t
             stdout.print("\n");
         }
         else
         {
-            boolean remaining = writeFirstOnly || writeSecondOnly || writeThirdOnly || writeFirstSecond || writeSecondThird || writeIntersection || writeUnion;
-            Iterator<String> fo = model.firstOnly().iterator();
-            Iterator<String> so = model.secondOnly().iterator();
-            Iterator<String> to = model.thirdOnly().iterator();
-            Iterator<String> fs = model.firstSecond().iterator();
-            Iterator<String> st = model.secondThird().iterator();
-            Iterator<String> i = model.intersection().iterator();
-            Iterator<String> u = model.union().iterator();
-
+            boolean remaining = fo || so || to || fs || st || i || u;
+            Iterator<String> foit = model.firstOnly().iterator();
+            Iterator<String> soit = model.secondOnly().iterator();
+            Iterator<String> toit = model.thirdOnly().iterator();
+            Iterator<String> fsit = model.firstSecond().iterator();
+            Iterator<String> stit = model.secondThird().iterator();
+            Iterator<String> iit = model.intersection().iterator();
+            Iterator<String> uit = model.union().iterator();
             while (remaining)
             {
-                if (writeFirstOnly && fo.hasNext())
-                {
-                    stdout.print(fo.next() + "\t");
-                }
-                if (writeSecondOnly && so.hasNext())
-                {
-                    stdout.print(so.next() + "\t");
-                }
-                if (writeThirdOnly && to.hasNext())
-                {
-                    stdout.print(to.next() + "\t");
-                }
-                if (writeFirstSecond && fs.hasNext())
-                {
-                    stdout.print(fs.next() + "\t");
-                }
-                if (writeSecondThird && st.hasNext())
-                {
-                    stdout.print(st.next() + "\t");
-                }
-                if (writeIntersection && i.hasNext())
-                {
-                    stdout.print(i.next() + "\t");
-                }
-                if (writeUnion && u.hasNext())
-                {
-                    stdout.print(u.next() + "\t");
-                }
-                remaining = fo.hasNext() || so.hasNext() || to.hasNext() || fs.hasNext() || st.hasNext() || i.hasNext() || u.hasNext();
+                write(fo, foit, stdout);
+                write(so, soit, stdout);
+                write(to, toit, stdout);
+                write(fs, fsit, stdout);
+                write(st, stit, stdout);
+                write(i, iit, stdout);
+                write(u, uit, stdout);
+                remaining = (fo && foit.hasNext())
+                    || (so && soit.hasNext())
+                    || (to && toit.hasNext())
+                    || (fs && fsit.hasNext())
+                    || (st && stit.hasNext())
+                    || (i && iit.hasNext())
+                    || (u && uit.hasNext());
 
                 // todo trim extra \t
                 stdout.print("\n");
@@ -294,6 +236,36 @@ public final class Venn3
         catch (Exception e)
         {
             // ignore
+        }
+    }
+
+    private void write(final boolean write, final String labelText, final PrintWriter stdout)
+    {
+        if (write)
+        {
+            stdout.print(labelText);
+            stdout.print("\t");
+        }
+    }
+
+    private void write(final boolean write, final int size, final PrintWriter stdout)
+    {
+        if (write)
+        {
+            stdout.print(size);
+            stdout.print("\t");
+        }
+    }
+
+    private void write(final boolean write, final Iterator<String> it, final PrintWriter stdout)
+    {
+        if (write)
+        {
+            if (it.hasNext())
+            {
+                stdout.print(it.next());
+            }
+            stdout.print("\t");
         }
     }
 

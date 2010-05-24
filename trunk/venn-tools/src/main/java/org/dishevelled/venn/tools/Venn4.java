@@ -176,14 +176,14 @@ public final class Venn4
         write(label.getUnionLabelText(), model.union(), union);
 
         // write collectively to stdout next
-        boolean fo = (firstOnly != null);
-        boolean so = (secondOnly != null);
-        boolean to = (thirdOnly != null);
-        boolean ro = (fourthOnly != null);
-        boolean fs = (firstSecond != null);
-        boolean st = (secondThird != null);
-        boolean i = (intersection != null);
-        boolean u = (union != null);
+        boolean fo = STDOUT.equals(firstOnly);
+        boolean so = STDOUT.equals(secondOnly);
+        boolean to = STDOUT.equals(thirdOnly);
+        boolean ro = STDOUT.equals(fourthOnly);
+        boolean fs = STDOUT.equals(firstSecond);
+        boolean st = STDOUT.equals(secondThird);
+        boolean i = STDOUT.equals(intersection);
+        boolean u = STDOUT.equals(union);
 
         PrintWriter stdout = null;
         stdout = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));
@@ -235,7 +235,15 @@ public final class Venn4
                 write(st, stit, stdout);
                 write(i, iit, stdout);
                 write(u, uit, stdout);
-                remaining = foit.hasNext() || soit.hasNext() || toit.hasNext() || roit.hasNext() || fsit.hasNext() || stit.hasNext() || iit.hasNext() || uit.hasNext();
+                remaining = (fo && foit.hasNext())
+                    || (so && soit.hasNext())
+                    || (to && toit.hasNext())
+                    || (ro && roit.hasNext())
+                    || (fs && fsit.hasNext())
+                    || (st && stit.hasNext())
+                    || (i && iit.hasNext())
+                    || (u && uit.hasNext());
+
                 // todo trim extra \t
                 stdout.print("\n");
             }
