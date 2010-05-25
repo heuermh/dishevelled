@@ -116,10 +116,25 @@ public final class Venn2
         this.header = header;
         this.first = first;
         this.second = second;
-        this.firstOnly = firstOnly;
-        this.secondOnly = secondOnly;
-        this.intersection = intersection;
-        this.union = union;
+
+        // default all to stdout if none are specified
+        if ((firstOnly == null)
+            && (secondOnly == null)
+            && (intersection == null)
+            && (union == null))
+        {
+            this.firstOnly = STDOUT;
+            this.secondOnly = STDOUT;
+            this.intersection = STDOUT;
+            this.union = STDOUT;
+        }
+        else
+        {
+            this.firstOnly = firstOnly;
+            this.secondOnly = secondOnly;
+            this.intersection = intersection;
+            this.union = union;
+        }
     }
 
 

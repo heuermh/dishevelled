@@ -137,13 +137,34 @@ public final class Venn3
         this.first = first;
         this.second = second;
         this.third = third;
-        this.firstOnly = firstOnly;
-        this.secondOnly = secondOnly;
-        this.thirdOnly = thirdOnly;
-        this.firstSecond = firstSecond;
-        this.secondThird = secondThird;
-        this.intersection = intersection;
-        this.union = union;
+
+        // default all to stdout if none are specified
+        if ((firstOnly == null)
+            && (secondOnly == null)
+            && (thirdOnly == null)
+            && (firstSecond == null)
+            && (secondThird == null)
+            && (intersection == null)
+            && (union == null))
+        {
+            this.firstOnly = STDOUT;
+            this.secondOnly = STDOUT;
+            this.thirdOnly = STDOUT;
+            this.firstSecond = STDOUT;
+            this.secondThird = STDOUT;
+            this.intersection = STDOUT;
+            this.union = STDOUT;
+        }
+        else
+        {
+            this.firstOnly = firstOnly;
+            this.secondOnly = secondOnly;
+            this.thirdOnly = thirdOnly;
+            this.firstSecond = firstSecond;
+            this.secondThird = secondThird;
+            this.intersection = intersection;
+            this.union = union;
+        }
     }
 
 

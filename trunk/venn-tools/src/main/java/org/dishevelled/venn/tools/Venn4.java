@@ -188,22 +188,61 @@ public final class Venn4
         this.second = second;
         this.third = third;
         this.fourth = fourth;
-        this.firstOnly = firstOnly;
-        this.secondOnly = secondOnly;
-        this.thirdOnly = thirdOnly;
-        this.fourthOnly = fourthOnly;
-        this.firstSecond = firstSecond;
-        this.firstThird = firstThird;
-        this.firstFourth = firstFourth;
-        this.secondThird = secondThird;
-        this.secondFourth = secondFourth;
-        this.thirdFourth = thirdFourth;
-        this.firstSecondThird = firstSecondThird;
-        this.firstSecondFourth = firstSecondFourth;
-        this.firstThirdFourth = firstThirdFourth;
-        this.secondThirdFourth = secondThirdFourth;
-        this.intersection = intersection;
-        this.union = union;
+
+        // default all to stdout if none are specified
+        if ((firstOnly == null)
+            && (secondOnly == null)
+            && (thirdOnly == null)
+            && (fourthOnly == null)
+            && (firstSecond == null)
+            && (firstThird == null)
+            && (firstFourth == null)
+            && (secondThird == null)
+            && (secondFourth == null)
+            && (thirdFourth == null)
+            && (firstSecondThird == null)
+            && (firstSecondFourth == null)
+            && (firstThirdFourth == null)
+            && (secondThirdFourth == null)
+            && (intersection == null)
+            && (union == null))
+        {
+            this.firstOnly = STDOUT;
+            this.secondOnly = STDOUT;
+            this.thirdOnly = STDOUT;
+            this.fourthOnly = STDOUT;
+            this.firstSecond = STDOUT;
+            this.firstThird = STDOUT;
+            this.firstFourth = STDOUT;
+            this.secondThird = STDOUT;
+            this.secondFourth = STDOUT;
+            this.thirdFourth = STDOUT;
+            this.firstSecondThird = STDOUT;
+            this.firstSecondFourth = STDOUT;
+            this.firstThirdFourth = STDOUT;
+            this.secondThirdFourth = STDOUT;
+            this.intersection = STDOUT;
+            this.union = STDOUT;
+        }
+        else
+        {
+            this.firstOnly = firstOnly;
+            this.secondOnly = secondOnly;
+            this.thirdOnly = thirdOnly;
+            this.fourthOnly = fourthOnly;
+            this.firstSecond = firstSecond;
+            this.firstThird = firstThird;
+            this.firstFourth = firstFourth;
+            this.secondThird = secondThird;
+            this.secondFourth = secondFourth;
+            this.thirdFourth = thirdFourth;
+            this.firstSecondThird = firstSecondThird;
+            this.firstSecondFourth = firstSecondFourth;
+            this.firstThirdFourth = firstThirdFourth;
+            this.secondThirdFourth = secondThirdFourth;
+            this.intersection = intersection;
+            this.union = union;
+        }
     }
 
 
