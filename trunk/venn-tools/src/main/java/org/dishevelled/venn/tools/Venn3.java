@@ -23,21 +23,13 @@
 */
 package org.dishevelled.venn.tools;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
-import java.io.Writer;
 
-import java.util.HashSet;
 import java.util.Iterator;
-import java.util.Set;
 
-import org.dishevelled.commandline.Argument;
 import org.dishevelled.commandline.ArgumentList;
 import org.dishevelled.commandline.CommandLine;
 import org.dishevelled.commandline.CommandLineParseException;
@@ -52,20 +44,14 @@ import org.dishevelled.venn.TernaryVennModel3;
 import org.dishevelled.venn.swing.TernaryVennLabel3;
 
 /**
- * Venn3.
+ * Venn three input files.
  *
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
 public final class Venn3
-    implements Runnable
+    extends AbstractVennRunnable
 {
-    /** True to output count(s) only. */
-    private final boolean count;
-
-    /** True to output header(s). */
-    private final boolean header;
-
     /** First input file. */
     private final File first;
 
@@ -99,9 +85,6 @@ public final class Venn3
     /** Usage string. */
     private static final String USAGE = "java Venn3 [args] first second third";
 
-    /** Marker file, write to stdout. */
-    private static final File STDOUT = new File(".");
-
 
     /**
      * Create a new venn 3 with the specified arguments.
@@ -132,8 +115,7 @@ public final class Venn3
                   final File intersection,
                   final File union)
     {
-        this.count = count;
-        this.header = header;
+        super(count, header);
         this.first = first;
         this.second = second;
         this.third = third;
@@ -194,7 +176,7 @@ public final class Venn3
 
         PrintWriter stdout = null;
         stdout = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));
-        if (header)
+        if (header())
         {
             write(fo, label.getFirstOnlyLabelText(), stdout);
             write(so, label.getSecondOnlyLabelText(), stdout);
@@ -207,7 +189,7 @@ public final class Venn3
             stdout.print("\n");
         }
 
-        if (count)
+        if (count())
         {
             write(fo, model.firstOnly().size(), stdout);
             write(so, model.secondOnly().size(), stdout);
@@ -260,123 +242,6 @@ public final class Venn3
         }
     }
 
-    private void write(final boolean write, final String labelText, final PrintWriter stdout)
-    {
-        if (write)
-        {
-            stdout.print(labelText);
-            stdout.print("\t");
-        }
-    }
-
-    private void write(final boolean write, final int size, final PrintWriter stdout)
-    {
-        if (write)
-        {
-            stdout.print(size);
-            stdout.print("\t");
-        }
-    }
-
-    private void write(final boolean write, final Iterator<String> it, final PrintWriter stdout)
-    {
-        if (write)
-        {
-            if (it.hasNext())
-            {
-                stdout.print(it.next());
-            }
-            stdout.print("\t");
-        }
-    }
-
-    /**
-     * Read a set of strings from the specified input file.
-     *
-     * @param input input file
-     * @return a set of strings
-     */
-    private static Set<String> read(final File input)
-    {
-        BufferedReader reader = null;
-        Set<String> result = new HashSet<String>(Math.max(16, (int) input.length() / 64));
-        try
-        {
-            reader = new BufferedReader(new FileReader(input));
-            while (reader.ready())
-            {
-                result.add(reader.readLine().trim());
-            }
-        }
-        catch (IOException e)
-        {
-            //throw new IllegalArgumentException("could not read input file " + input, e);  // jdk 1.6+
-            throw new IllegalArgumentException("could not read input file " + input + ", " + e.getMessage());
-        }
-        finally
-        {
-            try
-            {
-                reader.close();
-            }
-            catch (Exception e)
-            {
-                // ignore
-            }
-        }
-        return result;
-    }
-
-    /**
-     * Write the specified set view to the specified file if valid.
-     *
-     * @param headerText header text
-     * @param view view
-     * @param file file
-     */
-    private void write(final String headerText, final Set<String> view, final File file)
-    {
-        if (file == null || STDOUT.equals(file))
-        {
-            return;
-        }
-        PrintWriter writer = null;
-        try
-        {
-            writer = new PrintWriter(new BufferedWriter(new FileWriter(file)));
-            if (header)
-            {
-                writer.println(headerText);
-            }
-            if (count)
-            {
-                writer.println(view.size());
-            }
-            else
-            {
-                for (String s : view)
-                {
-                    writer.println(s);
-                }
-            }
-        }
-        catch (IOException e)
-        {
-            //throw new IllegalArgumentException("could not write to output file " + file, e); // jdk 1.6+
-            throw new IllegalArgumentException("could not write to output file " + file + ", " + e.getMessage());
-        }
-        finally
-        {
-            try
-            {
-                writer.close();
-            }
-            catch (Exception e)
-            {
-                // ignore
-            }
-        }
-    }
 
     /**
      * Main.
@@ -439,40 +304,5 @@ public final class Venn3
         {
             Usage.usage(USAGE, e, commandLine, arguments, System.err);
         }
-    }
-
-    /**
-     * Default to the specified default value if the argument was found and has a null
-     * value or if the value matches either of <code>value0</code>, <code>value1</code>,
-     * or <code>value2</code>.
-     *
-     * @param <T> argument type
-     * @param argument argument
-     * @param value0 first value
-     * @param value1 second value
-     * @param value2 third value
-     * @param defaultValue default value
-     * @return the specified default value if the argument was found and has a null
-     *    value or if the value matches either of <code>value0</code>, <code>value1</code>,
-     *    or <code>value2</code>
-     */
-    private static <T> T defaultIfFound(final Argument<T> argument, final T value0, final T value1, final T value2, final T defaultValue)
-    {
-        if (argument.wasFound())
-        {
-            if (argument.getValue() == null)
-            {
-                return defaultValue;
-            }
-            else
-            {
-                if (value0.equals(argument.getValue()) || value1.equals(argument.getValue()) || value2.equals(argument.getValue()))
-                {
-                    return defaultValue;
-                }
-                return argument.getValue();
-            }
-        }
-        return null;
     }
 }
