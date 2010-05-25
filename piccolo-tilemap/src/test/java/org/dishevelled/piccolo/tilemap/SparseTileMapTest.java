@@ -51,17 +51,17 @@ public final class SparseTileMapTest
 
     public void testConstructor()
     {
-        SparseTileMap tileMap0 = new SparseTileMap(1L, 1L, 0.0d, 0.0d);
-        SparseTileMap tileMap1 = new SparseTileMap(1L, 1L, 1.0d, 0.0d);
-        SparseTileMap tileMap2 = new SparseTileMap(1L, 1L, 0.0d, 1.0d);
-        SparseTileMap tileMap3 = new SparseTileMap(1L, 1L, 1.0d, 1.0d);
-        SparseTileMap tileMap4 = new SparseTileMap(1000L, 1L, 1.0d, 1.0d);
-        SparseTileMap tileMap5 = new SparseTileMap(1L, 1000L, 1.0d, 1.0d);
-        SparseTileMap tileMap6 = new SparseTileMap(1000L, 1000L, 1.0d, 1.0d);
+        new SparseTileMap(1L, 1L, 0.0d, 0.0d);
+        new SparseTileMap(1L, 1L, 1.0d, 0.0d);
+        new SparseTileMap(1L, 1L, 0.0d, 1.0d);
+        new SparseTileMap(1L, 1L, 1.0d, 1.0d);
+        new SparseTileMap(1000L, 1L, 1.0d, 1.0d);
+        new SparseTileMap(1L, 1000L, 1.0d, 1.0d);
+        new SparseTileMap(1000L, 1000L, 1.0d, 1.0d);
 
         try
         {
-            SparseTileMap tileMap = new SparseTileMap(0L, 1L, 1.0d, 1.0d);
+            new SparseTileMap(0L, 1L, 1.0d, 1.0d);
             fail("ctr(0,,,) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
@@ -70,7 +70,7 @@ public final class SparseTileMapTest
         }
         try
         {
-            SparseTileMap tileMap = new SparseTileMap(-1L, 1L, 1.0d, 1.0d);
+            new SparseTileMap(-1L, 1L, 1.0d, 1.0d);
             fail("ctr(-1,,,) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
@@ -79,7 +79,7 @@ public final class SparseTileMapTest
         }
         try
         {
-            SparseTileMap tileMap = new SparseTileMap(1L, 0, 1.0d, 1.0d);
+            new SparseTileMap(1L, 0, 1.0d, 1.0d);
             fail("ctr(,0,,) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
@@ -88,7 +88,7 @@ public final class SparseTileMapTest
         }
         try
         {
-            SparseTileMap tileMap = new SparseTileMap(1L, -1L, 1.0d, 1.0d);
+            new SparseTileMap(1L, -1L, 1.0d, 1.0d);
             fail("ctr(,-1,,) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
@@ -97,7 +97,7 @@ public final class SparseTileMapTest
         }
         try
         {
-            SparseTileMap tileMap = new SparseTileMap(1L, 1L, -1.0d, 1.0d);
+            new SparseTileMap(1L, 1L, -1.0d, 1.0d);
             fail("ctr(,,-1.0,) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
@@ -106,7 +106,7 @@ public final class SparseTileMapTest
         }
         try
         {
-            SparseTileMap tileMap = new SparseTileMap(1L, 1L, 1.0d, -1.0d);
+            new SparseTileMap(1L, 1L, 1.0d, -1.0d);
             fail("ctr(,,,-1.0) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
