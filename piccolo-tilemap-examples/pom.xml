@@ -33,7 +33,7 @@
           <configuration>
             <archive>
               <manifest>
-                <mainClass>org.dishevelled.piccolo.tilemap.examples.TileMapExample</mainClass>
+                <mainClass>org.dishevelled.piccolo.tilemap.examples.SparseTileMapExample</mainClass>
               </manifest>
             </archive>
             <descriptorRefs>
