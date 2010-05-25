@@ -76,6 +76,28 @@ public class FlixelTileMapReader
     }
 
     /**
+     * Create a new flixel tile map reader with the specified tile set image input stream.
+     *
+     * @param tileSet tile set image input stream, must not be null
+     * @param tileWidth tile width in pixels
+     * @param tileHeight tile height in pixels
+     * @param frames number of frames
+     */
+    public FlixelTileMapReader(final InputStream tileSet, final int tileWidth, final int tileHeight, final int frames)
+    {
+        this.tileWidth = tileWidth;
+        this.tileHeight = tileHeight;
+        try
+        {
+            tiles = Animations.createFrameList(tileSet, 0, 0, tileWidth, tileHeight, frames);
+        }
+        catch (IOException e)
+        {
+            throw new RuntimeException("could not read from " + tileSet);
+        }
+    }
+
+    /**
      * Create a new flixel tile map reader with the specified tile set image file.
      *
      * @param tileSet tile set image file, must not be null
