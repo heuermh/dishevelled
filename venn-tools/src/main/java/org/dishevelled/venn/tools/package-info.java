@@ -32,7 +32,7 @@
  * 1000\t2000\t500\t3000
  *
  * $ venn2 --count --header first.txt second.txt
- * first.txt only\tsecond.txt only\nintersection\tunion
+ * first.txt only\tsecond.txt only\nIntersection\tUnion
  * 1000\t2000\t500\t3000
  *
  * $ venn2 --count --first-only first.txt second.txt
@@ -56,18 +56,18 @@
  * 2000
  *
  * $ venn2 --count --intersection --header first.txt second.txt
- * intersection
+ * Intersection
  * 500
  *
  * $ venn2 --count --union --header first.txt second.txt
- * union
+ * Union
  * 3000
  *
  * $ venn2 --count --first-only --intersection first.txt second.txt
  * 1000\t500
  *
  * $ venn2 --count --first-only --intersection --header first.txt second.txt
- * first.txt only\tintersection
+ * first.txt only\tIntersection
  * 1000\t500
  *
  * $ venn2 --count --first-only first-only.txt first.txt second.txt
@@ -120,12 +120,12 @@
  * second1...
  *
  * $ venn2 --intersection --header first.txt second.txt
- * intersection
+ * Intersection
  * intersection0
  * intersection1...
  *
  * $ venn2 --union --header first.txt second.txt
- * union
+ * Union
  * union0
  * union1...
  *
@@ -134,7 +134,7 @@
  * first1\tintersection1...
  *
  * $ venn2 --first-only --intersection --header first.txt second.txt
- * first.txt only\tintersection
+ * first.txt only\tIntersection
  * first0\tintersection0
  * first1\tintersection1...
  *
@@ -154,7 +154,7 @@
  * first0\nfirst1\n... &gt; first-only.txt
  *
  * $ venn2 --first-only first-only.txt --intersection --header first.txt second.txt
- * intersection
+ * Intersection
  * intersection0
  * intersection1...
  * first.txt only\nfirst0\nfirst1\n... &gt; first-only.txt
@@ -165,7 +165,7 @@
  * first0\nfirst1\n... &gt; first-only.txt
  *
  * $ venn2 --first-only first-only.txt --intersection --header first.txt second.txt
- * intersection\tunion
+ * Intersection\tUnion
  * intersection0\tunion0
  * intersection1\tunion1...
  * first.txt only\nfirst0\nfirst1\n... &gt; first-only.txt
