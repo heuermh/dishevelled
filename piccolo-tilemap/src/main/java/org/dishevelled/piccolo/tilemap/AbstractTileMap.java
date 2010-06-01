@@ -62,7 +62,7 @@ public abstract class AbstractTileMap
     private boolean proxiesInvalid;
 
     /** Advance procedure. */
-    private static final UnaryProcedure<Sprite> ADVANCE_PROCEDURE = new UnaryProcedure<Sprite>()
+    private static final UnaryProcedure<Sprite> ADVANCE = new UnaryProcedure<Sprite>()
         {
             /** {@inheritDoc} */
             public void run(final Sprite tile)
@@ -72,7 +72,7 @@ public abstract class AbstractTileMap
         };
 
     /** Create proxy procedure. */
-    private final TernaryProcedure<Long, Long, Sprite> createProxyProcedure =
+    private final TernaryProcedure<Long, Long, Sprite> createProxy =
         new TernaryProcedure<Long, Long, Sprite>()
             {
                 /** {@inheritDoc} */
@@ -219,9 +219,9 @@ public abstract class AbstractTileMap
     }
 
     /**
-     * Fill the specified row in this tile map node with the specified tile.
+     * Fill <code>[0, y]</code> to <code>[getMapWidth(), y]</code> in this tile map node with the specified tile.
      *
-     * @param row row in this tile map node, must be <code>&gt;= 0</code> and <code>&lt; getMapHeight()</code>
+     * @param y y in this tile map node, must be <code>&gt;= 0</code> and <code>&lt; getMapHeight()</code>
      * @param tile tile to fill with
      */
     public final void fillY(final long y, final Sprite tile)
@@ -242,9 +242,9 @@ public abstract class AbstractTileMap
     }
 
     /**
-     * Fill the specified column in this tile map node with the specified tile.
+     * Fill <code>[x, 0]</code> to <code>[x, getMapHeight()]</code> in this tile map node with the specified tile.
      *
-     * @param column column in this tile map node, must be <code>&gt;= 0</code> and <code>&lt; getMapHeight()</code>
+     * @param x x in this tile map node, must be <code>&gt;= 0</code> and <code>&lt; getMapWidth()</code>
      * @param tile tile to fill with
      */
     public final void fillX(final long x, final Sprite tile)
@@ -349,7 +349,7 @@ public abstract class AbstractTileMap
      */
     public final void advance()
     {
-        tileMap.forEachNonNull(ADVANCE_PROCEDURE);
+        tileMap.forEachNonNull(ADVANCE);
         repaint();
     }
 
@@ -367,7 +367,7 @@ public abstract class AbstractTileMap
     private void validateProxies()
     {
         removeAllChildren();
-        tileMap.forEach(createProxyProcedure);
+        tileMap.forEach(createProxy);
 
         proxiesInvalid = false;
     }
