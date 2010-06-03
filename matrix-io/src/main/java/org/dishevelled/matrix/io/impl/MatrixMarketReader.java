@@ -47,6 +47,12 @@ import org.dishevelled.matrix.impl.SparseMatrix2D;
 public final class MatrixMarketReader
     extends AbstractMatrix2DReader<Double>
 {
+    /** Matrix2D supplier. */
+    private final Matrix2DSupplier supplier;
+
+    /** Default Matrix2D supplier. */
+    private static final Matrix2DSupplier DEFAULT_SUPPLIER = new SparseMatrix2DSupplier();
+
     /** Map of reader strategies keyed by name. */
     private static final Map<String, ReaderStrategy> STRATEGIES;
 
@@ -62,6 +68,30 @@ public final class MatrixMarketReader
         // TODO:  hermitian might only be valid for complex matrices
         STRATEGIES.put("hermitian", new HermitianReaderStrategy());
     }
+
+
+    /**
+     * Create a new matrix market reader with the default supplier.
+     */
+    public MatrixMarketReader()
+    {
+        this(DEFAULT_SUPPLIER);
+    }
+
+    /**
+     * Create a new matrix market reader with the specified supplier.
+     *
+     * @param supplier Matrix2D supplier, must not be null
+     */
+    public MatrixMarketReader(final Matrix2DSupplier supplier)
+    {
+        if (supplier == null)
+        {
+            throw new IllegalArgumentException("supplier must not be null");
+        }
+        this.supplier = supplier;
+    }
+
 
     /** {@inheritDoc} */
     public Matrix2D<Double> read(final InputStream inputStream) throws IOException
@@ -118,7 +148,7 @@ public final class MatrixMarketReader
                                                   + " before reading header line");
                         }
                         int cardinality = readerStrategy.cardinality(entries);
-                        matrix = new SparseMatrix2D<Double>(rows, columns, cardinality, 0.75f);
+                        matrix = supplier.createMatrix2D(rows, columns, cardinality);
                     }
                     else
                     {
@@ -160,6 +190,35 @@ public final class MatrixMarketReader
             throw new IOException("could not create create matrix, check header and first non-comment line");
         }
         return matrix;
+    }
+
+    /**
+     * Matrix2D supplier.
+     */
+    interface Matrix2DSupplier
+    {
+
+        /**
+         * Create and return a new implementation of Matrix2D&lt;Double&gt;.
+         *
+         * @param rows number of rows
+         * @param columns number of columns
+         * @param cardinality approximate cardinality
+         * @return a new instance of an implementation of Matrix2D&lt;Double&gt;
+         */
+        Matrix2D<Double> createMatrix2D(long rows, long columns, int cardinality);
+    }
+
+    /**
+     * SparseMatrix2D supplier.
+     */
+    private static class SparseMatrix2DSupplier implements Matrix2DSupplier
+    {
+        /** {@inheritDoc} */
+        public Matrix2D<Double> createMatrix2D(final long rows, final long columns, final int cardinality)
+        {
+            return new SparseMatrix2D<Double>(rows, columns, cardinality, 0.75f);
+        }
     }
 
     /**
