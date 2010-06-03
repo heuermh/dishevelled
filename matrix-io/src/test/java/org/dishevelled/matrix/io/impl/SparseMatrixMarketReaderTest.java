@@ -34,7 +34,7 @@ import junit.framework.TestCase;
 import org.dishevelled.matrix.Matrix2D;
 
 /**
- * Unit test for MatrixMarketReader.
+ * Unit test for SparseMatrixMarketReader.
  *
  * @author  Michael Heuer
  * @version $Revision$ $Date$
