@@ -23,20 +23,12 @@
 */
 package org.dishevelled.matrix.io.impl;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
 
 import org.dishevelled.functor.TernaryPredicate;
 import org.dishevelled.functor.TernaryProcedure;
 
 import org.dishevelled.matrix.Matrix2D;
-
-import org.dishevelled.matrix.io.Matrix2DWriter;
 
 /**
  * Matrix Market format writer for matrices of numbers in two dimensions.
@@ -45,7 +37,7 @@ import org.dishevelled.matrix.io.Matrix2DWriter;
  * @version $Revision$ $Date$
  */
 public final class MatrixMarketWriter
-    implements Matrix2DWriter<Number>
+    extends AbstractMatrix2DWriter<Number>
 {
     // TODO:
     // matrix type (real, complex, integer, pattern) should be {specifiable, automatic}
@@ -111,44 +103,5 @@ public final class MatrixMarketWriter
             });
 
         return appendable;
-    }
-
-    /** {@inheritDoc} */
-    public void write(final Matrix2D<? extends Number> matrix, final File file) throws IOException
-    {
-        if (matrix == null)
-        {
-            throw new IllegalArgumentException("matrix must not be null");
-        }
-        if (file == null)
-        {
-            throw new IllegalArgumentException("file must not be null");
-        }
-        Writer writer = null;
-        try
-        {
-            writer = new BufferedWriter(new FileWriter(file));
-            append(matrix, writer);
-        }
-        finally
-        {
-            MatrixIOUtils.closeQuietly(writer);
-        }
-    }
-
-    /** {@inheritDoc} */
-    public void write(final Matrix2D<? extends Number> matrix, final OutputStream outputStream) throws IOException
-    {
-        if (matrix == null)
-        {
-            throw new IllegalArgumentException("matrix must not be null");
-        }
-        if (outputStream == null)
-        {
-            throw new IllegalArgumentException("outputStream must not be null");
-        }
-        Writer writer = new BufferedWriter(new OutputStreamWriter(outputStream));
-        append(matrix, writer);
-        writer.flush();
     }
 }
