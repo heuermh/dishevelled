@@ -26,6 +26,7 @@ package org.dishevelled.piccolo.venn;
 import java.awt.Shape;
 
 import java.awt.geom.Area;
+import java.awt.geom.PathIterator;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
@@ -177,7 +178,7 @@ final class Centers
             throw new IllegalArgumentException("centroid must not be null");
         }
 
-        Rectangle2D bounds = area.getBounds2D();
+        final Rectangle2D bounds = area.getBounds2D();
         final Random random = new Random();
         List<Point2D> individuals = new ArrayList<Point2D>(100);
         for (int i = 0; i < 100; i++)
@@ -223,10 +224,17 @@ final class Centers
 
         Fitness<Point2D> fitness = new Fitness<Point2D>()
             {
-                private double distance = 0.0d;
-                private double leastXDistance = Double.MAX_VALUE;
-                private double leastYDistance = Double.MAX_VALUE;
-                private Point2D query = new Point2D.Double();
+                private double distance;
+                private double leastXDistance;
+                private double leastYDistance;
+                private final Point2D query = new Point2D.Double();
+                private Area vertical;
+                private Area horizontal;
+                private Rectangle2D horizontalBounds;
+                private Rectangle2D verticalBounds;
+                private final Rectangle2D v = new Rectangle2D.Double();
+                private final Rectangle2D h = new Rectangle2D.Double();
+
 
                 /** {@inheritDoc} */
                 public Double score(final Point2D individual)
@@ -235,52 +243,19 @@ final class Centers
                     {
                         return Double.valueOf(0.0d);
                     }
-                    distance = 0.0d;
-                    leastXDistance = Double.MAX_VALUE;
-                    leastYDistance = Double.MAX_VALUE;
                     query.setLocation(individual.getX(), individual.getY());
-                    while (area.contains(query))
-                    {
-                        query.setLocation(query.getX() + 0.5d, query.getY());
-                    }
-                    distance = query.getX() - individual.getX();
-                    if (distance < leastXDistance)
-                    {
-                        leastXDistance = distance;
-                    }
-                    query.setLocation(individual.getX(), query.getY());
 
-                    while (area.contains(query))
-                    {
-                        query.setLocation(query.getX() - 0.5d, query.getY());
-                    }
-                    distance = individual.getX() - query.getX();
-                    if (distance < leastXDistance)
-                    {
-                        leastXDistance = distance;
-                    }
-                    query.setLocation(individual.getX(), query.getY());
+                    v.setRect(query.getX(), bounds.getY(), 1.0d, bounds.getY() + bounds.getHeight());
+                    vertical = new Area(v);
+                    vertical.intersect(area);
+                    verticalBounds = vertical.getBounds2D();
+                    leastYDistance = Math.min(query.getY() - verticalBounds.getY(), verticalBounds.getY() + verticalBounds.getHeight() - query.getY());
 
-                    while (area.contains(query))
-                    {
-                        query.setLocation(query.getX(), query.getY() + 0.5d);
-                    }
-                    distance = query.getY() - individual.getY();
-                    if (distance < leastYDistance)
-                    {
-                        leastYDistance = distance;
-                    }
-                    query.setLocation(query.getX(), individual.getY());
-
-                    while (area.contains(query))
-                    {
-                        query.setLocation(query.getX(), query.getY() - 0.5d);
-                    }
-                    distance = individual.getY() - query.getY();
-                    if (distance < leastYDistance)
-                    {
-                        leastYDistance = distance;
-                    }
+                    h.setRect(bounds.getX(), query.getY(), bounds.getX() + bounds.getWidth(), 1.0d);
+                    horizontal = new Area(h);
+                    horizontal.intersect(area);
+                    horizontalBounds = horizontal.getBounds2D();
+                    leastXDistance = Math.min(query.getX() - horizontalBounds.getX(), horizontalBounds.getX() + horizontalBounds.getWidth() - query.getX());
 
                     return Double.valueOf(leastXDistance + leastYDistance);
                 }
