@@ -249,13 +249,15 @@ final class Centers
                     vertical = new Area(v);
                     vertical.intersect(area);
                     verticalBounds = vertical.getBounds2D();
-                    leastYDistance = Math.min(query.getY() - verticalBounds.getY(), verticalBounds.getY() + verticalBounds.getHeight() - query.getY());
+                    leastYDistance = Math.min(Math.abs(query.getY() - verticalBounds.getY()),
+                                              Math.abs(verticalBounds.getY() + verticalBounds.getHeight() - query.getY()));
 
                     h.setRect(bounds.getX(), query.getY(), bounds.getX() + bounds.getWidth(), 1.0d);
                     horizontal = new Area(h);
                     horizontal.intersect(area);
                     horizontalBounds = horizontal.getBounds2D();
-                    leastXDistance = Math.min(query.getX() - horizontalBounds.getX(), horizontalBounds.getX() + horizontalBounds.getWidth() - query.getX());
+                    leastXDistance = Math.min(Math.abs(query.getX() - horizontalBounds.getX()),
+                                              Math.abs(horizontalBounds.getX() + horizontalBounds.getWidth() - query.getX()));
 
                     return Double.valueOf(leastXDistance + leastYDistance);
                 }
