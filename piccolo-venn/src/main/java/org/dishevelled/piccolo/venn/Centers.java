@@ -26,7 +26,6 @@ package org.dishevelled.piccolo.venn;
 import java.awt.Shape;
 
 import java.awt.geom.Area;
-import java.awt.geom.PathIterator;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
@@ -58,6 +57,21 @@ import org.dishevelled.evolve.select.FitnessProportionalSelection;
  */
 final class Centers
 {
+    /** Number of individuals, <code>100</code>. */
+    private static final int INDIVIDUALS = 100;
+
+    /** Time limit in generations, <code>75</code>. */
+    private static final int GENERATIONS = 75;
+
+
+    /**
+     * Private no-arg constructor.
+     */
+    private Centers()
+    {
+        // empty
+    }
+
 
     /**
      * Find and return the center of the specified shape using its bounds rectangle.
@@ -149,7 +163,7 @@ final class Centers
      * Find and return an approximate centroid of the specified area using
      * an evolutionary algorithm.
      *
-     * @param shape shape, must not be null
+     * @param area area, must not be null
      * @return an approximate centroid of the specified area using an
      *    evolutionary algorithm
      */
@@ -162,7 +176,7 @@ final class Centers
      * Find and return the specified approximate centroid of the specified area using
      * an evolutionary algorithm.
      *
-     * @param shape shape, must not be null
+     * @param area area, must not be null
      * @param centroid centroid, must not be null
      * @return the specified approximate centroid of the specified area using an
      *    evolutionary algorithm
@@ -180,14 +194,14 @@ final class Centers
 
         final Rectangle2D bounds = area.getBounds2D();
         final Random random = new Random();
-        List<Point2D> individuals = new ArrayList<Point2D>(100);
-        for (int i = 0; i < 100; i++)
+        List<Point2D> individuals = new ArrayList<Point2D>(INDIVIDUALS);
+        for (int i = 0; i < INDIVIDUALS; i++)
         {
             double x = bounds.getX() + random.nextDouble() * bounds.getWidth();
             double y = bounds.getY() + random.nextDouble() * bounds.getHeight();
-            individuals.add(new Point2D.Double(x, y));                                               
+            individuals.add(new Point2D.Double(x, y));
         }
-        ExitStrategy<Point2D> exitStrategy = new TimeLimitExitStrategy<Point2D>(75);
+        ExitStrategy<Point2D> exitStrategy = new TimeLimitExitStrategy<Point2D>(GENERATIONS);
         Selection<Point2D> selection = new FitnessProportionalSelection<Point2D>();
 
         Recombination<Point2D> recombination = new SexualRecombination<Point2D>()
