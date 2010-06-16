@@ -188,6 +188,9 @@ public class QuaternaryVennNode3<E>
     /** Thread pool executor service. */
     private static final ExecutorService EXECUTOR_SERVICE = Executors.newFixedThreadPool(2);
 
+    /** Animation length, in milliseconds, <code>2000L</code>. */
+    private static final long MS = 2000L;
+
 
     /**
      * Create a new empty quaternary venn node.
@@ -426,7 +429,7 @@ public class QuaternaryVennNode3<E>
         area.intersect(r);
         area.subtract(t);
         firstSecondFourth.setArea(area);
-        
+
         area.reset();
         area.add(f);
         area.intersect(t);
@@ -596,7 +599,7 @@ public class QuaternaryVennNode3<E>
     /**
      * Layout worker.
      */
-    private class LayoutWorker
+    private final class LayoutWorker
         extends SwingWorker<Point2D, Object>
     {
         /** Area for this layout worker. */
@@ -630,10 +633,10 @@ public class QuaternaryVennNode3<E>
         {
             try
             {
-                Rectangle2D b = size.getFullBoundsReference();
-                Point2D c = get();
-                size.animateToPositionScaleRotation(c.getX() - (b.getWidth() / 2.0d),
-                                                    c.getY() - (b.getHeight() / 2.0d), 1.0d, 0.0d, 2000);
+                Rectangle2D bounds = size.getFullBoundsReference();
+                Point2D centroid = get();
+                size.animateToPositionScaleRotation(centroid.getX() - (bounds.getWidth() / 2.0d),
+                                                    centroid.getY() - (bounds.getHeight() / 2.0d), 1.0d, 0.0d, MS);
             }
             catch (Exception e)
             {

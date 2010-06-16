@@ -538,7 +538,7 @@ public abstract class AbstractQuaternaryVennNode<E>
      *
      * <p>This is a bound property.</p>
      *
-     * @param thirdLabelText label text for the fourth set
+     * @param fourthLabelText label text for the fourth set
      */
     public final void setFourthLabelText(final String fourthLabelText)
     {
@@ -778,7 +778,7 @@ public abstract class AbstractQuaternaryVennNode<E>
      * Return the label for the first set.  The text for the returned PText
      * should not be changed, as the text is synchronized to the quaternary
      * venn model backing this venn diagram.  Use methods
-     * {@link #setFirstLabelText(String)} and {@link setDisplaySizes(boolean)}
+     * {@link #setFirstLabelText(String)} and {@link #setDisplaySizes(boolean)}
      * to set the label text and whether to display sizes respectively.
      *
      * @return the label for the first set
@@ -792,7 +792,7 @@ public abstract class AbstractQuaternaryVennNode<E>
      * Return the label for the second set.  The text for the returned PText
      * should not be changed, as the text is synchronized to the quaternary
      * venn model backing this venn diagram.  Use methods
-     * {@link #setSecondLabelText(String)} and {@link setDisplaySizes(boolean)}
+     * {@link #setSecondLabelText(String)} and {@link #setDisplaySizes(boolean)}
      * to set the label text and whether to display sizes respectively.
      *
      * @return the label for the second set
@@ -806,7 +806,7 @@ public abstract class AbstractQuaternaryVennNode<E>
      * Return the label for the third set.  The text for the returned PText
      * should not be changed, as the text is synchronized to the quaternary
      * venn model backing this venn diagram.  Use methods
-     * {@link #setThirdLabelText(String)} and {@link setDisplaySizes(boolean)}
+     * {@link #setThirdLabelText(String)} and {@link #setDisplaySizes(boolean)}
      * to set the label text and whether to display sizes respectively.
      *
      * @return the label for the third set
@@ -820,7 +820,7 @@ public abstract class AbstractQuaternaryVennNode<E>
      * Return the label for the fourth set.  The text for the returned PText
      * should not be changed, as the text is synchronized to the quaternary
      * venn model backing this venn diagram.  Use methods
-     * {@link #setFourthLabelText(String)} and {@link setDisplaySizes(boolean)}
+     * {@link #setFourthLabelText(String)} and {@link #setDisplaySizes(boolean)}
      * to set the label text and whether to display sizes respectively.
      *
      * @return the label for the fourth set
@@ -834,7 +834,7 @@ public abstract class AbstractQuaternaryVennNode<E>
      * Return the label for the first only view.  The text for the returned PText
      * should not be changed, as the text is synchronized to the quaternary
      * venn model backing this venn diagram.  Use methods
-     * {@link #setFirstOnlyLabelText(String)} and {@link setDisplaySizes(boolean)}
+     * {@link #setFirstOnlyLabelText(String)} and {@link #setDisplaySizes(boolean)}
      * to set the label text and whether to display sizes respectively.
      *
      * @return the label for the first only view
@@ -848,7 +848,7 @@ public abstract class AbstractQuaternaryVennNode<E>
      * Return the label for the second only view.  The text for the returned PText
      * should not be changed, as the text is synchronized to the quaternary
      * venn model backing this venn diagram.  Use methods
-     * {@link #setSecondOnlyLabelText(String)} and {@link setDisplaySizes(boolean)}
+     * {@link #setSecondOnlyLabelText(String)} and {@link #setDisplaySizes(boolean)}
      * to set the label text and whether to display sizes respectively.
      *
      * @return the label for the second only view
@@ -862,7 +862,7 @@ public abstract class AbstractQuaternaryVennNode<E>
      * Return the label for the third only view.  The text for the returned PText
      * should not be changed, as the text is synchronized to the quaternary
      * venn model backing this venn diagram.  Use methods
-     * {@link #setThirdOnlyLabelText(String)} and {@link setDisplaySizes(boolean)}
+     * {@link #setThirdOnlyLabelText(String)} and {@link #setDisplaySizes(boolean)}
      * to set the label text and whether to display sizes respectively.
      *
      * @return the label for the third only view
@@ -876,7 +876,7 @@ public abstract class AbstractQuaternaryVennNode<E>
      * Return the label for the fourth only view.  The text for the returned PText
      * should not be changed, as the text is synchronized to the quaternary
      * venn model backing this venn diagram.  Use methods
-     * {@link #setFourthOnlyLabelText(String)} and {@link setDisplaySizes(boolean)}
+     * {@link #setFourthOnlyLabelText(String)} and {@link #setDisplaySizes(boolean)}
      * to set the label text and whether to display sizes respectively.
      *
      * @return the label for the fourth only view
@@ -890,7 +890,7 @@ public abstract class AbstractQuaternaryVennNode<E>
      * Return the label for the first second view.  The text for the returned PText
      * should not be changed, as the text is synchronized to the quaternary
      * venn model backing this venn diagram.  Use methods
-     * {@link #setFirstSecondLabelText(String)} and {@link setDisplaySizes(boolean)}
+     * {@link #setFirstSecondLabelText(String)} and {@link #setDisplaySizes(boolean)}
      * to set the label text and whether to display sizes respectively.
      *
      * @return the label for the first second view
@@ -904,7 +904,7 @@ public abstract class AbstractQuaternaryVennNode<E>
      * Return the label for the first third view.  The text for the returned PText
      * should not be changed, as the text is synchronized to the quaternary
      * venn model backing this venn diagram.  Use methods
-     * {@link #setFirstThirdLabelText(String)} and {@link setDisplaySizes(boolean)}
+     * {@link #setFirstThirdLabelText(String)} and {@link #setDisplaySizes(boolean)}
      * to set the label text and whether to display sizes respectively.
      *
      * @return the label for the first third view
@@ -918,7 +918,7 @@ public abstract class AbstractQuaternaryVennNode<E>
      * Return the label for the second third view.  The text for the returned PText
      * should not be changed, as the text is synchronized to the quaternary
      * venn model backing this venn diagram.  Use methods
-     * {@link #setSecondThirdLabelText(String)} and {@link setDisplaySizes(boolean)}
+     * {@link #setSecondThirdLabelText(String)} and {@link #setDisplaySizes(boolean)}
      * to set the label text and whether to display sizes respectively.
      *
      * @return the label for the second third view
@@ -932,7 +932,7 @@ public abstract class AbstractQuaternaryVennNode<E>
      * Return the label for the intersection view.  The text for the returned PText
      * should not be changed, as the text is synchronized to the quaternary
      * venn model backing this venn diagram.  Use methods
-     * {@link #setIntersectionLabelText(String)} and {@link setDisplaySizes(boolean)}
+     * {@link #setIntersectionLabelText(String)} and {@link #setDisplaySizes(boolean)}
      * to set the label text and whether to display sizes respectively.
      *
      * @return the label for the intersection view
@@ -946,7 +946,7 @@ public abstract class AbstractQuaternaryVennNode<E>
      * Return the label for the union view.  The text for the returned PText
      * should not be changed, as the text is synchronized to the quaternary
      * venn model backing this venn diagram.  Use methods
-     * {@link #setUnionLabelText(String)} and {@link setDisplaySizes(boolean)}
+     * {@link #setUnionLabelText(String)} and {@link #setDisplaySizes(boolean)}
      * to set the label text and whether to display sizes respectively.
      *
      * @return the label for the union view
@@ -985,7 +985,7 @@ public abstract class AbstractQuaternaryVennNode<E>
      * Return the label for the first fourth view.  The text for the returned PText
      * should not be changed, as the text is synchronized to the quaternary
      * venn model backing this venn diagram.  Use methods
-     * {@link #setFirstFourthLabelText(String)} and {@link setDisplaySizes(boolean)}
+     * {@link #setFirstFourthLabelText(String)} and {@link #setDisplaySizes(boolean)}
      * to set the label text and whether to display sizes respectively.
      *
      * @return the label for the first fourth view
@@ -1024,7 +1024,7 @@ public abstract class AbstractQuaternaryVennNode<E>
      * Return the label for the second fourth view.  The text for the returned PText
      * should not be changed, as the text is synchronized to the quaternary
      * venn model backing this venn diagram.  Use methods
-     * {@link #setSecondFourthLabelText(String)} and {@link setDisplaySizes(boolean)}
+     * {@link #setSecondFourthLabelText(String)} and {@link #setDisplaySizes(boolean)}
      * to set the label text and whether to display sizes respectively.
      *
      * @return the label for the second fourth view
@@ -1063,7 +1063,7 @@ public abstract class AbstractQuaternaryVennNode<E>
      * Return the label for the third fourth view.  The text for the returned PText
      * should not be changed, as the text is synchronized to the quaternary
      * venn model backing this venn diagram.  Use methods
-     * {@link #setThirdFourthLabelText(String)} and {@link setDisplaySizes(boolean)}
+     * {@link #setThirdFourthLabelText(String)} and {@link #setDisplaySizes(boolean)}
      * to set the label text and whether to display sizes respectively.
      *
      * @return the label for the third fourth view
@@ -1074,7 +1074,8 @@ public abstract class AbstractQuaternaryVennNode<E>
     }
 
     /**
-     * Return the label text for the first second third view.  Defaults to {@link #DEFAULT_FIRST_SECOND_THIRD_LABEL_TEXT}.
+     * Return the label text for the first second third view.  Defaults to
+     * {@link #DEFAULT_FIRST_SECOND_THIRD_LABEL_TEXT}.
      *
      * @return the label text for the first second third view
      */
@@ -1095,14 +1096,17 @@ public abstract class AbstractQuaternaryVennNode<E>
         String oldFirstSecondThirdLabelText = this.firstSecondThirdLabelText;
         this.firstSecondThirdLabelText = firstSecondThirdLabelText;
         firstSecondThirdLabel.setText(buildLabel(this.firstSecondThirdLabelText, model.firstSecondThird().size()));
-        firePropertyChange(-1, "firstSecondThirdLabelText", this.firstSecondThirdLabelText, oldFirstSecondThirdLabelText);
+        firePropertyChange(-1,
+                           "firstSecondThirdLabelText",
+                           this.firstSecondThirdLabelText,
+                           oldFirstSecondThirdLabelText);
     }
 
     /**
      * Return the label for the first second third view.  The text for the returned PText
      * should not be changed, as the text is synchronized to the quaternary
      * venn model backing this venn diagram.  Use methods
-     * {@link #setFirstSecondThirdLabelText(String)} and {@link setDisplaySizes(boolean)}
+     * {@link #setFirstSecondThirdLabelText(String)} and {@link #setDisplaySizes(boolean)}
      * to set the label text and whether to display sizes respectively.
      *
      * @return the label for the first second third view
@@ -1113,7 +1117,8 @@ public abstract class AbstractQuaternaryVennNode<E>
     }
 
     /**
-     * Return the label text for the first second fourth view.  Defaults to {@link #DEFAULT_FIRST_SECOND_FOURTH_LABEL_TEXT}.
+     * Return the label text for the first second fourth view.  Defaults to
+     * {@link #DEFAULT_FIRST_SECOND_FOURTH_LABEL_TEXT}.
      *
      * @return the label text for the first second fourth view
      */
@@ -1134,14 +1139,17 @@ public abstract class AbstractQuaternaryVennNode<E>
         String oldFirstSecondFourthLabelText = this.firstSecondFourthLabelText;
         this.firstSecondFourthLabelText = firstSecondFourthLabelText;
         firstSecondFourthLabel.setText(buildLabel(this.firstSecondFourthLabelText, model.firstSecondFourth().size()));
-        firePropertyChange(-1, "firstSecondFourthLabelText", this.firstSecondFourthLabelText, oldFirstSecondFourthLabelText);
+        firePropertyChange(-1,
+                           "firstSecondFourthLabelText",
+                           this.firstSecondFourthLabelText,
+                           oldFirstSecondFourthLabelText);
     }
 
     /**
      * Return the label for the first second fourth view.  The text for the returned PText
      * should not be changed, as the text is synchronized to the quaternary
      * venn model backing this venn diagram.  Use methods
-     * {@link #setFirstSecondFourthLabelText(String)} and {@link setDisplaySizes(boolean)}
+     * {@link #setFirstSecondFourthLabelText(String)} and {@link #setDisplaySizes(boolean)}
      * to set the label text and whether to display sizes respectively.
      *
      * @return the label for the first second fourth view
@@ -1152,7 +1160,8 @@ public abstract class AbstractQuaternaryVennNode<E>
     }
 
     /**
-     * Return the label text for the first third fourth view.  Defaults to {@link #DEFAULT_FIRST_THIRD_FOURTH_LABEL_TEXT}.
+     * Return the label text for the first third fourth view.  Defaults to
+     * {@link #DEFAULT_FIRST_THIRD_FOURTH_LABEL_TEXT}.
      *
      * @return the label text for the first third fourth view
      */
@@ -1173,14 +1182,17 @@ public abstract class AbstractQuaternaryVennNode<E>
         String oldFirstThirdFourthLabelText = this.firstThirdFourthLabelText;
         this.firstThirdFourthLabelText = firstThirdFourthLabelText;
         firstThirdFourthLabel.setText(buildLabel(this.firstThirdFourthLabelText, model.firstThirdFourth().size()));
-        firePropertyChange(-1, "firstThirdFourthLabelText", this.firstThirdFourthLabelText, oldFirstThirdFourthLabelText);
+        firePropertyChange(-1,
+                           "firstThirdFourthLabelText",
+                           this.firstThirdFourthLabelText,
+                           oldFirstThirdFourthLabelText);
     }
 
     /**
      * Return the label for the first third fourth view.  The text for the returned PText
      * should not be changed, as the text is synchronized to the quaternary
      * venn model backing this venn diagram.  Use methods
-     * {@link #setFirstThirdFourthLabelText(String)} and {@link setDisplaySizes(boolean)}
+     * {@link #setFirstThirdFourthLabelText(String)} and {@link #setDisplaySizes(boolean)}
      * to set the label text and whether to display sizes respectively.
      *
      * @return the label for the first third fourth view
@@ -1191,7 +1203,8 @@ public abstract class AbstractQuaternaryVennNode<E>
     }
 
     /**
-     * Return the label text for the second third fourth view.  Defaults to {@link #DEFAULT_SECOND_THIRD_FOURTH_LABEL_TEXT}.
+     * Return the label text for the second third fourth view.  Defaults to
+     * {@link #DEFAULT_SECOND_THIRD_FOURTH_LABEL_TEXT}.
      *
      * @return the label text for the second third fourth view
      */
@@ -1212,14 +1225,17 @@ public abstract class AbstractQuaternaryVennNode<E>
         String oldSecondThirdFourthLabelText = this.secondThirdFourthLabelText;
         this.secondThirdFourthLabelText = secondThirdFourthLabelText;
         secondThirdFourthLabel.setText(buildLabel(this.secondThirdFourthLabelText, model.secondThirdFourth().size()));
-        firePropertyChange(-1, "secondThirdFourthLabelText", this.secondThirdFourthLabelText, oldSecondThirdFourthLabelText);
+        firePropertyChange(-1,
+                           "secondThirdFourthLabelText",
+                           this.secondThirdFourthLabelText,
+                           oldSecondThirdFourthLabelText);
     }
 
     /**
      * Return the label for the second third fourth view.  The text for the returned PText
      * should not be changed, as the text is synchronized to the quaternary
      * venn model backing this venn diagram.  Use methods
-     * {@link #setSecondThirdFourthLabelText(String)} and {@link setDisplaySizes(boolean)}
+     * {@link #setSecondThirdFourthLabelText(String)} and {@link #setDisplaySizes(boolean)}
      * to set the label text and whether to display sizes respectively.
      *
      * @return the label for the second third fourth view
