@@ -28,16 +28,16 @@ import java.util.Set;
 
 import javax.swing.JLabel;
 
-import org.dishevelled.venn.QuaternaryVennModel3;
+import org.dishevelled.venn.QuaternaryVennModel;
 
 /**
- * Quaternary venn diagram label 3.
+ * Quaternary venn diagram label.
  *
  * @param <E> value type
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public final class QuaternaryVennLabel3<E>
+public final class QuaternaryVennLabel<E>
     extends AbstractQuaternaryVennDiagram<E>
 {
     /** Number of elements to display. */
@@ -110,7 +110,7 @@ public final class QuaternaryVennLabel3<E>
     /**
      * Create a new empty quaternary venn label.
      */
-    public QuaternaryVennLabel3()
+    public QuaternaryVennLabel()
     {
         super();
         updateContents();
@@ -129,7 +129,7 @@ public final class QuaternaryVennLabel3<E>
      * @param fourthLabelText label text for the fourth set
      * @param fourth fourth set, must not be null
      */
-    public QuaternaryVennLabel3(final String firstLabelText, final Set<? extends E> first,
+    public QuaternaryVennLabel(final String firstLabelText, final Set<? extends E> first,
                                 final String secondLabelText, final Set<? extends E> second,
                                 final String thirdLabelText, final Set<? extends E> third,
                                 final String fourthLabelText, final Set<? extends E> fourth)
@@ -144,7 +144,7 @@ public final class QuaternaryVennLabel3<E>
      *
      * @param model model for this quaternary venn label, must not be null
      */
-    public QuaternaryVennLabel3(final QuaternaryVennModel3<E> model)
+    public QuaternaryVennLabel(final QuaternaryVennModel<E> model)
     {
         super(model);
         updateContents();

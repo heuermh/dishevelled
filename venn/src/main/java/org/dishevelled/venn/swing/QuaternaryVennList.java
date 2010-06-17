@@ -47,16 +47,16 @@ import org.dishevelled.layout.LabelFieldPanel;
 import org.dishevelled.observable.event.SetChangeEvent;
 import org.dishevelled.observable.event.SetChangeListener;
 
-import org.dishevelled.venn.QuaternaryVennModel3;
+import org.dishevelled.venn.QuaternaryVennModel;
 
 /**
- * Quaternary venn diagram list 3.
+ * Quaternary venn diagram list.
  *
  * @param <E> value type
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public final class QuaternaryVennList3<E>
+public final class QuaternaryVennList<E>
     extends AbstractQuaternaryVennDiagram<E>
 {
     /** Contents of the first set. */
@@ -185,7 +185,7 @@ public final class QuaternaryVennList3<E>
         /** {@inheritDoc} */
         public void propertyChange(final PropertyChangeEvent event)
         {
-            uninstallListModels((QuaternaryVennModel3<E>) event.getOldValue());
+            uninstallListModels((QuaternaryVennModel<E>) event.getOldValue());
             installListModels();
         }
     };
@@ -214,7 +214,7 @@ public final class QuaternaryVennList3<E>
     /**
      * Create a new empty quaternary venn list.
      */
-    public QuaternaryVennList3()
+    public QuaternaryVennList()
     {
         super();
         installListModels();
@@ -235,7 +235,7 @@ public final class QuaternaryVennList3<E>
      * @param fourthLabelText label text for the fourth set
      * @param fourth fourth set, must not be null
      */
-    public QuaternaryVennList3(final String firstLabelText, final Set<? extends E> first,
+    public QuaternaryVennList(final String firstLabelText, final Set<? extends E> first,
                                final String secondLabelText, final Set<? extends E> second,
                                final String thirdLabelText, final Set<? extends E> third,
                                final String fourthLabelText, final Set<? extends E> fourth)
@@ -252,7 +252,7 @@ public final class QuaternaryVennList3<E>
      *
      * @param model model for this quaternary venn list, must not be null
      */
-    public QuaternaryVennList3(final QuaternaryVennModel3<E> model)
+    public QuaternaryVennList(final QuaternaryVennModel<E> model)
     {
         super(model);
         installListModels();
@@ -270,11 +270,11 @@ public final class QuaternaryVennList3<E>
      * @param fourthLabelText label text for the fourth set
      * @param model model for this abstract quaternary venn diagram, must not be null
      */
-    public QuaternaryVennList3(final String firstLabelText,
+    public QuaternaryVennList(final String firstLabelText,
                                final String secondLabelText,
                                final String thirdLabelText,
                                final String fourthLabelText,
-                               final QuaternaryVennModel3<E> model)
+                               final QuaternaryVennModel<E> model)
     {
         super(firstLabelText,
               secondLabelText,
@@ -394,7 +394,7 @@ public final class QuaternaryVennList3<E>
      *
      * @param oldModel old model
      */
-    private void uninstallListModels(final QuaternaryVennModel3<E> oldModel)
+    private void uninstallListModels(final QuaternaryVennModel<E> oldModel)
     {
         firstAdapter.dispose();
         secondAdapter.dispose();

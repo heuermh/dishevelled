@@ -28,16 +28,16 @@ import java.util.Set;
 
 import javax.swing.JLabel;
 
-import org.dishevelled.venn.BinaryVennModel3;
+import org.dishevelled.venn.BinaryVennModel;
 
 /**
- * Binary venn diagram label 3.
+ * Binary venn diagram label.
  *
  * @param <E> value type
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public final class BinaryVennLabel3<E>
+public final class BinaryVennLabel<E>
     extends AbstractBinaryVennDiagram<E>
 {
     /** Number of elements to display. */
@@ -68,7 +68,7 @@ public final class BinaryVennLabel3<E>
     /**
      * Create a new empty binary venn label.
      */
-    public BinaryVennLabel3()
+    public BinaryVennLabel()
     {
         super();
         updateContents();
@@ -83,7 +83,7 @@ public final class BinaryVennLabel3<E>
      * @param secondLabelText label text for the second set
      * @param second second set, must not be null
      */
-    public BinaryVennLabel3(final String firstLabelText, final Set<? extends E> first,
+    public BinaryVennLabel(final String firstLabelText, final Set<? extends E> first,
         final String secondLabelText, final Set<? extends E> second)
     {
         super(firstLabelText, first, secondLabelText, second);
@@ -96,7 +96,7 @@ public final class BinaryVennLabel3<E>
      *
      * @param model model for this binary venn label, must not be null
      */
-    public BinaryVennLabel3(final BinaryVennModel3<E> model)
+    public BinaryVennLabel(final BinaryVennModel<E> model)
     {
         super(model);
         updateContents();

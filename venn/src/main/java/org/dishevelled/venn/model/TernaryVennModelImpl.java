@@ -32,17 +32,17 @@ import org.dishevelled.observable.ObservableSet;
 
 import org.dishevelled.observable.impl.ObservableSetImpl;
 
-import org.dishevelled.venn.TernaryVennModel3;
+import org.dishevelled.venn.TernaryVennModel;
 
 /**
- * Tertiary venn model implementation 3.
+ * Tertiary venn model implementation.
  *
  * @param <E> value type
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public final class TernaryVennModelImpl3<E>
-    implements TernaryVennModel3<E>
+public final class TernaryVennModelImpl<E>
+    implements TernaryVennModel<E>
 {
     /** First view. */
     private final ObservableSet<E> first;
@@ -84,7 +84,7 @@ public final class TernaryVennModelImpl3<E>
     /**
      * Create a new empty ternary venn model.
      */
-    public TernaryVennModelImpl3()
+    public TernaryVennModelImpl()
     {
         this(new HashSet<E>(), new HashSet<E>(), new HashSet<E>());
     }
@@ -96,7 +96,7 @@ public final class TernaryVennModelImpl3<E>
      * @param second second set, must not be null
      * @param third third set, must not be null
      */
-    public TernaryVennModelImpl3(final Set<? extends E> first,
+    public TernaryVennModelImpl(final Set<? extends E> first,
                                   final Set<? extends E> second,
                                   final Set<? extends E> third)
     {

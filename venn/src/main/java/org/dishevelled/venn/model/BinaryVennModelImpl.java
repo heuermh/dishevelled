@@ -32,17 +32,17 @@ import org.dishevelled.observable.ObservableSet;
 
 import org.dishevelled.observable.impl.ObservableSetImpl;
 
-import org.dishevelled.venn.BinaryVennModel3;
+import org.dishevelled.venn.BinaryVennModel;
 
 /**
- * Binary venn model implementation 3.
+ * Binary venn model implementation.
  *
  * @param <E> value type
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public final class BinaryVennModelImpl3<E>
-    implements BinaryVennModel3<E>
+public final class BinaryVennModelImpl<E>
+    implements BinaryVennModel<E>
 {
     /** First view. */
     private final ObservableSet<E> first;
@@ -69,7 +69,7 @@ public final class BinaryVennModelImpl3<E>
     /**
      * Create a new empty binary venn model.
      */
-    public BinaryVennModelImpl3()
+    public BinaryVennModelImpl()
     {
         this(new HashSet<E>(), new HashSet<E>());
     }
@@ -80,7 +80,7 @@ public final class BinaryVennModelImpl3<E>
      * @param first first set, must not be null
      * @param second second set, must not be null
      */
-    public BinaryVennModelImpl3(final Set<? extends E> first, final Set<? extends E> second)
+    public BinaryVennModelImpl(final Set<? extends E> first, final Set<? extends E> second)
     {
         if (first == null)
         {

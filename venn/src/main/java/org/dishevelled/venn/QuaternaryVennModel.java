@@ -28,13 +28,13 @@ import java.util.Set;
 import org.dishevelled.observable.ObservableSet;
 
 /**
- * Quaternary venn diagram model 3.
+ * Quaternary venn diagram model.
  *
  * @param <E> value type
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public interface QuaternaryVennModel3<E>
+public interface QuaternaryVennModel<E>
 {
 
     /**
