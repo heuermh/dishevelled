@@ -239,7 +239,7 @@ public final class QuaternaryVennLabel3<E>
 
 
     /**
-     * Return the number of set elements to display.  Defaults to {@link DEFAULT_ELEMENTS_TO_DISPLAY}.
+     * Return the number of set elements to display.  Defaults to {@link #DEFAULT_ELEMENTS_TO_DISPLAY}.
      *
      * @return the number of set elements to display
      */

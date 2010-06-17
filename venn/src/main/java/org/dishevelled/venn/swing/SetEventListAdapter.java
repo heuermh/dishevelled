@@ -42,6 +42,7 @@ import ca.odell.glazedlists.util.concurrent.ReadWriteLock;
  * Adapts a Set to an EventList.  The set and event list must be synchronized
  * explicitly using the {@link #updateEventList()} method.
  *
+ * @param <E> value type
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
@@ -213,7 +214,7 @@ class SetEventListAdapter<E>
 
 
     /** {@inheritDoc} */
-    public E get(int index)
+    public E get(final int index)
     {
         return eventList.get(index);
     }

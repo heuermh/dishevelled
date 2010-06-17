@@ -45,6 +45,7 @@ import org.dishevelled.observable.event.SetChangeListener;
 /**
  * Adapts an ObservableSet to an EventList.
  *
+ * @param <E> value type
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
@@ -228,7 +229,7 @@ class ObservableSetEventListAdapter<E>
 
 
     /** {@inheritDoc} */
-    public E get(int index)
+    public E get(final int index)
     {
         return eventList.get(index);
     }

@@ -70,7 +70,6 @@ final class SelectionView<E>
      */
     SelectionView(final Set<E> union, final ObservableSet<E>... views)
     {
-        // todo  null check parameters
         super(new HashSet<E>(Math.max(DEFAULT_SIZE, union == null ? DEFAULT_SIZE : union.size())));
         this.union = union;
         for (ObservableSet<E> view : views)

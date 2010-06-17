@@ -232,7 +232,7 @@ public final class QuaternaryVennList3<E>
      * @param second second set, must not be null
      * @param thirdLabelText label text for the third set
      * @param third third set, must not be null
-     * @param thirdLabelText label text for the fourth set
+     * @param fourthLabelText label text for the fourth set
      * @param fourth fourth set, must not be null
      */
     public QuaternaryVennList3(final String firstLabelText, final Set<? extends E> first,
@@ -472,7 +472,9 @@ public final class QuaternaryVennList3<E>
     }
 
     /**
-     * Create main panel.
+     * Create and return the main panel.
+     *
+     * @return the main panel
      */
     private JPanel createMainPanel()
     {
