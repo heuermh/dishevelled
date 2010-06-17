@@ -40,23 +40,23 @@ import org.piccolo2d.PCanvas;
 
 import org.piccolo2d.util.PPaintContext;
 
-import org.dishevelled.piccolo.venn.BinaryVennNode3;
+import org.dishevelled.piccolo.venn.BinaryVennNode;
 
 /**
- * Binary venn node example 3.
+ * Binary venn node example.
  *
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public final class BinaryVennExample3
+public final class BinaryVennExample
     extends JPanel
     implements Runnable
 {
 
     /**
-     * Create a new binary venn example 3.
+     * Create a new binary venn example.
      */
-    public BinaryVennExample3()
+    public BinaryVennExample()
     {
         super();
         PCanvas canvas = new PCanvas();
@@ -67,7 +67,7 @@ public final class BinaryVennExample3
         Set<String> set0 = read("the_pioneers.txt");
         Set<String> set1 = read("the_deerslayer.txt");
 
-        BinaryVennNode3<String> node = new BinaryVennNode3<String>("The Pioneers", set0, "The Deerslayer", set1);
+        BinaryVennNode<String> node = new BinaryVennNode<String>("The Pioneers", set0, "The Deerslayer", set1);
         node.offset(150.0d, 150.0d);
         canvas.getLayer().addChild(node);
 
@@ -79,7 +79,7 @@ public final class BinaryVennExample3
     /** {@inheritDoc} */
     public void run()
     {
-        JFrame f = new JFrame("Binary Venn Example 3");
+        JFrame f = new JFrame("Binary Venn Example");
         f.setContentPane(this);
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.setBounds(100, 100, 400, 400);
@@ -93,7 +93,7 @@ public final class BinaryVennExample3
         Set<String> result = new HashSet<String>(12000);
         try
         {
-            reader = new BufferedReader(new InputStreamReader(BinaryVennExample3.class.getResourceAsStream(name)));
+            reader = new BufferedReader(new InputStreamReader(BinaryVennExample.class.getResourceAsStream(name)));
             while (reader.ready())
             {
                 result.add(reader.readLine().trim());
@@ -125,6 +125,6 @@ public final class BinaryVennExample3
      */
     public static void main(final String[] args)
     {
-        SwingUtilities.invokeLater(new BinaryVennExample3());
+        SwingUtilities.invokeLater(new BinaryVennExample());
     }
 }
