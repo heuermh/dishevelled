@@ -40,13 +40,13 @@ import org.piccolo2d.nodes.PText;
 import org.dishevelled.venn.BinaryVennModel;
 
 /**
- * Binary venn diagram node 3.
+ * Binary venn diagram node.
  *
  * @param <E> value type
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public class BinaryVennNode3<E>
+public class BinaryVennNode<E>
     extends AbstractBinaryVennNode<E>
 {
     /** Path node for the first set. */
@@ -101,7 +101,7 @@ public class BinaryVennNode3<E>
     /**
      * Create a new empty binary venn node.
      */
-    public BinaryVennNode3()
+    public BinaryVennNode()
     {
         super();
         initNodes();
@@ -116,7 +116,7 @@ public class BinaryVennNode3<E>
      * @param secondLabelText label text for the second set
      * @param second second set, must not be null
      */
-    public BinaryVennNode3(final String firstLabelText, final Set<? extends E> first,
+    public BinaryVennNode(final String firstLabelText, final Set<? extends E> first,
         final String secondLabelText, final Set<? extends E> second)
     {
         super(firstLabelText, first, secondLabelText, second);
@@ -129,7 +129,7 @@ public class BinaryVennNode3<E>
      *
      * @param model model for this binary venn node, must not be null
      */
-    public BinaryVennNode3(final BinaryVennModel<E> model)
+    public BinaryVennNode(final BinaryVennModel<E> model)
     {
         super(model);
         initNodes();

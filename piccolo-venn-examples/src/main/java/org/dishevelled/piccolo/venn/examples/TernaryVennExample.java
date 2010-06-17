@@ -40,23 +40,23 @@ import org.piccolo2d.PCanvas;
 
 import org.piccolo2d.util.PPaintContext;
 
-import org.dishevelled.piccolo.venn.TernaryVennNode3;
+import org.dishevelled.piccolo.venn.TernaryVennNode;
 
 /**
- * Ternary venn node example 3.
+ * Ternary venn node example.
  *
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public final class TernaryVennExample3
+public final class TernaryVennExample
     extends JPanel
     implements Runnable
 {
 
     /**
-     * Create a new ternary venn example 3.
+     * Create a new ternary venn example.
      */
-    public TernaryVennExample3()
+    public TernaryVennExample()
     {
         super();
         PCanvas canvas = new PCanvas();
@@ -68,7 +68,7 @@ public final class TernaryVennExample3
         Set<String> set1 = read("the_deerslayer.txt");
         Set<String> set2 = read("the_pathfinder.txt");
 
-        TernaryVennNode3<String> node = new TernaryVennNode3<String>("The Pioneers", set0,
+        TernaryVennNode<String> node = new TernaryVennNode<String>("The Pioneers", set0,
                                                                        "The Deerslayer", set1, "The Pathfinder", set2);
         node.offset(75.0d, 75.0d);
         canvas.getLayer().addChild(node);
@@ -81,7 +81,7 @@ public final class TernaryVennExample3
     /** {@inheritDoc} */
     public void run()
     {
-        JFrame f = new JFrame("Ternary Venn Example 3");
+        JFrame f = new JFrame("Ternary Venn Example");
         f.setContentPane(this);
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.setBounds(100, 100, 400, 400);
@@ -95,7 +95,7 @@ public final class TernaryVennExample3
         Set<String> result = new HashSet<String>(12000);
         try
         {
-            reader = new BufferedReader(new InputStreamReader(TernaryVennExample3.class.getResourceAsStream(name)));
+            reader = new BufferedReader(new InputStreamReader(TernaryVennExample.class.getResourceAsStream(name)));
             while (reader.ready())
             {
                 result.add(reader.readLine().trim());
@@ -127,6 +127,6 @@ public final class TernaryVennExample3
      */
     public static void main(final String[] args)
     {
-        SwingUtilities.invokeLater(new TernaryVennExample3());
+        SwingUtilities.invokeLater(new TernaryVennExample());
     }
 }

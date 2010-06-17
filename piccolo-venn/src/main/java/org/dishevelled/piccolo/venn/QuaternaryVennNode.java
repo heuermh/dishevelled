@@ -47,13 +47,13 @@ import org.piccolo2d.nodes.PText;
 import org.dishevelled.venn.QuaternaryVennModel;
 
 /**
- * Quaternary venn diagram node 3.
+ * Quaternary venn diagram node.
  *
  * @param <E> value type
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public class QuaternaryVennNode3<E>
+public class QuaternaryVennNode<E>
     extends AbstractQuaternaryVennNode<E>
 {
     /** Path node for the first set. */
@@ -195,7 +195,7 @@ public class QuaternaryVennNode3<E>
     /**
      * Create a new empty quaternary venn node.
      */
-    public QuaternaryVennNode3()
+    public QuaternaryVennNode()
     {
         super();
         initNodes();
@@ -214,7 +214,7 @@ public class QuaternaryVennNode3<E>
      * @param fourthLabelText label text for the fourth set
      * @param fourth fourth set, must not be null
      */
-    public QuaternaryVennNode3(final String firstLabelText, final Set<? extends E> first,
+    public QuaternaryVennNode(final String firstLabelText, final Set<? extends E> first,
                                final String secondLabelText, final Set<? extends E> second,
                                final String thirdLabelText, final Set<? extends E> third,
                                final String fourthLabelText, final Set<? extends E> fourth)
@@ -229,7 +229,7 @@ public class QuaternaryVennNode3<E>
      *
      * @param model model for this quaternary venn node, must not be null
      */
-    public QuaternaryVennNode3(final QuaternaryVennModel<E> model)
+    public QuaternaryVennNode(final QuaternaryVennModel<E> model)
     {
         super(model);
         initNodes();

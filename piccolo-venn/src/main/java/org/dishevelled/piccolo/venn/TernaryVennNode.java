@@ -40,13 +40,13 @@ import org.piccolo2d.nodes.PText;
 import org.dishevelled.venn.TernaryVennModel;
 
 /**
- * Ternary venn diagram node 3.
+ * Ternary venn diagram node.
  *
  * @param <E> value type
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public class TernaryVennNode3<E>
+public class TernaryVennNode<E>
     extends AbstractTernaryVennNode<E>
 {
     /** Path node for the first set. */
@@ -131,7 +131,7 @@ public class TernaryVennNode3<E>
     /**
      * Create a new empty ternary venn node.
      */
-    public TernaryVennNode3()
+    public TernaryVennNode()
     {
         super();
         initNodes();
@@ -148,7 +148,7 @@ public class TernaryVennNode3<E>
      * @param thirdLabelText label text for the third set
      * @param third third set, must not be null
      */
-    public TernaryVennNode3(final String firstLabelText, final Set<? extends E> first,
+    public TernaryVennNode(final String firstLabelText, final Set<? extends E> first,
                              final String secondLabelText, final Set<? extends E> second,
                              final String thirdLabelText, final Set<? extends E> third)
     {
@@ -162,7 +162,7 @@ public class TernaryVennNode3<E>
      *
      * @param model model for this ternary venn node, must not be null
      */
-    public TernaryVennNode3(final TernaryVennModel<E> model)
+    public TernaryVennNode(final TernaryVennModel<E> model)
     {
         super(model);
         initNodes();

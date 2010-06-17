@@ -53,17 +53,17 @@ import org.piccolo2d.nodes.PText;
 
 import org.piccolo2d.util.PPaintContext;
 
-import org.dishevelled.piccolo.venn.QuaternaryVennNode3;
+import org.dishevelled.piccolo.venn.QuaternaryVennNode;
 
 import org.dishevelled.venn.swing.QuaternaryVennList;
 
 /**
- * Quaternary venn node example 3.
+ * Quaternary venn node example.
  *
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public final class QuaternaryVennExample3
+public final class QuaternaryVennExample
     extends JPanel
     implements Runnable
 {
@@ -71,7 +71,7 @@ public final class QuaternaryVennExample3
     private final PCanvas canvas;
 
     /** Quaternary venn node. */
-    private final QuaternaryVennNode3<String> vennNode;
+    private final QuaternaryVennNode<String> vennNode;
 
     /** Details label. */
     private final PText detailsLabel;
@@ -81,9 +81,9 @@ public final class QuaternaryVennExample3
 
 
     /**
-     * Create a new quaternary venn example 3.
+     * Create a new quaternary venn example.
      */
-    public QuaternaryVennExample3()
+    public QuaternaryVennExample()
     {
         super();
         canvas = new PCanvas();
@@ -96,7 +96,7 @@ public final class QuaternaryVennExample3
         Set<String> set2 = read("the_pathfinder.txt");
         Set<String> set3 = read("last_of_the_mohicans.txt");
 
-        vennNode = new QuaternaryVennNode3<String>("The Pioneers", set0,
+        vennNode = new QuaternaryVennNode<String>("The Pioneers", set0,
                                                    "The Deerslayer", set1,
                                                    "The Pathfinder", set2,
                                                    "Last of the \nMohicans", set3);
@@ -164,7 +164,7 @@ public final class QuaternaryVennExample3
                     /** {@inheritDoc} */
                     public void run()
                     {
-                        details = new JDialog((JFrame) SwingUtilities.getRoot(QuaternaryVennExample3.this), "Details");
+                        details = new JDialog((JFrame) SwingUtilities.getRoot(QuaternaryVennExample.this), "Details");
                         QuaternaryVennList<String> list = new QuaternaryVennList<String>(vennNode.getFirstLabelText(),
                                                                                            vennNode.getSecondLabelText(),
                                                                                            vennNode.getThirdLabelText(),
@@ -196,7 +196,7 @@ public final class QuaternaryVennExample3
             // ignore
         }
 
-        JFrame f = new JFrame("Quaternary Venn Example 3");
+        JFrame f = new JFrame("Quaternary Venn Example");
         f.setContentPane(this);
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.setBounds(100, 100, 600, 600);
@@ -210,7 +210,7 @@ public final class QuaternaryVennExample3
         Set<String> result = new HashSet<String>(12000);
         try
         {
-            reader = new BufferedReader(new InputStreamReader(QuaternaryVennExample3.class.getResourceAsStream(name)));
+            reader = new BufferedReader(new InputStreamReader(QuaternaryVennExample.class.getResourceAsStream(name)));
             while (reader.ready())
             {
                 result.add(reader.readLine().trim());
@@ -242,6 +242,6 @@ public final class QuaternaryVennExample3
      */
     public static void main(final String[] args)
     {
-        SwingUtilities.invokeLater(new QuaternaryVennExample3());
+        SwingUtilities.invokeLater(new QuaternaryVennExample());
     }
 }

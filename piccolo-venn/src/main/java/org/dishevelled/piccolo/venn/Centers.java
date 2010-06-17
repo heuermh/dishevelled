@@ -238,7 +238,6 @@ final class Centers
 
         Fitness<Point2D> fitness = new Fitness<Point2D>()
             {
-                private double distance;
                 private double leastXDistance;
                 private double leastYDistance;
                 private final Point2D query = new Point2D.Double();
