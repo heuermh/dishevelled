@@ -95,7 +95,7 @@ public final class TernaryVennExample3
         Set<String> result = new HashSet<String>(12000);
         try
         {
-            reader = new BufferedReader(new InputStreamReader(TernaryVennExample.class.getResourceAsStream(name)));
+            reader = new BufferedReader(new InputStreamReader(TernaryVennExample3.class.getResourceAsStream(name)));
             while (reader.ready())
             {
                 result.add(reader.readLine().trim());

@@ -210,7 +210,7 @@ public final class QuaternaryVennExample3
         Set<String> result = new HashSet<String>(12000);
         try
         {
-            reader = new BufferedReader(new InputStreamReader(QuaternaryVennExample.class.getResourceAsStream(name)));
+            reader = new BufferedReader(new InputStreamReader(QuaternaryVennExample3.class.getResourceAsStream(name)));
             while (reader.ready())
             {
                 result.add(reader.readLine().trim());

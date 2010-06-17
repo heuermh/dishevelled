@@ -93,7 +93,7 @@ public final class BinaryVennExample3
         Set<String> result = new HashSet<String>(12000);
         try
         {
-            reader = new BufferedReader(new InputStreamReader(BinaryVennExample.class.getResourceAsStream(name)));
+            reader = new BufferedReader(new InputStreamReader(BinaryVennExample3.class.getResourceAsStream(name)));
             while (reader.ready())
             {
                 result.add(reader.readLine().trim());
