@@ -134,7 +134,7 @@ public abstract class AbstractQuaternaryVennModelTest
         }
 
         /** {@inheritDoc} */
-        public void setChanged(final SetChangeEvent event)
+        public void setChanged(final SetChangeEvent<String> event)
         {
             this.heardChangeEvent = true;
         }

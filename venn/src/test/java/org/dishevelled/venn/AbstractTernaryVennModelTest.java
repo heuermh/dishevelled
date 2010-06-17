@@ -70,7 +70,7 @@ public abstract class AbstractTernaryVennModelTest
         }
 
         /** {@inheritDoc} */
-        public void setChanged(final SetChangeEvent event)
+        public void setChanged(final SetChangeEvent<String> event)
         {
             this.heardChangeEvent = true;
         }
