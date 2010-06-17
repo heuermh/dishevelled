@@ -32,9 +32,9 @@ import org.dishevelled.layout.LabelFieldPanel;
 import org.dishevelled.observable.event.SetChangeEvent;
 import org.dishevelled.observable.event.SetChangeListener;
 
-import org.dishevelled.venn.BinaryVennModel3;
+import org.dishevelled.venn.BinaryVennModel;
 
-import org.dishevelled.venn.model.BinaryVennModelImpl3;
+import org.dishevelled.venn.model.BinaryVennModelImpl;
 
 /**
  * Abstract binary venn diagram.
@@ -47,7 +47,7 @@ public abstract class AbstractBinaryVennDiagram<E>
     extends LabelFieldPanel
 {
     /** Binary venn model. */
-    private BinaryVennModel3<E> model;
+    private BinaryVennModel<E> model;
 
     /** Label text for the first set. */
     private String firstLabelText = DEFAULT_FIRST_LABEL_TEXT;
@@ -124,7 +124,7 @@ public abstract class AbstractBinaryVennDiagram<E>
     protected AbstractBinaryVennDiagram()
     {
         super();
-        model = new BinaryVennModelImpl3<E>();
+        model = new BinaryVennModelImpl<E>();
 
         installListeners();
         updateLabels();
@@ -142,7 +142,7 @@ public abstract class AbstractBinaryVennDiagram<E>
         final String secondLabelText, final Set<? extends E> second)
     {
         super();
-        model = new BinaryVennModelImpl3<E>(first, second);
+        model = new BinaryVennModelImpl<E>(first, second);
         this.firstLabelText = firstLabelText;
         this.secondLabelText = secondLabelText;
         this.firstOnlyLabelText = firstLabelText + " only";
@@ -157,7 +157,7 @@ public abstract class AbstractBinaryVennDiagram<E>
      *
      * @param model model for this abstract binary venn diagram, must not be null
      */
-    protected AbstractBinaryVennDiagram(final BinaryVennModel3<E> model)
+    protected AbstractBinaryVennDiagram(final BinaryVennModel<E> model)
     {
         super();
         if (model == null)
@@ -234,7 +234,7 @@ public abstract class AbstractBinaryVennDiagram<E>
      *
      * @return the model for this binary venn label
      */
-    public final BinaryVennModel3<E> getModel()
+    public final BinaryVennModel<E> getModel()
     {
         return model;
     }
@@ -246,13 +246,13 @@ public abstract class AbstractBinaryVennDiagram<E>
      *
      * @param model model for this binary venn label, must not be null
      */
-    public final void setModel(final BinaryVennModel3<E> model)
+    public final void setModel(final BinaryVennModel<E> model)
     {
         if (model == null)
         {
             throw new IllegalArgumentException("model must not be null");
         }
-        BinaryVennModel3<E> oldModel = this.model;
+        BinaryVennModel<E> oldModel = this.model;
         uninstallListeners();
         this.model = model;
         installListeners();

@@ -32,9 +32,9 @@ import org.piccolo2d.nodes.PText;
 import org.dishevelled.observable.event.SetChangeEvent;
 import org.dishevelled.observable.event.SetChangeListener;
 
-import org.dishevelled.venn.QuaternaryVennModel3;
+import org.dishevelled.venn.QuaternaryVennModel;
 
-import org.dishevelled.venn.model.QuaternaryVennModelImpl3;
+import org.dishevelled.venn.model.QuaternaryVennModelImpl;
 
 /**
  * Abstract quaternary venn diagram node.
@@ -47,7 +47,7 @@ public abstract class AbstractQuaternaryVennNode<E>
     extends PNode
 {
     /** Quaternary venn model. */
-    private QuaternaryVennModel3<E> model;
+    private QuaternaryVennModel<E> model;
 
     /** Label text for the first set. */
     private String firstLabelText = DEFAULT_FIRST_LABEL_TEXT;
@@ -250,7 +250,7 @@ public abstract class AbstractQuaternaryVennNode<E>
     protected AbstractQuaternaryVennNode()
     {
         super();
-        model = new QuaternaryVennModelImpl3<E>();
+        model = new QuaternaryVennModelImpl<E>();
 
         installListeners();
         updateLabels();
@@ -274,7 +274,7 @@ public abstract class AbstractQuaternaryVennNode<E>
                                          final String fourthLabelText, final Set<? extends E> fourth)
     {
         super();
-        model = new QuaternaryVennModelImpl3<E>(first, second, third, fourth);
+        model = new QuaternaryVennModelImpl<E>(first, second, third, fourth);
         this.firstLabelText = firstLabelText;
         this.secondLabelText = secondLabelText;
         this.thirdLabelText = thirdLabelText;
@@ -303,7 +303,7 @@ public abstract class AbstractQuaternaryVennNode<E>
      *
      * @param model model for this abstract quaternary venn diagram node, must not be null
      */
-    protected AbstractQuaternaryVennNode(final QuaternaryVennModel3<E> model)
+    protected AbstractQuaternaryVennNode(final QuaternaryVennModel<E> model)
     {
         super();
         if (model == null)
@@ -398,7 +398,7 @@ public abstract class AbstractQuaternaryVennNode<E>
      *
      * @return the model for this quaternary venn label
      */
-    public final QuaternaryVennModel3<E> getModel()
+    public final QuaternaryVennModel<E> getModel()
     {
         return model;
     }
@@ -410,13 +410,13 @@ public abstract class AbstractQuaternaryVennNode<E>
      *
      * @param model model for this quaternary venn label, must not be null
      */
-    public final void setModel(final QuaternaryVennModel3<E> model)
+    public final void setModel(final QuaternaryVennModel<E> model)
     {
         if (model == null)
         {
             throw new IllegalArgumentException("model must not be null");
         }
-        QuaternaryVennModel3<E> oldModel = this.model;
+        QuaternaryVennModel<E> oldModel = this.model;
         uninstallListeners();
         this.model = model;
         installListeners();

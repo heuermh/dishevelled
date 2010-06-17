@@ -47,16 +47,16 @@ import org.dishevelled.layout.LabelFieldPanel;
 import org.dishevelled.observable.event.SetChangeEvent;
 import org.dishevelled.observable.event.SetChangeListener;
 
-import org.dishevelled.venn.TernaryVennModel3;
+import org.dishevelled.venn.TernaryVennModel;
 
 /**
- * Tertiary venn diagram list 3.
+ * Tertiary venn diagram list.
  *
  * @param <E> value type
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public final class TernaryVennList3<E>
+public final class TernaryVennList<E>
     extends AbstractTernaryVennDiagram<E>
 {
     /** Contents of the first set. */
@@ -131,7 +131,7 @@ public final class TernaryVennList3<E>
         /** {@inheritDoc} */
         public void propertyChange(final PropertyChangeEvent event)
         {
-            uninstallListModels((TernaryVennModel3<E>) event.getOldValue());
+            uninstallListModels((TernaryVennModel<E>) event.getOldValue());
             installListModels();
         }
     };
@@ -160,7 +160,7 @@ public final class TernaryVennList3<E>
     /**
      * Create a new empty ternary venn list.
      */
-    public TernaryVennList3()
+    public TernaryVennList()
     {
         super();
         installListModels();
@@ -179,7 +179,7 @@ public final class TernaryVennList3<E>
      * @param thirdLabelText label text for the third set
      * @param third third set, must not be null
      */
-    public TernaryVennList3(final String firstLabelText, final Set<? extends E> first,
+    public TernaryVennList(final String firstLabelText, final Set<? extends E> first,
                              final String secondLabelText, final Set<? extends E> second,
                              final String thirdLabelText, final Set<? extends E> third)
     {
@@ -195,7 +195,7 @@ public final class TernaryVennList3<E>
      *
      * @param model model for this ternary venn list, must not be null
      */
-    public TernaryVennList3(final TernaryVennModel3<E> model)
+    public TernaryVennList(final TernaryVennModel<E> model)
     {
         super(model);
         installListModels();
@@ -282,7 +282,7 @@ public final class TernaryVennList3<E>
      *
      * @param oldModel old model
      */
-    private void uninstallListModels(final TernaryVennModel3<E> oldModel)
+    private void uninstallListModels(final TernaryVennModel<E> oldModel)
     {
         firstAdapter.dispose();
         secondAdapter.dispose();

@@ -35,12 +35,12 @@ import org.dishevelled.observable.event.SetChangeEvent;
 import org.dishevelled.observable.event.SetChangeListener;
 
 /**
- * Abstract unit test for implementations of BinaryVennModel3.
+ * Abstract unit test for implementations of BinaryVennModel.
  *
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public abstract class AbstractBinaryVennModel3Test
+public abstract class AbstractBinaryVennModelTest
     extends TestCase
 {
     /** First set. */
@@ -75,25 +75,25 @@ public abstract class AbstractBinaryVennModel3Test
 
 
     /**
-     * Create and return a new instance of an implementation of BinaryVennModel3
+     * Create and return a new instance of an implementation of BinaryVennModel
      * with the specified sets to test.
      *
      * @param first first set, must not be null
      * @param second second set, must not be null
-     * @return a new instance of an implementation of BinaryVennModel3 with the
+     * @return a new instance of an implementation of BinaryVennModel with the
      *    specified sets to test
      */
-    protected abstract <T> BinaryVennModel3<T> createBinaryVennModel3(Set<? extends T> first, Set<? extends T> second);
+    protected abstract <T> BinaryVennModel<T> createBinaryVennModel3(Set<? extends T> first, Set<? extends T> second);
 
     public void testCreateBinaryVennModel3()
     {
-        BinaryVennModel3<String> binaryVennModel = createBinaryVennModel3(FIRST, SECOND);
+        BinaryVennModel<String> binaryVennModel = createBinaryVennModel3(FIRST, SECOND);
         assertNotNull(binaryVennModel);
     }
 
     public void testFirst()
     {
-        BinaryVennModel3<String> binaryVennModel = createBinaryVennModel3(FIRST, SECOND);
+        BinaryVennModel<String> binaryVennModel = createBinaryVennModel3(FIRST, SECOND);
         Set<String> first = binaryVennModel.first();
         assertNotNull(first);
         assertEquals(2, first.size());
@@ -111,7 +111,7 @@ public abstract class AbstractBinaryVennModel3Test
 
     public void testFirstListener()
     {
-        BinaryVennModel3<String> binaryVennModel = createBinaryVennModel3(FIRST, SECOND);
+        BinaryVennModel<String> binaryVennModel = createBinaryVennModel3(FIRST, SECOND);
         ObservableSet<String> first = binaryVennModel.first();
         Listener listener = new Listener();
         first.addSetChangeListener(listener);
@@ -122,7 +122,7 @@ public abstract class AbstractBinaryVennModel3Test
 
     public void testSecond()
     {
-        BinaryVennModel3<String> binaryVennModel = createBinaryVennModel3(FIRST, SECOND);
+        BinaryVennModel<String> binaryVennModel = createBinaryVennModel3(FIRST, SECOND);
         Set<String> second = binaryVennModel.second();
         assertNotNull(second);
         assertEquals(3, second.size());
@@ -141,7 +141,7 @@ public abstract class AbstractBinaryVennModel3Test
 
     public void testSecondListener()
     {
-        BinaryVennModel3<String> binaryVennModel = createBinaryVennModel3(FIRST, SECOND);
+        BinaryVennModel<String> binaryVennModel = createBinaryVennModel3(FIRST, SECOND);
         ObservableSet<String> second = binaryVennModel.second();
         Listener listener = new Listener();
         second.addSetChangeListener(listener);
@@ -152,7 +152,7 @@ public abstract class AbstractBinaryVennModel3Test
 
     public void testFirstOnly()
     {
-        BinaryVennModel3<String> binaryVennModel = createBinaryVennModel3(FIRST, SECOND);
+        BinaryVennModel<String> binaryVennModel = createBinaryVennModel3(FIRST, SECOND);
         Set<String> first = binaryVennModel.first();
         Set<String> firstOnly = binaryVennModel.firstOnly();
         assertNotNull(firstOnly);
@@ -176,7 +176,7 @@ public abstract class AbstractBinaryVennModel3Test
 
     public void testSecondOnly()
     {
-        BinaryVennModel3<String> binaryVennModel = createBinaryVennModel3(FIRST, SECOND);
+        BinaryVennModel<String> binaryVennModel = createBinaryVennModel3(FIRST, SECOND);
         Set<String> second = binaryVennModel.second();
         Set<String> secondOnly = binaryVennModel.secondOnly();
         assertNotNull(secondOnly);
@@ -204,7 +204,7 @@ public abstract class AbstractBinaryVennModel3Test
 
     public void testIntersection()
     {
-        BinaryVennModel3<String> binaryVennModel = createBinaryVennModel3(FIRST, SECOND);
+        BinaryVennModel<String> binaryVennModel = createBinaryVennModel3(FIRST, SECOND);
         Set<String> intersection = binaryVennModel.intersection();
         assertNotNull(intersection);
         assertEquals(1, intersection.size());
@@ -228,7 +228,7 @@ public abstract class AbstractBinaryVennModel3Test
 
     public void testUnion()
     {
-        BinaryVennModel3<String> binaryVennModel = createBinaryVennModel3(FIRST, SECOND);
+        BinaryVennModel<String> binaryVennModel = createBinaryVennModel3(FIRST, SECOND);
         Set<String> union = binaryVennModel.union();
         assertNotNull(union);
         assertEquals(4, union.size());
@@ -258,7 +258,7 @@ public abstract class AbstractBinaryVennModel3Test
 
     public void testSelection()
     {
-        BinaryVennModel3<String> binaryVennModel = createBinaryVennModel3(FIRST, SECOND);
+        BinaryVennModel<String> binaryVennModel = createBinaryVennModel3(FIRST, SECOND);
         Set<String> first = binaryVennModel.first();
         Set<String> second = binaryVennModel.second();
         Set<String> selection = binaryVennModel.selection();
@@ -314,7 +314,7 @@ public abstract class AbstractBinaryVennModel3Test
 
     public void testSelectionListener()
     {
-        BinaryVennModel3<String> binaryVennModel = createBinaryVennModel3(FIRST, SECOND);
+        BinaryVennModel<String> binaryVennModel = createBinaryVennModel3(FIRST, SECOND);
         ObservableSet<String> selection = binaryVennModel.selection();
         Listener listener = new Listener();
         selection.addSetChangeListener(listener);

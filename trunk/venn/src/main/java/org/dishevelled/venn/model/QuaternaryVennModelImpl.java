@@ -32,17 +32,17 @@ import org.dishevelled.observable.ObservableSet;
 
 import org.dishevelled.observable.impl.ObservableSetImpl;
 
-import org.dishevelled.venn.QuaternaryVennModel3;
+import org.dishevelled.venn.QuaternaryVennModel;
 
 /**
- * Quaternary venn model implementation 3.
+ * Quaternary venn model implementation.
  *
  * @param <E> value type
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public final class QuaternaryVennModelImpl3<E>
-    implements QuaternaryVennModel3<E>
+public final class QuaternaryVennModelImpl<E>
+    implements QuaternaryVennModel<E>
 {
     /** First view. */
     private final ObservableSet<E> first;
@@ -111,7 +111,7 @@ public final class QuaternaryVennModelImpl3<E>
     /**
      * Create a new empty quaternary venn model.
      */
-    public QuaternaryVennModelImpl3()
+    public QuaternaryVennModelImpl()
     {
         this(new HashSet<E>(), new HashSet<E>(), new HashSet<E>(), new HashSet<E>());
     }
@@ -124,7 +124,7 @@ public final class QuaternaryVennModelImpl3<E>
      * @param third third set, must not be null
      * @param fourth fourth set, must not be null
      */
-    public QuaternaryVennModelImpl3(final Set<? extends E> first,
+    public QuaternaryVennModelImpl(final Set<? extends E> first,
                                     final Set<? extends E> second,
                                     final Set<? extends E> third,
                                     final Set<? extends E> fourth)

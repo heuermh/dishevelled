@@ -47,16 +47,16 @@ import org.dishevelled.layout.LabelFieldPanel;
 import org.dishevelled.observable.event.SetChangeEvent;
 import org.dishevelled.observable.event.SetChangeListener;
 
-import org.dishevelled.venn.BinaryVennModel3;
+import org.dishevelled.venn.BinaryVennModel;
 
 /**
- * Binary venn diagram list 3.
+ * Binary venn diagram list.
  *
  * @param <E> value type
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public final class BinaryVennList3<E>
+public final class BinaryVennList<E>
     extends AbstractBinaryVennDiagram<E>
 {
     /** Contents of the first set. */
@@ -101,7 +101,7 @@ public final class BinaryVennList3<E>
         /** {@inheritDoc} */
         public void propertyChange(final PropertyChangeEvent event)
         {
-            uninstallListModels((BinaryVennModel3<E>) event.getOldValue());
+            uninstallListModels((BinaryVennModel<E>) event.getOldValue());
             installListModels();
         }
     };
@@ -130,7 +130,7 @@ public final class BinaryVennList3<E>
     /**
      * Create a new empty binary venn list.
      */
-    public BinaryVennList3()
+    public BinaryVennList()
     {
         super();
         installListModels();
@@ -147,7 +147,7 @@ public final class BinaryVennList3<E>
      * @param secondLabelText label text for the second set
      * @param second second set, must not be null
      */
-    public BinaryVennList3(final String firstLabelText, final Set<? extends E> first,
+    public BinaryVennList(final String firstLabelText, final Set<? extends E> first,
         final String secondLabelText, final Set<? extends E> second)
     {
         super(firstLabelText, first, secondLabelText, second);
@@ -162,7 +162,7 @@ public final class BinaryVennList3<E>
      *
      * @param model model for this binary venn list, must not be null
      */
-    public BinaryVennList3(final BinaryVennModel3<E> model)
+    public BinaryVennList(final BinaryVennModel<E> model)
     {
         super(model);
         installListModels();
@@ -307,7 +307,7 @@ public final class BinaryVennList3<E>
      *
      * @param oldModel old model
      */
-    private void uninstallListModels(final BinaryVennModel3<E> oldModel)
+    private void uninstallListModels(final BinaryVennModel<E> oldModel)
     {
         firstAdapter.dispose();
         secondAdapter.dispose();

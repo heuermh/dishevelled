@@ -55,7 +55,7 @@ import org.piccolo2d.util.PPaintContext;
 
 import org.dishevelled.piccolo.venn.QuaternaryVennNode3;
 
-import org.dishevelled.venn.swing.QuaternaryVennList3;
+import org.dishevelled.venn.swing.QuaternaryVennList;
 
 /**
  * Quaternary venn node example 3.
@@ -165,7 +165,7 @@ public final class QuaternaryVennExample3
                     public void run()
                     {
                         details = new JDialog((JFrame) SwingUtilities.getRoot(QuaternaryVennExample3.this), "Details");
-                        QuaternaryVennList3<String> list = new QuaternaryVennList3<String>(vennNode.getFirstLabelText(),
+                        QuaternaryVennList<String> list = new QuaternaryVennList<String>(vennNode.getFirstLabelText(),
                                                                                            vennNode.getSecondLabelText(),
                                                                                            vennNode.getThirdLabelText(),
                                                                                            vennNode.getFourthLabelText(),

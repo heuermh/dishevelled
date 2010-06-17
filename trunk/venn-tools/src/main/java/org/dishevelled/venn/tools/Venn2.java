@@ -39,9 +39,9 @@ import org.dishevelled.commandline.Usage;
 
 import org.dishevelled.commandline.argument.FileArgument;
 
-import org.dishevelled.venn.BinaryVennModel3;
+import org.dishevelled.venn.BinaryVennModel;
 
-import org.dishevelled.venn.swing.BinaryVennLabel3;
+import org.dishevelled.venn.swing.BinaryVennLabel;
 
 /**
  * Venn two input files.
@@ -123,8 +123,8 @@ public final class Venn2
     /** {@inheritDoc} */
     public void run()
     {
-        BinaryVennLabel3<String> label = new BinaryVennLabel3<String>(first.getName(), read(first), second.getName(), read(second));
-        BinaryVennModel3<String> model = label.getModel();
+        BinaryVennLabel<String> label = new BinaryVennLabel<String>(first.getName(), read(first), second.getName(), read(second));
+        BinaryVennModel<String> model = label.getModel();
 
         // write individually to output files first
         write(label.getFirstOnlyLabelText(), model.firstOnly(), firstOnly);

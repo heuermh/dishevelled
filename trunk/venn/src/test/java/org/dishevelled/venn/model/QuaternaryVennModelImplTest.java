@@ -25,38 +25,38 @@ package org.dishevelled.venn.model;
 
 import java.util.Set;
 
-import org.dishevelled.venn.AbstractQuaternaryVennModel3Test;
-import org.dishevelled.venn.QuaternaryVennModel3;
+import org.dishevelled.venn.AbstractQuaternaryVennModelTest;
+import org.dishevelled.venn.QuaternaryVennModel;
 
-import org.dishevelled.venn.model.QuaternaryVennModelImpl3;
+import org.dishevelled.venn.model.QuaternaryVennModelImpl;
 
 /**
- * Unit test for QuaternaryVennModelImpl3.
+ * Unit test for QuaternaryVennModelImpl.
  *
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public final class QuaternaryVennModelImpl3Test
-    extends AbstractQuaternaryVennModel3Test
+public final class QuaternaryVennModelImplTest
+    extends AbstractQuaternaryVennModelTest
 {
 
     /** {@inheritDoc} */
-    protected <T> QuaternaryVennModel3<T> createQuaternaryVennModel3(final Set<? extends T> first,
+    protected <T> QuaternaryVennModel<T> createQuaternaryVennModel3(final Set<? extends T> first,
                                                                      final Set<? extends T> second,
                                                                      final Set<? extends T> third,
                                                                      final Set<? extends T> fourth)
     {
-        return new QuaternaryVennModelImpl3<T>(first, second, third, fourth);
+        return new QuaternaryVennModelImpl<T>(first, second, third, fourth);
     }
 
     public void testConstructor()
     {
-        new QuaternaryVennModelImpl3();
-        new QuaternaryVennModelImpl3<String>(FIRST, SECOND, THIRD, FOURTH);
+        new QuaternaryVennModelImpl();
+        new QuaternaryVennModelImpl<String>(FIRST, SECOND, THIRD, FOURTH);
 
         try
         {
-            new QuaternaryVennModelImpl3<String>(null, SECOND, THIRD, FOURTH);
+            new QuaternaryVennModelImpl<String>(null, SECOND, THIRD, FOURTH);
             fail("ctr(null,,,) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
@@ -65,7 +65,7 @@ public final class QuaternaryVennModelImpl3Test
         }
         try
         {
-            new QuaternaryVennModelImpl3<String>(FIRST, null, THIRD, FOURTH);
+            new QuaternaryVennModelImpl<String>(FIRST, null, THIRD, FOURTH);
             fail("ctr(,null,,) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
@@ -74,7 +74,7 @@ public final class QuaternaryVennModelImpl3Test
         }
         try
         {
-            new QuaternaryVennModelImpl3<String>(FIRST, SECOND, null, FOURTH);
+            new QuaternaryVennModelImpl<String>(FIRST, SECOND, null, FOURTH);
             fail("ctr(,,null,) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
@@ -83,7 +83,7 @@ public final class QuaternaryVennModelImpl3Test
         }
         try
         {
-            new QuaternaryVennModelImpl3<String>(FIRST, SECOND, THIRD, null);
+            new QuaternaryVennModelImpl<String>(FIRST, SECOND, THIRD, null);
             fail("ctr(,,,null) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
@@ -92,7 +92,7 @@ public final class QuaternaryVennModelImpl3Test
         }
         try
         {
-            new QuaternaryVennModelImpl3<String>(null, null, null, null);
+            new QuaternaryVennModelImpl<String>(null, null, null, null);
             fail("ctr(null, null, null, null) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)

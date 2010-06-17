@@ -28,13 +28,13 @@ import java.util.Set;
 import org.dishevelled.observable.ObservableSet;
 
 /**
- * Binary venn diagram model 3.
+ * Binary venn diagram model.
  *
  * @param <E> value type
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public interface BinaryVennModel3<E>
+public interface BinaryVennModel<E>
 {
 
     /**

@@ -37,7 +37,7 @@ import org.piccolo2d.PNode;
 import org.piccolo2d.nodes.PPath;
 import org.piccolo2d.nodes.PText;
 
-import org.dishevelled.venn.TernaryVennModel3;
+import org.dishevelled.venn.TernaryVennModel;
 
 /**
  * Ternary venn diagram node 3.
@@ -162,7 +162,7 @@ public class TernaryVennNode3<E>
      *
      * @param model model for this ternary venn node, must not be null
      */
-    public TernaryVennNode3(final TernaryVennModel3<E> model)
+    public TernaryVennNode3(final TernaryVennModel<E> model)
     {
         super(model);
         initNodes();

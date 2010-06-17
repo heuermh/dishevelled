@@ -25,35 +25,35 @@ package org.dishevelled.venn.model;
 
 import java.util.Set;
 
-import org.dishevelled.venn.AbstractBinaryVennModel3Test;
-import org.dishevelled.venn.BinaryVennModel3;
+import org.dishevelled.venn.AbstractBinaryVennModelTest;
+import org.dishevelled.venn.BinaryVennModel;
 
-import org.dishevelled.venn.model.BinaryVennModelImpl3;
+import org.dishevelled.venn.model.BinaryVennModelImpl;
 
 /**
- * Unit test for BinaryVennModelImpl3.
+ * Unit test for BinaryVennModelImpl.
  *
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public final class BinaryVennModelImpl3Test
-    extends AbstractBinaryVennModel3Test
+public final class BinaryVennModelImplTest
+    extends AbstractBinaryVennModelTest
 {
 
     /** {@inheritDoc} */
-    protected <T> BinaryVennModel3<T> createBinaryVennModel3(final Set<? extends T> first, final Set<? extends T> second)
+    protected <T> BinaryVennModel<T> createBinaryVennModel3(final Set<? extends T> first, final Set<? extends T> second)
     {
-        return new BinaryVennModelImpl3<T>(first, second);
+        return new BinaryVennModelImpl<T>(first, second);
     }
 
     public void testConstructor()
     {
-        assertNotNull(new BinaryVennModelImpl3<String>());
-        assertNotNull(new BinaryVennModelImpl3<String>(FIRST, SECOND));
+        assertNotNull(new BinaryVennModelImpl<String>());
+        assertNotNull(new BinaryVennModelImpl<String>(FIRST, SECOND));
 
         try
         {
-            new BinaryVennModelImpl3<String>(null, SECOND);
+            new BinaryVennModelImpl<String>(null, SECOND);
             fail("ctr(, null) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
@@ -62,7 +62,7 @@ public final class BinaryVennModelImpl3Test
         }
         try
         {
-            new BinaryVennModelImpl3<String>(FIRST, null);
+            new BinaryVennModelImpl<String>(FIRST, null);
             fail("ctr(null,) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
@@ -71,7 +71,7 @@ public final class BinaryVennModelImpl3Test
         }
         try
         {
-            new BinaryVennModelImpl3<String>(null, null);
+            new BinaryVennModelImpl<String>(null, null);
             fail("ctr(null, null) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)

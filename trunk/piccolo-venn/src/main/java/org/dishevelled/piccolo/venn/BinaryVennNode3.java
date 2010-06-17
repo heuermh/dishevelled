@@ -37,7 +37,7 @@ import org.piccolo2d.PNode;
 import org.piccolo2d.nodes.PPath;
 import org.piccolo2d.nodes.PText;
 
-import org.dishevelled.venn.BinaryVennModel3;
+import org.dishevelled.venn.BinaryVennModel;
 
 /**
  * Binary venn diagram node 3.
@@ -129,7 +129,7 @@ public class BinaryVennNode3<E>
      *
      * @param model model for this binary venn node, must not be null
      */
-    public BinaryVennNode3(final BinaryVennModel3<E> model)
+    public BinaryVennNode3(final BinaryVennModel<E> model)
     {
         super(model);
         initNodes();

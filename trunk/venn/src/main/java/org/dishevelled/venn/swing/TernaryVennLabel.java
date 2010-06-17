@@ -28,16 +28,16 @@ import java.util.Set;
 
 import javax.swing.JLabel;
 
-import org.dishevelled.venn.TernaryVennModel3;
+import org.dishevelled.venn.TernaryVennModel;
 
 /**
- * Tertiary venn diagram label 3.
+ * Tertiary venn diagram label.
  *
  * @param <E> value type
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public final class TernaryVennLabel3<E>
+public final class TernaryVennLabel<E>
     extends AbstractTernaryVennDiagram<E>
 {
     /** Number of elements to display. */
@@ -83,7 +83,7 @@ public final class TernaryVennLabel3<E>
     /**
      * Create a new empty ternary venn label.
      */
-    public TernaryVennLabel3()
+    public TernaryVennLabel()
     {
         super();
         updateContents();
@@ -100,7 +100,7 @@ public final class TernaryVennLabel3<E>
      * @param thirdLabelText label text for the third set
      * @param third third set, must not be null
      */
-    public TernaryVennLabel3(final String firstLabelText, final Set<? extends E> first,
+    public TernaryVennLabel(final String firstLabelText, final Set<? extends E> first,
                               final String secondLabelText, final Set<? extends E> second,
                               final String thirdLabelText, final Set<? extends E> third)
     {
@@ -114,7 +114,7 @@ public final class TernaryVennLabel3<E>
      *
      * @param model model for this ternary venn label, must not be null
      */
-    public TernaryVennLabel3(final TernaryVennModel3<E> model)
+    public TernaryVennLabel(final TernaryVennModel<E> model)
     {
         super(model);
         updateContents();

@@ -32,9 +32,9 @@ import org.piccolo2d.nodes.PText;
 import org.dishevelled.observable.event.SetChangeEvent;
 import org.dishevelled.observable.event.SetChangeListener;
 
-import org.dishevelled.venn.TernaryVennModel3;
+import org.dishevelled.venn.TernaryVennModel;
 
-import org.dishevelled.venn.model.TernaryVennModelImpl3;
+import org.dishevelled.venn.model.TernaryVennModelImpl;
 
 /**
  * Abstract ternary venn diagram node.
@@ -47,7 +47,7 @@ public abstract class AbstractTernaryVennNode<E>
     extends PNode
 {
     /** Ternary venn model. */
-    private TernaryVennModel3<E> model;
+    private TernaryVennModel<E> model;
 
     /** Label text for the first set. */
     private String firstLabelText = DEFAULT_FIRST_LABEL_TEXT;
@@ -169,7 +169,7 @@ public abstract class AbstractTernaryVennNode<E>
     protected AbstractTernaryVennNode()
     {
         super();
-        model = new TernaryVennModelImpl3<E>();
+        model = new TernaryVennModelImpl<E>();
 
         installListeners();
         updateLabels();
@@ -190,7 +190,7 @@ public abstract class AbstractTernaryVennNode<E>
                                        final String thirdLabelText, final Set<? extends E> third)
     {
         super();
-        model = new TernaryVennModelImpl3<E>(first, second, third);
+        model = new TernaryVennModelImpl<E>(first, second, third);
         this.firstLabelText = firstLabelText;
         this.secondLabelText = secondLabelText;
         this.thirdLabelText = thirdLabelText;
@@ -210,7 +210,7 @@ public abstract class AbstractTernaryVennNode<E>
      *
      * @param model model for this abstract ternary venn diagram node, must not be null
      */
-    protected AbstractTernaryVennNode(final TernaryVennModel3<E> model)
+    protected AbstractTernaryVennNode(final TernaryVennModel<E> model)
     {
         super();
         if (model == null)
@@ -294,7 +294,7 @@ public abstract class AbstractTernaryVennNode<E>
      *
      * @return the model for this ternary venn label
      */
-    public final TernaryVennModel3<E> getModel()
+    public final TernaryVennModel<E> getModel()
     {
         return model;
     }
@@ -306,13 +306,13 @@ public abstract class AbstractTernaryVennNode<E>
      *
      * @param model model for this ternary venn label, must not be null
      */
-    public final void setModel(final TernaryVennModel3<E> model)
+    public final void setModel(final TernaryVennModel<E> model)
     {
         if (model == null)
         {
             throw new IllegalArgumentException("model must not be null");
         }
-        TernaryVennModel3<E> oldModel = this.model;
+        TernaryVennModel<E> oldModel = this.model;
         uninstallListeners();
         this.model = model;
         installListeners();

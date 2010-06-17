@@ -44,7 +44,7 @@ import org.piccolo2d.PNode;
 import org.piccolo2d.nodes.PPath;
 import org.piccolo2d.nodes.PText;
 
-import org.dishevelled.venn.QuaternaryVennModel3;
+import org.dishevelled.venn.QuaternaryVennModel;
 
 /**
  * Quaternary venn diagram node 3.
@@ -229,7 +229,7 @@ public class QuaternaryVennNode3<E>
      *
      * @param model model for this quaternary venn node, must not be null
      */
-    public QuaternaryVennNode3(final QuaternaryVennModel3<E> model)
+    public QuaternaryVennNode3(final QuaternaryVennModel<E> model)
     {
         super(model);
         initNodes();
