@@ -372,7 +372,243 @@ public abstract class AbstractQuaternaryVennModel3Test
         // todo
     }
 
+    public void testFirstSecond()
+    {
+        QuaternaryVennModel3<String> quaternaryVennModel = createQuaternaryVennModel3(FIRST, SECOND, THIRD, FOURTH);
+        Set<String> firstSecond = quaternaryVennModel.firstSecond();
+        assertNotNull(firstSecond);
+        assertTrue(firstSecond.contains("f n s - t - r"));
 
+        quaternaryVennModel.first().add("garply");
+        quaternaryVennModel.second().add("garply");
+        assertEquals(2, firstSecond.size());
+        assertTrue(firstSecond.contains("garply"));
+
+        quaternaryVennModel.first().remove("garply");
+        quaternaryVennModel.second().remove("garply");
+        assertEquals(1, firstSecond.size());
+        assertFalse(firstSecond.contains("garply"));
+    }
+
+    public void testFirstSecondIsImmutable()
+    {
+        // todo
+    }
+
+    public void testFirstThird()
+    {
+        QuaternaryVennModel3<String> quaternaryVennModel = createQuaternaryVennModel3(FIRST, SECOND, THIRD, FOURTH);
+        Set<String> firstThird = quaternaryVennModel.firstThird();
+        assertNotNull(firstThird);
+        assertTrue(firstThird.contains("f n t - s - r"));
+
+        quaternaryVennModel.first().add("garply");
+        quaternaryVennModel.third().add("garply");
+        assertEquals(2, firstThird.size());
+        assertTrue(firstThird.contains("garply"));
+
+        quaternaryVennModel.first().remove("garply");
+        quaternaryVennModel.third().remove("garply");
+        assertEquals(1, firstThird.size());
+        assertFalse(firstThird.contains("garply"));
+    }
+
+    public void testFirstThirdIsImmutable()
+    {
+        // todo
+    }
+
+    public void testFirstFourth()
+    {
+        QuaternaryVennModel3<String> quaternaryVennModel = createQuaternaryVennModel3(FIRST, SECOND, THIRD, FOURTH);
+        Set<String> firstFourth = quaternaryVennModel.firstFourth();
+        assertNotNull(firstFourth);
+        assertTrue(firstFourth.contains("f n r - s - t"));
+
+        quaternaryVennModel.first().add("garply");
+        quaternaryVennModel.fourth().add("garply");
+        assertEquals(2, firstFourth.size());
+        assertTrue(firstFourth.contains("garply"));
+
+        quaternaryVennModel.first().remove("garply");
+        quaternaryVennModel.fourth().remove("garply");
+        assertEquals(1, firstFourth.size());
+        assertFalse(firstFourth.contains("garply"));
+    }
+
+    public void testFirstFourthIsImmutable()
+    {
+        // todo
+    }
+
+    public void testSecondThird()
+    {
+        QuaternaryVennModel3<String> quaternaryVennModel = createQuaternaryVennModel3(FIRST, SECOND, THIRD, FOURTH);
+        Set<String> secondThird = quaternaryVennModel.secondThird();
+        assertNotNull(secondThird);
+        assertTrue(secondThird.contains("s n t - f - r"));
+
+        quaternaryVennModel.second().add("garply");
+        quaternaryVennModel.third().add("garply");
+        assertEquals(2, secondThird.size());
+        assertTrue(secondThird.contains("garply"));
+
+        quaternaryVennModel.second().remove("garply");
+        quaternaryVennModel.third().remove("garply");
+        assertEquals(1, secondThird.size());
+        assertFalse(secondThird.contains("garply"));
+    }
+
+    public void testSecondThirdIsImmutable()
+    {
+        // todo
+    }
+
+    public void testSecondFourth()
+    {
+        QuaternaryVennModel3<String> quaternaryVennModel = createQuaternaryVennModel3(FIRST, SECOND, THIRD, FOURTH);
+        Set<String> secondFourth = quaternaryVennModel.secondFourth();
+        assertNotNull(secondFourth);
+        assertTrue(secondFourth.contains("s n r - f - t"));
+
+        quaternaryVennModel.second().add("garply");
+        quaternaryVennModel.fourth().add("garply");
+        assertEquals(2, secondFourth.size());
+        assertTrue(secondFourth.contains("garply"));
+
+        quaternaryVennModel.second().remove("garply");
+        quaternaryVennModel.fourth().remove("garply");
+        assertEquals(1, secondFourth.size());
+        assertFalse(secondFourth.contains("garply"));
+    }
+
+    public void testSecondFourthIsImmutable()
+    {
+        // todo
+    }
+
+    public void testThirdFourth()
+    {
+        QuaternaryVennModel3<String> quaternaryVennModel = createQuaternaryVennModel3(FIRST, SECOND, THIRD, FOURTH);
+        Set<String> thirdFourth = quaternaryVennModel.thirdFourth();
+        assertNotNull(thirdFourth);
+        assertTrue(thirdFourth.contains("t n r - f - s"));
+
+        quaternaryVennModel.third().add("garply");
+        quaternaryVennModel.fourth().add("garply");
+        assertEquals(2, thirdFourth.size());
+        assertTrue(thirdFourth.contains("garply"));
+
+        quaternaryVennModel.third().remove("garply");
+        quaternaryVennModel.fourth().remove("garply");
+        assertEquals(1, thirdFourth.size());
+        assertFalse(thirdFourth.contains("garply"));
+    }
+
+    public void testThirdFourthIsImmutable()
+    {
+        // todo
+    }
+
+    public void testFirstSecondThird()
+    {
+        QuaternaryVennModel3<String> quaternaryVennModel = createQuaternaryVennModel3(FIRST, SECOND, THIRD, FOURTH);
+        Set<String> firstSecondThird = quaternaryVennModel.firstSecondThird();
+        assertNotNull(firstSecondThird);
+        assertTrue(firstSecondThird.contains("f u s u t - r"));
+
+        quaternaryVennModel.first().add("garply");
+        quaternaryVennModel.second().add("garply");
+        quaternaryVennModel.third().add("garply");
+        assertEquals(2, firstSecondThird.size());
+        assertTrue(firstSecondThird.contains("garply"));
+
+        quaternaryVennModel.first().remove("garply");
+        quaternaryVennModel.second().remove("garply");
+        quaternaryVennModel.third().remove("garply");
+        assertEquals(1, firstSecondThird.size());
+        assertFalse(firstSecondThird.contains("garply"));
+    }
+
+    public void testFirstSecondThirdIsImmutable()
+    {
+        // todo
+    }
+
+    public void testFirstSecondFourth()
+    {
+        QuaternaryVennModel3<String> quaternaryVennModel = createQuaternaryVennModel3(FIRST, SECOND, THIRD, FOURTH);
+        Set<String> firstSecondFourth = quaternaryVennModel.firstSecondFourth();
+        assertNotNull(firstSecondFourth);
+        assertTrue(firstSecondFourth.contains("f u s u r - t"));
+
+        quaternaryVennModel.first().add("garply");
+        quaternaryVennModel.second().add("garply");
+        quaternaryVennModel.fourth().add("garply");
+        assertEquals(2, firstSecondFourth.size());
+        assertTrue(firstSecondFourth.contains("garply"));
+
+        quaternaryVennModel.first().remove("garply");
+        quaternaryVennModel.second().remove("garply");
+        quaternaryVennModel.fourth().remove("garply");
+        assertEquals(1, firstSecondFourth.size());
+        assertFalse(firstSecondFourth.contains("garply"));
+    }
+
+    public void testFirstSecondFourthIsImmutable()
+    {
+        // todo
+    }
+
+    public void testSecondThirdFourth()
+    {
+        QuaternaryVennModel3<String> quaternaryVennModel = createQuaternaryVennModel3(FIRST, SECOND, THIRD, FOURTH);
+        Set<String> secondThirdFourth = quaternaryVennModel.secondThirdFourth();
+        assertNotNull(secondThirdFourth);
+        assertTrue(secondThirdFourth.contains("s u t u r - f"));
+
+        quaternaryVennModel.second().add("garply");
+        quaternaryVennModel.third().add("garply");
+        quaternaryVennModel.fourth().add("garply");
+        assertEquals(2, secondThirdFourth.size());
+        assertTrue(secondThirdFourth.contains("garply"));
+
+        quaternaryVennModel.second().remove("garply");
+        quaternaryVennModel.third().remove("garply");
+        quaternaryVennModel.fourth().remove("garply");
+        assertEquals(1, secondThirdFourth.size());
+        assertFalse(secondThirdFourth.contains("garply"));
+    }
+
+    public void testSecondThirdFourthIsImmutable()
+    {
+        // todo
+    }
+
+    public void testFirstThirdFourth()
+    {
+        QuaternaryVennModel3<String> quaternaryVennModel = createQuaternaryVennModel3(FIRST, SECOND, THIRD, FOURTH);
+        Set<String> firstThirdFourth = quaternaryVennModel.firstThirdFourth();
+        assertNotNull(firstThirdFourth);
+        assertTrue(firstThirdFourth.contains("f u t u r - s"));
+
+        quaternaryVennModel.first().add("garply");
+        quaternaryVennModel.third().add("garply");
+        quaternaryVennModel.fourth().add("garply");
+        assertEquals(2, firstThirdFourth.size());
+        assertTrue(firstThirdFourth.contains("garply"));
+
+        quaternaryVennModel.first().remove("garply");
+        quaternaryVennModel.third().remove("garply");
+        quaternaryVennModel.fourth().remove("garply");
+        assertEquals(1, firstThirdFourth.size());
+        assertFalse(firstThirdFourth.contains("garply"));
+    }
+
+    public void testFirstThirdFourthIsImmutable()
+    {
+        // todo
+    }
 
     public void testIntersection()
     {

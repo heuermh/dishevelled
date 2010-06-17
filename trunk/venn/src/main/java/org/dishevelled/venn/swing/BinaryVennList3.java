@@ -352,7 +352,9 @@ public final class BinaryVennList3<E>
     }
 
     /**
-     * Create main panel.
+     * Create and return the main panel.
+     *
+     * @return the main panel
      */
     private JPanel createMainPanel()
     {

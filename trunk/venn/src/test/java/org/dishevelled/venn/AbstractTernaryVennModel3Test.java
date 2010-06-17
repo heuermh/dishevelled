@@ -87,19 +87,19 @@ public abstract class AbstractTernaryVennModel3Test
      * @return a new instance of an implementation of TernaryVennModel3 with the
      *    specified sets to test
      */
-    protected abstract <T> TernaryVennModel3<T> createTertiaryVennModel3(Set<? extends T> first,
+    protected abstract <T> TernaryVennModel3<T> createTernaryVennModel3(Set<? extends T> first,
             Set<? extends T> second,
             Set<? extends T> third);
 
-    public void testCreateTertiaryVennModel3()
+    public void testCreateTernaryVennModel3()
     {
-        TernaryVennModel3<String> ternaryVennModel = createTertiaryVennModel3(FIRST, SECOND, THIRD);
+        TernaryVennModel3<String> ternaryVennModel = createTernaryVennModel3(FIRST, SECOND, THIRD);
         assertNotNull(ternaryVennModel);
     }
 
     public void testFirst()
     {
-        TernaryVennModel3<String> ternaryVennModel = createTertiaryVennModel3(FIRST, SECOND, THIRD);
+        TernaryVennModel3<String> ternaryVennModel = createTernaryVennModel3(FIRST, SECOND, THIRD);
         Set<String> first = ternaryVennModel.first();
         assertNotNull(first);
         assertEquals(2, first.size());
@@ -117,7 +117,7 @@ public abstract class AbstractTernaryVennModel3Test
 
     public void testFirstListener()
     {
-        TernaryVennModel3<String> ternaryVennModel = createTertiaryVennModel3(FIRST, SECOND, THIRD);
+        TernaryVennModel3<String> ternaryVennModel = createTernaryVennModel3(FIRST, SECOND, THIRD);
         ObservableSet<String> first = ternaryVennModel.first();
         Listener listener = new Listener();
         first.addSetChangeListener(listener);
@@ -128,7 +128,7 @@ public abstract class AbstractTernaryVennModel3Test
 
     public void testSecond()
     {
-        TernaryVennModel3<String> ternaryVennModel = createTertiaryVennModel3(FIRST, SECOND, THIRD);
+        TernaryVennModel3<String> ternaryVennModel = createTernaryVennModel3(FIRST, SECOND, THIRD);
         Set<String> second = ternaryVennModel.second();
         assertNotNull(second);
         assertEquals(2, second.size());
@@ -146,7 +146,7 @@ public abstract class AbstractTernaryVennModel3Test
 
     public void testSecondListener()
     {
-        TernaryVennModel3<String> ternaryVennModel = createTertiaryVennModel3(FIRST, SECOND, THIRD);
+        TernaryVennModel3<String> ternaryVennModel = createTernaryVennModel3(FIRST, SECOND, THIRD);
         ObservableSet<String> second = ternaryVennModel.second();
         Listener listener = new Listener();
         second.addSetChangeListener(listener);
@@ -157,7 +157,7 @@ public abstract class AbstractTernaryVennModel3Test
 
     public void testThird()
     {
-        TernaryVennModel3<String> ternaryVennModel = createTertiaryVennModel3(FIRST, SECOND, THIRD);
+        TernaryVennModel3<String> ternaryVennModel = createTernaryVennModel3(FIRST, SECOND, THIRD);
         Set<String> third = ternaryVennModel.third();
         assertNotNull(third);
         assertEquals(3, third.size());
@@ -176,7 +176,7 @@ public abstract class AbstractTernaryVennModel3Test
 
     public void testThirdListener()
     {
-        TernaryVennModel3<String> ternaryVennModel = createTertiaryVennModel3(FIRST, SECOND, THIRD);
+        TernaryVennModel3<String> ternaryVennModel = createTernaryVennModel3(FIRST, SECOND, THIRD);
         ObservableSet<String> third = ternaryVennModel.third();
         Listener listener = new Listener();
         third.addSetChangeListener(listener);
@@ -187,7 +187,7 @@ public abstract class AbstractTernaryVennModel3Test
 
     public void testFirstOnly()
     {
-        TernaryVennModel3<String> ternaryVennModel = createTertiaryVennModel3(FIRST, SECOND, THIRD);
+        TernaryVennModel3<String> ternaryVennModel = createTernaryVennModel3(FIRST, SECOND, THIRD);
         Set<String> first = ternaryVennModel.first();
         Set<String> firstOnly = ternaryVennModel.firstOnly();
         assertNotNull(firstOnly);
@@ -211,7 +211,7 @@ public abstract class AbstractTernaryVennModel3Test
 
     public void testSecondOnly()
     {
-        TernaryVennModel3<String> ternaryVennModel = createTertiaryVennModel3(FIRST, SECOND, THIRD);
+        TernaryVennModel3<String> ternaryVennModel = createTernaryVennModel3(FIRST, SECOND, THIRD);
         Set<String> second = ternaryVennModel.second();
         Set<String> secondOnly = ternaryVennModel.secondOnly();
         assertNotNull(secondOnly);
@@ -233,7 +233,7 @@ public abstract class AbstractTernaryVennModel3Test
 
     public void testThirdOnly()
     {
-        TernaryVennModel3<String> ternaryVennModel = createTertiaryVennModel3(FIRST, SECOND, THIRD);
+        TernaryVennModel3<String> ternaryVennModel = createTernaryVennModel3(FIRST, SECOND, THIRD);
         Set<String> third = ternaryVennModel.third();
         Set<String> thirdOnly = ternaryVennModel.thirdOnly();
         assertNotNull(thirdOnly);
@@ -256,9 +256,78 @@ public abstract class AbstractTernaryVennModel3Test
         // todo
     }
 
+    public void testFirstSecond()
+    {
+        TernaryVennModel3<String> ternaryVennModel = createTernaryVennModel3(FIRST, SECOND, THIRD);
+        Set<String> firstSecond = ternaryVennModel.firstSecond();
+        assertNotNull(firstSecond);
+        assertTrue(firstSecond.isEmpty());
+
+        ternaryVennModel.first().add("garply");
+        ternaryVennModel.second().add("garply");
+        assertEquals(1, firstSecond.size());
+        assertTrue(firstSecond.contains("garply"));
+
+        ternaryVennModel.first().remove("garply");
+        ternaryVennModel.second().remove("garply");
+        assertEquals(0, firstSecond.size());
+        assertFalse(firstSecond.contains("garply"));
+    }
+
+    public void testFirstSecondIsImmutable()
+    {
+        // todo
+    }
+
+    public void testFirstThird()
+    {
+        TernaryVennModel3<String> ternaryVennModel = createTernaryVennModel3(FIRST, SECOND, THIRD);
+        Set<String> firstThird = ternaryVennModel.firstThird();
+        assertNotNull(firstThird);
+        assertTrue(firstThird.isEmpty());
+
+        ternaryVennModel.first().add("garply");
+        ternaryVennModel.third().add("garply");
+        assertEquals(1, firstThird.size());
+        assertTrue(firstThird.contains("garply"));
+
+        ternaryVennModel.first().remove("garply");
+        ternaryVennModel.third().remove("garply");
+        assertEquals(0, firstThird.size());
+        assertFalse(firstThird.contains("garply"));
+    }
+
+    public void testFirstThirdIsImmutable()
+    {
+        // todo
+    }
+
+    public void testSecondThird()
+    {
+        TernaryVennModel3<String> ternaryVennModel = createTernaryVennModel3(FIRST, SECOND, THIRD);
+        Set<String> secondThird = ternaryVennModel.secondThird();
+        assertNotNull(secondThird);
+        assertTrue(secondThird.contains("baz"));
+
+        ternaryVennModel.second().add("garply");
+        ternaryVennModel.third().add("garply");
+        assertEquals(2, secondThird.size());
+        assertTrue(secondThird.contains("garply"));
+
+        ternaryVennModel.second().remove("garply");
+        ternaryVennModel.third().remove("garply");
+        assertEquals(1, secondThird.size());
+        assertFalse(secondThird.contains("garply"));
+    }
+
+    public void testSecondThirdIsImmutable()
+    {
+        // todo
+    }
+
     public void testIntersection()
     {
-        TernaryVennModel3<String> ternaryVennModel = createTertiaryVennModel3(FIRST, SECOND, THIRD);
+        TernaryVennModel3<String> ternaryVennModel = createTernaryVennModel3(FIRST, SECOND, THIRD);
         Set<String> intersection = ternaryVennModel.intersection();
         assertNotNull(intersection);
         assertEquals(1, intersection.size());
@@ -284,7 +353,7 @@ public abstract class AbstractTernaryVennModel3Test
 
     public void testUnion()
     {
-        TernaryVennModel3<String> ternaryVennModel = createTertiaryVennModel3(FIRST, SECOND, THIRD);
+        TernaryVennModel3<String> ternaryVennModel = createTernaryVennModel3(FIRST, SECOND, THIRD);
         Set<String> union = ternaryVennModel.union();
         assertNotNull(union);
         assertEquals(4, union.size());
@@ -319,7 +388,7 @@ public abstract class AbstractTernaryVennModel3Test
 
     public void testSelection()
     {
-        TernaryVennModel3<String> ternaryVennModel = createTertiaryVennModel3(FIRST, SECOND, THIRD);
+        TernaryVennModel3<String> ternaryVennModel = createTernaryVennModel3(FIRST, SECOND, THIRD);
         Set<String> first = ternaryVennModel.first();
         Set<String> second = ternaryVennModel.second();
         Set<String> third = ternaryVennModel.third();
@@ -387,7 +456,7 @@ public abstract class AbstractTernaryVennModel3Test
 
     public void testSelectionListener()
     {
-        TernaryVennModel3<String> ternaryVennModel = createTertiaryVennModel3(FIRST, SECOND, THIRD);
+        TernaryVennModel3<String> ternaryVennModel = createTernaryVennModel3(FIRST, SECOND, THIRD);
         ObservableSet<String> selection = ternaryVennModel.selection();
         Listener listener = new Listener();
         selection.addSetChangeListener(listener);

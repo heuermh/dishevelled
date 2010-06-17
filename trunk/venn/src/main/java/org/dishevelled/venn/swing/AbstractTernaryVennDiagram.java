@@ -623,7 +623,7 @@ public abstract class AbstractTernaryVennDiagram<E>
      * Return the label for the first set.  The text for the returned JLabel
      * should not be changed, as the text is synchronized to the ternary
      * venn model backing this venn diagram.  Use methods
-     * {@link #setFirstLabelText(String)} and {@link setDisplaySizes(boolean)}
+     * {@link #setFirstLabelText(String)} and {@link #setDisplaySizes(boolean)}
      * to set the label text and whether to display sizes respectively.
      *
      * @return the label for the first set
@@ -637,7 +637,7 @@ public abstract class AbstractTernaryVennDiagram<E>
      * Return the label for the second set.  The text for the returned JLabel
      * should not be changed, as the text is synchronized to the ternary
      * venn model backing this venn diagram.  Use methods
-     * {@link #setSecondLabelText(String)} and {@link setDisplaySizes(boolean)}
+     * {@link #setSecondLabelText(String)} and {@link #setDisplaySizes(boolean)}
      * to set the label text and whether to display sizes respectively.
      *
      * @return the label for the second set
@@ -651,7 +651,7 @@ public abstract class AbstractTernaryVennDiagram<E>
      * Return the label for the third set.  The text for the returned JLabel
      * should not be changed, as the text is synchronized to the ternary
      * venn model backing this venn diagram.  Use methods
-     * {@link #setThirdLabelText(String)} and {@link setDisplaySizes(boolean)}
+     * {@link #setThirdLabelText(String)} and {@link #setDisplaySizes(boolean)}
      * to set the label text and whether to display sizes respectively.
      *
      * @return the label for the third set
@@ -665,7 +665,7 @@ public abstract class AbstractTernaryVennDiagram<E>
      * Return the label for the first only view.  The text for the returned JLabel
      * should not be changed, as the text is synchronized to the ternary
      * venn model backing this venn diagram.  Use methods
-     * {@link #setFirstOnlyLabelText(String)} and {@link setDisplaySizes(boolean)}
+     * {@link #setFirstOnlyLabelText(String)} and {@link #setDisplaySizes(boolean)}
      * to set the label text and whether to display sizes respectively.
      *
      * @return the label for the first only view
@@ -679,7 +679,7 @@ public abstract class AbstractTernaryVennDiagram<E>
      * Return the label for the second only view.  The text for the returned JLabel
      * should not be changed, as the text is synchronized to the ternary
      * venn model backing this venn diagram.  Use methods
-     * {@link #setSecondOnlyLabelText(String)} and {@link setDisplaySizes(boolean)}
+     * {@link #setSecondOnlyLabelText(String)} and {@link #setDisplaySizes(boolean)}
      * to set the label text and whether to display sizes respectively.
      *
      * @return the label for the second only view
@@ -693,7 +693,7 @@ public abstract class AbstractTernaryVennDiagram<E>
      * Return the label for the third only view.  The text for the returned JLabel
      * should not be changed, as the text is synchronized to the ternary
      * venn model backing this venn diagram.  Use methods
-     * {@link #setThirdOnlyLabelText(String)} and {@link setDisplaySizes(boolean)}
+     * {@link #setThirdOnlyLabelText(String)} and {@link #setDisplaySizes(boolean)}
      * to set the label text and whether to display sizes respectively.
      *
      * @return the label for the third only view
@@ -707,7 +707,7 @@ public abstract class AbstractTernaryVennDiagram<E>
      * Return the label for the first second view.  The text for the returned JLabel
      * should not be changed, as the text is synchronized to the ternary
      * venn model backing this venn diagram.  Use methods
-     * {@link #setFirstSecondLabelText(String)} and {@link setDisplaySizes(boolean)}
+     * {@link #setFirstSecondLabelText(String)} and {@link #setDisplaySizes(boolean)}
      * to set the label text and whether to display sizes respectively.
      *
      * @return the label for the first second view
@@ -721,7 +721,7 @@ public abstract class AbstractTernaryVennDiagram<E>
      * Return the label for the first third view.  The text for the returned JLabel
      * should not be changed, as the text is synchronized to the ternary
      * venn model backing this venn diagram.  Use methods
-     * {@link #setFirstThirdLabelText(String)} and {@link setDisplaySizes(boolean)}
+     * {@link #setFirstThirdLabelText(String)} and {@link #setDisplaySizes(boolean)}
      * to set the label text and whether to display sizes respectively.
      *
      * @return the label for the first third view
@@ -735,7 +735,7 @@ public abstract class AbstractTernaryVennDiagram<E>
      * Return the label for the second third view.  The text for the returned JLabel
      * should not be changed, as the text is synchronized to the ternary
      * venn model backing this venn diagram.  Use methods
-     * {@link #setSecondThirdLabelText(String)} and {@link setDisplaySizes(boolean)}
+     * {@link #setSecondThirdLabelText(String)} and {@link #setDisplaySizes(boolean)}
      * to set the label text and whether to display sizes respectively.
      *
      * @return the label for the second third view
@@ -749,7 +749,7 @@ public abstract class AbstractTernaryVennDiagram<E>
      * Return the label for the intersection view.  The text for the returned JLabel
      * should not be changed, as the text is synchronized to the ternary
      * venn model backing this venn diagram.  Use methods
-     * {@link #setIntersectionLabelText(String)} and {@link setDisplaySizes(boolean)}
+     * {@link #setIntersectionLabelText(String)} and {@link #setDisplaySizes(boolean)}
      * to set the label text and whether to display sizes respectively.
      *
      * @return the label for the intersection view
@@ -763,7 +763,7 @@ public abstract class AbstractTernaryVennDiagram<E>
      * Return the label for the union view.  The text for the returned JLabel
      * should not be changed, as the text is synchronized to the ternary
      * venn model backing this venn diagram.  Use methods
-     * {@link #setUnionLabelText(String)} and {@link setDisplaySizes(boolean)}
+     * {@link #setUnionLabelText(String)} and {@link #setDisplaySizes(boolean)}
      * to set the label text and whether to display sizes respectively.
      *
      * @return the label for the union view
