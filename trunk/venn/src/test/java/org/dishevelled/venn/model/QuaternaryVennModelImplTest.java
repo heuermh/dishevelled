@@ -51,7 +51,7 @@ public final class QuaternaryVennModelImplTest
 
     public void testConstructor()
     {
-        new QuaternaryVennModelImpl();
+        new QuaternaryVennModelImpl<String>();
         new QuaternaryVennModelImpl<String>(FIRST, SECOND, THIRD, FOURTH);
 
         try
