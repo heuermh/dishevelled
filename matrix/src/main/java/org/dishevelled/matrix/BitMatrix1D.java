@@ -296,7 +296,7 @@ public final class BitMatrix1D
     }
 
     /**
-     * Return true if the specied 1D bit matrix has any bits set
+     * Return true if the specified 1D bit matrix has any bits set
      * to true that are also set to true in this 1D bit matrix.
      *
      * @param other other 1D bit matrix, must not be null and must

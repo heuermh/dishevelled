@@ -210,7 +210,7 @@ public interface Matrix2D<E>
     E aggregate(BinaryFunction<E, E, E> aggr, UnaryFunction<E, E> function);
 
     /**
-     * Apply a function to each value in this 2D matrix and the specifed
+     * Apply a function to each value in this 2D matrix and the specified
      * matrix and aggregate the result.
      *
      * @param other other 2D matrix, must not be null and must
