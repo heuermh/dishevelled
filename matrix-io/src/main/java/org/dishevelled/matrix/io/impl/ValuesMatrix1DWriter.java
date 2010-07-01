@@ -27,21 +27,21 @@ import java.io.IOException;
 
 import java.util.Iterator;
 
-import org.dishevelled.matrix.Matrix3D;
+import org.dishevelled.matrix.Matrix1D;
 
 /**
- * Simple writer for matrices of objects in three dimensions.
+ * Values writer for matrices of objects in one dimension.
  *
- * @param <E> 3D matrix element type
+ * @param <E> 1D matrix element type
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public final class SimpleMatrix3DWriter<E>
-    extends AbstractMatrix3DWriter<E>
+public final class ValuesMatrix1DWriter<E>
+    extends AbstractMatrix1DWriter<E>
 {
 
     /** {@inheritDoc} */
-    public <T extends Appendable> T append(final Matrix3D<? extends E> matrix, final T appendable)
+    public <T extends Appendable> T append(final Matrix1D<? extends E> matrix, final T appendable)
         throws IOException
     {
         if (matrix == null)
