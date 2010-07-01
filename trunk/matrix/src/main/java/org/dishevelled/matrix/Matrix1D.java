@@ -60,7 +60,7 @@ public interface Matrix1D<E>
     long cardinality();
 
     /**
-     * Return true if the cardinalty of this 1D matrix is zero.
+     * Return true if the cardinality of this 1D matrix is zero.
      *
      * @return true if the cardinality of this 1D matrix is zero
      */
@@ -185,7 +185,7 @@ public interface Matrix1D<E>
     E aggregate(BinaryFunction<E, E, E> aggr, UnaryFunction<E, E> function);
 
     /**
-     * Apply a function to each value in this 1D matrix and the specifed
+     * Apply a function to each value in this 1D matrix and the specified
      * matrix and aggregate the result.
      *
      * @param other other 1D matrix, must not be null and must
