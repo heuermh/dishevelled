@@ -35,7 +35,6 @@ import org.dishevelled.functor.UnaryFunction;
 public final class NonBlockingSparseTextMatrix1DReader<E>
     extends AbstractNonBlockingSparseTextMatrix1DReader<E>
 {
-
         /** Parser function. */
         private final UnaryFunction<String, ? extends E> parser;
 
