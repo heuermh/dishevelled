@@ -49,6 +49,7 @@ public abstract class AbstractMatrix3DReader<E>
      * Parse the specified value to an instance of type <code>E</code>.
      *
      * @param value value to parse
+     * @return an instance of type <code>E</code>
      * @throws IOException if an IO error occurs
      */
     protected abstract E parse(String value) throws IOException;
