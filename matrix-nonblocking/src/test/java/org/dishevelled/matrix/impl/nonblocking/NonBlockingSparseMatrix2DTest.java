@@ -21,8 +21,25 @@
     > http://www.opensource.org/licenses/lgpl-license.php
 
 */
+package org.dishevelled.matrix.impl.nonblocking;
+
+import org.dishevelled.matrix.AbstractMatrix2DTest;
+import org.dishevelled.matrix.Matrix2D;
+import org.dishevelled.matrix.impl.nonblocking.NonBlockingSparseMatrix2D;
 
 /**
- * Non-blocking matrix implementations.
+ * Unit test for NonBlockingSparseMatrix2D.
+ *
+ * @author  Michael Heuer
+ * @version $Revision$ $Date$
  */
-package org.dishevelled.matrix.nonblocking;
+public class NonBlockingSparseMatrix2DTest
+    extends AbstractMatrix2DTest
+{
+
+    /** {@inheritDoc} */
+    protected <T> Matrix2D<T> createMatrix2D(final long rows, final long columns)
+    {
+        return new NonBlockingSparseMatrix2D<T>(rows, columns, Math.min(100, (int) (rows * columns)));
+    }
+}

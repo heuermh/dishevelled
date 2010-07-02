@@ -25,10 +25,10 @@ package org.dishevelled.matrix.io.impl.nonblocking;
 
 import org.dishevelled.matrix.Matrix2D;
 
+import org.dishevelled.matrix.impl.nonblocking.NonBlockingSparseMatrix2D;
 import org.dishevelled.matrix.io.impl.AbstractMatrixMarketReader;
 
 // todo:  maybe nonblocking should move to matrix.impl.nonblocking
-import org.dishevelled.matrix.nonblocking.NonBlockingSparseMatrix2D;
 
 /**
  * Matrix Market format reader for non-blocking sparse matrices of doubles in two dimensions.
