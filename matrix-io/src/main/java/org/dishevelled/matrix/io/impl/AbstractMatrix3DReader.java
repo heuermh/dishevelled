@@ -45,8 +45,27 @@ public abstract class AbstractMatrix3DReader<E>
     implements Matrix3DReader<E>
 {
 
+    /**
+     * Parse the specified value to an instance of type <code>E</code>.
+     *
+     * @param value value to parse
+     * @throws IOException if an IO error occurs
+     */
+    protected abstract E parse(String value) throws IOException;
+
+    /**
+     * Create and return a new instance of an implementation of Matrix3D.
+     *
+     * @param slices number of slices
+     * @param rows number of rows
+     * @param columns number of columns
+     * @param cardinality approximate cardinality
+     * @return a new instance of an implementation of Matrix3D
+     */
+    protected abstract Matrix3D<E> createMatrix3D(long slices, long rows, long columns, int cardinality);
+
     /** {@inheritDoc} */
-    public Matrix3D<E> read(final File file) throws IOException
+    public final Matrix3D<E> read(final File file) throws IOException
     {
         if (file == null)
         {
@@ -69,7 +88,7 @@ public abstract class AbstractMatrix3DReader<E>
     }
 
     /** {@inheritDoc} */
-    public Matrix3D<E> read(final URL url) throws IOException
+    public final Matrix3D<E> read(final URL url) throws IOException
     {
         if (url == null)
         {
