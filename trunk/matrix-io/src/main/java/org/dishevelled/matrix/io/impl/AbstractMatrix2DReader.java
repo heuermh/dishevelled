@@ -45,8 +45,26 @@ public abstract class AbstractMatrix2DReader<E>
     implements Matrix2DReader<E>
 {
 
+    /**
+     * Parse the specified value to an instance of type <code>E</code>.
+     *
+     * @param value value to parse
+     * @throws IOException if an IO error occurs
+     */
+    protected abstract E parse(String value) throws IOException;
+
+    /**
+     * Create and return a new instance of an implementation of Matrix2D.
+     *
+     * @param rows number of rows
+     * @param columns number of columns
+     * @param cardinality approximate cardinality
+     * @return a new instance of an implementation of Matrix2D
+     */
+    protected abstract Matrix2D<E> createMatrix2D(long rows, long columns, int cardinality);
+
     /** {@inheritDoc} */
-    public Matrix2D<E> read(final File file) throws IOException
+    public final Matrix2D<E> read(final File file) throws IOException
     {
         if (file == null)
         {
@@ -69,7 +87,7 @@ public abstract class AbstractMatrix2DReader<E>
     }
 
     /** {@inheritDoc} */
-    public Matrix2D<E> read(final URL url) throws IOException
+    public final Matrix2D<E> read(final URL url) throws IOException
     {
         if (url == null)
         {

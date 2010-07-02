@@ -45,8 +45,25 @@ public abstract class AbstractMatrix1DReader<E>
     implements Matrix1DReader<E>
 {
 
+    /**
+     * Parse the specified value to an instance of type <code>E</code>.
+     *
+     * @param value value to parse
+     * @throws IOException if an IO error occurs
+     */
+    protected abstract E parse(String value) throws IOException;
+
+    /**
+     * Create and return a new instance of an implementation of Matrix1D.
+     *
+     * @param size size
+     * @param cardinality approximate cardinality
+     * @return a new instance of an implementation of Matrix1D
+     */
+    protected abstract Matrix1D<E> createMatrix1D(long size, int cardinality);
+
     /** {@inheritDoc} */
-    public Matrix1D<E> read(final File file) throws IOException
+    public final Matrix1D<E> read(final File file) throws IOException
     {
         if (file == null)
         {
@@ -69,7 +86,7 @@ public abstract class AbstractMatrix1DReader<E>
     }
 
     /** {@inheritDoc} */
-    public Matrix1D<E> read(final URL url) throws IOException
+    public final Matrix1D<E> read(final URL url) throws IOException
     {
         if (url == null)
         {

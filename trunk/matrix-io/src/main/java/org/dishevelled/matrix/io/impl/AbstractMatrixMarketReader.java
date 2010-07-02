@@ -61,16 +61,15 @@ public abstract class AbstractMatrixMarketReader
         STRATEGIES.put("hermitian", new HermitianReaderStrategy());
     }
 
-
     /**
-     * Create and return a new instance of an implementation of Matrix2D&lt;Double&gt;.
+     * {@inheritDoc}
      *
-     * @param rows number of rows
-     * @param columns number of columns
-     * @param cardinality approximate cardinality
-     * @return a new instance of an implementation of Matrix2D&lt;Double&gt;
+     * Not used in this implementation, parse functionality is provided by reader strategy.
      */
-    protected abstract Matrix2D<Double> createMatrix2D(long rows, long columns, int cardinality);
+    protected Double parse(final String value)
+    {
+        return null;
+    }
 
     /** {@inheritDoc} */
     public final Matrix2D<Double> read(final InputStream inputStream) throws IOException
