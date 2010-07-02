@@ -21,25 +21,29 @@
     > http://www.opensource.org/licenses/lgpl-license.php
 
 */
-package org.dishevelled.matrix.io.impl;
+package org.dishevelled.matrix.io.impl.sparse;
 
-import org.dishevelled.matrix.Matrix2D;
+import org.dishevelled.matrix.Matrix3D;
 
-import org.dishevelled.matrix.impl.SparseMatrix2D;
+import org.dishevelled.matrix.impl.SparseMatrix3D;
+
+import org.dishevelled.matrix.io.impl.AbstractTextMatrix3DReader;
 
 /**
- * Matrix Market format reader for sparse matrices of doubles in two dimensions.
+ * Abstract tab-delimited text reader for sparse matrices of objects in three dimensions.
  *
+ * @param <E> 3D matrix element type
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public final class SparseMatrixMarketReader
-    extends AbstractMatrixMarketReader
+public abstract class AbstractSparseTextMatrix3DReader<E>
+    extends AbstractTextMatrix3DReader<E>
 {
 
     /** {@inheritDoc} */
-    protected Matrix2D<Double> createMatrix2D(final long rows, final long columns, final int cardinality)
+    protected final Matrix3D<E> createMatrix3D(final long slices,
+            final long rows, final long columns, final int cardinality)
     {
-        return new SparseMatrix2D<Double>(rows, columns, cardinality, 0.75f);
+        return new SparseMatrix3D<E>(slices, rows, columns, cardinality, 0.75f);
     }
 }
