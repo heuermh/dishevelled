@@ -26,6 +26,7 @@ package org.dishevelled.matrix.io.impl.nonblocking;
 import org.dishevelled.matrix.Matrix2D;
 
 import org.dishevelled.matrix.impl.nonblocking.NonBlockingSparseMatrix2D;
+
 import org.dishevelled.matrix.io.impl.AbstractTextMatrix2DReader;
 
 /**
