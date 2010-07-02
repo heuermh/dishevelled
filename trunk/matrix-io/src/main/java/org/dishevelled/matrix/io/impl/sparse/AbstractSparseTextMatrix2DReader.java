@@ -21,14 +21,15 @@
     > http://www.opensource.org/licenses/lgpl-license.php
 
 */
-package org.dishevelled.matrix.io.impl;
+package org.dishevelled.matrix.io.impl.sparse;
 
 import org.dishevelled.matrix.Matrix2D;
 
 import org.dishevelled.matrix.impl.SparseMatrix2D;
+import org.dishevelled.matrix.io.impl.AbstractTextMatrix2DReader;
 
 /**
- * Abstract sparse tab-delimited text reader for matrices of objects in two dimensions.
+ * Abstract tab-delimited text reader for sparse matrices of objects in two dimensions.
  *
  * @param <E> 2D matrix element type
  * @author  Michael Heuer

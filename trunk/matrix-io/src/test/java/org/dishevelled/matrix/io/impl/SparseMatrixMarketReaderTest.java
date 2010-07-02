@@ -32,6 +32,7 @@ import java.net.URL;
 import junit.framework.TestCase;
 
 import org.dishevelled.matrix.Matrix2D;
+import org.dishevelled.matrix.io.impl.sparse.SparseMatrixMarketReader;
 
 /**
  * Unit test for SparseMatrixMarketReader.

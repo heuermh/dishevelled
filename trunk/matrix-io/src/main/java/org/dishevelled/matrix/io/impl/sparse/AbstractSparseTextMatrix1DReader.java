@@ -21,27 +21,27 @@
     > http://www.opensource.org/licenses/lgpl-license.php
 
 */
-package org.dishevelled.matrix.io.impl;
+package org.dishevelled.matrix.io.impl.sparse;
 
-import org.dishevelled.matrix.Matrix3D;
+import org.dishevelled.matrix.Matrix1D;
 
-import org.dishevelled.matrix.impl.SparseMatrix3D;
+import org.dishevelled.matrix.impl.SparseMatrix1D;
+import org.dishevelled.matrix.io.impl.AbstractTextMatrix1DReader;
 
 /**
- * Abstract sparse tab-delimited text reader for matrices of objects in three dimensions.
+ * Abstract tab-delimited text reader for sparse matrices of objects in one dimension.
  *
- * @param <E> 3D matrix element type
+ * @param <E> 1D matrix element type
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public abstract class AbstractSparseTextMatrix3DReader<E>
-    extends AbstractTextMatrix3DReader<E>
+public abstract class AbstractSparseTextMatrix1DReader<E>
+    extends AbstractTextMatrix1DReader<E>
 {
 
     /** {@inheritDoc} */
-    protected final Matrix3D<E> createMatrix3D(final long slices,
-            final long rows, final long columns, final int cardinality)
+    protected final Matrix1D<E> createMatrix1D(final long size, final int cardinality)
     {
-        return new SparseMatrix3D<E>(slices, rows, columns, cardinality, 0.75f);
+        return new SparseMatrix1D<E>(size, cardinality, 0.75f);
     }
 }
