@@ -1,6 +1,6 @@
 /*
 
-    dsh-matrix-io-nonblocking  Readers and writers for non-blocking matrix implementations.
+    dsh-matrix-io-nonblocking  Non-blocking sparse matrix readers.
     Copyright (c) 2010 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
@@ -23,6 +23,6 @@
 */
 
 /**
- * Readers and writers for non-blocking matrix implementations.
+ * Non-blocking sparse matrix readers.
  */
 package org.dishevelled.matrix.io.impl.nonblocking;
