@@ -21,24 +21,8 @@
     > http://www.opensource.org/licenses/lgpl-license.php
 
 */
-package org.dishevelled.matrix.nonblocking;
-
-import org.dishevelled.matrix.AbstractMatrix3DTest;
-import org.dishevelled.matrix.Matrix3D;
 
 /**
- * Unit test for NonBlockingSparseMatrix3D.
- *
- * @author  Michael Heuer
- * @version $Revision$ $Date$
+ * Non-blocking matrix implementations.
  */
-public class NonBlockingSparseMatrix3DTest
-    extends AbstractMatrix3DTest
-{
-
-    /** {@inheritDoc} */
-    protected <T> Matrix3D<T> createMatrix3D(final long slices, final long rows, final long columns)
-    {
-        return new NonBlockingSparseMatrix3D<T>(slices, rows, columns, Math.min(100, (int) (slices * rows * columns)));
-    }
-}
+package org.dishevelled.matrix.impl.nonblocking;

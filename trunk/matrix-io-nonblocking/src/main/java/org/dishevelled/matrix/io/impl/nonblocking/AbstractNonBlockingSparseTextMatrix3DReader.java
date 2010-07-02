@@ -25,9 +25,9 @@ package org.dishevelled.matrix.io.impl.nonblocking;
 
 import org.dishevelled.matrix.Matrix3D;
 
+import org.dishevelled.matrix.impl.nonblocking.NonBlockingSparseMatrix3D;
 import org.dishevelled.matrix.io.impl.AbstractTextMatrix3DReader;
 
-import org.dishevelled.matrix.nonblocking.NonBlockingSparseMatrix3D;
 /**
  * Abstract tab-delimited text reader for non-blocking sparse matrices of objects in one dimension.
  *

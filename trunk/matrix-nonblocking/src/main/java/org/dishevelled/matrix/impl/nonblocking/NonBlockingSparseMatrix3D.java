@@ -21,7 +21,7 @@
     > http://www.opensource.org/licenses/lgpl-license.php
 
 */
-package org.dishevelled.matrix.nonblocking;
+package org.dishevelled.matrix.impl.nonblocking;
 
 import java.util.Map;
 
