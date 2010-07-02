@@ -23,26 +23,25 @@
 */
 package org.dishevelled.matrix.io.impl.nonblocking;
 
-import org.dishevelled.matrix.Matrix2D;
+import org.dishevelled.matrix.Matrix3D;
 
-import org.dishevelled.matrix.io.impl.AbstractMatrixMarketReader;
+import org.dishevelled.matrix.io.impl.AbstractTextMatrix3DReader;
 
-// todo:  maybe nonblocking should move to matrix.impl.nonblocking
-import org.dishevelled.matrix.nonblocking.NonBlockingSparseMatrix2D;
-
+import org.dishevelled.matrix.nonblocking.NonBlockingSparseMatrix3D;
 /**
- * Matrix Market format reader for non-blocking sparse matrices of doubles in two dimensions.
+ * Abstract tab-delimited text reader for non-blocking sparse matrices of objects in one dimension.
  *
+ * @param <E> 3D matrix element type
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public final class NonBlockingSparseMatrixMarketReader
-    extends AbstractMatrixMarketReader
+public abstract class AbstractNonBlockingSparseTextMatrix3DReader<E>
+    extends AbstractTextMatrix3DReader<E>
 {
 
     /** {@inheritDoc} */
-    protected Matrix2D<Double> createMatrix2D(final long rows, final long columns, final int cardinality)
+    protected final Matrix3D<E> createMatrix3D(final long slices, final long rows, final long columns, final int cardinality)
     {
-        return new NonBlockingSparseMatrix2D<Double>(rows, columns, cardinality);
+        return new NonBlockingSparseMatrix3D<E>(slices, rows, columns, cardinality);
     }
 }
