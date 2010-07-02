@@ -26,6 +26,7 @@ package org.dishevelled.matrix.io.impl.nonblocking;
 import org.dishevelled.matrix.Matrix3D;
 
 import org.dishevelled.matrix.impl.nonblocking.NonBlockingSparseMatrix3D;
+
 import org.dishevelled.matrix.io.impl.AbstractTextMatrix3DReader;
 
 /**
