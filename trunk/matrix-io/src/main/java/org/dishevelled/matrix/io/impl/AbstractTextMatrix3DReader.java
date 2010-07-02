@@ -98,7 +98,8 @@ public abstract class AbstractTextMatrix3DReader<E>
         }
         if (matrix == null)
         {
-            throw new IOException("could not create create matrix, first line should contain rows/\tcolumns/\tcardinality");
+            throw new IOException("could not create create matrix, first line should contain"
+                    + " rows/\tcolumns/\tcardinality");
         }
         return matrix;
     }
