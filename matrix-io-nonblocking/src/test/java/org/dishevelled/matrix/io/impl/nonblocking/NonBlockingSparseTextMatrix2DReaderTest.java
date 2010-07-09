@@ -55,7 +55,7 @@ public final class NonBlockingSparseTextMatrix2DReaderTest
     /** {@inheritDoc} */
     protected <T> Matrix2DReader<T> createMatrix2DReader()
     {
-        return new NonBlockingSparseTextMatrix2DReader(new UnaryFunction<String, T>()
+        return new NonBlockingSparseTextMatrix2DReader<T>(new UnaryFunction<String, T>()
             {
                 /** {@inheritDoc} */
                 public T evaluate(final String value)
@@ -67,11 +67,11 @@ public final class NonBlockingSparseTextMatrix2DReaderTest
 
     public void testConstructor()
     {
-        assertNotNull(new NonBlockingSparseTextMatrix2DReader(PARSER));
+        assertNotNull(new NonBlockingSparseTextMatrix2DReader<String>(PARSER));
 
         try
         {
-            new NonBlockingSparseTextMatrix2DReader(null);
+            new NonBlockingSparseTextMatrix2DReader<String>(null);
             fail("ctr(null) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
@@ -84,8 +84,8 @@ public final class NonBlockingSparseTextMatrix2DReaderTest
     {
         try
         {
-            Matrix2DReader<String> reader = new NonBlockingSparseTextMatrix2DReader(PARSER);
-            Matrix2D matrix = reader.read(getClass().getResource("empty.tsv"));
+            Matrix2DReader<String> reader = new NonBlockingSparseTextMatrix2DReader<String>(PARSER);
+            reader.read(getClass().getResource("empty.tsv"));
             fail("empty.tsv expected IOException");
         }
         catch (IOException e)
@@ -98,9 +98,9 @@ public final class NonBlockingSparseTextMatrix2DReaderTest
     {
         try
         {
-            Matrix2DReader<String> reader = new NonBlockingSparseTextMatrix2DReader(PARSER);
+            Matrix2DReader<String> reader = new NonBlockingSparseTextMatrix2DReader<String>(PARSER);
             File empty = File.createTempFile("sparseTextMatrix2DReaderTest", "tsv");
-            Matrix2D matrix = reader.read(empty);
+            reader.read(empty);
             fail("empty.tsv file expected IOException");
         }
         catch (IOException e)
@@ -111,7 +111,7 @@ public final class NonBlockingSparseTextMatrix2DReaderTest
 
     public void testEmptyMatrix() throws IOException
     {
-        Matrix2DReader<String> reader = new NonBlockingSparseTextMatrix2DReader(PARSER);
+        Matrix2DReader<String> reader = new NonBlockingSparseTextMatrix2DReader<String>(PARSER);
         Matrix2D matrix = reader.read(getClass().getResource("empty2d.tsv"));
         assertEquals(0, matrix.rows());
         assertEquals(0, matrix.columns());
@@ -120,7 +120,7 @@ public final class NonBlockingSparseTextMatrix2DReaderTest
 
     public void testOneElement() throws IOException
     {
-        Matrix2DReader<String> reader = new NonBlockingSparseTextMatrix2DReader(PARSER);
+        Matrix2DReader<String> reader = new NonBlockingSparseTextMatrix2DReader<String>(PARSER);
         Matrix2D matrix = reader.read(getClass().getResource("oneElement2d.tsv"));
         assertEquals(1, matrix.rows());
         assertEquals(1, matrix.columns());
@@ -130,7 +130,7 @@ public final class NonBlockingSparseTextMatrix2DReaderTest
 
     public void testTwoElement() throws IOException
     {
-        Matrix2DReader<String> reader = new NonBlockingSparseTextMatrix2DReader(PARSER);
+        Matrix2DReader<String> reader = new NonBlockingSparseTextMatrix2DReader<String>(PARSER);
         Matrix2D matrix = reader.read(getClass().getResource("twoElement2d.tsv"));
         assertEquals(2, matrix.rows());
         assertEquals(2, matrix.columns());
@@ -141,7 +141,7 @@ public final class NonBlockingSparseTextMatrix2DReaderTest
 
     public void testTwoElementCardinalityOne() throws IOException
     {
-        Matrix2DReader<String> reader = new NonBlockingSparseTextMatrix2DReader(PARSER);
+        Matrix2DReader<String> reader = new NonBlockingSparseTextMatrix2DReader<String>(PARSER);
         Matrix2D matrix = reader.read(getClass().getResource("twoElementCardinalityOne2d.tsv"));
         assertEquals(2, matrix.rows());
         assertEquals(2, matrix.columns());

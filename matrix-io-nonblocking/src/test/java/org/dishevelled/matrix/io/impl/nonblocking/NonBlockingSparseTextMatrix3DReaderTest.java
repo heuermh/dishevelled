@@ -55,7 +55,7 @@ public final class NonBlockingSparseTextMatrix3DReaderTest
     /** {@inheritDoc} */
     protected <T> Matrix3DReader<T> createMatrix3DReader()
     {
-        return new NonBlockingSparseTextMatrix3DReader(new UnaryFunction<String, T>()
+        return new NonBlockingSparseTextMatrix3DReader<T>(new UnaryFunction<String, T>()
             {
                 /** {@inheritDoc} */
                 public T evaluate(final String value)
@@ -67,11 +67,11 @@ public final class NonBlockingSparseTextMatrix3DReaderTest
 
     public void testConstructor()
     {
-        assertNotNull(new NonBlockingSparseTextMatrix3DReader(PARSER));
+        assertNotNull(new NonBlockingSparseTextMatrix3DReader<String>(PARSER));
 
         try
         {
-            new NonBlockingSparseTextMatrix3DReader(null);
+            new NonBlockingSparseTextMatrix3DReader<String>(null);
             fail("ctr(null) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
@@ -84,8 +84,8 @@ public final class NonBlockingSparseTextMatrix3DReaderTest
     {
         try
         {
-            Matrix3DReader<String> reader = new NonBlockingSparseTextMatrix3DReader(PARSER);
-            Matrix3D matrix = reader.read(getClass().getResource("empty.tsv"));
+            Matrix3DReader<String> reader = new NonBlockingSparseTextMatrix3DReader<String>(PARSER);
+            reader.read(getClass().getResource("empty.tsv"));
             fail("empty.tsv expected IOException");
         }
         catch (IOException e)
@@ -98,9 +98,9 @@ public final class NonBlockingSparseTextMatrix3DReaderTest
     {
         try
         {
-            Matrix3DReader<String> reader = new NonBlockingSparseTextMatrix3DReader(PARSER);
+            Matrix3DReader<String> reader = new NonBlockingSparseTextMatrix3DReader<String>(PARSER);
             File empty = File.createTempFile("sparseTextMatrix3DReaderTest", "tsv");
-            Matrix3D matrix = reader.read(empty);
+            reader.read(empty);
             fail("empty.tsv file expected IOException");
         }
         catch (IOException e)
@@ -111,7 +111,7 @@ public final class NonBlockingSparseTextMatrix3DReaderTest
 
     public void testEmptyMatrix() throws IOException
     {
-        Matrix3DReader<String> reader = new NonBlockingSparseTextMatrix3DReader(PARSER);
+        Matrix3DReader<String> reader = new NonBlockingSparseTextMatrix3DReader<String>(PARSER);
         Matrix3D matrix = reader.read(getClass().getResource("empty3d.tsv"));
         assertEquals(0, matrix.slices());
         assertEquals(0, matrix.rows());
@@ -121,7 +121,7 @@ public final class NonBlockingSparseTextMatrix3DReaderTest
 
     public void testOneElement() throws IOException
     {
-        Matrix3DReader<String> reader = new NonBlockingSparseTextMatrix3DReader(PARSER);
+        Matrix3DReader<String> reader = new NonBlockingSparseTextMatrix3DReader<String>(PARSER);
         Matrix3D matrix = reader.read(getClass().getResource("oneElement3d.tsv"));
         assertEquals(1, matrix.slices());
         assertEquals(1, matrix.rows());
@@ -132,7 +132,7 @@ public final class NonBlockingSparseTextMatrix3DReaderTest
 
     public void testTwentySevenElement() throws IOException
     {
-        Matrix3DReader<String> reader = new NonBlockingSparseTextMatrix3DReader(PARSER);
+        Matrix3DReader<String> reader = new NonBlockingSparseTextMatrix3DReader<String>(PARSER);
         Matrix3D matrix = reader.read(getClass().getResource("twentySevenElement3d.tsv"));
         assertEquals(3, matrix.slices());
         assertEquals(3, matrix.rows());
@@ -172,7 +172,7 @@ public final class NonBlockingSparseTextMatrix3DReaderTest
 
     public void testTwentySevenElementCardinalityOne() throws IOException
     {
-        Matrix3DReader<String> reader = new NonBlockingSparseTextMatrix3DReader(PARSER);
+        Matrix3DReader<String> reader = new NonBlockingSparseTextMatrix3DReader<String>(PARSER);
         Matrix3D matrix = reader.read(getClass().getResource("twentySevenElementCardinalityOne3d.tsv"));
         assertEquals(3, matrix.slices());
         assertEquals(3, matrix.rows());
