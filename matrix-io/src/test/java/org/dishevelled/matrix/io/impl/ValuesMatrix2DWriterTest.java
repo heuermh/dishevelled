@@ -50,8 +50,8 @@ public final class ValuesMatrix2DWriterTest
 
     public void testEmptyMatrix() throws IOException
     {
-        Matrix2D<String> matrix = new SparseMatrix2D(0L, 0L);
-        Matrix2DWriter<String> writer = new ValuesMatrix2DWriter();
+        Matrix2D<String> matrix = new SparseMatrix2D<String>(0L, 0L);
+        Matrix2DWriter<String> writer = new ValuesMatrix2DWriter<String>();
         StringBuffer appendable = new StringBuffer();
         appendable = writer.append(matrix, appendable);
         assertEquals("[]", appendable.toString());
@@ -59,9 +59,9 @@ public final class ValuesMatrix2DWriterTest
 
     public void testOneElementMatrix() throws IOException
     {
-        Matrix2D<String> matrix = new SparseMatrix2D(1L, 1L);
+        Matrix2D<String> matrix = new SparseMatrix2D<String>(1L, 1L);
         matrix.setQuick(0L, 0L, "foo");
-        Matrix2DWriter<String> writer = new ValuesMatrix2DWriter();
+        Matrix2DWriter<String> writer = new ValuesMatrix2DWriter<String>();
         StringBuffer appendable = new StringBuffer();
         appendable = writer.append(matrix, appendable);
         assertEquals("[foo]", appendable.toString());

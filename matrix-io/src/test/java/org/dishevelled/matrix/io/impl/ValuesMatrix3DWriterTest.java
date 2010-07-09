@@ -50,8 +50,8 @@ public final class ValuesMatrix3DWriterTest
 
     public void testEmptyMatrix() throws IOException
     {
-        Matrix3D<String> matrix = new SparseMatrix3D(0L, 0L, 0L);
-        Matrix3DWriter<String> writer = new ValuesMatrix3DWriter();
+        Matrix3D<String> matrix = new SparseMatrix3D<String>(0L, 0L, 0L);
+        Matrix3DWriter<String> writer = new ValuesMatrix3DWriter<String>();
         StringBuffer appendable = new StringBuffer();
         appendable = writer.append(matrix, appendable);
         assertEquals("[]", appendable.toString());
@@ -59,9 +59,9 @@ public final class ValuesMatrix3DWriterTest
 
     public void testOneElementMatrix() throws IOException
     {
-        Matrix3D<String> matrix = new SparseMatrix3D(1L, 1L, 1L);
+        Matrix3D<String> matrix = new SparseMatrix3D<String>(1L, 1L, 1L);
         matrix.setQuick(0L, 0L, 0L, "foo");
-        Matrix3DWriter<String> writer = new ValuesMatrix3DWriter();
+        Matrix3DWriter<String> writer = new ValuesMatrix3DWriter<String>();
         StringBuffer appendable = new StringBuffer();
         appendable = writer.append(matrix, appendable);
         assertEquals("[foo]", appendable.toString());

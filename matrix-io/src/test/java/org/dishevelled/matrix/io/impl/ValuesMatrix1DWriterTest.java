@@ -50,8 +50,8 @@ public final class ValuesMatrix1DWriterTest
 
     public void testEmptyMatrix() throws IOException
     {
-        Matrix1D<String> matrix = new SparseMatrix1D(0L);
-        Matrix1DWriter<String> writer = new ValuesMatrix1DWriter();
+        Matrix1D<String> matrix = new SparseMatrix1D<String>(0L);
+        Matrix1DWriter<String> writer = new ValuesMatrix1DWriter<String>();
         StringBuffer appendable = new StringBuffer();
         appendable = writer.append(matrix, appendable);
         assertEquals("[]", appendable.toString());
@@ -59,9 +59,9 @@ public final class ValuesMatrix1DWriterTest
 
     public void testOneElementMatrix() throws IOException
     {
-        Matrix1D<String> matrix = new SparseMatrix1D(1L);
+        Matrix1D<String> matrix = new SparseMatrix1D<String>(1L);
         matrix.setQuick(0L, "foo");
-        Matrix1DWriter<String> writer = new ValuesMatrix1DWriter();
+        Matrix1DWriter<String> writer = new ValuesMatrix1DWriter<String>();
         StringBuffer appendable = new StringBuffer();
         appendable = writer.append(matrix, appendable);
         assertEquals("[foo]", appendable.toString());
@@ -69,10 +69,10 @@ public final class ValuesMatrix1DWriterTest
 
     public void testTwoElementMatrix() throws IOException
     {
-        Matrix1D<String> matrix = new SparseMatrix1D(2L);
+        Matrix1D<String> matrix = new SparseMatrix1D<String>(2L);
         matrix.setQuick(0L, "foo");
         matrix.setQuick(1L, "bar");
-        Matrix1DWriter<String> writer = new ValuesMatrix1DWriter();
+        Matrix1DWriter<String> writer = new ValuesMatrix1DWriter<String>();
         StringBuffer appendable = new StringBuffer();
         appendable = writer.append(matrix, appendable);
         assertEquals("[foo,bar]", appendable.toString());
