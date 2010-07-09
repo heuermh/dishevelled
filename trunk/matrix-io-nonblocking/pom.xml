@@ -34,6 +34,13 @@
     </dependency>
     <dependency>
       <groupId>org.dishevelled</groupId>
+      <artifactId>dsh-matrix-io</artifactId>
+      <version>1.0-SNAPSHOT</version>
+      <type>test-jar</type>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.dishevelled</groupId>
       <artifactId>dsh-matrix-nonblocking</artifactId>
       <version>1.0-SNAPSHOT</version>
       <scope>compile</scope>

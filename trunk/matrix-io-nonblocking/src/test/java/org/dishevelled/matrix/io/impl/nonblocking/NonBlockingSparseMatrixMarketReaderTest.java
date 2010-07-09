@@ -1,7 +1,7 @@
 /*
 
-    dsh-matrix-io  Matrix readers and writers.
-    Copyright (c) 2008-2010 held jointly by the individual authors.
+    dsh-matrix-io-nonblocking  Non-blocking sparse matrix readers.
+    Copyright (c) 2010 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
@@ -21,7 +21,7 @@
     > http://www.opensource.org/licenses/lgpl-license.php
 
 */
-package org.dishevelled.matrix.io.impl;
+package org.dishevelled.matrix.io.impl.nonblocking;
 
 import java.io.File;
 import java.io.InputStream;
@@ -33,21 +33,19 @@ import junit.framework.TestCase;
 
 import org.dishevelled.matrix.Matrix2D;
 
-import org.dishevelled.matrix.io.impl.sparse.SparseMatrixMarketReader;
-
 /**
- * Unit test for SparseMatrixMarketReader.
+ * Unit test for NonBlockingSparseMatrixMarketReader.
  *
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public final class SparseMatrixMarketReaderTest
+public final class NonBlockingSparseMatrixMarketReaderTest
     extends TestCase
 {
 
     public void testConstructor()
     {
-        SparseMatrixMarketReader reader = new SparseMatrixMarketReader();
+        NonBlockingSparseMatrixMarketReader reader = new NonBlockingSparseMatrixMarketReader();
         assertNotNull(reader);
     }
 
@@ -57,7 +55,7 @@ public final class SparseMatrixMarketReaderTest
         try
         {
             inputStream = getClass().getResourceAsStream("empty.mm");
-            SparseMatrixMarketReader reader = new SparseMatrixMarketReader();
+            NonBlockingSparseMatrixMarketReader reader = new NonBlockingSparseMatrixMarketReader();
             Matrix2D<Double> matrix = reader.read(inputStream);
             fail("read(empty.mm) expected IOException");
         }
@@ -77,7 +75,7 @@ public final class SparseMatrixMarketReaderTest
         try
         {
             inputStream = getClass().getResourceAsStream("emptyWithHeader.mm");
-            SparseMatrixMarketReader reader = new SparseMatrixMarketReader();
+            NonBlockingSparseMatrixMarketReader reader = new NonBlockingSparseMatrixMarketReader();
             Matrix2D<Double> matrix = reader.read(inputStream);
             fail("read(emptyWithHeader.mm) expected IOException");
         }
@@ -97,7 +95,7 @@ public final class SparseMatrixMarketReaderTest
         try
         {
             inputStream = getClass().getResourceAsStream("emptyMatrix.mm");
-            SparseMatrixMarketReader reader = new SparseMatrixMarketReader();
+            NonBlockingSparseMatrixMarketReader reader = new NonBlockingSparseMatrixMarketReader();
             Matrix2D<Double> matrix = reader.read(inputStream);
             assertNotNull(matrix);
             assertEquals(0, matrix.size());
@@ -117,7 +115,7 @@ public final class SparseMatrixMarketReaderTest
         try
         {
             inputStream = getClass().getResourceAsStream("fourByFour.mm");
-            SparseMatrixMarketReader reader = new SparseMatrixMarketReader();
+            NonBlockingSparseMatrixMarketReader reader = new NonBlockingSparseMatrixMarketReader();
             Matrix2D<Double> matrix = reader.read(inputStream);
             assertNotNull(matrix);
             assertEquals(16, matrix.size());
@@ -148,13 +146,13 @@ public final class SparseMatrixMarketReaderTest
         }
     }
 
-    public void testSparseMatrix() throws IOException
+    public void testNonBlockingSparseMatrix() throws IOException
     {
         InputStream inputStream = null;
         try
         {
             inputStream = getClass().getResourceAsStream("sparse.mm");
-            SparseMatrixMarketReader reader = new SparseMatrixMarketReader();
+            NonBlockingSparseMatrixMarketReader reader = new NonBlockingSparseMatrixMarketReader();
             Matrix2D<Double> matrix = reader.read(inputStream);
             assertNotNull(matrix);
             assertEquals((998 * 999), matrix.size());
@@ -179,7 +177,7 @@ public final class SparseMatrixMarketReaderTest
         try
         {
             inputStream = getClass().getResourceAsStream("symmetric.mm");
-            SparseMatrixMarketReader reader = new SparseMatrixMarketReader();
+            NonBlockingSparseMatrixMarketReader reader = new NonBlockingSparseMatrixMarketReader();
             Matrix2D<Double> matrix = reader.read(inputStream);
             assertNotNull(matrix);
             assertEquals(3 * 3, matrix.size());
@@ -209,7 +207,7 @@ public final class SparseMatrixMarketReaderTest
         try
         {
             inputStream = getClass().getResourceAsStream("skewSymmetric.mm");
-            SparseMatrixMarketReader reader = new SparseMatrixMarketReader();
+            NonBlockingSparseMatrixMarketReader reader = new NonBlockingSparseMatrixMarketReader();
             Matrix2D<Double> matrix = reader.read(inputStream);
             assertNotNull(matrix);
             assertEquals(3 * 3, matrix.size());
@@ -239,7 +237,7 @@ public final class SparseMatrixMarketReaderTest
         try
         {
             inputStream = getClass().getResourceAsStream("hermitian.mm");
-            SparseMatrixMarketReader reader = new SparseMatrixMarketReader();
+            NonBlockingSparseMatrixMarketReader reader = new NonBlockingSparseMatrixMarketReader();
             Matrix2D<Double> matrix = reader.read(inputStream);
             assertNotNull(matrix);
             // TODO:  add'l assertions
@@ -256,7 +254,7 @@ public final class SparseMatrixMarketReaderTest
         try
         {
             inputStream = getClass().getResourceAsStream("invalidHeader.mm");
-            SparseMatrixMarketReader reader = new SparseMatrixMarketReader();
+            NonBlockingSparseMatrixMarketReader reader = new NonBlockingSparseMatrixMarketReader();
             Matrix2D<Double> matrix = reader.read(inputStream);
             fail("invalidHeader.mm expected IOException");
         }
@@ -276,7 +274,7 @@ public final class SparseMatrixMarketReaderTest
         try
         {
             inputStream = getClass().getResourceAsStream("invalidHeaderFormat.mm");
-            SparseMatrixMarketReader reader = new SparseMatrixMarketReader();
+            NonBlockingSparseMatrixMarketReader reader = new NonBlockingSparseMatrixMarketReader();
             Matrix2D<Double> matrix = reader.read(inputStream);
             fail("invalidHeaderFormat.mm expected IOException");
         }
@@ -296,7 +294,7 @@ public final class SparseMatrixMarketReaderTest
         try
         {
             inputStream = getClass().getResourceAsStream("invalidHeaderType.mm");
-            SparseMatrixMarketReader reader = new SparseMatrixMarketReader();
+            NonBlockingSparseMatrixMarketReader reader = new NonBlockingSparseMatrixMarketReader();
             Matrix2D<Double> matrix = reader.read(inputStream);
             fail("invalidHeaderType.mm expected IOException");
         }
@@ -316,7 +314,7 @@ public final class SparseMatrixMarketReaderTest
         try
         {
             inputStream = getClass().getResourceAsStream("invalidHeaderSymmetryStructure.mm");
-            SparseMatrixMarketReader reader = new SparseMatrixMarketReader();
+            NonBlockingSparseMatrixMarketReader reader = new NonBlockingSparseMatrixMarketReader();
             Matrix2D<Double> matrix = reader.read(inputStream);
             fail("invalidHeaderSymmetryStructure.mm expected IOException");
         }
@@ -336,7 +334,7 @@ public final class SparseMatrixMarketReaderTest
         try
         {
             inputStream = getClass().getResourceAsStream("invalidRow.mm");
-            SparseMatrixMarketReader reader = new SparseMatrixMarketReader();
+            NonBlockingSparseMatrixMarketReader reader = new NonBlockingSparseMatrixMarketReader();
             Matrix2D<Double> matrix = reader.read(inputStream);
             fail("invalidRow.mm expected IOException due to NumberFormatException");
         }
@@ -356,7 +354,7 @@ public final class SparseMatrixMarketReaderTest
         try
         {
             inputStream = getClass().getResourceAsStream("invalidColumn.mm");
-            SparseMatrixMarketReader reader = new SparseMatrixMarketReader();
+            NonBlockingSparseMatrixMarketReader reader = new NonBlockingSparseMatrixMarketReader();
             Matrix2D<Double> matrix = reader.read(inputStream);
             fail("invalidColumn.mm expected IOException due to NumberFormatException");
         }
@@ -376,7 +374,7 @@ public final class SparseMatrixMarketReaderTest
         try
         {
             inputStream = getClass().getResourceAsStream("invalidValue.mm");
-            SparseMatrixMarketReader reader = new SparseMatrixMarketReader();
+            NonBlockingSparseMatrixMarketReader reader = new NonBlockingSparseMatrixMarketReader();
             Matrix2D<Double> matrix = reader.read(inputStream);
             fail("invalidValue.mm expected IOException due to NumberFormatException");
         }
@@ -396,7 +394,7 @@ public final class SparseMatrixMarketReaderTest
         try
         {
             inputStream = getClass().getResourceAsStream("rowOutOfBounds.mm");
-            SparseMatrixMarketReader reader = new SparseMatrixMarketReader();
+            NonBlockingSparseMatrixMarketReader reader = new NonBlockingSparseMatrixMarketReader();
             Matrix2D<Double> matrix = reader.read(inputStream);
             fail("rowOutOfBounds.mm expected IOException due to NumberFormatException");
         }
@@ -416,7 +414,7 @@ public final class SparseMatrixMarketReaderTest
         try
         {
             inputStream = getClass().getResourceAsStream("columnOutOfBounds.mm");
-            SparseMatrixMarketReader reader = new SparseMatrixMarketReader();
+            NonBlockingSparseMatrixMarketReader reader = new NonBlockingSparseMatrixMarketReader();
             Matrix2D<Double> matrix = reader.read(inputStream);
             fail("columnOutOfBounds.mm expected IOException due to NumberFormatException");
         }
@@ -432,7 +430,7 @@ public final class SparseMatrixMarketReaderTest
 
     public void testReadInputStream() throws IOException
     {
-        SparseMatrixMarketReader reader = new SparseMatrixMarketReader();
+        NonBlockingSparseMatrixMarketReader reader = new NonBlockingSparseMatrixMarketReader();
         try
         {
             reader.read((InputStream) null);
@@ -446,7 +444,7 @@ public final class SparseMatrixMarketReaderTest
 
     public void testReadFile() throws IOException
     {
-        SparseMatrixMarketReader reader = new SparseMatrixMarketReader();
+        NonBlockingSparseMatrixMarketReader reader = new NonBlockingSparseMatrixMarketReader();
         try
         {
             reader.read((File) null);
@@ -460,7 +458,7 @@ public final class SparseMatrixMarketReaderTest
 
     public void testReadURL() throws IOException
     {
-        SparseMatrixMarketReader reader = new SparseMatrixMarketReader();
+        NonBlockingSparseMatrixMarketReader reader = new NonBlockingSparseMatrixMarketReader();
         try
         {
             reader.read((URL) null);
