@@ -56,7 +56,7 @@ public final class NonBlockingSparseTextMatrix1DReaderTest
     /** {@inheritDoc} */
     protected <T> Matrix1DReader<T> createMatrix1DReader()
     {
-        return new NonBlockingSparseTextMatrix1DReader(new UnaryFunction<String, T>()
+        return new NonBlockingSparseTextMatrix1DReader<T>(new UnaryFunction<String, T>()
             {
                 /** {@inheritDoc} */
                 public T evaluate(final String value)
@@ -68,11 +68,11 @@ public final class NonBlockingSparseTextMatrix1DReaderTest
 
     public void testConstructor()
     {
-        assertNotNull(new NonBlockingSparseTextMatrix1DReader(PARSER));
+        assertNotNull(new NonBlockingSparseTextMatrix1DReader<String>(PARSER));
 
         try
         {
-            new NonBlockingSparseTextMatrix1DReader(null);
+            new NonBlockingSparseTextMatrix1DReader<String>(null);
             fail("ctr(null) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
@@ -85,8 +85,8 @@ public final class NonBlockingSparseTextMatrix1DReaderTest
     {
         try
         {
-            Matrix1DReader<String> reader = new NonBlockingSparseTextMatrix1DReader(PARSER);
-            Matrix1D matrix = reader.read(getClass().getResource("empty.tsv"));
+            Matrix1DReader<String> reader = new NonBlockingSparseTextMatrix1DReader<String>(PARSER);
+            reader.read(getClass().getResource("empty.tsv"));
             fail("empty.tsv url expected IOException");
         }
         catch (IOException e)
@@ -99,9 +99,9 @@ public final class NonBlockingSparseTextMatrix1DReaderTest
     {
         try
         {
-            Matrix1DReader<String> reader = new NonBlockingSparseTextMatrix1DReader(PARSER);
+            Matrix1DReader<String> reader = new NonBlockingSparseTextMatrix1DReader<String>(PARSER);
             File empty = File.createTempFile("sparseTextMatrix1DReaderTest", "tsv");
-            Matrix1D matrix = reader.read(empty);
+            reader.read(empty);
             fail("empty.tsv file expected IOException");
         }
         catch (IOException e)
@@ -112,7 +112,7 @@ public final class NonBlockingSparseTextMatrix1DReaderTest
 
     public void testEmptyMatrix() throws IOException
     {
-        Matrix1DReader<String> reader = new NonBlockingSparseTextMatrix1DReader(PARSER);
+        Matrix1DReader<String> reader = new NonBlockingSparseTextMatrix1DReader<String>(PARSER);
         Matrix1D matrix = reader.read(getClass().getResource("empty1d.tsv"));
         assertEquals(0, matrix.size());
         assertEquals(0, matrix.cardinality());
@@ -120,7 +120,7 @@ public final class NonBlockingSparseTextMatrix1DReaderTest
 
     public void testOneElement() throws IOException
     {
-        Matrix1DReader<String> reader = new NonBlockingSparseTextMatrix1DReader(PARSER);
+        Matrix1DReader<String> reader = new NonBlockingSparseTextMatrix1DReader<String>(PARSER);
         Matrix1D matrix = reader.read(getClass().getResource("oneElement1d.tsv"));
         assertEquals(1, matrix.size());
         assertEquals(1, matrix.cardinality());
@@ -129,7 +129,7 @@ public final class NonBlockingSparseTextMatrix1DReaderTest
 
     public void testTwoElement() throws IOException
     {
-        Matrix1DReader<String> reader = new NonBlockingSparseTextMatrix1DReader(PARSER);
+        Matrix1DReader<String> reader = new NonBlockingSparseTextMatrix1DReader<String>(PARSER);
         Matrix1D matrix = reader.read(getClass().getResource("twoElement1d.tsv"));
         assertEquals(2, matrix.size());
         assertEquals(2, matrix.cardinality());
@@ -139,7 +139,7 @@ public final class NonBlockingSparseTextMatrix1DReaderTest
 
     public void testTwoElementCardinalityOne() throws IOException
     {
-        Matrix1DReader<String> reader = new NonBlockingSparseTextMatrix1DReader(PARSER);
+        Matrix1DReader<String> reader = new NonBlockingSparseTextMatrix1DReader<String>(PARSER);
         Matrix1D matrix = reader.read(getClass().getResource("twoElementCardinalityOne1d.tsv"));
         assertEquals(2, matrix.size());
         assertEquals(1, matrix.cardinality());

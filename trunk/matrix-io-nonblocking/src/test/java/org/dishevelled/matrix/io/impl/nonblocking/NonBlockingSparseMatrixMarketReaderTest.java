@@ -56,7 +56,7 @@ public final class NonBlockingSparseMatrixMarketReaderTest
         {
             inputStream = getClass().getResourceAsStream("empty.mm");
             NonBlockingSparseMatrixMarketReader reader = new NonBlockingSparseMatrixMarketReader();
-            Matrix2D<Double> matrix = reader.read(inputStream);
+            reader.read(inputStream);
             fail("read(empty.mm) expected IOException");
         }
         catch (IOException e)
@@ -76,7 +76,7 @@ public final class NonBlockingSparseMatrixMarketReaderTest
         {
             inputStream = getClass().getResourceAsStream("emptyWithHeader.mm");
             NonBlockingSparseMatrixMarketReader reader = new NonBlockingSparseMatrixMarketReader();
-            Matrix2D<Double> matrix = reader.read(inputStream);
+            reader.read(inputStream);
             fail("read(emptyWithHeader.mm) expected IOException");
         }
         catch (IOException e)
@@ -255,7 +255,7 @@ public final class NonBlockingSparseMatrixMarketReaderTest
         {
             inputStream = getClass().getResourceAsStream("invalidHeader.mm");
             NonBlockingSparseMatrixMarketReader reader = new NonBlockingSparseMatrixMarketReader();
-            Matrix2D<Double> matrix = reader.read(inputStream);
+            reader.read(inputStream);
             fail("invalidHeader.mm expected IOException");
         }
         catch (IOException e)
@@ -275,7 +275,7 @@ public final class NonBlockingSparseMatrixMarketReaderTest
         {
             inputStream = getClass().getResourceAsStream("invalidHeaderFormat.mm");
             NonBlockingSparseMatrixMarketReader reader = new NonBlockingSparseMatrixMarketReader();
-            Matrix2D<Double> matrix = reader.read(inputStream);
+            reader.read(inputStream);
             fail("invalidHeaderFormat.mm expected IOException");
         }
         catch (IOException e)
@@ -295,7 +295,7 @@ public final class NonBlockingSparseMatrixMarketReaderTest
         {
             inputStream = getClass().getResourceAsStream("invalidHeaderType.mm");
             NonBlockingSparseMatrixMarketReader reader = new NonBlockingSparseMatrixMarketReader();
-            Matrix2D<Double> matrix = reader.read(inputStream);
+            reader.read(inputStream);
             fail("invalidHeaderType.mm expected IOException");
         }
         catch (IOException e)
@@ -315,7 +315,7 @@ public final class NonBlockingSparseMatrixMarketReaderTest
         {
             inputStream = getClass().getResourceAsStream("invalidHeaderSymmetryStructure.mm");
             NonBlockingSparseMatrixMarketReader reader = new NonBlockingSparseMatrixMarketReader();
-            Matrix2D<Double> matrix = reader.read(inputStream);
+            reader.read(inputStream);
             fail("invalidHeaderSymmetryStructure.mm expected IOException");
         }
         catch (IOException e)
@@ -335,7 +335,7 @@ public final class NonBlockingSparseMatrixMarketReaderTest
         {
             inputStream = getClass().getResourceAsStream("invalidRow.mm");
             NonBlockingSparseMatrixMarketReader reader = new NonBlockingSparseMatrixMarketReader();
-            Matrix2D<Double> matrix = reader.read(inputStream);
+            reader.read(inputStream);
             fail("invalidRow.mm expected IOException due to NumberFormatException");
         }
         catch (IOException e)
@@ -355,7 +355,7 @@ public final class NonBlockingSparseMatrixMarketReaderTest
         {
             inputStream = getClass().getResourceAsStream("invalidColumn.mm");
             NonBlockingSparseMatrixMarketReader reader = new NonBlockingSparseMatrixMarketReader();
-            Matrix2D<Double> matrix = reader.read(inputStream);
+            reader.read(inputStream);
             fail("invalidColumn.mm expected IOException due to NumberFormatException");
         }
         catch (IOException e)
@@ -375,7 +375,7 @@ public final class NonBlockingSparseMatrixMarketReaderTest
         {
             inputStream = getClass().getResourceAsStream("invalidValue.mm");
             NonBlockingSparseMatrixMarketReader reader = new NonBlockingSparseMatrixMarketReader();
-            Matrix2D<Double> matrix = reader.read(inputStream);
+            reader.read(inputStream);
             fail("invalidValue.mm expected IOException due to NumberFormatException");
         }
         catch (IOException e)
@@ -395,7 +395,7 @@ public final class NonBlockingSparseMatrixMarketReaderTest
         {
             inputStream = getClass().getResourceAsStream("rowOutOfBounds.mm");
             NonBlockingSparseMatrixMarketReader reader = new NonBlockingSparseMatrixMarketReader();
-            Matrix2D<Double> matrix = reader.read(inputStream);
+            reader.read(inputStream);
             fail("rowOutOfBounds.mm expected IOException due to NumberFormatException");
         }
         catch (IOException e)
@@ -415,7 +415,7 @@ public final class NonBlockingSparseMatrixMarketReaderTest
         {
             inputStream = getClass().getResourceAsStream("columnOutOfBounds.mm");
             NonBlockingSparseMatrixMarketReader reader = new NonBlockingSparseMatrixMarketReader();
-            Matrix2D<Double> matrix = reader.read(inputStream);
+            reader.read(inputStream);
             fail("columnOutOfBounds.mm expected IOException due to NumberFormatException");
         }
         catch (IOException e)
