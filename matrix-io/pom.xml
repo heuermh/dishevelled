@@ -25,6 +25,22 @@
       <url>scp://shell.sourceforge.net/home/groups/d/di/dishevelled/htdocs/matrix-io-${project.version}</url>
     </site>
   </distributionManagement>
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <artifactId>maven-jar-plugin</artifactId>
+          <executions>
+            <execution>
+              <goals>
+                <goal>test-jar</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
   <dependencies>
     <dependency>
       <groupId>org.dishevelled</groupId>

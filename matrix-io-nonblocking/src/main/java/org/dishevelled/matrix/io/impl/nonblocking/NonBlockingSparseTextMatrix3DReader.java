@@ -35,28 +35,28 @@ import org.dishevelled.functor.UnaryFunction;
 public final class NonBlockingSparseTextMatrix3DReader<E>
     extends AbstractNonBlockingSparseTextMatrix3DReader<E>
 {
-        /** Parser function. */
-        private final UnaryFunction<String, ? extends E> parser;
+    /** Parser function. */
+    private final UnaryFunction<String, ? extends E> parser;
 
 
-        /**
-         * Create a new non-blocking sparse text matrix 3D reader with the specified parser function.
-         *
-         * @param parser parser function, must not be null
-         */
-        public NonBlockingSparseTextMatrix3DReader(final UnaryFunction<String, ? extends E> parser)
+    /**
+     * Create a new non-blocking sparse text matrix 3D reader with the specified parser function.
+     *
+     * @param parser parser function, must not be null
+     */
+    public NonBlockingSparseTextMatrix3DReader(final UnaryFunction<String, ? extends E> parser)
+    {
+        if (parser == null)
         {
-            if (parser == null)
-            {
-                throw new IllegalArgumentException("parser must not be null");
-            }
-            this.parser = parser;
+            throw new IllegalArgumentException("parser must not be null");
         }
+        this.parser = parser;
+    }
 
 
-        /** {@inheritDoc} */
-        protected E parse(final String value)
-        {
-            return parser.evaluate(value);
-        }
+    /** {@inheritDoc} */
+    protected E parse(final String value)
+    {
+        return parser.evaluate(value);
+    }
 }

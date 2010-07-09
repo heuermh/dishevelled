@@ -23,6 +23,12 @@
 */
 package org.dishevelled.matrix.io.impl;
 
+import java.io.IOException;
+
+import org.dishevelled.matrix.Matrix2D;
+
+import org.dishevelled.matrix.impl.SparseMatrix2D;
+
 import org.dishevelled.matrix.io.AbstractMatrix2DWriterTest;
 import org.dishevelled.matrix.io.Matrix2DWriter;
 
@@ -36,9 +42,62 @@ public class TextMatrix2DWriterTest
     extends AbstractMatrix2DWriterTest
 {
 
-        /** {@inheritDoc} */
-        protected <E> Matrix2DWriter<E> createMatrix2DWriter()
-        {
-            return new TextMatrix2DWriter<E>();
-        }
+    /** {@inheritDoc} */
+    protected <E> Matrix2DWriter<E> createMatrix2DWriter()
+    {
+        return new TextMatrix2DWriter<E>();
+    }
+
+    public void testEmptyMatrix() throws IOException
+    {
+        Matrix2D<String> matrix = new SparseMatrix2D(0L, 0L);
+        Matrix2DWriter<String> writer = createMatrix2DWriter();
+        StringBuffer appendable = new StringBuffer();
+        appendable = writer.append(matrix, appendable);
+        assertEquals("0\t0\t0\n", appendable.toString());
+    }
+
+    public void testOneElementMatrix() throws IOException
+    {
+        Matrix2D<String> matrix = new SparseMatrix2D(1L, 1L);
+        matrix.setQuick(0L, 0L, "foo");
+        Matrix2DWriter<String> writer = createMatrix2DWriter();
+        StringBuffer appendable = new StringBuffer();
+        appendable = writer.append(matrix, appendable);
+        assertEquals("1\t1\t1\n0\t0\tfoo\n", appendable.toString());
+    }
+
+    public void testTwoElementMatrix() throws IOException
+    {
+        Matrix2D<String> matrix = new SparseMatrix2D(2L, 2L);
+        matrix.setQuick(0L, 0L, "foo");
+        matrix.setQuick(0L, 1L, "bar");
+        matrix.setQuick(1L, 0L, "baz");
+        matrix.setQuick(1L, 1L, "qux");
+        Matrix2DWriter<String> writer = createMatrix2DWriter();
+        StringBuffer appendable = new StringBuffer();
+        appendable = writer.append(matrix, appendable);
+        assertEquals("2\t2\t4\n0\t0\tfoo\n0\t1\tbar\n1\t0\tbaz\n1\t1\tqux\n", appendable.toString());
+    }
+
+    public void testTwoElementMatrixCardinalityOne() throws IOException
+    {
+        Matrix2D<String> matrix = new SparseMatrix2D(2L, 2L);
+        matrix.setQuick(1L, 1L, "qux");
+        Matrix2DWriter<String> writer = createMatrix2DWriter();
+        StringBuffer appendable = new StringBuffer();
+        appendable = writer.append(matrix, appendable);
+        assertEquals("2\t2\t1\n1\t1\tqux\n", appendable.toString());
+    }
+
+    public void testOneElementMatrixWithNull() throws IOException
+    {
+        Matrix2D<String> matrix = new SparseMatrix2D(2L, 2L);
+        matrix.setQuick(0L, 0L, null);
+        matrix.setQuick(1L, 1L, "qux");
+        Matrix2DWriter<String> writer = createMatrix2DWriter();
+        StringBuffer appendable = new StringBuffer();
+        appendable = writer.append(matrix, appendable);
+        assertEquals("2\t2\t1\n1\t1\tqux\n", appendable.toString());
+    }
 }

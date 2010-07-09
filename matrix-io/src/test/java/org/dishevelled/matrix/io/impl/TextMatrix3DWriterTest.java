@@ -23,6 +23,12 @@
 */
 package org.dishevelled.matrix.io.impl;
 
+import java.io.IOException;
+
+import org.dishevelled.matrix.Matrix3D;
+
+import org.dishevelled.matrix.impl.SparseMatrix3D;
+
 import org.dishevelled.matrix.io.AbstractMatrix3DWriterTest;
 import org.dishevelled.matrix.io.Matrix3DWriter;
 
@@ -36,9 +42,78 @@ public class TextMatrix3DWriterTest
     extends AbstractMatrix3DWriterTest
 {
 
-        /** {@inheritDoc} */
-        protected <E> Matrix3DWriter<E> createMatrix3DWriter()
-        {
-            return new TextMatrix3DWriter<E>();
-        }
+    /** {@inheritDoc} */
+    protected <E> Matrix3DWriter<E> createMatrix3DWriter()
+    {
+        return new TextMatrix3DWriter<E>();
+    }
+
+    public void testEmptyMatrix() throws IOException
+    {
+        Matrix3D<String> matrix = new SparseMatrix3D(0L, 0L, 0L);
+        Matrix3DWriter<String> writer = createMatrix3DWriter();
+        StringBuffer appendable = new StringBuffer();
+        appendable = writer.append(matrix, appendable);
+        assertEquals("0\t0\t0\t0\n", appendable.toString());
+    }
+
+    public void testOneElementMatrix() throws IOException
+    {
+        Matrix3D<String> matrix = new SparseMatrix3D(1L, 1L, 1L);
+        matrix.setQuick(0L, 0L, 0L, "foo");
+        Matrix3DWriter<String> writer = createMatrix3DWriter();
+        StringBuffer appendable = new StringBuffer();
+        appendable = writer.append(matrix, appendable);
+        assertEquals("1\t1\t1\t1\n0\t0\t0\tfoo\n", appendable.toString());
+    }
+
+    public void testTwentySevenElementMatrix() throws IOException
+    {
+        Matrix3D<String> matrix = new SparseMatrix3D(3L, 3L, 3L);
+
+        matrix.setQuick(0L, 0L, 0L, "foo");
+        matrix.setQuick(1L, 0L, 0L, "foo");
+        matrix.setQuick(2L, 0L, 0L, "foo");
+        matrix.setQuick(0L, 1L, 0L, "foo");
+        matrix.setQuick(1L, 1L, 0L, "foo");
+        matrix.setQuick(2L, 1L, 0L, "foo");
+        matrix.setQuick(0L, 2L, 0L, "foo");
+        matrix.setQuick(1L, 2L, 0L, "foo");
+        matrix.setQuick(2L, 2L, 0L, "foo");
+
+        matrix.setQuick(0L, 0L, 1L, "bar");
+        matrix.setQuick(1L, 0L, 1L, "bar");
+        matrix.setQuick(2L, 0L, 1L, "bar");
+        matrix.setQuick(0L, 1L, 1L, "bar");
+        matrix.setQuick(1L, 1L, 1L, "bar");
+        matrix.setQuick(2L, 1L, 1L, "bar");
+        matrix.setQuick(0L, 2L, 1L, "bar");
+        matrix.setQuick(1L, 2L, 1L, "bar");
+        matrix.setQuick(2L, 2L, 1L, "bar");
+
+        matrix.setQuick(0L, 0L, 2L, "baz");
+        matrix.setQuick(1L, 0L, 2L, "baz");
+        matrix.setQuick(2L, 0L, 2L, "baz");
+        matrix.setQuick(0L, 1L, 2L, "baz");
+        matrix.setQuick(1L, 1L, 2L, "baz");
+        matrix.setQuick(2L, 1L, 2L, "baz");
+        matrix.setQuick(0L, 2L, 2L, "baz");
+        matrix.setQuick(1L, 2L, 2L, "baz");
+        matrix.setQuick(2L, 2L, 2L, "baz");
+
+        Matrix3DWriter<String> writer = createMatrix3DWriter();
+        StringBuffer appendable = new StringBuffer();
+        appendable = writer.append(matrix, appendable);
+        assertTrue(appendable.toString().startsWith("3\t3\t3\t27\n"));
+    }
+
+    public void testTwentySevenElementMatrixCardinalityOne() throws IOException
+    {
+        Matrix3D<String> matrix = new SparseMatrix3D(3L, 3L, 3L);
+        matrix.setQuick(0L, 0L, 0L, "foo");
+        Matrix3DWriter<String> writer = createMatrix3DWriter();
+        StringBuffer appendable = new StringBuffer();
+        appendable = writer.append(matrix, appendable);
+        assertEquals("3\t3\t3\t1\n0\t0\t0\tfoo\n", appendable.toString());
+    }
 }

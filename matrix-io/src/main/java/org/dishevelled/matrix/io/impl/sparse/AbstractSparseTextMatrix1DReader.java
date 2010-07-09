@@ -26,6 +26,7 @@ package org.dishevelled.matrix.io.impl.sparse;
 import org.dishevelled.matrix.Matrix1D;
 
 import org.dishevelled.matrix.impl.SparseMatrix1D;
+
 import org.dishevelled.matrix.io.impl.AbstractTextMatrix1DReader;
 
 /**
