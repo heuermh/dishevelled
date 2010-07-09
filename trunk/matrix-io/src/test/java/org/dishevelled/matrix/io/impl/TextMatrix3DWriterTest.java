@@ -50,7 +50,7 @@ public class TextMatrix3DWriterTest
 
     public void testEmptyMatrix() throws IOException
     {
-        Matrix3D<String> matrix = new SparseMatrix3D(0L, 0L, 0L);
+        Matrix3D<String> matrix = new SparseMatrix3D<String>(0L, 0L, 0L);
         Matrix3DWriter<String> writer = createMatrix3DWriter();
         StringBuffer appendable = new StringBuffer();
         appendable = writer.append(matrix, appendable);
@@ -59,7 +59,7 @@ public class TextMatrix3DWriterTest
 
     public void testOneElementMatrix() throws IOException
     {
-        Matrix3D<String> matrix = new SparseMatrix3D(1L, 1L, 1L);
+        Matrix3D<String> matrix = new SparseMatrix3D<String>(1L, 1L, 1L);
         matrix.setQuick(0L, 0L, 0L, "foo");
         Matrix3DWriter<String> writer = createMatrix3DWriter();
         StringBuffer appendable = new StringBuffer();
@@ -69,7 +69,7 @@ public class TextMatrix3DWriterTest
 
     public void testTwentySevenElementMatrix() throws IOException
     {
-        Matrix3D<String> matrix = new SparseMatrix3D(3L, 3L, 3L);
+        Matrix3D<String> matrix = new SparseMatrix3D<String>(3L, 3L, 3L);
 
         matrix.setQuick(0L, 0L, 0L, "foo");
         matrix.setQuick(1L, 0L, 0L, "foo");
@@ -109,7 +109,7 @@ public class TextMatrix3DWriterTest
 
     public void testTwentySevenElementMatrixCardinalityOne() throws IOException
     {
-        Matrix3D<String> matrix = new SparseMatrix3D(3L, 3L, 3L);
+        Matrix3D<String> matrix = new SparseMatrix3D<String>(3L, 3L, 3L);
         matrix.setQuick(0L, 0L, 0L, "foo");
         Matrix3DWriter<String> writer = createMatrix3DWriter();
         StringBuffer appendable = new StringBuffer();

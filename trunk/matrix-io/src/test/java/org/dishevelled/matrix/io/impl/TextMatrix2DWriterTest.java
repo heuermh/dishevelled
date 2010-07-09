@@ -50,7 +50,7 @@ public class TextMatrix2DWriterTest
 
     public void testEmptyMatrix() throws IOException
     {
-        Matrix2D<String> matrix = new SparseMatrix2D(0L, 0L);
+        Matrix2D<String> matrix = new SparseMatrix2D<String>(0L, 0L);
         Matrix2DWriter<String> writer = createMatrix2DWriter();
         StringBuffer appendable = new StringBuffer();
         appendable = writer.append(matrix, appendable);
@@ -59,7 +59,7 @@ public class TextMatrix2DWriterTest
 
     public void testOneElementMatrix() throws IOException
     {
-        Matrix2D<String> matrix = new SparseMatrix2D(1L, 1L);
+        Matrix2D<String> matrix = new SparseMatrix2D<String>(1L, 1L);
         matrix.setQuick(0L, 0L, "foo");
         Matrix2DWriter<String> writer = createMatrix2DWriter();
         StringBuffer appendable = new StringBuffer();
@@ -69,7 +69,7 @@ public class TextMatrix2DWriterTest
 
     public void testTwoElementMatrix() throws IOException
     {
-        Matrix2D<String> matrix = new SparseMatrix2D(2L, 2L);
+        Matrix2D<String> matrix = new SparseMatrix2D<String>(2L, 2L);
         matrix.setQuick(0L, 0L, "foo");
         matrix.setQuick(0L, 1L, "bar");
         matrix.setQuick(1L, 0L, "baz");
@@ -82,7 +82,7 @@ public class TextMatrix2DWriterTest
 
     public void testTwoElementMatrixCardinalityOne() throws IOException
     {
-        Matrix2D<String> matrix = new SparseMatrix2D(2L, 2L);
+        Matrix2D<String> matrix = new SparseMatrix2D<String>(2L, 2L);
         matrix.setQuick(1L, 1L, "qux");
         Matrix2DWriter<String> writer = createMatrix2DWriter();
         StringBuffer appendable = new StringBuffer();
@@ -92,7 +92,7 @@ public class TextMatrix2DWriterTest
 
     public void testOneElementMatrixWithNull() throws IOException
     {
-        Matrix2D<String> matrix = new SparseMatrix2D(2L, 2L);
+        Matrix2D<String> matrix = new SparseMatrix2D<String>(2L, 2L);
         matrix.setQuick(0L, 0L, null);
         matrix.setQuick(1L, 1L, "qux");
         Matrix2DWriter<String> writer = createMatrix2DWriter();
