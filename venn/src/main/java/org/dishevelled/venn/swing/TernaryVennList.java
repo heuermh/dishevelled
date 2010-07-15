@@ -347,7 +347,7 @@ public final class TernaryVennList<E>
     private JPanel createMainPanel()
     {
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(2, 8, 12, 12));
+        panel.setLayout(new GridLayout(3, 5, 12, 12));
 
         LabelFieldPanel f = new LabelFieldPanel();
         f.addLabel(getFirstLabel());
@@ -366,9 +366,6 @@ public final class TernaryVennList<E>
 
         panel.add(Box.createGlue());
         panel.add(Box.createGlue());
-        panel.add(Box.createGlue());
-        panel.add(Box.createGlue());
-        panel.add(Box.createGlue());
 
         LabelFieldPanel fo = new LabelFieldPanel();
         fo.addLabel(getFirstOnlyLabel());
@@ -385,6 +382,9 @@ public final class TernaryVennList<E>
         to.addFinalField(new JScrollPane(thirdOnly));
         panel.add(to);
 
+        panel.add(Box.createGlue());
+        panel.add(Box.createGlue());
+ 
         LabelFieldPanel fs = new LabelFieldPanel();
         fs.addLabel(getFirstSecondLabel());
         fs.addFinalField(new JScrollPane(firstSecond));
