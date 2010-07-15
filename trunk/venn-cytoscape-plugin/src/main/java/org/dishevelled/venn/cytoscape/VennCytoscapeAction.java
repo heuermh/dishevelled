@@ -44,7 +44,7 @@ final class VennCytoscapeAction
      */
     VennCytoscapeAction()
     {
-        super("Venn Diagrams");  // i18n
+        super("Venn Diagrams...");  // i18n
     }
 
 
