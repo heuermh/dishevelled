@@ -25,7 +25,10 @@ package org.dishevelled.venn.cytoscape;
 
 import java.awt.BorderLayout;
 
-import javax.swing.JButton;
+import java.awt.event.ActionEvent;
+
+import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.JDialog;
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -62,6 +65,26 @@ final class VennCytoscapeDialog
     /** List of groups. */
     private JList groupList;
 
+    /** Cancel action. */
+    private final Action cancel = new AbstractAction("Cancel") // i18n
+        {
+            /** {@inheritDoc} */
+            public void actionPerformed(final ActionEvent event)
+            {
+                cancel();
+            }
+        };
+
+    /** OK action. */
+    private final Action ok = new AbstractAction("OK") // i18n
+        {
+            /** {@inheritDoc} */
+            public void actionPerformed(final ActionEvent event)
+            {
+                ok();
+            }
+        };
+
 
     /**
      * Create a new dialog for the venn diagram Cytoscape plugin
@@ -71,7 +94,7 @@ final class VennCytoscapeDialog
      */
     VennCytoscapeDialog(final CytoscapeDesktop desktop)
     {
-        super(desktop, "Venn Diagrams"); // i18n?
+        super(desktop, "Venn Diagrams"); // i18n
 
         initComponents();
         layoutComponents();
@@ -101,9 +124,8 @@ final class VennCytoscapeDialog
 
         ButtonPanel buttonPanel = new ButtonPanel();
         buttonPanel.setBorder(new EmptyBorder(24, 0, 0, 0));
-        // todo:  actions
-        buttonPanel.add(new JButton("Cancel"));
-        buttonPanel.add(new JButton("OK"));
+        buttonPanel.add(cancel);
+        buttonPanel.add(ok);
 
         JPanel contentPane = new JPanel();
         contentPane.setLayout(new BorderLayout());
@@ -111,5 +133,21 @@ final class VennCytoscapeDialog
         contentPane.add("Center", mainPanel);
         contentPane.add("South", buttonPanel);
         setContentPane(contentPane);
+    }
+
+    /**
+     * Cancel.
+     */
+    private void cancel()
+    {
+        setVisible(false);
+    }
+
+    /**
+     * OK.
+     */
+    private void ok()
+    {
+        // empty
     }
 }
