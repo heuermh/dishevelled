@@ -24,8 +24,25 @@
 package org.dishevelled.venn.cytoscape;
 
 import java.awt.BorderLayout;
+import java.awt.Dialog;
+import java.awt.FileDialog;
+import java.awt.Image;
 
+import java.awt.event.ActionEvent;
+
+import java.awt.image.RenderedImage;
+
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+
+import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
+
+import static javax.swing.SwingUtilities.windowForComponent;
 
 import cytoscape.CyNode;
 
@@ -49,39 +66,97 @@ final class DiagramView
     /** Canvas. */
     private final PCanvas canvas;
 
+    /** Export to PNG image action. */
+    private final Action exportToPNG = new AbstractAction("Export to PNG...") // i18n
+        {
+            /** {@inheritDoc} */
+            public void actionPerformed(final ActionEvent event)
+            {
+                exportToPNG();
+            }
+        };
 
+
+    /**
+     * Create a new diagram view.
+     */
     private DiagramView()
     {
         canvas = new PCanvas();
         canvas.setDefaultRenderQuality(PPaintContext.HIGH_QUALITY_RENDERING);
         canvas.setAnimatingRenderQuality(PPaintContext.HIGH_QUALITY_RENDERING);
         canvas.setInteractingRenderQuality(PPaintContext.HIGH_QUALITY_RENDERING);
+        canvas.removeInputEventListener(canvas.getPanEventHandler());
+        canvas.removeInputEventListener(canvas.getZoomEventHandler());
 
-        // override pan & zoom handlers
-        // add context menu
+        JPopupMenu contextMenu = new JPopupMenu();
+        contextMenu.add(exportToPNG);
+        canvas.addMouseListener(new ContextMenuListener(contextMenu));
 
         setLayout(new BorderLayout());
         add("Center", canvas);
     }
 
+    /**
+     * Create a new diagram view with the specified binary venn node.
+     *
+     * @param binaryVennNode binary venn node
+     */
     DiagramView(final BinaryVennNode<CyNode> binaryVennNode)
     {
         this();
-        binaryVennNode.offset(150.0d, 150.0d); // fix
+        binaryVennNode.offset(92.0d, 124.0d);
         canvas.getLayer().addChild(binaryVennNode);
     }
 
+    /**
+     * Create a new diagram view with the specified ternary venn node.
+     *
+     * @param ternaryVennNode ternary venn node
+     */
     DiagramView(final TernaryVennNode<CyNode> ternaryVennNode)
     {
         this();
-        ternaryVennNode.offset(75.0d, 75.0d);
+        ternaryVennNode.offset(92.0d, 70.0d);
         canvas.getLayer().addChild(ternaryVennNode);
     }
 
+    /**
+     * Create a new diagram view with the specified quaternary venn node.
+     *
+     * @param quaternaryVennNode quaternary venn node
+     */
     DiagramView(final QuaternaryVennNode<CyNode> quaternaryVennNode)
     {
         this();
         quaternaryVennNode.offset(40.0d, 235.0d);
         canvas.getLayer().addChild(quaternaryVennNode);
+    }
+
+
+    /**
+     * Export to PNG.
+     */
+    private void exportToPNG()
+    {
+        Image image = canvas.getLayer().toImage();
+        // unsafe cast, if this view isn't rooted in a dialog
+        FileDialog fileDialog = new FileDialog((Dialog) windowForComponent(this), "Export to PNG...", FileDialog.SAVE);
+        fileDialog.setVisible(true);
+
+        String directory = fileDialog.getDirectory();
+        String fileName = fileDialog.getFile();
+
+        if (fileName != null && directory != null)
+        {
+            try
+            {
+                ImageIO.write((RenderedImage) image, "png", new File(directory, fileName));
+            }
+            catch (IOException e)
+            {
+                // ignore
+            }
+        }
     }
 }

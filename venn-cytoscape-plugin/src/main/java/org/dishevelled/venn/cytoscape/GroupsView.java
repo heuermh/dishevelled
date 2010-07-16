@@ -26,9 +26,6 @@ package org.dishevelled.venn.cytoscape;
 import java.awt.BorderLayout;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -60,8 +57,6 @@ import cytoscape.CyNode;
 import cytoscape.groups.CyGroup;
 import cytoscape.groups.CyGroupManager;
 
-import cytoscape.view.CytoscapeDesktop;
-
 import org.dishevelled.layout.ButtonPanel;
 import org.dishevelled.layout.LabelFieldPanel;
 
@@ -72,10 +67,6 @@ import org.dishevelled.piccolo.venn.QuaternaryVennNode;
 import org.dishevelled.venn.swing.BinaryVennList;
 import org.dishevelled.venn.swing.TernaryVennList;
 import org.dishevelled.venn.swing.QuaternaryVennList;
-
-import org.piccolo2d.PCanvas;
-
-import org.piccolo2d.util.PPaintContext;
 
 /**
  * Groups view.
