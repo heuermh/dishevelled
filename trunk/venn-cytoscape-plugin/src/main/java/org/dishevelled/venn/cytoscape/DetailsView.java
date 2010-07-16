@@ -62,7 +62,7 @@ final class DetailsView
     private final QuaternaryVennList<CyNode> quaternaryVennList;
 
     /** Select all action. */
-    private final Action selectAll = new AbstractAction("Select all")
+    private final Action selectAll = new AbstractAction("Select all") // i18n
         {
             /** {@inheritDoc} */
             public void actionPerformed(final ActionEvent event)
@@ -83,7 +83,7 @@ final class DetailsView
         };
 
     /** Clear selection action. */
-    private final Action clearSelection = new AbstractAction("Clear selection")
+    private final Action clearSelection = new AbstractAction("Clear selection") // i18n
         {
             /** {@inheritDoc} */
             public void actionPerformed(final ActionEvent event)
@@ -104,6 +104,13 @@ final class DetailsView
         };
 
 
+    /**
+     * Create a new details view.
+     *
+     * @param binaryVennList binary venn list
+     * @param ternaryVennList ternary venn list
+     * @param quaternaryVennList quaternary venn list
+     */
     private DetailsView(final BinaryVennList<CyNode> binaryVennList,
                         final TernaryVennList<CyNode> ternaryVennList,
                         final QuaternaryVennList<CyNode> quaternaryVennList)
@@ -127,6 +134,11 @@ final class DetailsView
         addMouseListener(new ContextMenuListener(contextMenu));
     }
 
+    /**
+     * Create a new details view with the specified binary venn list.
+     *
+     * @param binaryVennList binary venn list
+     */
     DetailsView(final BinaryVennList<CyNode> binaryVennList)
     {
         this(binaryVennList, null, null);
@@ -134,6 +146,11 @@ final class DetailsView
         add("Center", binaryVennList);
     }
 
+    /**
+     * Create a new details view with the specified ternary venn list.
+     *
+     * @param ternaryVennList ternary venn list
+     */
     DetailsView(final TernaryVennList<CyNode> ternaryVennList)
     {
         this(null, ternaryVennList, null);
@@ -141,6 +158,11 @@ final class DetailsView
         add("Center", ternaryVennList);
     }
 
+    /**
+     * Create a new details view with the specified quaternary venn list.
+     *
+     * @param quaternaryVennList quaternary venn list
+     */
     DetailsView(final QuaternaryVennList<CyNode> quaternaryVennList)
     {
         this(null, null, quaternaryVennList);

@@ -40,9 +40,7 @@ import cytoscape.plugin.CytoscapePlugin;
   update groups list per listener
   diagram pan should require holding space bar
   diagram zoom should use mouse wheel
-  save diagram as image action (svg would be nice)
   tooltips on diagram with label text
-  add zoom to center bounds with invokeLater, or recenter binary via offset
   add mouse click listeners to area nodes to update selection
   create icons for actions
   create export action
@@ -60,7 +58,7 @@ import cytoscape.plugin.CytoscapePlugin;
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public final class VennCytoscapePlugin
+public final class VennDiagrams
     extends CytoscapePlugin
 {
     /** Venn diagrams action. */
@@ -82,7 +80,7 @@ public final class VennCytoscapePlugin
     /**
      * Create a new cytoscape plugin for venn diagrams.
      */
-    public VennCytoscapePlugin()
+    public VennDiagrams()
     {
         // todo:  check if on AWT event thread
         Cytoscape.getDesktop().getCyMenus().getOperationsMenu().add(vennDiagrams);
