@@ -242,6 +242,20 @@ public class QuaternaryVennNode<E>
      */
     private void initNodes()
     {
+        /*
+
+          Venn construction based on
+
+          http://commons.wikimedia.org/wiki/File:Venn%27s_four_ellipse_construction.svg
+          by author RupertMillard http://commons.wikimedia.org/wiki/User:RupertMillard
+
+          licensed under the Creative Commons Attribution-Share Alike 3.0 Unported license.
+          http://creativecommons.org/licenses/by-sa/3.0/deed.en
+
+          The following lines of code, to line 292, are also under the same license.
+
+        */
+
         Ellipse2D ellipse = new Ellipse2D.Double(0.0d, 0.0d, 376.0d, 234.0d);
         c.setLocation(ellipse.getBounds2D().getCenterX(), ellipse.getBounds2D().getCenterY());
 
