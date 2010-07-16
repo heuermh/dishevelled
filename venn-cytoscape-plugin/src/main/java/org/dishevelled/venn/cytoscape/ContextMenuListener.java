@@ -23,37 +23,64 @@
 */
 package org.dishevelled.venn.cytoscape;
 
-import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
-import javax.swing.AbstractAction;
-
-import cytoscape.Cytoscape;
+import javax.swing.JPopupMenu;
 
 /**
- * Action to display the dialog for the venn diagram Cytoscape plugin.
+ * Context menu listener.
  *
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-final class VennCytoscapeAction
-    extends AbstractAction
+final class ContextMenuListener
+    extends MouseAdapter
 {
+    /** Context menu. */
+    private final JPopupMenu contextMenu;
+
 
     /**
-     * Create a new action to display the dialog for the venn diagram Cytoscape plugin.
+     * Create a new context menu listener for the specified context menu.
+     *
+     * @param contextMenu context menu, must not be null
      */
-    VennCytoscapeAction()
+    ContextMenuListener(final JPopupMenu contextMenu)
     {
-        super("Venn Diagrams...");  // i18n
+        if (contextMenu == null)
+        {
+            throw new IllegalArgumentException("contextMenu must not be null");
+        }
+        this.contextMenu = contextMenu;
     }
 
 
     /** {@inheritDoc} */
-    public void actionPerformed(final ActionEvent event)
+    public void mousePressed(final MouseEvent event)
     {
-        VennCytoscapeDialog dialog = new VennCytoscapeDialog(Cytoscape.getDesktop());
-        // todo:  layout dialog with regards to main frame
-        dialog.setBounds(200, 200, 400, 400);
-        dialog.setVisible(true);
+        if (event.isPopupTrigger())
+        {
+            showContextMenu(event);
+        }
+    }
+
+    /** {@inheritDoc} */
+    public void mouseReleased(final MouseEvent event)
+    {
+        if (event.isPopupTrigger())
+        {
+            showContextMenu(event);
+        }
+    }
+
+    /**
+     * Show context menu.
+     *
+     * @param event mouse event
+     */
+    private void showContextMenu(final MouseEvent event)
+    {
+        contextMenu.show(event.getComponent(), event.getX(), event.getY());
     }
 }

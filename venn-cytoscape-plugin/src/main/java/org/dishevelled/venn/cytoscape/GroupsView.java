@@ -42,6 +42,8 @@ import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JToolBar;
 
+import static javax.swing.SwingUtilities.windowForComponent;
+
 import javax.swing.border.EmptyBorder;
 
 import javax.swing.event.ListSelectionEvent;
@@ -75,36 +77,14 @@ import org.piccolo2d.PCanvas;
 
 import org.piccolo2d.util.PPaintContext;
 
-/*
-
-  todos:
-
-  update groups list per listener
-  diagram pan should require holding space bar
-  diagram zoom should use mouse wheel
-  tooltips on diagram with label text
-  add zoom to center bounds with invokeLater, or recenter binary via offset
-  add mouse click listeners to area nodes to update selection
-  create icons for actions
-  create export action
-  change icon/text for actions on selection change
-  export details panel selection to cytoscape selection
-  add Select all and Clear selection context menu to details
-  turn off details selection when union size reaches a certian limit
-  additional information in CyGroup list cell renderer, or use table
-  additional information in CyNode list cell renderer, or use table
-  extract code from dialog to view class
-
- */
-
 /**
- * Dialog for the venn diagram Cytoscape plugin.
+ * Groups view.
  *
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-final class VennCytoscapeDialog
-    extends JDialog
+final class GroupsView
+    extends JPanel
 {
     /** List of groups. */
     private final EventList<CyGroup> groups;
@@ -210,46 +190,13 @@ final class VennCytoscapeDialog
             }
         };
 
-    /** Context menu listener. */
-    private final MouseListener contextMenuListener = new MouseAdapter()
-        {
-            /** {@inheritDoc} */
-            public void mousePressed(final MouseEvent event)
-            {
-                if (event.isPopupTrigger())
-                {
-                    showContextMenu(event);
-                }
-            }
-
-            /** {@inheritDoc} */
-            public void mouseReleased(final MouseEvent event)
-            {
-                if (event.isPopupTrigger())
-                {
-                    showContextMenu(event);
-                }
-            }
-
-            /**
-             * Show context menu.
-             */
-            private void showContextMenu(final MouseEvent event)
-            {
-                contextMenu.show(event.getComponent(), event.getX(), event.getY());
-            }
-        };
-
 
     /**
-     * Create a new dialog for the venn diagram Cytoscape plugin
-     * with the specified Cytoscape desktop.
-     *
-     * @param desktop Cytoscape desktop
+     * Create a new groups view.
      */
-    VennCytoscapeDialog(final CytoscapeDesktop desktop)
+    GroupsView()
     {
-        super(desktop, "Venn Diagrams"); // i18n
+        super();
 
         groups = GlazedLists.eventList(CyGroupManager.getGroupList());
         EventListModel<CyGroup> listModel = new EventListModel<CyGroup>(groups);
@@ -258,12 +205,12 @@ final class VennCytoscapeDialog
         selectionModel.addListSelectionListener(listSelectionListener); // or use event list listener
         groupList = new JList(listModel);
         groupList.setSelectionModel(selectionModel);
-        groupList.addMouseListener(contextMenuListener);
 
         contextMenu = new JPopupMenu();
         contextMenu.add(diagram);
         contextMenu.add(details);
         contextMenu.add(export);
+        groupList.addMouseListener(new ContextMenuListener(contextMenu));
 
         diagram.setEnabled(false);
         details.setEnabled(false);
@@ -292,12 +239,10 @@ final class VennCytoscapeDialog
         buttonPanel.setBorder(new EmptyBorder(24, 12, 12, 12));
         buttonPanel.add(done);
 
-        JPanel contentPane = new JPanel();
-        contentPane.setLayout(new BorderLayout());
-        contentPane.add("North", toolBar);
-        contentPane.add("Center", mainPanel);
-        contentPane.add("South", buttonPanel);
-        setContentPane(contentPane);
+        setLayout(new BorderLayout());
+        add("North", toolBar);
+        add("Center", mainPanel);
+        add("South", buttonPanel);
     }
 
     /**
@@ -305,7 +250,7 @@ final class VennCytoscapeDialog
      */
     private void done()
     {
-        setVisible(false);
+        windowForComponent(this).setVisible(false);
     }
 
     /**
@@ -315,25 +260,14 @@ final class VennCytoscapeDialog
     {
         String firstLabel = selected.get(0).getGroupName();
         String secondLabel = selected.get(1).getGroupName();
-
-        JDialog dialog = new JDialog(this, firstLabel + ", " + secondLabel + " Diagram");
-
-        PCanvas canvas = new PCanvas();
-        canvas.setDefaultRenderQuality(PPaintContext.HIGH_QUALITY_RENDERING);
-        canvas.setAnimatingRenderQuality(PPaintContext.HIGH_QUALITY_RENDERING);
-        canvas.setInteractingRenderQuality(PPaintContext.HIGH_QUALITY_RENDERING);
-
         Set<CyNode> first = new HashSet<CyNode>(selected.get(0).getNodes());
         Set<CyNode> second = new HashSet<CyNode>(selected.get(1).getNodes());
-        BinaryVennNode<CyNode> node = new BinaryVennNode<CyNode>(firstLabel, first, secondLabel, second);
-        node.offset(150.0d, 150.0d);
-        canvas.getLayer().addChild(node);
+        BinaryVennNode<CyNode> binaryVennNode = new BinaryVennNode<CyNode>(firstLabel, first, secondLabel, second);
 
-        JPanel contentPane = new JPanel();
-        contentPane.setLayout(new BorderLayout());
-        contentPane.add("Center", canvas);
-        dialog.setContentPane(contentPane);
-        // offset per this
+        JDialog dialog = new JDialog(windowForComponent(this), firstLabel + ", " + secondLabel + " Diagram");
+        dialog.setContentPane(new DiagramView(binaryVennNode));
+
+        // offset per parent dialog
         dialog.setBounds(100, 100, 400, 400);
         dialog.setVisible(true);
     }
@@ -346,26 +280,15 @@ final class VennCytoscapeDialog
         String firstLabel = selected.get(0).getGroupName();
         String secondLabel = selected.get(1).getGroupName();
         String thirdLabel = selected.get(2).getGroupName();
-
-        JDialog dialog = new JDialog(this, firstLabel + ", " + secondLabel + ", " + thirdLabel + " Diagram");
-
-        PCanvas canvas = new PCanvas();
-        canvas.setDefaultRenderQuality(PPaintContext.HIGH_QUALITY_RENDERING);
-        canvas.setAnimatingRenderQuality(PPaintContext.HIGH_QUALITY_RENDERING);
-        canvas.setInteractingRenderQuality(PPaintContext.HIGH_QUALITY_RENDERING);
-
         Set<CyNode> first = new HashSet<CyNode>(selected.get(0).getNodes());
         Set<CyNode> second = new HashSet<CyNode>(selected.get(1).getNodes());
         Set<CyNode> third = new HashSet<CyNode>(selected.get(2).getNodes());
-        TernaryVennNode<CyNode> node = new TernaryVennNode<CyNode>(firstLabel, first, secondLabel, second, thirdLabel, third);
-        node.offset(75.0d, 75.0d);
-        canvas.getLayer().addChild(node);
+        TernaryVennNode<CyNode> ternaryVennNode = new TernaryVennNode<CyNode>(firstLabel, first, secondLabel, second, thirdLabel, third);
 
-        JPanel contentPane = new JPanel();
-        contentPane.setLayout(new BorderLayout());
-        contentPane.add("Center", canvas);
-        dialog.setContentPane(contentPane);
-        // offset per this
+        JDialog dialog = new JDialog(windowForComponent(this), firstLabel + ", " + secondLabel + ", " + thirdLabel + " Diagram");
+        dialog.setContentPane(new DiagramView(ternaryVennNode));
+
+        // offset per parent dialog
         dialog.setBounds(100, 100, 400, 400);
         dialog.setVisible(true);
     }
@@ -379,27 +302,16 @@ final class VennCytoscapeDialog
         String secondLabel = selected.get(1).getGroupName();
         String thirdLabel = selected.get(2).getGroupName();
         String fourthLabel = selected.get(3).getGroupName();
-
-        JDialog dialog = new JDialog(this, firstLabel + ", " + secondLabel + ", " + thirdLabel + ", " + fourthLabel + " Diagram");
-
-        PCanvas canvas = new PCanvas();
-        canvas.setDefaultRenderQuality(PPaintContext.HIGH_QUALITY_RENDERING);
-        canvas.setAnimatingRenderQuality(PPaintContext.HIGH_QUALITY_RENDERING);
-        canvas.setInteractingRenderQuality(PPaintContext.HIGH_QUALITY_RENDERING);
-
         Set<CyNode> first = new HashSet<CyNode>(selected.get(0).getNodes());
         Set<CyNode> second = new HashSet<CyNode>(selected.get(1).getNodes());
         Set<CyNode> third = new HashSet<CyNode>(selected.get(2).getNodes());
         Set<CyNode> fourth = new HashSet<CyNode>(selected.get(3).getNodes());
-        QuaternaryVennNode<CyNode> node = new QuaternaryVennNode<CyNode>(firstLabel, first, secondLabel, second, thirdLabel, third, fourthLabel, fourth);
-        node.offset(40.0d, 235.0d);
-        canvas.getLayer().addChild(node);
+        QuaternaryVennNode<CyNode> quaternaryVennNode = new QuaternaryVennNode<CyNode>(firstLabel, first, secondLabel, second, thirdLabel, third, fourthLabel, fourth);
 
-        JPanel contentPane = new JPanel();
-        contentPane.setLayout(new BorderLayout());
-        contentPane.add("Center", canvas);
-        dialog.setContentPane(contentPane);
-        // offset per this
+        JDialog dialog = new JDialog(windowForComponent(this), firstLabel + ", " + secondLabel + ", " + thirdLabel + ", " + fourthLabel + " Diagram");
+        dialog.setContentPane(new DiagramView(quaternaryVennNode));
+
+        // offset per parent dialog
         dialog.setBounds(100, 100, 600, 600);
         dialog.setVisible(true);
     }
@@ -411,19 +323,14 @@ final class VennCytoscapeDialog
     {
         String firstLabel = selected.get(0).getGroupName();
         String secondLabel = selected.get(1).getGroupName();
-
-        JDialog dialog = new JDialog(this, firstLabel + ", " + secondLabel + " Details");
-
         Set<CyNode> first = new HashSet<CyNode>(selected.get(0).getNodes());
         Set<CyNode> second = new HashSet<CyNode>(selected.get(1).getNodes());
-        BinaryVennList<CyNode> list = new BinaryVennList<CyNode>(firstLabel, first, secondLabel, second);
+        final BinaryVennList<CyNode> binaryVennList = new BinaryVennList<CyNode>(firstLabel, first, secondLabel, second);
 
-        JPanel contentPane = new JPanel();
-        contentPane.setBorder(new EmptyBorder(12, 12, 12, 12));
-        contentPane.setLayout(new BorderLayout());
-        contentPane.add("Center", list);
-        dialog.setContentPane(contentPane);
-        // offset per this
+        JDialog dialog = new JDialog(windowForComponent(this), firstLabel + ", " + secondLabel + " Details");
+        dialog.setContentPane(new DetailsView(binaryVennList));
+
+        // offset per parent dialog
         dialog.setBounds(100, 100, 600, 450);
         dialog.setVisible(true);
     }
@@ -436,20 +343,15 @@ final class VennCytoscapeDialog
         String firstLabel = selected.get(0).getGroupName();
         String secondLabel = selected.get(1).getGroupName();
         String thirdLabel = selected.get(2).getGroupName();
-
-        JDialog dialog = new JDialog(this, firstLabel + ", " + secondLabel + ", " + thirdLabel + " Details");
-
         Set<CyNode> first = new HashSet<CyNode>(selected.get(0).getNodes());
         Set<CyNode> second = new HashSet<CyNode>(selected.get(1).getNodes());
         Set<CyNode> third = new HashSet<CyNode>(selected.get(2).getNodes());
-        TernaryVennList<CyNode> list = new TernaryVennList<CyNode>(firstLabel, first, secondLabel, second, thirdLabel, third);
+        final TernaryVennList<CyNode> ternaryVennList = new TernaryVennList<CyNode>(firstLabel, first, secondLabel, second, thirdLabel, third);
 
-        JPanel contentPane = new JPanel();
-        contentPane.setBorder(new EmptyBorder(12, 12, 12, 12));
-        contentPane.setLayout(new BorderLayout());
-        contentPane.add("Center", list);
-        dialog.setContentPane(contentPane);
-        // offset per this
+        JDialog dialog = new JDialog(windowForComponent(this), firstLabel + ", " + secondLabel + ", " + thirdLabel + " Details");
+        dialog.setContentPane(new DetailsView(ternaryVennList));
+
+        // offset per parent dialog
         dialog.setBounds(100, 100, 747, 669);
         dialog.setVisible(true);
     }
@@ -463,21 +365,16 @@ final class VennCytoscapeDialog
         String secondLabel = selected.get(1).getGroupName();
         String thirdLabel = selected.get(2).getGroupName();
         String fourthLabel = selected.get(3).getGroupName();
-
-        JDialog dialog = new JDialog(this, firstLabel + ", " + secondLabel + ", " + thirdLabel + ", " + fourthLabel + " Details");
-
         Set<CyNode> first = new HashSet<CyNode>(selected.get(0).getNodes());
         Set<CyNode> second = new HashSet<CyNode>(selected.get(1).getNodes());
         Set<CyNode> third = new HashSet<CyNode>(selected.get(2).getNodes());
         Set<CyNode> fourth = new HashSet<CyNode>(selected.get(3).getNodes());
-        QuaternaryVennList<CyNode> list = new QuaternaryVennList<CyNode>(firstLabel, first, secondLabel, second, thirdLabel, third, fourthLabel, fourth);
+        final QuaternaryVennList<CyNode> quaternaryVennList = new QuaternaryVennList<CyNode>(firstLabel, first, secondLabel, second, thirdLabel, third, fourthLabel, fourth);
 
-        JPanel contentPane = new JPanel();
-        contentPane.setBorder(new EmptyBorder(12, 12, 12, 12));
-        contentPane.setLayout(new BorderLayout());
-        contentPane.add("Center", list);
-        dialog.setContentPane(contentPane);
-        // offset per this
+        JDialog dialog = new JDialog(windowForComponent(this), firstLabel + ", " + secondLabel + ", " + thirdLabel + ", " + fourthLabel + " Details");
+        dialog.setContentPane(new DetailsView(quaternaryVennList));
+
+        // offset per parent dialog
         dialog.setBounds(100, 100, 894, 888);
         dialog.setVisible(true);
     }
