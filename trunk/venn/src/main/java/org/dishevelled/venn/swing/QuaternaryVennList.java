@@ -607,6 +607,13 @@ public final class QuaternaryVennList<E>
             clearSelection(firstSecond);
             clearSelection(firstThird);
             clearSelection(secondThird);
+            clearSelection(firstFourth);
+            clearSelection(secondFourth);
+            clearSelection(thirdFourth);
+            clearSelection(firstSecondThird);
+            clearSelection(firstSecondFourth);
+            clearSelection(firstThirdFourth);
+            clearSelection(secondThirdFourth);
             clearSelection(intersection);
             clearSelection(union);
         }
@@ -626,6 +633,13 @@ public final class QuaternaryVennList<E>
                 addToSelection(getModel().firstSecond(), firstSecond, firstSecondAdapter, e);
                 addToSelection(getModel().firstThird(), firstThird, firstThirdAdapter, e);
                 addToSelection(getModel().secondThird(), secondThird, secondThirdAdapter, e);
+                addToSelection(getModel().firstFourth(), firstFourth, firstFourthAdapter, e);
+                addToSelection(getModel().secondFourth(), secondFourth, secondFourthAdapter, e);
+                addToSelection(getModel().thirdFourth(), thirdFourth, thirdFourthAdapter, e);
+                addToSelection(getModel().firstSecondThird(), firstSecondThird, firstSecondThirdAdapter, e);
+                addToSelection(getModel().firstSecondFourth(), firstSecondFourth, firstSecondFourthAdapter, e);
+                addToSelection(getModel().firstThirdFourth(), firstThirdFourth, firstThirdFourthAdapter, e);
+                addToSelection(getModel().secondThirdFourth(), secondThirdFourth, secondThirdFourthAdapter, e);
                 addToSelection(getModel().intersection(), intersection, intersectionAdapter, e);
                 addToSelection(getModel().union(), union, unionAdapter, e);
             }
@@ -641,6 +655,13 @@ public final class QuaternaryVennList<E>
             removeFromSelection(getModel().firstSecond(), firstSecond, firstSecondAdapter);
             removeFromSelection(getModel().firstThird(), firstThird, firstThirdAdapter);
             removeFromSelection(getModel().secondThird(), secondThird, secondThirdAdapter);
+            removeFromSelection(getModel().firstFourth(), firstFourth, firstFourthAdapter);
+            removeFromSelection(getModel().secondFourth(), secondFourth, secondFourthAdapter);
+            removeFromSelection(getModel().thirdFourth(), thirdFourth, thirdFourthAdapter);
+            removeFromSelection(getModel().firstSecondThird(), firstSecondThird, firstSecondThirdAdapter);
+            removeFromSelection(getModel().firstSecondFourth(), firstSecondFourth, firstSecondFourthAdapter);
+            removeFromSelection(getModel().firstThirdFourth(), firstThirdFourth, firstThirdFourthAdapter);
+            removeFromSelection(getModel().secondThirdFourth(), secondThirdFourth, secondThirdFourthAdapter);
             removeFromSelection(getModel().intersection(), intersection, intersectionAdapter);
             removeFromSelection(getModel().union(), union, unionAdapter);
         }
