@@ -23,11 +23,36 @@
 */
 package org.dishevelled.venn.cytoscape;
 
-import javax.swing.SwingUtilities;
+import java.awt.event.ActionEvent;
+
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.JDialog;
 
 import cytoscape.Cytoscape;
 
 import cytoscape.plugin.CytoscapePlugin;
+
+/*
+
+  todos:
+
+  update groups list per listener
+  diagram pan should require holding space bar
+  diagram zoom should use mouse wheel
+  save diagram as image action (svg would be nice)
+  tooltips on diagram with label text
+  add zoom to center bounds with invokeLater, or recenter binary via offset
+  add mouse click listeners to area nodes to update selection
+  create icons for actions
+  create export action
+  change icon/text for actions on selection change
+  export details panel selection to cytoscape selection
+  turn off details selection when union size reaches a certian limit
+  additional information in CyGroup list cell renderer, or use table
+  additional information in CyNode list cell renderer, or use table
+
+ */
 
 /**
  * Cytoscape plugin for venn diagrams.
@@ -38,19 +63,28 @@ import cytoscape.plugin.CytoscapePlugin;
 public final class VennCytoscapePlugin
     extends CytoscapePlugin
 {
+    /** Venn diagrams action. */
+    private final Action vennDiagrams = new AbstractAction("Venn Diagrams...")
+        {
+            /** {@inheritDoc} */
+            public void actionPerformed(final ActionEvent event)
+            {
+                JDialog dialog = new JDialog(Cytoscape.getDesktop(), "Venn Diagrams"); // i18n
+                dialog.setContentPane(new GroupsView());
+
+                // todo:  layout dialog with regards to main frame
+                dialog.setBounds(200, 200, 400, 400);
+                dialog.setVisible(true);
+            }
+        };
+
 
     /**
      * Create a new cytoscape plugin for venn diagrams.
      */
     public VennCytoscapePlugin()
     {
-        SwingUtilities.invokeLater(new Runnable()
-            {
-                /** {@inheritDoc} */
-                public void run()
-                {
-                    Cytoscape.getDesktop().getCyMenus().getOperationsMenu().add(new VennCytoscapeAction());
-                }
-            });
+        // todo:  check if on AWT event thread
+        Cytoscape.getDesktop().getCyMenus().getOperationsMenu().add(vennDiagrams);
     }
 }
