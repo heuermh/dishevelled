@@ -45,10 +45,10 @@ import cytoscape.plugin.CytoscapePlugin;
   create icons for actions
   create export action
   change icon/text for actions on selection change
-  export details panel selection to cytoscape selection
   turn off details selection when union size reaches a certian limit
   additional information in CyGroup list cell renderer, or use table
   additional information in CyNode list cell renderer, or use table
+  add manifest attribute, see presentation
 
  */
 
