@@ -36,6 +36,11 @@ import javax.swing.JToolBar;
 import javax.swing.border.EmptyBorder;
 
 import cytoscape.CyNode;
+import cytoscape.CyNetwork;
+import cytoscape.Cytoscape;
+
+import org.dishevelled.observable.event.SetChangeEvent;
+import org.dishevelled.observable.event.SetChangeListener;
 
 import org.dishevelled.venn.swing.BinaryVennList;
 import org.dishevelled.venn.swing.TernaryVennList;
@@ -60,6 +65,20 @@ final class DetailsView
 
     /** Quaternary venn list. */
     private final QuaternaryVennList<CyNode> quaternaryVennList;
+
+    /** Update Cytoscape selection. */
+    private final SetChangeListener<CyNode> updateCytoscapeSelection = new SetChangeListener<CyNode>()
+        {
+            /** {@inheritDoc} */
+            public void setChanged(final SetChangeEvent<CyNode> event)
+            {
+                // ick.  wholesale update every time
+                CyNetwork currentNetwork = Cytoscape.getCurrentNetwork();
+                currentNetwork.unselectAllNodes();
+                currentNetwork.setSelectedNodeState(event.getObservableSet(), true);
+                Cytoscape.getCurrentNetworkView().updateView();
+            }
+        };
 
     /** Select all action. */
     private final Action selectAll = new AbstractAction("Select all") // i18n
@@ -143,6 +162,7 @@ final class DetailsView
     {
         this(binaryVennList, null, null);
         binaryVennList.setBorder(new EmptyBorder(12, 12, 12, 12));
+        binaryVennList.getModel().selection().addSetChangeListener(updateCytoscapeSelection);
         add("Center", binaryVennList);
     }
 
@@ -155,6 +175,7 @@ final class DetailsView
     {
         this(null, ternaryVennList, null);
         ternaryVennList.setBorder(new EmptyBorder(12, 12, 12, 12));
+        ternaryVennList.getModel().selection().addSetChangeListener(updateCytoscapeSelection);
         add("Center", ternaryVennList);
     }
 
@@ -167,6 +188,7 @@ final class DetailsView
     {
         this(null, null, quaternaryVennList);
         quaternaryVennList.setBorder(new EmptyBorder(12, 12, 12, 12));
+        quaternaryVennList.getModel().selection().addSetChangeListener(updateCytoscapeSelection);
         add("Center", quaternaryVennList);
     }
 }
