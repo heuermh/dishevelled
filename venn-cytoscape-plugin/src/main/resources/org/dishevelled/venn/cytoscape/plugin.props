@@ -31,7 +31,7 @@ projectURL=http://www.dishevelled.org/venn-cytoscape-plugin
 pluginAuthorsInstitutions=Michael Heuer:dishevelled.org
 
 # Date this plugin/plugin version was released
-releaseDate=01 Aug 2010
+releaseDate=July 19 2010
 
 # If this plugin is never meant to be downloaded except as part of a plugin (not common) add this property.  Default is "no"
 themeOnly=no
