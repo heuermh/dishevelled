@@ -10,7 +10,7 @@ pluginName=VennDiagrams
 
 # Description used to give users information about the plugin such as what it does.
 # Html tags are encouraged for formatting purposes.
-pluginDescription=Cytoscape plugin for venn diagrams.<p>This plugin is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation; either version 3 of the License, or (at your option) any later version.</p><p>This plugin has dependencies on libraries released under other free and/or open source licenses, see website for details.</p>
+pluginDescription=Cytoscape plugin for venn diagrams.<p>This plugin is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation; either version 3 of the License, or (at your option) any later version.</p><p>This plugin has dependencies on libraries released under other free and/or open source licenses, see website for details.</p><p><a href="http://www.dishevelled.org/venn-cytoscape-plugin">http://www.dishevelled.org/venn-cytoscape-plugin</a></p>
 
 # Plugin version number, this must be two numbers separated by a decimlal.  Ex. 0.2, 14.03
 pluginVersion=0.1
