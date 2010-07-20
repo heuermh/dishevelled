@@ -25,6 +25,26 @@
       <url>scp://shell.sourceforge.net/home/groups/d/di/dishevelled/htdocs/venn-cytoscape-plugin-${project.version}</url>
     </site>
   </distributionManagement>
+
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <artifactId>maven-assembly-plugin</artifactId>
+          <configuration>
+            <archive>
+              <manifestEntries>
+                <Cytoscape-Plugin>org.dishevelled.venn.cytoscape.VennDiagrams</Cytoscape-Plugin>
+              </manifestEntries>
+            </archive>
+            <descriptorRefs>
+              <descriptorRef>jar-with-dependencies</descriptorRef>
+            </descriptorRefs>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
   <dependencies>
     <dependency>
       <groupId>net.java.dev.glazedlists</groupId>
