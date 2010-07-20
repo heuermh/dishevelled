@@ -33,7 +33,48 @@
 <p>
 dishevelled.org <b>venn-cytoscape-plugin</b> provides venn diagrams for
 Cytoscape [<a href="#1">1</a>] as a plugin.  The venn diagram Cytoscape plugin
-requires java version 1.6 or later and Cytoscape version 2.7 or later.
+requires java version 1.6 or later and Cytoscape version 2.7.0 or later.
+</p>
+</section>
+
+<section name="Venn Diagrams">
+<p>
+The plugin provides a diagram view and a details view for comparing two to four
+Cytoscape groups at a time.
+</p>
+
+<p>
+The diagram view is a static venn diagram showing the number of nodes in each
+logical grouping.  The diagram can be exported to an image file in PNG format.
+</p>
+
+<p>
+The details view shows the nodes in each logical grouping.  The selection model
+of the details view synchronizes all of the list views in both directions (i.e.
+selecting a node in any one list will select it in all lists) and exports the
+selection to the current Cytoscape network view (selecting a node in the details view
+will select it in the current Cytoscape network view, but not vice versa).
+</p>
+
+<p>
+Screenshot showing the diagram and detail views for comparing two groups:
+</p>
+<p>
+<a href="images/binary.jpg"><img src="images/binary-thumb.jpg" width="500" height="364" alt="Screenshot of binary diagram and details"/></a>
+</p>
+
+<p>
+Screenshot showing the diagram and detail views for comparing three groups:
+</p>
+<p>
+<a href="images/ternary.jpg"><img src="images/ternary-thumb.jpg" width="500" height="366" alt="Screenshot of ternary diagram and details"/></a>
+</p>
+
+<p>
+Screenshot showing the diagram and detail views for comparing four groups:
+</p>
+<p>
+<a href="images/quaternary.jpg"><img src="images/quaternary-thumb.jpg" width="500" height="312" alt="Screenshot of quaternary diagram and details"/></a>
 </p>
 </section>
 
