@@ -25,6 +25,8 @@ package org.dishevelled.piccolo.venn;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Paint;
+import java.awt.Stroke;
 
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Area;
@@ -41,6 +43,7 @@ import javax.swing.SwingWorker;
 
 import org.piccolo2d.PNode;
 
+import org.piccolo2d.nodes.PArea;
 import org.piccolo2d.nodes.PPath;
 import org.piccolo2d.nodes.PText;
 
@@ -57,103 +60,103 @@ public class QuaternaryVennNode<E>
     extends AbstractQuaternaryVennNode<E>
 {
     /** Path node for the first set. */
-    private final PPath first = new PPath();
+    private final PPath first = new PPath.Double(STROKE);
 
     /** Area node for the first only view. */
-    private final AreaNode firstOnly = new AreaNode();
+    private final PArea firstOnly = new PArea();
 
     /** Label for the size of the first only view. */
     private final PText firstOnlySize = new PText();
 
     /** Path node for the second set. */
-    private final PPath second = new PPath();
+    private final PPath second = new PPath.Double(STROKE);
 
     /** Area node for the second only view. */
-    private final AreaNode secondOnly = new AreaNode();
+    private final PArea secondOnly = new PArea();
 
     /** Label for the size of the second only view. */
     private final PText secondOnlySize = new PText();
 
     /** Path node for the third set. */
-    private final PPath third = new PPath();
+    private final PPath third = new PPath.Double(STROKE);
 
     /** Area node for the third only view. */
-    private final AreaNode thirdOnly = new AreaNode();
+    private final PArea thirdOnly = new PArea();
 
     /** Label for the size of the third only view. */
     private final PText thirdOnlySize = new PText();
 
     /** Path node for the fourth set. */
-    private final PPath fourth = new PPath();
+    private final PPath fourth = new PPath.Double(STROKE);
 
     /** Area node for the fourth only view. */
-    private final AreaNode fourthOnly = new AreaNode();
+    private final PArea fourthOnly = new PArea();
 
     /** Label for the size of the fourth only view. */
     private final PText fourthOnlySize = new PText();
 
     /** Area node for the first second view. */
-    private final AreaNode firstSecond = new AreaNode();
+    private final PArea firstSecond = new PArea();
 
     /** Label for the size of the first second view. */
     private final PText firstSecondSize = new PText();
 
     /** Area node for the first third view. */
-    private final AreaNode firstThird = new AreaNode();
+    private final PArea firstThird = new PArea();
 
     /** Label for the size of the first third view. */
     private final PText firstThirdSize = new PText();
 
     /** Area node for the second third view. */
-    private final AreaNode secondThird = new AreaNode();
+    private final PArea secondThird = new PArea();
 
     /** Label for the size of the second third view. */
     private final PText secondThirdSize = new PText();
 
     /** Area node for the first fourth view. */
-    private final AreaNode firstFourth = new AreaNode();
+    private final PArea firstFourth = new PArea();
 
     /** Label for the size of the first fourth view. */
     private final PText firstFourthSize = new PText();
 
     /** Area node for the second fourth view. */
-    private final AreaNode secondFourth = new AreaNode();
+    private final PArea secondFourth = new PArea();
 
     /** Label for the size of the second fourth view. */
     private final PText secondFourthSize = new PText();
 
     /** Area node for the third fourth view. */
-    private final AreaNode thirdFourth = new AreaNode();
+    private final PArea thirdFourth = new PArea();
 
     /** Label for the size of the third fourth view. */
     private final PText thirdFourthSize = new PText();
 
     /** Area node for the first second third view. */
-    private final AreaNode firstSecondThird = new AreaNode();
+    private final PArea firstSecondThird = new PArea();
 
     /** Label for the size of the first second third view. */
     private final PText firstSecondThirdSize = new PText();
 
     /** Area node for the first second fourth view. */
-    private final AreaNode firstSecondFourth = new AreaNode();
+    private final PArea firstSecondFourth = new PArea();
 
     /** Label for the size of the first second fourth view. */
     private final PText firstSecondFourthSize = new PText();
 
     /** Area node for the first third fourth view. */
-    private final AreaNode firstThirdFourth = new AreaNode();
+    private final PArea firstThirdFourth = new PArea();
 
     /** Label for the size of the first third fourth view. */
     private final PText firstThirdFourthSize = new PText();
 
     /** Area node for the second third fourth view. */
-    private final AreaNode secondThirdFourth = new AreaNode();
+    private final PArea secondThirdFourth = new PArea();
 
     /** Label for the size of the second third fourth view. */
     private final PText secondThirdFourthSize = new PText();
 
     /** Area node for the intersection view. */
-    private final AreaNode intersection = new AreaNode();
+    private final PArea intersection = new PArea();
 
     /** Label for the size of the intersection view. */
     private final PText intersectionSize = new PText();
@@ -169,9 +172,6 @@ public class QuaternaryVennNode<E>
 
     /** Cached area. */
     private Area r;
-
-    /** Cached area. */
-    private final Area area = new Area();
 
     /** Cached rectangle. */
     private Rectangle2D a = new Rectangle2D.Double();
@@ -190,6 +190,24 @@ public class QuaternaryVennNode<E>
 
     /** Animation length, in milliseconds, <code>2000L</code>. */
     private static final long MS = 2000L;
+
+    /** First paint. */
+    private static final Paint FIRST_PAINT = new Color(30, 30, 30, 50);
+
+    /** Second paint. */
+    private static final Paint SECOND_PAINT = new Color(5, 37, 255, 50);
+
+    /** Third paint. */
+    private static final Paint THIRD_PAINT = new Color(255, 100, 5, 50);
+
+    /** Third paint. */
+    private static final Paint FOURTH_PAINT = new Color(11, 255, 5, 50);
+
+    /** Stroke. */
+    private static final Stroke STROKE = new BasicStroke(0.5f);
+
+    /** Stroke paint. */
+    private static final Paint STROKE_PAINT = new Color(20, 20, 20);
 
 
     /**
@@ -252,7 +270,7 @@ public class QuaternaryVennNode<E>
           licensed under the Creative Commons Attribution-Share Alike 3.0 Unported license.
           http://creativecommons.org/licenses/by-sa/3.0/deed.en
 
-          The following lines of code, to line 292, are also under the same license.
+          The following lines of code, to line 305, are also under the same license.
 
         */
 
@@ -261,34 +279,30 @@ public class QuaternaryVennNode<E>
 
         f = new Area(ellipse);
         f = f.createTransformedArea(AffineTransform.getRotateInstance((2.0d * Math.PI) / 9.0d, c.getX(), c.getY()));
-        first.setPathTo(f);
-        first.setPaint(new Color(30, 30, 30, 50));
-        first.setStroke(new BasicStroke(0.5f));
-        first.setStrokePaint(new Color(20, 20, 20));
+        first.append(f, false);
+        first.setPaint(FIRST_PAINT);
+        first.setStrokePaint(STROKE_PAINT);
 
         s = new Area(ellipse);
         s = s.createTransformedArea(AffineTransform.getRotateInstance((2.0d * Math.PI) / 9.0d, c.getX(), c.getY()));
         s = s.createTransformedArea(AffineTransform.getTranslateInstance(72.0d, -85.0d));
-        second.setPathTo(s);
-        second.setPaint(new Color(5, 37, 255, 50));
-        second.setStroke(new BasicStroke(0.5f));
-        second.setStrokePaint(new Color(20, 20, 20));
+        second.append(s, false);
+        second.setPaint(SECOND_PAINT);
+        second.setStrokePaint(STROKE_PAINT);
 
         t = new Area(ellipse);
         t = t.createTransformedArea(AffineTransform.getRotateInstance((-2.0d * Math.PI) / 9.0d, c.getX(), c.getY()));
         t = t.createTransformedArea(AffineTransform.getTranslateInstance(72.0d, -85.0d));
-        third.setPathTo(t);
-        third.setPaint(new Color(255, 100, 5, 50));
-        third.setStroke(new BasicStroke(0.5f));
-        third.setStrokePaint(new Color(20, 20, 20));
+        third.append(t, false);
+        third.setPaint(THIRD_PAINT);
+        third.setStrokePaint(STROKE_PAINT);
 
         r = new Area(ellipse);
         r = r.createTransformedArea(AffineTransform.getRotateInstance((-2.0d * Math.PI) / 9.0d, c.getX(), c.getY()));
         r = r.createTransformedArea(AffineTransform.getTranslateInstance(144.0d, 0.0d));
-        fourth.setPathTo(r);
-        fourth.setPaint(new Color(11, 255, 5, 50));
-        fourth.setStroke(new BasicStroke(0.5f));
-        fourth.setStrokePaint(new Color(20, 20, 20));
+        fourth.append(r, false);
+        fourth.setPaint(FOURTH_PAINT);
+        fourth.setStrokePaint(STROKE_PAINT);
 
         addChild(first);
         addChild(second);
@@ -360,149 +374,134 @@ public class QuaternaryVennNode<E>
         t = new Area(third.getPathReference());
         r = new Area(fourth.getPathReference());
 
-        area.reset();
-        area.add(f);
-        area.subtract(s);
-        area.subtract(t);
-        area.subtract(r);
-        firstOnly.setArea(area);
+        firstOnly.reset();
+        firstOnly.add(f);
+        firstOnly.subtract(s);
+        firstOnly.subtract(t);
+        firstOnly.subtract(r);
 
-        area.reset();
-        area.add(s);
-        area.subtract(f);
-        area.subtract(t);
-        area.subtract(r);
-        secondOnly.setArea(area);
+        secondOnly.reset();
+        secondOnly.add(s);
+        secondOnly.subtract(f);
+        secondOnly.subtract(t);
+        secondOnly.subtract(r);
 
-        area.reset();
-        area.add(t);
-        area.subtract(f);
-        area.subtract(s);
-        area.subtract(r);
-        thirdOnly.setArea(area);
+        thirdOnly.reset();
+        thirdOnly.add(t);
+        thirdOnly.subtract(f);
+        thirdOnly.subtract(s);
+        thirdOnly.subtract(r);
+        
+        fourthOnly.reset();
+        fourthOnly.add(r);
+        fourthOnly.subtract(f);
+        fourthOnly.subtract(s);
+        fourthOnly.subtract(t);
+        
+        firstSecond.reset();
+        firstSecond.add(f);
+        firstSecond.intersect(s);
+        firstSecond.subtract(t);
+        firstSecond.subtract(r);
 
-        area.reset();
-        area.add(r);
-        area.subtract(f);
-        area.subtract(s);
-        area.subtract(t);
-        fourthOnly.setArea(area);
+        firstThird.reset();
+        firstThird.add(f);
+        firstThird.intersect(t);
+        firstThird.subtract(s);
+        firstThird.subtract(r);
 
-        area.reset();
-        area.add(f);
-        area.intersect(s);
-        area.subtract(t);
-        area.subtract(r);
-        firstSecond.setArea(area);
+        firstFourth.reset();
+        firstFourth.add(f);
+        firstFourth.intersect(r);
+        firstFourth.subtract(s);
+        firstFourth.subtract(t);
 
-        area.reset();
-        area.add(f);
-        area.intersect(t);
-        area.subtract(s);
-        area.subtract(r);
-        firstThird.setArea(area);
+        secondThird.reset();
+        secondThird.add(s);
+        secondThird.intersect(t);
+        secondThird.subtract(f);
+        secondThird.subtract(r);
 
-        area.reset();
-        area.add(f);
-        area.intersect(r);
-        area.subtract(s);
-        area.subtract(t);
-        firstFourth.setArea(area);
+        secondFourth.reset();
+        secondFourth.add(s);
+        secondFourth.intersect(r);
+        secondFourth.subtract(f);
+        secondFourth.subtract(t);
 
-        area.reset();
-        area.add(s);
-        area.intersect(t);
-        area.subtract(f);
-        area.subtract(r);
-        secondThird.setArea(area);
+        thirdFourth.reset();
+        thirdFourth.add(t);
+        thirdFourth.intersect(r);
+        thirdFourth.subtract(f);
+        thirdFourth.subtract(s);
 
-        area.reset();
-        area.add(s);
-        area.intersect(r);
-        area.subtract(f);
-        area.subtract(t);
-        secondFourth.setArea(area);
+        firstSecondThird.reset();
+        firstSecondThird.add(f);
+        firstSecondThird.intersect(s);
+        firstSecondThird.intersect(t);
+        firstSecondThird.subtract(r);
 
-        area.reset();
-        area.add(t);
-        area.intersect(r);
-        area.subtract(f);
-        area.subtract(s);
-        thirdFourth.setArea(area);
+        firstSecondFourth.reset();
+        firstSecondFourth.add(f);
+        firstSecondFourth.intersect(s);
+        firstSecondFourth.intersect(r);
+        firstSecondFourth.subtract(t);
 
-        area.reset();
-        area.add(f);
-        area.intersect(s);
-        area.intersect(t);
-        area.subtract(r);
-        firstSecondThird.setArea(area);
+        firstThirdFourth.reset();
+        firstThirdFourth.add(f);
+        firstThirdFourth.intersect(t);
+        firstThirdFourth.intersect(r);
+        firstThirdFourth.subtract(s);
 
-        area.reset();
-        area.add(f);
-        area.intersect(s);
-        area.intersect(r);
-        area.subtract(t);
-        firstSecondFourth.setArea(area);
+        secondThirdFourth.reset();
+        secondThirdFourth.add(s);
+        secondThirdFourth.intersect(t);
+        secondThirdFourth.intersect(r);
+        secondThirdFourth.subtract(f);
 
-        area.reset();
-        area.add(f);
-        area.intersect(t);
-        area.intersect(r);
-        area.subtract(s);
-        firstThirdFourth.setArea(area);
-
-        area.reset();
-        area.add(s);
-        area.intersect(t);
-        area.intersect(r);
-        area.subtract(f);
-        secondThirdFourth.setArea(area);
-
-        area.reset();
-        area.add(f);
-        area.intersect(s);
-        area.intersect(t);
-        area.intersect(r);
-        intersection.setArea(area);
+        intersection.reset();
+        intersection.add(f);
+        intersection.intersect(s);
+        intersection.intersect(t);
+        intersection.intersect(r);
 
         // offset to center now
-        offset(firstOnly.getArea(), firstOnlySize);
-        offset(secondOnly.getArea(), secondOnlySize);
-        offset(thirdOnly.getArea(), thirdOnlySize);
-        offset(fourthOnly.getArea(), fourthOnlySize);
-        offset(firstSecond.getArea(), firstSecondSize);
-        offset(firstThird.getArea(), firstThirdSize);
-        offset(secondThird.getArea(), secondThirdSize);
-        offset(firstFourth.getArea(), firstFourthSize);
-        offset(secondFourth.getArea(), secondFourthSize);
-        offset(thirdFourth.getArea(), thirdFourthSize);
-        offset(firstSecondThird.getArea(), firstSecondThirdSize);
-        offset(firstSecondFourth.getArea(), firstSecondFourthSize);
-        offset(firstThirdFourth.getArea(), firstThirdFourthSize);
-        offset(secondThirdFourth.getArea(), secondThirdFourthSize);
-        offset(intersection.getArea(), intersectionSize);
+        offset(firstOnly.getAreaReference(), firstOnlySize);
+        offset(secondOnly.getAreaReference(), secondOnlySize);
+        offset(thirdOnly.getAreaReference(), thirdOnlySize);
+        offset(fourthOnly.getAreaReference(), fourthOnlySize);
+        offset(firstSecond.getAreaReference(), firstSecondSize);
+        offset(firstThird.getAreaReference(), firstThirdSize);
+        offset(secondThird.getAreaReference(), secondThirdSize);
+        offset(firstFourth.getAreaReference(), firstFourthSize);
+        offset(secondFourth.getAreaReference(), secondFourthSize);
+        offset(thirdFourth.getAreaReference(), thirdFourthSize);
+        offset(firstSecondThird.getAreaReference(), firstSecondThirdSize);
+        offset(firstSecondFourth.getAreaReference(), firstSecondFourthSize);
+        offset(firstThirdFourth.getAreaReference(), firstThirdFourthSize);
+        offset(secondThirdFourth.getAreaReference(), secondThirdFourthSize);
+        offset(intersection.getAreaReference(), intersectionSize);
 
         // delay offset to centroids
-        EXECUTOR_SERVICE.submit(new LayoutWorker(firstOnly.getArea(), firstOnlySize));
-        EXECUTOR_SERVICE.submit(new LayoutWorker(secondOnly.getArea(), secondOnlySize));
-        EXECUTOR_SERVICE.submit(new LayoutWorker(thirdOnly.getArea(), thirdOnlySize));
-        EXECUTOR_SERVICE.submit(new LayoutWorker(fourthOnly.getArea(), fourthOnlySize));
-        EXECUTOR_SERVICE.submit(new LayoutWorker(firstSecond.getArea(), firstSecondSize));
-        EXECUTOR_SERVICE.submit(new LayoutWorker(firstThird.getArea(), firstThirdSize));
-        EXECUTOR_SERVICE.submit(new LayoutWorker(secondThird.getArea(), secondThirdSize));
-        EXECUTOR_SERVICE.submit(new LayoutWorker(firstFourth.getArea(), firstFourthSize));
-        EXECUTOR_SERVICE.submit(new LayoutWorker(secondFourth.getArea(), secondFourthSize));
-        EXECUTOR_SERVICE.submit(new LayoutWorker(thirdFourth.getArea(), thirdFourthSize));
-        EXECUTOR_SERVICE.submit(new LayoutWorker(firstSecondThird.getArea(), firstSecondThirdSize));
-        EXECUTOR_SERVICE.submit(new LayoutWorker(firstSecondFourth.getArea(), firstSecondFourthSize));
-        EXECUTOR_SERVICE.submit(new LayoutWorker(firstThirdFourth.getArea(), firstThirdFourthSize));
-        EXECUTOR_SERVICE.submit(new LayoutWorker(secondThirdFourth.getArea(), secondThirdFourthSize));
-        EXECUTOR_SERVICE.submit(new LayoutWorker(intersection.getArea(), intersectionSize));
+        EXECUTOR_SERVICE.submit(new LayoutWorker(firstOnly.getAreaReference(), firstOnlySize));
+        EXECUTOR_SERVICE.submit(new LayoutWorker(secondOnly.getAreaReference(), secondOnlySize));
+        EXECUTOR_SERVICE.submit(new LayoutWorker(thirdOnly.getAreaReference(), thirdOnlySize));
+        EXECUTOR_SERVICE.submit(new LayoutWorker(fourthOnly.getAreaReference(), fourthOnlySize));
+        EXECUTOR_SERVICE.submit(new LayoutWorker(firstSecond.getAreaReference(), firstSecondSize));
+        EXECUTOR_SERVICE.submit(new LayoutWorker(firstThird.getAreaReference(), firstThirdSize));
+        EXECUTOR_SERVICE.submit(new LayoutWorker(secondThird.getAreaReference(), secondThirdSize));
+        EXECUTOR_SERVICE.submit(new LayoutWorker(firstFourth.getAreaReference(), firstFourthSize));
+        EXECUTOR_SERVICE.submit(new LayoutWorker(secondFourth.getAreaReference(), secondFourthSize));
+        EXECUTOR_SERVICE.submit(new LayoutWorker(thirdFourth.getAreaReference(), thirdFourthSize));
+        EXECUTOR_SERVICE.submit(new LayoutWorker(firstSecondThird.getAreaReference(), firstSecondThirdSize));
+        EXECUTOR_SERVICE.submit(new LayoutWorker(firstSecondFourth.getAreaReference(), firstSecondFourthSize));
+        EXECUTOR_SERVICE.submit(new LayoutWorker(firstThirdFourth.getAreaReference(), firstThirdFourthSize));
+        EXECUTOR_SERVICE.submit(new LayoutWorker(secondThirdFourth.getAreaReference(), secondThirdFourthSize));
+        EXECUTOR_SERVICE.submit(new LayoutWorker(intersection.getAreaReference(), intersectionSize));
 
-        labelFarLeft(firstOnly.getArea(), secondOnly.getArea(), getFirstLabel());
-        labelLeft(secondOnly.getArea(), getSecondLabel());
-        labelRight(thirdOnly.getArea(), getThirdLabel());
-        labelFarRight(fourthOnly.getArea(), thirdOnly.getArea(), getFourthLabel());
+        labelFarLeft(firstOnly.getAreaReference(), secondOnly.getAreaReference(), getFirstLabel());
+        labelLeft(secondOnly.getAreaReference(), getSecondLabel());
+        labelRight(thirdOnly.getAreaReference(), getThirdLabel());
+        labelFarRight(fourthOnly.getAreaReference(), thirdOnly.getAreaReference(), getFourthLabel());
     }
 
     /**
@@ -588,27 +587,6 @@ public class QuaternaryVennNode<E>
 
     // todo:  allow getters for nodes, or alternatively getters/setters for paint, stroke, strokePaint
     //    allowing reference to first, second paths would allow clients to change the path/shape and offset
-
-    /**
-     * Area node.
-     */
-    private class AreaNode
-        extends PNode
-    {
-        /** Area for this area node. */
-        private Area area;
-
-        // todo:  implement this to allow for mouse-over, picking, etc.
-        private void setArea(final Area area)
-        {
-            this.area = (Area) area.clone();
-        }
-
-        private Area getArea()
-        {
-            return area;
-        }
-    }
 
     /**
      * Layout worker.
