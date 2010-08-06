@@ -25,8 +25,11 @@ package org.dishevelled.piccolo.venn;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Paint;
+import java.awt.Stroke;
 
 import java.awt.geom.Area;
+import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
@@ -34,6 +37,7 @@ import java.util.Set;
 
 import org.piccolo2d.PNode;
 
+import org.piccolo2d.nodes.PArea;
 import org.piccolo2d.nodes.PPath;
 import org.piccolo2d.nodes.PText;
 
@@ -50,52 +54,52 @@ public class TernaryVennNode<E>
     extends AbstractTernaryVennNode<E>
 {
     /** Path node for the first set. */
-    private final PPath first = new PPath();
+    private final PPath first = new PPath.Double(FIRST_SHAPE, STROKE);
 
     /** Area node for the first only view. */
-    private final AreaNode firstOnly = new AreaNode();
+    private final PArea firstOnly = new PArea();
 
     /** Label for the size of the first only view. */
     private final PText firstOnlySize = new PText();
 
     /** Path node for the second set. */
-    private final PPath second = new PPath();
+    private final PPath second = new PPath.Double(SECOND_SHAPE, STROKE);
 
     /** Area node for the second only view. */
-    private final AreaNode secondOnly = new AreaNode();
+    private final PArea secondOnly = new PArea();
 
     /** Label for the size of the second only view. */
     private final PText secondOnlySize = new PText();
 
     /** Path node for the third set. */
-    private final PPath third = new PPath();
+    private final PPath third = new PPath.Double(THIRD_SHAPE, STROKE);
 
     /** Area node for the third only view. */
-    private final AreaNode thirdOnly = new AreaNode();
+    private final PArea thirdOnly = new PArea();
 
     /** Label for the size of the third only view. */
     private final PText thirdOnlySize = new PText();
 
     /** Area node for the first second view. */
-    private final AreaNode firstSecond = new AreaNode();
+    private final PArea firstSecond = new PArea();
 
     /** Label for the size of the first second view. */
     private final PText firstSecondSize = new PText();
 
     /** Area node for the first third view. */
-    private final AreaNode firstThird = new AreaNode();
+    private final PArea firstThird = new PArea();
 
     /** Label for the size of the first third view. */
     private final PText firstThirdSize = new PText();
 
     /** Area node for the second third view. */
-    private final AreaNode secondThird = new AreaNode();
+    private final PArea secondThird = new PArea();
 
     /** Label for the size of the second third view. */
     private final PText secondThirdSize = new PText();
 
     /** Area node for the intersection view. */
-    private final AreaNode intersection = new AreaNode();
+    private final PArea intersection = new PArea();
 
     /** Label for the size of the intersection view. */
     private final PText intersectionSize = new PText();
@@ -108,9 +112,6 @@ public class TernaryVennNode<E>
 
     /** Cached area. */
     private Area t;
-
-    /** Cached area. */
-    private final Area area = new Area();
 
     /** Cached rectangle. */
     private Rectangle2D a = new Rectangle2D.Double();
@@ -126,6 +127,30 @@ public class TernaryVennNode<E>
 
     /** Adjust label gap, <code>10.0d</code>. */
     private static final double ADJUST_LABEL_GAP = 10.0d;
+
+    /** First shape. */
+    private static final Ellipse2D FIRST_SHAPE = new Ellipse2D.Double(0.0d, 0.0d, 128.0d, 128.0d);
+
+    /** First paint. */
+    private static final Paint FIRST_PAINT = new Color(30, 30, 30, 50);
+
+    /** Second shape. */
+    private static final Ellipse2D SECOND_SHAPE = new Ellipse2D.Double(((2.0d * 128.0d) / 3.0d), 0.0d, 128.0d, 128.0d);
+
+    /** Second paint. */
+    private static final Paint SECOND_PAINT = new Color(5, 37, 255, 50);
+
+    /** Third shape. */
+    private static final Ellipse2D THIRD_SHAPE = new Ellipse2D.Double(128.0d / 3.0d, (2.0d * 128.0d) / 3.0d, 128.0d, 128.0d);
+
+    /** Third paint. */
+    private static final Paint THIRD_PAINT = new Color(255, 100, 5, 50);
+
+    /** Stroke. */
+    private static final Stroke STROKE = new BasicStroke(0.5f);
+
+    /** Stroke paint. */
+    private static final Paint STROKE_PAINT = new Color(20, 20, 20);
 
 
     /**
@@ -175,18 +200,12 @@ public class TernaryVennNode<E>
      */
     private void initNodes()
     {
-        first.setPathToEllipse(0.0f, 0.0f, 128.0f, 128.0f);
-        first.setPaint(new Color(30, 30, 30, 50));
-        first.setStroke(new BasicStroke(0.5f));
-        first.setStrokePaint(new Color(20, 20, 20));
-        second.setPathToEllipse(((2.0f * 128.0f) / 3.0f), 0.0f, 128.0f, 128.0f);
-        second.setPaint(new Color(5, 37, 255, 50));
-        second.setStroke(new BasicStroke(0.5f));
-        second.setStrokePaint(new Color(20, 20, 20));
-        third.setPathToEllipse(128.0f / 3.0f, (2.0f * 128.0f) / 3.0f, 128.0f, 128.0f);
-        third.setPaint(new Color(255, 100, 5, 50));
-        third.setStroke(new BasicStroke(0.5f));
-        third.setStrokePaint(new Color(20, 20, 20));
+        first.setPaint(FIRST_PAINT);
+        first.setStrokePaint(STROKE_PAINT);
+        second.setPaint(SECOND_PAINT);
+        second.setStrokePaint(STROKE_PAINT);
+        third.setPaint(THIRD_PAINT);
+        third.setStrokePaint(STROKE_PAINT);
 
         addChild(first);
         addChild(second);
@@ -223,64 +242,56 @@ public class TernaryVennNode<E>
     /** {@inheritDoc} */
     protected void layoutChildren()
     {
-        //System.out.println("layoutChildren");
         f = new Area(first.getPathReference());
         s = new Area(second.getPathReference());
         t = new Area(third.getPathReference());
 
-        area.reset();
-        area.add(f);
-        area.subtract(s);
-        area.subtract(t);
-        firstOnly.setArea(area);
+        firstOnly.reset();
+        firstOnly.add(f);
+        firstOnly.subtract(s);
+        firstOnly.subtract(t);
 
-        area.reset();
-        area.add(s);
-        area.subtract(f);
-        area.subtract(t);
-        secondOnly.setArea(area);
+        secondOnly.reset();
+        secondOnly.add(s);
+        secondOnly.subtract(f);
+        secondOnly.subtract(t);
 
-        area.reset();
-        area.add(t);
-        area.subtract(f);
-        area.subtract(s);
-        thirdOnly.setArea(area);
+        thirdOnly.reset();
+        thirdOnly.add(t);
+        thirdOnly.subtract(f);
+        thirdOnly.subtract(s);
 
-        area.reset();
-        area.add(f);
-        area.intersect(s);
-        area.subtract(t);
-        firstSecond.setArea(area);
+        firstSecond.reset();
+        firstSecond.add(f);
+        firstSecond.intersect(s);
+        firstSecond.subtract(t);
 
-        area.reset();
-        area.add(f);
-        area.intersect(t);
-        area.subtract(s);
-        firstThird.setArea(area);
+        firstThird.reset();
+        firstThird.add(f);
+        firstThird.intersect(t);
+        firstThird.subtract(s);
 
-        area.reset();
-        area.add(s);
-        area.intersect(t);
-        area.subtract(f);
-        secondThird.setArea(area);
+        secondThird.reset();
+        secondThird.add(s);
+        secondThird.intersect(t);
+        secondThird.subtract(f);
 
-        area.reset();
-        area.add(f);
-        area.intersect(s);
-        area.intersect(t);
-        intersection.setArea(area);
+        intersection.reset();
+        intersection.add(f);
+        intersection.intersect(s);
+        intersection.intersect(t);
 
-        offset(firstOnly.getArea(), firstOnlySize);
-        offset(secondOnly.getArea(), secondOnlySize);
-        offset(thirdOnly.getArea(), thirdOnlySize);
-        offset(firstSecond.getArea(), firstSecondSize);
-        offset(firstThird.getArea(), firstThirdSize);
-        offset(secondThird.getArea(), secondThirdSize);
-        offset(intersection.getArea(), intersectionSize);
+        offset(firstOnly.getAreaReference(), firstOnlySize);
+        offset(secondOnly.getAreaReference(), secondOnlySize);
+        offset(thirdOnly.getAreaReference(), thirdOnlySize);
+        offset(firstSecond.getAreaReference(), firstSecondSize);
+        offset(firstThird.getAreaReference(), firstThirdSize);
+        offset(secondThird.getAreaReference(), secondThirdSize);
+        offset(intersection.getAreaReference(), intersectionSize);
 
-        labelLeft(firstOnly.getArea(), getFirstLabel());
-        labelRight(secondOnly.getArea(), getSecondLabel());
-        labelCenter(thirdOnly.getArea(), getThirdLabel());
+        labelLeft(firstOnly.getAreaReference(), getFirstLabel());
+        labelRight(secondOnly.getAreaReference(), getSecondLabel());
+        labelCenter(thirdOnly.getAreaReference(), getThirdLabel());
         adjustLabels(getFirstLabel(), getSecondLabel());
     }
 
@@ -359,26 +370,4 @@ public class TernaryVennNode<E>
 
     // todo:  allow getters for nodes, or alternatively getters/setters for paint, stroke, strokePaint
     //    allowing reference to first, second paths would allow clients to change the path/shape and offset
-
-
-    /**
-     * Area node.
-     */
-    private class AreaNode
-        extends PNode
-    {
-        /** Area for this area node. */
-        private Area area;
-
-        // todo:  implement this to allow for mouse-over, picking, etc.
-        private void setArea(final Area area)
-        {
-            this.area = (Area) area.clone();
-        }
-
-        private Area getArea()
-        {
-            return area;
-        }
-    }
 }
