@@ -53,7 +53,7 @@
         <configuration>
           <archive>
             <manifest>
-              <mainClass>org.dishevelled.piccolo.venn.examples.BinaryVennExample</mainClass>
+              <mainClass>org.dishevelled.piccolo.venn.examples.QuaternaryVennExample</mainClass>
             </manifest>
           </archive>
           <descriptorRefs>
