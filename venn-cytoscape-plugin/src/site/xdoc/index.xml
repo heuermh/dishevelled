@@ -50,7 +50,7 @@ logical grouping.  The diagram can be exported to an image file in PNG format.
 
 <p>
 The details view shows the nodes in each logical grouping.  The selection model
-of the details view synchronizes all of the list views in both directions (i.e.
+of the details view synchronizes the selection for all of the list views (i.e.
 selecting a node in any one list will select it in all lists) and exports the
 selection to the current Cytoscape network view (selecting a node in the details view
 will select it in the current Cytoscape network view, but not vice versa).
