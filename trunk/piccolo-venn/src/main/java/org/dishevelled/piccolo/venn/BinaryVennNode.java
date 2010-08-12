@@ -57,7 +57,7 @@ public class BinaryVennNode<E>
     private final PPath first = new PPath.Double(FIRST_SHAPE, STROKE);
 
     /** Area node for the first only view. */
-    private final PArea firstOnly = new PArea();
+    private final PArea firstOnly = new PArea(AREA_STROKE);
 
     /** Label for the size of the first only view. */
     private final PText firstOnlySize = new PText();
@@ -66,13 +66,13 @@ public class BinaryVennNode<E>
     private final PPath second = new PPath.Double(SECOND_SHAPE, STROKE);
 
     /** Area node for the second only view. */
-    private final PArea secondOnly = new PArea();
+    private final PArea secondOnly = new PArea(AREA_STROKE);
 
     /** Label for the size of the second only view. */
     private final PText secondOnlySize = new PText();
 
     /** Area node for the intersection view. */
-    private final PArea intersection = new PArea();
+    private final PArea intersection = new PArea(AREA_STROKE);
 
     /** Label for the size of the intersection view. */
     private final PText intersectionSize = new PText();
@@ -115,6 +115,12 @@ public class BinaryVennNode<E>
 
     /** Stroke paint. */
     private static final Paint STROKE_PAINT = new Color(20, 20, 20);
+
+    /** Area paint. */
+    private static final Paint AREA_PAINT = new Color(0, 0, 0, 0);
+
+    /** Area stroke. */
+    private static final Stroke AREA_STROKE = null;
 
 
     /**
@@ -165,14 +171,18 @@ public class BinaryVennNode<E>
         first.setStrokePaint(STROKE_PAINT);
         second.setPaint(SECOND_PAINT);
         second.setStrokePaint(STROKE_PAINT);
+        firstOnly.setPaint(AREA_PAINT);
+        secondOnly.setPaint(AREA_PAINT);
+        intersection.setPaint(AREA_PAINT);
 
         addChild(first);
         addChild(second);
+        addChild(firstOnly);
+        addChild(secondOnly);
         addChild(intersection);
         addChild(firstOnlySize);
         addChild(secondOnlySize);
         addChild(intersectionSize);
-        // todo:  use firstOnlyLabel and secondOnlyLabel as mouseovers?
         addChild(getFirstLabel());
         addChild(getSecondLabel());
     }
@@ -271,6 +281,53 @@ public class BinaryVennNode<E>
         }
     }
 
-    // todo:  allow getters for nodes, or alternatively getters/setters for paint, stroke, strokePaint
-    //    allowing reference to first, second paths would allow clients to change the path/shape and offset
+    /**
+     * Return the path node for the first set.
+     *
+     * @return the path node for the first set
+     */
+    public PPath getFirst()
+    {
+        return first;
+    }
+
+    /**
+     * Return the path node for the second set.
+     *
+     * @return the path node for the second set
+     */
+    public PPath getSecond()
+    {
+        return second;
+    }
+
+    /**
+     * Return the area node for the first only view.
+     *
+     * @return the area node for the first only view
+     */
+    public PArea getFirstOnly()
+    {
+        return firstOnly;
+    }
+
+    /**
+     * Return the area node for the second only view.
+     *
+     * @return the area node for the second only view
+     */
+    public PArea getSecondOnly()
+    {
+        return secondOnly;
+    }
+
+    /**
+     * Return the area node for the intersection view.
+     *
+     * @return the area node for the intersection view
+     */
+    public PArea getIntersection()
+    {
+        return intersection;
+    }
 }
