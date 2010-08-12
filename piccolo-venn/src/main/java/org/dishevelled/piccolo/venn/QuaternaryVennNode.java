@@ -63,7 +63,7 @@ public class QuaternaryVennNode<E>
     private final PPath first = new PPath.Double(STROKE);
 
     /** Area node for the first only view. */
-    private final PArea firstOnly = new PArea();
+    private final PArea firstOnly = new PArea(AREA_STROKE);
 
     /** Label for the size of the first only view. */
     private final PText firstOnlySize = new PText();
@@ -72,7 +72,7 @@ public class QuaternaryVennNode<E>
     private final PPath second = new PPath.Double(STROKE);
 
     /** Area node for the second only view. */
-    private final PArea secondOnly = new PArea();
+    private final PArea secondOnly = new PArea(AREA_STROKE);
 
     /** Label for the size of the second only view. */
     private final PText secondOnlySize = new PText();
@@ -81,7 +81,7 @@ public class QuaternaryVennNode<E>
     private final PPath third = new PPath.Double(STROKE);
 
     /** Area node for the third only view. */
-    private final PArea thirdOnly = new PArea();
+    private final PArea thirdOnly = new PArea(AREA_STROKE);
 
     /** Label for the size of the third only view. */
     private final PText thirdOnlySize = new PText();
@@ -90,73 +90,73 @@ public class QuaternaryVennNode<E>
     private final PPath fourth = new PPath.Double(STROKE);
 
     /** Area node for the fourth only view. */
-    private final PArea fourthOnly = new PArea();
+    private final PArea fourthOnly = new PArea(AREA_STROKE);
 
     /** Label for the size of the fourth only view. */
     private final PText fourthOnlySize = new PText();
 
     /** Area node for the first second view. */
-    private final PArea firstSecond = new PArea();
+    private final PArea firstSecond = new PArea(AREA_STROKE);
 
     /** Label for the size of the first second view. */
     private final PText firstSecondSize = new PText();
 
     /** Area node for the first third view. */
-    private final PArea firstThird = new PArea();
+    private final PArea firstThird = new PArea(AREA_STROKE);
 
     /** Label for the size of the first third view. */
     private final PText firstThirdSize = new PText();
 
     /** Area node for the second third view. */
-    private final PArea secondThird = new PArea();
+    private final PArea secondThird = new PArea(AREA_STROKE);
 
     /** Label for the size of the second third view. */
     private final PText secondThirdSize = new PText();
 
     /** Area node for the first fourth view. */
-    private final PArea firstFourth = new PArea();
+    private final PArea firstFourth = new PArea(AREA_STROKE);
 
     /** Label for the size of the first fourth view. */
     private final PText firstFourthSize = new PText();
 
     /** Area node for the second fourth view. */
-    private final PArea secondFourth = new PArea();
+    private final PArea secondFourth = new PArea(AREA_STROKE);
 
     /** Label for the size of the second fourth view. */
     private final PText secondFourthSize = new PText();
 
     /** Area node for the third fourth view. */
-    private final PArea thirdFourth = new PArea();
+    private final PArea thirdFourth = new PArea(AREA_STROKE);
 
     /** Label for the size of the third fourth view. */
     private final PText thirdFourthSize = new PText();
 
     /** Area node for the first second third view. */
-    private final PArea firstSecondThird = new PArea();
+    private final PArea firstSecondThird = new PArea(AREA_STROKE);
 
     /** Label for the size of the first second third view. */
     private final PText firstSecondThirdSize = new PText();
 
     /** Area node for the first second fourth view. */
-    private final PArea firstSecondFourth = new PArea();
+    private final PArea firstSecondFourth = new PArea(AREA_STROKE);
 
     /** Label for the size of the first second fourth view. */
     private final PText firstSecondFourthSize = new PText();
 
     /** Area node for the first third fourth view. */
-    private final PArea firstThirdFourth = new PArea();
+    private final PArea firstThirdFourth = new PArea(AREA_STROKE);
 
     /** Label for the size of the first third fourth view. */
     private final PText firstThirdFourthSize = new PText();
 
     /** Area node for the second third fourth view. */
-    private final PArea secondThirdFourth = new PArea();
+    private final PArea secondThirdFourth = new PArea(AREA_STROKE);
 
     /** Label for the size of the second third fourth view. */
     private final PText secondThirdFourthSize = new PText();
 
     /** Area node for the intersection view. */
-    private final PArea intersection = new PArea();
+    private final PArea intersection = new PArea(AREA_STROKE);
 
     /** Label for the size of the intersection view. */
     private final PText intersectionSize = new PText();
@@ -208,6 +208,12 @@ public class QuaternaryVennNode<E>
 
     /** Stroke paint. */
     private static final Paint STROKE_PAINT = new Color(20, 20, 20);
+
+    /** Area paint. */
+    private static final Paint AREA_PAINT = new Color(0, 0, 0, 0);
+
+    /** Area stroke. */
+    private static final Stroke AREA_STROKE = null;
 
 
     /**
@@ -304,10 +310,30 @@ public class QuaternaryVennNode<E>
         fourth.setPaint(FOURTH_PAINT);
         fourth.setStrokePaint(STROKE_PAINT);
 
+        firstOnly.setPaint(AREA_PAINT);
+        secondOnly.setPaint(AREA_PAINT);
+        thirdOnly.setPaint(AREA_PAINT);
+        fourthOnly.setPaint(AREA_PAINT);
+        firstSecond.setPaint(AREA_PAINT);
+        firstThird.setPaint(AREA_PAINT);
+        secondThird.setPaint(AREA_PAINT);
+        firstFourth.setPaint(AREA_PAINT);
+        secondFourth.setPaint(AREA_PAINT);
+        thirdFourth.setPaint(AREA_PAINT);
+        firstSecondThird.setPaint(AREA_PAINT);
+        firstSecondFourth.setPaint(AREA_PAINT);
+        firstThirdFourth.setPaint(AREA_PAINT);
+        secondThirdFourth.setPaint(AREA_PAINT);
+        intersection.setPaint(AREA_PAINT);
+
         addChild(first);
         addChild(second);
         addChild(third);
         addChild(fourth);
+        addChild(firstOnly);
+        addChild(secondOnly);
+        addChild(thirdOnly);
+        addChild(fourthOnly);
         addChild(firstSecond);
         addChild(firstThird);
         addChild(secondThird);
@@ -334,7 +360,6 @@ public class QuaternaryVennNode<E>
         addChild(firstThirdFourthSize);
         addChild(secondThirdFourthSize);
         addChild(intersectionSize);
-        // todo:  use firstOnlyLabel and secondOnlyLabel as mouseovers?
         addChild(getFirstLabel());
         addChild(getSecondLabel());
         addChild(getThirdLabel());
@@ -585,8 +610,195 @@ public class QuaternaryVennNode<E>
         label.setOffset(Math.max(right, farRight), y);
     }
 
-    // todo:  allow getters for nodes, or alternatively getters/setters for paint, stroke, strokePaint
-    //    allowing reference to first, second paths would allow clients to change the path/shape and offset
+    /**
+     * Return the path node for the first set.
+     *
+     * @return the path node for the first set
+     */
+    public PPath getFirst()
+    {
+        return first;
+    }
+
+    /**
+     * Return the path node for the second set.
+     *
+     * @return the path node for the second set
+     */
+    public PPath getSecond()
+    {
+        return second;
+    }
+
+    /**
+     * Return the path node for the third set.
+     *
+     * @return the path node for the third set
+     */
+    public PPath getThird()
+    {
+        return third;
+    }
+
+    /**
+     * Return the path node for the fourth set.
+     *
+     * @return the path node for the fourth set
+     */
+    public PPath getFourth()
+    {
+        return fourth;
+    }
+
+    /**
+     * Return the area node for the first only view.
+     *
+     * @return the area node for the first only view
+     */
+    public PArea getFirstOnly()
+    {
+        return firstOnly;
+    }
+
+    /**
+     * Return the area node for the second only view.
+     *
+     * @return the area node for the second only view
+     */
+    public PArea getSecondOnly()
+    {
+        return secondOnly;
+    }
+
+    /**
+     * Return the area node for the third only view.
+     *
+     * @return the area node for the third only view
+     */
+    public PArea getThirdOnly()
+    {
+        return thirdOnly;
+    }
+
+    /**
+     * Return the area node for the fourth only view.
+     *
+     * @return the area node for the fourth only view
+     */
+    public PArea getFourthOnly()
+    {
+        return fourthOnly;
+    }
+
+    /**
+     * Return the area node for the first second view.
+     *
+     * @return the area node for the first second view
+     */
+    public PArea getFirstSecond()
+    {
+        return firstSecond;
+    }
+
+    /**
+     * Return the area node for the first third view.
+     *
+     * @return the area node for the first third view
+     */
+    public PArea getFirstThird()
+    {
+        return firstThird;
+    }
+
+    /**
+     * Return the area node for the second third view.
+     *
+     * @return the area node for the second third view
+     */
+    public PArea getSecondThird()
+    {
+        return secondThird;
+    }
+
+    /**
+     * Return the area node for the first fourth view.
+     *
+     * @return the area node for the first fourth view
+     */
+    public PArea getFirstFourth()
+    {
+        return firstFourth;
+    }
+
+    /**
+     * Return the area node for the second fourth view.
+     *
+     * @return the area node for the second fourth view
+     */
+    public PArea getSecondFourth()
+    {
+        return secondFourth;
+    }
+
+    /**
+     * Return the area node for the third fourth view.
+     *
+     * @return the area node for the third fourth view
+     */
+    public PArea getThirdFourth()
+    {
+        return thirdFourth;
+    }
+
+    /**
+     * Return the area node for the first second third view.
+     *
+     * @return the area node for the first second third view
+     */
+    public PArea getFirstSecondThird()
+    {
+        return firstSecondThird;
+    }
+
+    /**
+     * Return the area node for the first second fourth view.
+     *
+     * @return the area node for the first second fourth view
+     */
+    public PArea getFirstSecondFourth()
+    {
+        return firstSecondFourth;
+    }
+
+    /**
+     * Return the area node for the first third fourth view.
+     *
+     * @return the area node for the first third fourth view
+     */
+    public PArea getFirstThirdFourth()
+    {
+        return firstThirdFourth;
+    }
+
+    /**
+     * Return the area node for the second third fourth view.
+     *
+     * @return the area node for the second third fourth view
+     */
+    public PArea getSecondThirdFourth()
+    {
+        return secondThirdFourth;
+    }
+
+    /**
+     * Return the area node for the intersection view.
+     *
+     * @return the area node for the intersection view
+     */
+    public PArea getIntersection()
+    {
+        return intersection;
+    }
 
     /**
      * Layout worker.

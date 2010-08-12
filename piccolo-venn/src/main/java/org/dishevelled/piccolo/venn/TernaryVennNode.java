@@ -57,7 +57,7 @@ public class TernaryVennNode<E>
     private final PPath first = new PPath.Double(FIRST_SHAPE, STROKE);
 
     /** Area node for the first only view. */
-    private final PArea firstOnly = new PArea();
+    private final PArea firstOnly = new PArea(AREA_STROKE);
 
     /** Label for the size of the first only view. */
     private final PText firstOnlySize = new PText();
@@ -66,7 +66,7 @@ public class TernaryVennNode<E>
     private final PPath second = new PPath.Double(SECOND_SHAPE, STROKE);
 
     /** Area node for the second only view. */
-    private final PArea secondOnly = new PArea();
+    private final PArea secondOnly = new PArea(AREA_STROKE);
 
     /** Label for the size of the second only view. */
     private final PText secondOnlySize = new PText();
@@ -75,31 +75,31 @@ public class TernaryVennNode<E>
     private final PPath third = new PPath.Double(THIRD_SHAPE, STROKE);
 
     /** Area node for the third only view. */
-    private final PArea thirdOnly = new PArea();
+    private final PArea thirdOnly = new PArea(AREA_STROKE);
 
     /** Label for the size of the third only view. */
     private final PText thirdOnlySize = new PText();
 
     /** Area node for the first second view. */
-    private final PArea firstSecond = new PArea();
+    private final PArea firstSecond = new PArea(AREA_STROKE);
 
     /** Label for the size of the first second view. */
     private final PText firstSecondSize = new PText();
 
     /** Area node for the first third view. */
-    private final PArea firstThird = new PArea();
+    private final PArea firstThird = new PArea(AREA_STROKE);
 
     /** Label for the size of the first third view. */
     private final PText firstThirdSize = new PText();
 
     /** Area node for the second third view. */
-    private final PArea secondThird = new PArea();
+    private final PArea secondThird = new PArea(AREA_STROKE);
 
     /** Label for the size of the second third view. */
     private final PText secondThirdSize = new PText();
 
     /** Area node for the intersection view. */
-    private final PArea intersection = new PArea();
+    private final PArea intersection = new PArea(AREA_STROKE);
 
     /** Label for the size of the intersection view. */
     private final PText intersectionSize = new PText();
@@ -151,6 +151,12 @@ public class TernaryVennNode<E>
 
     /** Stroke paint. */
     private static final Paint STROKE_PAINT = new Color(20, 20, 20);
+
+    /** Area paint. */
+    private static final Paint AREA_PAINT = new Color(0, 0, 0, 0);
+
+    /** Area stroke. */
+    private static final Stroke AREA_STROKE = null;
 
 
     /**
@@ -206,10 +212,20 @@ public class TernaryVennNode<E>
         second.setStrokePaint(STROKE_PAINT);
         third.setPaint(THIRD_PAINT);
         third.setStrokePaint(STROKE_PAINT);
+        firstOnly.setPaint(AREA_PAINT);
+        secondOnly.setPaint(AREA_PAINT);
+        thirdOnly.setPaint(AREA_PAINT);
+        firstSecond.setPaint(AREA_PAINT);
+        firstThird.setPaint(AREA_PAINT);
+        secondThird.setPaint(AREA_PAINT);
+        intersection.setPaint(AREA_PAINT);
 
         addChild(first);
         addChild(second);
         addChild(third);
+        addChild(firstOnly);
+        addChild(secondOnly);
+        addChild(thirdOnly);
         addChild(firstSecond);
         addChild(firstThird);
         addChild(secondThird);
@@ -221,7 +237,6 @@ public class TernaryVennNode<E>
         addChild(firstThirdSize);
         addChild(secondThirdSize);
         addChild(intersectionSize);
-        // todo:  use firstOnlyLabel and secondOnlyLabel as mouseovers?
         addChild(getFirstLabel());
         addChild(getSecondLabel());
         addChild(getThirdLabel());
@@ -368,6 +383,103 @@ public class TernaryVennNode<E>
         }
     }
 
-    // todo:  allow getters for nodes, or alternatively getters/setters for paint, stroke, strokePaint
-    //    allowing reference to first, second paths would allow clients to change the path/shape and offset
+    /**
+     * Return the path node for the first set.
+     *
+     * @return the path node for the first set
+     */
+    public PPath getFirst()
+    {
+        return first;
+    }
+
+    /**
+     * Return the path node for the second set.
+     *
+     * @return the path node for the second set
+     */
+    public PPath getSecond()
+    {
+        return second;
+    }
+
+    /**
+     * Return the path node for the third set.
+     *
+     * @return the path node for the third set
+     */
+    public PPath getThird()
+    {
+        return third;
+    }
+
+    /**
+     * Return the area node for the first only view.
+     *
+     * @return the area node for the first only view
+     */
+    public PArea getFirstOnly()
+    {
+        return firstOnly;
+    }
+
+    /**
+     * Return the area node for the second only view.
+     *
+     * @return the area node for the second only view
+     */
+    public PArea getSecondOnly()
+    {
+        return secondOnly;
+    }
+
+    /**
+     * Return the area node for the third only view.
+     *
+     * @return the area node for the third only view
+     */
+    public PArea getThirdOnly()
+    {
+        return thirdOnly;
+    }
+
+    /**
+     * Return the area node for the first second view.
+     *
+     * @return the area node for the first second view
+     */
+    public PArea getFirstSecond()
+    {
+        return firstSecond;
+    }
+
+    /**
+     * Return the area node for the first third view.
+     *
+     * @return the area node for the first third view
+     */
+    public PArea getFirstThird()
+    {
+        return firstThird;
+    }
+
+    /**
+     * Return the area node for the second third view.
+     *
+     * @return the area node for the second third view
+     */
+    public PArea getSecondThird()
+    {
+        return secondThird;
+    }
+
+    /**
+     * Return the area node for the intersection view.
+     *
+     * @return the area node for the intersection view
+     */
+    public PArea getIntersection()
+    {
+        return intersection;
+    }
 }
