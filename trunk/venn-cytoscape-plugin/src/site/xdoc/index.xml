@@ -44,8 +44,10 @@ Cytoscape groups at a time.
 </p>
 
 <p>
-The diagram view is a static venn diagram showing the number of nodes in each
-logical grouping.  The diagram can be exported to an image file in PNG format.
+The diagram view is an interactive venn diagram showing the number of nodes in each
+logical grouping.  Clicking on any area in the diagram selects the corresponding
+nodes in the current Cytoscape network view.  The diagram can be exported to an
+image file in PNG format.
 </p>
 
 <p>
