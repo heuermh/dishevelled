@@ -177,12 +177,12 @@ public class BinaryVennNode<E>
 
         addChild(first);
         addChild(second);
-        addChild(firstOnly);
-        addChild(secondOnly);
-        addChild(intersection);
         addChild(firstOnlySize);
         addChild(secondOnlySize);
         addChild(intersectionSize);
+        addChild(firstOnly);
+        addChild(secondOnly);
+        addChild(intersection);
         addChild(getFirstLabel());
         addChild(getSecondLabel());
     }

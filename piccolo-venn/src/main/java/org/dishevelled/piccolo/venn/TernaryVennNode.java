@@ -223,13 +223,6 @@ public class TernaryVennNode<E>
         addChild(first);
         addChild(second);
         addChild(third);
-        addChild(firstOnly);
-        addChild(secondOnly);
-        addChild(thirdOnly);
-        addChild(firstSecond);
-        addChild(firstThird);
-        addChild(secondThird);
-        addChild(intersection);
         addChild(firstOnlySize);
         addChild(secondOnlySize);
         addChild(thirdOnlySize);
@@ -237,6 +230,13 @@ public class TernaryVennNode<E>
         addChild(firstThirdSize);
         addChild(secondThirdSize);
         addChild(intersectionSize);
+        addChild(firstOnly);
+        addChild(secondOnly);
+        addChild(thirdOnly);
+        addChild(firstSecond);
+        addChild(firstThird);
+        addChild(secondThird);
+        addChild(intersection);
         addChild(getFirstLabel());
         addChild(getSecondLabel());
         addChild(getThirdLabel());
