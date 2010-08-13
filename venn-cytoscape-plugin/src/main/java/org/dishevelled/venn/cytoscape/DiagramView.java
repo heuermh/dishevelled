@@ -25,12 +25,17 @@ package org.dishevelled.venn.cytoscape;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dialog;
 import java.awt.FileDialog;
 import java.awt.Image;
 import java.awt.Paint;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
+
+import java.awt.geom.Point2D;
 
 import java.awt.image.RenderedImage;
 
@@ -53,12 +58,11 @@ import cytoscape.CyNode;
 import cytoscape.CyNetwork;
 import cytoscape.Cytoscape;
 
-import cytoscape.logger.CyLogger;
-
 import org.dishevelled.piccolo.venn.BinaryVennNode;
 import org.dishevelled.piccolo.venn.TernaryVennNode;
 import org.dishevelled.piccolo.venn.QuaternaryVennNode;
 
+import org.piccolo2d.PCamera;
 import org.piccolo2d.PCanvas;
 import org.piccolo2d.PNode;
 
@@ -66,6 +70,8 @@ import org.piccolo2d.nodes.PText;
 
 import org.piccolo2d.event.PBasicInputEventHandler;
 import org.piccolo2d.event.PInputEvent;
+import org.piccolo2d.event.PInputEventFilter;
+import org.piccolo2d.event.PPanEventHandler;
 
 import org.piccolo2d.util.PPaintContext;
 import org.piccolo2d.util.PPickPath;
@@ -92,14 +98,13 @@ final class DiagramView
             }
         };
 
-    /** Logger. */
-    private static final CyLogger LOGGER = CyLogger.getLogger(DiagramView.class);
-
     /** Area color. */
     private static final Color AREA_COLOR = new Color(0, 0, 0, 0);
 
     /** Area pressed paint. */
     private static final Paint AREA_PRESSED_PAINT = new Color(20, 20, 20, 80);
+
+    private PText status;
 
 
     /**
@@ -113,10 +118,16 @@ final class DiagramView
         canvas.setInteractingRenderQuality(PPaintContext.HIGH_QUALITY_RENDERING);
         canvas.removeInputEventListener(canvas.getPanEventHandler());
         canvas.removeInputEventListener(canvas.getZoomEventHandler());
+        canvas.addInputEventListener(new PanEventHandler());
+        canvas.addInputEventListener(new ZoomEventHandler());
 
         JPopupMenu contextMenu = new JPopupMenu();
         contextMenu.add(exportToPNG);
-        canvas.addMouseListener(new ContextMenuListener(contextMenu));
+        //canvas.addMouseListener(new ContextMenuListener(contextMenu));
+
+        status = new PText("Status");
+        status.offset(20.0d, 20.0d);
+        canvas.getLayer().addChild(status);
 
         setLayout(new BorderLayout());
         add("Center", canvas);
@@ -456,64 +467,6 @@ final class DiagramView
     }
 
     /**
-     * Tool tip text listener.
-     */
-    private class ToolTipTextListener
-        extends PBasicInputEventHandler
-    {
-
-        /** {@inheritDoc} */
-        public void mouseEntered(final PInputEvent event)
-        {
-            PCanvas canvas = (PCanvas) event.getComponent();
-            canvas.setToolTipText(getLabelTextForPickedNode(event.getPath()));
-        }
-
-        /** {@inheritDoc} */
-        public void mouseExited(final PInputEvent event)
-        {
-            PCanvas canvas = (PCanvas) event.getComponent();
-            canvas.setToolTipText(null);
-        }
-    }
-
-
-    /**
-     * Mouse pressed listener.
-     */
-    private class MousePressedListener
-        extends PBasicInputEventHandler
-    {
-        /** Last color. */
-        private Color lastColor;
-
-
-        /** {@inheritDoc} */
-        public void mousePressed(final PInputEvent event)
-        {
-            PNode pickedNode = event.getPickedNode();
-            lastColor = (Color) pickedNode.getPaint();
-            pickedNode.setPaint(AREA_PRESSED_PAINT);
-
-            Set<CyNode> selection = getViewForPickedNode(event.getPath());
-            if (selection != null)
-            {
-                CyNetwork currentNetwork = Cytoscape.getCurrentNetwork();
-                currentNetwork.unselectAllNodes();
-                currentNetwork.setSelectedNodeState(selection, true);
-                Cytoscape.getCurrentNetworkView().updateView();
-            }
-        }
-
-        /** {@inheritDoc} */
-        public void mouseReleased(final PInputEvent event)
-        {
-            PNode pickedNode = event.getPickedNode();
-            pickedNode.animateToColor(AREA_COLOR, 250L);
-        }
-    }
-
-    /**
      * Export to PNG.
      */
     private void exportToPNG()
@@ -536,6 +489,191 @@ final class DiagramView
             {
                 // ignore
             }
+        }
+    }
+
+    /**
+     * Tool tip text listener.
+     */
+    private class ToolTipTextListener
+        extends PBasicInputEventHandler
+    {
+
+        /**
+         * Create a new tool tip text listener.
+         */
+        ToolTipTextListener()
+        {
+            super();
+            PInputEventFilter eventFilter = new PInputEventFilter();
+            eventFilter.rejectAllEventTypes();
+            eventFilter.setAcceptsMouseEntered(true);
+            eventFilter.setAcceptsMouseExited(true);
+            setEventFilter(eventFilter);
+        }
+
+        /** {@inheritDoc} */
+        public void mouseEntered(final PInputEvent event)
+        {
+            PCanvas canvas = (PCanvas) event.getComponent();
+            canvas.setToolTipText(getLabelTextForPickedNode(event.getPath()));
+        }
+
+        /** {@inheritDoc} */
+        public void mouseExited(final PInputEvent event)
+        {
+            PCanvas canvas = (PCanvas) event.getComponent();
+            canvas.setToolTipText(null);
+        }
+    }
+
+    /**
+     * Mouse pressed listener.
+     */
+    private class MousePressedListener
+        extends PBasicInputEventHandler
+    {
+        /** Last color. */
+        private Color lastColor;
+
+
+        /**
+         * Create a new mouse pressed listener.
+         */
+        MousePressedListener()
+        {
+            super();
+            PInputEventFilter eventFilter = new PInputEventFilter();
+            eventFilter.rejectAllEventTypes();
+            eventFilter.setAcceptsMousePressed(true);
+            eventFilter.setAcceptsMouseReleased(true);
+            setEventFilter(eventFilter);
+        }
+
+
+        /** {@inheritDoc} */
+        public void mousePressed(final PInputEvent event)
+        {
+            // @todo  mouse presses hide labels occasionally
+            if (!event.isLeftMouseButton())
+            {
+                return;
+            }
+            status.setText("mousePressed");
+            PNode pickedNode = event.getPickedNode();
+            lastColor = (Color) pickedNode.getPaint();
+            pickedNode.setPaint(AREA_PRESSED_PAINT);
+
+            Set<CyNode> selection = getViewForPickedNode(event.getPath());
+            if (selection != null)
+            {
+                CyNetwork currentNetwork = Cytoscape.getCurrentNetwork();
+                currentNetwork.unselectAllNodes();
+                currentNetwork.setSelectedNodeState(selection, true);
+                Cytoscape.getCurrentNetworkView().updateView();
+            }
+        }
+
+        /** {@inheritDoc} */
+        public void mouseReleased(final PInputEvent event)
+        {
+            if (!event.isLeftMouseButton())
+            {
+                return;
+            }
+            status.setText("mouseReleased");
+            PNode pickedNode = event.getPickedNode();
+            pickedNode.animateToColor(AREA_COLOR, 250L);
+        }
+    }
+
+    /**
+     * Pan event handler.
+     */
+    // @todo  canvas never receives keyboard focus
+    private class PanEventHandler
+    //        extends PPanEventHandler
+        extends PBasicInputEventHandler
+    {
+        /** True if the space bar is down. */
+        private boolean spaceDown = false;
+
+
+        /**
+         * Create a new pan event handler.
+         */
+        PanEventHandler()
+        {
+            super();
+            setEventFilter(new PInputEventFilter());
+            /*
+            setEventFilter(new PInputEventFilter()
+                {
+                    public boolean acceptsEvent(final PInputEvent event, final int type)
+                    {
+                        return (event.isMouseEvent() && spaceDown) || event.isKeyEvent();
+                    }
+                });
+            */
+        }
+
+
+        /** {@inheritDoc} */
+        public void keyPressed(final PInputEvent event)
+        {
+            status.setText("keyPressed " + event.getKeyCode());
+            if (KeyEvent.VK_SPACE == event.getKeyCode())
+            {
+                spaceDown = true;
+                status.setText("keyPressed spaceDown " + spaceDown);
+                ((PCanvas) event.getComponent()).setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            }
+        }
+
+        /** {@inheritDoc} */
+        public void keyReleased(final PInputEvent event)
+        {
+            status.setText("keyReleased " + event.getKeyCode());
+            if (KeyEvent.VK_SPACE == event.getKeyCode())
+            {
+                spaceDown = false;                
+                status.setText("keyReleased spaceDown " + spaceDown);
+                ((PCanvas) event.getComponent()).setCursor(Cursor.getDefaultCursor());
+            }
+        }
+    }
+
+    /**
+     * Zoom event handler.
+     */
+    private class ZoomEventHandler
+        extends PBasicInputEventHandler
+    {
+        /** Scale factor. */
+        private static final double SCALE_FACTOR = 0.1d;
+
+
+        /**
+         * Create a new zoom event handler.
+         */
+        ZoomEventHandler()
+        {
+            super();
+            PInputEventFilter eventFilter = new PInputEventFilter();
+            eventFilter.rejectAllEventTypes();
+            eventFilter.setAcceptsMouseWheelRotated(true);
+            setEventFilter(eventFilter);
+        }
+
+
+        /** {@inheritDoc} */
+        public void mouseWheelRotated(final PInputEvent event)
+        {
+            status.setText("mouseWheelRotated " + event.getWheelRotation());
+            PCamera camera = event.getCamera();
+            double scale = 1.0d + event.getWheelRotation() * SCALE_FACTOR;
+            Point2D center = camera.getBoundsReference().getCenter2D();
+            camera.scaleViewAboutPoint(scale, center.getX(), center.getY());
         }
     }
 }
