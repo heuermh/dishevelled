@@ -137,13 +137,6 @@ final class DiagramView
         binaryVennNode.getSecondOnly().addInputEventListener(new MousePressedListener());
         binaryVennNode.getIntersection().addInputEventListener(new ToolTipTextListener());
         binaryVennNode.getIntersection().addInputEventListener(new MousePressedListener());
-
-        binaryVennNode.getFirstOnlyLabel().addInputEventListener(new ToolTipTextListener());
-        binaryVennNode.getFirstOnlyLabel().addInputEventListener(new MousePressedListener());
-        binaryVennNode.getSecondOnlyLabel().addInputEventListener(new ToolTipTextListener());
-        binaryVennNode.getSecondOnlyLabel().addInputEventListener(new MousePressedListener());
-        binaryVennNode.getIntersectionLabel().addInputEventListener(new ToolTipTextListener());
-        binaryVennNode.getIntersectionLabel().addInputEventListener(new MousePressedListener());
         canvas.getLayer().addChild(binaryVennNode);
     }
 
@@ -170,21 +163,6 @@ final class DiagramView
         ternaryVennNode.getSecondThird().addInputEventListener(new MousePressedListener());
         ternaryVennNode.getIntersection().addInputEventListener(new ToolTipTextListener());
         ternaryVennNode.getIntersection().addInputEventListener(new MousePressedListener());
-
-        ternaryVennNode.getFirstOnlyLabel().addInputEventListener(new ToolTipTextListener());
-        ternaryVennNode.getFirstOnlyLabel().addInputEventListener(new MousePressedListener());
-        ternaryVennNode.getSecondOnlyLabel().addInputEventListener(new ToolTipTextListener());
-        ternaryVennNode.getSecondOnlyLabel().addInputEventListener(new MousePressedListener());
-        ternaryVennNode.getThirdOnlyLabel().addInputEventListener(new ToolTipTextListener());
-        ternaryVennNode.getThirdOnlyLabel().addInputEventListener(new MousePressedListener());
-        ternaryVennNode.getFirstSecondLabel().addInputEventListener(new ToolTipTextListener());
-        ternaryVennNode.getFirstSecondLabel().addInputEventListener(new MousePressedListener());
-        ternaryVennNode.getFirstThirdLabel().addInputEventListener(new ToolTipTextListener());
-        ternaryVennNode.getFirstThirdLabel().addInputEventListener(new MousePressedListener());
-        ternaryVennNode.getSecondThirdLabel().addInputEventListener(new ToolTipTextListener());
-        ternaryVennNode.getSecondThirdLabel().addInputEventListener(new MousePressedListener());
-        ternaryVennNode.getIntersectionLabel().addInputEventListener(new ToolTipTextListener());
-        ternaryVennNode.getIntersectionLabel().addInputEventListener(new MousePressedListener());
         canvas.getLayer().addChild(ternaryVennNode);
     }
 
@@ -227,37 +205,6 @@ final class DiagramView
         quaternaryVennNode.getSecondThirdFourth().addInputEventListener(new MousePressedListener());
         quaternaryVennNode.getIntersection().addInputEventListener(new ToolTipTextListener());
         quaternaryVennNode.getIntersection().addInputEventListener(new MousePressedListener());
-
-        quaternaryVennNode.getFirstOnlyLabel().addInputEventListener(new ToolTipTextListener());
-        quaternaryVennNode.getFirstOnlyLabel().addInputEventListener(new MousePressedListener());
-        quaternaryVennNode.getSecondOnlyLabel().addInputEventListener(new ToolTipTextListener());
-        quaternaryVennNode.getSecondOnlyLabel().addInputEventListener(new MousePressedListener());
-        quaternaryVennNode.getThirdOnlyLabel().addInputEventListener(new ToolTipTextListener());
-        quaternaryVennNode.getThirdOnlyLabel().addInputEventListener(new MousePressedListener());
-        quaternaryVennNode.getFourthOnlyLabel().addInputEventListener(new ToolTipTextListener());
-        quaternaryVennNode.getFourthOnlyLabel().addInputEventListener(new MousePressedListener());
-        quaternaryVennNode.getFirstSecondLabel().addInputEventListener(new ToolTipTextListener());
-        quaternaryVennNode.getFirstSecondLabel().addInputEventListener(new MousePressedListener());
-        quaternaryVennNode.getFirstThirdLabel().addInputEventListener(new ToolTipTextListener());
-        quaternaryVennNode.getFirstThirdLabel().addInputEventListener(new MousePressedListener());
-        quaternaryVennNode.getSecondThirdLabel().addInputEventListener(new ToolTipTextListener());
-        quaternaryVennNode.getSecondThirdLabel().addInputEventListener(new MousePressedListener());
-        quaternaryVennNode.getFirstFourthLabel().addInputEventListener(new ToolTipTextListener());
-        quaternaryVennNode.getFirstFourthLabel().addInputEventListener(new MousePressedListener());
-        quaternaryVennNode.getSecondFourthLabel().addInputEventListener(new ToolTipTextListener());
-        quaternaryVennNode.getSecondFourthLabel().addInputEventListener(new MousePressedListener());
-        quaternaryVennNode.getThirdFourthLabel().addInputEventListener(new ToolTipTextListener());
-        quaternaryVennNode.getThirdFourthLabel().addInputEventListener(new MousePressedListener());
-        quaternaryVennNode.getFirstSecondThirdLabel().addInputEventListener(new ToolTipTextListener());
-        quaternaryVennNode.getFirstSecondThirdLabel().addInputEventListener(new MousePressedListener());
-        quaternaryVennNode.getFirstSecondFourthLabel().addInputEventListener(new ToolTipTextListener());
-        quaternaryVennNode.getFirstSecondFourthLabel().addInputEventListener(new MousePressedListener());
-        quaternaryVennNode.getFirstThirdFourthLabel().addInputEventListener(new ToolTipTextListener());
-        quaternaryVennNode.getFirstThirdFourthLabel().addInputEventListener(new MousePressedListener());
-        quaternaryVennNode.getSecondThirdFourthLabel().addInputEventListener(new ToolTipTextListener());
-        quaternaryVennNode.getSecondThirdFourthLabel().addInputEventListener(new MousePressedListener());
-        quaternaryVennNode.getIntersectionLabel().addInputEventListener(new ToolTipTextListener());
-        quaternaryVennNode.getIntersectionLabel().addInputEventListener(new MousePressedListener());
         canvas.getLayer().addChild(quaternaryVennNode);
     }
 
@@ -266,11 +213,6 @@ final class DiagramView
     private String getLabelTextForPickedNode(final PPickPath path)
     {
         PNode pickedNode = path.getPickedNode();
-        if (pickedNode instanceof PText)
-        {
-            LOGGER.info("labelText pickedNode was " + pickedNode + ", next picked node is " + path.nextPickedNode());
-            pickedNode = path.nextPickedNode();
-        }
         for (Iterator i = path.getNodeStackReference().iterator(); i.hasNext(); )
         {
             PNode node = (PNode) i.next();
@@ -308,6 +250,10 @@ final class DiagramView
                 else if (ternaryVennNode.getFirstSecond().equals(pickedNode))
                 {
                     return ternaryVennNode.getFirstSecondLabelText();
+                }
+                else if (ternaryVennNode.getFirstThird().equals(pickedNode))
+                {
+                    return ternaryVennNode.getFirstThirdLabelText();
                 }
                 else if (ternaryVennNode.getSecondThird().equals(pickedNode))
                 {
@@ -390,11 +336,6 @@ final class DiagramView
     private Set<CyNode> getViewForPickedNode(final PPickPath path)
     {
         PNode pickedNode = path.getPickedNode();
-        if (pickedNode instanceof PText)
-        {
-            LOGGER.info("view pickedNode was " + pickedNode + ", next picked node is " + path.nextPickedNode());
-            pickedNode = path.nextPickedNode();
-        }
         for (Iterator i = path.getNodeStackReference().iterator(); i.hasNext(); )
         {
             PNode node = (PNode) i.next();
@@ -432,6 +373,10 @@ final class DiagramView
                 else if (ternaryVennNode.getFirstSecond().equals(pickedNode))
                 {
                     return ternaryVennNode.getModel().firstSecond();
+                }
+                else if (ternaryVennNode.getFirstThird().equals(pickedNode))
+                {
+                    return ternaryVennNode.getModel().firstThird();
                 }
                 else if (ternaryVennNode.getSecondThird().equals(pickedNode))
                 {
@@ -547,11 +492,6 @@ final class DiagramView
         public void mousePressed(final PInputEvent event)
         {
             PNode pickedNode = event.getPickedNode();
-            if (pickedNode instanceof PText)
-            {
-                LOGGER.info("color pressed pickedNode was " + pickedNode + ", next picked node is " + event.getPath().nextPickedNode());
-                pickedNode = event.getPath().nextPickedNode();
-            }
             lastColor = (Color) pickedNode.getPaint();
             pickedNode.setPaint(AREA_PRESSED_PAINT);
 
@@ -569,11 +509,6 @@ final class DiagramView
         public void mouseReleased(final PInputEvent event)
         {
             PNode pickedNode = event.getPickedNode();
-            if (pickedNode instanceof PText)
-            {
-                LOGGER.info("color released pickedNode was " + pickedNode + ", next picked node is " + event.getPath().nextPickedNode());
-                pickedNode = event.getPath().nextPickedNode();
-            }
             pickedNode.animateToColor(AREA_COLOR, 250L);
         }
     }
