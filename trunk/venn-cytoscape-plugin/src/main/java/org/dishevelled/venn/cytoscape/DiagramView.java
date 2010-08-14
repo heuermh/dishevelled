@@ -33,6 +33,7 @@ import java.awt.Paint;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.InputEvent;
+import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 import java.awt.geom.Point2D;
@@ -104,7 +105,12 @@ final class DiagramView
     /** Area pressed paint. */
     private static final Paint AREA_PRESSED_PAINT = new Color(20, 20, 20, 80);
 
-    private PText status;
+    /** Mode. */
+    private Mode mode = Mode.EDIT;
+
+    private enum Mode { EDIT, PAN };
+
+    //private PText status;
 
 
     /**
@@ -118,16 +124,17 @@ final class DiagramView
         canvas.setInteractingRenderQuality(PPaintContext.HIGH_QUALITY_RENDERING);
         canvas.removeInputEventListener(canvas.getPanEventHandler());
         canvas.removeInputEventListener(canvas.getZoomEventHandler());
+        canvas.addKeyListener(new ModeEventHandler());
         canvas.addInputEventListener(new PanEventHandler());
         canvas.addInputEventListener(new ZoomEventHandler());
 
         JPopupMenu contextMenu = new JPopupMenu();
         contextMenu.add(exportToPNG);
-        //canvas.addMouseListener(new ContextMenuListener(contextMenu));
+        canvas.addMouseListener(new ContextMenuListener(contextMenu));
 
-        status = new PText("Status");
-        status.offset(20.0d, 20.0d);
-        canvas.getLayer().addChild(status);
+        //status = new PText("Status");
+        //status.offset(20.0d, 20.0d);
+        //canvas.getLayer().addChild(status);
 
         setLayout(new BorderLayout());
         add("Center", canvas);
@@ -547,6 +554,7 @@ final class DiagramView
             eventFilter.rejectAllEventTypes();
             eventFilter.setAcceptsMousePressed(true);
             eventFilter.setAcceptsMouseReleased(true);
+            eventFilter.setAndMask(InputEvent.BUTTON1_MASK);
             setEventFilter(eventFilter);
         }
 
@@ -555,11 +563,7 @@ final class DiagramView
         public void mousePressed(final PInputEvent event)
         {
             // @todo  mouse presses hide labels occasionally
-            if (!event.isLeftMouseButton())
-            {
-                return;
-            }
-            status.setText("mousePressed");
+            //status.setText("mousePressed");
             PNode pickedNode = event.getPickedNode();
             lastColor = (Color) pickedNode.getPaint();
             pickedNode.setPaint(AREA_PRESSED_PAINT);
@@ -577,27 +581,50 @@ final class DiagramView
         /** {@inheritDoc} */
         public void mouseReleased(final PInputEvent event)
         {
-            if (!event.isLeftMouseButton())
-            {
-                return;
-            }
-            status.setText("mouseReleased");
+            //status.setText("mouseReleased");
             PNode pickedNode = event.getPickedNode();
             pickedNode.animateToColor(AREA_COLOR, 250L);
         }
     }
 
     /**
+     * Mode event listener.
+     */
+    private class ModeEventHandler
+        extends KeyAdapter
+    {
+
+        /** {@inheritDoc} */
+        public void keyPressed(final KeyEvent event)
+        {
+            //status.setText("keyPressed " + event.getKeyCode());
+            if (KeyEvent.VK_SPACE == event.getKeyCode())
+            {
+                mode = Mode.PAN;
+                //status.setText("keyPressed spaceDown " + mode);
+                ((PCanvas) event.getComponent()).setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            }
+        }
+
+        /** {@inheritDoc} */
+        public void keyReleased(final KeyEvent event)
+        {
+            //status.setText("keyReleased " + event.getKeyCode());
+            if (KeyEvent.VK_SPACE == event.getKeyCode())
+            {
+                mode = Mode.EDIT;
+                //status.setText("keyReleased spaceDown " + mode);
+                ((PCanvas) event.getComponent()).setCursor(Cursor.getDefaultCursor());
+            }
+        }
+    }
+
+    /**
      * Pan event handler.
      */
-    // @todo  canvas never receives keyboard focus
     private class PanEventHandler
-    //        extends PPanEventHandler
-        extends PBasicInputEventHandler
+            extends PPanEventHandler
     {
-        /** True if the space bar is down. */
-        private boolean spaceDown = false;
-
 
         /**
          * Create a new pan event handler.
@@ -605,41 +632,13 @@ final class DiagramView
         PanEventHandler()
         {
             super();
-            setEventFilter(new PInputEventFilter());
-            /*
-            setEventFilter(new PInputEventFilter()
+            setEventFilter(new PInputEventFilter(InputEvent.BUTTON1_MASK)
                 {
                     public boolean acceptsEvent(final PInputEvent event, final int type)
                     {
-                        return (event.isMouseEvent() && spaceDown) || event.isKeyEvent();
+                        return super.acceptsEvent(event, type) && (Mode.PAN == mode);
                     }
                 });
-            */
-        }
-
-
-        /** {@inheritDoc} */
-        public void keyPressed(final PInputEvent event)
-        {
-            status.setText("keyPressed " + event.getKeyCode());
-            if (KeyEvent.VK_SPACE == event.getKeyCode())
-            {
-                spaceDown = true;
-                status.setText("keyPressed spaceDown " + spaceDown);
-                ((PCanvas) event.getComponent()).setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-            }
-        }
-
-        /** {@inheritDoc} */
-        public void keyReleased(final PInputEvent event)
-        {
-            status.setText("keyReleased " + event.getKeyCode());
-            if (KeyEvent.VK_SPACE == event.getKeyCode())
-            {
-                spaceDown = false;                
-                status.setText("keyReleased spaceDown " + spaceDown);
-                ((PCanvas) event.getComponent()).setCursor(Cursor.getDefaultCursor());
-            }
         }
     }
 
@@ -669,7 +668,7 @@ final class DiagramView
         /** {@inheritDoc} */
         public void mouseWheelRotated(final PInputEvent event)
         {
-            status.setText("mouseWheelRotated " + event.getWheelRotation());
+            //status.setText("mouseWheelRotated " + event.getWheelRotation());
             PCamera camera = event.getCamera();
             double scale = 1.0d + event.getWheelRotation() * SCALE_FACTOR;
             Point2D center = camera.getBoundsReference().getCenter2D();
