@@ -105,12 +105,18 @@ final class DiagramView
     /** Area pressed paint. */
     private static final Paint AREA_PRESSED_PAINT = new Color(20, 20, 20, 80);
 
-    /** Mode. */
+    /** Current mode. */
     private Mode mode = Mode.EDIT;
 
-    private enum Mode { EDIT, PAN };
+    /** Edit or pan modes, toggled by the space bar. */
+    private enum Mode
+    {
+        /** Edit mode. */
+        EDIT,
 
-    //private PText status;
+        /** Pan mode. */
+        PAN
+    };
 
 
     /**
@@ -131,10 +137,6 @@ final class DiagramView
         JPopupMenu contextMenu = new JPopupMenu();
         contextMenu.add(exportToPNG);
         canvas.addMouseListener(new ContextMenuListener(contextMenu));
-
-        //status = new PText("Status");
-        //status.offset(20.0d, 20.0d);
-        //canvas.getLayer().addChild(status);
 
         setLayout(new BorderLayout());
         add("Center", canvas);
@@ -562,8 +564,10 @@ final class DiagramView
         /** {@inheritDoc} */
         public void mousePressed(final PInputEvent event)
         {
-            // @todo  mouse presses hide labels occasionally
-            //status.setText("mousePressed");
+            if (Mode.PAN == mode)
+            {
+                return;
+            }
             PNode pickedNode = event.getPickedNode();
             lastColor = (Color) pickedNode.getPaint();
             pickedNode.setPaint(AREA_PRESSED_PAINT);
@@ -581,7 +585,10 @@ final class DiagramView
         /** {@inheritDoc} */
         public void mouseReleased(final PInputEvent event)
         {
-            //status.setText("mouseReleased");
+            if (Mode.PAN == mode)
+            {
+                return;
+            }
             PNode pickedNode = event.getPickedNode();
             pickedNode.animateToColor(AREA_COLOR, 250L);
         }
@@ -597,23 +604,19 @@ final class DiagramView
         /** {@inheritDoc} */
         public void keyPressed(final KeyEvent event)
         {
-            //status.setText("keyPressed " + event.getKeyCode());
             if (KeyEvent.VK_SPACE == event.getKeyCode())
             {
                 mode = Mode.PAN;
-                //status.setText("keyPressed spaceDown " + mode);
-                ((PCanvas) event.getComponent()).setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+                ((PCanvas) event.getComponent()).setCursor(Cursor.getPredefinedCursor(Cursor.MOVE_CURSOR));
             }
         }
 
         /** {@inheritDoc} */
         public void keyReleased(final KeyEvent event)
         {
-            //status.setText("keyReleased " + event.getKeyCode());
             if (KeyEvent.VK_SPACE == event.getKeyCode())
             {
                 mode = Mode.EDIT;
-                //status.setText("keyReleased spaceDown " + mode);
                 ((PCanvas) event.getComponent()).setCursor(Cursor.getDefaultCursor());
             }
         }
@@ -634,6 +637,7 @@ final class DiagramView
             super();
             setEventFilter(new PInputEventFilter(InputEvent.BUTTON1_MASK)
                 {
+                    /** {@inheritDoc} */
                     public boolean acceptsEvent(final PInputEvent event, final int type)
                     {
                         return super.acceptsEvent(event, type) && (Mode.PAN == mode);
@@ -668,7 +672,6 @@ final class DiagramView
         /** {@inheritDoc} */
         public void mouseWheelRotated(final PInputEvent event)
         {
-            //status.setText("mouseWheelRotated " + event.getWheelRotation());
             PCamera camera = event.getCamera();
             double scale = 1.0d + event.getWheelRotation() * SCALE_FACTOR;
             Point2D center = camera.getBoundsReference().getCenter2D();
