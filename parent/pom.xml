@@ -216,6 +216,11 @@
         <version>2.0-SNAPSHOT</version>
       </dependency>
       <dependency>
+        <groupId>org.piccolo2d</groupId>
+        <artifactId>piccolo2d-jdk16</artifactId>
+        <version>2.0-SNAPSHOT</version>
+      </dependency>
+      <dependency>
         <groupId>stax</groupId>
         <artifactId>stax</artifactId>
         <version>1.2.0</version>
