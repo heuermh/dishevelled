@@ -7,22 +7,22 @@
     <version>1.0-SNAPSHOT</version>
     <relativePath>../parent/pom.xml</relativePath>
   </parent>
-  <artifactId>dsh-iconbundle-tango</artifactId>
+  <artifactId>dsh-iconbundle-svg</artifactId>
   <packaging>jar</packaging>
-  <name>dishevelled.org iconbundle-tango</name>
+  <name>dishevelled.org iconbundle-svg</name>
   <version>1.0-SNAPSHOT</version>
-  <description>Icon bundles for the Tango Project icon theme.</description>
-  <url>http://www.dishevelled.org/iconbundle-tango</url>
-  <inceptionYear>2005</inceptionYear>
+  <description>SVG icon bundle implementation.</description>
+  <url>http://www.dishevelled.org/iconbundle-svg</url>
+  <inceptionYear>2003</inceptionYear>
   <scm>
-    <connection>scm:svn|http://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/iconbundle-tango</connection>
-    <developerConnection>scm:svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/iconbundle-tango</developerConnection>
-    <url>http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/trunk/iconbundle-tango</url>
+    <connection>scm:svn|http://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/iconbundle-svg</connection>
+    <developerConnection>scm:svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/iconbundle-svg</developerConnection>
+    <url>http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/trunk/iconbundle-svg</url>
   </scm>
   <distributionManagement>
     <site>
       <id>dishevelled.sf.net</id>
-      <url>scp://shell.sourceforge.net/home/groups/d/di/dishevelled/htdocs/iconbundle-tango-${project.version}</url>
+      <url>scp://shell.sourceforge.net/home/groups/d/di/dishevelled/htdocs/iconbundle-svg-${project.version}</url>
     </site>
   </distributionManagement>
   <dependencies>
@@ -34,14 +34,21 @@
     </dependency>
     <dependency>
       <groupId>org.dishevelled</groupId>
-      <artifactId>dsh-iconbundle-svg</artifactId>
+      <artifactId>dsh-iconbundle</artifactId>
       <version>${project.version}</version>
+      <type>test-jar</type>
+      <scope>test</scope>
+    </dependency>
+    <!-- todo:  exclude unnecessary batik transitive deps -->
+    <dependency>
+      <groupId>org.apache.xmlgraphics</groupId>
+      <artifactId>batik-transcoder</artifactId>
       <scope>compile</scope>
     </dependency>
     <dependency>
-      <groupId>org.freedesktop.tango</groupId>
-      <artifactId>tango-icon-theme</artifactId>
-      <scope>runtime</scope>
+      <groupId>commons-lang</groupId>
+      <artifactId>commons-lang</artifactId>
+      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>junit</groupId>
@@ -61,7 +68,7 @@
         <artifactId>maven-javadoc-plugin</artifactId>
         <configuration>
           <!-- todo:  must manually update the copyright dates here -->
-          <bottom>Copyright (c) 2005-2010 held jointly by the individual authors. Licensed under the &lt;a href="http://www.fsf.org/licensing/licenses/lgpl.html"&gt;GNU Lesser General Public License&lt;a&gt; (LGPL).</bottom>
+          <bottom>Copyright (c) 2003-2010 held jointly by the individual authors. Licensed under the &lt;a href="http://www.fsf.org/licensing/licenses/lgpl.html"&gt;GNU Lesser General Public License&lt;a&gt; (LGPL).</bottom>
         </configuration>
       </plugin>
       <plugin>

@@ -38,7 +38,7 @@ import org.dishevelled.commandline.argument.StringArgument;
 
 import org.dishevelled.iconbundle.IconBundle;
 
-import org.dishevelled.iconbundle.impl.SVGIconBundle;
+import org.dishevelled.iconbundle.impl.svg.SVGIconBundle;
 
 /**
  * SVG variants.
