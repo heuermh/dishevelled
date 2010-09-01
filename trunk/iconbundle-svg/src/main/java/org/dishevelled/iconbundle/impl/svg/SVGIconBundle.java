@@ -1,7 +1,7 @@
 /*
 
-    dsh-iconbundle-tango  Icon bundles for the Tango Project icon theme.
-    Copyright (c) 2005-2010 held jointly by the individual authors.
+    dsh-iconbundle-svg  SVG icon bundle implementation.
+    Copyright (c) 2003-2010 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
@@ -21,17 +21,17 @@
     > http://www.opensource.org/licenses/lgpl-license.php
 
 */
-package org.dishevelled.iconbundle.tango;
+package org.dishevelled.iconbundle.impl.svg;
+
+import java.io.File;
+
+import java.net.URL;
 
 import java.awt.Image;
 import java.awt.Color;
 import java.awt.Component;
 
 import java.awt.image.BufferedImage;
-
-import java.net.URL;
-
-import javax.imageio.ImageIO;
 
 import javax.swing.UIManager;
 
@@ -42,39 +42,56 @@ import org.dishevelled.iconbundle.IconTextDirection;
 
 import org.dishevelled.iconbundle.impl.IconBundleUtils;
 
-import org.dishevelled.iconbundle.impl.svg.SVGIconBundleUtils;
-
 /**
- * Tango project icon bundle.
+ * Icon bundle derived from a single scalable base image in SVG format.
  *
  * @author  Michael Heuer
- * @version $Revision$ $Date$
+ * @version $Revision: 741 $ $Date: 2010-01-02 20:23:15 -0600 (Sat, 02 Jan 2010) $
  */
-final class TangoProjectIconBundle
+public final class SVGIconBundle
     implements IconBundle
 {
-    /** Base url. */
-    private static final String BASE_URL = "/org/freedesktop/tango/";
-
-    /** Tango project standard icon context. */
-    private final String context;
-
-    /** Tango project standard icon name. */
-    private final String name;
+    /** SVG document url. */
+    private URL url;
 
 
     /**
-     * Create a new tango project icon bundle for
-     * the specified standard icon name.
+     * Create a new SVG icon bundle from a base scalable image that will
+     * be read from the specified file.
      *
-     * @param context tango project standard icon context
-     * @param name tango project standard icon name
+     * @param file file, must not be null
      */
-    TangoProjectIconBundle(final String context,
-                           final String name)
+    public SVGIconBundle(final File file)
     {
-        this.context = context;
-        this.name = name;
+        if (file == null)
+        {
+            throw new IllegalArgumentException("file must not be null");
+        }
+
+        try
+        {
+            url = new URL("file://" + file.getAbsolutePath());
+        }
+        catch (Exception e)
+        {
+            throw new IllegalArgumentException("could not create base image URL: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Create a new SVG icon bundle from a base scalable image that will
+     * the specified URL.
+     *
+     * @param url URL, must not be null
+     */
+    public SVGIconBundle(final URL url)
+    {
+        if (url == null)
+        {
+            throw new IllegalArgumentException("url must not be null");
+        }
+
+        this.url = url;
     }
 
 
@@ -97,32 +114,10 @@ final class TangoProjectIconBundle
             throw new IllegalArgumentException("size must not be null");
         }
 
-        URL url = null;
-        BufferedImage image = null;
+        int height = size.getHeight();
+        int width = size.getWidth();
 
-        if (TangoProject.EXTRA_SMALL.equals(size) || TangoProject.SMALL.equals(size) || TangoProject.MEDIUM.equals(size))
-        {
-            try
-            {
-                url = this.getClass().getResource(BASE_URL + size.toString() + "/" + context + "/" + name + ".png");
-                image = ImageIO.read(url);
-            }
-            catch (Exception e)
-            {
-                System.err.println("couldn't find image for url=" + url);
-                System.err.println("   or=" + BASE_URL + size.toString() + "/" + context + "/" + name + ".png");
-                e.printStackTrace();
-                // ignore
-            }
-        }
-        else
-        {
-            int width = size.getWidth();
-            int height = size.getHeight();
-
-            url = this.getClass().getResource(BASE_URL + "scalable/" + context + "/" + name + ".svg");
-            image = SVGIconBundleUtils.readSVG(url, width, height);
-        }
+        BufferedImage image = SVGIconBundleUtils.readSVG(url, width, height);
 
         if (IconState.ACTIVE == state)
         {
