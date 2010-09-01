@@ -40,6 +40,7 @@
     <module>graph</module>
     <module>graph-io</module>
     <module>iconbundle</module>
+    <module>iconbundle-svg</module>
     <module>iconbundle-tango</module>
     <module>iconbundle-tango-examples</module>
     <module>iconbundle-tools</module>
@@ -50,6 +51,7 @@
     <module>matrix</module>
     <module>matrix-io</module>
     <module>matrix-nonblocking</module>
+    <module>matrix-io-nonblocking</module>
     <module>multi-map</module>
     <module>observable</module>
     <module>observable-graph</module>
