@@ -25,6 +25,7 @@ package org.dishevelled.iconbundle.impl;
 
 import java.io.File;
 import java.io.InputStream;
+import java.io.IOException;
 
 import java.awt.Color;
 import java.awt.Image;
@@ -59,6 +60,9 @@ import org.dishevelled.iconbundle.IconTextDirection;
 public final class PNGIconBundle
     implements IconBundle
 {
+    /** Base image name. */
+    private final String baseImageName;
+
     /** Base image. */
     private final BufferedImage baseImage;
 
@@ -76,6 +80,7 @@ public final class PNGIconBundle
             throw new IllegalArgumentException("file must not be null");
         }
 
+        baseImageName = null;
         try
         {
             baseImage = ImageIO.read(file);
@@ -99,6 +104,7 @@ public final class PNGIconBundle
             throw new IllegalArgumentException("inputStream must not be null");
         }
 
+        baseImageName = null;
         try
         {
             baseImage = ImageIO.read(inputStream);
@@ -122,6 +128,7 @@ public final class PNGIconBundle
             throw new IllegalArgumentException("imageInputStream must not be null");
         }
 
+        baseImageName = null;
         try
         {
             baseImage = ImageIO.read(imageInputStream);
@@ -145,6 +152,7 @@ public final class PNGIconBundle
             throw new IllegalArgumentException("url must not be null");
         }
 
+        baseImageName = null;
         try
         {
             baseImage = ImageIO.read(url);
@@ -153,6 +161,23 @@ public final class PNGIconBundle
         {
             throw new IllegalArgumentException("could not create base image; " + e.getMessage());
         }
+    }
+
+    /**
+     * Create a new PNG icon bundle from a base image name.  The name
+     * will be used to construct an URL to a classpath resource
+     * <code>baseImageName + iconSize.toString() + ".png"</code>.
+     *
+     * @param baseImageName base image name, must not be null
+     */
+    public PNGIconBundle(final String baseImageName)
+    {
+        if (baseImageName == null)
+        {
+            throw new IllegalArgumentException("baseImageName must not be null");
+        }
+        baseImage = null;
+        this.baseImageName = baseImageName;
     }
 
 
@@ -175,42 +200,57 @@ public final class PNGIconBundle
             throw new IllegalArgumentException("size must not be null");
         }
 
-        int h = size.getHeight();
-        int w = size.getWidth();
-
-        BufferedImage image = new BufferedImage(w + 1, h + 1, BufferedImage.TYPE_INT_ARGB);
-        Graphics2D g = image.createGraphics();
-
-        g.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
-        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
-
-        Rectangle2D bounds = new Rectangle2D.Double(0.0d, 0.0d,
-                                                    (double) baseImage.getWidth(),
-                                                    (double) baseImage.getHeight());
-
-        double d = 1.0d;
-        if (bounds.getWidth() >= bounds.getHeight())
+        BufferedImage image = null;
+        if (baseImage == null)
         {
-            d = w / bounds.getWidth();
+            try
+            {
+                URL url = getClass().getResource(baseImageName + size.toString() + ".png");
+                image = (url == null) ? null : ImageIO.read(url);
+            }
+            catch (IOException e)
+            {
+                // ignore
+            }
         }
         else
         {
-            d = h / bounds.getHeight();
+            int h = size.getHeight();
+            int w = size.getWidth();
+
+            image = new BufferedImage(w + 1, h + 1, BufferedImage.TYPE_INT_ARGB);
+            Graphics2D g = image.createGraphics();
+
+            g.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+            g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+            g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
+
+            Rectangle2D bounds = new Rectangle2D.Double(0.0d, 0.0d,
+                                                        (double) baseImage.getWidth(),
+                                                        (double) baseImage.getHeight());
+
+            double d = 1.0d;
+            if (bounds.getWidth() >= bounds.getHeight())
+            {
+                d = w / bounds.getWidth();
+            }
+            else
+            {
+                d = h / bounds.getHeight();
+            }
+
+            AffineTransform at = new AffineTransform();
+
+            // translate to center of icon size rect
+            at.translate(w / 2.0d, h / 2.0d);
+            // scale image to icon size rect
+            at.scale(d, d);
+            // translate center of image to center of icon size rect
+            at.translate(-1 * bounds.getCenterX(), -1 * bounds.getCenterY());
+
+            g.drawRenderedImage(baseImage, at);
+            g.dispose();
         }
-
-        AffineTransform at = new AffineTransform();
-
-        // translate to center of icon size rect
-        at.translate(w / 2.0d, h / 2.0d);
-        // scale image to icon size rect
-        at.scale(d, d);
-        // translate center of image to center of icon size rect
-        at.translate(-1 * bounds.getCenterX(), -1 * bounds.getCenterY());
-
-        g.drawRenderedImage(baseImage, at);
-
-        g.dispose();
 
         if (IconState.ACTIVE == state)
         {
