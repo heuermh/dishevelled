@@ -635,6 +635,7 @@ final class DiagramView
         PanEventHandler()
         {
             super();
+            // @todo  cytoscape main network view uses middle-click + drag to pan
             setEventFilter(new PInputEventFilter(InputEvent.BUTTON1_MASK)
                 {
                     /** {@inheritDoc} */

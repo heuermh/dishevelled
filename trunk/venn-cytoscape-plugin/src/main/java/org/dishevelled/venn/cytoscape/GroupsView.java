@@ -57,6 +57,17 @@ import cytoscape.CyNode;
 import cytoscape.groups.CyGroup;
 import cytoscape.groups.CyGroupManager;
 
+import org.dishevelled.iconbundle.IconBundle;
+import org.dishevelled.iconbundle.IconSize;
+
+import org.dishevelled.iconbundle.impl.CachingIconBundle;
+import org.dishevelled.iconbundle.impl.PNGIconBundle;
+
+import org.dishevelled.identify.IdentifiableAction;
+import org.dishevelled.identify.IdButton;
+import org.dishevelled.identify.IdMenuItem;
+import org.dishevelled.identify.IdToolBar;
+
 import org.dishevelled.layout.ButtonPanel;
 import org.dishevelled.layout.LabelFieldPanel;
 
@@ -89,8 +100,11 @@ final class GroupsView
     /** Context menu. */
     private final JPopupMenu contextMenu;
 
+    /** Diagram action icon bundle. */
+    private final IconBundle diagramIconBundle = new CachingIconBundle(new PNGIconBundle("/org/dishevelled/venn/cytoscape/diagram"));
+
     /** Diagram action. */
-    private final Action diagram = new AbstractAction("Diagram...")
+    private final IdentifiableAction diagram = new IdentifiableAction("Diagram...", diagramIconBundle)
         {
             /** {@inheritDoc} */
             public void actionPerformed(final ActionEvent event)
@@ -112,8 +126,11 @@ final class GroupsView
             }
         };
 
+    /** Details action icon bundle. */
+    private final IconBundle detailsIconBundle = new CachingIconBundle(new PNGIconBundle("/org/dishevelled/venn/cytoscape/details"));
+
     /** Details action. */
-    private final Action details = new AbstractAction("Details...")
+    private final IdentifiableAction details = new IdentifiableAction("Details...", detailsIconBundle)
         {
             /** {@inheritDoc} */
             public void actionPerformed(final ActionEvent event)
@@ -198,9 +215,9 @@ final class GroupsView
         groupList.setSelectionModel(selectionModel);
 
         contextMenu = new JPopupMenu();
-        contextMenu.add(diagram);
-        contextMenu.add(details);
-        contextMenu.add(export);
+        contextMenu.add(new IdMenuItem(diagram));
+        contextMenu.add(new IdMenuItem(details));
+        //contextMenu.add(export);
         groupList.addMouseListener(new ContextMenuListener(contextMenu));
 
         diagram.setEnabled(false);
@@ -221,10 +238,23 @@ final class GroupsView
         mainPanel.addLabel("Groups:"); // i18n
         mainPanel.addFinalField(new JScrollPane(groupList));
 
-        JToolBar toolBar = new JToolBar();
-        toolBar.add(diagram);
-        toolBar.add(details);
-        toolBar.add(export);
+        IdToolBar toolBar = new IdToolBar();
+        IdButton diagramButton = toolBar.add(diagram);
+        diagramButton.setBorderPainted(false);
+        diagramButton.setFocusPainted(false);
+        IdButton detailsButton = toolBar.add(details);
+        detailsButton.setBorderPainted(false);
+        detailsButton.setFocusPainted(false);
+        //toolBar.add(export);
+        toolBar.displayIcons();
+        toolBar.setIconSize(IconSize.DEFAULT_24X24);
+
+        JPopupMenu toolBarContextMenu = new JPopupMenu();
+        for (Object action : toolBar.getDisplayActions())
+        {
+            toolBarContextMenu.add((Action) action);
+        }
+        toolBar.addMouseListener(new ContextMenuListener(toolBarContextMenu));
 
         ButtonPanel buttonPanel = new ButtonPanel();
         buttonPanel.setBorder(new EmptyBorder(24, 12, 12, 12));

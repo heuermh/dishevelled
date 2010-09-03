@@ -37,18 +37,21 @@ import cytoscape.plugin.CytoscapePlugin;
 
   todos:
 
+  layout dialogs with regards to main Cytoscape frame
   update groups list per listener
-  diagram pan should require holding space bar
-  diagram zoom should use mouse wheel
-  tooltips on diagram with label text
-  add mouse click listeners to area nodes to update selection
   create icons for actions
-  create export action
-  change icon/text for actions on selection change
+  internationalization for action, dialog names
+  update icon/text for actions on selection change
   turn off details selection when union size reaches a certian limit
   additional information in CyGroup list cell renderer, or use table
   additional information in CyNode list cell renderer, or use table
-  add manifest attribute, see presentation
+  add select all, select none, zoom in, zoom out actions to context menu
+  provide keyboard access to pan & zoom
+  test against 2.8-alpha or 2.8 built from svn source
+  add dependencies report to site, or list/link dependency licenses explicitly
+  implement export or remove action
+  update screenshots to show interactivity of diagram view
+  cut 0.2 release and find place to host it
 
  */
 
@@ -69,8 +72,6 @@ public final class VennDiagrams
             {
                 JDialog dialog = new JDialog(Cytoscape.getDesktop(), "Venn Diagrams"); // i18n
                 dialog.setContentPane(new GroupsView());
-
-                // todo:  layout dialog with regards to main frame
                 dialog.setBounds(200, 200, 400, 400);
                 dialog.setVisible(true);
             }
