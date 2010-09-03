@@ -23,6 +23,8 @@
 */
 package org.dishevelled.iconbundle.impl;
 
+import java.awt.Component;
+
 import java.io.File;
 import java.io.InputStream;
 import java.io.FileInputStream;
@@ -32,8 +34,13 @@ import java.net.URL;
 import javax.imageio.stream.ImageInputStream;
 import javax.imageio.stream.FileImageInputStream;
 
-import org.dishevelled.iconbundle.IconBundle;
+import javax.swing.JPanel;
+
 import org.dishevelled.iconbundle.AbstractIconBundleTest;
+import org.dishevelled.iconbundle.IconSize;
+import org.dishevelled.iconbundle.IconState;
+import org.dishevelled.iconbundle.IconBundle;
+import org.dishevelled.iconbundle.IconTextDirection;
 
 /**
  * Unit test for PNGIconBundle.
@@ -138,5 +145,36 @@ public final class PNGIconBundleTest
         {
             // expected
         }
+    }
+
+    public void testBaseImageNameConstructor()
+    {
+        assertNotNull(new PNGIconBundle("baseImageName"));
+    }
+
+    public void testBaseImageNameConstructorNullBaseImageName()
+    {
+        try
+        {
+            new PNGIconBundle((String) null);
+            fail("ctr((String) null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }        
+    }
+
+    public void testBaseImageName()
+    {
+        PNGIconBundle iconBundle = new PNGIconBundle("test");
+        Component c = new JPanel();
+        assertNotNull(iconBundle.getImage(c, IconTextDirection.LEFT_TO_RIGHT, IconState.NORMAL, IconSize.DEFAULT_16X16));
+        assertNotNull(iconBundle.getImage(c, IconTextDirection.LEFT_TO_RIGHT, IconState.NORMAL, IconSize.DEFAULT_24X24));
+        assertNotNull(iconBundle.getImage(c, IconTextDirection.LEFT_TO_RIGHT, IconState.NORMAL, IconSize.DEFAULT_32X32));
+        assertNull(iconBundle.getImage(c, IconTextDirection.LEFT_TO_RIGHT, IconState.NORMAL, IconSize.DEFAULT_48X48));
+        assertNull(iconBundle.getImage(c, IconTextDirection.LEFT_TO_RIGHT, IconState.NORMAL, IconSize.DEFAULT_64X64));
+        assertNull(iconBundle.getImage(c, IconTextDirection.LEFT_TO_RIGHT, IconState.NORMAL, IconSize.DEFAULT_96X96));
+        assertNull(iconBundle.getImage(c, IconTextDirection.LEFT_TO_RIGHT, IconState.NORMAL, IconSize.DEFAULT_128X128));
     }
 }
