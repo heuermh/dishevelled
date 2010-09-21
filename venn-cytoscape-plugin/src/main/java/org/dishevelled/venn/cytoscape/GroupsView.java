@@ -32,6 +32,7 @@ import java.util.Set;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JDialog;
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -250,9 +251,9 @@ final class GroupsView
         toolBar.setIconSize(IconSize.DEFAULT_24X24);
 
         JPopupMenu toolBarContextMenu = new JPopupMenu();
-        for (Object action : toolBar.getDisplayActions())
+        for (Object menuItem : toolBar.getDisplayMenuItems())
         {
-            toolBarContextMenu.add((Action) action);
+            toolBarContextMenu.add((JCheckBoxMenuItem) menuItem);
         }
         toolBar.addMouseListener(new ContextMenuListener(toolBarContextMenu));
 

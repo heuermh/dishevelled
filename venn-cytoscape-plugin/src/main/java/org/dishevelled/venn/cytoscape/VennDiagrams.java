@@ -40,7 +40,6 @@ import cytoscape.plugin.CytoscapePlugin;
   layout dialogs with regards to main Cytoscape frame
   update groups list per listener
   create icons for actions
-  internationalization for action, dialog names
   update icon/text for actions on selection change
   turn off details selection when union size reaches a certian limit
   additional information in CyGroup list cell renderer, or use table
