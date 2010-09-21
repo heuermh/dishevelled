@@ -29,10 +29,13 @@ import java.awt.event.ActionEvent;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
+import javax.swing.ButtonGroup;
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JToolBar;
 
 import org.dishevelled.iconbundle.IconSize;
@@ -240,6 +243,26 @@ public final class IdToolBar
     }
 
     /**
+     * Return an unmodifiable list of check box menu items for the display actions.  The list
+     * will not be null.
+     *
+     * @return an unmodifiable list of check box menu items for the display actions
+     */
+    public List/*<JCheckBoxMenuItem>*/ getDisplayMenuItems()
+    {
+        ButtonGroup buttonGroup = new ButtonGroup();
+        List/*<JCheckBoxMenuItem>*/ menuItems = new ArrayList/*<JCheckBoxMenuItem>*/(displayActions.size());
+        for (Iterator i = displayActions.iterator(); i.hasNext(); )
+        {
+            Action displayAction = (Action) i.next();
+            JCheckBoxMenuItem menuItem = new JCheckBoxMenuItem(displayAction);
+            menuItems.add(menuItem);
+            buttonGroup.add(menuItem);
+        }
+        return Collections.unmodifiableList(menuItems);
+    }
+
+    /**
      * Create and return a new icon size action for this tool bar for the specified icon size.
      * The new icon size action will not be null.
      *
@@ -263,6 +286,26 @@ public final class IdToolBar
     public List/*<Action>*/ getDefaultIconSizeActions()
     {
         return Collections.unmodifiableList(defaultIconSizeActions);
+    }
+
+    /**
+     * Return an unmodifiable list of check box menu items for the default icon size actions.  The list
+     * will not be null.
+     *
+     * @return an unmodifiable list of check box menu items for the default icon size actions
+     */
+    public List/*<JCheckBoxMenuItem>*/ getDefaultIconSizeMenuItems()
+    {
+        ButtonGroup buttonGroup = new ButtonGroup();
+        List/*<JCheckBoxMenuItem>*/ menuItems = new ArrayList/*<JCheckBoxMenuItem>*/(defaultIconSizeActions.size());
+        for (Iterator i = defaultIconSizeActions.iterator(); i.hasNext(); )
+        {
+            Action iconSizeAction = (Action) i.next();
+            JCheckBoxMenuItem menuItem = new JCheckBoxMenuItem(iconSizeAction);
+            menuItems.add(menuItem);
+            buttonGroup.add(menuItem);
+        }
+        return Collections.unmodifiableList(menuItems);
     }
 
     /**
