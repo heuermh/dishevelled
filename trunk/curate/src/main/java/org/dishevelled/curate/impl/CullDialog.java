@@ -31,6 +31,7 @@ import java.util.Collection;
 import java.util.Iterator;
 
 import javax.swing.Action;
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 
@@ -77,16 +78,16 @@ public final class CullDialog<E>
         toolBar.setIconSize(TangoProject.SMALL);
         // todo:  would be nice if actions displayed checkbox in menu
         final JPopupMenu toolBarContextMenu = new JPopupMenu();
-        for (Iterator<?> displayActions = ((IdToolBar) toolBar).getDisplayActions().iterator(); displayActions.hasNext(); )
+        for (Iterator<?> displayMenuItems = ((IdToolBar) toolBar).getDisplayMenuItems().iterator(); displayMenuItems.hasNext(); )
         {
-            Action displayAction = (Action) displayActions.next();
-            toolBarContextMenu.add(displayAction);
+            JCheckBoxMenuItem displayMenuItem = (JCheckBoxMenuItem) displayMenuItems.next();
+            toolBarContextMenu.add(displayMenuItem);
         }
         toolBarContextMenu.addSeparator();
-        for (Iterator<?> iconSizeActions = ((IdToolBar) toolBar).getDefaultIconSizeActions().iterator(); iconSizeActions.hasNext(); )
+        for (Iterator<?> iconSizeMenuItems = ((IdToolBar) toolBar).getDefaultIconSizeMenuItems().iterator(); iconSizeMenuItems.hasNext(); )
         {
-            Action iconSizeAction = (Action) iconSizeActions.next();
-            toolBarContextMenu.add(iconSizeAction);
+            JCheckBoxMenuItem iconSizeMenuItem = (JCheckBoxMenuItem) iconSizeMenuItems.next();
+            toolBarContextMenu.add(iconSizeMenuItem);
         }
         toolBar.addMouseListener(new MouseAdapter()
         {
