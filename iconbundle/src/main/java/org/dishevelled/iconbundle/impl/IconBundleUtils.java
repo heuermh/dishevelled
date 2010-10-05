@@ -25,6 +25,7 @@ package org.dishevelled.iconbundle.impl;
 
 import java.awt.Color;
 import java.awt.Image;
+import java.awt.Graphics2D;
 
 import java.awt.image.Raster;
 import java.awt.image.RasterOp;
@@ -63,16 +64,18 @@ public final class IconBundleUtils
     /**
      * RescaleOp for saturating active images.
      */
-    private static final RescaleOp ACTIVE_OP = new RescaleOp(new float[] { 0.8f, 0.8f, 0.8f, 1.0f },
-                                                             new float[] { 0.0f, 0.0f, 0.0f, 0.0f },
-                                                             null);
+    //private static final RescaleOp ACTIVE_OP = new RescaleOp(new float[] { 0.8f, 0.8f, 0.8f, 1.0f },
+    //                                                         new float[] { 0.0f, 0.0f, 0.0f, 0.0f },
+    //                                                         null);
+    private static final RescaleOp ACTIVE_OP = new RescaleOp(0.8f, 0.0f, null);
 
     /**
      * RescaleOp for saturating mouseover images.
      */
-    private static final RescaleOp MOUSEOVER_OP = new RescaleOp(new float[] { 1.2f, 1.2f, 1.2f, 1.0f },
-                                                                new float[] { 0.0f, 0.0f, 0.0f, 0.0f },
-                                                                null);
+    //private static final RescaleOp MOUSEOVER_OP = new RescaleOp(new float[] { 1.2f, 1.2f, 1.2f, 1.0f },
+    //                                                            new float[] { 0.0f, 0.0f, 0.0f, 0.0f },
+    //                                                            null);
+    private static final RescaleOp MOUSEOVER_OP = new RescaleOp(1.2f, 0.0f, null);
 
     /**
      * RescaleOp for creating translucent dragging images.
@@ -84,9 +87,11 @@ public final class IconBundleUtils
     /**
      * RescaleOp for desaturating disabled images.
      */
-    private static final RescaleOp DISABLED_SATURATION_OP = new RescaleOp(new float[] { 0.8f, 0.8f, 0.8f, 1.0f },
-                                                                          new float[] { 0.0f, 0.0f, 0.0f, 0.0f },
-                                                                          null);
+    //private static final RescaleOp DISABLED_SATURATION_OP = new RescaleOp(new float[] { 0.8f, 0.8f, 0.8f, 1.0f },
+    //                                                                      new float[] { 0.0f, 0.0f, 0.0f, 0.0f },
+    //                                                                     null);
+    private static final RescaleOp DISABLED_SATURATION_OP = new RescaleOp(0.8f, 0.0f, null);
+
 
     /**
      * RasterOp for creating the pattern overlay for disabled images.
@@ -157,6 +162,23 @@ public final class IconBundleUtils
      */
     public static Image makeActive(final BufferedImage src)
     {
+        /*
+        BufferedImage dest;
+        try
+        {
+            dest = new BufferedImage(src.getColorModel(),
+                                               src.copyData(null),
+                                               src.isAlphaPremultiplied(),
+                                               null);
+        }
+        catch (IllegalArgumentException e)
+        {
+            dest = new BufferedImage(src.getWidth(), src.getHeight(), BufferedImage.TYPE_INT_ARGB);
+            Graphics2D graphics = dest.createGraphics();
+            graphics.drawImage(src, 0, 0, null);
+            graphics.dispose();
+        }
+        */
         BufferedImage dest = new BufferedImage(src.getColorModel(),
                                                src.copyData(null),
                                                src.isAlphaPremultiplied(),
