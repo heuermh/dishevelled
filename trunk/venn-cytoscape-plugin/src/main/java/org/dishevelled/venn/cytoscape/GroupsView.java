@@ -56,7 +56,11 @@ import ca.odell.glazedlists.swing.EventSelectionModel;
 import cytoscape.CyNode;
 
 import cytoscape.groups.CyGroup;
+import cytoscape.groups.CyGroupChangeListener;
 import cytoscape.groups.CyGroupManager;
+import cytoscape.groups.CyGroupViewer;
+
+import cytoscape.view.CyNetworkView;
 
 import org.dishevelled.iconbundle.IconBundle;
 import org.dishevelled.iconbundle.IconSize;
@@ -88,6 +92,7 @@ import org.dishevelled.venn.swing.QuaternaryVennList;
  */
 final class GroupsView
     extends JPanel
+    implements CyGroupChangeListener, CyGroupViewer
 {
     /** List of groups. */
     private final EventList<CyGroup> groups;
@@ -226,6 +231,8 @@ final class GroupsView
         export.setEnabled(false);
 
         layoutComponents();
+        CyGroupManager.registerGroupViewer(this);
+        CyGroupManager.addGroupChangeListener(this);
     }
 
 
@@ -421,5 +428,67 @@ final class GroupsView
      */
     private void quaternaryExport()
     {
+    }
+
+    /** {@inheritDoc} */
+    public String getViewerName()
+    {
+        return "Venn Diagrams";
+    }
+
+    /** {@inheritDoc} */
+    public void groupChanged(final CyGroup group, final CyNode changedNode, CyGroupViewer.ChangeType change)
+    {
+        // ignore for now
+    }
+
+    /** {@inheritDoc} */
+    public void groupCreated(final CyGroup group)
+    {
+        if (!groups.contains(group))
+        {
+            groups.add(group);
+        }
+    }
+
+    /** {@inheritDoc} */
+    public void groupCreated(final CyGroup group, final CyNetworkView networkView)
+    {
+        if (!groups.contains(group))
+        {
+            groups.add(group);
+        }
+    }
+
+    /** {@inheritDoc} */
+    public void groupWillBeRemoved(final CyGroup group)
+    {
+        if (groups.contains(group))
+        {
+            groups.remove(group);
+        }
+    }
+
+    /** {@inheritDoc} */
+    public void groupChanged(final CyGroup group, final CyGroupChangeListener.ChangeType change)
+    {
+        switch (change)
+        {
+            case GROUP_CREATED:
+                if (!groups.contains(group))
+                {
+                    groups.add(group);
+                }
+                break;
+            case GROUP_DELETED:
+                if (groups.contains(group))
+                {
+                    groups.remove(group);
+                }
+                break;
+            case GROUP_MODIFIED:
+            default:
+                break;
+        }
     }
 }

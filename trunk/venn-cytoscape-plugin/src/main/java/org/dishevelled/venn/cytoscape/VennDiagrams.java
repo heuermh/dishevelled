@@ -38,7 +38,6 @@ import cytoscape.plugin.CytoscapePlugin;
   todos:
 
   layout dialogs with regards to main Cytoscape frame
-  update groups list per listener
   create icons for actions
   update icon/text for actions on selection change
   turn off details selection when union size reaches a certian limit
