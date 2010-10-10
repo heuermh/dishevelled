@@ -55,6 +55,15 @@ import org.dishevelled.venn.swing.QuaternaryVennList;
 final class DetailsView
     extends JPanel
 {
+    /** Maximum number of nodes above which selection sync should be disabled for binary details views. */
+    private final int BINARY_SELECTION_SYNC_MAXIMUM = Integer.MAX_VALUE;
+
+    /** Maximum number of nodes above which selection sync should be disabled for ternary details views. */
+    private final int TERNARY_SELECTION_SYNC_MAXIMUM = 2000000;
+
+    /** Maximum number of nodes above which selection sync should be disabled for quaternary details views. */
+    private final int QUATERNARY_SELECTION_SYNC_MAXIMUM = 20000;
+
     // todo:  would be nice if *VennList had a shared superclass or interface
 
     /** Binary venn list. */
@@ -162,7 +171,15 @@ final class DetailsView
     {
         this(binaryVennList, null, null);
         binaryVennList.setBorder(new EmptyBorder(12, 12, 12, 12));
-        binaryVennList.getModel().selection().addSetChangeListener(updateCytoscapeSelection);
+        if (binaryVennList.getModel().union().size() > BINARY_SELECTION_SYNC_MAXIMUM)
+        {
+            selectAll.setEnabled(false);
+            clearSelection.setEnabled(false);
+        }
+        else
+        {
+            binaryVennList.getModel().selection().addSetChangeListener(updateCytoscapeSelection);
+        }
         add("Center", binaryVennList);
     }
 
@@ -175,7 +192,15 @@ final class DetailsView
     {
         this(null, ternaryVennList, null);
         ternaryVennList.setBorder(new EmptyBorder(12, 12, 12, 12));
-        ternaryVennList.getModel().selection().addSetChangeListener(updateCytoscapeSelection);
+        if (ternaryVennList.getModel().union().size() > TERNARY_SELECTION_SYNC_MAXIMUM)
+        {
+            selectAll.setEnabled(false);
+            clearSelection.setEnabled(false);
+        }
+        else
+        {
+            ternaryVennList.getModel().selection().addSetChangeListener(updateCytoscapeSelection);
+        }
         add("Center", ternaryVennList);
     }
 
@@ -188,7 +213,15 @@ final class DetailsView
     {
         this(null, null, quaternaryVennList);
         quaternaryVennList.setBorder(new EmptyBorder(12, 12, 12, 12));
-        quaternaryVennList.getModel().selection().addSetChangeListener(updateCytoscapeSelection);
+        if (quaternaryVennList.getModel().union().size() > QUATERNARY_SELECTION_SYNC_MAXIMUM)
+        {
+            selectAll.setEnabled(false);
+            clearSelection.setEnabled(false);
+        }
+        else
+        {
+            quaternaryVennList.getModel().selection().addSetChangeListener(updateCytoscapeSelection);
+        }
         add("Center", quaternaryVennList);
     }
 }
