@@ -40,7 +40,6 @@ import cytoscape.plugin.CytoscapePlugin;
   layout dialogs with regards to main Cytoscape frame
   create icons for actions
   update icon/text for actions on selection change
-  turn off details selection when union size reaches a certian limit
   additional information in CyGroup list cell renderer, or use table
   additional information in CyNode list cell renderer, or use table
   provide keyboard access to pan & zoom
