@@ -43,7 +43,6 @@ import cytoscape.plugin.CytoscapePlugin;
   turn off details selection when union size reaches a certian limit
   additional information in CyGroup list cell renderer, or use table
   additional information in CyNode list cell renderer, or use table
-  add select all, select none, zoom in, zoom out actions to context menu
   provide keyboard access to pan & zoom
   test against 2.8-alpha or 2.8 built from svn source
   add dependencies report to site, or list/link dependency licenses explicitly

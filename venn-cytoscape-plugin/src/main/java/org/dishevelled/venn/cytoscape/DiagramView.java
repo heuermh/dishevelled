@@ -99,11 +99,54 @@ final class DiagramView
             }
         };
 
+    /** Select all action. */
+    private final Action selectAll = new AbstractAction("Select all") // i18n
+        {
+            /** {@inheritDoc} */
+            public void actionPerformed(final ActionEvent event)
+            {
+                selectAll();
+            }
+        };
+
+    /** Clear selection action. */
+    private final Action clearSelection = new AbstractAction("Clear selection") // i18n
+        {
+            /** {@inheritDoc} */
+            public void actionPerformed(final ActionEvent event)
+            {
+                clearSelection();
+            }
+        };
+
+    /** Zoom in action. */
+    private final Action zoomIn = new AbstractAction("Zoom in") // i18n
+        {
+            /** {@inheritDoc} */
+            public void actionPerformed(final ActionEvent event)
+            {
+                zoomIn();
+            }
+        };
+
+    /** Zoom out action. */
+    private final Action zoomOut = new AbstractAction("Zoom out") // i18n
+        {
+            /** {@inheritDoc} */
+            public void actionPerformed(final ActionEvent event)
+            {
+                zoomOut();
+            }
+        };
+
     /** Area color. */
     private static final Color AREA_COLOR = new Color(0, 0, 0, 0);
 
     /** Area pressed paint. */
     private static final Paint AREA_PRESSED_PAINT = new Color(20, 20, 20, 80);
+
+    /** Scale factor. */
+    private static final double SCALE_FACTOR = 0.1d;
 
     /** Current mode. */
     private Mode mode = Mode.EDIT;
@@ -136,6 +179,12 @@ final class DiagramView
 
         JPopupMenu contextMenu = new JPopupMenu();
         contextMenu.add(exportToPNG);
+        contextMenu.addSeparator();
+        contextMenu.add(selectAll);
+        contextMenu.add(clearSelection);
+        contextMenu.addSeparator();
+        contextMenu.add(zoomIn);
+        contextMenu.add(zoomOut);
         canvas.addMouseListener(new ContextMenuListener(contextMenu));
 
         setLayout(new BorderLayout());
@@ -502,6 +551,69 @@ final class DiagramView
     }
 
     /**
+     * Select all.
+     */
+    private void selectAll()
+    {
+        CyNetwork currentNetwork = Cytoscape.getCurrentNetwork();
+        for (Iterator i = canvas.getLayer().getChildrenIterator(); i.hasNext(); )
+        {
+            PNode node = (PNode) i.next();
+            if (node instanceof BinaryVennNode)
+            {
+                BinaryVennNode<CyNode> binaryVennNode = (BinaryVennNode<CyNode>) node;                
+                currentNetwork.unselectAllNodes();
+                currentNetwork.setSelectedNodeState(binaryVennNode.getModel().union(), true);
+            }
+            else if (node instanceof TernaryVennNode)
+            {
+                TernaryVennNode<CyNode> ternaryVennNode = (TernaryVennNode<CyNode>) node;                
+                currentNetwork.unselectAllNodes();
+                currentNetwork.setSelectedNodeState(ternaryVennNode.getModel().union(), true);
+            }
+            else if (node instanceof QuaternaryVennNode)
+            {
+                QuaternaryVennNode<CyNode> quaternaryVennNode = (QuaternaryVennNode<CyNode>) node;                
+                currentNetwork.unselectAllNodes();
+                currentNetwork.setSelectedNodeState(quaternaryVennNode.getModel().union(), true);
+            }
+        }
+        Cytoscape.getCurrentNetworkView().updateView();
+    }
+
+    /**
+     * Clear selection.
+     */
+    private void clearSelection()
+    {
+        CyNetwork currentNetwork = Cytoscape.getCurrentNetwork();
+        currentNetwork.unselectAllNodes();
+        Cytoscape.getCurrentNetworkView().updateView();
+    }
+
+    /**
+     * Zoom in.
+     */
+    private void zoomIn()
+    {
+        PCamera camera = canvas.getCamera();
+        double scale = 1.0d + 4.0d * SCALE_FACTOR;
+        Point2D center = camera.getBoundsReference().getCenter2D();
+        camera.scaleViewAboutPoint(scale, center.getX(), center.getY());
+    }
+
+    /**
+     * Zoom out.
+     */
+    private void zoomOut()
+    {
+        PCamera camera = canvas.getCamera();
+        double scale = 1.0d - 2.0d * SCALE_FACTOR;
+        Point2D center = camera.getBoundsReference().getCenter2D();
+        camera.scaleViewAboutPoint(scale, center.getX(), center.getY());
+    }
+
+    /**
      * Tool tip text listener.
      */
     private class ToolTipTextListener
@@ -653,10 +765,6 @@ final class DiagramView
     private class ZoomEventHandler
         extends PBasicInputEventHandler
     {
-        /** Scale factor. */
-        private static final double SCALE_FACTOR = 0.1d;
-
-
         /**
          * Create a new zoom event handler.
          */
