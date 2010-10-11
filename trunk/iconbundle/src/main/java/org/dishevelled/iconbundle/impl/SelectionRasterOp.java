@@ -62,19 +62,22 @@ final class SelectionRasterOp
     /** {@inheritDoc} */
     public WritableRaster filter(final Raster src, final WritableRaster dest)
     {
-        float[] pixel = new float[PIXEL_ARRAY_SIZE];
-        float[] selection = selectionColor.getColorComponents(new float[PIXEL_ARRAY_SIZE]);
-
-        for (int x = 0, w = src.getWidth(); x < w; x++)
+        if (selectionColor != null)
         {
-            for (int y = 0, h = src.getHeight(); y < h; y++)
-            {
-                pixel = src.getPixel(x, y, pixel);
-                pixel[0] = Math.min(pixel[0], selection[0] * WHITE);
-                pixel[1] = Math.min(pixel[1], selection[1] * WHITE);
-                pixel[2] = Math.min(pixel[2], selection[2] * WHITE);
+            float[] pixel = new float[PIXEL_ARRAY_SIZE];
+            float[] selection = selectionColor.getColorComponents(new float[PIXEL_ARRAY_SIZE]);
 
-                dest.setPixel(x, y, pixel);
+            for (int x = 0, w = src.getWidth(); x < w; x++)
+            {
+                for (int y = 0, h = src.getHeight(); y < h; y++)
+                {
+                    pixel = src.getPixel(x, y, pixel);
+                    pixel[0] = Math.min(pixel[0], selection[0] * WHITE);
+                    pixel[1] = Math.min(pixel[1], selection[1] * WHITE);
+                    pixel[2] = Math.min(pixel[2], selection[2] * WHITE);
+
+                    dest.setPixel(x, y, pixel);
+                }
             }
         }
         return dest;
