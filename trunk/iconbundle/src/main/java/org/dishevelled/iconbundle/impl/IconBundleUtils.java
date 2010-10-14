@@ -64,18 +64,18 @@ public final class IconBundleUtils
     /**
      * RescaleOp for saturating active images.
      */
-    //private static final RescaleOp ACTIVE_OP = new RescaleOp(new float[] { 0.8f, 0.8f, 0.8f, 1.0f },
-    //                                                         new float[] { 0.0f, 0.0f, 0.0f, 0.0f },
-    //                                                         null);
-    private static final RescaleOp ACTIVE_OP = new RescaleOp(0.8f, 0.0f, null);
+    private static final RescaleOp ACTIVE_OP = new RescaleOp(new float[] { 0.8f, 0.8f, 0.8f, 1.0f },
+                                                             new float[] { 0.0f, 0.0f, 0.0f, 0.0f },
+                                                             null);
+    //private static final RescaleOp ACTIVE_OP = new RescaleOp(0.8f, 0.0f, null);
 
     /**
      * RescaleOp for saturating mouseover images.
      */
-    //private static final RescaleOp MOUSEOVER_OP = new RescaleOp(new float[] { 1.2f, 1.2f, 1.2f, 1.0f },
-    //                                                            new float[] { 0.0f, 0.0f, 0.0f, 0.0f },
-    //                                                            null);
-    private static final RescaleOp MOUSEOVER_OP = new RescaleOp(1.2f, 0.0f, null);
+    private static final RescaleOp MOUSEOVER_OP = new RescaleOp(new float[] { 1.2f, 1.2f, 1.2f, 1.0f },
+                                                                new float[] { 0.0f, 0.0f, 0.0f, 0.0f },
+                                                                null);
+    //private static final RescaleOp MOUSEOVER_OP = new RescaleOp(1.2f, 0.0f, null);
 
     /**
      * RescaleOp for creating translucent dragging images.
@@ -87,10 +87,10 @@ public final class IconBundleUtils
     /**
      * RescaleOp for desaturating disabled images.
      */
-    //private static final RescaleOp DISABLED_SATURATION_OP = new RescaleOp(new float[] { 0.8f, 0.8f, 0.8f, 1.0f },
-    //                                                                      new float[] { 0.0f, 0.0f, 0.0f, 0.0f },
-    //                                                                     null);
-    private static final RescaleOp DISABLED_SATURATION_OP = new RescaleOp(0.8f, 0.0f, null);
+    private static final RescaleOp DISABLED_SATURATION_OP = new RescaleOp(new float[] { 0.8f, 0.8f, 0.8f, 1.0f },
+                                                                          new float[] { 0.0f, 0.0f, 0.0f, 0.0f },
+                                                                         null);
+    //private static final RescaleOp DISABLED_SATURATION_OP = new RescaleOp(0.8f, 0.0f, null);
 
 
     /**
