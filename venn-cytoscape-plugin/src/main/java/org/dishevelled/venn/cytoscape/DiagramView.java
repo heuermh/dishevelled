@@ -206,14 +206,6 @@ final class DiagramView
             node.addInputEventListener(new ToolTipTextListener());
             node.addInputEventListener(new MousePressedListener());
         }
-        /*
-        binaryVennNode.getFirstOnly().addInputEventListener(new ToolTipTextListener());
-        binaryVennNode.getFirstOnly().addInputEventListener(new MousePressedListener());
-        binaryVennNode.getSecondOnly().addInputEventListener(new ToolTipTextListener());
-        binaryVennNode.getSecondOnly().addInputEventListener(new MousePressedListener());
-        binaryVennNode.getIntersection().addInputEventListener(new ToolTipTextListener());
-        binaryVennNode.getIntersection().addInputEventListener(new MousePressedListener());
-        */
         canvas.getLayer().addChild(binaryVennNode);
     }
 
@@ -231,22 +223,6 @@ final class DiagramView
             node.addInputEventListener(new ToolTipTextListener());
             node.addInputEventListener(new MousePressedListener());
         }
-        /*
-        ternaryVennNode.getFirstOnly().addInputEventListener(new ToolTipTextListener());
-        ternaryVennNode.getFirstOnly().addInputEventListener(new MousePressedListener());
-        ternaryVennNode.getSecondOnly().addInputEventListener(new ToolTipTextListener());
-        ternaryVennNode.getSecondOnly().addInputEventListener(new MousePressedListener());
-        ternaryVennNode.getThirdOnly().addInputEventListener(new ToolTipTextListener());
-        ternaryVennNode.getThirdOnly().addInputEventListener(new MousePressedListener());
-        ternaryVennNode.getFirstSecond().addInputEventListener(new ToolTipTextListener());
-        ternaryVennNode.getFirstSecond().addInputEventListener(new MousePressedListener());
-        ternaryVennNode.getFirstThird().addInputEventListener(new ToolTipTextListener());
-        ternaryVennNode.getFirstThird().addInputEventListener(new MousePressedListener());
-        ternaryVennNode.getSecondThird().addInputEventListener(new ToolTipTextListener());
-        ternaryVennNode.getSecondThird().addInputEventListener(new MousePressedListener());
-        ternaryVennNode.getIntersection().addInputEventListener(new ToolTipTextListener());
-        ternaryVennNode.getIntersection().addInputEventListener(new MousePressedListener());
-        */
         canvas.getLayer().addChild(ternaryVennNode);
     }
 
@@ -264,38 +240,6 @@ final class DiagramView
             node.addInputEventListener(new ToolTipTextListener());
             node.addInputEventListener(new MousePressedListener());
         }
-        /*
-        quaternaryVennNode.getFirstOnly().addInputEventListener(new ToolTipTextListener());
-        quaternaryVennNode.getFirstOnly().addInputEventListener(new MousePressedListener());
-        quaternaryVennNode.getSecondOnly().addInputEventListener(new ToolTipTextListener());
-        quaternaryVennNode.getSecondOnly().addInputEventListener(new MousePressedListener());
-        quaternaryVennNode.getThirdOnly().addInputEventListener(new ToolTipTextListener());
-        quaternaryVennNode.getThirdOnly().addInputEventListener(new MousePressedListener());
-        quaternaryVennNode.getFourthOnly().addInputEventListener(new ToolTipTextListener());
-        quaternaryVennNode.getFourthOnly().addInputEventListener(new MousePressedListener());
-        quaternaryVennNode.getFirstSecond().addInputEventListener(new ToolTipTextListener());
-        quaternaryVennNode.getFirstSecond().addInputEventListener(new MousePressedListener());
-        quaternaryVennNode.getFirstThird().addInputEventListener(new ToolTipTextListener());
-        quaternaryVennNode.getFirstThird().addInputEventListener(new MousePressedListener());
-        quaternaryVennNode.getSecondThird().addInputEventListener(new ToolTipTextListener());
-        quaternaryVennNode.getSecondThird().addInputEventListener(new MousePressedListener());
-        quaternaryVennNode.getFirstFourth().addInputEventListener(new ToolTipTextListener());
-        quaternaryVennNode.getFirstFourth().addInputEventListener(new MousePressedListener());
-        quaternaryVennNode.getSecondFourth().addInputEventListener(new ToolTipTextListener());
-        quaternaryVennNode.getSecondFourth().addInputEventListener(new MousePressedListener());
-        quaternaryVennNode.getThirdFourth().addInputEventListener(new ToolTipTextListener());
-        quaternaryVennNode.getThirdFourth().addInputEventListener(new MousePressedListener());
-        quaternaryVennNode.getFirstSecondThird().addInputEventListener(new ToolTipTextListener());
-        quaternaryVennNode.getFirstSecondThird().addInputEventListener(new MousePressedListener());
-        quaternaryVennNode.getFirstSecondFourth().addInputEventListener(new ToolTipTextListener());
-        quaternaryVennNode.getFirstSecondFourth().addInputEventListener(new MousePressedListener());
-        quaternaryVennNode.getFirstThirdFourth().addInputEventListener(new ToolTipTextListener());
-        quaternaryVennNode.getFirstThirdFourth().addInputEventListener(new MousePressedListener());
-        quaternaryVennNode.getSecondThirdFourth().addInputEventListener(new ToolTipTextListener());
-        quaternaryVennNode.getSecondThirdFourth().addInputEventListener(new MousePressedListener());
-        quaternaryVennNode.getIntersection().addInputEventListener(new ToolTipTextListener());
-        quaternaryVennNode.getIntersection().addInputEventListener(new MousePressedListener());
-        */
         canvas.getLayer().addChild(quaternaryVennNode);
     }
 
