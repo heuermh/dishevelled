@@ -38,14 +38,14 @@ import cytoscape.plugin.CytoscapePlugin;
   todos:
 
   layout dialogs with regards to main Cytoscape frame
-  create icons for actions
   update icon/text for actions on selection change
   additional information in CyGroup list cell renderer, or use table
   additional information in CyNode list cell renderer, or use table
   provide keyboard access to pan & zoom
-  test against 2.8-alpha or 2.8 built from svn source
+  test against 2.8-alpha or 2.8 built from svn source, doesn't start, neither does grouptool 1.x
+    CyGroupChangeListener.ChangeType is missing
   add dependencies report to site, or list/link dependency licenses explicitly
-  implement export or remove action
+  implement export or remove action, currently removed
   update screenshots to show interactivity of diagram view
   cut 0.2 release and find place to host it
 

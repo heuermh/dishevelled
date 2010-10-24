@@ -59,6 +59,7 @@ import cytoscape.CyNode;
 import cytoscape.CyNetwork;
 import cytoscape.Cytoscape;
 
+import org.dishevelled.piccolo.venn.AbstractVennNode;
 import org.dishevelled.piccolo.venn.BinaryVennNode;
 import org.dishevelled.piccolo.venn.TernaryVennNode;
 import org.dishevelled.piccolo.venn.QuaternaryVennNode;
@@ -200,12 +201,19 @@ final class DiagramView
     {
         this();
         binaryVennNode.offset(92.0d, 124.0d);
+        for (PNode node : binaryVennNode.nodes())
+        {
+            node.addInputEventListener(new ToolTipTextListener());
+            node.addInputEventListener(new MousePressedListener());
+        }
+        /*
         binaryVennNode.getFirstOnly().addInputEventListener(new ToolTipTextListener());
         binaryVennNode.getFirstOnly().addInputEventListener(new MousePressedListener());
         binaryVennNode.getSecondOnly().addInputEventListener(new ToolTipTextListener());
         binaryVennNode.getSecondOnly().addInputEventListener(new MousePressedListener());
         binaryVennNode.getIntersection().addInputEventListener(new ToolTipTextListener());
         binaryVennNode.getIntersection().addInputEventListener(new MousePressedListener());
+        */
         canvas.getLayer().addChild(binaryVennNode);
     }
 
@@ -218,6 +226,12 @@ final class DiagramView
     {
         this();
         ternaryVennNode.offset(92.0d, 70.0d);
+        for (PNode node : ternaryVennNode.nodes())
+        {
+            node.addInputEventListener(new ToolTipTextListener());
+            node.addInputEventListener(new MousePressedListener());
+        }
+        /*
         ternaryVennNode.getFirstOnly().addInputEventListener(new ToolTipTextListener());
         ternaryVennNode.getFirstOnly().addInputEventListener(new MousePressedListener());
         ternaryVennNode.getSecondOnly().addInputEventListener(new ToolTipTextListener());
@@ -232,6 +246,7 @@ final class DiagramView
         ternaryVennNode.getSecondThird().addInputEventListener(new MousePressedListener());
         ternaryVennNode.getIntersection().addInputEventListener(new ToolTipTextListener());
         ternaryVennNode.getIntersection().addInputEventListener(new MousePressedListener());
+        */
         canvas.getLayer().addChild(ternaryVennNode);
     }
 
@@ -244,6 +259,12 @@ final class DiagramView
     {
         this();
         quaternaryVennNode.offset(40.0d, 235.0d);
+        for (PNode node : quaternaryVennNode.nodes())
+        {
+            node.addInputEventListener(new ToolTipTextListener());
+            node.addInputEventListener(new MousePressedListener());
+        }
+        /*
         quaternaryVennNode.getFirstOnly().addInputEventListener(new ToolTipTextListener());
         quaternaryVennNode.getFirstOnly().addInputEventListener(new MousePressedListener());
         quaternaryVennNode.getSecondOnly().addInputEventListener(new ToolTipTextListener());
@@ -274,252 +295,59 @@ final class DiagramView
         quaternaryVennNode.getSecondThirdFourth().addInputEventListener(new MousePressedListener());
         quaternaryVennNode.getIntersection().addInputEventListener(new ToolTipTextListener());
         quaternaryVennNode.getIntersection().addInputEventListener(new MousePressedListener());
+        */
         canvas.getLayer().addChild(quaternaryVennNode);
     }
 
 
-    // @todo move this logic internal to venn node(s)
+    /**
+     * Return the label text for the picked node for the specified pick path, if any.
+     *
+     * @param path pick path
+     * @return the label text for the picked node for the specified pick path, or <code>null</code>
+     *    if no such label text exists
+     */
     private String getLabelTextForPickedNode(final PPickPath path)
     {
         PNode pickedNode = path.getPickedNode();
         for (Iterator i = path.getNodeStackReference().iterator(); i.hasNext(); )
         {
             PNode node = (PNode) i.next();
-            if (node instanceof BinaryVennNode)
+            if (node instanceof AbstractVennNode)
             {
-                BinaryVennNode binaryVennNode = (BinaryVennNode) node;
-                if (binaryVennNode.getFirstOnly().equals(pickedNode))
+                AbstractVennNode abstractVennNode = (AbstractVennNode) node;
+                String labelText = abstractVennNode.labelTextForNode(pickedNode);
+                if (labelText != null)
                 {
-                    return binaryVennNode.getFirstOnlyLabelText();
-                }
-                else if (binaryVennNode.getSecondOnly().equals(pickedNode))
-                {
-                    return binaryVennNode.getSecondOnlyLabelText();
-                }
-                else if (binaryVennNode.getIntersection().equals(pickedNode))
-                {
-                    return binaryVennNode.getIntersectionLabelText();
-                }
-            }
-            else if (node instanceof TernaryVennNode)
-            {
-                TernaryVennNode ternaryVennNode = (TernaryVennNode) node;
-                if (ternaryVennNode.getFirstOnly().equals(pickedNode))
-                {
-                    return ternaryVennNode.getFirstOnlyLabelText();
-                }
-                else if (ternaryVennNode.getSecondOnly().equals(pickedNode))
-                {
-                    return ternaryVennNode.getSecondOnlyLabelText();
-                }
-                else if (ternaryVennNode.getThirdOnly().equals(pickedNode))
-                {
-                    return ternaryVennNode.getThirdOnlyLabelText();
-                }
-                else if (ternaryVennNode.getFirstSecond().equals(pickedNode))
-                {
-                    return ternaryVennNode.getFirstSecondLabelText();
-                }
-                else if (ternaryVennNode.getFirstThird().equals(pickedNode))
-                {
-                    return ternaryVennNode.getFirstThirdLabelText();
-                }
-                else if (ternaryVennNode.getSecondThird().equals(pickedNode))
-                {
-                    return ternaryVennNode.getSecondThirdLabelText();
-                }
-                else if (ternaryVennNode.getIntersection().equals(pickedNode))
-                {
-                    return ternaryVennNode.getIntersectionLabelText();
-                }
-            }
-            else if (node instanceof QuaternaryVennNode)
-            {
-                QuaternaryVennNode quaternaryVennNode = (QuaternaryVennNode) node;
-                if (quaternaryVennNode.getFirstOnly().equals(pickedNode))
-                {
-                    return quaternaryVennNode.getFirstOnlyLabelText();
-                }
-                else if (quaternaryVennNode.getSecondOnly().equals(pickedNode))
-                {
-                    return quaternaryVennNode.getSecondOnlyLabelText();
-                }
-                else if (quaternaryVennNode.getThirdOnly().equals(pickedNode))
-                {
-                    return quaternaryVennNode.getThirdOnlyLabelText();
-                }
-                else if (quaternaryVennNode.getFourthOnly().equals(pickedNode))
-                {
-                    return quaternaryVennNode.getFourthOnlyLabelText();
-                }
-                else if (quaternaryVennNode.getFirstSecond().equals(pickedNode))
-                {
-                    return quaternaryVennNode.getFirstSecondLabelText();
-                }
-                else if (quaternaryVennNode.getFirstThird().equals(pickedNode))
-                {
-                    return quaternaryVennNode.getFirstThirdLabelText();
-                }
-                else if (quaternaryVennNode.getSecondThird().equals(pickedNode))
-                {
-                    return quaternaryVennNode.getSecondThirdLabelText();
-                }
-                else if (quaternaryVennNode.getFirstFourth().equals(pickedNode))
-                {
-                    return quaternaryVennNode.getFirstFourthLabelText();
-                }
-                else if (quaternaryVennNode.getSecondFourth().equals(pickedNode))
-                {
-                    return quaternaryVennNode.getSecondFourthLabelText();
-                }
-                else if (quaternaryVennNode.getThirdFourth().equals(pickedNode))
-                {
-                    return quaternaryVennNode.getThirdFourthLabelText();
-                }
-                else if (quaternaryVennNode.getFirstSecondThird().equals(pickedNode))
-                {
-                    return quaternaryVennNode.getFirstSecondThirdLabelText();
-                }
-                else if (quaternaryVennNode.getFirstSecondFourth().equals(pickedNode))
-                {
-                    return quaternaryVennNode.getFirstSecondFourthLabelText();
-                }
-                else if (quaternaryVennNode.getFirstThirdFourth().equals(pickedNode))
-                {
-                    return quaternaryVennNode.getFirstThirdFourthLabelText();
-                }
-                else if (quaternaryVennNode.getSecondThirdFourth().equals(pickedNode))
-                {
-                    return quaternaryVennNode.getSecondThirdFourthLabelText();
-                }
-                else if (quaternaryVennNode.getIntersection().equals(pickedNode))
-                {
-                    return quaternaryVennNode.getIntersectionLabelText();
+                    return labelText;
                 }
             }
         }
         return null;
     }
 
-    // @todo move this logic internal to venn node(s)
+    /**
+     * Return the view for the picked node for the specified pick path, if any.
+     *
+     * @param path pick path
+     * @return the view for the picked node for the specified pick path, or <code>null</code>
+     *    if no such view exists
+     */
     private Set<CyNode> getViewForPickedNode(final PPickPath path)
     {
         PNode pickedNode = path.getPickedNode();
         for (Iterator i = path.getNodeStackReference().iterator(); i.hasNext(); )
         {
             PNode node = (PNode) i.next();
-            if (node instanceof BinaryVennNode)
+            if (node instanceof AbstractVennNode)
             {
-                BinaryVennNode binaryVennNode = (BinaryVennNode) node;
-                if (binaryVennNode.getFirstOnly().equals(pickedNode))
+                AbstractVennNode<CyNode> abstractVennNode = (AbstractVennNode<CyNode>) node;
+                Set<CyNode> view = abstractVennNode.viewForNode(pickedNode);
+                if (view != null)
                 {
-                    return binaryVennNode.getModel().firstOnly();
-                }
-                else if (binaryVennNode.getSecondOnly().equals(pickedNode))
-                {
-                    return binaryVennNode.getModel().secondOnly();
-                }
-                else if (binaryVennNode.getIntersection().equals(pickedNode))
-                {
-                    return binaryVennNode.getModel().intersection();
+                    return view;
                 }
             }
-            else if (node instanceof TernaryVennNode)
-            {
-                TernaryVennNode ternaryVennNode = (TernaryVennNode) node;
-                if (ternaryVennNode.getFirstOnly().equals(pickedNode))
-                {
-                    return ternaryVennNode.getModel().firstOnly();
-                }
-                else if (ternaryVennNode.getSecondOnly().equals(pickedNode))
-                {
-                    return ternaryVennNode.getModel().secondOnly();
-                }
-                else if (ternaryVennNode.getThirdOnly().equals(pickedNode))
-                {
-                    return ternaryVennNode.getModel().thirdOnly();
-                }
-                else if (ternaryVennNode.getFirstSecond().equals(pickedNode))
-                {
-                    return ternaryVennNode.getModel().firstSecond();
-                }
-                else if (ternaryVennNode.getFirstThird().equals(pickedNode))
-                {
-                    return ternaryVennNode.getModel().firstThird();
-                }
-                else if (ternaryVennNode.getSecondThird().equals(pickedNode))
-                {
-                    return ternaryVennNode.getModel().secondThird();
-                }
-                else if (ternaryVennNode.getIntersection().equals(pickedNode))
-                {
-                    return ternaryVennNode.getModel().intersection();
-                }
-            }
-            else if (node instanceof QuaternaryVennNode)
-            {
-                QuaternaryVennNode quaternaryVennNode = (QuaternaryVennNode) node;
-                if (quaternaryVennNode.getFirstOnly().equals(pickedNode))
-                {
-                    return quaternaryVennNode.getModel().firstOnly();
-                }
-                else if (quaternaryVennNode.getSecondOnly().equals(pickedNode))
-                {
-                    return quaternaryVennNode.getModel().secondOnly();
-                }
-                else if (quaternaryVennNode.getThirdOnly().equals(pickedNode))
-                {
-                    return quaternaryVennNode.getModel().thirdOnly();
-                }
-                else if (quaternaryVennNode.getFourthOnly().equals(pickedNode))
-                {
-                    return quaternaryVennNode.getModel().fourthOnly();
-                }
-                else if (quaternaryVennNode.getFirstSecond().equals(pickedNode))
-                {
-                    return quaternaryVennNode.getModel().firstSecond();
-                }
-                else if (quaternaryVennNode.getFirstThird().equals(pickedNode))
-                {
-                    return quaternaryVennNode.getModel().firstThird();
-                }
-                else if (quaternaryVennNode.getSecondThird().equals(pickedNode))
-                {
-                    return quaternaryVennNode.getModel().secondThird();
-                }
-                else if (quaternaryVennNode.getFirstFourth().equals(pickedNode))
-                {
-                    return quaternaryVennNode.getModel().firstFourth();
-                }
-                else if (quaternaryVennNode.getSecondFourth().equals(pickedNode))
-                {
-                    return quaternaryVennNode.getModel().secondFourth();
-                }
-                else if (quaternaryVennNode.getThirdFourth().equals(pickedNode))
-                {
-                    return quaternaryVennNode.getModel().thirdFourth();
-                }
-                else if (quaternaryVennNode.getFirstSecondThird().equals(pickedNode))
-                {
-                    return quaternaryVennNode.getModel().firstSecondThird();
-                }
-                else if (quaternaryVennNode.getFirstSecondFourth().equals(pickedNode))
-                {
-                    return quaternaryVennNode.getModel().firstSecondFourth();
-                }
-                else if (quaternaryVennNode.getFirstThirdFourth().equals(pickedNode))
-                {
-                    return quaternaryVennNode.getModel().firstThirdFourth();
-                }
-                else if (quaternaryVennNode.getSecondThirdFourth().equals(pickedNode))
-                {
-                    return quaternaryVennNode.getModel().secondThirdFourth();
-                }
-                else if (quaternaryVennNode.getIntersection().equals(pickedNode))
-                {
-                    return quaternaryVennNode.getModel().intersection();
-                }
-           }
         }
         return null;
     }

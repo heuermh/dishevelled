@@ -23,6 +23,8 @@
 */
 package org.dishevelled.piccolo.venn;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 
 import org.piccolo2d.PNode;
@@ -44,7 +46,7 @@ import org.dishevelled.venn.model.BinaryVennModelImpl;
  * @version $Revision$ $Date$
  */
 public abstract class AbstractBinaryVennNode<E>
-    extends PNode
+    extends AbstractVennNode<E>
 {
     /** Binary venn model. */
     private BinaryVennModel<E> model;
@@ -67,9 +69,6 @@ public abstract class AbstractBinaryVennNode<E>
     /** Label text for the union view. */
     private String unionLabelText = DEFAULT_UNION_LABEL_TEXT;
 
-    /** True if labels should display sizes. */
-    private boolean displaySizes = true;
-
     /** Label for the first set. */
     private final PText firstLabel = new PText();
 
@@ -87,6 +86,10 @@ public abstract class AbstractBinaryVennNode<E>
 
     /** Label for the union view. */
     private final PText unionLabel = new PText();
+
+    /** List of labels. */
+    private final List<PText> labels = Arrays.asList(new PText[] { firstLabel, secondLabel, firstOnlyLabel,
+                                                                   secondOnlyLabel, intersectionLabel, unionLabel });
 
     /** Update labels and contents. */
     private final SetChangeListener<E> update = new SetChangeListener<E>()
@@ -207,27 +210,12 @@ public abstract class AbstractBinaryVennNode<E>
      */
     protected abstract void updateContents();
 
-    /**
-     * Build and return label text.
-     *
-     * @param labelText label text
-     * @param size size
-     * @return label text
-     */
-    private String buildLabel(final String labelText, final int size)
-    {
-        StringBuilder sb = new StringBuilder();
-        sb.append(labelText);
-        if (displaySizes)
-        {
-            sb.append(" (");
-            sb.append(size);
-            sb.append(")");
-        }
-        sb.append(":");
-        return sb.toString();
-    }
 
+    /** {@inheritDoc} */
+    public final Iterable<PText> labels()
+    {
+        return labels;
+    }
 
     /**
      * Return the model for this binary venn label.  The model will not be null.
@@ -258,30 +246,6 @@ public abstract class AbstractBinaryVennNode<E>
         installListeners();
         updateLabels();
         firePropertyChange(-1, "model", oldModel, this.model);
-    }
-
-    /**
-     * Return true if labels should display sizes.  Defaults to <code>true</code>.
-     *
-     * @return true if labels should display sizes
-     */
-    public final boolean getDisplaySizes()
-    {
-        return displaySizes;
-    }
-
-    /**
-     * Set to true if labels should display sizes.
-     *
-     * <p>This is a bound property.</p>
-     *
-     * @param displaySizes true if labels should display sizes
-     */
-    public final void setDisplaySizes(final boolean displaySizes)
-    {
-        boolean oldDisplaySizes = this.displaySizes;
-        this.displaySizes = displaySizes;
-        firePropertyChange(-1, "displaySizes", oldDisplaySizes, this.displaySizes);
     }
 
     /**
