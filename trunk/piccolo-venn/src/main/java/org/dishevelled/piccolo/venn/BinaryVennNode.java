@@ -33,6 +33,8 @@ import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 
 import org.piccolo2d.PNode;
@@ -77,6 +79,9 @@ public class BinaryVennNode<E>
 
     /** Label for the size of the intersection view. */
     private final PText intersectionSize = new PText();
+
+    /** List of nodes. */
+    private final List<PNode> nodes = Arrays.asList(new PNode[] { firstOnly, secondOnly, intersection });
 
     /** Cached area. */
     private Area f;
@@ -330,5 +335,65 @@ public class BinaryVennNode<E>
     public PArea getIntersection()
     {
         return intersection;
+    }
+
+    /** {@inheritDoc} */
+    public Iterable<PNode> nodes()
+    {
+        return nodes;
+    }
+
+    /** {@inheritDoc} */
+    public PText labelForNode(final PNode node)
+    {
+        if (firstOnly.equals(node))
+        {
+            return getFirstOnlyLabel();
+        }
+        else if (secondOnly.equals(node))
+        {
+            return getSecondOnlyLabel();
+        }
+        else if (intersection.equals(node))
+        {
+            return getIntersectionLabel();
+        }
+        return null;
+    }
+
+    /** {@inheritDoc} */
+    public String labelTextForNode(final PNode node)
+    {
+        if (firstOnly.equals(node))
+        {
+            return getFirstOnlyLabelText();
+        }
+        else if (secondOnly.equals(node))
+        {
+            return getSecondOnlyLabelText();
+        }
+        else if (intersection.equals(node))
+        {
+            return getIntersectionLabelText();
+        }
+        return null;
+    }
+
+    /** {@inheritDoc} */
+    public Set<E> viewForNode(final PNode node)
+    {
+        if (firstOnly.equals(node))
+        {
+            return getModel().firstOnly();
+        }
+        else if (secondOnly.equals(node))
+        {
+            return getModel().secondOnly();
+        }
+        else if (intersection.equals(node))
+        {
+            return getModel().intersection();
+        }
+        return null;
     }
 }

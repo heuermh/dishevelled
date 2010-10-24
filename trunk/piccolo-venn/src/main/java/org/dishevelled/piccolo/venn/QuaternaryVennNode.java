@@ -34,6 +34,8 @@ import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 
 import java.util.concurrent.Executors;
@@ -161,6 +163,13 @@ public class QuaternaryVennNode<E>
 
     /** Label for the size of the intersection view. */
     private final PText intersectionSize = new PText();
+
+    /** List of nodes. */
+    private final List<PNode> nodes = Arrays.asList(new PNode[] { firstOnly, secondOnly, thirdOnly, fourthOnly,
+                                                                  firstSecond, firstThird, secondThird, firstFourth,
+                                                                  secondFourth, thirdFourth, firstSecondThird,
+                                                                  firstSecondFourth, firstThirdFourth,
+                                                                  secondThirdFourth, intersection });
 
     /** Cached area. */
     private Area f;
@@ -800,6 +809,211 @@ public class QuaternaryVennNode<E>
     {
         return intersection;
     }
+
+    /** {@inheritDoc} */
+    public Iterable<PNode> nodes()
+    {
+        return nodes;
+    }
+
+    /** {@inheritDoc} */
+    public PText labelForNode(final PNode node)
+    {
+        if (firstOnly.equals(node))
+        {
+            return getFirstOnlyLabel();
+        }
+        else if (secondOnly.equals(node))
+        {
+            return getSecondOnlyLabel();
+        }
+        else if (thirdOnly.equals(node))
+        {
+            return getThirdOnlyLabel();
+        }
+        else if (fourthOnly.equals(node))
+        {
+            return getFourthOnlyLabel();
+        }
+        else if (firstSecond.equals(node))
+        {
+            return getFirstSecondLabel();
+        }
+        else if (firstThird.equals(node))
+        {
+            return getFirstThirdLabel();
+        }
+        else if (secondThird.equals(node))
+        {
+            return getSecondThirdLabel();
+        }
+        else if (firstFourth.equals(node))
+        {
+            return getFirstFourthLabel();
+        }
+        else if (secondFourth.equals(node))
+        {
+            return getSecondFourthLabel();
+        }
+        else if (thirdFourth.equals(node))
+        {
+            return getThirdFourthLabel();
+        }
+        else if (firstSecondThird.equals(node))
+        {
+            return getFirstSecondThirdLabel();
+        }
+        else if (firstSecondFourth.equals(node))
+        {
+            return getFirstSecondFourthLabel();
+        }
+        else if (firstThirdFourth.equals(node))
+        {
+            return getFirstThirdFourthLabel();
+        }
+        else if (secondThirdFourth.equals(node))
+        {
+            return getSecondThirdFourthLabel();
+        }
+        else if (intersection.equals(node))
+        {
+            return getIntersectionLabel();
+        }
+        return null;
+    }
+
+    /** {@inheritDoc} */
+    public String labelTextForNode(final PNode node)
+    {
+        if (firstOnly.equals(node))
+        {
+            return getFirstOnlyLabelText();
+        }
+        else if (secondOnly.equals(node))
+        {
+            return getSecondOnlyLabelText();
+        }
+        else if (thirdOnly.equals(node))
+        {
+            return getThirdOnlyLabelText();
+        }
+        else if (fourthOnly.equals(node))
+        {
+            return getFourthOnlyLabelText();
+        }
+        else if (firstSecond.equals(node))
+        {
+            return getFirstSecondLabelText();
+        }
+        else if (firstThird.equals(node))
+        {
+            return getFirstThirdLabelText();
+        }
+        else if (secondThird.equals(node))
+        {
+            return getSecondThirdLabelText();
+        }
+        else if (firstFourth.equals(node))
+        {
+            return getFirstFourthLabelText();
+        }
+        else if (secondFourth.equals(node))
+        {
+            return getSecondFourthLabelText();
+        }
+        else if (thirdFourth.equals(node))
+        {
+            return getThirdFourthLabelText();
+        }
+        else if (firstSecondThird.equals(node))
+        {
+            return getFirstSecondThirdLabelText();
+        }
+        else if (firstSecondFourth.equals(node))
+        {
+            return getFirstSecondFourthLabelText();
+        }
+        else if (firstThirdFourth.equals(node))
+        {
+            return getFirstThirdFourthLabelText();
+        }
+        else if (secondThirdFourth.equals(node))
+        {
+            return getSecondThirdFourthLabelText();
+        }
+        else if (intersection.equals(node))
+        {
+            return getIntersectionLabelText();
+        }
+        return null;
+    }
+
+    /** {@inheritDoc} */
+    public Set<E> viewForNode(final PNode node)
+    {
+        if (firstOnly.equals(node))
+        {
+            return getModel().firstOnly();
+        }
+        else if (secondOnly.equals(node))
+        {
+            return getModel().secondOnly();
+        }
+        else if (thirdOnly.equals(node))
+        {
+            return getModel().thirdOnly();
+        }
+        else if (fourthOnly.equals(node))
+        {
+            return getModel().fourthOnly();
+        }
+        else if (firstSecond.equals(node))
+        {
+            return getModel().firstSecond();
+        }
+        else if (firstThird.equals(node))
+        {
+            return getModel().firstThird();
+        }
+        else if (secondThird.equals(node))
+        {
+            return getModel().secondThird();
+        }
+        else if (firstFourth.equals(node))
+        {
+            return getModel().firstFourth();
+        }
+        else if (secondFourth.equals(node))
+        {
+            return getModel().secondFourth();
+        }
+        else if (thirdFourth.equals(node))
+        {
+            return getModel().thirdFourth();
+        }
+        else if (firstSecondThird.equals(node))
+        {
+            return getModel().firstSecondThird();
+        }
+        else if (firstSecondFourth.equals(node))
+        {
+            return getModel().firstSecondFourth();
+        }
+        else if (firstThirdFourth.equals(node))
+        {
+            return getModel().firstThirdFourth();
+        }
+        else if (secondThirdFourth.equals(node))
+        {
+            return getModel().secondThirdFourth();
+        }
+        else if (intersection.equals(node))
+        {
+            return getModel().intersection();
+        }
+        return null;
+    }
+
 
     /**
      * Layout worker.
