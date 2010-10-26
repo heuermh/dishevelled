@@ -25,7 +25,7 @@
 <project>
   <body>
     <menu>
-      <item name="Downloads"/>
+      <item name="Downloads" href="https://sourceforge.net/projects/dishevelled/files/venn-cytoscape-plugin"/>
       <item name="Repository" href="source-repository.html"/>
       <item name="Javadocs" href="apidocs/index.html"/>
       <item name="Checkstyle" href="checkstyle.html"/>
