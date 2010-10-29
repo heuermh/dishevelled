@@ -65,6 +65,13 @@ public final class DiscreteColorScheme
 
     /**
      * Create a new discrete color scheme.
+     *
+     * @param name name
+     * @param colors list of colors, must not be null and must contain at least two colors
+     * @param minimumValue minimum value
+     * @param maximumValue maximum value
+     * @param colorFactory color factory, must not be null
+     * @param interpolation interpolation, must not be null
      */
     public DiscreteColorScheme(final String name,
                                final List<Color> colors,
@@ -87,7 +94,7 @@ public final class DiscreteColorScheme
         }
         if (interpolation == null)
         {
-            throw new IllegalArgumentException("colorFactory must not be null");
+            throw new IllegalArgumentException("interpolation must not be null");
         }
         this.name = name;
         this.colors = new ArrayList<Color>(colors);
@@ -116,43 +123,43 @@ public final class DiscreteColorScheme
     }
 
     /** {@inheritDoc} */
-    public final double getMinimumValue()
+    public double getMinimumValue()
     {
         return minimumValue;
     }
 
     /** {@inheritDoc} */
-    public final void setMinimumValue(final double minimumValue)
+    public void setMinimumValue(final double minimumValue)
     {
         throw new UnsupportedOperationException("setMinimumValue operation not supported by this color scheme");
     }
 
     /** {@inheritDoc} */
-    public final double getMaximumValue()
+    public double getMaximumValue()
     {
         return maximumValue;
     }
 
     /** {@inheritDoc} */
-    public final void setMaximumValue(final double maximumValue)
+    public void setMaximumValue(final double maximumValue)
     {
         throw new UnsupportedOperationException("setMaximumValue operation not supported by this color scheme");
     }
 
     /** {@inheritDoc} */
-    public final double getZeroValue()
+    public double getZeroValue()
     {
         return Double.NaN;
     }
 
     /** {@inheritDoc} */
-    public final void setZeroValue(final double zeroValue)
+    public void setZeroValue(final double zeroValue)
     {
         throw new UnsupportedOperationException("setZeroValue operation not supported by this color scheme");
     }
 
     /** {@inheritDoc} */
-    public final ColorFactory getColorFactory()
+    public ColorFactory getColorFactory()
     {
         return colorFactory;
     }
@@ -164,13 +171,13 @@ public final class DiscreteColorScheme
     }
 
     /** {@inheritDoc} */
-    public final Interpolation getInterpolation()
+    public Interpolation getInterpolation()
     {
         return interpolation;
     }
 
     /** {@inheritDoc} */
-    public final void setInterpolation(final Interpolation interpolation)
+    public void setInterpolation(final Interpolation interpolation)
     {
         throw new UnsupportedOperationException("setInterpolation operation not supported by this color scheme");
     }
@@ -206,7 +213,7 @@ public final class DiscreteColorScheme
     }
 
     /** {@inheritDoc} */
-    public final Color getColor(final double value)
+    public Color getColor(final double value)
     {
         if (value < getMinimumAnchor())
         {

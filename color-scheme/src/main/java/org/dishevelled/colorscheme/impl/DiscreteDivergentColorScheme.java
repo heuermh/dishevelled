@@ -68,6 +68,14 @@ public final class DiscreteDivergentColorScheme
 
     /**
      * Create a new discrete divergent color scheme.
+     *
+     * @param name name
+     * @param colors list of colors, must not be null and must contain at least two colors
+     * @param minimumValue minimum value
+     * @param zeroValue zero value
+     * @param maximumValue maximum value
+     * @param colorFactory color factory, must not be null
+     * @param interpolation interpolation, must not be null
      */
     public DiscreteDivergentColorScheme(final String name,
                                         final List<Color> colors,
@@ -91,7 +99,7 @@ public final class DiscreteDivergentColorScheme
         }
         if (interpolation == null)
         {
-            throw new IllegalArgumentException("colorFactory must not be null");
+            throw new IllegalArgumentException("interpolation must not be null");
         }
         this.name = name;
         this.colors = new ArrayList<Color>(colors);
@@ -119,33 +127,33 @@ public final class DiscreteDivergentColorScheme
         // ick.
         double z = zeroValue;
         double mn = minimumValue;
-        double mx = maximumValue; 
+        double mx = maximumValue;
         double x = (z - mn);
         double y = (mx - z);
         int c = colors.size();
-        int d = (c/2);
+        int d = (c / 2);
 
         if ((c % 2) == 0)
         {
             for (int i = 1; i < d; i++)
             {
-                anchors.add((2 * i * x)/c);
+                anchors.add((2 * i * x) / c);
             }
             anchors.add(z);
             for (int i = d + 1; i < c; i++)
             {
-                anchors.add((2 * (i - d) * y)/c + z);
+                anchors.add((2 * (i - d) * y) / c + z);
             }
         }
         else
         {
             for (int i = 1; i < d + 1; i++)
             {
-                anchors.add((2 * i * x)/c);
+                anchors.add((2 * i * x) / c);
             }
             for (int i = d + 1; i < c; i++)
             {
-                anchors.add(((2 * (i - d) - 1) * y)/c + z );
+                anchors.add(((2 * (i - d) - 1) * y) / c + z );
             }
         }
     }
@@ -162,46 +170,46 @@ public final class DiscreteDivergentColorScheme
     }
 
     /** {@inheritDoc} */
-    public final double getMinimumValue()
+    public double getMinimumValue()
     {
         return minimumValue;
     }
 
     /** {@inheritDoc} */
-    public final void setMinimumValue(final double minimumValue)
+    public void setMinimumValue(final double minimumValue)
     {
         this.minimumValue = minimumValue;
         recalculateAnchors();
     }
 
     /** {@inheritDoc} */
-    public final double getMaximumValue()
+    public double getMaximumValue()
     {
         return maximumValue;
     }
 
     /** {@inheritDoc} */
-    public final void setMaximumValue(final double maximumValue)
+    public void setMaximumValue(final double maximumValue)
     {
         this.maximumValue = maximumValue;
         recalculateAnchors();
     }
 
     /** {@inheritDoc} */
-    public final double getZeroValue()
+    public double getZeroValue()
     {
         return zeroValue;
     }
 
     /** {@inheritDoc} */
-    public final void setZeroValue(final double zeroValue)
+    public void setZeroValue(final double zeroValue)
     {
         this.zeroValue = zeroValue;
         recalculateAnchors();
     }
 
     /** {@inheritDoc} */
-    public final ColorFactory getColorFactory()
+    public ColorFactory getColorFactory()
     {
         return colorFactory;
     }
@@ -213,13 +221,13 @@ public final class DiscreteDivergentColorScheme
     }
 
     /** {@inheritDoc} */
-    public final Interpolation getInterpolation()
+    public Interpolation getInterpolation()
     {
         return interpolation;
     }
 
     /** {@inheritDoc} */
-    public final void setInterpolation(final Interpolation interpolation)
+    public void setInterpolation(final Interpolation interpolation)
     {
         throw new UnsupportedOperationException("setInterpolation operation not supported by this color scheme");
     }
@@ -255,7 +263,7 @@ public final class DiscreteDivergentColorScheme
     }
 
     /** {@inheritDoc} */
-    public final Color getColor(final double value)
+    public Color getColor(final double value)
     {
         if (value < getMinimumAnchor())
         {
