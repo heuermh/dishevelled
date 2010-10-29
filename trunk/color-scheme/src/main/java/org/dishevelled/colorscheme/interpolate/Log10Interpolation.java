@@ -37,22 +37,34 @@ public final class Log10Interpolation
     /** Natural log of 10.0d. */
     private static final double LOG_10 = Math.log(10.0d);
 
+    /**
+     * Return the log base 10 of the specified value.
+     *
+     * @param value value
+     * @return the log base 10 of the specified value
+     */
     private static double log10(final double value)
     {
         return Math.log(value) / LOG_10;
     }
 
+    /**
+     * Return the symmetric log base 10 of the specified value.
+     *
+     * @param value value
+     * @return the symmetric log base 10 of the specified value
+     */
     private static double symmetricLog10(final double value)
     {
         return (value == 0.0d) ? 0.0d : ((value < 0.0d) ? -1 * log10(-value) : log10(value));
     }
 
     /** {@inheritDoc} */
-    public final double interpolate(final double value,
-                                    final double sourceMinimum,
-                                    final double sourceMaximum,
-                                    final double targetMinimum,
-                                    final double targetMaximum)
+    public double interpolate(final double value,
+                              final double sourceMinimum,
+                              final double sourceMaximum,
+                              final double targetMinimum,
+                              final double targetMaximum)
     {
         if (value <= sourceMinimum)
         {
@@ -63,6 +75,8 @@ public final class Log10Interpolation
             return targetMaximum;
         }
         // (log(x) - log(d0)) / (log(d1) - log(d0)) * (r1 - r0) + r0
-        return (symmetricLog10(value) - symmetricLog10(sourceMinimum)) / (symmetricLog10(sourceMaximum) - symmetricLog10(sourceMinimum)) * (targetMaximum - targetMinimum) + targetMinimum;
+        return (symmetricLog10(value) - symmetricLog10(sourceMinimum))
+            / (symmetricLog10(sourceMaximum) - symmetricLog10(sourceMinimum))
+            * (targetMaximum - targetMinimum) + targetMinimum;
     }
 }

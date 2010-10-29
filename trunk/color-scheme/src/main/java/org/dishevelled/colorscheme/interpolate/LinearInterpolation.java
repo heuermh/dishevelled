@@ -36,12 +36,13 @@ public final class LinearInterpolation
 {
 
     /** {@inheritDoc} */
-    public final double interpolate(final double value,
-                                    final double sourceMinimum,
-                                    final double sourceMaximum,
-                                    final double targetMinimum,
-                                    final double targetMaximum)
+    public double interpolate(final double value,
+                              final double sourceMinimum,
+                              final double sourceMaximum,
+                              final double targetMinimum,
+                              final double targetMaximum)
     {
-        return targetMinimum + (targetMaximum - targetMinimum) * ((value - sourceMinimum) / (sourceMaximum - sourceMinimum));
+        return targetMinimum + (targetMaximum - targetMinimum)
+            * ((value - sourceMinimum) / (sourceMaximum - sourceMinimum));
     }
 }
