@@ -1,0 +1,232 @@
+/*
+
+    dsh-glazedlists-view  Views that use GlazedLists' EventList.
+    Copyright (c) 2010 held jointly by the individual authors.
+
+    This library is free software; you can redistribute it and/or modify it
+    under the terms of the GNU Lesser General Public License as published
+    by the Free Software Foundation; either version 3 of the License, or (at
+    your option) any later version.
+
+    This library is distributed in the hope that it will be useful, but WITHOUT
+    ANY WARRANTY; with out even the implied warranty of MERCHANTABILITY or
+    FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
+    License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with this library;  if not, write to the Free Software Foundation,
+    Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307  USA.
+
+    > http://www.fsf.org/licensing/licenses/lgpl.html
+    > http://www.opensource.org/licenses/lgpl-license.php
+
+*/
+package org.dishevelled.glazedlists.view;
+
+import ca.odell.glazedlists.EventList;
+import ca.odell.glazedlists.ListSelection;
+
+import java.awt.event.ActionEvent;
+
+import java.util.Collection;
+
+import javax.swing.AbstractAction;
+import javax.swing.JPanel;
+
+import org.dishevelled.identify.IdentifiableAction;
+
+import org.dishevelled.iconbundle.tango.TangoProject;
+
+/**
+ * Abstract event list view.
+ *
+ * @param <E> model element type
+ * @author  Michael Heuer
+ * @version $Revision$ $Date$
+ */
+public abstract class AbstractEventListView<E>
+    extends JPanel
+    implements EventListView<E>
+{
+    /** Event list view support. */
+    private final EventListViewSupport<E> eventListViewSupport;
+
+    /** Select all action. */
+    private final IdentifiableAction selectAllAction = new IdentifiableAction("Select all", TangoProject.EDIT_SELECT_ALL)
+        {
+                /** {@inheritDoc} */
+                public void actionPerformed(final ActionEvent event)
+                {
+                    selectAll();
+                }
+        };
+
+    /** Clear selection action. */
+    private final AbstractAction clearSelectionAction = new AbstractAction("Clear selection")
+        {
+                /** {@inheritDoc} */
+                public void actionPerformed(final ActionEvent event)
+                {
+                    clearSelection();
+                }
+        };
+
+    /** Invert selection action. */
+    private final AbstractAction invertSelectionAction = new AbstractAction("Invert selection")
+        {
+                /** {@inheritDoc} */
+                public void actionPerformed(final ActionEvent event)
+                {
+                    invertSelection();
+                }
+        };
+
+    /** Cut action. */
+    private final IdentifiableAction cutAction = new IdentifiableAction("Cut", TangoProject.EDIT_CUT)
+        {
+                /** {@inheritDoc} */
+                public void actionPerformed(final ActionEvent event)
+                {
+                    cut();
+                }
+        };
+
+    /** Copy action. */
+    private final IdentifiableAction copyAction = new IdentifiableAction("Cut", TangoProject.EDIT_COPY)
+        {
+                /** {@inheritDoc} */
+                public void actionPerformed(final ActionEvent event)
+                {
+                    copy();
+                }
+        };
+
+    /** Paste action. */
+    private final IdentifiableAction pasteAction = new IdentifiableAction("Paste", TangoProject.EDIT_PASTE)
+        {
+                /** {@inheritDoc} */
+                public void actionPerformed(final ActionEvent event)
+                {
+                    paste();
+                }
+        };
+
+    /** Add action. */
+    private final IdentifiableAction addAction = new IdentifiableAction("Add", TangoProject.LIST_ADD)
+        {
+                /** {@inheritDoc} */
+                public void actionPerformed(final ActionEvent event)
+                {
+                    add();
+                }
+        };
+
+    /** Remove action. */
+    private final IdentifiableAction removeAction = new IdentifiableAction("Remove", TangoProject.LIST_REMOVE)
+        {
+                /** {@inheritDoc} */
+                public void actionPerformed(final ActionEvent event)
+                {
+                    //remove();
+                }
+        };
+
+    /** Remove all action. */
+    private final AbstractAction removeAllAction = new AbstractAction("Remove all")
+        {
+                /** {@inheritDoc} */
+                public void actionPerformed(final ActionEvent event)
+                {
+                    //removeAll();
+                }
+        };
+
+
+    /**
+     * Create a new abstract event list view with the specified model.
+     *
+     * @param model model, must not be null
+     */
+    protected AbstractEventListView(final EventList<E> model)
+    {
+        super();
+        eventListViewSupport = new EventListViewSupport<E>(model);
+    }
+
+
+    public final boolean isEmpty()
+    {
+        return getModel().isEmpty();
+    }
+
+    public final boolean isSelectionEmpty()
+    {
+        return getSelectionModel().getSelected().isEmpty();
+    }
+
+    public final void selectAll()
+    {
+        getSelectionModel().selectAll();
+    }
+
+    public final void clearSelection()
+    {
+        getSelectionModel().deselectAll();
+    }
+
+    public final void invertSelection()
+    {
+        getSelectionModel().invertSelection();
+    }
+
+    public final void cut()
+    {
+    }
+
+    public final void copy()
+    {
+    }
+
+    public final void paste()
+    {
+    }
+
+    protected abstract void add();
+
+    /*
+
+      conflict with JPanel methods
+
+    public final void add(final E e)
+    {
+        getModel().add(e);
+    }
+
+    public final void addAll(final Collection<? extends E> e)
+    {
+        getModel().addAll(e);
+    }
+
+    public final void remove()
+    {
+        getSelectionModel().getSelected().clear();
+    }
+
+    public final void removeAll()
+    {
+        getModel().clear();
+    }
+    */
+
+    /** {@inheritDoc} */
+    public final EventList<E> getModel()
+    {
+        return eventListViewSupport.getModel();
+    }
+
+    /** {@inheritDoc} */
+    public final ListSelection<E> getSelectionModel()
+    {
+        return eventListViewSupport.getSelectionModel();
+    }
+}
