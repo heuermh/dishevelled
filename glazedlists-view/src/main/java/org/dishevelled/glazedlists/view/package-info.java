@@ -1,6 +1,6 @@
 /*
 
-    dsh-glazedlists-view  Views that use GlazedLists' EventList.
+    dsh-glazedlists-view  Views for event lists.
     Copyright (c) 2010 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
@@ -23,7 +23,7 @@
 */
 
 /**
- * Views that use GlazedLists' EventList.
+ * Views for event lists.
  */
 package org.dishevelled.glazedlists.view;
 
@@ -39,40 +39,39 @@ observable-view, observable
 ObservableSetViewSupport
 ObservableListViewSupport
 ObservableMapViewSupport
-<<abstract>>AbstractObservableSetView
-<<abstract>>AbstractObservableListView
-<<abstract>>AbstractObservableMapView
-<<int>>ModelToView
-<<int>>ViewToModel
-<<int>>IndexedModelToView
-<<int>>IndexedViewToModel
-<<int>>KeyedModelToView
-<<int>>KeyedViewToModel
-<<int>>View, or ViewDecorator
-NoopView, NoopViewDecorator, ViewAdapter?
+<<abstract>>AbstractObservableSetView extends JPanel
+<<abstract>>AbstractObservableListView extends JPanel
+<<abstract>>AbstractObservableMapView extends JPanel
 
 glazedlists-view, glazedlists
 
 <<int>>EventListView
 EventListViewSupport
-<<abstract>>AbstractEventListView
-EventListModelToView?
-EventListViewToModel?
+<<abstract>>AbstractEventListView extends JPanel
 
 piccolo-selection, observable-view, piccolo
 
-ObservableSetNode
-ObservableListNode
-ObservableMapNode
+ObservableSetNode extends PNode
+ObservableListNode extends PNode
+ObservableMapNode extends PNode
 SelectionMarquee
-SelectionEventHandler
-IndexedSelectionEventHandler
-KeyedSelectionEventHandler
+SelectionEventHandler  (set of selected elements)
+IndexedSelectionEventHandler  (similar to ListSelectionModel)
+KeyedSelectionEventHandler  (set of selected keys)
 
 piccolo-glazedlists-selection, glazedlists-view, piccolo
 
-EventListNode
+EventListNode extends PNode
 EventListSelectionEventHandler ?
+
+glazedlists-identify-view, identify, glazedlists-view
+
+IdElementsLabel
+IdList(View)
+IdTable(View)
+IdTree(View)
+IdGraph(View)
+IdMatrix1/2/3D(View)
 
 piccolo-identify-observable-view, piccolo-selection, piccolo-identify
 
@@ -84,4 +83,10 @@ piccolo-identify-glazedlists-view, piccolo-glazedlists-selection, piccolo-identi
 
 IdEventListNode
 
+other selection models
+
+GraphSelectionModel?
+IndexedSelection1/2/3DModel?
+Binary/Ternary/Quaternary/KeyedSelectionModel?
+BitMatrix1/2/3DSelectionModel?
      */

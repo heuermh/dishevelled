@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!--
 
-    dsh-glazedlists-view  Views that use GlazedLists' EventList.
+    dsh-glazedlists-view  Views for event lists.
     Copyright (c) 2010 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
@@ -31,7 +31,7 @@
 <section name="Summary">
 
 <p>
-dishevelled.org <b>glazedlists-view</b> provides views that use GlazedLists' EventList.
+dishevelled.org <b>glazedlists-view</b> provides views for event lists.
 The glazedlists-view library requires java version 1.5 or later.
 </p>
 </section>
