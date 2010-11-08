@@ -1,6 +1,6 @@
 /*
 
-    dsh-glazedlists-view  Views that use GlazedLists' EventList.
+    dsh-glazedlists-view  Views for event lists.
     Copyright (c) 2010 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
@@ -59,6 +59,7 @@ public final class IdElementsView<E>
                 return labels.get(element);                
             }
         };
+
 
     /**
      * Create a new identifiable elements view with the specified model.

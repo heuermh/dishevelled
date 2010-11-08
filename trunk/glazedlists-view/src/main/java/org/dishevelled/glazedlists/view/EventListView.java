@@ -1,6 +1,6 @@
 /*
 
-    dsh-glazedlists-view  Views that use GlazedLists' EventList.
+    dsh-glazedlists-view  Views for event lists.
     Copyright (c) 2010 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
@@ -27,7 +27,7 @@ import ca.odell.glazedlists.EventList;
 import ca.odell.glazedlists.ListSelection;
 
 /**
- * View to a GlazedLists' EventList.
+ * View to an event list.
  *
  * @param <E> model element type
  * @author  Michael Heuer
