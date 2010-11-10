@@ -25,55 +25,31 @@ package org.dishevelled.glazedlists.view;
 
 import ca.odell.glazedlists.EventList;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import org.dishevelled.functor.UnaryFunction;
-
 import org.dishevelled.iconbundle.IconSize;
 
-import org.dishevelled.identify.IdLabel;
+import org.dishevelled.identify.IdListCellRenderer;
 
 /**
- * Identifiable elements view.
+ * Identifiable elements list.
  *
  * @param <E> model element type
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public final class IdElementsView<E>
-    extends ElementsView<E>
+public class IdElementsList<E>
+    extends ElementsList<E>
 {
-    /** Map of labels keyed by element. */
-    private final Map<E, IdLabel> labels = new HashMap<E, IdLabel>();
-
-    /** Model to view mapping. */
-    private final UnaryFunction<E, IdLabel> modelToView = new UnaryFunction<E, IdLabel>()
-        {
-            /** {@inheritDoc} */
-            public IdLabel evaluate(final E element)
-            {
-                if (!labels.containsKey(element))
-                {
-                    IdLabel label = new IdLabel(element);
-                    label.setIconSize(IconSize.DEFAULT_16X16);
-                    labels.put(element, label);
-                }
-                return labels.get(element);                
-            }
-        };
-
 
     /**
-     * Create a new identifiable elements view with the specified model.
+     * Create a new elements view with the specified model.
      *
      * @param model model, must not be null
      */
-    public IdElementsView(final EventList<E> model)
+    public IdElementsList(final EventList<E> model)
     {
         super(model);
-        setModelToView(modelToView);
+        getList().setCellRenderer(new IdListCellRenderer(IconSize.DEFAULT_16X16));
     }
 
-    // dispose?
+    // setIconSize, add actions to contextMenu, etc.
 }

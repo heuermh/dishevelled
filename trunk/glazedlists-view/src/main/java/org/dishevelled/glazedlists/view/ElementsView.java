@@ -28,8 +28,8 @@ import ca.odell.glazedlists.EventList;
 import ca.odell.glazedlists.event.ListEvent;
 import ca.odell.glazedlists.event.ListEventListener;
 
-import java.awt.FlowLayout;
-
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 
@@ -76,13 +76,21 @@ public class ElementsView<E>
             }
         };
 
-    protected ElementsView(final EventList<E> model)
-    {
-        super(model);
-    }
 
     /**
      * Create a new elements view with the specified model.
+     *
+     * @param model model, must not be null
+     */
+    protected ElementsView(final EventList<E> model)
+    {
+        super(model);
+        getModel().addListEventListener(listener);
+        setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+    }
+
+    /**
+     * Create a new elements view with the specified model and model to view mapping.
      *
      * @param model model, must not be null
      * @param modelToView model to view mapping, must not be null
@@ -90,11 +98,18 @@ public class ElementsView<E>
     public ElementsView(final EventList<E> model, final UnaryFunction<E, ? extends JComponent> modelToView)
     {
         this(model);
+        getModel().addListEventListener(listener);
+        setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
         setModelToView(modelToView);
     }
 
 
-    protected void setModelToView(final UnaryFunction<E, ? extends JComponent> modelToView)
+    /**
+     * Set the model to view mapping for this elements view to <code>modelToView</code>.
+     *
+     * @param modelToView model to view mapping, must not be null
+     */
+    protected final void setModelToView(final UnaryFunction<E, ? extends JComponent> modelToView)
     {
         if (modelToView == null)
         {
@@ -153,6 +168,8 @@ public class ElementsView<E>
                 if (separator != null)
                 {
                     add(separator);
+                    add(Box.createHorizontalStrut(12));
+                    //add((JComponent) ((Cloneable) separator).clone());
                 }
                 add(modelToView.evaluate(getModel().get(i)));
             }
@@ -161,6 +178,7 @@ public class ElementsView<E>
                 add(indicator);
             }
         }
+        add(Box.createGlue());
     }
 
     /**

@@ -23,6 +23,8 @@
 */
 package org.dishevelled.glazedlists.view;
 
+import java.awt.BorderLayout;
+
 import ca.odell.glazedlists.EventList;
 
 import ca.odell.glazedlists.event.ListEvent;
@@ -83,7 +85,8 @@ public final class ElementsLabel<E>
         elements = new JLabel();
         updateLabelText();
         addListeners();
-        add("Center", elements);
+        setLayout(new BorderLayout());
+        add("West", elements);
     }
 
 
