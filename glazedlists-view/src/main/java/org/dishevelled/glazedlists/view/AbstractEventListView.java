@@ -218,6 +218,43 @@ public abstract class AbstractEventListView<E>
     }
     */
 
+    protected final IdentifiableAction getSelectAllAction()
+    {
+        return selectAllAction;
+    }
+    protected final AbstractAction getClearSelectionAction()
+    {
+        return clearSelectionAction;
+    }
+    protected final AbstractAction getInvertSelectionAction()
+    {
+        return invertSelectionAction;
+    }
+    protected final IdentifiableAction getCutAction()
+    {
+        return cutAction;
+    }
+    protected final IdentifiableAction getCopyAction()
+    {
+        return copyAction;
+    }
+    protected final IdentifiableAction getPasteAction()
+    {
+        return pasteAction;
+    }
+    protected final IdentifiableAction getAddAction()
+    {
+        return addAction;
+    }
+    protected final IdentifiableAction getRemoveAction()
+    {
+        return removeAction;
+    }
+    protected final AbstractAction getRemoveAllAction()
+    {
+        return removeAllAction;
+    }
+
     /** {@inheritDoc} */
     public final EventList<E> getModel()
     {
