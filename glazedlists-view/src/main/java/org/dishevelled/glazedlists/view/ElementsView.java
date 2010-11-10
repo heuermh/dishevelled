@@ -30,6 +30,7 @@ import ca.odell.glazedlists.event.ListEventListener;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.Icon;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 
@@ -48,20 +49,32 @@ public class ElementsView<E>
     /** Number of elements to display. */
     private int elementsToDisplay = DEFAULT_ELEMENTS_TO_DISPLAY;
 
-    /** Separator between elements. */
-    private JComponent separator = DEFAULT_SEPARATOR;
+    /** Separator text between elements. */
+    private String separatorText = DEFAULT_SEPARATOR_TEXT;
 
-    /** More elements indicator. */
-    private JComponent indicator = DEFAULT_INDICATOR;
+    /** Separator icon between elements. */
+    private Icon separatorIcon = DEFAULT_SEPARATOR_ICON;
+
+    /** More elements indicator text. */
+    private String indicatorText = DEFAULT_INDICATOR_TEXT;
+
+    /** More elements indicator icon. */
+    private Icon indicatorIcon = DEFAULT_INDICATOR_ICON;
 
     /** Default number of elements to display, <code>3</code>. */
     public static final int DEFAULT_ELEMENTS_TO_DISPLAY = 3;
 
-    /** Default separator between elements, a label <code>, </code>. */
-    public static final JComponent DEFAULT_SEPARATOR = new JLabel(", ");
+    /** Default separator text between elements, <code>, </code>. */
+    public static final String DEFAULT_SEPARATOR_TEXT = ", ";
 
-    /** Default more elements indicator, a label <code>...</code>. */
-    public static final JComponent DEFAULT_INDICATOR = new JLabel("...");
+    /** Default separator icon between elements, <code>null</code>. */
+    public static final Icon DEFAULT_SEPARATOR_ICON = null;
+
+    /** Default more elements indicator text, <code>...</code>. */
+    public static final String DEFAULT_INDICATOR_TEXT = "...";
+
+    /** Default more elements indicator icon, <code>null</code>. */
+    public static final Icon DEFAULT_INDICATOR_ICON = null;
 
     /** Model to view mapping. */
     private UnaryFunction<E, ? extends JComponent> modelToView;
@@ -131,19 +144,35 @@ public class ElementsView<E>
         updateComponents();
     }
 
-    public void setSeparator(final JComponent separator)
+    public void setSeparatorText(final String separatorText)
     {
-        JComponent oldSeparator = this.separator;
-        this.separator = separator;
-        firePropertyChange("separator", oldSeparator, this.separator);
+        String oldSeparatorText = this.separatorText;
+        this.separatorText = separatorText;
+        firePropertyChange("separatorText", oldSeparatorText, this.separatorText);
         updateComponents();
     }
 
-    public void setIndicator(final JComponent indicator)
+    public void setSeparatorIcon(final Icon separatorIcon)
     {
-        JComponent oldIndicator = this.indicator;
-        this.indicator = indicator;
-        firePropertyChange("indicator", oldIndicator, this.indicator);
+        Icon oldSeparatorIcon = this.separatorIcon;
+        this.separatorIcon = separatorIcon;
+        firePropertyChange("separatorIcon", oldSeparatorIcon, this.separatorIcon);
+        updateComponents();
+    }
+
+    public void setIndicatorText(final String indicatorText)
+    {
+        String oldIndicatorText = this.indicatorText;
+        this.indicatorText = indicatorText;
+        firePropertyChange("indicatorText", oldIndicatorText, this.indicatorText);
+        updateComponents();
+    }
+
+    public void setIndicatorIcon(final Icon indicatorIcon)
+    {
+        Icon oldIndicatorIcon = this.indicatorIcon;
+        this.indicatorIcon = indicatorIcon;
+        firePropertyChange("indicatorIcon", oldIndicatorIcon, this.indicatorIcon);
         updateComponents();
     }
 
@@ -165,17 +194,15 @@ public class ElementsView<E>
             add(modelToView.evaluate(getModel().get(0)));
             for (int i = 1, size = Math.min(elementsToDisplay, getModel().size()); i < size; i++)
             {
-                if (separator != null)
+                if (separatorText != null || separatorIcon != null)
                 {
-                    add(separator);
-                    add(Box.createHorizontalStrut(12));
-                    //add((JComponent) ((Cloneable) separator).clone());
+                    add(new JLabel(separatorText, separatorIcon, JLabel.CENTER));
                 }
                 add(modelToView.evaluate(getModel().get(i)));
             }
-            if ((elementsToDisplay < getModel().size()) && (indicator != null))
+            if ((elementsToDisplay < getModel().size()) && ((indicatorText != null) || (indicatorIcon != null)))
             {
-                add(indicator);
+                add(new JLabel(indicatorText, indicatorIcon, JLabel.CENTER));
             }
         }
         add(Box.createGlue());
