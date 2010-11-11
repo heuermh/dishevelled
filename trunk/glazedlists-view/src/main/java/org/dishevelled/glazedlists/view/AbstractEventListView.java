@@ -26,6 +26,9 @@ package org.dishevelled.glazedlists.view;
 import ca.odell.glazedlists.EventList;
 import ca.odell.glazedlists.ListSelection;
 
+import ca.odell.glazedlists.event.ListEvent;
+import ca.odell.glazedlists.event.ListEventListener;
+
 import java.awt.event.ActionEvent;
 
 import java.util.Collection;
@@ -92,7 +95,7 @@ public abstract class AbstractEventListView<E>
         };
 
     /** Copy action. */
-    private final IdentifiableAction copyAction = new IdentifiableAction("Cut", TangoProject.EDIT_COPY)
+    private final IdentifiableAction copyAction = new IdentifiableAction("Copy", TangoProject.EDIT_COPY)
         {
                 /** {@inheritDoc} */
                 public void actionPerformed(final ActionEvent event)
@@ -127,7 +130,7 @@ public abstract class AbstractEventListView<E>
                 /** {@inheritDoc} */
                 public void actionPerformed(final ActionEvent event)
                 {
-                    //remove();
+                    remove();
                 }
         };
 
@@ -137,8 +140,28 @@ public abstract class AbstractEventListView<E>
                 /** {@inheritDoc} */
                 public void actionPerformed(final ActionEvent event)
                 {
-                    //removeAll();
+                    clear();
                 }
+        };
+
+    /** Listener. */
+    private ListEventListener<E> listener = new ListEventListener<E>()
+        {
+            /** {@inheritDoc} */
+            public void listChanged(final ListEvent<E> event)
+            {
+                updateListActions();
+            }
+        };
+
+    /** Selection listener. */
+    private ListSelection.Listener selectionListener = new ListSelection.Listener()
+        {
+            /** {@inheritDoc} */
+            public void selectionChanged(final int index0, final int index1)
+            {
+                updateSelectionActions();
+            }
         };
 
 
@@ -151,8 +174,27 @@ public abstract class AbstractEventListView<E>
     {
         super();
         eventListViewSupport = new EventListViewSupport<E>(model);
+        getModel().addListEventListener(listener);
+        getSelectionModel().addSelectionListener(selectionListener);
+        updateListActions();
+        updateSelectionActions();
     }
 
+
+    private void updateListActions()
+    {
+        selectAllAction.setEnabled(!isEmpty());
+        invertSelectionAction.setEnabled(!isEmpty());
+        removeAllAction.setEnabled(!isEmpty());
+    }
+
+    private void updateSelectionActions()
+    {
+        copyAction.setEnabled(!isSelectionEmpty());
+        cutAction.setEnabled(!isSelectionEmpty());
+        removeAction.setEnabled(!isSelectionEmpty());
+        clearSelectionAction.setEnabled(!isSelectionEmpty());
+    }
 
     public final boolean isEmpty()
     {
@@ -193,6 +235,16 @@ public abstract class AbstractEventListView<E>
 
     protected abstract void add();
 
+    public final void remove()
+    {
+        getSelectionModel().getSelected().clear();
+    }
+
+    public final void clear() // removeAll
+    {
+        getModel().clear();
+    }
+
     /*
 
       conflict with JPanel methods
@@ -205,11 +257,6 @@ public abstract class AbstractEventListView<E>
     public final void addAll(final Collection<? extends E> e)
     {
         getModel().addAll(e);
-    }
-
-    public final void remove()
-    {
-        getSelectionModel().getSelected().clear();
     }
 
     public final void removeAll()
@@ -265,5 +312,11 @@ public abstract class AbstractEventListView<E>
     public final ListSelection<E> getSelectionModel()
     {
         return eventListViewSupport.getSelectionModel();
+    }
+
+    public void dispose()
+    {
+        getModel().removeListEventListener(listener);
+        getSelectionModel().removeSelectionListener(selectionListener);
     }
 }
