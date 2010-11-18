@@ -52,6 +52,7 @@ import org.dishevelled.identify.ContextMenuListener;
 import org.dishevelled.identify.IdButton;
 import org.dishevelled.identify.IdPopupMenu;
 import org.dishevelled.identify.IdToolBar;
+import org.dishevelled.identify.IdToolPanel;
 
 /**
  * Elements list.
@@ -103,24 +104,9 @@ public class ElementsList<E>
         list.addMouseListener(new ContextMenuListener(contextMenu));
 
         toolBar = new IdToolBar();
-        // get rid of left-side decoration
-        toolBar.setBorder(new EmptyBorder(0, 0, 0, 0));
-        IdButton addButton = toolBar.add(getAddAction());
-        // should this be in IdToolBar?
-        addButton.setBorderPainted(false);
-        addButton.setFocusPainted(false);
-        IdButton removeButton = toolBar.add(getRemoveAction());
-        removeButton.setBorderPainted(false);
-        removeButton.setFocusPainted(false);
-        ContextMenuButton contextMenuButton = new ContextMenuButton(contextMenu);
-        contextMenuButton.setBorderPainted(false);
-        contextMenuButton.setFocusPainted(false);
-        toolBar.add(contextMenuButton);
-
-        // todo:  it is a bug that these need to be called after adding actions
-        //    and also a bug that menu items are not checked
-        toolBar.displayIcons();
-        toolBar.setIconSize(IconSize.DEFAULT_16X16);
+        toolBar.add(getAddAction());
+        toolBar.add(getRemoveAction());
+        toolBar.add(contextMenu);
 
         toolBarContextMenu = new JPopupMenu();
         for (Object menuItem : toolBar.getDisplayMenuItems())
