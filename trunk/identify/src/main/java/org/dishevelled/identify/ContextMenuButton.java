@@ -53,8 +53,11 @@ public final class ContextMenuButton
             }
         };
 
-    /** Image icon. */
-    private static final ImageIcon ICON = new ImageIcon(ContextMenuButton.class.getResource("context-menu.png"));
+    /** Default image icon. */
+    private static final ImageIcon DEFAULT_ICON = new ImageIcon(ContextMenuButton.class.getResource("context-menu.png"));
+
+    /** GTK look and feel image icon. */
+    private static final ImageIcon GTK_ICON = new ImageIcon(ContextMenuButton.class.getResource("context-menu-gtk.png"));
 
 
     /**
@@ -70,7 +73,7 @@ public final class ContextMenuButton
             throw new IllegalArgumentException("contextMenu must not be null");
         }
         this.contextMenu = contextMenu;
-        setIcon(ICON);
+        setIcon(IdentifyUtils.isGTKLookAndFeel() ? GTK_ICON : DEFAULT_ICON);
         setToolTipText("View menu");
         addMouseListener(listener);
     }

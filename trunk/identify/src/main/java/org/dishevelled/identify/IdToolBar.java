@@ -255,10 +255,19 @@ public final class IdToolBar
                 break;
         }
 
-        // default to icon over centered text layout
-        idButton.setHorizontalAlignment(IdButton.CENTER);
-        idButton.setHorizontalTextPosition(IdButton.CENTER);
-        idButton.setVerticalTextPosition(IdButton.BOTTOM);
+        if (IdentifyUtils.isGTKLookAndFeel())
+        {
+            idButton.setHorizontalAlignment(IdButton.LEFT);
+            idButton.setHorizontalTextPosition(IdButton.TRAILING);
+            idButton.setVerticalTextPosition(IdButton.CENTER);
+        }
+        else
+        {
+            // default to icon over centered text layout
+            idButton.setHorizontalAlignment(IdButton.CENTER);
+            idButton.setHorizontalTextPosition(IdButton.CENTER);
+            idButton.setVerticalTextPosition(IdButton.BOTTOM);
+        }
 
         // tweak visual settings; might be L&F dependent
         idButton.setBorderPainted(false);

@@ -34,6 +34,10 @@ import java.lang.reflect.InvocationTargetException;
 
 import java.net.URL;
 
+import javax.swing.UIManager;
+
+import javax.swing.plaf.LookAndFeel;
+
 import org.dishevelled.iconbundle.IconBundle;
 
 import org.dishevelled.iconbundle.impl.PNGIconBundle;
@@ -56,13 +60,30 @@ public final class IdentifyUtils
     /** Default icon bundle. */
     private IconBundle defaultIconBundle;
 
+    /** Private static instance of IdentifyUtils. */
+    private static IdentifyUtils instance;
+
+    /** GTK look and feel class name. */
+    private static final String GTK_LOOK_AND_FEEL_CLASS_NAME = "com.sun.java.swing.plaf.gtk.GTKLookAndFeel";
+
+    /** MacOSX look and feel class name. */
+    private static final String MAC_OSX_LOOK_AND_FEEL_CLASS_NAME = "apple.laf.AquaLookAndFeel";
+
+    /** Windows look and feel class name. */
+    private static final String WINDOWS_LOOK_AND_FEEL_CLASS_NAME = "com.sun.java.swing.plaf.windows.WindowsLookAndFeel";
+
 
     /**
-     * Private static instance of IdentifyUtils.
-     *
-     * @see #getInstance
+     * Private no-arg constructor.
      */
-    private static IdentifyUtils instance;
+    private IdentifyUtils()
+    {
+        nameStrategy = new DefaultNameStrategy();
+        iconBundleStrategy = new DefaultIconBundleStrategy();
+
+        URL url = getClass().getResource("default.png");
+        defaultIconBundle = new PNGIconBundle(url);
+    }
 
 
     /**
@@ -76,7 +97,6 @@ public final class IdentifyUtils
         {
             instance = new IdentifyUtils();
         }
-
         return instance;
     }
 
@@ -112,19 +132,53 @@ public final class IdentifyUtils
         return getInstance().getIconBundleStrategy().getIconBundleFor(bean);
     }
 
-
     /**
-     * Private constructor.
+     * Return true if the current look and feel is the GTK look and feel.
+     *
+     * @see #GTK_LOOK_AND_FEEL_CLASS_NAME
+     * @return true if the current look and feel is the GTK look and feel
      */
-    private IdentifyUtils()
+    public static boolean isGTKLookAndFeel()
     {
-        nameStrategy = new DefaultNameStrategy();
-        iconBundleStrategy = new DefaultIconBundleStrategy();
-
-        URL url = getClass().getResource("default.png");
-        defaultIconBundle = new PNGIconBundle(url);
+        LookAndFeel lookAndFeel = UIManager.getLookAndFeel();
+        if (lookAndFeel == null)
+        {
+            return false;
+        }
+        return GTK_LOOK_AND_FEEL_CLASS_NAME.equals(lookAndFeel.getClass().getName());
     }
 
+    /**
+     * Return true if the current look and feel is the MacOSX look and feel.
+     *
+     * @see #MAC_OSX_LOOK_AND_FEEL_CLASS_NAME
+     * @return true if the current look and feel is the MacOSX look and feel
+     */
+    public static boolean isMacOSXLookAndFeel()
+    {
+        LookAndFeel lookAndFeel = UIManager.getLookAndFeel();
+        if (lookAndFeel == null)
+        {
+            return false;
+        }
+        return MAC_OSX_LOOK_AND_FEEL_CLASS_NAME.equals(lookAndFeel.getClass().getName());
+    }
+
+    /**
+     * Return true if the current look and feel is the Windows look and feel.
+     *
+     * @see #WINDOWS_LOOK_AND_FEEL_CLASS_NAME
+     * @return true if the current look and feel is the Windows look and feel
+     */
+    public static boolean isWindowsLookAndFeel()
+    {
+        LookAndFeel lookAndFeel = UIManager.getLookAndFeel();
+        if (lookAndFeel == null)
+        {
+            return false;
+        }
+        return WINDOWS_LOOK_AND_FEEL_CLASS_NAME.equals(lookAndFeel.getClass().getName());
+    }
 
     /**
      * Return the strategy used to determine the value for
@@ -205,7 +259,6 @@ public final class IdentifyUtils
         {
             throw new IllegalArgumentException("defaultIconBundle must not be null");
         }
-
         this.defaultIconBundle = defaultIconBundle;
     }
 
