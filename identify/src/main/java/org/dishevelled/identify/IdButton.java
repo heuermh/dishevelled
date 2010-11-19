@@ -26,8 +26,10 @@ package org.dishevelled.identify;
 import java.awt.ComponentOrientation;
 
 import javax.swing.Action;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.UIManager;
 
 import org.dishevelled.iconbundle.IconBundle;
 import org.dishevelled.iconbundle.IconSize;
@@ -68,6 +70,10 @@ public final class IdButton
     public IdButton(final IdentifiableAction action)
     {
         super();
+        // clear gradient for Metal/Ocean L&F
+        UIManager.put("Button.gradient", null);
+        UIManager.getDefaults().put("Button.gradient", null);
+        UIManager.getLookAndFeelDefaults().put("Button.gradient", null);
 
         if (action == null)
         {
@@ -86,6 +92,10 @@ public final class IdButton
     public IdButton(final IdentifiableAction action, final IconSize iconSize)
     {
         super();
+        // clear gradient for Metal/Ocean L&F
+        UIManager.put("Button.gradient", null);
+        UIManager.getDefaults().put("Button.gradient", null);
+        UIManager.getLookAndFeelDefaults().put("Button.gradient", null);
 
         if (action == null)
         {

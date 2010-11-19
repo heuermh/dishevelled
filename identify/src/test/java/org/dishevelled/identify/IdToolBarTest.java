@@ -86,7 +86,7 @@ public final class IdToolBarTest
     {
         IdToolBar toolBar = new IdToolBar();
         assertNotNull(toolBar.getDisplayActions());
-        assertEquals(IdToolBar.DISPLAY_ACTIONS, toolBar.getDisplayActions().size());
+        assertEquals(3, toolBar.getDisplayActions().size());
     }
 
     public void testDisplayIcons()

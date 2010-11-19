@@ -137,6 +137,11 @@ public final class IdToolBar
     public IdToolBar()
     {
         super();
+        // clear gradient for Metal/Ocean L&F
+        UIManager.put("MenuBar.gradient", null);
+        UIManager.getDefaults().put("MenuBar.gradient", null);
+        UIManager.getLookAndFeelDefaults().put("MenuBar.gradient", null);
+
         createDisplayMenuItems();
         displayIcons();
         setIconSize(iconSize);
@@ -151,7 +156,11 @@ public final class IdToolBar
     public IdToolBar(final int orientation)
     {
         super(orientation);
-        UIManager.put("Button.gradient", null);
+        // clear gradient for Metal/Ocean L&F
+        UIManager.put("MenuBar.gradient", null);
+        UIManager.getDefaults().put("MenuBar.gradient", null);
+        UIManager.getLookAndFeelDefaults().put("MenuBar.gradient", null);
+
         createDisplayMenuItems();
         displayIcons();
         setIconSize(iconSize);
@@ -165,7 +174,6 @@ public final class IdToolBar
     public IdToolBar(final String name)
     {
         super(name);
-        UIManager.put("Button.gradient", null);
         createDisplayMenuItems();
         displayIcons();
         setIconSize(iconSize);
@@ -181,7 +189,6 @@ public final class IdToolBar
     public IdToolBar(final String name, final int orientation)
     {
         super(name, orientation);
-        UIManager.put("Button.gradient", null);
         createDisplayMenuItems();
         displayIcons();
         setIconSize(iconSize);
@@ -213,16 +220,12 @@ public final class IdToolBar
     public ContextMenuButton add(final JPopupMenu contextMenu)
     {
         ContextMenuButton contextMenuButton = new ContextMenuButton(contextMenu);
-        super.add(contextMenuButton);
 
         // tweak visual settings; might be L&F dependent
         contextMenuButton.setBorderPainted(false);
         contextMenuButton.setFocusPainted(false);
-        System.out.println("Button.gradient=" + UIManager.get("Button.gradient"));
-        UIManager.put("Button.gradient", null);
-        contextMenuButton.updateUI();
-        System.out.println("Button.gradient=" + UIManager.get("Button.gradient"));
 
+        super.add(contextMenuButton);
         return contextMenuButton;
     }
 
@@ -257,16 +260,11 @@ public final class IdToolBar
         idButton.setHorizontalTextPosition(IdButton.CENTER);
         idButton.setVerticalTextPosition(IdButton.BOTTOM);
 
-        super.add(idButton);
-
         // tweak visual settings; might be L&F dependent
         idButton.setBorderPainted(false);
         idButton.setFocusPainted(false);
-        System.out.println("Button.gradient=" + UIManager.get("Button.gradient"));
-        UIManager.put("Button.gradient", null);
-        idButton.updateUI();
-        System.out.println("Button.gradient=" + UIManager.get("Button.gradient"));
 
+        super.add(idButton);
         return idButton;
     }
 
