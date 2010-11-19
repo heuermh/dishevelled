@@ -34,9 +34,8 @@ import java.lang.reflect.InvocationTargetException;
 
 import java.net.URL;
 
+import javax.swing.LookAndFeel;
 import javax.swing.UIManager;
-
-import javax.swing.plaf.LookAndFeel;
 
 import org.dishevelled.iconbundle.IconBundle;
 
