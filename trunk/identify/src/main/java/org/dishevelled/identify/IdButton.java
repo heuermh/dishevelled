@@ -255,7 +255,7 @@ public final class IdButton
             setSelectedIcon(new ImageIcon(bndl.getImage(this, iconTextDirection, IconState.SELECTED, iconSize)));
             setRolloverIcon(new ImageIcon(bndl.getImage(this, iconTextDirection, IconState.MOUSEOVER, iconSize)));
             setRolloverSelectedIcon(new ImageIcon(bndl.getImage(this, iconTextDirection, IconState.SELECTED, iconSize)));
-            setDisabledIcon(new ImageIcon(bndl.getImage(this, iconTextDirection, IconState.DISABLED, iconSize)));
+            //setDisabledIcon(new ImageIcon(bndl.getImage(this, iconTextDirection, IconState.DISABLED, iconSize)));
         }
     }
 }
