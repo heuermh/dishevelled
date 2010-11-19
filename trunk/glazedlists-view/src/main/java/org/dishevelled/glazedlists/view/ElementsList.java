@@ -52,7 +52,6 @@ import org.dishevelled.identify.ContextMenuListener;
 import org.dishevelled.identify.IdButton;
 import org.dishevelled.identify.IdPopupMenu;
 import org.dishevelled.identify.IdToolBar;
-import org.dishevelled.identify.IdToolPanel;
 
 /**
  * Elements list.
@@ -104,6 +103,7 @@ public class ElementsList<E>
         list.addMouseListener(new ContextMenuListener(contextMenu));
 
         toolBar = new IdToolBar();
+        toolBar.setBorder(new EmptyBorder(2, 2, 2, 2));
         toolBar.add(getAddAction());
         toolBar.add(getRemoveAction());
         toolBar.add(contextMenu);
