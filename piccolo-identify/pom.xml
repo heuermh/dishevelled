@@ -80,7 +80,6 @@
     <dependency>
       <groupId>commons-jexl</groupId>
       <artifactId>commons-jexl</artifactId>
-      <optional>true</optional>
       <scope>runtime</scope>
     </dependency>
     <dependency>

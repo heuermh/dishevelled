@@ -265,6 +265,11 @@ public final class PNGIconBundle
             Color selectionColor = UIManager.getColor("List.selectionBackground");
             return IconBundleUtils.makeSelected(image, selectionColor);
         }
+        else if (IconState.SELECTED_MOUSEOVER == state)
+        {
+            Color selectionColor = UIManager.getColor("List.selectionBackground");
+            return IconBundleUtils.makeSelectedMouseover(image, selectionColor);
+        }
         else if (IconState.DRAGGING == state)
         {
             return IconBundleUtils.makeDragging(image);
