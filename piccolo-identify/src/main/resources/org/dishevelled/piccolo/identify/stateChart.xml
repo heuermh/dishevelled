@@ -110,7 +110,7 @@
   <state id="reverseSelected">
     <transition event="disable" target="reverseDisabled"/>
     <transition event="startDrag" target="reverseDragging"/>
-    <transition event="mouseEntered" target="reverseMouseover"/>
+    <transition event="mouseEntered" target="reverseSelectedMouseover"/>
     <transition event="deselect" target="reverseNormal"/>
     <transition event="reverseVideo" target="selected"/>
   </state>
