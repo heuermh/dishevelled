@@ -25,7 +25,7 @@ package org.dishevelled.glazedlists.view;
 
 import ca.odell.glazedlists.EventList;
 
-import org.dishevelled.iconbundle.IconSize;
+import org.dishevelled.iconbundle.tango.TangoProject;
 
 import org.dishevelled.identify.IdListCellRenderer;
 
@@ -48,7 +48,7 @@ public class IdElementsList<E>
     public IdElementsList(final EventList<E> model)
     {
         super(model);
-        getList().setCellRenderer(new IdListCellRenderer(IconSize.DEFAULT_16X16));
+        getList().setCellRenderer(new IdListCellRenderer(TangoProject.EXTRA_SMALL));
     }
 
     // setIconSize, add actions to contextMenu, etc.
