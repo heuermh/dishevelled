@@ -30,7 +30,7 @@ import java.util.Map;
 
 import org.dishevelled.functor.UnaryFunction;
 
-import org.dishevelled.iconbundle.IconSize;
+import org.dishevelled.iconbundle.tango.TangoProject;
 
 import org.dishevelled.identify.IdLabel;
 
@@ -56,7 +56,7 @@ public final class IdElementsView<E>
                 if (!labels.containsKey(element))
                 {
                     IdLabel label = new IdLabel(element);
-                    label.setIconSize(IconSize.DEFAULT_16X16);
+                    label.setIconSize(TangoProject.EXTRA_SMALL);
                     labels.put(element, label);
                 }
                 return labels.get(element);                
