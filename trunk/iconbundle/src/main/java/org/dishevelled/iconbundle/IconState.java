@@ -104,6 +104,16 @@ public final class IconState
     }
 
     /**
+     * Return true if this icon state is <code>IconState.SELECTED_MOUSEOVER</code>.
+     *
+     * @return true if this icon state is <code>IconState.SELECTED_MOUSEOVER</code>
+     */
+    public boolean isSelectedMouseover()
+    {
+        return (this == SELECTED_MOUSEOVER);
+    }
+
+    /**
      * Return true if this icon state is <code>IconState.DRAGGING</code>.
      *
      * @return true if this icon state is <code>IconState.DRAGGING</code>
@@ -136,6 +146,9 @@ public final class IconState
     /** Selected icon state. */
     public static final IconState SELECTED = new IconState("selected");
 
+    /** Selected mouseover icon state. */
+    public static final IconState SELECTED_MOUSEOVER = new IconState("selected-mouseover");
+
     /** Dragging icon state. */
     public static final IconState DRAGGING = new IconState("dragging");
 
@@ -150,6 +163,7 @@ public final class IconState
                                                       ACTIVE,
                                                       MOUSEOVER,
                                                       SELECTED,
+                                                      SELECTED_MOUSEOVER,
                                                       DRAGGING,
                                                       DISABLED
                                                     };

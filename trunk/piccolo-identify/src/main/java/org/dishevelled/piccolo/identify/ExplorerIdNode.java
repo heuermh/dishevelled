@@ -192,9 +192,31 @@ public final class ExplorerIdNode
     }
 
     /**
+     * Selected mouseover state.
+     */
+    private void selectedMouseover()
+    {
+        setTransparency(1.0f);
+        setIconState(IconState.SELECTED);
+        getNameTextNode().setTextPaint(Color.WHITE);
+        textSelection.setPaint(UIManager.getColor("List.selectionBackground"));
+        textSelection.setStrokePaint(UIManager.getColor("List.selectionBackground"));
+        textSelection.setVisible(true);
+        textShadow.setVisible(false);
+    }
+
+    /**
      * Reverse selected state.
      */
     private void reverseSelected()
+    {
+        selected();
+    }
+
+    /**
+     * Reverse selected mouseover state.
+     */
+    private void reverseSelectedMouseover()
     {
         selected();
     }
@@ -212,7 +234,7 @@ public final class ExplorerIdNode
      */
     private void reverseDragging()
     {
-        dragging();
+        setTransparency(0.66f);
     }
 
     /**

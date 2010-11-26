@@ -254,4 +254,16 @@ public final class IconBundleUtils
         selectionOp = null;
         return dest;
     }
+
+    /**
+     * Make the specified source image selected mouseover.
+     *
+     * @param src source image
+     * @param selectionColor selection color
+     * @return filtered source image
+     */
+    public static Image makeSelectedMouseover(final BufferedImage src, final Color selectionColor)
+    {
+        return makeMouseover((BufferedImage) makeSelected(src, selectionColor));
+    }
 }

@@ -210,11 +210,59 @@ public final class NautilusIdNode
     }
 
     /**
+     * Selected mouseover state.
+     */
+    private void selectedMouseover()
+    {
+        setIconState(IconState.SELECTED_MOUSEOVER);
+        getNameTextNode().setTextPaint(Color.WHITE);
+        textSelection.setPaint(UIManager.getColor("List.selectionBackground"));
+        textSelection.setStrokePaint(UIManager.getColor("List.selectionBackground"));
+        textSelection.setVisible(true);
+        textShadow.setVisible(false);
+    }
+
+    /**
      * Reverse selected state.
      */
     private void reverseSelected()
     {
         selected();
+    }
+
+    /**
+     * Reverse selected mouseover state.
+     */
+    private void reverseSelectedMouseover()
+    {
+        selectedMouseover();
+    }
+
+
+    /**
+     * Dragging state.
+     */
+    private void dragging()
+    {
+        setIconState(IconState.NORMAL);
+        getNameTextNode().setTextPaint(Color.WHITE);
+        textSelection.setPaint(UIManager.getColor("List.selectionBackground"));
+        textSelection.setStrokePaint(UIManager.getColor("List.selectionBackground"));
+        textSelection.setVisible(true);
+        textShadow.setVisible(false);
+    }
+
+    /**
+     * Reverse dragging state.
+     */
+    private void reverseDragging()
+    {
+        setIconState(IconState.NORMAL);
+        getNameTextNode().setTextPaint(Color.WHITE);
+        textSelection.setPaint(UIManager.getColor("List.selectionBackground"));
+        textSelection.setStrokePaint(UIManager.getColor("List.selectionBackground"));
+        textSelection.setVisible(true);
+        textShadow.setVisible(false);
     }
 
     /**

@@ -196,9 +196,25 @@ public final class FinderIdNode
     }
 
     /**
+     * Selected mouseover state.
+     */
+    private void selectedMouseover()
+    {
+        selected();
+    }
+
+    /**
      * Reverse selected state.
      */
     private void reverseSelected()
+    {
+        selected();
+    }
+
+    /**
+     * Reverse selected mouseover state.
+     */
+    private void reverseSelectedMouseover()
     {
         selected();
     }

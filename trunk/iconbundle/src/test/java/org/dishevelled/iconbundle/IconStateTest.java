@@ -44,11 +44,12 @@ public class IconStateTest
         assertNotNull(IconState.DRAGGING);
         assertNotNull(IconState.DISABLED);
         assertNotNull(IconState.VALUES);
-        assertTrue(IconState.VALUES.size() == 6);
+        assertTrue(IconState.VALUES.size() == 7);
         assertTrue(IconState.VALUES.contains(IconState.NORMAL));
         assertTrue(IconState.VALUES.contains(IconState.ACTIVE));
         assertTrue(IconState.VALUES.contains(IconState.MOUSEOVER));
         assertTrue(IconState.VALUES.contains(IconState.SELECTED));
+        assertTrue(IconState.VALUES.contains(IconState.SELECTED_MOUSEOVER));
         assertTrue(IconState.VALUES.contains(IconState.DRAGGING));
         assertTrue(IconState.VALUES.contains(IconState.DISABLED));
         assertEquals(IconState.NORMAL.toString(), "normal");
