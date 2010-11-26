@@ -47,6 +47,8 @@ import javax.swing.event.ListSelectionListener;
 
 import org.dishevelled.iconbundle.IconSize;
 
+import org.dishevelled.iconbundle.tango.TangoProject;
+
 import org.dishevelled.identify.ContextMenuButton;
 import org.dishevelled.identify.ContextMenuListener;
 import org.dishevelled.identify.IdButton;
@@ -89,16 +91,16 @@ public class ElementsList<E>
         list.setSelectionModel(new ListSelectionModelAdapter<E>());
 
         contextMenu = new IdPopupMenu();
-        contextMenu.add(getCutAction());
-        contextMenu.add(getCopyAction());
-        contextMenu.add(getPasteAction());
+        contextMenu.add(getCutAction(), TangoProject.EXTRA_SMALL);
+        contextMenu.add(getCopyAction(), TangoProject.EXTRA_SMALL);
+        contextMenu.add(getPasteAction(), TangoProject.EXTRA_SMALL);
         contextMenu.addSeparator();
-        contextMenu.add(getSelectAllAction());
+        contextMenu.add(getSelectAllAction(), TangoProject.EXTRA_SMALL);
         contextMenu.add(getClearSelectionAction());
         contextMenu.add(getInvertSelectionAction());
         contextMenu.addSeparator();
-        contextMenu.add(getAddAction());
-        contextMenu.add(getRemoveAction());
+        contextMenu.add(getAddAction(), TangoProject.EXTRA_SMALL);
+        contextMenu.add(getRemoveAction(), TangoProject.EXTRA_SMALL);
         contextMenu.add(getRemoveAllAction());
         list.addMouseListener(new ContextMenuListener(contextMenu));
 
@@ -114,10 +116,11 @@ public class ElementsList<E>
             toolBarContextMenu.add((JCheckBoxMenuItem) menuItem);
         }
         toolBarContextMenu.addSeparator();
-        for (Object menuItem : toolBar.getDefaultIconSizeMenuItems())
+        for (Object iconSize : TangoProject.SIZES)
         {
-            toolBarContextMenu.add((JCheckBoxMenuItem) menuItem);
+            toolBarContextMenu.add(toolBar.createIconSizeMenuItem((IconSize) iconSize));
         }
+        toolBar.setIconSize(TangoProject.EXTRA_SMALL);
         toolBar.addMouseListener(new ContextMenuListener(toolBarContextMenu));
 
         setLayout(new BorderLayout());
