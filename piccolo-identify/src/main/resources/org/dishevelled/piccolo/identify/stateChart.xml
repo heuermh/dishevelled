@@ -41,7 +41,7 @@
   <state id="mouseover">
     <transition event="disable" target="disabled"/>
     <!-- todo: mousePressed to selected should be handled by selection model -->
-    <transition event="mousePressed" target="selected"/>
+    <transition event="mousePressed" target="selectedMouseover"/>
     <transition event="mouseExited" target="normal"/>
     <transition event="reverseVideo" target="reverseMouseover"/>
   </state>
@@ -56,8 +56,6 @@
   <state id="normal">
     <transition event="disable" target="disabled"/>
     <transition event="mouseEntered" target="mouseover"/>
-    <!-- todo: mousePressed to selected should be handled by selection model -->
-    <transition event="mousePressed" target="selected"/>
     <transition event="select" target="selected"/>
     <transition event="reverseVideo" target="reverseNormal"/>
   </state>
@@ -87,13 +85,14 @@
   <state id="reverseMouseover">
     <transition event="disable" target="reverseDisabled"/>
     <!-- todo: mousePressed to selected should be handled by selection model -->
-    <transition event="mousePressed" target="reverseSelected"/>
+    <transition event="mousePressed" target="reverseSelectedMouseover"/>
     <transition event="mouseExited" target="reverseNormal"/>
     <transition event="reverseVideo" target="mouseover"/>
   </state>
 
   <state id="reverseSelectedMouseover">
     <transition event="disable" target="disabled"/>
+    <transition event="startDrag" target="reverseDragging"/>
     <transition event="mouseExited" target="reverseSelected"/>
     <transition event="reverseVideo" target="selectedMouseover"/>
   </state>
@@ -101,8 +100,6 @@
   <state id="reverseNormal">
     <transition event="disable" target="reverseDisabled"/>
     <transition event="mouseEntered" target="reverseMouseover"/>
-    <!-- todo: mousePressed to selected should be handled by selection model -->
-    <transition event="mousePressed" target="reverseSelected"/>
     <transition event="select" target="reverseSelected"/>
     <transition event="reverseVideo" target="normal"/>
   </state>

@@ -154,27 +154,6 @@ public final class NautilusIdNode
     }
 
     /**
-     * Active state.
-     */
-    private void active()
-    {
-        setIconState(IconState.SELECTED);
-        getNameTextNode().setTextPaint(Color.WHITE);
-        textSelection.setPaint(UIManager.getColor("List.selectionBackground"));
-        textSelection.setStrokePaint(UIManager.getColor("List.selectionBackground"));
-        textSelection.setVisible(true);
-        textShadow.setVisible(false);
-    }
-
-    /**
-     * Reverse active state.
-     */
-    private void reverseActive()
-    {
-        active();
-    }
-
-    /**
      * Mouseover state.
      */
     private void mouseover()
@@ -237,7 +216,6 @@ public final class NautilusIdNode
     {
         selectedMouseover();
     }
-
 
     /**
      * Dragging state.
