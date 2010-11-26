@@ -132,28 +132,6 @@ public final class ExplorerIdNode
     }
 
     /**
-     * Active state.
-     */
-    private void active()
-    {
-        setTransparency(1.0f);
-        setIconState(IconState.SELECTED);
-        getNameTextNode().setTextPaint(Color.WHITE);
-        textSelection.setPaint(UIManager.getColor("List.selectionBackground"));
-        textSelection.setStrokePaint(UIManager.getColor("List.selectionBackground"));
-        textShadow.setVisible(false);
-        textSelection.setVisible(true);
-    }
-
-    /**
-     * Reverse active state.
-     */
-    private void reverseActive()
-    {
-        active();
-    }
-
-    /**
      * Normal state.
      */
     private void normal()

@@ -136,27 +136,6 @@ public final class FinderIdNode
     }
 
     /**
-     * Active state.
-     */
-    private void active()
-    {
-        setTransparency(1.0f);
-        getNameTextNode().setTextPaint(Color.WHITE);
-        iconSelection.setVisible(true);
-        textSelection.setPaint(TEXT_SELECTION_SELECTED_PAINT);
-        textSelectionShadow.setVisible(true);
-        setIconState(IconState.NORMAL);
-    }
-
-    /**
-     * Reverse active state.
-     */
-    private void reverseActive()
-    {
-        active();
-    }
-
-    /**
      * Normal state.
      */
     private void normal()
