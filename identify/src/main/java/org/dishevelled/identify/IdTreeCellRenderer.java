@@ -128,9 +128,8 @@ public class IdTreeCellRenderer
         }
         else
         {
-            IconState state = determineState(label, isSelected, hasFocus);
             IconTextDirection textDirection = determineTextDirection(label);
-            Image image = iconBundle.getImage(label, textDirection, state, iconSize);
+            Image image = iconBundle.getImage(label, textDirection, IconState.NORMAL, iconSize);
 
             if (imageIcon == null)
             {
@@ -144,33 +143,6 @@ public class IdTreeCellRenderer
         }
 
         return label;
-    }
-
-    /**
-     * Determine an icon state from the specified label and flags.
-     *
-     * @param label label
-     * @param isSelected true if the specifed cell is selected
-     * @param hasFocus true if the specified cell has focus
-     * @return an icon state for the specified label and flags
-     */
-    private IconState determineState(final JLabel label, final boolean isSelected, final boolean hasFocus)
-    {
-        if (isSelected)
-        {
-            return IconState.SELECTED;
-        }
-        else
-        {
-            if (hasFocus)
-            {
-                return IconState.MOUSEOVER;
-            }
-            else
-            {
-                return IconState.NORMAL;
-            }
-        }
     }
 
     /**
