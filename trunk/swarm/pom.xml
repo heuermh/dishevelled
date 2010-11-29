@@ -40,6 +40,8 @@
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
+      <!-- this project is not compatible with junit 4.x yet -->
+      <version>3.8.2</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
