@@ -30,6 +30,8 @@ import ca.odell.glazedlists.swing.EventListModel;
 
 import java.awt.BorderLayout;
 
+import java.util.List;
+
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JCheckBoxMenuItem;
@@ -128,23 +130,66 @@ public class ElementsList<E>
         add("Center", new JScrollPane(list));
     }
 
-    protected void add() { }
 
+    /** {@inheritDoc} */
+    protected void cut(final List<E> toCut)
+    {
+        // empty
+    }
+
+    /** {@inheritDoc} */
+    protected void copy(final List<E> toCopy)
+    {
+        // empty
+    }
+
+    /** {@inheritDoc} */
+    public void add()
+    {
+        // empty
+    }
+
+    /** {@inheritDoc} */
+    public void paste()
+    {
+        // empty
+    }
+
+    /**
+     * Return the list for this elements list.
+     *
+     * @return the list for this elements list
+     */
     protected final JList getList()
     {
         return list;
     }
 
+    /**
+     * Return the tool bar for this elements list.
+     *
+     * @return the tool bar for this elements list
+     */
     protected final IdToolBar getToolBar()
     {
         return toolBar;
     }
 
+    /**
+     * Return the context menu for this elements list.
+     *
+     * @return the context menu for this elements list
+     */
     protected final IdPopupMenu getContextMenu()
     {
         return contextMenu;
     }
 
+    /**
+     * Return the tool bar context menu for this elements list.
+     *
+     * @return the tool bar context menu for this elements list
+     */
     protected final JPopupMenu getToolBarContextMenu()
     {
         return toolBarContextMenu;
