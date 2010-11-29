@@ -25,6 +25,8 @@ package org.dishevelled.glazedlists.view;
 
 import java.awt.BorderLayout;
 
+import java.util.List;
+
 import ca.odell.glazedlists.EventList;
 
 import ca.odell.glazedlists.event.ListEvent;
@@ -128,7 +130,25 @@ public final class ElementsLabel<E>
 
 
     /** {@inheritDoc} */
-    protected void add()
+    protected void cut(final List<E> toCut)
+    {
+        // empty
+    }
+
+    /** {@inheritDoc} */
+    protected void copy(final List<E> toCopy)
+    {
+        // empty
+    }
+
+    /** {@inheritDoc} */
+    public void add()
+    {
+        // empty
+    }
+
+    /** {@inheritDoc} */
+    public void paste()
     {
         // empty
     }

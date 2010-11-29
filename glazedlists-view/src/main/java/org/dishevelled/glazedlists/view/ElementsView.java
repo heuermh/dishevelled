@@ -28,6 +28,8 @@ import ca.odell.glazedlists.EventList;
 import ca.odell.glazedlists.event.ListEvent;
 import ca.odell.glazedlists.event.ListEventListener;
 
+import java.util.List;
+
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.Icon;
@@ -132,7 +134,14 @@ public class ElementsView<E>
         updateComponents();
     }
 
-    public void setElementsToDisplay(final int elementsToDisplay)
+    /**
+     * Set the number of elements to display to <code>elementsToDisplay</code>.
+     *
+     * <p>This is a bound property.</p>
+     *
+     * @param elementsToDisplay the number of elements to display, must be at least zero
+     */
+    public final void setElementsToDisplay(final int elementsToDisplay)
     {
         if (elementsToDisplay < 0)
         {
@@ -144,7 +153,14 @@ public class ElementsView<E>
         updateComponents();
     }
 
-    public void setSeparatorText(final String separatorText)
+    /**
+     * Set the separator text between elements to <code>separatorText</code>.
+     *
+     * <p>This is a bound property.</p>
+     *
+     * @param separatorText separator text between elements
+     */
+    public final void setSeparatorText(final String separatorText)
     {
         String oldSeparatorText = this.separatorText;
         this.separatorText = separatorText;
@@ -152,7 +168,14 @@ public class ElementsView<E>
         updateComponents();
     }
 
-    public void setSeparatorIcon(final Icon separatorIcon)
+    /**
+     * Set the separator icon between elements to <code>separatorIcon</code>.
+     *
+     * <p>This is a bound property.</p>
+     *
+     * @param separatorIcon separator icon between elements
+     */
+    public final void setSeparatorIcon(final Icon separatorIcon)
     {
         Icon oldSeparatorIcon = this.separatorIcon;
         this.separatorIcon = separatorIcon;
@@ -160,7 +183,14 @@ public class ElementsView<E>
         updateComponents();
     }
 
-    public void setIndicatorText(final String indicatorText)
+    /**
+     * Set the more elements indicator text to <code>indicatorText</code>.
+     *
+     * <p>This is a bound property.</p>
+     *
+     * @param indicatorText more elements indicator text
+     */
+    public final void setIndicatorText(final String indicatorText)
     {
         String oldIndicatorText = this.indicatorText;
         this.indicatorText = indicatorText;
@@ -168,7 +198,14 @@ public class ElementsView<E>
         updateComponents();
     }
 
-    public void setIndicatorIcon(final Icon indicatorIcon)
+    /**
+     * Set the more elements indicator icon to <code>indicatorIcon</code>.
+     *
+     * <p>This is a bound property.</p>
+     *
+     * @param indicatorIcon more elements indicator icon
+     */
+    public final void setIndicatorIcon(final Icon indicatorIcon)
     {
         Icon oldIndicatorIcon = this.indicatorIcon;
         this.indicatorIcon = indicatorIcon;
@@ -176,9 +213,26 @@ public class ElementsView<E>
         updateComponents();
     }
 
+    /** {@inheritDoc} */
+    protected void cut(final List<E> toCut)
+    {
+        // empty
+    }
 
     /** {@inheritDoc} */
-    protected void add()
+    protected void copy(final List<E> toCopy)
+    {
+        // empty
+    }
+
+    /** {@inheritDoc} */
+    public void add()
+    {
+        // empty
+    }
+
+    /** {@inheritDoc} */
+    public void paste()
     {
         // empty
     }
@@ -224,11 +278,10 @@ public class ElementsView<E>
         getModel().removeListEventListener(listener);
     }
 
-    /**
-     * Release the resources consumed by this elements label so that it may eventually be garbage collected.
-     */
+    /** {@inheritDoc} */
     public void dispose()
     {
+        super.dispose();
         removeListeners();
     }
 }

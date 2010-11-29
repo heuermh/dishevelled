@@ -74,6 +74,4 @@ public final class IdElementsView<E>
         super(model);
         setModelToView(modelToView);
     }
-
-    // dispose?
 }

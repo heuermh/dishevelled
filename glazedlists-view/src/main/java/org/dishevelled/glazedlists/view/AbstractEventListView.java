@@ -31,7 +31,9 @@ import ca.odell.glazedlists.event.ListEventListener;
 
 import java.awt.event.ActionEvent;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import javax.swing.AbstractAction;
 import javax.swing.JPanel;
@@ -181,6 +183,9 @@ public abstract class AbstractEventListView<E>
     }
 
 
+    /**
+     * Update list actions.
+     */
     private void updateListActions()
     {
         selectAllAction.setEnabled(!isEmpty());
@@ -188,6 +193,9 @@ public abstract class AbstractEventListView<E>
         removeAllAction.setEnabled(!isEmpty());
     }
 
+    /**
+     * Update selection actions.
+     */
     private void updateSelectionActions()
     {
         copyAction.setEnabled(!isSelectionEmpty());
@@ -196,107 +204,197 @@ public abstract class AbstractEventListView<E>
         clearSelectionAction.setEnabled(!isSelectionEmpty());
     }
 
+    /**
+     * Return true if the model is empty.
+     *
+     * @return true if the model is empty.
+     */
     public final boolean isEmpty()
     {
         return getModel().isEmpty();
     }
 
+    /**
+     * Return true if the selection is empty.
+     *
+     * @return true if the selection is empty.
+     */
     public final boolean isSelectionEmpty()
     {
         return getSelectionModel().getSelected().isEmpty();
     }
 
+    /**
+     * Select all.
+     */
     public final void selectAll()
     {
         getSelectionModel().selectAll();
     }
 
+    /**
+     * Clear selection.
+     */
     public final void clearSelection()
     {
         getSelectionModel().deselectAll();
     }
 
+    /**
+     * Invert selection.
+     */
     public final void invertSelection()
     {
         getSelectionModel().invertSelection();
     }
 
+    /**
+     * Cut.
+     */
     public final void cut()
     {
+        if (!isSelectionEmpty())
+        {
+            cut(new ArrayList<E>(getSelectionModel().getSelected()));
+        }
     }
 
+    /**
+     * Copy.
+     */
     public final void copy()
     {
+        if (!isSelectionEmpty())
+        {
+            copy(new ArrayList<E>(getSelectionModel().getSelected()));
+        }
     }
 
-    public final void paste()
-    {
-    }
+    /**
+     * Cut the specific list of elements to the clipboard.
+     *
+     * @param toCut list of elements to cut, must not be null
+     */
+    protected abstract void cut(List<E> toCut);
 
-    protected abstract void add();
+    /**
+     * Copy the specific list of elements to the clipboard.
+     *
+     * @param toCopy list of elements to copy, must not be null
+     */
+    protected abstract void copy(List<E> toCopy);
 
+    /**
+     * Add.
+     */
+    public abstract void add();
+
+    /**
+     * Paste.
+     */
+    public abstract void paste();
+
+    /**
+     * Remove.
+     */
     public final void remove()
     {
         getSelectionModel().getSelected().clear();
     }
 
+    /**
+     * Clear (or remove all).
+     */
     public final void clear() // removeAll
     {
         getModel().clear();
     }
 
-    /*
-
-      conflict with JPanel methods
-
-    public final void add(final E e)
-    {
-        getModel().add(e);
-    }
-
-    public final void addAll(final Collection<? extends E> e)
-    {
-        getModel().addAll(e);
-    }
-
-    public final void removeAll()
-    {
-        getModel().clear();
-    }
-    */
-
+    /**
+     * Return the select all action.
+     *
+     * @return the select all action
+     */
     protected final IdentifiableAction getSelectAllAction()
     {
         return selectAllAction;
     }
+
+    /**
+     * Return the clear selection action.
+     *
+     * @return the clear selection action
+     */
     protected final AbstractAction getClearSelectionAction()
     {
         return clearSelectionAction;
     }
+
+    /**
+     * Return the invert selection action.
+     *
+     * @return the invert selection action
+     */
     protected final AbstractAction getInvertSelectionAction()
     {
         return invertSelectionAction;
     }
+
+    /**
+     * Return the cut action.
+     *
+     * @return the cut action
+     */
     protected final IdentifiableAction getCutAction()
     {
         return cutAction;
     }
+ 
+    /**
+     * Return the copy action.
+     *
+     * @return the copy action
+     */
     protected final IdentifiableAction getCopyAction()
     {
         return copyAction;
     }
+
+    /**
+     * Return the paste action.
+     *
+     * @return the paste action
+     */
     protected final IdentifiableAction getPasteAction()
     {
         return pasteAction;
     }
+
+    /**
+     * Return the add action.
+     *
+     * @return the add action
+     */
     protected final IdentifiableAction getAddAction()
     {
         return addAction;
     }
+
+    /**
+     * Return the remove action.
+     *
+     * @return the remove action
+     */
     protected final IdentifiableAction getRemoveAction()
     {
         return removeAction;
     }
+
+    /**
+     * Return the remove all action.
+     *
+     * @return the remove all action
+     */
     protected final AbstractAction getRemoveAllAction()
     {
         return removeAllAction;
@@ -314,6 +412,11 @@ public abstract class AbstractEventListView<E>
         return eventListViewSupport.getSelectionModel();
     }
 
+    /**
+     * Release the resources consumed by this abstract event list view
+     * so that it may eventually be garbage collected.  Subclasses that override
+     * this method should call <code>super.dispose()</code>.
+     */
     public void dispose()
     {
         getModel().removeListEventListener(listener);
