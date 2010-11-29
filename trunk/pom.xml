@@ -37,6 +37,8 @@
     <module>evolve</module>
     <module>evolve-examples</module>
     <module>functor</module>
+    <module>glazedlists-view</module>
+    <module>glazedlists-view-examples</module>
     <module>graph</module>
     <module>graph-io</module>
     <module>iconbundle</module>
