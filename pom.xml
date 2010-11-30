@@ -59,6 +59,7 @@
     <module>observable-graph</module>
     <module>piccolo-ease</module>
     <module>piccolo-ease-examples</module>
+    <module>piccolo-eventlist-view</module>
     <module>piccolo-identify</module>
     <module>piccolo-identify-examples</module>
     <module>piccolo-physics</module>
