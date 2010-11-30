@@ -7,22 +7,22 @@
     <version>1.0-SNAPSHOT</version>
     <relativePath>../parent/pom.xml</relativePath>
   </parent>
-  <artifactId>dsh-glazedlists-view</artifactId>
+  <artifactId>dsh-eventlist-view</artifactId>
   <packaging>jar</packaging>
-  <name>dishevelled.org glazedlists-view</name>
+  <name>dishevelled.org eventlist-view</name>
   <version>1.0-SNAPSHOT</version>
   <description>Views for event lists.</description>
-  <url>http://www.dishevelled.org/glazedlists-view</url>
+  <url>http://www.dishevelled.org/eventlist-view</url>
   <inceptionYear>2010</inceptionYear>
   <scm>
-    <connection>scm:svn|http://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/glazedlists-view</connection>
-    <developerConnection>scm:svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/glazedlists-view</developerConnection>
-    <url>http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/trunk/glazedlists-view</url>
+    <connection>scm:svn|http://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/eventlist-view</connection>
+    <developerConnection>scm:svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/eventlist-view</developerConnection>
+    <url>http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/trunk/eventlist-view</url>
   </scm>
   <distributionManagement>
     <site>
       <id>dishevelled.sf.net</id>
-      <url>scp://shell.sourceforge.net/home/groups/d/di/dishevelled/htdocs/glazedlists-view-${project.version}</url>
+      <url>scp://shell.sourceforge.net/home/groups/d/di/dishevelled/htdocs/eventlist-view-${project.version}</url>
     </site>
   </distributionManagement>
   <dependencies>

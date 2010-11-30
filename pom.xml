@@ -34,11 +34,11 @@
     <module>curate-examples</module>
     <module>disclosure-triangle</module>
     <module>disclosure-triangle-examples</module>
+    <module>eventlist-view</module>
+    <module>eventlist-view-examples</module>
     <module>evolve</module>
     <module>evolve-examples</module>
     <module>functor</module>
-    <module>glazedlists-view</module>
-    <module>glazedlists-view-examples</module>
     <module>graph</module>
     <module>graph-io</module>
     <module>iconbundle</module>
