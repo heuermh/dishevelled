@@ -1,6 +1,6 @@
 /*
 
-    dsh-glazedlists-view-examples  Examples for the glazedlists-view library.
+    dsh-eventlist-view-examples  Examples for the eventlist-view library.
     Copyright (c) 2010 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
@@ -23,6 +23,6 @@
 */
 
 /**
- * Examples for the glazedlists-view library.
+ * Examples for the eventlist-view library.
  */
-package org.dishevelled.glazedlists.view.examples;
+package org.dishevelled.eventlist.view.examples;

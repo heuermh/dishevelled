@@ -1,6 +1,6 @@
 /*
 
-    dsh-glazedlists-view  Views for event lists.
+    dsh-eventlist-view  Views for event lists.
     Copyright (c) 2010 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
@@ -25,7 +25,7 @@
 /**
  * Views for event lists.
  */
-package org.dishevelled.glazedlists.view;
+package org.dishevelled.eventlist.view;
 
     /*
 

@@ -1,6 +1,6 @@
 /*
 
-    dsh-glazedlists-view-examples  Examples for the glazedlists-view library.
+    dsh-eventlist-view-examples  Examples for the eventlist-view library.
     Copyright (c) 2010 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
@@ -21,7 +21,7 @@
     > http://www.opensource.org/licenses/lgpl-license.php
 
 */
-package org.dishevelled.glazedlists.view.examples;
+package org.dishevelled.eventlist.view.examples;
 
 import ca.odell.glazedlists.EventList;
 import ca.odell.glazedlists.GlazedLists;
@@ -50,12 +50,12 @@ import javax.swing.border.EmptyBorder;
 
 import org.dishevelled.functor.UnaryFunction;
 
-import org.dishevelled.glazedlists.view.CountLabel;
-import org.dishevelled.glazedlists.view.ElementsLabel;
-import org.dishevelled.glazedlists.view.ElementsList;
-import org.dishevelled.glazedlists.view.ElementsView;
-import org.dishevelled.glazedlists.view.IdElementsList;
-import org.dishevelled.glazedlists.view.IdElementsView;
+import org.dishevelled.eventlist.view.CountLabel;
+import org.dishevelled.eventlist.view.ElementsLabel;
+import org.dishevelled.eventlist.view.ElementsList;
+import org.dishevelled.eventlist.view.ElementsView;
+import org.dishevelled.eventlist.view.IdElementsList;
+import org.dishevelled.eventlist.view.IdElementsView;
 
 import org.dishevelled.layout.LabelFieldPanel;
 
