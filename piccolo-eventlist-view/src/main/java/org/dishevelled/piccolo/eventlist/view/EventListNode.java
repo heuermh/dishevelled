@@ -58,11 +58,11 @@ public class EventListNode<E>
     /** Scale threshold for elements summary --&gt; elements transition. */
     private double summaryThreshold = DEFAULT_SUMMARY_THRESHOLD;
 
-    /** Default count scale threshold, <code>0.2d</code>. */
-    public static final double DEFAULT_COUNT_THRESHOLD = 0.2d;
+    /** Default count scale threshold, <code>0.7d</code>. */
+    public static final double DEFAULT_COUNT_THRESHOLD = 0.7d;
 
-    /** Default summary scale threshold, <code>0.6d</code>. */
-    public static final double DEFAULT_SUMMARY_THRESHOLD = 0.6d;
+    /** Default summary scale threshold, <code>0.9d</code>. */
+    public static final double DEFAULT_SUMMARY_THRESHOLD = 0.9d;
 
 
     /**
@@ -76,6 +76,7 @@ public class EventListNode<E>
         countLabel = new CountLabelNode<E>(model);
         elementsSummary = new ElementsSummaryNode<E>(model);
         elements = new ElementsNode<E>(model);
+        addChild(countLabel);
     }
 
     /**
