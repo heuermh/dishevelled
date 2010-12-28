@@ -33,7 +33,7 @@
           <configuration>
             <archive>
               <manifest>
-                <mainClass>org.dishevelled.glazedlists.view.examples.EventListViewExample</mainClass>
+                <mainClass>org.dishevelled.eventlist.view.examples.EventListViewExample</mainClass>
               </manifest>
             </archive>
             <descriptorRefs>
