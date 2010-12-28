@@ -46,7 +46,7 @@
     <dependency>
       <groupId>org.dishevelled</groupId>
       <artifactId>dsh-curate</artifactId>
-      <version>1.0-SNAPSHOT</version>
+      <version>${project.version}</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
