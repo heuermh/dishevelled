@@ -53,9 +53,9 @@ import org.dishevelled.functor.UnaryFunction;
 import org.dishevelled.eventlist.view.CountLabel;
 import org.dishevelled.eventlist.view.ElementsLabel;
 import org.dishevelled.eventlist.view.ElementsList;
-import org.dishevelled.eventlist.view.ElementsView;
+import org.dishevelled.eventlist.view.ElementsSummary;
 import org.dishevelled.eventlist.view.IdElementsList;
-import org.dishevelled.eventlist.view.IdElementsView;
+import org.dishevelled.eventlist.view.IdElementsSummary;
 
 import org.dishevelled.layout.LabelFieldPanel;
 
@@ -86,7 +86,7 @@ public final class EventListViewExample
         final EventList<String> eventList = GlazedLists.eventList(strings);
         addField("Count label:", new CountLabel(eventList));
         addField("Elements label:", new ElementsLabel(eventList));
-        addLabel("Elements view:");
+        addLabel("Elements summary:");
 
         UnaryFunction<String, JComponent> modelToLabel = new UnaryFunction<String, JComponent>()
         {
@@ -104,15 +104,15 @@ public final class EventListViewExample
             }
         };
 
-        addField(new ElementsView(eventList, modelToLabel));
+        addField(new ElementsSummary(eventList, modelToLabel));
         addSpacing(12);
-        addLabel("Identifiable elements view:");
-        addField(new IdElementsView(eventList));
+        addLabel("Identifiable elements summary:");
+        addField(new IdElementsSummary(eventList));
         addSpacing(12);
         addLabel("Elements list:");
         addField(new ElementsList(eventList));
         addSpacing(12);
-        addLabel("Identifiable elements view:");
+        addLabel("Identifiable elements list:");
         addFinalField(new IdElementsList(eventList));
 
         Timer t = new Timer(5000, new ActionListener()
