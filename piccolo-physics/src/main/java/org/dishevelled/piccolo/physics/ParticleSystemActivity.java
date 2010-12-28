@@ -37,7 +37,7 @@ import org.piccolo2d.util.PUtil;
 
 import org.dishevelled.multimap.BinaryKeyMap;
 
-import org.dishevelled.multimap.impl.HashedBinaryKeyMap;
+import static org.dishevelled.multimap.impl.BinaryKeyMaps.createBinaryKeyMap;
 
 import traer.physics.Attraction;
 import traer.physics.Particle;
@@ -48,8 +48,8 @@ import traer.physics.Spring;
  * Particle system activity.
  *
  * @author  Michael Heuer
- * @version $Revision$ $Date$
- */
+ * @version $Revision$ $Date$ 
+*/
 public class ParticleSystemActivity
     extends PActivity
 {
@@ -87,9 +87,9 @@ public class ParticleSystemActivity
     {
         super(duration, stepRate, startTime);
         particleSystem = new ParticleSystem();
-        attractions = new HashedBinaryKeyMap<PNode, PNode, Attraction>();
+        attractions = createBinaryKeyMap();
         particles = new HashMap<PNode, Particle>();
-        springs = new HashedBinaryKeyMap<PNode, PNode, Spring>();
+        springs = createBinaryKeyMap();
     }
 
 
