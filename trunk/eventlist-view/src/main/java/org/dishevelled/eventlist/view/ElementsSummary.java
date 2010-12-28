@@ -39,13 +39,13 @@ import javax.swing.JLabel;
 import org.dishevelled.functor.UnaryFunction;
 
 /**
- * Elements view.
+ * Elements summary.
  *
  * @param <E> model element type
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public class ElementsView<E>
+public class ElementsSummary<E>
     extends AbstractEventListView<E>
 {
     /** Number of elements to display. */
@@ -93,11 +93,11 @@ public class ElementsView<E>
 
 
     /**
-     * Create a new elements view with the specified model.
+     * Create a new elements summary with the specified model.
      *
      * @param model model, must not be null
      */
-    protected ElementsView(final EventList<E> model)
+    protected ElementsSummary(final EventList<E> model)
     {
         super(model);
         getModel().addListEventListener(listener);
@@ -105,12 +105,12 @@ public class ElementsView<E>
     }
 
     /**
-     * Create a new elements view with the specified model and model to view mapping.
+     * Create a new elements summary with the specified model and model to view mapping.
      *
      * @param model model, must not be null
      * @param modelToView model to view mapping, must not be null
      */
-    public ElementsView(final EventList<E> model, final UnaryFunction<E, ? extends JComponent> modelToView)
+    public ElementsSummary(final EventList<E> model, final UnaryFunction<E, ? extends JComponent> modelToView)
     {
         this(model);
         getModel().addListEventListener(listener);
@@ -120,7 +120,7 @@ public class ElementsView<E>
 
 
     /**
-     * Set the model to view mapping for this elements view to <code>modelToView</code>.
+     * Set the model to view mapping for this elements summary to <code>modelToView</code>.
      *
      * @param modelToView model to view mapping, must not be null
      */
