@@ -93,8 +93,6 @@ public class ParticleSystemActivity
     }
 
 
-    // set integrator?
-
     /**
      * Set the drag force for the particle system to <code>drag</code>.
      *
@@ -157,19 +155,12 @@ public class ParticleSystemActivity
      */
     public Point2D getVelocity(final PNode node, final Point2D velocity)
     {
-        if (node == null)
-        {
-            throw new IllegalArgumentException("node must not be null");
-        }
+        checkParticleArgs(node);
         if (velocity == null)
         {
             throw new IllegalArgumentException("velocity must not be null");
         }
         Particle particle = particles.get(node);
-        if (particle == null)
-        {
-            throw new IllegalArgumentException("no particle exists for node " + node);
-        }
         velocity.setLocation(particle.velocity().x(), particle.velocity().y());
         return velocity;
     }
@@ -185,16 +176,8 @@ public class ParticleSystemActivity
      */
     public void setVelocity(final PNode node, final float x, final float y)
     {
-        if (node == null)
-        {
-            throw new IllegalArgumentException("node must not be null");
-        }
-        Particle particle = particles.get(node);
-        if (particle == null)
-        {
-            throw new IllegalArgumentException("no particle exists for node " + node);
-        }
-        particle.velocity().set(x, y, 0.0f);
+        checkParticleArgs(node);
+        particles.get(node).velocity().set(x, y, 0.0f);
     }
 
     /**
@@ -207,48 +190,39 @@ public class ParticleSystemActivity
      */
     public void setVelocity(final PNode node, final Point2D velocity)
     {
-        if (node == null)
-        {
-            throw new IllegalArgumentException("node must not be null");
-        }
+        checkParticleArgs(node);
         if (velocity == null)
         {
             throw new IllegalArgumentException("velocity must not be null");
         }
-        Particle particle = particles.get(node);
-        if (particle == null)
-        {
-            throw new IllegalArgumentException("no particle exists for node " + node);
-        }
-        particle.velocity().set((float) velocity.getX(), (float) velocity.getY(), 0.0f);
+        particles.get(node).velocity().set((float) velocity.getX(), (float) velocity.getY(), 0.0f);
     }
 
-    private void checkParticleArgs(final PNode node)
-    {
-        if (node == null)
-        {
-            throw new IllegalArgumentException("node must not be null");
-        }
-        Particle particle = particles.get(node);
-        if (particle == null)
-        {
-            throw new IllegalArgumentException("no particle exists for node " + node);
-        }
-    }
-
+    /**
+     * Return the mass of the particle associated with the specified node.  A particle
+     * must have already been created for the specified node.
+     *
+     * @param node node, must not be null
+     * @return the mass of the particle associated with the specified node
+     */
     public float getParticleMass(final PNode node)
     {
         checkParticleArgs(node);
         return particles.get(node).mass();
     }
 
+    /**
+     * Set the mass of the particle associated with the specified node to <code>mass</code>.
+     * A particle must have already been created for the specified node.
+     *
+     * @param node node, must not be null
+     * @param mass particle mass
+     */
     public void setParticleMass(final PNode node, final float mass)
     {
         checkParticleArgs(node);
         particles.get(node).setMass(mass);
     }
-
-    // todo:  fix/free, clamp/release, affix?
 
     /**
      * Clamp the velocity for the particle associated with the specified node
@@ -260,16 +234,8 @@ public class ParticleSystemActivity
      */
     public void clamp(final PNode node)
     {
-        if (node == null)
-        {
-            throw new IllegalArgumentException("node must not be null");
-        }
-        Particle particle = particles.get(node);
-        if (particle == null)
-        {
-            throw new IllegalArgumentException("no particle exists for node " + node);
-        }
-        particle.makeFixed();
+        checkParticleArgs(node);
+        particles.get(node).makeFixed();
     }
 
     /**
@@ -280,16 +246,8 @@ public class ParticleSystemActivity
      */
     public void release(final PNode node)
     {
-        if (node == null)
-        {
-            throw new IllegalArgumentException("node must not be null");
-        }
-        Particle particle = particles.get(node);
-        if (particle == null)
-        {
-            throw new IllegalArgumentException("no particle exists for node " + node);
-        }
-        particle.makeFree();
+        checkParticleArgs(node);
+        particles.get(node).makeFree();
     }
 
     /**
@@ -359,53 +317,85 @@ public class ParticleSystemActivity
         springs.get(source, target).turnOff();
     }
 
-    private void checkSpringArgs(final PNode source, final PNode target)
-    {
-        if (source == null)
-        {
-            throw new IllegalArgumentException("source node must not be null");
-        }
-        if (target == null)
-        {
-            throw new IllegalArgumentException("target node must not be null");
-        }
-        if (!springs.containsKey(source, target))
-        {
-            throw new IllegalArgumentException("no spring exists between source node "
-                                               + source + " and target node " + target);
-        }
-    }
-
+    /**
+     * Return the rest length for the spring between the specified source and target nodes.
+     * A spring must have already been created for the specified source and target nodes.
+     *
+     * @param source source node, must not be null
+     * @param target target node, must not be null
+     * @return the rest length for the spring between the specified source and target nodes
+     */
     public float getSpringRestLength(final PNode source, final PNode target)
     {
         checkSpringArgs(source, target);
         return springs.get(source, target).restLength();
     }
 
+    /**
+     * Set the rest length for the spring between the specified source and target nodes to <code>restLength</code>.
+     * A spring must have already been created for the specified source and target nodes.
+     *
+     * @param source source node, must not be null
+     * @param target target node, must not be null
+     * @param restLength rest length
+     */
     public void setSpringRestLength(final PNode source, final PNode target, final float restLength)
     {
         checkSpringArgs(source, target);
         springs.get(source, target).setRestLength(restLength);
     }
 
+    /**
+     * Return the strength of the spring between the specified source and target nodes.
+     * A spring must have already been created for the specified source and target nodes.
+     *
+     * @param source source node, must not be null
+     * @param target target node, must not be null
+     * @return the strength of the spring between the specified source and target nodes
+     */
     public float getSpringStrength(final PNode source, final PNode target)
     {
         checkSpringArgs(source, target);
         return springs.get(source, target).strength();
     }
 
+    /**
+     * Set the strength of the spring between the specified source and target nodes to <code>strength</code>.
+     * A spring must have already been created for the specified source and target nodes.
+     *
+     * @param source source node, must not be null
+     * @param target target node, must not be null
+     * @param strength spring strength
+     */
     public void setSpringStrength(final PNode source, final PNode target, final float strength)
     {
         checkSpringArgs(source, target);
         springs.get(source, target).setStrength(strength);
     }
 
+    /**
+     * Return the damping factor for the spring between the specified source and target nodes.
+     * A spring must have already been created for the specified source and target nodes.
+     *
+     * @param source source node, must not be null
+     * @param target target node, must not be null
+     * @return the damping factor for the spring between the specified source and target nodes
+     */
     public float getSpringDamping(final PNode source, final PNode target)
     {
         checkSpringArgs(source, target);
         return springs.get(source, target).damping();
     }
 
+    /**
+     * Set the damping factor for the spring between the specified source and target nodes to
+     * <code>dampingFactor</code>.  A spring must have already been created for the specified
+     * source and target nodes.
+     *
+     * @param source source node, must not be null
+     * @param target target node, must not be null
+     * @param damping damping factor
+     */
     public void setSpringDamping(final PNode source, final PNode target, final float damping)
     {
         checkSpringArgs(source, target);
@@ -463,23 +453,6 @@ public class ParticleSystemActivity
         attractions.get(source, target).turnOn();
     }
 
-    private void checkAttractionArgs(final PNode source, final PNode target)
-    {
-        if (source == null)
-        {
-            throw new IllegalArgumentException("source node must not be null");
-        }
-        if (target == null)
-        {
-            throw new IllegalArgumentException("target node must not be null");
-        }
-        if (!attractions.containsKey(source, target))
-        {
-            throw new IllegalArgumentException("no attraction exists between source node "
-                                               + source + " and target node " + target);
-        }
-    }
-
     /**
      * Disable the attraction between the specified source and target nodes.  An attraction
      * must have already been created for the specified source and target nodes.
@@ -493,24 +466,57 @@ public class ParticleSystemActivity
         attractions.get(source, target).turnOff();
     }
 
+    /**
+     * Return the strength of the attraction between the specified source and target nodes.  An attraction
+     * must have already been created for the specified source and target nodes.
+     *
+     * @param source source node, must not be null
+     * @param target target node, must not be null
+     * @return the strength of the attraction between the specified source and target nodes
+     */
     public float getAttractionStrength(final PNode source, final PNode target)
     {
         checkAttractionArgs(source, target);
         return attractions.get(source, target).getStrength();
     }
 
+    /**
+     * Set the strength of the attraction between the specified source and target nodes to <code>strength</code>.
+     * An attraction must have already been created for the specified source and target nodes.
+     *
+     * @param source source node, must not be null
+     * @param target target node, must not be null
+     * @param strength attraction (or repulsion) force strength
+     */
     public void setAttractionStrength(final PNode source, final PNode target, final float strength)
     {
         checkAttractionArgs(source, target);
         attractions.get(source, target).setStrength(strength);
     }
 
+    /**
+     * Return the minimum distance for the attraction between the specified source and target nodes.  An attraction
+     * must have already been created for the specified source and target nodes.
+     *
+     * @param source source node, must not be null
+     * @param target target node, must not be null
+     * @return the minimum distance for the attraction between the specified source and target nodes
+     */
     public float getAttractionMinimumDistance(final PNode source, final PNode target)
     {
         checkAttractionArgs(source, target);
         return attractions.get(source, target).getMinimumDistance();
     }
 
+    /**
+     * Set the minimum distance for the attraction between the specified source and target nodes
+     * to <code>minimumDistance</code>.  An attraction must have already been created for the
+     * specified source and target nodes.
+     *
+     * @param source source node, must not be null
+     * @param target target node, must not be null
+     * @param minimumDistance minimum distance
+     */
     public void setAttractionMinimumDistance(final PNode source, final PNode target, final float minimumDistance)
     {
         checkAttractionArgs(source, target);
@@ -526,7 +532,6 @@ public class ParticleSystemActivity
      */
     protected void activityStep(final long elapsedTime)
     {
-        // todo:  is the call to super req'd?
         super.activityStep(elapsedTime);
         particleSystem.tick();
         for (Map.Entry<PNode, Particle> entry : particles.entrySet())
@@ -555,11 +560,80 @@ public class ParticleSystemActivity
      */
     protected void activityFinished()
     {
-        // todo:  is the call to super req'd?
         super.activityFinished();
         attractions.clear();
         particles.clear();
         springs.clear();
         particleSystem.clear();
+    }
+
+
+    /**
+     * Check the specified particle arguments are valid.  Throws an {@link IllegalArgumentException}
+     * if the specified node is null or if no particle exists for the specified node.
+     *
+     * @param node node, must not be null
+     */
+    private void checkParticleArgs(final PNode node)
+    {
+        if (node == null)
+        {
+            throw new IllegalArgumentException("node must not be null");
+        }
+        Particle particle = particles.get(node);
+        if (particle == null)
+        {
+            throw new IllegalArgumentException("no particle exists for node " + node);
+        }
+    }
+
+    /**
+     * Check the specified spring arguments are valid.  Throws an {@link IllegalArgumentException}
+     * if either the specified nodes are null or if no spring exists for the specified source and target
+     * nodes.
+     *
+     * @param source source node, must not be null
+     * @param target target node, must not be null
+     */
+    private void checkSpringArgs(final PNode source, final PNode target)
+    {
+        if (source == null)
+        {
+            throw new IllegalArgumentException("source node must not be null");
+        }
+        if (target == null)
+        {
+            throw new IllegalArgumentException("target node must not be null");
+        }
+        if (!springs.containsKey(source, target))
+        {
+            throw new IllegalArgumentException("no spring exists between source node "
+                                               + source + " and target node " + target);
+        }
+    }
+
+    /**
+     * Check the specified attraction arguments are valid.  Throws an {@link IllegalArgumentException}
+     * if either the specified nodes are null or if no attraction exists for the specified source and target
+     * nodes.
+     *
+     * @param source source node, must not be null
+     * @param target target node, must not be null
+     */
+    private void checkAttractionArgs(final PNode source, final PNode target)
+    {
+        if (source == null)
+        {
+            throw new IllegalArgumentException("source node must not be null");
+        }
+        if (target == null)
+        {
+            throw new IllegalArgumentException("target node must not be null");
+        }
+        if (!attractions.containsKey(source, target))
+        {
+            throw new IllegalArgumentException("no attraction exists between source node "
+                                               + source + " and target node " + target);
+        }
     }
 }
