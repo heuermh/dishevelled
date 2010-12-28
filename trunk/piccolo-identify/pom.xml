@@ -29,32 +29,32 @@
     <dependency>
       <groupId>org.dishevelled</groupId>
       <artifactId>dsh-functor</artifactId>
-      <version>1.0-SNAPSHOT</version>
+      <version>${project.version}</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>org.dishevelled</groupId>
       <artifactId>dsh-iconbundle</artifactId>
-      <version>1.0-SNAPSHOT</version>
+      <version>${project.version}</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>org.dishevelled</groupId>
       <artifactId>dsh-identify</artifactId>
-      <version>1.0-SNAPSHOT</version>
+      <version>${project.version}</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>org.dishevelled</groupId>
       <artifactId>dsh-identify</artifactId>
-      <version>1.0-SNAPSHOT</version>
+      <version>${project.version}</version>
       <type>test-jar</type>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.dishevelled</groupId>
       <artifactId>dsh-iconbundle-tango</artifactId>
-      <version>1.0-SNAPSHOT</version>
+      <version>${project.version}</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
