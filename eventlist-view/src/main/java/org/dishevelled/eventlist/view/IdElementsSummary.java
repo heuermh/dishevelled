@@ -35,14 +35,14 @@ import org.dishevelled.iconbundle.tango.TangoProject;
 import org.dishevelled.identify.IdLabel;
 
 /**
- * Identifiable elements view.
+ * Identifiable elements summary.
  *
  * @param <E> model element type
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public final class IdElementsView<E>
-    extends ElementsView<E>
+public final class IdElementsSummary<E>
+    extends ElementsSummary<E>
 {
     /** Map of labels keyed by element. */
     private final Map<E, IdLabel> labels = new HashMap<E, IdLabel>();
@@ -65,11 +65,11 @@ public final class IdElementsView<E>
 
 
     /**
-     * Create a new identifiable elements view with the specified model.
+     * Create a new identifiable elements summary with the specified model.
      *
      * @param model model, must not be null
      */
-    public IdElementsView(final EventList<E> model)
+    public IdElementsSummary(final EventList<E> model)
     {
         super(model);
         setModelToView(modelToView);
