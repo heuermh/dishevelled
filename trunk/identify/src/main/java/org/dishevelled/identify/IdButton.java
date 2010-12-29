@@ -26,7 +26,6 @@ package org.dishevelled.identify;
 import java.awt.ComponentOrientation;
 
 import javax.swing.Action;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.UIManager;
