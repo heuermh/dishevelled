@@ -26,8 +26,6 @@ package org.dishevelled.eventlist.view.examples;
 import ca.odell.glazedlists.EventList;
 import ca.odell.glazedlists.GlazedLists;
 
-import java.awt.BorderLayout;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -36,13 +34,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.Timer;
 import javax.swing.SwingUtilities;
 
@@ -84,8 +78,8 @@ public final class EventListViewExample
             strings.add("Value " + i);
         }
         final EventList<String> eventList = GlazedLists.eventList(strings);
-        addField("Count label:", new CountLabel(eventList));
-        addField("Elements label:", new ElementsLabel(eventList));
+        addField("Count label:", new CountLabel<String>(eventList));
+        addField("Elements label:", new ElementsLabel<String>(eventList));
         addLabel("Elements summary:");
 
         UnaryFunction<String, JComponent> modelToLabel = new UnaryFunction<String, JComponent>()
@@ -104,16 +98,16 @@ public final class EventListViewExample
             }
         };
 
-        addField(new ElementsSummary(eventList, modelToLabel));
+        addField(new ElementsSummary<String>(eventList, modelToLabel));
         addSpacing(12);
         addLabel("Identifiable elements summary:");
-        addField(new IdElementsSummary(eventList));
+        addField(new IdElementsSummary<String>(eventList));
         addSpacing(12);
         addLabel("Elements list:");
-        addField(new ElementsList(eventList));
+        addField(new ElementsList<String>(eventList));
         addSpacing(12);
         addLabel("Identifiable elements list:");
-        addFinalField(new IdElementsList(eventList));
+        addFinalField(new IdElementsList<String>(eventList));
 
         Timer t = new Timer(5000, new ActionListener()
             {

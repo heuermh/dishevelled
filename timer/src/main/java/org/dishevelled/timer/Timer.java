@@ -134,7 +134,7 @@ public final class Timer
     public void start()
     {
         started = true;
-        startTime = (double) System.nanoTime();
+        startTime = System.nanoTime();
     }
 
     /**
@@ -148,7 +148,7 @@ public final class Timer
     {
         if (started)
         {
-            double currentTime = (double) System.nanoTime();
+            double currentTime = System.nanoTime();
             double elapsedTime = currentTime - startTime;
             summaryStatistics.addValue(elapsedTime);
         }

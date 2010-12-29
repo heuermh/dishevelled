@@ -51,9 +51,7 @@ import org.dishevelled.iconbundle.IconSize;
 
 import org.dishevelled.iconbundle.tango.TangoProject;
 
-import org.dishevelled.identify.ContextMenuButton;
 import org.dishevelled.identify.ContextMenuListener;
-import org.dishevelled.identify.IdButton;
 import org.dishevelled.identify.IdPopupMenu;
 import org.dishevelled.identify.IdToolBar;
 
@@ -90,7 +88,7 @@ public class ElementsList<E>
         super(model);
 
         list = new JList(new EventListModel<E>(getModel()));
-        list.setSelectionModel(new ListSelectionModelAdapter<E>());
+        list.setSelectionModel(new ListSelectionModelAdapter());
 
         contextMenu = new IdPopupMenu();
         contextMenu.add(getCutAction(), TangoProject.EXTRA_SMALL);
@@ -216,7 +214,7 @@ public class ElementsList<E>
      *
      * @param <E> model element type
      */
-    private class ListSelectionModelAdapter<E> implements ListSelectionModel
+    private class ListSelectionModelAdapter implements ListSelectionModel
     {
         /** Event listener list. */
         private final EventListenerList listenerList;

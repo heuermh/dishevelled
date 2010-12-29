@@ -112,7 +112,7 @@ public final class TernaryKey<K1, K2, K3>
         }
         if (other instanceof TernaryKey)
         {
-            TernaryKey ternaryKey = (TernaryKey) other;
+            TernaryKey<?, ?, ?> ternaryKey = (TernaryKey<?, ?, ?>) other;
             return (key1 == null ? ternaryKey.key1 == null : key1.equals(ternaryKey.key1))
                     && (key2 == null ? ternaryKey.key2 == null : key2.equals(ternaryKey.key2))
                     && (key3 == null ? ternaryKey.key3 == null : key3.equals(ternaryKey.key3));

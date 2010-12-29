@@ -25,15 +25,12 @@ package org.dishevelled.iconbundle.impl;
 
 import java.awt.Color;
 import java.awt.Image;
-import java.awt.Graphics2D;
 
 import java.awt.image.Raster;
 import java.awt.image.RasterOp;
 import java.awt.image.RescaleOp;
 import java.awt.image.BufferedImage;
 import java.awt.image.WritableRaster;
-
-import java.net.URL;
 
 /**
  * IconBundle static utility class.

@@ -31,7 +31,7 @@ package org.dishevelled.vocabulary;
  * @version $Revision: 1.4 $ $Date: 2003/12/02 03:41:15 $
  */
 public final class Evidence
-    implements Comparable
+    implements Comparable<Evidence>
 {
     /** Evidence name. */
     private final String name;
@@ -132,45 +132,43 @@ public final class Evidence
     }
 
     /** {@inheritDoc} */
-    public int compareTo(final Object o)
+    public int compareTo(final Evidence evidence)
     {
-        final Evidence e = (Evidence) o;
-
         // compare scores
-        if (score < e.getScore())
+        if (score < evidence.getScore())
         {
             return 1;
         }
-        if (score > e.getScore())
+        if (score > evidence.getScore())
         {
             return -1;
         }
 
         // scores are equal, compare confidence
-        if (confidence < e.getConfidence())
+        if (confidence < evidence.getConfidence())
         {
             return  1;
         }
-        if (confidence > e.getConfidence())
+        if (confidence > evidence.getConfidence())
         {
             return -1;
         }
 
         // scores and confidence are equal, compare name
-        if ((name == null) && (e.getName() == null))
+        if ((name == null) && (evidence.getName() == null))
         {
             return 0;
         }
-        if ((name == null) && (e.getName() != null))
+        if ((name == null) && (evidence.getName() != null))
         {
             return 1;
         }
-        if ((name != null) && (e.getName() == null))
+        if ((name != null) && (evidence.getName() == null))
         {
             return -1;
         }
 
-        return (name.compareTo(e.getName()));
+        return (name.compareTo(evidence.getName()));
     }
 
     /** {@inheritDoc} */
