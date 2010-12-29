@@ -77,7 +77,10 @@ public final class IdNodeExample
     implements Runnable
 {
     /** Custom 128x128 icon size. */
-    private static final IconSize CUSTOM_128X128 = new IconSize(128, 128) {};
+    private static final IconSize CUSTOM_128X128 = new IconSize(128, 128)
+        {
+            // empty
+        };
 
     // download these images to src/main/resources/org/dishevelled/piccolo/identify/examples
     //    as the terms of use do not allow redistribution or hot-linking

@@ -243,7 +243,7 @@ public class ElementsSummaryNode<E>
         double padding = 2.0d;
         for (int i = 0, size = getChildrenCount(); i < size; i++)
         {
-            PNode child = (PNode) getChild(i);
+            PNode child = getChild(i);
             child.setOffset(x, child.getFullBoundsReference().getHeight() / 2.0d);
             x += child.getFullBoundsReference().getWidth();
             x += padding;

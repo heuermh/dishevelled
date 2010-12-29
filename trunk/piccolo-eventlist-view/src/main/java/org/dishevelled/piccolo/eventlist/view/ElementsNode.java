@@ -24,7 +24,6 @@
 package org.dishevelled.piccolo.eventlist.view;
 
 import ca.odell.glazedlists.EventList;
-import ca.odell.glazedlists.ListSelection;
 
 import ca.odell.glazedlists.event.ListEvent;
 import ca.odell.glazedlists.event.ListEventListener;
@@ -43,9 +42,7 @@ import org.dishevelled.iconbundle.IconSize;
 
 import org.dishevelled.iconbundle.tango.TangoProject;
 
-import org.dishevelled.identify.ContextMenuButton;
 import org.dishevelled.identify.ContextMenuListener;
-import org.dishevelled.identify.IdButton;
 import org.dishevelled.identify.IdPopupMenu;
 import org.dishevelled.identify.IdToolBar;
 

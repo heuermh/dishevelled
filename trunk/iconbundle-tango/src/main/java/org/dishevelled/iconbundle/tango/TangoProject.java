@@ -46,16 +46,28 @@ public final class TangoProject
     // Tango Project icon sizes
 
     /** Custom icon size, tango project "extra small". */
-    public static final IconSize EXTRA_SMALL = new IconSize(16, 16) { };
+    public static final IconSize EXTRA_SMALL = new IconSize(16, 16)
+        {
+            // empty
+        };
 
     /** Custom icon size, tango project "small". */
-    public static final IconSize SMALL = new IconSize(22, 22) { };
+    public static final IconSize SMALL = new IconSize(22, 22)
+        {
+            // empty
+        };
 
     /** Custom icon size, tango project "medium". */
-    public static final IconSize MEDIUM = new IconSize(32, 32) { };
+    public static final IconSize MEDIUM = new IconSize(32, 32)
+        {
+            // empty
+        };
 
     /** Custom icon size, tango project "large". */
-    public static final IconSize LARGE = new IconSize(48, 48) { };
+    public static final IconSize LARGE = new IconSize(48, 48)
+        {
+            // empty
+        };
 
 
     /** Private array of tango custom icon sizes. */

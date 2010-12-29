@@ -60,9 +60,6 @@ final class StateMachineSupport
     /** Object to delegate to. */
     private final Object delegator;
 
-    /** State machine for this support class. */
-    private final SCXML stateMachine;
-
     /** State machine executor for this support class. */
     private final SCXMLExecutor executor;
 
@@ -87,7 +84,6 @@ final class StateMachineSupport
             throw new IllegalArgumentException("stateMachine must not be null");
         }
         this.delegator = delegator;
-        this.stateMachine = stateMachine;
 
         Evaluator evaluator = new JexlEvaluator();
         EventDispatcher dispatcher = new SimpleDispatcher();
@@ -193,7 +189,7 @@ final class StateMachineSupport
     {
         try
         {
-            Class c = delegator.getClass();
+            Class<?> c = delegator.getClass();
             Method method = c.getDeclaredMethod(methodName, new Class[0]);
             method.setAccessible(true);
             method.invoke(delegator, new Object[0]);

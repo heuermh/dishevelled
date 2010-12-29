@@ -183,7 +183,7 @@ public final class CullPanel<E>
                 /** {@inheritDoc} */
                 public void actionPerformed(final ActionEvent event)
                 {
-                    EventSelectionModel remainingSelectionModel = (EventSelectionModel) remainingList.getSelectionModel();
+                    EventSelectionModel<E> remainingSelectionModel = (EventSelectionModel<E>) remainingList.getSelectionModel();
                     int maxSelectionIndex = Math.min(remainingSelectionModel.getMaxSelectionIndex() + 1, remaining.size() - 1);
                     int selectionSize = selectedRemaining.size();
                     int newSelectionIndex = maxSelectionIndex - selectionSize;
@@ -492,7 +492,7 @@ public final class CullPanel<E>
                     /** {@inheritDoc} */
                     public void actionPerformed(final ActionEvent event)
                     {
-                        EventSelectionModel remainingSelectionModel = (EventSelectionModel) remainingList.getSelectionModel();
+                        EventSelectionModel<E> remainingSelectionModel = (EventSelectionModel<E>) remainingList.getSelectionModel();
                         int maxSelectionIndex = Math.min(remaining.size() - 1, remainingSelectionModel.getMaxSelectionIndex() + 1);
                         remainingSelectionModel.setSelectionInterval(maxSelectionIndex, maxSelectionIndex);
                         remainingList.ensureIndexIsVisible(maxSelectionIndex);

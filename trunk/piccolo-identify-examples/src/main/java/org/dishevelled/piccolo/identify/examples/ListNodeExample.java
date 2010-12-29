@@ -37,8 +37,6 @@ import org.piccolo2d.PCanvas;
 
 import org.piccolo2d.util.PPaintContext;
 
-import org.piccolo2d.extras.swing.PScrollPane;
-
 import org.dishevelled.piccolo.identify.ListNode;
 
 /**

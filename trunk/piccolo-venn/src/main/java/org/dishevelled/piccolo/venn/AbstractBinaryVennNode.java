@@ -27,8 +27,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
-import org.piccolo2d.PNode;
-
 import org.piccolo2d.nodes.PText;
 
 import org.dishevelled.observable.event.SetChangeEvent;

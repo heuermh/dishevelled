@@ -126,25 +126,46 @@ public abstract class IconSize
 
 
     /** Default 16x16 icon size. */
-    public static final IconSize DEFAULT_16X16 = new IconSize(16, 16) { };
+    public static final IconSize DEFAULT_16X16 = new IconSize(16, 16)
+        {
+            // empty
+        };
 
     /** Default 24x24 icon size. */
-    public static final IconSize DEFAULT_24X24 = new IconSize(24, 24) { };
+    public static final IconSize DEFAULT_24X24 = new IconSize(24, 24)
+        {
+            // empty
+        };
 
     /** Default 32x32 icon size. */
-    public static final IconSize DEFAULT_32X32 = new IconSize(32, 32) { };
+    public static final IconSize DEFAULT_32X32 = new IconSize(32, 32)
+        {
+            // empty
+        };
 
     /** Default 48x48 icon size. */
-    public static final IconSize DEFAULT_48X48 = new IconSize(48, 48) { };
+    public static final IconSize DEFAULT_48X48 = new IconSize(48, 48)
+        {
+            // empty
+        };
 
     /** Default 64x64 icon size. */
-    public static final IconSize DEFAULT_64X64 = new IconSize(64, 64) { };
+    public static final IconSize DEFAULT_64X64 = new IconSize(64, 64)
+        {
+            // empty
+        };
 
     /** Default 96x96 icon size. */
-    public static final IconSize DEFAULT_96X96 = new IconSize(96, 96) { };
+    public static final IconSize DEFAULT_96X96 = new IconSize(96, 96)
+        {
+            // empty
+        };
 
     /** Default 128x128 icon size. */
-    public static final IconSize DEFAULT_128X128 = new IconSize(128, 128) { };
+    public static final IconSize DEFAULT_128X128 = new IconSize(128, 128)
+        {
+            // empty
+        };
 
     /**
      * Private array of default enumeration values.

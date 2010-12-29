@@ -98,7 +98,10 @@ public class IconSizeTest
 
     public void testCustomSize()
     {
-        IconSize customSize = new IconSize(99, 101) { };
+        IconSize customSize = new IconSize(99, 101)
+            {
+                // empty
+            };
 
         assertNotNull(customSize);
         assertTrue(customSize.getWidth() == 99);

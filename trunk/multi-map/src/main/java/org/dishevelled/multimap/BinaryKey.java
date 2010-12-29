@@ -94,7 +94,7 @@ public final class BinaryKey<K1, K2>
         }
         if (other instanceof BinaryKey)
         {
-            BinaryKey binaryKey = (BinaryKey) other;
+            BinaryKey<?, ?> binaryKey = (BinaryKey<?, ?>) other;
             return (key1 == null ? binaryKey.key1 == null : key1.equals(binaryKey.key1))
                 && (key2 == null ? binaryKey.key2 == null : key2.equals(binaryKey.key2));
         }

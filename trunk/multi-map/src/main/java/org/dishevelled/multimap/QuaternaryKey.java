@@ -130,7 +130,7 @@ public final class QuaternaryKey<K1, K2, K3, K4>
         }
         if (other instanceof QuaternaryKey)
         {
-            QuaternaryKey quaternaryKey = (QuaternaryKey) other;
+            QuaternaryKey<?, ?, ?, ?> quaternaryKey = (QuaternaryKey<?, ?, ?, ?>) other;
             return (key1 == null ? quaternaryKey.key1 == null : key1.equals(quaternaryKey.key1))
                 && (key2 == null ? quaternaryKey.key2 == null : key2.equals(quaternaryKey.key2))
                 && (key3 == null ? quaternaryKey.key3 == null : key3.equals(quaternaryKey.key3))

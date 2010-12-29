@@ -27,14 +27,6 @@ import ca.odell.glazedlists.EventList;
 
 import java.util.List;
 
-import org.dishevelled.functor.UnaryFunction;
-
-import org.dishevelled.iconbundle.IconSize;
-
-import org.dishevelled.iconbundle.tango.TangoProject;
-
-import org.dishevelled.piccolo.identify.GenericIdNode;
-
 import org.piccolo2d.PNode;
 
 import org.piccolo2d.util.PPaintContext;

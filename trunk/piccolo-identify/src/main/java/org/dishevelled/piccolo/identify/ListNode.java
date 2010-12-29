@@ -105,7 +105,7 @@ public final class ListNode<E>
     protected void layoutChildren()
     {
         double y = 0.0d;
-        for (Iterator children = getChildrenIterator(); children.hasNext(); )
+        for (Iterator<?> children = getChildrenIterator(); children.hasNext(); )
         {
             PNode child = (PNode) children.next();
             child.setOffset(0.0d, y);
