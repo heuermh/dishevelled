@@ -61,7 +61,10 @@ import org.dishevelled.iconbundle.IconTextDirection;
 public final class IdToolBar
     extends JToolBar
 {
-    /** Display icons action. */
+	/** Action selected key, Action.SELECTED_KEY only available in JDK 1.6+. */
+	private static final String SELECTED_KEY = "SwingSelectedKey";
+
+	/** Display icons action. */
     private final AbstractAction displayIcons = new AbstractAction("Display icons")
         {
             /** {@inheritDoc} */
@@ -283,7 +286,7 @@ public final class IdToolBar
     public void displayIcons()
     {
         display = DISPLAY_ICONS;
-        displayIcons.putValue(Action.SELECTED_KEY, Boolean.TRUE);
+        displayIcons.putValue(SELECTED_KEY, Boolean.TRUE);
 
         for (int i = 0, size = getComponentCount(); i < size; i++)
         {
@@ -302,7 +305,7 @@ public final class IdToolBar
     public void displayText()
     {
         display = DISPLAY_TEXT;
-        displayText.putValue(Action.SELECTED_KEY, Boolean.TRUE);
+        displayText.putValue(SELECTED_KEY, Boolean.TRUE);
 
         for (int i = 0, size = getComponentCount(); i < size; i++)
         {
@@ -321,7 +324,7 @@ public final class IdToolBar
     public void displayIconsAndText()
     {
         display = DISPLAY_ICONS_AND_TEXT;
-        displayIconsAndText.putValue(Action.SELECTED_KEY, Boolean.TRUE);
+        displayIconsAndText.putValue(SELECTED_KEY, Boolean.TRUE);
 
         for (int i = 0, size = getComponentCount(); i < size; i++)
         {
@@ -356,7 +359,7 @@ public final class IdToolBar
             throw new IllegalArgumentException("iconSize must not be null");
         }
         Action iconSizeAction = createIconSizeAction(iconSize);
-        iconSizeAction.putValue(Action.SELECTED_KEY, Boolean.TRUE);
+        iconSizeAction.putValue(SELECTED_KEY, Boolean.TRUE);
 
         for (int i = 0, size = getComponentCount(); i < size; i++)
         {
