@@ -9,7 +9,7 @@
   </parent>
   <artifactId>dsh-piccolo-sprite-examples</artifactId>
   <packaging>jar</packaging>
-  <name>dishevelled.org piccolo sprite examples</name>
+  <name>dishevelled.org piccolo-sprite-examples</name>
   <version>1.0-SNAPSHOT</version>
   <description>Piccolo2D sprite node examples.</description>
   <url>http://www.dishevelled.org/piccolo-sprite-examples</url>

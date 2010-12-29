@@ -9,7 +9,7 @@
   </parent>
   <artifactId>dsh-piccolo-tilemap-examples</artifactId>
   <packaging>jar</packaging>
-  <name>dishevelled.org piccolo tilemap examples</name>
+  <name>dishevelled.org piccolo-tilemap-examples</name>
   <version>1.0-SNAPSHOT</version>
   <description>Piccolo2D tile map node examples</description>
   <url>http://www.dishevelled.org/piccolo-tilemap-examples</url>
