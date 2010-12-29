@@ -41,7 +41,8 @@
  * </p>
  * <p>
  * Apache Jakarta Commons Functor<br/>
- * &gt; <a href="http://jakarta.apache.org/commons/sandbox/functor">http://jakarta.apache.org/commons/sandbox/functor</a>
+ * &gt; <a href="http://jakarta.apache.org/commons/sandbox/functor">
+ * http://jakarta.apache.org/commons/sandbox/functor</a>
  * </p>
  * <p>
  * Colt Project<br/>
