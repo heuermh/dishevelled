@@ -96,6 +96,7 @@ public final class IdElementsSummary<E>
 
     /**
      * Set the icon size for this identifiable elements summary to <code>iconSize</code>.
+     * Defaults to {@link #DEFAULT_ICON_SIZE}.
      *
      * <p>This is a bound property.</p>
      *
