@@ -41,7 +41,7 @@ import org.dishevelled.eventlist.view.EventListViewSupport;
 
 import org.dishevelled.identify.IdentifiableAction;
 
-import org.dishevelled.iconbundle.tango.TangoProject;
+import static org.dishevelled.iconbundle.tango.TangoProject.*;
 
 import org.piccolo2d.PNode;
 
@@ -60,7 +60,7 @@ public abstract class AbstractEventListNode<E>
     private final EventListViewSupport<E> eventListViewSupport;
 
     /** Select all action. */
-    private final IdentifiableAction selectAllAction = new IdentifiableAction("Select all", TangoProject.EDIT_SELECT_ALL)
+    private final IdentifiableAction selectAllAction = new IdentifiableAction("Select all", EDIT_SELECT_ALL)
         {
                 /** {@inheritDoc} */
                 public void actionPerformed(final ActionEvent event)
@@ -90,7 +90,7 @@ public abstract class AbstractEventListNode<E>
         };
 
     /** Cut action. */
-    private final IdentifiableAction cutAction = new IdentifiableAction("Cut", TangoProject.EDIT_CUT)
+    private final IdentifiableAction cutAction = new IdentifiableAction("Cut", EDIT_CUT)
         {
                 /** {@inheritDoc} */
                 public void actionPerformed(final ActionEvent event)
@@ -100,7 +100,7 @@ public abstract class AbstractEventListNode<E>
         };
 
     /** Copy action. */
-    private final IdentifiableAction copyAction = new IdentifiableAction("Copy", TangoProject.EDIT_COPY)
+    private final IdentifiableAction copyAction = new IdentifiableAction("Copy", EDIT_COPY)
         {
                 /** {@inheritDoc} */
                 public void actionPerformed(final ActionEvent event)
@@ -110,7 +110,7 @@ public abstract class AbstractEventListNode<E>
         };
 
     /** Paste action. */
-    private final IdentifiableAction pasteAction = new IdentifiableAction("Paste", TangoProject.EDIT_PASTE)
+    private final IdentifiableAction pasteAction = new IdentifiableAction("Paste", EDIT_PASTE)
         {
                 /** {@inheritDoc} */
                 public void actionPerformed(final ActionEvent event)
@@ -120,7 +120,7 @@ public abstract class AbstractEventListNode<E>
         };
 
     /** Add action. */
-    private final IdentifiableAction addAction = new IdentifiableAction("Add", TangoProject.LIST_ADD)
+    private final IdentifiableAction addAction = new IdentifiableAction("Add", LIST_ADD)
         {
                 /** {@inheritDoc} */
                 public void actionPerformed(final ActionEvent event)
@@ -130,7 +130,7 @@ public abstract class AbstractEventListNode<E>
         };
 
     /** Remove action. */
-    private final IdentifiableAction removeAction = new IdentifiableAction("Remove", TangoProject.LIST_REMOVE)
+    private final IdentifiableAction removeAction = new IdentifiableAction("Remove", LIST_REMOVE)
         {
                 /** {@inheritDoc} */
                 public void actionPerformed(final ActionEvent event)
@@ -352,7 +352,7 @@ public abstract class AbstractEventListNode<E>
     {
         return cutAction;
     }
- 
+
     /**
      * Return the copy action.
      *

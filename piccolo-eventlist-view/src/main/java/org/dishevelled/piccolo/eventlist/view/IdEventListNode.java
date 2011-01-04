@@ -78,6 +78,15 @@ public class IdEventListNode<E>
     }
 
 
+    /**
+     * Set the count threshold to <code>countThreshold</code>.  If the scale for the
+     * camera viewing this identifiable event list node is less than the specified count threshold, this
+     * node will be painted as a count label node. Defaults to {@link #DEFAULT_COUNT_THRESHOLD}.
+     *
+     * <p>This is a bound property.</p>
+     *
+     * @param countThreshold count threshold
+     */
     public final void setCountThreshold(final double countThreshold)
     {
         double oldCountThreshold = this.countThreshold;
@@ -86,6 +95,17 @@ public class IdEventListNode<E>
         repaint();
     }
 
+    /**
+     * Set the summary threshold to <code>summaryThreshold</code>.  If the scale for the
+     * camera viewing this identifiable event list node is greater than the count threshold and less than the
+     * specified summary threshold, this node will be painted as an identifiable elements summary node.
+     * Defaults to {@link #DEFAULT_SUMMARY_THRESHOLD}.
+     *
+     * <p>This is a bound property.</p>
+     *
+     * @see #setCountThreshold(double)
+     * @param summaryThreshold summary threshold
+     */
     public final void setSummaryThreshold(final double summaryThreshold)
     {
         double oldSummaryThreshold = this.summaryThreshold;
@@ -119,6 +139,11 @@ public class IdEventListNode<E>
         // empty
     }
 
+    /**
+     * Add the specified child node if it not already a child of this node.
+     *
+     * @param child child node to add
+     */
     private void addIfMissing(final PNode child)
     {
         // or getChildrenReference().contains()?
@@ -128,6 +153,11 @@ public class IdEventListNode<E>
         }
     }
 
+    /**
+     * Remove the specified child node if it is a child of this node.
+     *
+     * @param child child node to remove
+     */
     private void removeIfPresent(final PNode child)
     {
         if (indexOfChild(child) > -1)

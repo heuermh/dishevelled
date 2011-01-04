@@ -72,5 +72,45 @@ public final class IdElementsSummaryNode<E>
     }
 
 
-    // allow other id node impls, setIconSize
+    // todo: allow other id node impls
+    /**
+     * Return the icon size for this identifiable elements summary node.
+     *
+     * @return the icon size for this identifiable elements summary node
+     */
+    public IconSize getIconSize()
+    {
+        return iconSize;
+    }
+
+    /**
+     * Set the icon size for this identifiable elements summary node to <code>iconSize</code>.
+     * Defaults to {@link #DEFAULT_ICON_SIZE}.
+     *
+     * <p>This is a bound property.</p>
+     *
+     * @param iconSize icon size for this identifiable elements summary node, must not be null
+     */
+    public void setIconSize(final IconSize iconSize)
+    {
+        IconSize oldIconSize = this.iconSize;
+        this.iconSize = iconSize;
+        updateIconSize();
+        firePropertyChange(-1, "iconSize", oldIconSize, this.iconSize);
+    }
+
+    /**
+     * Update icon size.
+     */
+    private void updateIconSize()
+    {
+        for (Object o : getChildrenReference())
+        {
+            if (o instanceof GenericIdNode)
+            {
+                GenericIdNode idNode = (GenericIdNode) o;
+                idNode.setIconSize(iconSize);
+            }
+        }
+    }
 }
