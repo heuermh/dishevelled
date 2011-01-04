@@ -214,7 +214,7 @@ public class ElementsList<E>
      *
      * @param <E> model element type
      */
-    private class ListSelectionModelAdapter implements ListSelectionModel
+    private final class ListSelectionModelAdapter implements ListSelectionModel
     {
         /** Event listener list. */
         private final EventListenerList listenerList;
@@ -239,7 +239,8 @@ public class ElementsList<E>
             getSelectionModel().addSelectionListener(new ListSelection.Listener()
                 {
                     /** {@inheritDoc} */
-                    public void selectionChanged(final int index0, final int index1) {
+                    public void selectionChanged(final int index0, final int index1)
+                    {
                         fireSelectionChanged(index0, index1);
                     }
                 });
@@ -381,7 +382,8 @@ public class ElementsList<E>
          * @param index0 first index
          * @param index1 second index
          */
-        private void fireSelectionChanged(final int index0, final int index1) {
+        private void fireSelectionChanged(final int index0, final int index1)
+        {
             if (valueIsAdjusting)
             {
                 if ((fullIndex0 == -1) || (index0 < fullIndex0))
