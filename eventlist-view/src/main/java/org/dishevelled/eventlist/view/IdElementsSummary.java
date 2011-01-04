@@ -32,6 +32,8 @@ import org.dishevelled.functor.UnaryFunction;
 
 import org.dishevelled.iconbundle.tango.TangoProject;
 
+import org.dishevelled.iconbundle.IconSize;
+
 import org.dishevelled.identify.IdLabel;
 
 /**
@@ -44,6 +46,12 @@ import org.dishevelled.identify.IdLabel;
 public final class IdElementsSummary<E>
     extends ElementsSummary<E>
 {
+    /** Icon size. */
+    private IconSize iconSize = DEFAULT_ICON_SIZE;
+
+    /** Default icon size, {@link TangoProject#EXTRA_SMALL}. */
+    public static final IconSize DEFAULT_ICON_SIZE = TangoProject.EXTRA_SMALL;
+
     /** Map of labels keyed by element. */
     private final Map<E, IdLabel> labels = new HashMap<E, IdLabel>();
 
@@ -56,7 +64,7 @@ public final class IdElementsSummary<E>
                 if (!labels.containsKey(element))
                 {
                     IdLabel label = new IdLabel(element);
-                    label.setIconSize(TangoProject.EXTRA_SMALL);
+                    label.setIconSize(iconSize);
                     labels.put(element, label);
                 }
                 return labels.get(element);
@@ -73,5 +81,43 @@ public final class IdElementsSummary<E>
     {
         super(model);
         setModelToView(modelToView);
+    }
+
+
+    /**
+     * Return the icon size for this identifiable elements summary.
+     *
+     * @return the icon size for this identifiable elements summary
+     */
+    public IconSize getIconSize()
+    {
+        return iconSize;
+    }
+
+    /**
+     * Set the icon size for this identifiable elements summary to <code>iconSize</code>.
+     *
+     * <p>This is a bound property.</p>
+     *
+     * @param iconSize icon size for this identifiable elements summary, must not be null
+     */
+    public void setIconSize(final IconSize iconSize)
+    {
+        IconSize oldIconSize = this.iconSize;
+        this.iconSize = iconSize;
+        updateIconSize();
+        firePropertyChange("iconSize", oldIconSize, this.iconSize);
+    }
+
+    /**
+     * Update icon size.
+     */
+    private void updateIconSize()
+    {
+        for (IdLabel label : labels.values())
+        {
+            label.setIconSize(iconSize);
+        }
+        updateComponents();
     }
 }

@@ -245,7 +245,7 @@ public class ElementsSummary<E>
     /**
      * Update components.
      */
-    private void updateComponents()
+    protected final void updateComponents()
     {
         removeAll();
         if (!isEmpty())
