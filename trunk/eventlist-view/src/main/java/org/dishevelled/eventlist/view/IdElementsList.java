@@ -27,6 +27,8 @@ import ca.odell.glazedlists.EventList;
 
 import org.dishevelled.iconbundle.tango.TangoProject;
 
+import org.dishevelled.iconbundle.IconSize;
+
 import org.dishevelled.identify.IdListCellRenderer;
 
 /**
@@ -39,6 +41,9 @@ import org.dishevelled.identify.IdListCellRenderer;
 public class IdElementsList<E>
     extends ElementsList<E>
 {
+    /** Identifiable list cell renderer. */
+    private final IdListCellRenderer listCellRenderer;
+
 
     /**
      * Create a new elements view with the specified model.
@@ -48,8 +53,30 @@ public class IdElementsList<E>
     public IdElementsList(final EventList<E> model)
     {
         super(model);
-        getList().setCellRenderer(new IdListCellRenderer(TangoProject.EXTRA_SMALL));
+        listCellRenderer = new IdListCellRenderer(TangoProject.EXTRA_SMALL);
+        getList().setCellRenderer(listCellRenderer);
     }
 
-    // setIconSize, add actions to contextMenu, etc.
+    // todo:  add actions to contextMenu, etc.
+
+
+    /**
+     * Return the icon size for this identifiable elements list.
+     *
+     * @return the icon size for this identifiable elements list
+     */
+    public final IconSize getIconSize()
+    {
+        return listCellRenderer.getIconSize();
+    }
+
+    /**
+     * Set the icon size for this identifiable elements list to <code>iconSize</code>.
+     *
+     * @param iconSize icon size for this identifiable elements list, must not be null
+     */
+    public final void setIconSize(final IconSize iconSize)
+    {
+        listCellRenderer.setIconSize(iconSize);
+    }
 }

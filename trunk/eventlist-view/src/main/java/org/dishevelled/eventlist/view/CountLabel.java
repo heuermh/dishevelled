@@ -75,9 +75,11 @@ public final class CountLabel<E>
 
 
     /**
-     * Return the label.
+     * Return the label for this count label.  The text for the returned JLabel
+     * should not be changed, as the text is synchronized to the event
+     * list backing this count label.
      *
-     * @return the label
+     * @return the label for this count label
      */
     public JLabel getLabel()
     {
