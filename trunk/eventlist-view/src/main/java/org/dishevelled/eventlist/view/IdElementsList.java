@@ -60,6 +60,7 @@ public class IdElementsList<E>
     // todo:  add actions to contextMenu, etc.
 
 
+    // todo:  bound?
     /**
      * Return the icon size for this identifiable elements list.
      *
