@@ -194,7 +194,7 @@ public class ElementsNode<E>
      *
      * @return the context menu for this elements node
      */
-    protected final IdPopupMenu getContextMenu()
+    public final IdPopupMenu getContextMenu()
     {
         return contextMenu;
     }

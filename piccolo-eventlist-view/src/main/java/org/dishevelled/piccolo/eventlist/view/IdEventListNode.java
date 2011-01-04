@@ -27,6 +27,11 @@ import ca.odell.glazedlists.EventList;
 
 import java.util.List;
 
+import javax.swing.JPopupMenu;
+
+import org.dishevelled.identify.IdPopupMenu;
+import org.dishevelled.identify.IdToolBar;
+
 import org.piccolo2d.PNode;
 
 import org.piccolo2d.util.PPaintContext;
@@ -188,6 +193,37 @@ public class IdEventListNode<E>
             addIfMissing(elements);
         }
         super.paint(context);
+    }
+
+    /**
+     * Return the tool bar for this elements node.
+     *
+     * @return the tool bar for this elements node
+     */
+    public final IdToolBar getToolBar()
+    {
+        return elements.getToolBar();
+    }
+
+    /**
+     * Return the context menu for this elements node.
+     *
+     * @return the context menu for this elements node
+     */
+    public final IdPopupMenu getContextMenu()
+    {
+        // todo:  add add'l actions?
+        return elements.getContextMenu();
+    }
+
+    /**
+     * Return the tool bar context menu for this elements node.
+     *
+     * @return the tool bar context menu for this elements node
+     */
+    public final JPopupMenu getToolBarContextMenu()
+    {
+        return elements.getToolBarContextMenu();
     }
 
     /** {@inheritDoc} */
