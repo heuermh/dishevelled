@@ -58,13 +58,21 @@ public class EventListViewSupport<E>
     }
 
 
-    /** {@inheritDoc} */
+    /**
+     * Return the model for this event list view support class.  The model will not be null.
+     *
+     * @return the model for this event list view support class
+     */
     public final EventList<E> getModel()
     {
         return model;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * Return the selection model for this event list view support class.  The selection model will not be null.
+     *
+     * @return the selection model for this event list view support class
+     */
     public final ListSelection<E> getSelectionModel()
     {
         return selectionModel;

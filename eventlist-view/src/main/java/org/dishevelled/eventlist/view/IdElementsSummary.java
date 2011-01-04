@@ -1,6 +1,6 @@
 /*
 
-    dsh-eventlist-view  Views for event list.
+    dsh-eventlist-view  Views for event lists.
     Copyright (c) 2010 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
@@ -59,7 +59,7 @@ public final class IdElementsSummary<E>
                     label.setIconSize(TangoProject.EXTRA_SMALL);
                     labels.put(element, label);
                 }
-                return labels.get(element);                
+                return labels.get(element);
             }
         };
 

@@ -93,11 +93,29 @@ public final class ElementsLabel<E>
 
 
 
+    /**
+     * Return the label for this elements label.  The text for the returned JLabel
+     * should not be changed, as the text is synchronized to the event
+     * list backing this elements label.  Use methods {@link #setSeparator(String)},
+     * {@link #setElementsToDisplay(int)}, and {@link #setIndicator(String)} to set the
+     * separator between elements, number of elements to display, and more
+     * elements indicator respectively.
+     *
+     * @return the label for this elements label
+     */
     public JLabel getLabel()
     {
         return elements;
     }
 
+    /**
+     * Set the number of elements to display to <code>elementsToDisplay</code>.  Defaults
+     * to {@link #DEFAULT_ELEMENTS_TO_DISPLAY}.
+     *
+     * <p>This is a bound property.</p>
+     *
+     * @param elementsToDisplay number of elements to display, must be at least zero
+     */
     public void setElementsToDisplay(final int elementsToDisplay)
     {
         if (elementsToDisplay < 0)
@@ -110,6 +128,14 @@ public final class ElementsLabel<E>
         updateLabelText();
     }
 
+    /**
+     * Set the separator between elements to <code>separator</code>.  Defaults
+     * to {@link #DEFAULT_SEPARATOR}.
+     *
+     * <p>This is a bound property.</p>
+     *
+     * @param separator separator between elements
+     */
     public void setSeparator(final String separator)
     {
         String oldSeparator = this.separator;
@@ -118,6 +144,14 @@ public final class ElementsLabel<E>
         updateLabelText();
     }
 
+    /**
+     * Set the more elements indicator to <code>indicator</code>.  Defaults
+     * to {@link #DEFAULT_INDICATOR}.
+     *
+     * <p>This is a bound property.</p>
+     *
+     * @param indicator more elements indicator
+     */
     public void setIndicator(final String indicator)
     {
         String oldIndicator = this.indicator;
@@ -125,9 +159,6 @@ public final class ElementsLabel<E>
         firePropertyChange("indicator", oldIndicator, this.indicator);
         updateLabelText();
     }
-
-    // fire label text property changes?
-
 
     /** {@inheritDoc} */
     protected void cut(final List<E> toCut)

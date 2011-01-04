@@ -135,7 +135,8 @@ public class ElementsSummary<E>
     }
 
     /**
-     * Set the number of elements to display to <code>elementsToDisplay</code>.
+     * Set the number of elements to display to <code>elementsToDisplay</code>.  Defaults
+     * to {@link #DEFAULT_ELEMENTS_TO_DISPLAY}.
      *
      * <p>This is a bound property.</p>
      *
@@ -154,7 +155,8 @@ public class ElementsSummary<E>
     }
 
     /**
-     * Set the separator text between elements to <code>separatorText</code>.
+     * Set the separator text between elements to <code>separatorText</code>.  Defaults to
+     * {@link #DEFAULT_SEPARATOR_TEXT}.
      *
      * <p>This is a bound property.</p>
      *
@@ -169,7 +171,8 @@ public class ElementsSummary<E>
     }
 
     /**
-     * Set the separator icon between elements to <code>separatorIcon</code>.
+     * Set the separator icon between elements to <code>separatorIcon</code>.  Defaults to
+     * {@link #DEFAULT_SEPARATOR_ICON}.
      *
      * <p>This is a bound property.</p>
      *
@@ -184,7 +187,8 @@ public class ElementsSummary<E>
     }
 
     /**
-     * Set the more elements indicator text to <code>indicatorText</code>.
+     * Set the more elements indicator text to <code>indicatorText</code>.  Defaults to
+     * {@link #DEFAULT_INDICATOR_TEXT}.
      *
      * <p>This is a bound property.</p>
      *
@@ -199,7 +203,8 @@ public class ElementsSummary<E>
     }
 
     /**
-     * Set the more elements indicator icon to <code>indicatorIcon</code>.
+     * Set the more elements indicator icon to <code>indicatorIcon</code>.  Defaults to
+     * {@link #DEFAULT_INDICATOR_ICON}.
      *
      * <p>This is a bound property.</p>
      *
