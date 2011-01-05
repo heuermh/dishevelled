@@ -36,37 +36,23 @@ import java.util.List;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
-import javax.swing.border.EmptyBorder;
-
 import org.dishevelled.iconbundle.IconBundle;
-import org.dishevelled.iconbundle.IconSize;
 
 import org.dishevelled.iconbundle.tango.TangoProject;
 
 import org.dishevelled.identify.ContextMenuListener;
 import org.dishevelled.identify.Identifiable;
-import org.dishevelled.identify.IdPopupMenu;
-import org.dishevelled.identify.IdToolBar;
-
-import org.dishevelled.piccolo.eventlist.view.CountLabelNode;
-import org.dishevelled.piccolo.eventlist.view.ElementsLabelNode;
-import org.dishevelled.piccolo.eventlist.view.IdElementsNode;
-import org.dishevelled.piccolo.eventlist.view.IdElementsSummaryNode;
 import org.dishevelled.piccolo.eventlist.view.IdEventListNode;
 
 import org.piccolo2d.PCanvas;
 import org.piccolo2d.PLayer;
 
 import org.piccolo2d.extras.swing.PScrollPane;
-
-import org.piccolo2d.nodes.PText;
 
 import org.piccolo2d.util.PPaintContext;
 
