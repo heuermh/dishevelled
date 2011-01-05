@@ -46,7 +46,7 @@ import org.dishevelled.iconbundle.impl.IconBundleUtils;
  * Icon bundle derived from a single scalable base image in SVG format.
  *
  * @author  Michael Heuer
- * @version $Revision: 741 $ $Date: 2010-01-02 20:23:15 -0600 (Sat, 02 Jan 2010) $
+ * @version $Revision: 741 $ $Date: 2010-2011-01-02 20:23:15 -0600 (Sat, 02 Jan 2010-2011) $
  */
 public final class SVGIconBundle
     implements IconBundle

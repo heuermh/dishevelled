@@ -36,7 +36,7 @@ import org.dishevelled.iconbundle.AbstractIconBundleTest;
  * Unit test for SVGIconBundle.
  *
  * @author  Michael Heuer
- * @version $Revision: 741 $ $Date: 2010-01-02 20:23:15 -0600 (Sat, 02 Jan 2010) $
+ * @version $Revision: 741 $ $Date: 2010-2011-01-02 20:23:15 -0600 (Sat, 02 Jan 2010-2011) $
  */
 public final class SVGIconBundleTest
     extends AbstractIconBundleTest

@@ -34,7 +34,7 @@ import org.apache.batik.transcoder.image.ImageTranscoder;
  * but does not write the image to the transcoder output.
  *
  * @author  Michael Heuer
- * @version $Revision: 741 $ $Date: 2010-01-02 20:23:15 -0600 (Sat, 02 Jan 2010) $
+ * @version $Revision: 741 $ $Date: 2010-2011-01-02 20:23:15 -0600 (Sat, 02 Jan 2010-2011) $
  */
 final class BufferedImageTranscoder
     extends ImageTranscoder
