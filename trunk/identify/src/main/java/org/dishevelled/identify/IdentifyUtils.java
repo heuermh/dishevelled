@@ -65,8 +65,11 @@ public final class IdentifyUtils
     /** GTK look and feel class name. */
     private static final String GTK_LOOK_AND_FEEL_CLASS_NAME = "com.sun.java.swing.plaf.gtk.GTKLookAndFeel";
 
-    /** MacOSX look and feel class name. */
-    private static final String MAC_OSX_LOOK_AND_FEEL_CLASS_NAME = "apple.laf.AquaLookAndFeel";
+    /** JDK &lt;= 1.5 MacOSX look and feel class name. */
+    private static final String JDK15_MAC_OSX_LOOK_AND_FEEL_CLASS_NAME = "apple.laf.AquaLookAndFeel";
+
+    /** JDK &gt;= 1.6 MacOSX look and feel class name. */
+    private static final String JDK16_MAC_OSX_LOOK_AND_FEEL_CLASS_NAME = "com.apple.laf.AquaLookAndFeel";
 
     /** Windows look and feel class name. */
     private static final String WINDOWS_LOOK_AND_FEEL_CLASS_NAME = "com.sun.java.swing.plaf.windows.WindowsLookAndFeel";
@@ -150,7 +153,8 @@ public final class IdentifyUtils
     /**
      * Return true if the current look and feel is the MacOSX look and feel.
      *
-     * @see #MAC_OSX_LOOK_AND_FEEL_CLASS_NAME
+     * @see #JDK15_MAC_OSX_LOOK_AND_FEEL_CLASS_NAME
+     * @see #JDK16_MAC_OSX_LOOK_AND_FEEL_CLASS_NAME
      * @return true if the current look and feel is the MacOSX look and feel
      */
     public static boolean isMacOSXLookAndFeel()
@@ -160,7 +164,8 @@ public final class IdentifyUtils
         {
             return false;
         }
-        return MAC_OSX_LOOK_AND_FEEL_CLASS_NAME.equals(lookAndFeel.getClass().getName());
+        return JDK15_MAC_OSX_LOOK_AND_FEEL_CLASS_NAME.equals(lookAndFeel.getClass().getName())
+            || JDK16_MAC_OSX_LOOK_AND_FEEL_CLASS_NAME.equals(lookAndFeel.getClass().getName());
     }
 
     /**
