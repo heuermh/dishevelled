@@ -54,6 +54,7 @@ public class StringArgumentTest
         assertTrue("sa isRequired", sa.isRequired());
         assertFalse("sa wasFound == false", sa.wasFound());
         assertEquals("sa value == null", null, sa.getValue());
+        assertEquals("default value", sa.getValue("default value"));
     }
 
     public void testObjectContract()
@@ -83,6 +84,7 @@ public class StringArgumentTest
             CommandLineParser.parse(commandLine, arguments);
 
             assertNotNull("-s " + value + " not null", stringArgument.getValue());
+            assertFalse("default value".equals(stringArgument.getValue("default value")));
         }
     }
 
@@ -100,6 +102,7 @@ public class StringArgumentTest
             CommandLineParser.parse(commandLine, arguments);
 
             assertNotNull("--string-argument " + value + " not null", stringArgument.getValue());
+            assertFalse("default value".equals(stringArgument.getValue("default value")));
         }
     }
 

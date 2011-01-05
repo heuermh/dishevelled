@@ -188,6 +188,12 @@ public abstract class AbstractArgument<E>
     }
 
     /** {@inheritDoc} */
+    public final E getValue(final E defaultValue)
+    {
+        return found ? value : defaultValue;
+    }
+
+    /** {@inheritDoc} */
     public final boolean equals(final Object o)
     {
         return super.equals(o);

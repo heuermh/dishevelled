@@ -93,4 +93,13 @@ public interface Argument<E>
      * @return the value of this argument
      */
     E getValue();
+
+    /**
+     * Return the value of this argument or the specified default value
+     * if this argument was not found in the command line.
+     *
+     * @return the value of this argument or the specified default value
+     *    if this argument was not found in the command line
+     */
+    E getValue(E defaultValue);
 }
