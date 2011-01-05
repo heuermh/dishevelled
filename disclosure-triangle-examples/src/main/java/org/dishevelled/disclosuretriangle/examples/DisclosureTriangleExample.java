@@ -126,14 +126,6 @@ public final class DisclosureTriangleExample
      */
     public static void main(final String[] args)
     {
-        SwingUtilities.invokeLater(new Runnable()
-            {
-                /** {@inheritDoc} */
-                public void run()
-                {
-                    Runnable r = new DisclosureTriangleExample();
-                    r.run();
-                }
-            });
+        SwingUtilities.invokeLater(new DisclosureTriangleExample());
     }
 }

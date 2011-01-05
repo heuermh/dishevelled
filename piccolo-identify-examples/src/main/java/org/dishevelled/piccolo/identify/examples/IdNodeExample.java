@@ -423,13 +423,6 @@ public final class IdNodeExample
      */
     public static void main(final String[] args)
     {
-        SwingUtilities.invokeLater(new Runnable()
-            {
-                /** {@inheritDoc} */
-                public void run()
-                {
-                    new IdNodeExample().run();
-                }
-            });
+        SwingUtilities.invokeLater(new IdNodeExample());
     }
 }

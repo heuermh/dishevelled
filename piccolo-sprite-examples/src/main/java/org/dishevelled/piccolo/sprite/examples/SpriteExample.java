@@ -149,13 +149,6 @@ public class SpriteExample
      */
     public static void main(final String[] args)
     {
-        SwingUtilities.invokeLater(new Runnable()
-            {
-                /** {@inheritDoc} */
-                public void run()
-                {
-                    new SpriteExample().run();
-                }
-            });
+        SwingUtilities.invokeLater(new SpriteExample());
     }
 }

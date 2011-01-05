@@ -99,13 +99,6 @@ public final class CullViewExample
      */
     public static void main(final String[] args)
     {
-        SwingUtilities.invokeLater(new Runnable()
-            {
-                /** {@inheritDoc} */
-                public void run()
-                {
-                    new CullViewExample().run();
-                }
-            });
+        SwingUtilities.invokeLater(new CullViewExample());
     }
 }
