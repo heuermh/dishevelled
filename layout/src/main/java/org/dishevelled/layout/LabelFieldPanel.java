@@ -47,8 +47,11 @@ public class LabelFieldPanel
     /** Label field layout for this label field panel. */
     private final LabelFieldLayout layout;
 
-    /** MacOSX look and feel class name. */
-    private static final String MAC_OSX_LOOK_AND_FEEL_CLASS_NAME = "apple.laf.AquaLookAndFeel";
+    /** JDK &lt;= 1.5 MacOSX look and feel class name. */
+    private static final String JDK15_MAC_OSX_LOOK_AND_FEEL_CLASS_NAME = "apple.laf.AquaLookAndFeel";
+
+    /** JDK &gt;= 1.6 MacOSX look and feel class name. */
+    private static final String JDK16_MAC_OSX_LOOK_AND_FEEL_CLASS_NAME = "com.apple.laf.AquaLookAndFeel";
 
 
     /**
@@ -359,6 +362,7 @@ public class LabelFieldPanel
         {
             return false;
         }
-        return MAC_OSX_LOOK_AND_FEEL_CLASS_NAME.equals(lookAndFeel.getClass().getName());
+        return JDK15_MAC_OSX_LOOK_AND_FEEL_CLASS_NAME.equals(lookAndFeel.getClass().getName())
+            || JDK16_MAC_OSX_LOOK_AND_FEEL_CLASS_NAME.equals(lookAndFeel.getClass().getName());
     }
 }
