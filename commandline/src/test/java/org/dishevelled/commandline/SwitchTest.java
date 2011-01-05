@@ -47,6 +47,8 @@ public class SwitchTest
         assertFalse("s isRequired == false", s.isRequired());
         assertFalse("s wasFound == false", s.wasFound());
         assertEquals("s value == false", Boolean.FALSE, s.getValue());
+        assertEquals(Boolean.FALSE, s.getValue(Boolean.FALSE));
+        assertEquals(Boolean.TRUE, s.getValue(Boolean.TRUE));
     }
 
     public void testSwitchShortPresent()
@@ -60,6 +62,8 @@ public class SwitchTest
         CommandLineParser.parse(commandLine, arguments);
 
         assertEquals("-s == true", Boolean.TRUE, s.getValue());
+        assertEquals(Boolean.TRUE, s.getValue(Boolean.FALSE));
+        assertEquals(Boolean.TRUE, s.getValue(Boolean.TRUE));
     }
 
     public void testSwitchLongPresent()

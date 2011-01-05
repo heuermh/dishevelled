@@ -108,4 +108,10 @@ public final class Switch
     {
         return Boolean.valueOf(found);
     }
+
+    /** {@inheritDoc} */
+    public Boolean getValue(final Boolean defaultValue)
+    {
+        return found ? Boolean.TRUE : defaultValue;
+    }
 }
