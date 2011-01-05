@@ -124,14 +124,6 @@ public final class LabelFieldPanelExample
      */
     public static void main(final String[] args)
     {
-        SwingUtilities.invokeLater(new Runnable()
-            {
-                /** {@inheritDoc} */
-                public void run()
-                {
-                    Runnable r = new LabelFieldPanelExample();
-                    r.run();
-                }
-            });
+        SwingUtilities.invokeLater(new LabelFieldPanelExample());
     }
 }

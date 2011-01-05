@@ -174,14 +174,6 @@ public final class LabelFieldLayoutExample
      */
     public static void main(final String[] args)
     {
-        SwingUtilities.invokeLater(new Runnable()
-            {
-                /** {@inheritDoc} */
-                public void run()
-                {
-                    Runnable r = new LabelFieldLayoutExample();
-                    r.run();
-                }
-            });
+        SwingUtilities.invokeLater(new LabelFieldLayoutExample());
     }
 }

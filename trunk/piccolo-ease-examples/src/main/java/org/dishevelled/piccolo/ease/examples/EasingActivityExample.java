@@ -146,14 +146,7 @@ public final class EasingActivityExample
      */
     public static void main(final String[] args)
     {
-        SwingUtilities.invokeLater(new Runnable()
-            {
-                /** {@inheritDoc} */
-                public void run()
-                {
-                    new EasingActivityExample().run();
-                }
-            });
+        SwingUtilities.invokeLater(new EasingActivityExample());
     }
 
 

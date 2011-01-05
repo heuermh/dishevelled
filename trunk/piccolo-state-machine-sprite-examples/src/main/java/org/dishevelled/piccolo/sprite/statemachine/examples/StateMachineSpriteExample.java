@@ -201,13 +201,6 @@ public final class StateMachineSpriteExample
      */
     public static void main(final String[] args)
     {
-        SwingUtilities.invokeLater(new Runnable()
-            {
-                /** {@inheritDoc} */
-                public void run()
-                {
-                    new StateMachineSpriteExample().run();
-                }
-            });
+        SwingUtilities.invokeLater(new StateMachineSpriteExample());
     }
 }

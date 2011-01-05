@@ -210,13 +210,6 @@ public final class TextRenderingBenchmarks
      */
     public static void main(final String[] args)
     {
-        SwingUtilities.invokeLater(new Runnable()
-            {
-                /** {@inheritDoc} */
-                public void run()
-                {
-                    new TextRenderingBenchmarks().run();
-                }
-            });
+        SwingUtilities.invokeLater(new TextRenderingBenchmarks());
     }
 }

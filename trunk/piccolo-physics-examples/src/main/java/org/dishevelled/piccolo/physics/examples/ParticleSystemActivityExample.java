@@ -514,13 +514,6 @@ public final class ParticleSystemActivityExample
      */
     public static void main(final String[] args)
     {
-        SwingUtilities.invokeLater(new Runnable()
-            {
-                /** {@inheritDoc} */
-                public void run()
-                {
-                    new ParticleSystemActivityExample().run();
-                }
-            });
+        SwingUtilities.invokeLater(new ParticleSystemActivityExample());
     }
 }
