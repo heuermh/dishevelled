@@ -40,6 +40,7 @@ import java.awt.Toolkit;
 import static java.awt.RenderingHints.*;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 
@@ -69,6 +70,7 @@ import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
+import javax.swing.Timer;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -81,6 +83,7 @@ import org.dishevelled.commandline.CommandLineParseException;
 import org.dishevelled.commandline.Switch;
 import org.dishevelled.commandline.Usage;
 
+import org.dishevelled.commandline.argument.IntegerArgument;
 import org.dishevelled.commandline.argument.StringArgument;
 
 /**
@@ -95,6 +98,36 @@ public final class BrainStorm
 {
     /** File name. */
     private final String fileName;
+
+    /** Font name. */
+    private final String fontName;
+
+    /** Font size. */
+    private final int fontSize;
+
+    /** Number of rows to display. */
+    private final int rows;
+
+    /** Background color. */
+    private final Color backgroundColor;
+
+    /** Text color. */
+    private final Color textColor;
+
+    /** Default font name, <code>null</code>. */
+    private static final String DEFAULT_FONT_NAME = null;
+
+    /** Default font size, <code>28</code>. */
+    private static final int DEFAULT_FONT_SIZE = 28;
+
+    /** Default number of rows to display, <code>2</code>. */
+    private static final int DEFAULT_ROWS = 2;
+
+    /** Default background color, <code>black</code>. */
+    private static final String DEFAULT_BACKGROUND_COLOR = "black";
+
+    /** Default text color, <code>rgb(200, 200, 200)</code>. */
+    private static final String DEFAULT_TEXT_COLOR = "rgb(200, 200, 200)";
 
     /** Text area. */
     private JTextArea textArea;
@@ -113,8 +146,33 @@ public final class BrainStorm
      */
     public BrainStorm(final String fileName)
     {
+        this(fileName,
+             DEFAULT_FONT_NAME,
+             DEFAULT_FONT_SIZE,
+             DEFAULT_ROWS,
+             DEFAULT_BACKGROUND_COLOR,
+             DEFAULT_TEXT_COLOR);
+    }
+
+    /**
+     * Create a new brain storm with the specified file name.
+     *
+     * @param fileName file name
+     */
+    public BrainStorm(final String fileName,
+                      final String fontName,
+                      final int fontSize,
+                      final int rows,
+                      final String backgroundColor,
+                      final String textColor)
+    {
         super();
         this.fileName = fileName;
+        this.fontName = fontName;
+        this.fontSize = fontSize;
+        this.rows = rows;
+        this.backgroundColor = parse(backgroundColor);
+        this.textColor = parse(textColor);
         setOpaque(true);
         initComponents();
         layoutComponents();
@@ -126,7 +184,7 @@ public final class BrainStorm
      */
     private void initComponents()
     {
-        Font font = new Font(chooseFontName(), Font.PLAIN, 28);
+        Font font = new Font(chooseFontName(), Font.PLAIN, fontSize);
         hiddenCursor = createHiddenCursor();
         textArea = new JTextArea()
             {
@@ -142,9 +200,9 @@ public final class BrainStorm
         textArea.setFont(font);
         textArea.setOpaque(true);
         textArea.setCursor(hiddenCursor);
-        textArea.setBackground(Color.BLACK);
-        textArea.setForeground(Color.LIGHT_GRAY);
-        textArea.setRows(2);
+        textArea.setBackground(backgroundColor);
+        textArea.setForeground(textColor);
+        textArea.setRows(rows);
         textArea.setLineWrap(true);
         textArea.setWrapStyleWord(true);
 
@@ -179,16 +237,6 @@ public final class BrainStorm
         textArea.getActionMap().put("quit", quitAction);
 
         placeholder = Box.createGlue();
-
-        SwingUtilities.invokeLater(new Runnable()
-            {
-                /** {@inheritDoc} */
-                public void run()
-                {
-                    calculatePlaceholderSize();
-                    calculateTextAreaSize();
-                }
-            });
     }
 
     /**
@@ -198,9 +246,16 @@ public final class BrainStorm
     {
         List<String> preferredNames = Arrays.asList(new String[] { "Luxi Sans", "Calibri", "Corbel", "Lucida Sans Unicode", "Lucida Grande" });
         List<String> actualNames = Arrays.asList(GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames());
-        for (String preferred : preferredNames)
+        for (String actual : actualNames)
         {
-            for (String actual : actualNames)
+            if ((fontName != null) && (fontName.equalsIgnoreCase(actual)))
+            {
+                return actual;
+            }
+        }
+        for (String actual : actualNames)
+        {
+            for (String preferred : preferredNames)
             {
                 if (preferred.equalsIgnoreCase(actual))
                 {
@@ -229,7 +284,7 @@ public final class BrainStorm
         double width = (double) getWidth();
         FontRenderContext frc = new FontRenderContext(new AffineTransform(), true, true);
         TextLayout textLayout = new TextLayout("W", textArea.getFont(), frc);
-        Rectangle2D textBounds = textLayout.getBounds();
+        Rectangle2D textBounds = textLayout.getBounds();        
         int columns = Math.min(45, (int) (width / textBounds.getWidth()) - 4);
         textArea.setColumns(columns);
     }
@@ -243,7 +298,7 @@ public final class BrainStorm
         JScrollPane scrollPane = new JScrollPane(textArea);
         scrollPane.setBorder(null);
         scrollPane.setOpaque(true);
-        scrollPane.setBackground(Color.BLACK);
+        scrollPane.setBackground(backgroundColor);
         scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
         add(placeholder);
@@ -344,7 +399,7 @@ public final class BrainStorm
     {
         Graphics2D g = (Graphics2D) graphics;
         Paint oldPaint = g.getPaint();
-        g.setPaint(Color.BLACK);
+        g.setPaint(backgroundColor);
         g.fill(getBounds());
         g.setPaint(oldPaint);
     }
@@ -363,6 +418,30 @@ public final class BrainStorm
         System.setProperty("apple.awt.fullscreenhidecursor","true");
         GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().setFullScreenWindow(f);
         f.validate();
+
+        SwingUtilities.invokeLater(new Runnable()
+            {
+                /** {@inheritDoc} */
+                public void run()
+                {
+                    calculatePlaceholderSize();
+                    calculateTextAreaSize();
+                    validate();
+                    textArea.scrollRectToVisible(new Rectangle(0, textArea.getHeight() - 1, textArea.getWidth(), textArea.getHeight()));
+                }
+            });
+
+        // save every five minutes
+        Timer t = new Timer(5 * 60 * 1000, new ActionListener()
+            {
+                /** {@inheritDoc} */
+                public void actionPerformed(final ActionEvent event)
+                {
+                    save();
+                }
+            });
+        t.setRepeats(true);
+        t.start();
     }
 
     /**
@@ -387,8 +466,6 @@ public final class BrainStorm
             Font font = oldFont.deriveFont(oldFont.getSize2D() * 1.1f);
             textArea.setFont(font);
             calculateTextAreaSize();
-
-            textArea.invalidate();
             validate();
             textArea.scrollRectToVisible(new Rectangle(0, textArea.getHeight() - 1, textArea.getWidth(), textArea.getHeight()));
         }
@@ -416,8 +493,6 @@ public final class BrainStorm
             Font font = oldFont.deriveFont(oldFont.getSize2D() * 0.9f);
             textArea.setFont(font);
             calculateTextAreaSize();
-
-            textArea.invalidate();
             validate();
             textArea.scrollRectToVisible(new Rectangle(0, textArea.getHeight() - 1, textArea.getWidth(), textArea.getHeight()));
         }
@@ -489,6 +564,19 @@ public final class BrainStorm
         }
     }
 
+    // todo:  use parseColor impl from elsewhere
+    private static Color parse(final String value)
+    {
+        if ("black".equals(value))
+        {
+            return Color.BLACK;
+        }
+        else
+        {
+            return Color.LIGHT_GRAY;
+        }
+    }
+
     /**
      * Main.
      *
@@ -501,8 +589,13 @@ public final class BrainStorm
         try
         {
             Switch help = new Switch("h", "help", "display help and usage text");
-            final StringArgument fileName = new StringArgument("f", "file-name", "file name", false);
-            arguments = new ArgumentList(help, fileName);
+            StringArgument fileName = new StringArgument("f", "file-name", "file name", false);
+            StringArgument fontName = new StringArgument("n", "font-name", "font name, default " + DEFAULT_FONT_NAME, false);
+            IntegerArgument fontSize = new IntegerArgument("z", "font-size", "font size, default " + DEFAULT_FONT_SIZE, false);
+            IntegerArgument rows = new IntegerArgument("r", "rows", "number of rows to display, default " + DEFAULT_ROWS, false);
+            StringArgument backgroundColor = new StringArgument("b", "background-color", "background color, default " + DEFAULT_BACKGROUND_COLOR, false);
+            StringArgument textColor = new StringArgument("t", "text-color", "text color, default " + DEFAULT_TEXT_COLOR, false);
+            arguments = new ArgumentList(help, fileName, fontName, fontSize, rows, backgroundColor, textColor);
             commandLine = new CommandLine(args);
             CommandLineParser.parse(commandLine, arguments);
 
@@ -513,15 +606,12 @@ public final class BrainStorm
             }
             else
             {
-                SwingUtilities.invokeLater(new Runnable()
-                    {
-                        /** {@inheritDoc} */
-                        public void run()
-                        {
-                            BrainStorm brainStorm = new BrainStorm(fileName.getValue());
-                            brainStorm.run();
-                        }
-                    });
+                SwingUtilities.invokeLater(new BrainStorm(fileName.getValue(),
+                                                          fontName.getValue(DEFAULT_FONT_NAME),
+                                                          fontSize.getValue(DEFAULT_FONT_SIZE),
+                                                          rows.getValue(DEFAULT_ROWS),
+                                                          backgroundColor.getValue(DEFAULT_BACKGROUND_COLOR),
+                                                          textColor.getValue(DEFAULT_TEXT_COLOR)));
             }
         }
         catch (CommandLineParseException e)
