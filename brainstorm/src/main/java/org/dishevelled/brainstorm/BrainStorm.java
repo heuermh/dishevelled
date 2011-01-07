@@ -41,7 +41,6 @@ import static java.awt.RenderingHints.*;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 
 import java.awt.font.FontRenderContext;
@@ -217,14 +216,15 @@ public final class BrainStorm
         textArea.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), "insert-break");
         textArea.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_TAB, 0), "insert-tab");
         textArea.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_BACK_SPACE, 0), "delete-previous");
-        textArea.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_BACK_SPACE, InputEvent.CTRL_DOWN_MASK), "delete-previous-word");
+        int keyMask = Toolkit.getDefaultToolkit().getMenuShortcutKeyMask();
+        textArea.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_BACK_SPACE, keyMask), "delete-previous-word");
 
         // add new input mappings
-        textArea.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_EQUALS, InputEvent.CTRL_DOWN_MASK), "increase-font-size");
-        textArea.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_MINUS, InputEvent.CTRL_DOWN_MASK), "decrease-font-size");
-        textArea.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_DOWN_MASK), "save");
+        textArea.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_EQUALS, keyMask), "increase-font-size");
+        textArea.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_MINUS, keyMask), "decrease-font-size");
+        textArea.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_S, keyMask), "save");
         textArea.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "quit");
-        textArea.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_Q, InputEvent.CTRL_DOWN_MASK), "quit");
+        textArea.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_Q, keyMask), "quit");
 
         Action increaseFontSizeAction = new IncreaseFontSizeAction();
         Action decreaseFontSizeAction = new DecreaseFontSizeAction();
@@ -414,8 +414,6 @@ public final class BrainStorm
         f.setUndecorated(true);
         // hide cursor on linux and windows platforms
         f.setCursor(hiddenCursor);
-        // hide cursor on mac platform
-        System.setProperty("apple.awt.fullscreenhidecursor","true");
         GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().setFullScreenWindow(f);
         f.validate();
 
@@ -584,6 +582,9 @@ public final class BrainStorm
      */
     public static final void main(final String[] args)
     {
+        // hide cursor on mac platform
+        System.setProperty("apple.awt.fullscreenhidecursor","true");
+
         CommandLine commandLine = null;
         ArgumentList arguments = null;
         try
