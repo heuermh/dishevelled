@@ -27,6 +27,9 @@ import junit.framework.TestCase;
 
 /**
  * Abstract unit test for implementations of ColorFactory.
+ *
+ * @author  Michael Heuer
+ * @version $Revision$ $Date$
  */
 public abstract class AbstractColorFactoryTest
     extends TestCase
