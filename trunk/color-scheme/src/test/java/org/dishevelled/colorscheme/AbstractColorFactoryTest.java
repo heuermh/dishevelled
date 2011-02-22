@@ -23,6 +23,8 @@
 */
 package org.dishevelled.colorscheme;
 
+import java.awt.Color;
+
 import junit.framework.TestCase;
 
 /**
@@ -52,5 +54,34 @@ public abstract class AbstractColorFactoryTest
     {
         ColorFactory colorFactory = createColorFactory();
         assertNotNull(colorFactory.createColor(0, 0, 0, 0.0f));
+    }
+
+    public void testCreateColorRGBA()
+    {
+        ColorFactory colorFactory = createColorFactory();
+
+        Color red = colorFactory.createColor(255, 0, 0, 1.0f);
+        assertEquals(255, red.getRed());
+        assertEquals(0, red.getGreen());
+        assertEquals(0, red.getBlue());
+        assertEquals(255, red.getAlpha());
+
+        Color green = colorFactory.createColor(0, 255, 0, 1.0f);
+        assertEquals(0, green.getRed());
+        assertEquals(255, green.getGreen());
+        assertEquals(0, green.getBlue());
+        assertEquals(255, green.getAlpha());
+
+        Color blue = colorFactory.createColor(0, 0, 255, 1.0f);
+        assertEquals(0, blue.getRed());
+        assertEquals(0, blue.getGreen());
+        assertEquals(255, blue.getBlue());
+        assertEquals(255, blue.getAlpha());
+
+        Color transparent = colorFactory.createColor(0, 0, 0, 0.0f);
+        assertEquals(0, transparent.getRed());
+        assertEquals(0, transparent.getGreen());
+        assertEquals(0, transparent.getBlue());
+        assertEquals(0, transparent.getAlpha());
     }
 }
