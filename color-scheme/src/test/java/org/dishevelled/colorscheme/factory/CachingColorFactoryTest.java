@@ -23,6 +23,8 @@
 */
 package org.dishevelled.colorscheme.factory;
 
+import java.awt.Color;
+
 import org.dishevelled.colorscheme.AbstractColorFactoryTest;
 import org.dishevelled.colorscheme.ColorFactory;
 
@@ -40,5 +42,16 @@ public final class CachingColorFactoryTest
     protected ColorFactory createColorFactory()
     {
         return new CachingColorFactory();
+    }
+
+    public void testCreateColorCachesValues()
+    {
+        ColorFactory colorFactory = new CachingColorFactory();
+
+        Color red = colorFactory.createColor(255, 0, 0, 1.0f);
+        assertSame(red, colorFactory.createColor(255, 0, 0, 1.0f));
+        assertNotSame(red, colorFactory.createColor(255, 0, 0, 0.0f));
+        assertNotSame(red, colorFactory.createColor(0, 255, 0, 1.0f));
+        assertNotSame(red, colorFactory.createColor(0, 0, 255, 1.0f));
     }
 }
