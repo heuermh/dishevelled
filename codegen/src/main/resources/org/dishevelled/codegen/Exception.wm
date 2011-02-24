@@ -55,13 +55,15 @@ import ${r.PackageName}.${r.Upper};
 /**
  * ${cd.Description}.
  *
- * @author ${cd.Author}
+ * @author  ${cd.Author}
  * @version ${cd.Version}
  */
 public final class ${cd.Upper}
     extends Exception
 #if ($cd.Realizes.size() > 0)
-    implements #foreach ($r in $cd.Realizes)${r.Upper}#if ($velocityCount < ($cd.Realizes.size() - 1)), #end#end
+    implements #foreach ($r in $cd.Realizes)${r.Upper}#if ($velocityCount < ($cd.Realizes.size()))
+, #end#end
+
 #end
 {
 #foreach ($a in $cd.Attributes)
