@@ -84,7 +84,7 @@ public final class ClassDescription
         this.upper = CodegenUtils.makeUppercase(name);
         this.description = CodegenUtils.makeDescription(name);
         this.author = " codegen";
-        this.version = "$Revision$ $Date$";
+        this.version = "$" + "Revision$ $" + "Date$";  // split to prevent svn expansion
         this.specializes = new LinkedHashSet<ClassDescription>();
         this.realizes = new LinkedHashSet<InterfaceDescription>();
         this.attributes = new LinkedHashSet<Attribute>();

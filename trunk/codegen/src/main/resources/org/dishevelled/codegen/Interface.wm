@@ -51,12 +51,14 @@ import ${s.PackageName}.${s.Upper};
 /**
  * ${id.Description}
  *
- * @author ${id.Author}
+ * @author  ${id.Author}
  * @version ${id.Version}
  */
 public interface ${id.Upper}
 #if ($id.Specializes.size() > 0)
-    extends #foreach ($i in $id.Specializes)${i.Upper}, #end
+    extends #foreach ($i in $id.Specializes)${i.Upper}#if ($velocityCount < ($id.Specializes.size()))
+, #end#end
+
 #end
 {
 #foreach ($a in $id.Attributes)

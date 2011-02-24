@@ -66,15 +66,19 @@ import ${r.PackageName}.${r.Upper};
 /**
  * ${cd.Description}.
  *
- * @author ${cd.Author}
+ * @author  ${cd.Author}
  * @version ${cd.Version}
  */
 public class ${cd.Upper}
 #if ($cd.Specializes.size() > 0)
-    extends #foreach ($s in $cd.Specializes)${s.Upper}#if ($velocityCount < ($cd.Specializes.size() - 1)), #end#end
+    extends #foreach ($s in $cd.Specializes)${s.Upper}#if ($velocityCount < ($cd.Specializes.size()))
+, #end#end
+
 #end
 #if ($cd.Realizes.size() > 0)
-    implements #foreach ($r in $cd.Realizes)${r.Upper}#if ($velocityCount < ($cd.Realizes.size() - 1)), #end#end
+    implements #foreach ($r in $cd.Realizes)${r.Upper}#if ($velocityCount < ($cd.Realizes.size()))
+, #end#end
+
 #end
 {
 #foreach ($a in $cd.Attributes)
@@ -461,7 +465,7 @@ public class ${cd.Upper}
      */
     public final boolean has${r.Upper}()
     {
-        return (${r.Mixed} == null);
+        return (${r.Mixed} != null);
     }
 
     /**
@@ -869,7 +873,7 @@ public class ${cd.Upper}
      */
     public final boolean has${r.Upper}()
     {
-        return (${r.Mixed} == null);
+        return (${r.Mixed} != null);
     }
 
     /**

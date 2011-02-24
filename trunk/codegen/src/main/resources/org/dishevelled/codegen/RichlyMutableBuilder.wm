@@ -62,7 +62,7 @@ import ${r.PackageName}.${r.Upper};
 /**
  * Fluent builder API for creating ${cd.Lower}s.
  *
- * @author ${cd.Author}
+ * @author  ${cd.Author}
  * @version ${cd.Version}
  */
 public final class ${cd.Upper}Builder

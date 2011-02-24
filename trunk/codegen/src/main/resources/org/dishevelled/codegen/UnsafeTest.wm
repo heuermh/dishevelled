@@ -59,7 +59,7 @@ import ${s.PackageName}.${s.Upper};
 /**
  * Unit test for ${cd.Upper}.
  *
- * @author ${cd.Author}
+ * @author  ${cd.Author}
  * @version ${cd.Version}
  */
 public final class ${cd.Upper}Test

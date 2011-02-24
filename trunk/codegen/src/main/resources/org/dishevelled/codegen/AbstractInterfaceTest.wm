@@ -59,7 +59,7 @@ import ${s.PackageName}.${s.Upper};
 /**
  * Abstract unit test for implementations of ${id.Upper}.
  *
- * @author ${id.Author}
+ * @author  ${id.Author}
  * @version ${id.Version}
  */
 public abstract class Abstract${id.Upper}Test
