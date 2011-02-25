@@ -35,25 +35,28 @@ import java.util.Collections;
  */
 public final class ClassDescription
 {
-    /** The package name for this class description. */
+    /** License for this class description. */
+    private String license;
+
+    /** Package name for this class description. */
     private String packageName;
 
-    /** The lowercase name for this class description. */
+    /** Lowercase name for this class description. */
     private String lower;
 
-    /** The mixed-case name for this class description. */
+    /** Mixed-case name for this class description. */
     private String mixed;
 
-    /** The uppercase name for this class description. */
+    /** Uppercase name for this class description. */
     private String upper;
 
-    /** The author for this class description. */
+    /** Author for this class description. */
     private String author;
 
-    /** The version for this class description. */
+    /** Version for this class description. */
     private String version;
 
-    /** The description for this class description. */
+    /** Description for this class description. */
     private String description;
 
     /** Set of classes this class description specializes. */
@@ -82,7 +85,31 @@ public final class ClassDescription
         this.lower = CodegenUtils.makeLowercase(name);
         this.mixed = CodegenUtils.makeMixedCase(name);
         this.upper = CodegenUtils.makeUppercase(name);
-        this.description = CodegenUtils.makeDescription(name);
+        this.description = CodegenUtils.makeSentenceCaseDescription(name);
+        this.author = " codegen";
+        this.version = "$" + "Revision$ $" + "Date$";  // split to prevent svn expansion
+        this.specializes = new LinkedHashSet<ClassDescription>();
+        this.realizes = new LinkedHashSet<InterfaceDescription>();
+        this.attributes = new LinkedHashSet<Attribute>();
+        this.associations = new LinkedHashSet<Association>();
+    }
+
+    /**
+     * Create a new class description with the specified package name
+     * and name.
+     *
+     * @param license license for this class description
+     * @param packageName package name for this class description
+     * @param name name of this class description
+     */
+    public ClassDescription(final String license, final String packageName, final String name)
+    {
+        this.license = license;
+        this.packageName = packageName;
+        this.lower = CodegenUtils.makeLowercase(name);
+        this.mixed = CodegenUtils.makeMixedCase(name);
+        this.upper = CodegenUtils.makeUppercase(name);
+        this.description = CodegenUtils.makeSentenceCaseDescription(name);
         this.author = " codegen";
         this.version = "$" + "Revision$ $" + "Date$";  // split to prevent svn expansion
         this.specializes = new LinkedHashSet<ClassDescription>();
@@ -204,6 +231,16 @@ public final class ClassDescription
         this.associations.addAll(associations);
     }
 
+
+    /**
+     * Return the license for this class description.
+     *
+     * @return the license for this class description
+     */
+    public String getLicense()
+    {
+        return license;
+    }
 
     /**
      * Return the package name for this class description.

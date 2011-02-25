@@ -21,7 +21,7 @@
     > http://www.opensource.org/licenses/lgpl-license.php
 
 *#
-$!{license}
+$!{id.License}
 package ${id.PackageName};
 
 #foreach ($a in $id.Attributes)
@@ -49,7 +49,7 @@ import ${s.PackageName}.${s.Upper};
 #end
 
 /**
- * ${id.Description}
+ * ${id.Description}.
  *
  * @author  ${id.Author}
  * @version ${id.Version}

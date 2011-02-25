@@ -23,6 +23,9 @@
 */
 package org.dishevelled.codegen;
 
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * Static utility methods for the codegen package.
  *
@@ -31,6 +34,19 @@ package org.dishevelled.codegen;
  */
 public final class CodegenUtils
 {
+    /** List of Java primitive names. */
+    private static final List<String> PRIMITIVE_NAMES = Arrays.asList(new String[] { "byte", "short", "int", "long", "char", "float", "double", "boolean" });
+
+
+    /**
+     * Return true if the specified name is a Java primitive name.
+     *
+     * @return true if the specified name is a primitive name
+     */
+    public static boolean isPrimitive(final String name)
+    {
+        return PRIMITIVE_NAMES.contains(name);
+    }
 
     /**
      * Make a lowercase name from the specified name.

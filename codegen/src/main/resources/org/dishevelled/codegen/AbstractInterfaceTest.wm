@@ -21,7 +21,7 @@
     > http://www.opensource.org/licenses/lgpl-license.php
 
 *#
-$!{license}
+$!{id.License}
 package ${id.PackageName};
 
 #foreach ($a in $id.Attributes)
