@@ -23,11 +23,15 @@
 */
 package org.dishevelled.codegen;
 
+import java.io.File;
 import java.io.FileWriter;
+import java.io.IOException;
 
 import java.util.Properties;
 
 import org.apache.commons.lang.StringUtils;
+
+import org.apache.commons.io.FileUtils;
 
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
@@ -51,6 +55,27 @@ public final class Codegen
         // empty
     }
 
+
+    /**
+     * Read license text from the specified file.
+     *
+     * @param license license file to read
+     * @return license text from the specified file or null if the
+     *   specified license file cannot be read
+     */
+    public static String readLicense(final String license)
+    {
+        String text = null;
+        try
+        {
+            text = FileUtils.readFileToString(new File(license));
+        }
+        catch (IOException e)
+        {
+            // ignore
+        }
+        return text;
+    }
 
     /**
      * Generate a java source file for the specified interface
