@@ -21,7 +21,7 @@
     > http://www.opensource.org/licenses/lgpl-license.php
 
 *#
-$!{license}
+$!{cd.License}
 package ${cd.PackageName};
 
 import java.lang.reflect.Constructor;

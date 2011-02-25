@@ -35,25 +35,28 @@ import java.util.Collections;
  */
 public final class InterfaceDescription
 {
-    /** The package name for this interface description. */
+    /** License for this interface description. */
+    private String license;
+
+    /** Package name for this interface description. */
     private String packageName;
 
-    /** The lowercase name for this interface description. */
+    /** Lowercase name for this interface description. */
     private String lower;
 
-    /** The mixed-case name for this interface description. */
+    /** Mixed-case name for this interface description. */
     private String mixed;
 
-    /** The uppercase name for this interface description. */
+    /** Uppercase name for this interface description. */
     private String upper;
 
-    /** The author for this interface description. */
+    /** Author for this interface description. */
     private String author;
 
-    /** The version for this interface description. */
+    /** Version for this interface description. */
     private String version;
 
-    /** The description for this interface description. */
+    /** Description for this interface description. */
     private String description;
 
     /** Set of interfaces this interface description specializes. */
@@ -79,7 +82,30 @@ public final class InterfaceDescription
         this.lower = CodegenUtils.makeLowercase(name);
         this.mixed = CodegenUtils.makeMixedCase(name);
         this.upper = CodegenUtils.makeUppercase(name);
-        this.description = CodegenUtils.makeDescription(name);
+        this.description = CodegenUtils.makeSentenceCaseDescription(name);
+        this.author = "codegen";
+        this.version = "$" + "Revision$ $" + "Date$";  // split to prevent svn expansion
+        this.specializes = new LinkedHashSet<InterfaceDescription>();
+        this.attributes = new LinkedHashSet<Attribute>();
+        this.associations = new LinkedHashSet<Association>();
+    }
+
+    /**
+     * Create a new interface description with the specified package name
+     * and name.
+     *
+     * @param license license for this interface description
+     * @param packageName package name for this interface description
+     * @param name name of this interface description
+     */
+    public InterfaceDescription(final String license, final String packageName, final String name) 
+    {
+        this.license = license;
+        this.packageName = packageName;
+        this.lower = CodegenUtils.makeLowercase(name);
+        this.mixed = CodegenUtils.makeMixedCase(name);
+        this.upper = CodegenUtils.makeUppercase(name);
+        this.description = CodegenUtils.makeSentenceCaseDescription(name);
         this.author = "codegen";
         this.version = "$" + "Revision$ $" + "Date$";  // split to prevent svn expansion
         this.specializes = new LinkedHashSet<InterfaceDescription>();
@@ -105,7 +131,7 @@ public final class InterfaceDescription
         this.upper = CodegenUtils.makeUppercase(name);
         this.author = author;
         this.version = version;
-        this.description = description;
+        this.description = CodegenUtils.makeSentenceCaseDescription(name) + ".";
         this.specializes = new LinkedHashSet<InterfaceDescription>();
         this.attributes = new LinkedHashSet<Attribute>();
         this.associations = new LinkedHashSet<Association>();
@@ -189,6 +215,16 @@ public final class InterfaceDescription
         this.associations.addAll(associations);
     }
 
+
+    /**
+     * Return the license for this interface description.
+     *
+     * @return the license for this interface description
+     */
+    public String getLicense()
+    {
+        return license;
+    }
 
     /**
      * Return the package name for this interface description.
