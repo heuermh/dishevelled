@@ -1,7 +1,7 @@
 /*
 
     dsh-text-rendering-benchmark  Text rendering benchmarks.
-    Copyright (c) 2009 held jointly by the individual authors.
+    Copyright (c) 2009-2011 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
@@ -33,11 +33,11 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.JComponent;
 
-import edu.umd.cs.piccolo.PCanvas;
+import org.piccolo2d.PCanvas;
 
-import edu.umd.cs.piccolo.nodes.PText;
+import org.piccolo2d.nodes.PText;
 
-import edu.umd.cs.piccolo.util.PPaintContext;
+import org.piccolo2d.util.PPaintContext;
 
 import org.dishevelled.text.TextRenderingBenchmark;
 
