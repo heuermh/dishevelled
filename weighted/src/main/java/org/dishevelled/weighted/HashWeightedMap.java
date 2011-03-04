@@ -90,6 +90,18 @@ public final class HashWeightedMap<E>
 
     /**
      * Create a new weighted map with the specified initial capacity
+     * and default load factor.
+     *
+     * @param initialCapacity initial capacity
+     */
+    public HashWeightedMap(final int initialCapacity)
+    {
+        map = new HashMap<E, Double>(initialCapacity, DEFAULT_LOAD_FACTOR);
+        dirty = true;
+    }
+
+    /**
+     * Create a new weighted map with the specified initial capacity
      * and load factor.
      *
      * @param initialCapacity initial capacity
@@ -351,7 +363,7 @@ public final class HashWeightedMap<E>
      * Sort elements in descending order according to their
      * normalized weights.
      */
-    private final Comparator<E> byRankDescending = new Comparator<E>()
+    private transient final Comparator<E> byRankDescending = new Comparator<E>()
         {
             /** {@inheritDoc} */
             public int compare(final E e1, final E e2)
