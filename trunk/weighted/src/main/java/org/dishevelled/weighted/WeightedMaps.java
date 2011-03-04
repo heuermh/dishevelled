@@ -49,14 +49,28 @@ public final class WeightedMaps
      * @return a new weighted map with the default initial capacity
      *    and load factor
      */
-    public static <E> WeightedMap<E> newWeightedMap()
+    public static <E> WeightedMap<E> createWeightedMap()
     {
         return new HashWeightedMap<E>();
     }
 
 
     /**
-     * Create a new weighted map with the specified initial capacity
+     * Create and return new weighted map with the specified initial capacity
+     * and default load factor.
+     *
+     * @param <E> element type
+     * @param initialCapacity initial capacity
+     * @return a new weighted map with the specified initial capacity
+     *    and default load factor
+     */
+    public static <E> WeightedMap<E> createWeightedMap(final int initialCapacity)
+    {
+        return new HashWeightedMap<E>(initialCapacity);
+    }
+
+    /**
+     * Create and return new weighted map with the specified initial capacity
      * and load factor.
      *
      * @param <E> element type
@@ -65,7 +79,7 @@ public final class WeightedMaps
      * @return a new weighted map with the specified initial capacity
      *    and load factor
      */
-    public static <E> WeightedMap<E> newWeightedMap(final int initialCapacity, final float loadFactor)
+    public static <E> WeightedMap<E> createWeightedMap(final int initialCapacity, final float loadFactor)
     {
         return new HashWeightedMap<E>(initialCapacity, loadFactor);
     }
@@ -79,7 +93,7 @@ public final class WeightedMaps
      * @return a new weighted map with the elements and weights
      *    in the specified weighted map
      */
-    public static <E> WeightedMap<E> newWeightedMap(final WeightedMap<? extends E> weightedMap)
+    public static <E> WeightedMap<E> createWeightedMap(final WeightedMap<? extends E> weightedMap)
     {
         return new HashWeightedMap<E>(weightedMap);
     }

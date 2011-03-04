@@ -55,6 +55,9 @@ public class HashWeightedMapTest
         WeightedMap<String> m3 = new HashWeightedMap<String>(m0);
         assertNotNull("m3 not null", m3);
 
+        WeightedMap<String> m4 = new HashWeightedMap<String>(25);
+        assertNotNull("m4 not null", m4);
+
         try
         {
             WeightedMap<String> m = new HashWeightedMap<String>(-1, 0.75f);

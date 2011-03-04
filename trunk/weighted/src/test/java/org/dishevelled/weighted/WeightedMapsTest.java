@@ -37,25 +37,28 @@ public final class WeightedMapsTest
     extends TestCase
 {
 
-    public void testNewWeightedMap()
+    public void testCreateWeightedMap()
     {
-        WeightedMap<String> weightedMap0 = newWeightedMap();
+        WeightedMap<String> weightedMap0 = createWeightedMap();
         assertNotNull(weightedMap0);
 
-        WeightedMap<String> weightedMap1 = newWeightedMap(15, 0.75f);
+        WeightedMap<String> weightedMap1 = createWeightedMap(15);
         assertNotNull(weightedMap1);
 
-        WeightedMap<String> toCopy = newWeightedMap();
+        WeightedMap<String> weightedMap2 = createWeightedMap(15, 0.75f);
+        assertNotNull(weightedMap2);
+
+        WeightedMap<String> toCopy = createWeightedMap();
         toCopy.put("foo", 1.0d);
         toCopy.put("bar", 2.0d);
 
-        WeightedMap<String> weightedMap2 = newWeightedMap(toCopy);
-        assertNotNull(weightedMap2);
+        WeightedMap<String> weightedMap3 = createWeightedMap(toCopy);
+        assertNotNull(weightedMap3);
 
         try
         {
-            WeightedMap<String> ignore = newWeightedMap(null);
-            fail("newWeightedMap(null) expected NullPointerException");
+            WeightedMap<String> ignore = createWeightedMap(null);
+            fail("createWeightedMap(null) expected NullPointerException");
         }
         catch (NullPointerException e)
         {
