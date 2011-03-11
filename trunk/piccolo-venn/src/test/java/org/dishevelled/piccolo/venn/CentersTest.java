@@ -30,6 +30,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import java.util.Random;
 
 import junit.framework.TestCase;
 
@@ -240,6 +241,38 @@ public final class CentersTest
         //assertEquals(10.0d, centroid.getY(), CENTROID_TOLERANCE);        
     }
 
+    public void testCentroidOfCAGSuppliedRandom()
+    {
+        // copied from QuaternaryVennNode:
+        Ellipse2D ellipse = new Ellipse2D.Double(0.0d, 0.0d, 376.0d, 234.0d);
+        Point2D center = new Point2D.Double(ellipse.getBounds2D().getCenterX(), ellipse.getBounds2D().getCenterY());
+
+        Area firstArea = new Area(ellipse);
+        firstArea = firstArea.createTransformedArea(AffineTransform.getRotateInstance((2.0d * Math.PI) / 9.0d, center.getX(), center.getY()));
+
+        Area secondArea = new Area(ellipse);
+        secondArea = secondArea.createTransformedArea(AffineTransform.getRotateInstance((2.0d * Math.PI) / 9.0d, center.getX(), center.getY()));
+        secondArea = secondArea.createTransformedArea(AffineTransform.getTranslateInstance(72.0d, -85.0d));
+
+        Area thirdArea = new Area(ellipse);
+        thirdArea = thirdArea.createTransformedArea(AffineTransform.getRotateInstance((-2.0d * Math.PI) / 9.0d, center.getX(), center.getY()));
+        thirdArea = thirdArea.createTransformedArea(AffineTransform.getTranslateInstance(72.0d, -85.0d));
+
+        Area fourthArea = new Area(ellipse);
+        fourthArea = fourthArea.createTransformedArea(AffineTransform.getRotateInstance((-2.0d * Math.PI) / 9.0d, center.getX(), center.getY()));
+        fourthArea = fourthArea.createTransformedArea(AffineTransform.getTranslateInstance(144.0d, 0.0d));
+
+        fourthArea.subtract(firstArea);
+        fourthArea.subtract(secondArea);
+        fourthArea.subtract(thirdArea);
+
+        Point2D centroid = centroidOf(fourthArea, new Point2D.Double(), new Random());
+
+        assertNotNull(centroid);
+        //assertEquals(5.0d, centroid.getX(), CENTROID_TOLERANCE);
+        //assertEquals(10.0d, centroid.getY(), CENTROID_TOLERANCE);        
+    }
+
     public void testCentroidOfIllegalArguments()
     {
         Area area = new Area(new Rectangle2D.Double(0.0d, 0.0d, 10.0d, 20.0d));
@@ -267,6 +300,15 @@ public final class CentersTest
         {
             centroidOf(area, null);
             fail("centroidOf(area, null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+        try
+        {
+            centroidOf(area, centroid, null);
+            fail("centroidOf(area, centroid, null) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
         {
