@@ -22,7 +22,8 @@
   <distributionManagement>
     <site>
       <id>dishevelled.sf.net</id>
-      <url>scp://shell.sourceforge.net/home/groups/d/di/dishevelled/htdocs/color-scheme-${project.version}</url>
+      <url>scp://shell.sourceforge.net/home/project-web/dishevelled/htdocs/color-scheme-${project.version}</url>
+<!--      <url>scp://shell.sourceforge.net/home/groups/d/di/dishevelled/htdocs/color-scheme-${project.version}</url> -->
     </site>
   </distributionManagement>
   <dependencies>
