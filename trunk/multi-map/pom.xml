@@ -40,9 +40,9 @@
       <plugin>
         <artifactId>maven-checkstyle-plugin</artifactId>
         <configuration>
-          <!-- todo:  can configLocation and enableRulesSummary be enherited from parent? -->
-          <configLocation>src/build/conf/checkstyle.xml</configLocation>
-          <suppressionsLocation>src/build/conf/checkstyle-suppressions.xml</suppressionsLocation>
+          <configLocation>${basedir}/src/build/conf/checkstyle.xml</configLocation>
+          <propertyExpansion>header.file=${basedir}/HEADER.txt</propertyExpansion>
+          <suppressionsLocation>${basedir}/src/build/conf/checkstyle-suppressions.xml</suppressionsLocation>
           <suppressionsFileExpression>checkstyle.suppressions.file</suppressionsFileExpression>
           <enableRulesSummary>false</enableRulesSummary>
         </configuration>
