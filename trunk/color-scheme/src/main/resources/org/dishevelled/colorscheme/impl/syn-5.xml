@@ -22,10 +22,12 @@
     > http://www.opensource.org/licenses/lgpl-license.php
 
 -->
-<color-scheme name="PuBlGy" type="qualitative">
+<color-scheme name="Syn" type="qualitative">
   <colors>
-    <color red="61" blue="167" green="75" alpha="0.25"/>
-    <color red="122" blue="220" green="211" alpha="0.25"/>
-    <color red="182" blue="175" green="177" alpha="1.0"/>
+    <color red="61" blue="174" green="85" alpha="1.0"/>
+    <color red="236" blue="37" green="30" alpha="1.0"/>
+    <color red="134" blue="144" green="93" alpha="1.0"/>
+    <color red="98" blue="48" green="140" alpha="1.0"/>
+    <color red="238" blue="26" green="99" alpha="1.0"/>
   </colors>
 </color-scheme>
