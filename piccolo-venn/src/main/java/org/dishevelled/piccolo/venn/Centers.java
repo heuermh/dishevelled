@@ -183,6 +183,21 @@ final class Centers
      */
     static Point2D centroidOf(final Area area, final Point2D centroid)
     {
+        return centroidOf(area, centroid, new Random());
+    }
+
+    /**
+     * Find and return the specified approximate centroid of the specified area using
+     * an evolutionary algorithm.
+     *
+     * @param area area, must not be null
+     * @param centroid centroid, must not be null
+     * @param random source of randomness
+     * @return the specified approximate centroid of the specified area using an
+     *    evolutionary algorithm
+     */
+    static Point2D centroidOf(final Area area, final Point2D centroid, final Random random)
+    {
         if (area == null)
         {
             throw new IllegalArgumentException("area must not be null");
@@ -191,9 +206,12 @@ final class Centers
         {
             throw new IllegalArgumentException("centroid must not be null");
         }
+        if (random == null)
+        {
+            throw new IllegalArgumentException("random must not be null");
+        }
 
         final Rectangle2D bounds = area.getBounds2D();
-        final Random random = new Random();
         List<Point2D> individuals = new ArrayList<Point2D>(INDIVIDUALS);
         for (int i = 0; i < INDIVIDUALS; i++)
         {
