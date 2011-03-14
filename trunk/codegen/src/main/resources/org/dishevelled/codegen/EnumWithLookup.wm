@@ -57,13 +57,14 @@ import ${r.PackageName}.${r.Upper};
 #end
 #end
 import java.util.Map;
-
+//import static java.util.Collections.unmodifiableMap;
+//import java.util.HashMap;
 //import static com.google.common.collect.ImmutableMap.copyOf;
 //import static com.google.common.collect.Maps.newHashMap;
 import static org.dishevelled.collect.Maps.*;
 
 /**
- * ${StringUtils.capitalize($cd.Description)}.
+ * ${cd.Description}.
  *
  * @author  ${cd.Author}
  * @version ${cd.Version}
@@ -80,15 +81,16 @@ public enum ${cd.Upper}
 
 #end
 {
-    /** ${StringUtils.capitalize($cd.Description)}. */
+    /** ${cd.Description}. */
     ${CodegenUtils.makeUppercaseWithUnderscores($cd.Upper)}(...);
 
-    /** Map of ${cd.Description}s keyed by name and lowercase-with-dashes name. */
+    /** Map of ${cd.Lower}s keyed by name and lowercase-with-dashes name. */
     private static final Map<String, ${cd.Upper}> ${CodegenUtils.makeUppercaseWithUnderscores($cd.Upper)}S;
 
     static
     {
         //Map<String, ${cd.Upper}> tmp = newHashMap();
+        //Map<String, RefillType> tmp = new HashMap<String, RefillType>();
         Map<String, ${cd.Upper}> tmp = createMap();
         for (${cd.Upper} ${cd.Mixed} : values())
         {
@@ -96,6 +98,7 @@ public enum ${cd.Upper}
             tmp.put(${cd.Mixed}.lowercaseName(), ${cd.Mixed});
         }
         //${CodegenUtils.makeUppercaseWithUnderscores($cd.Upper)}S = copyOf(tmp);
+        //${CodegenUtils.makeUppercaseWithUnderscores($cd.Upper)}S = unmodifiableMap(tmp);
         ${CodegenUtils.makeUppercaseWithUnderscores($cd.Upper)}S = immutableMap(tmp);
     }
 
@@ -429,9 +432,9 @@ public enum ${cd.Upper}
 #end
 
     /**
-     * Return the name of this ${cd.Description} in <code>lowercase-with-dashes</code> style.
+     * Return the name of this ${cd.Lower} in <code>lowercase-with-dashes</code> style.
      *
-     * @return the name of this ${cd.Description} in <code>lowercase-with-dashes</code> style
+     * @return the name of this ${cd.Lower} in <code>lowercase-with-dashes</code> style
      */
     public String lowercaseName()
     {
@@ -440,13 +443,13 @@ public enum ${cd.Upper}
 
 
     /**
-     * Return the ${cd.Description} with the specified name, if any.  The name may
+     * Return the ${cd.Lower} with the specified name, if any.  The name may
      * be specified in either <code>UPPERCASE_WITH_UNDERSCORES</code>
      * or <code>lowercase-with-dashes</code> style.
      *
      * @param name name
-     * @return the ${cd.Description} with the specified name, or <code>null</code>
-     *    if no such ${cd.Description} exists
+     * @return the ${cd.Lower} with the specified name, or <code>null</code>
+     *    if no such ${cd.Lower} exists
      */
     public static ${cd.Upper} parse${cd.Upper}(final String name)
     {

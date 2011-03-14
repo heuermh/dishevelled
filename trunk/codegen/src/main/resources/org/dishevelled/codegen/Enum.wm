@@ -58,7 +58,7 @@ import ${r.PackageName}.${r.Upper};
 #end
 
 /**
- * ${StringUtils.capitalize($cd.Description)}.
+ * ${cd.Description}.
  *
  * @author  ${cd.Author}
  * @version ${cd.Version}
@@ -75,7 +75,7 @@ public enum ${cd.Upper}
 
 #end
 {
-    /** ${StringUtils.capitalize($cd.Description)}. */
+    /** ${cd.Description}. */
     ${CodegenUtils.makeUppercaseWithUnderscores($cd.Upper)}(...);
 
 #foreach ($a in $cd.Attributes)
