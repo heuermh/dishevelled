@@ -32,8 +32,8 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>com.google.collections</groupId>
-      <artifactId>google-collections</artifactId>
+      <groupId>com.google.guava</groupId>
+      <artifactId>guava</artifactId>
       <scope>compile</scope>
     </dependency>
     <dependency>
