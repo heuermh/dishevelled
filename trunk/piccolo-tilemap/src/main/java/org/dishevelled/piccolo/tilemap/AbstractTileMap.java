@@ -381,6 +381,16 @@ public abstract class AbstractTileMap
         }
     }
 
+    /** {@inheritDoc} */
+    public void repaint()
+    {
+        if (proxiesInvalid)
+        {
+            validateProxies();
+        }
+        super.repaint();
+    }
+
     /**
      * Create and add a new proxy with the specified offset and tile.
      *
