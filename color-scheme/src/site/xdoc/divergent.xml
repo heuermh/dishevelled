@@ -1,0 +1,238 @@
+<?xml version="1.0"?>
+<!--
+
+    dsh-color-scheme  Color schemes.
+    Copyright (c) 2009-2011 held jointly by the individual authors.
+
+    This library is free software; you can redistribute it and/or modify it
+    under the terms of the GNU Lesser General Public License as published
+    by the Free Software Foundation; either version 3 of the License, or (at
+    your option) any later version.
+
+    This library is distributed in the hope that it will be useful, but WITHOUT
+    ANY WARRANTY; with out even the implied warranty of MERCHANTABILITY or
+    FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
+    License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with this library;  if not, write to the Free Software Foundation,
+    Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307  USA.
+
+    > http://www.fsf.org/licensing/licenses/lgpl.html
+    > http://www.opensource.org/licenses/lgpl-license.php
+
+-->
+<document>
+  <properties>
+    <title>color-scheme reference: divergent</title>
+  </properties>
+<body>
+
+<section name="Color scheme reference">
+<p>
+<a href="sequential.html">Sequential</a> schemes are suited to ordered data that progress
+from low to high.  Lightness steps dominate the look of these schemes, with light colors for low
+data values to dark colors for high data values.
+</p>
+<p>
+<a href="#divergent">Divergent</a> schemes put equal emphasis on mid-range critical
+values and extremes at both ends of the data range.  The critical value or break in the middle of
+the gradient is emphasized with light colors and low and high extremes are emphasized with dark
+colors that have contrasting hues.
+</p>
+<p>
+<a href="qualitative.html">Qualitative</a> schemes do not imply magnitude differences between
+data ranges, and hues are used to create the primary visual differences between gradient colors.
+Qualitative schemes are best suited to representing nominal or categorical data.
+</p>
+
+<p>
+A few color schemes commonly used for scientific visualization applications that deviate from
+these definitions (e.g. <a href="#rd-bl-gr">RdBlGr</a>, a divergent scheme with black as the mid-range color)
+are also included.
+</p>
+
+<p>
+See <a href="http://colorbrewer.org">http://colorbrewer.org</a> for further details.
+</p>
+</section>
+
+<section name="Divergent" id="divergent">
+<subsection name="BrBG" id="br-b-g">
+<p><object data="images/continuous-br-b-g-3.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-br-b-g-3.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/continuous-br-b-g-4.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-br-b-g-4.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/continuous-br-b-g-5.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-br-b-g-5.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/continuous-br-b-g-6.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-br-b-g-6.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/continuous-br-b-g-7.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-br-b-g-7.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/continuous-br-b-g-8.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-br-b-g-8.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/continuous-br-b-g-9.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-br-b-g-9.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/continuous-br-b-g-10.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-br-b-g-10.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/continuous-br-b-g-11.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-br-b-g-11.svg" type="image/svg+xml" width="810" height="80"></object></p>
+</subsection>
+<subsection name="BuBlYl" id="bu-bl-yl">
+<p><object data="images/continuous-bu-bl-yl-3.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-bu-bl-yl-3.svg" type="image/svg+xml" width="810" height="80"></object></p>
+</subsection>
+<subsection name="BuWhRd" id="bu-wh-rd">
+<p><object data="images/continuous-bu-wh-rd-3.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-bu-wh-rd-3.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/continuous-bu-wh-rd-7.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-bu-wh-rd-7.svg" type="image/svg+xml" width="810" height="80"></object></p>
+</subsection>
+<subsection name="PRGn" id="p-r-gn">
+<p><object data="images/continuous-p-r-gn-3.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-p-r-gn-3.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/continuous-p-r-gn-4.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-p-r-gn-4.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/continuous-p-r-gn-5.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-p-r-gn-5.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/continuous-p-r-gn-6.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-p-r-gn-6.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/continuous-p-r-gn-7.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-p-r-gn-7.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/continuous-p-r-gn-8.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-p-r-gn-8.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/continuous-p-r-gn-9.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-p-r-gn-9.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/continuous-p-r-gn-10.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-p-r-gn-10.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/continuous-p-r-gn-11.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-p-r-gn-11.svg" type="image/svg+xml" width="810" height="80"></object></p>
+</subsection>
+<subsection name="PiYG" id="pi-y-g">
+<p><object data="images/continuous-pi-y-g-3.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-pi-y-g-3.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/continuous-pi-y-g-4.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-pi-y-g-4.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/continuous-pi-y-g-5.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-pi-y-g-5.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/continuous-pi-y-g-6.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-pi-y-g-6.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/continuous-pi-y-g-7.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-pi-y-g-7.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/continuous-pi-y-g-8.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-pi-y-g-8.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/continuous-pi-y-g-9.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-pi-y-g-9.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/continuous-pi-y-g-10.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-pi-y-g-10.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/continuous-pi-y-g-11.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-pi-y-g-11.svg" type="image/svg+xml" width="810" height="80"></object></p>
+</subsection>
+<subsection name="PuOr" id="pu-or">
+<p><object data="images/continuous-pu-or-3.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-pu-or-3.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/continuous-pu-or-4.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-pu-or-4.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/continuous-pu-or-5.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-pu-or-5.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/continuous-pu-or-6.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-pu-or-6.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/continuous-pu-or-7.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-pu-or-7.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/continuous-pu-or-8.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-pu-or-8.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/continuous-pu-or-9.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-pu-or-9.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/continuous-pu-or-10.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-pu-or-10.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/continuous-pu-or-11.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-pu-or-11.svg" type="image/svg+xml" width="810" height="80"></object></p>
+</subsection>
+<subsection name="RdBlGr" id="rd-bl-gr">
+<p><object data="images/continuous-rd-bl-gr-3.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-rd-bl-gr-3.svg" type="image/svg+xml" width="810" height="80"></object></p>
+</subsection>
+<subsection name="RdBu" id="rd-bu">
+<p><object data="images/continuous-rd-bu-3.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-rd-bu-3.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/continuous-rd-bu-4.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-rd-bu-4.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/continuous-rd-bu-5.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-rd-bu-5.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/continuous-rd-bu-6.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-rd-bu-6.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/continuous-rd-bu-7.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-rd-bu-7.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/continuous-rd-bu-8.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-rd-bu-8.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/continuous-rd-bu-9.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-rd-bu-9.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/continuous-rd-bu-10.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-rd-bu-10.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/continuous-rd-bu-11.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-rd-bu-11.svg" type="image/svg+xml" width="810" height="80"></object></p>
+</subsection>
+<subsection name="RdGy" id="rd-gy">
+<p><object data="images/continuous-rd-gy-3.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-rd-gy-3.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/continuous-rd-gy-4.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-rd-gy-4.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/continuous-rd-gy-5.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-rd-gy-5.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/continuous-rd-gy-6.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-rd-gy-6.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/continuous-rd-gy-7.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-rd-gy-7.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/continuous-rd-gy-8.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-rd-gy-8.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/continuous-rd-gy-9.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-rd-gy-9.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/continuous-rd-gy-10.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-rd-gy-10.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/continuous-rd-gy-11.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-rd-gy-11.svg" type="image/svg+xml" width="810" height="80"></object></p>
+</subsection>
+<subsection name="RdYlBu" id="rd-yl-bu">
+<p><object data="images/continuous-rd-yl-bu-10.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-rd-yl-bu-10.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/continuous-rd-yl-bu-11.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-rd-yl-bu-11.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/continuous-rd-yl-bu-3.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-rd-yl-bu-3.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/continuous-rd-yl-bu-4.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-rd-yl-bu-4.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/continuous-rd-yl-bu-5.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-rd-yl-bu-5.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/continuous-rd-yl-bu-6.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-rd-yl-bu-6.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/continuous-rd-yl-bu-7.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-rd-yl-bu-7.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/continuous-rd-yl-bu-8.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-rd-yl-bu-8.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/continuous-rd-yl-bu-9.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-rd-yl-bu-9.svg" type="image/svg+xml" width="810" height="80"></object></p>
+</subsection>
+<subsection name="RdYlGn" id="rd-yl-gn">
+<p><object data="images/continuous-rd-yl-gn-3.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-rd-yl-gn-3.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/continuous-rd-yl-gn-4.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-rd-yl-gn-4.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/continuous-rd-yl-gn-5.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-rd-yl-gn-5.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/continuous-rd-yl-gn-6.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-rd-yl-gn-6.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/continuous-rd-yl-gn-7.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-rd-yl-gn-7.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/continuous-rd-yl-gn-8.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-rd-yl-gn-8.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/continuous-rd-yl-gn-9.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-rd-yl-gn-9.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/continuous-rd-yl-gn-10.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-rd-yl-gn-10.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/continuous-rd-yl-gn-11.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-rd-yl-gn-11.svg" type="image/svg+xml" width="810" height="80"></object></p>
+</subsection>
+</section>
+
+</body>
+</document>
