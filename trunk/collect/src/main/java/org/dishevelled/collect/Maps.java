@@ -593,7 +593,7 @@ public final class Maps
     /**
      * Create and return a new unmodifiable view of the specified map.  Query operations on
      * the returned map "read through" to the specified map.  Attempts to modify the returned map,
-     * whether direct or via its collection views, result in an <code>UnsupportedOperationException<code>.
+     * whether direct or via its collection views, result in an <code>UnsupportedOperationException</code>.
      *
      * @param <K> key type
      * @param <V> value type
