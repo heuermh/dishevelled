@@ -25,6 +25,7 @@ package org.dishevelled.collect;
 
 import java.util.Comparator;
 import java.util.Map;
+import java.util.NavigableMap;
 import java.util.SortedMap;
 
 import java.util.concurrent.ConcurrentMap;
@@ -314,6 +315,61 @@ public final class MapsTest
         {
             immutableSortedMap(null);
             fail("immutableSortedMap(null) expected NullPointerException");
+        }
+        catch (NullPointerException e)
+        {
+            // expected
+        }
+    }
+
+    public void testCreateNavigableMap()
+    {
+        NavigableMap<String, Double> navigableMap0 = createNavigableMap();
+        assertNotNull(navigableMap0);
+
+        Comparator<String> comparator = new Comparator<String>()
+            {
+                /** {@inheritDoc} */
+                public int compare(final String value0, final String value1)
+                {
+                    return value0.compareTo(value1);
+                }
+            };
+
+        NavigableMap<String, Double> navigableMap1 = createNavigableMap(comparator);
+        assertNotNull(navigableMap1);
+
+        NavigableMap<String, Double> navigableMap2 = createNavigableMap((Comparator<String>) null);
+        assertNotNull(navigableMap2);
+
+        Map<String, Double> toCopy = createMap();
+        toCopy.put("foo", Double.valueOf(1.0d));
+        toCopy.put("bar", Double.valueOf(2.0d));
+
+        NavigableMap<String, Double> navigableMap3 = createNavigableMap(toCopy);
+        assertNotNull(navigableMap3);
+
+        NavigableMap<String, Double> navigableToCopy = createNavigableMap();
+        navigableToCopy.put("foo", Double.valueOf(1.0d));
+        navigableToCopy.put("bar", Double.valueOf(2.0d));
+
+        NavigableMap<String, Double> navigableMap4 = createNavigableMap(navigableToCopy);
+        assertNotNull(navigableMap4);
+
+        try
+        {
+            createNavigableMap((Map<String, Double>) null);
+            fail("newNavigableMap((Map<String, Double>) null) expected NullPointerException");
+        }
+        catch (NullPointerException e)
+        {
+            // expected
+        }
+
+        try
+        {
+            createNavigableMap((NavigableMap<String, Double>) null);
+            fail("newNavigableMap((NavigableMap<String, Double>) null) expected NullPointerException");
         }
         catch (NullPointerException e)
         {

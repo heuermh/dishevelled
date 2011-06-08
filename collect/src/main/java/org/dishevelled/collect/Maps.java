@@ -27,6 +27,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.NavigableMap;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
@@ -531,6 +532,62 @@ public final class Maps
     public static <K, V> SortedMap<K, V> createSortedMap(final SortedMap<K, ? extends V> sortedMap)
     {
         return new TreeMap<K, V>(sortedMap);
+    }
+
+    /**
+     * Create and return a new instance of NavigableMap using the natural ordering of its keys.
+     *
+     * @param <K> key type
+     * @param <V> value type
+     * @return a new instance of NavigableMap using the natural ordering of its keys
+     */
+    public static <K, V> NavigableMap<K, V> createNavigableMap()
+    {
+        return new TreeMap<K, V>();
+    }
+
+    /**
+     * Create and return a new instance of NavigableMap ordered according to the specified comparator.
+     *
+     * @param <K> key type
+     * @param <V> value type
+     * @param comparator comparator used to order this map, or <code>null</code> to use the
+     *    natural ordering of its keys
+     * @return a new instance of NavigableMap ordered according to the specified comparator
+     */
+    public static <K, V> NavigableMap<K, V> createNavigableMap(final Comparator<? super K> comparator)
+    {
+        return new TreeMap<K, V>(comparator);
+    }
+
+    /**
+     * Create and return a new instance of NavigableMap containing the same mappings as the specified
+     * map ordered according to the natural ordering of its keys.
+     *
+     * @param <K> key type
+     * @param <V> value type
+     * @param map map to copy mappings from, must not be null
+     * @return a new instance of NavigableMap containing the same mappings as the specified
+     *    map ordered according to the natural ordering of its keys
+     */
+    public static <K, V> NavigableMap<K, V> createNavigableMap(final Map<? extends K, ? extends V> map)
+    {
+        return new TreeMap<K, V>(map);
+    }
+
+    /**
+     * Create and return a new instance of NavigableMap containing the same mappings and the same
+     * ordering as the specified navigable map.
+     *
+     * @param <K> key type
+     * @param <V> value type
+     * @param navigableMap navigable map to copy mappings and comparator from, must not be null
+     * @return a new instance of NavigableMap containing the same mappings and the same
+     *    ordering as the specified navigable map
+     */
+    public static <K, V> NavigableMap<K, V> createNavigableMap(final NavigableMap<K, ? extends V> navigableMap)
+    {
+        return new TreeMap<K, V>(navigableMap);
     }
 
     /**
