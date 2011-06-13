@@ -24,6 +24,7 @@
 package org.dishevelled.analysis;
 
 import java.util.Collections;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -32,6 +33,8 @@ import org.junit.Test;
 import static org.dishevelled.analysis.AnalysisUtils.*;
 
 import static org.dishevelled.collect.Lists.*;
+
+import org.dishevelled.functor.UnaryFunction;
 
 import org.dishevelled.graph.Edge;
 import org.dishevelled.graph.Graph;
@@ -60,7 +63,7 @@ public final class AnalysisUtilsTest
     public void testToSparseMatrixNullNodes()
     {
         Graph<String, Double> graph = createGraph();
-        toSparseMatrix(graph, null);
+        toSparseMatrix(graph, (List<Node<String, Double>>) null);
     }
 
     @Test
@@ -87,18 +90,6 @@ public final class AnalysisUtilsTest
     }
 
     @Test
-    public void testToSparseMatrixNoEdgesOnlyOneNodeInList()
-    {
-        Graph<String, Double> graph = createGraph();
-        Node<String, Double> node0 = graph.createNode("node0");
-        Node<String, Double> node1 = graph.createNode("node1");
-        Matrix2D<Double> matrix = toSparseMatrix(graph, asList(node1));
-        assertEquals(1, matrix.rows());
-        assertEquals(1, matrix.columns());
-        assertTrue(matrix.isEmpty());
-    }
-
-    @Test
     public void testToSparseMatrixTwoNodesTwoEdges()
     {
         Graph<String, Double> graph = createGraph();
@@ -112,6 +103,13 @@ public final class AnalysisUtilsTest
         assertEquals(1.0d, matrix.get(0, 1), TOLERANCE);
         assertEquals(2.0d, matrix.get(1, 0), TOLERANCE);
         assertFalse(matrix.isEmpty());
+    }
+
+    @Test(expected=IllegalArgumentException.class)
+    public void testToSparseMatrixNullNodeIndices()
+    {
+        Graph<String, Double> graph = createGraph();
+        toSparseMatrix(graph, (UnaryFunction<Node<String, Double>, Long>) null);
     }
 
     @Test(expected=IllegalArgumentException.class)
@@ -163,6 +161,13 @@ public final class AnalysisUtilsTest
         toGraph(matrix);
     }
 
+    @Test(expected=IllegalArgumentException.class)
+    public void testToGraphMatrixTooLargeRowsAndColumns()
+    {
+        Matrix2D<Double> matrix = createSparseMatrix2D(Integer.MAX_VALUE + 1L, Integer.MAX_VALUE + 1L, 20, 0.75f);
+        toGraph(matrix);
+    }
+
     @Test
     public void testToGraphSelfEdgesOnly()
     {
@@ -206,4 +211,11 @@ public final class AnalysisUtilsTest
             }
         }
     }        
+
+    @Test(expected=IllegalArgumentException.class)
+    public void testToGraphNullNodeValues()
+    {
+        Matrix2D<Double> matrix = createSparseMatrix2D(4, 4);
+        toGraph(matrix, null);
+    }
 }

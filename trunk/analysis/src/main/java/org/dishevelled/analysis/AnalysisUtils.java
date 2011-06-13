@@ -34,6 +34,7 @@ import org.dishevelled.graph.Node;
 
 import static org.dishevelled.graph.impl.GraphUtils.createGraph;
 
+import org.dishevelled.functor.UnaryFunction;
 import org.dishevelled.functor.UnaryProcedure;
 import org.dishevelled.functor.TernaryProcedure;
 
@@ -63,35 +64,115 @@ public final class AnalysisUtils
      *
      * @param <N> graph node type
      * @param <E> graph edge type and sparse matrix type
-     * @param graph graph, must not be null
+     * @param graph graph to convert, must not be null
      * @param nodes nodes, must not be null
      * @return the specified graph converted to a sparse matrix
      */
     public static <N, E> Matrix2D<E> toSparseMatrix(final Graph<N, E> graph, final List<Node<N, E>> nodes)
     {
+        return toSparseMatrix(graph, new NodeIndices<N, E>(nodes));
+    }
+
+    /**
+     * Node indices mapping function.
+     *
+     * @param <N> graph node type
+     * @param <E> graph edge type
+     */
+    private static class NodeIndices<N, E> implements UnaryFunction<Node<N, E>, Long>
+    {
+        /** List of nodes. */
+        private final List<Node<N, E>> nodes;
+
+
+        /**
+         * Create a new node indices mapping function with the specified list of nodes.
+         *
+         * @param nodes list of nodes, must not be null
+         */
+        NodeIndices(final List<Node<N, E>> nodes)
+        {
+            if (nodes == null)
+            {
+                throw new IllegalArgumentException("nodes must not be null");
+            }
+            this.nodes = nodes;
+        }
+
+
+        @Override
+        public Long evaluate(final Node<N, E> node)
+        {
+            return Long.valueOf(nodes.indexOf(node));
+        }
+    }
+
+    /**
+     * Convert the specified graph to a sparse matrix.
+     *
+     * @param <N> graph node type
+     * @param <E> graph edge type and sparse matrix type
+     * @param graph graph to convert, must not be null
+     * @param nodeIndices mapping of long indices by nodes, must not be null
+     * @return the specified graph converted to a sparse matrix
+     */
+    public static <N, E> Matrix2D<E> toSparseMatrix(final Graph<N, E> graph, final UnaryFunction<Node<N, E>, Long> nodeIndices)
+    {
         if (graph == null)
         {
             throw new IllegalArgumentException("graph must not be null");
         }
-        if (nodes == null)
+        if (nodeIndices == null)
         {
-            throw new IllegalArgumentException("nodes must not be null");
+            throw new IllegalArgumentException("nodeIndices must not be null");
         }
-        long n = Math.min(graph.nodeCount(), nodes.size());
-        final Matrix2D<E> matrix = createSparseMatrix2D(n, n, graph.edgeCount(), 0.75f);
+        long n = graph.nodeCount();
+        int e = graph.edgeCount();
+        final Matrix2D<E> matrix = createSparseMatrix2D(n, n, e, 0.75f);
         graph.forEachEdge(new UnaryProcedure<Edge<N, E>>()
                           {
                               @Override
                               public void run(final Edge<N, E> edge)
                               {
                                   // todo:  provide "merge strategy" for multiple edges
-                                  matrix.set(nodes.indexOf(edge.source()), nodes.indexOf(edge.target()), edge.getValue());
+                                  matrix.set(nodeIndices.evaluate(edge.source()), nodeIndices.evaluate(edge.target()), edge.getValue());
                               }
                           });
         return matrix;
     }
 
+    /** Index node values mapping function. */
+    private static final UnaryFunction<Long, Long> INDEX_NODE_VALUES = new UnaryFunction<Long, Long>()
+    {
+        @Override
+        public Long evaluate(final Long value)
+        {
+            return value;
+        }
+    };
+
+    /**
+     * Convert the specified matrix to a graph with long indices as node values.
+     *
+     * @param <E> matrix type and graph edge type
+     * @param matrix matrix to convert, must not be null
+     * @return the specified matrix converted to a graph with long indices as node values
+     */
     public static <E> Graph<Long, E> toGraph(final Matrix2D<E> matrix)
+    {
+        return toGraph(matrix, INDEX_NODE_VALUES);
+    }
+
+    /**
+     * Convert the specified matrix to a graph.
+     *
+     * @param <N> graph node type
+     * @param <E> matrix type and graph edge type
+     * @param matrix matrix to convert, must not be null
+     * @param nodeValues mapping of node values by long indices, must not be null
+     * @return the specified matrix converted to a graph
+     */
+    public static <N, E> Graph<N, E> toGraph(final Matrix2D<E> matrix, final UnaryFunction<Long, N> nodeValues)
     {
         if (matrix == null)
         {
@@ -109,11 +190,15 @@ public final class AnalysisUtils
         {
             throw new IllegalArgumentException("graph size in number of edges is limited to " + Integer.MAX_VALUE);
         }
+        if (nodeValues == null)
+        {
+            throw new IllegalArgumentException("nodeValues must not be null");
+        }
         int n = (int) matrix.rows();
         int e = (int) matrix.cardinality();
         // todo:  compare to createLongNonBlockingMap
-        final Map<Long, Node<Long, E>> nodes = createMap(n);
-        final Graph<Long, E> graph = createGraph(n, e);
+        final Map<Long, Node<N, E>> nodes = createMap(n);
+        final Graph<N, E> graph = createGraph(n, e);
         matrix.forEach(new TernaryProcedure<Long, Long, E>()
                        {
                            @Override
@@ -121,14 +206,15 @@ public final class AnalysisUtils
                            {
                                if (!nodes.containsKey(row))
                                {
-                                   nodes.put(row, graph.createNode(row));
+                                   nodes.put(row, graph.createNode(nodeValues.evaluate(row)));
                                }
                                if (!nodes.containsKey(column))
                                {
-                                   nodes.put(column, graph.createNode(column));
+                                   nodes.put(column, graph.createNode(nodeValues.evaluate(column)));
                                }
                                if (value != null)
                                {
+                                   // todo:  add a predicate to choose whether an edge gets created (e.g. value cutoff)
                                    graph.createEdge(nodes.get(row), nodes.get(column), value);
                                }
                            }
