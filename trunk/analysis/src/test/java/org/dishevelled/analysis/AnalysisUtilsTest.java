@@ -42,6 +42,8 @@ import org.dishevelled.graph.Node;
 
 import org.dishevelled.matrix.Matrix2D;
 
+import org.dishevelled.multimap.BinaryKeyMap;
+
 import static org.dishevelled.graph.impl.GraphUtils.createGraph;
 
 import static org.dishevelled.matrix.impl.SparseMatrixUtils.createSparseMatrix2D;
@@ -115,7 +117,7 @@ public final class AnalysisUtilsTest
     @Test(expected=IllegalArgumentException.class)
     public void testToGraphNullMatrix()
     {
-        toGraph(null);
+        toGraph((Matrix2D<Double>) null);
     }
 
     @Test
@@ -217,5 +219,36 @@ public final class AnalysisUtilsTest
     {
         Matrix2D<Double> matrix = createSparseMatrix2D(4, 4);
         toGraph(matrix, null);
+    }
+
+    @Test(expected=IllegalArgumentException.class)
+    public void testToBinaryKeyMapNullGraph()
+    {
+        toBinaryKeyMap((Graph<String, Double>) null);
+    }
+
+    @Test(expected=IllegalArgumentException.class)
+    public void testToBinaryKeyMapNullMatrix()
+    {
+        //toBinaryKeyMap((Matrix2D<Double>) null);
+    }
+
+    @Test(expected=IllegalArgumentException.class)
+    public void testToBinaryKeyMapNullNodeValues()
+    {
+        Matrix2D<Double> matrix = createSparseMatrix2D(4, 4);
+        //toBinaryKeyMap(matrix, null);
+    }
+
+    @Test(expected=IllegalArgumentException.class)
+    public void testToSparseMatrixNullBinaryKeyMap()
+    {
+        //toSparseMatrix((BinaryKeyMap<String, String, Double>) null);
+    }
+
+    @Test(expected=IllegalArgumentException.class)
+    public void testToGraphNullBinaryKeyMap()
+    {
+        toGraph((BinaryKeyMap<String, String, Double>) null);
     }
 }
