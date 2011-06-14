@@ -25,8 +25,10 @@ package org.dishevelled.analysis;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import static org.dishevelled.collect.Maps.createMap;
+import static org.dishevelled.collect.Sets.createSet;
 
 import org.dishevelled.graph.Edge;
 import org.dishevelled.graph.Graph;
@@ -64,97 +66,8 @@ public final class AnalysisUtils
     }
 
 
-    /**
-     * Convert the specified graph to a sparse matrix.
-     *
-     * @param <N> graph node type
-     * @param <E> graph edge type and sparse matrix type
-     * @param graph graph to convert, must not be null
-     * @param nodes nodes, must not be null
-     * @return the specified graph converted to a sparse matrix
-     */
-    public static <N, E> Matrix2D<E> toSparseMatrix(final Graph<N, E> graph, final List<Node<N, E>> nodes)
-    {
-        return toSparseMatrix(graph, new NodeIndices<N, E>(nodes));
-    }
+    // --> binary key map
 
-    /**
-     * Node indices mapping function.
-     *
-     * @param <N> graph node type
-     * @param <E> graph edge type
-     */
-    private static class NodeIndices<N, E> implements UnaryFunction<Node<N, E>, Long>
-    {
-        /** List of nodes. */
-        private final List<Node<N, E>> nodes;
-
-
-        /**
-         * Create a new node indices mapping function with the specified list of nodes.
-         *
-         * @param nodes list of nodes, must not be null
-         */
-        NodeIndices(final List<Node<N, E>> nodes)
-        {
-            if (nodes == null)
-            {
-                throw new IllegalArgumentException("nodes must not be null");
-            }
-            this.nodes = nodes;
-        }
-
-
-        @Override
-        public Long evaluate(final Node<N, E> node)
-        {
-            return Long.valueOf(nodes.indexOf(node));
-        }
-    }
-
-    /**
-     * Convert the specified graph to a sparse matrix.
-     *
-     * @param <N> graph node type
-     * @param <E> graph edge type and sparse matrix type
-     * @param graph graph to convert, must not be null
-     * @param nodeIndices mapping of long indices by nodes, must not be null
-     * @return the specified graph converted to a sparse matrix
-     */
-    public static <N, E> Matrix2D<E> toSparseMatrix(final Graph<N, E> graph, final UnaryFunction<Node<N, E>, Long> nodeIndices)
-    {
-        if (graph == null)
-        {
-            throw new IllegalArgumentException("graph must not be null");
-        }
-        if (nodeIndices == null)
-        {
-            throw new IllegalArgumentException("nodeIndices must not be null");
-        }
-        long n = graph.nodeCount();
-        int e = graph.edgeCount();
-        final Matrix2D<E> matrix = createSparseMatrix2D(n, n, e, 0.75f);
-        graph.forEachEdge(new UnaryProcedure<Edge<N, E>>()
-                          {
-                              @Override
-                              public void run(final Edge<N, E> edge)
-                              {
-                                  // todo:  provide "merge strategy" for multiple edges
-                                  matrix.set(nodeIndices.evaluate(edge.source()), nodeIndices.evaluate(edge.target()), edge.getValue());
-                              }
-                          });
-        return matrix;
-    }
-
-    /** Index node values mapping function. */
-    private static final UnaryFunction<Long, Long> INDEX_NODE_VALUES = new UnaryFunction<Long, Long>()
-    {
-        @Override
-        public Long evaluate(final Long value)
-        {
-            return value;
-        }
-    };
 
     /**
      * Convert the specified graph to a binary key map.  Note that only nodes with degree
@@ -185,6 +98,69 @@ public final class AnalysisUtils
     }
 
     /**
+     * Convert the specified matrix to a binary key map with long indices as keys.
+     *
+     * @param <E> matrix type and binary key map value type
+     * @param matrix matrix to convert, must not be null
+     * @return the specified matrix converted to a binary key map with long indices as keys
+     */
+    public static <E> BinaryKeyMap<Long, Long, E> toBinaryKeyMap(final Matrix2D<E> matrix)
+    {
+        return toBinaryKeyMap(matrix, IDENTITY);
+    }
+
+    /**
+     * Convert the specified matrix to a binary key map.
+     *
+     * @param <N> binary key map key type
+     * @param <E> matrix type and binary key map value type
+     * @param matrix matrix to convert, must not be null
+     * @param keys mapping of keys by long indices, must not be null
+     * @return the specified matrix converted to a binary key map
+     */
+    public static <N, E> BinaryKeyMap<N, N, E> toBinaryKeyMap(final Matrix2D<E> matrix, final UnaryFunction<Long, N> keys)
+    {
+        if (matrix == null)
+        {
+            throw new IllegalArgumentException("matrix must not be null");
+        }
+        if (matrix.rows() != matrix.columns())
+        {
+            throw new IllegalArgumentException("matrix must be balanced, rows=" + matrix.rows() + ", columns=" + matrix.columns());
+        }
+        if (matrix.cardinality() > Integer.MAX_VALUE)
+        {
+            throw new IllegalArgumentException("binary key map size is limited to " + Integer.MAX_VALUE);
+        }
+        if (keys == null)
+        {
+            throw new IllegalArgumentException("keys must not be null");
+        }
+        int e = (int) matrix.cardinality();
+        final BinaryKeyMap<N, N, E> binaryKeyMap = createBinaryKeyMap(e);
+        matrix.forEach(new TernaryProcedure<Long, Long, E>()
+                       {
+                           @Override
+                           public void run(final Long row, final Long column, final E value)
+                           {
+                               N firstKey = keys.evaluate(row);
+                               N secondKey = keys.evaluate(column);
+
+                               if (firstKey != null && secondKey != null)
+                               {
+                                  // todo:  provide "merge strategy" for multiple mappings
+                                   binaryKeyMap.put(firstKey, secondKey, value);
+                               }
+                           }
+                       });
+        return binaryKeyMap;
+    }
+
+
+    // --> graph
+
+
+    /**
      * Convert the specified binary key map to a graph.  The first key value will be the
      * source node and the second key value the target node in edges in the returned graph.
      *
@@ -201,8 +177,8 @@ public final class AnalysisUtils
         }
         int n = binaryKeyMap.keySet().size();
         int e = binaryKeyMap.size();
-        final Map<N, Node<N, E>> nodes = createMap(n);
-        final Graph<N, E> graph = createGraph(n, e);
+        Map<N, Node<N, E>> nodes = createMap(n);
+        Graph<N, E> graph = createGraph(n, e);
         for (Map.Entry<BinaryKey<N, N>, E> entry : binaryKeyMap.entrySet())
         {
             N sourceValue = entry.getKey().getFirstKey();
@@ -234,7 +210,7 @@ public final class AnalysisUtils
      */
     public static <E> Graph<Long, E> toGraph(final Matrix2D<E> matrix)
     {
-        return toGraph(matrix, INDEX_NODE_VALUES);
+        return toGraph(matrix, IDENTITY);
     }
 
     /**
@@ -256,7 +232,7 @@ public final class AnalysisUtils
         {
             throw new IllegalArgumentException("matrix must be balanced, rows=" + matrix.rows() + ", columns=" + matrix.columns());
         }
-        if (matrix.rows() > Integer.MAX_VALUE || matrix.columns() > Integer.MAX_VALUE)
+        if (matrix.rows() > Integer.MAX_VALUE)
         {
             throw new IllegalArgumentException("graph size in number of nodes is limited to " + Integer.MAX_VALUE);
         }
@@ -296,32 +272,200 @@ public final class AnalysisUtils
         return graph;
     }
 
-    /*
 
-      notes, not necessarily correct
-
-Graph --> Matrix2D and vice versa, or Matrix2D + Map --> Graph
-
-consider moving distance/similarity, interpolation, and similar functions to a separate data analysis project, see LingPipe API for inspiration
-
-extend collect or start something new to pull together matrix, graph, multimap and weightedmap (observable + glazed too?)
-
-To go from Graph to Matrix2D
-
-<N, E> Matrix2D<E> toSparseMatrix(final Graph2D<? extends N, ? extends E> graph);
-<N, E> Matrix2D<E> toSparseMatrix(final Graph2D<? extends N, ? extends E> graph, final List<N> nodes);
-<N, E> Matrix2D<E> toSparseMatrix(final Graph2D<? extends N, ? extends E> graph, final Map<N, Integer> nodes);
-<N, E> Matrix2D<E> toSparseMatrix(final Graph2D<? extends N, ? extends E> graph, final UnaryFunction<N, Integer> nodes);
-
-<N, E> Matrix2D<E> toNonBlockingMatrix(final Graph2D<? extends N, ? extends E> graph);
-
-from Matrix2D to Graph
-
-<N, E> Graph<N, E> toGraph(final Matrix2D<E> matrix);
-<N, E> Graph<N, E> toGraph(final Matrix2D<E> matrix, final List<N> nodes);
-<N, E> Graph<N, E> toGraph(final Matrix2D<E> matrix, final Map<Integer, N> nodes);
-<N, E> Graph<N, E> toGraph(final Matrix2D<E> matrix, final UnaryFunction<Integer, N> nodes);
+    // --> sparse matrix
 
 
+    /**
+     * Convert the specified binary key map to a sparse matrix.
+     *
+     * @param <N> binary key map key type
+     * @param <E> binary key map value type and sparse matrix type
+     * @param binaryKeyMap binary key map to convert, must not be null
+     * @param keys list of keys, must not be null
+     * @return the specified binary key map converted to a sparse matrix
      */
+    public static <N, E> Matrix2D<E> toSparseMatrix(final BinaryKeyMap<N, N, E> binaryKeyMap, final List<N> keys)
+    {
+        return toSparseMatrix(binaryKeyMap, new IndexOfKey<N>(keys));
+    }
+
+    /**
+     * Convert the specified binary key map to a sparse matrix.
+     *
+     * @param <N> binary key map key type
+     * @param <E> binary key map value type and sparse matrix type
+     * @param binaryKeyMap binary key map to convert, must not be null
+     * @param keyIndices mapping of long indices by keys, must not be null
+     * @return the specified binary key map converted to a sparse matrix
+     */
+    public static <N, E> Matrix2D<E> toSparseMatrix(final BinaryKeyMap<N, N, E> binaryKeyMap, final UnaryFunction<N, Long> keyIndices)
+    {
+        if (binaryKeyMap == null)
+        {
+            throw new IllegalArgumentException("binaryKeyMap must not be null");
+        }
+        if (keyIndices == null)
+        {
+            throw new IllegalArgumentException("keyIndices must not be null");
+        }
+        Set<N> uniqueKeys = createSet(binaryKeyMap.size() * 2);
+        for (BinaryKey<N, N> key : binaryKeyMap.keySet())
+        {
+            uniqueKeys.add(key.getFirstKey());
+            uniqueKeys.add(key.getSecondKey());
+        }
+        long n = uniqueKeys.size();
+        int e = binaryKeyMap.size();
+        Matrix2D<E> matrix = createSparseMatrix2D(n, n, e, 0.75f);
+        for (Map.Entry<BinaryKey<N, N>, E> entry : binaryKeyMap.entrySet())
+        {
+            N source = entry.getKey().getFirstKey();
+            N target = entry.getKey().getSecondKey();
+            Long sourceIndex = keyIndices.evaluate(source);
+            Long targetIndex = keyIndices.evaluate(target);
+
+            if (sourceIndex != null && targetIndex != null)
+            {
+                // todo:  provide "merge strategy" for multiple "edges"
+                matrix.set(sourceIndex, targetIndex, entry.getValue());
+            }
+        }
+        return matrix;
+    }
+
+    /**
+     * Convert the specified graph to a sparse matrix.
+     *
+     * @param <N> graph node type
+     * @param <E> graph edge type and sparse matrix type
+     * @param graph graph to convert, must not be null
+     * @param nodes list of nodes, must not be null
+     * @return the specified graph converted to a sparse matrix
+     */
+    public static <N, E> Matrix2D<E> toSparseMatrix(final Graph<N, E> graph, final List<Node<N, E>> nodes)
+    {
+        return toSparseMatrix(graph, new IndexOfNode<N, E>(nodes));
+    }
+
+    /**
+     * Convert the specified graph to a sparse matrix.
+     *
+     * @param <N> graph node type
+     * @param <E> graph edge type and sparse matrix type
+     * @param graph graph to convert, must not be null
+     * @param nodeIndices mapping of long indices by nodes, must not be null
+     * @return the specified graph converted to a sparse matrix
+     */
+    public static <N, E> Matrix2D<E> toSparseMatrix(final Graph<N, E> graph, final UnaryFunction<Node<N, E>, Long> nodeIndices)
+    {
+        if (graph == null)
+        {
+            throw new IllegalArgumentException("graph must not be null");
+        }
+        if (nodeIndices == null)
+        {
+            throw new IllegalArgumentException("nodeIndices must not be null");
+        }
+        long n = graph.nodeCount();
+        int e = graph.edgeCount();
+        final Matrix2D<E> matrix = createSparseMatrix2D(n, n, e, 0.75f);
+        graph.forEachEdge(new UnaryProcedure<Edge<N, E>>()
+                          {
+                              @Override
+                              public void run(final Edge<N, E> edge)
+                              {
+                                  Long sourceIndex = nodeIndices.evaluate(edge.source());
+                                  Long targetIndex = nodeIndices.evaluate(edge.target());
+
+                                  if (sourceIndex != null && targetIndex != null)
+                                  {
+                                      // todo:  provide "merge strategy" for multiple edges
+                                      matrix.set(sourceIndex, targetIndex, edge.getValue());
+                                  }
+                              }
+                          });
+        return matrix;
+    }
+
+
+    // helper classes
+
+
+    /** Identity mapping function. */
+    private static final UnaryFunction<Long, Long> IDENTITY = new UnaryFunction<Long, Long>()
+    {
+        @Override
+        public Long evaluate(final Long value)
+        {
+            return value;
+        }
+    };
+
+    /**
+     * Index of key mapping function.
+     *
+     * @param <N> key type
+     */
+    private static class IndexOfKey<N> implements UnaryFunction<N, Long>
+    {
+        /** List of keys. */
+        private final List<N> keys;
+
+
+        /**
+         * Create a new index of key mapping function with the specified list of keys.
+         *
+         * @param keys list of keys, must not be null
+         */
+        IndexOfKey(final List<N> keys)
+        {
+            if (keys == null)
+            {
+                throw new IllegalArgumentException("keys must not be null");
+            }
+            this.keys = keys;
+        }
+
+
+        @Override
+        public Long evaluate(final N key)
+        {
+            return Long.valueOf(keys.indexOf(key));
+        }
+    }
+
+    /**
+     * Index of node mapping function.
+     *
+     * @param <N> graph node type
+     * @param <E> graph edge type
+     */
+    private static class IndexOfNode<N, E> implements UnaryFunction<Node<N, E>, Long>
+    {
+        /** List of nodes. */
+        private final List<Node<N, E>> nodes;
+
+
+        /**
+         * Create a new index of node mapping function with the specified list of nodes.
+         *
+         * @param nodes list of nodes, must not be null
+         */
+        IndexOfNode(final List<Node<N, E>> nodes)
+        {
+            if (nodes == null)
+            {
+                throw new IllegalArgumentException("nodes must not be null");
+            }
+            this.nodes = nodes;
+        }
+
+
+        @Override
+        public Long evaluate(final Node<N, E> node)
+        {
+            return Long.valueOf(nodes.indexOf(node));
+        }
+    }
 }
