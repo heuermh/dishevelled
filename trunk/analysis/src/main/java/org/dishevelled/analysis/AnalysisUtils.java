@@ -296,6 +296,20 @@ public final class AnalysisUtils
      * @param <N> binary key map key type
      * @param <E> binary key map value type and sparse matrix type
      * @param binaryKeyMap binary key map to convert, must not be null
+     * @param keyIndices map of long indices by keys, must not be null
+     * @return the specified binary key map converted to a sparse matrix
+     */
+    public static <N, E> Matrix2D<E> toSparseMatrix(final BinaryKeyMap<N, N, E> binaryKeyMap, final Map<N, Long> keyIndices)
+    {
+        return toSparseMatrix(binaryKeyMap, new KeyIndices<N>(keyIndices));
+    }
+
+    /**
+     * Convert the specified binary key map to a sparse matrix.
+     *
+     * @param <N> binary key map key type
+     * @param <E> binary key map value type and sparse matrix type
+     * @param binaryKeyMap binary key map to convert, must not be null
      * @param keyIndices mapping of long indices by keys, must not be null
      * @return the specified binary key map converted to a sparse matrix
      */
@@ -346,6 +360,20 @@ public final class AnalysisUtils
     public static <N, E> Matrix2D<E> toSparseMatrix(final Graph<N, E> graph, final List<Node<N, E>> nodes)
     {
         return toSparseMatrix(graph, new IndexOfNode<N, E>(nodes));
+    }
+
+    /**
+     * Convert the specified graph to a sparse matrix.
+     *
+     * @param <N> graph node type
+     * @param <E> graph edge type and sparse matrix type
+     * @param graph graph to convert, must not be null
+     * @param nodeIndices map of long indicies by nodes, must not be null
+     * @return the specified graph converted to a sparse matrix
+     */
+    public static <N, E> Matrix2D<E> toSparseMatrix(final Graph<N, E> graph, final Map<Node<N, E>, Long> nodeIndices)
+    {
+        return toSparseMatrix(graph, new NodeIndices<N, E>(nodeIndices));
     }
 
     /**
@@ -466,6 +494,73 @@ public final class AnalysisUtils
         public Long evaluate(final Node<N, E> node)
         {
             return Long.valueOf(nodes.indexOf(node));
+        }
+    }
+
+    /**
+     * Key indices mapping function.
+     *
+     * @param <N> key type
+     */
+    private static class KeyIndices<N> implements UnaryFunction<N, Long>
+    {
+        /** Map of keys to long indices. */
+        private final Map<N, Long> keyIndices;
+
+
+        /**
+         * Create a new key indicies mapping function with the specified map of keys to long indices.
+         *
+         * @param keyIndices map of keys to long indices, must not be null
+         */
+        KeyIndices(final Map<N, Long> keyIndices)
+        {
+            if (keyIndices == null)
+            {
+                throw new IllegalArgumentException("keyIndices must not be null");
+            }
+            this.keyIndices = keyIndices;
+        }
+
+
+        @Override
+        public Long evaluate(final N key)
+        {
+            return keyIndices.get(key);
+        }
+    }
+
+    /**
+     * Node indices mapping function.
+     *
+     * @param <N> graph node type
+     * @param <E> graph edge type
+     */
+    private static class NodeIndices<N, E> implements UnaryFunction<Node<N, E>, Long>
+    {
+        /** Map of nodes to long indices. */
+        private final Map<Node<N, E>, Long> nodeIndices;
+
+
+        /**
+         * Create a new node indices mapping function with the specified map of nodes to long indices.
+         *
+         * @param nodeIndices map of nodes to long indices, must not be null
+         */
+        NodeIndices(final Map<Node<N, E>, Long> nodeIndices)
+        {
+            if (nodeIndices == null)
+            {
+                throw new IllegalArgumentException("nodeIndices must not be null");
+            }
+            this.nodeIndices = nodeIndices;
+        }
+
+
+        @Override
+        public Long evaluate(final Node<N, E> node)
+        {
+            return nodeIndices.get(node);
         }
     }
 }
