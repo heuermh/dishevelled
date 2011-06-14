@@ -23,7 +23,6 @@
 */
 package org.dishevelled.analysis;
 
-import java.util.Collections;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -48,6 +47,8 @@ import static org.dishevelled.graph.impl.GraphUtils.createGraph;
 
 import static org.dishevelled.matrix.impl.SparseMatrixUtils.createSparseMatrix2D;
 
+import static org.dishevelled.multimap.impl.BinaryKeyMaps.createBinaryKeyMap;
+
 /**
  * Unit test for AnalysisUtils.
  */
@@ -55,63 +56,33 @@ public final class AnalysisUtilsTest
 {
     private static final double TOLERANCE = 0.001d;
 
-    @Test(expected=IllegalArgumentException.class)
-    public void testToSparseMatrixNullGraph()
-    {
-        toSparseMatrix((Graph<String, Double>) null, Collections.<Node<String, Double>>emptyList());
-    }
+    // --> binary key map
 
     @Test(expected=IllegalArgumentException.class)
-    public void testToSparseMatrixNullNodes()
+    public void testToBinaryKeyMapNullGraph()
     {
-        Graph<String, Double> graph = createGraph();
-        toSparseMatrix(graph, (List<Node<String, Double>>) null);
-    }
-
-    @Test
-    public void testToSparseMatrixEmptyGraph()
-    {
-        Graph<String, Double> graph = createGraph();
-        Matrix2D<Double> matrix = toSparseMatrix(graph, Collections.<Node<String, Double>>emptyList());
-        assertNotNull(matrix);
-        assertEquals(0, matrix.rows());
-        assertEquals(0, matrix.columns());
-        assertTrue(matrix.isEmpty());
-    }
-
-    @Test
-    public void testToSparseMatrixNoEdges()
-    {
-        Graph<String, Double> graph = createGraph();
-        Node<String, Double> node0 = graph.createNode("node0");
-        Node<String, Double> node1 = graph.createNode("node1");
-        Matrix2D<Double> matrix = toSparseMatrix(graph, asList(node0, node1));
-        assertEquals(2, matrix.rows());
-        assertEquals(2, matrix.columns());
-        assertTrue(matrix.isEmpty());
-    }
-
-    @Test
-    public void testToSparseMatrixTwoNodesTwoEdges()
-    {
-        Graph<String, Double> graph = createGraph();
-        Node<String, Double> node0 = graph.createNode("node0");
-        Node<String, Double> node1 = graph.createNode("node1");
-        graph.createEdge(node0, node1, 1.0d);
-        graph.createEdge(node1, node0, 2.0d);
-        Matrix2D<Double> matrix = toSparseMatrix(graph, asList(node0, node1));
-        assertEquals(2, matrix.rows());
-        assertEquals(2, matrix.columns());
-        assertEquals(1.0d, matrix.get(0, 1), TOLERANCE);
-        assertEquals(2.0d, matrix.get(1, 0), TOLERANCE);
-        assertFalse(matrix.isEmpty());
+        toBinaryKeyMap((Graph<String, Double>) null);
     }
 
     @Test(expected=IllegalArgumentException.class)
-    public void testToSparseMatrixNullNodeIndices()
+    public void testToBinaryKeyMapNullMatrix()
     {
-        Graph<String, Double> graph = createGraph();
-        toSparseMatrix(graph, (UnaryFunction<Node<String, Double>, Long>) null);
+        toBinaryKeyMap((Matrix2D<Double>) null);
+    }
+
+    @Test(expected=IllegalArgumentException.class)
+    public void testToBinaryKeyMapNullKeys()
+    {
+        Matrix2D<Double> matrix = createSparseMatrix2D(4, 4);
+        toBinaryKeyMap(matrix, null);
+    }
+
+    // --> graph
+
+    @Test(expected=IllegalArgumentException.class)
+    public void testToGraphNullBinaryKeyMap()
+    {
+        toGraph((BinaryKeyMap<String, String, Double>) null);
     }
 
     @Test(expected=IllegalArgumentException.class)
@@ -150,21 +121,7 @@ public final class AnalysisUtilsTest
     }
 
     @Test(expected=IllegalArgumentException.class)
-    public void testToGraphMatrixTooLargeRows()
-    {
-        Matrix2D<Double> matrix = createSparseMatrix2D(Integer.MAX_VALUE + 1L, 20, 20, 0.75f);
-        toGraph(matrix);
-    }
-
-    @Test(expected=IllegalArgumentException.class)
-    public void testToGraphMatrixTooLargeColumns()
-    {
-        Matrix2D<Double> matrix = createSparseMatrix2D(20, Integer.MAX_VALUE + 1L, 20, 0.75f);
-        toGraph(matrix);
-    }
-
-    @Test(expected=IllegalArgumentException.class)
-    public void testToGraphMatrixTooLargeRowsAndColumns()
+    public void testToGraphMatrixTooLarge()
     {
         Matrix2D<Double> matrix = createSparseMatrix2D(Integer.MAX_VALUE + 1L, Integer.MAX_VALUE + 1L, 20, 0.75f);
         toGraph(matrix);
@@ -221,34 +178,99 @@ public final class AnalysisUtilsTest
         toGraph(matrix, null);
     }
 
-    @Test(expected=IllegalArgumentException.class)
-    public void testToBinaryKeyMapNullGraph()
-    {
-        toBinaryKeyMap((Graph<String, Double>) null);
-    }
-
-    @Test(expected=IllegalArgumentException.class)
-    public void testToBinaryKeyMapNullMatrix()
-    {
-        //toBinaryKeyMap((Matrix2D<Double>) null);
-    }
-
-    @Test(expected=IllegalArgumentException.class)
-    public void testToBinaryKeyMapNullNodeValues()
-    {
-        Matrix2D<Double> matrix = createSparseMatrix2D(4, 4);
-        //toBinaryKeyMap(matrix, null);
-    }
+    // --> sparse matrix
 
     @Test(expected=IllegalArgumentException.class)
     public void testToSparseMatrixNullBinaryKeyMap()
     {
-        //toSparseMatrix((BinaryKeyMap<String, String, Double>) null);
+        List<String> emptyKeys = emptyList();
+        toSparseMatrix((BinaryKeyMap<String, String, Double>) null, emptyKeys);
     }
 
     @Test(expected=IllegalArgumentException.class)
-    public void testToGraphNullBinaryKeyMap()
+    public void testToSparseMatrixNullKeys()
     {
-        toGraph((BinaryKeyMap<String, String, Double>) null);
+        BinaryKeyMap<String, String, Double> binaryKeyMap = createBinaryKeyMap();
+        toSparseMatrix(binaryKeyMap, (List<String>) null);
+    }
+
+    @Test(expected=IllegalArgumentException.class)
+    public void testToSparseMatrixWithKeyIndicesNullBinaryKeyMap()
+    {
+        toSparseMatrix((BinaryKeyMap<String, String, Double>) null, new UnaryFunction<String, Long>()
+                       {
+                           public Long evaluate(final String value)
+                           {
+                               return Long.valueOf(0L);
+                           }
+                       });
+    }
+
+    @Test(expected=IllegalArgumentException.class)
+    public void testToSparseMatrixNullKeyIndices()
+    {
+        BinaryKeyMap<String, String, Double> binaryKeyMap = createBinaryKeyMap();
+        toSparseMatrix(binaryKeyMap, (UnaryFunction<String, Long>) null);
+    }
+
+    @Test(expected=IllegalArgumentException.class)
+    public void testToSparseMatrixNullGraph()
+    {
+        List<Node<String, Double>> emptyNodes = emptyList();
+        toSparseMatrix((Graph<String, Double>) null, emptyNodes);
+    }
+
+    @Test(expected=IllegalArgumentException.class)
+    public void testToSparseMatrixNullNodes()
+    {
+        Graph<String, Double> graph = createGraph();
+        toSparseMatrix(graph, (List<Node<String, Double>>) null);
+    }
+
+    @Test
+    public void testToSparseMatrixEmptyGraph()
+    {
+        Graph<String, Double> graph = createGraph();
+        List<Node<String, Double>> emptyNodes = emptyList();
+        Matrix2D<Double> matrix = toSparseMatrix(graph, emptyNodes);
+        assertNotNull(matrix);
+        assertEquals(0, matrix.rows());
+        assertEquals(0, matrix.columns());
+        assertTrue(matrix.isEmpty());
+    }
+
+    @Test
+    public void testToSparseMatrixNoEdges()
+    {
+        Graph<String, Double> graph = createGraph();
+        Node<String, Double> node0 = graph.createNode("node0");
+        Node<String, Double> node1 = graph.createNode("node1");
+        Matrix2D<Double> matrix = toSparseMatrix(graph, asList(node0, node1));
+        assertEquals(2, matrix.rows());
+        assertEquals(2, matrix.columns());
+        assertTrue(matrix.isEmpty());
+    }
+
+    @Test
+    public void testToSparseMatrixTwoNodesTwoEdges()
+    {
+        Graph<String, Double> graph = createGraph();
+        Node<String, Double> node0 = graph.createNode("node0");
+        Node<String, Double> node1 = graph.createNode("node1");
+        graph.createEdge(node0, node1, 1.0d);
+        graph.createEdge(node1, node0, 2.0d);
+        Matrix2D<Double> matrix = toSparseMatrix(graph, asList(node0, node1));
+        assertEquals(2, matrix.rows());
+        assertEquals(2, matrix.columns());
+        assertEquals(1.0d, matrix.get(0, 1), TOLERANCE);
+        assertEquals(2.0d, matrix.get(1, 0), TOLERANCE);
+        assertFalse(matrix.isEmpty());
+    }
+
+    @Test(expected=IllegalArgumentException.class)
+    public void testToSparseMatrixNullNodeIndices()
+    {
+        Graph<String, Double> graph = createGraph();
+        toSparseMatrix(graph, (UnaryFunction<Node<String, Double>, Long>) null);
     }
 }
