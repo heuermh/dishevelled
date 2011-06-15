@@ -24,6 +24,7 @@
 package org.dishevelled.analysis;
 
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.Assert.*;
 
@@ -34,6 +35,7 @@ import static org.dishevelled.analysis.AnalysisUtils.*;
 import static org.dishevelled.collect.Lists.*;
 
 import org.dishevelled.functor.UnaryFunction;
+import org.dishevelled.functor.UnaryPredicate;
 
 import org.dishevelled.graph.Edge;
 import org.dishevelled.graph.Graph;
@@ -64,10 +66,76 @@ public final class AnalysisUtilsTest
         toBinaryKeyMap((Graph<String, Double>) null);
     }
 
+    @Test
+    public void testToBinaryKeyMapEmptyGraph()
+    {
+        Graph<String, Double> graph = createGraph();
+        BinaryKeyMap<String, String, Double> binaryKeyMap = toBinaryKeyMap(graph);
+        assertNotNull(binaryKeyMap);
+        assertTrue(binaryKeyMap.isEmpty());
+        assertTrue(binaryKeyMap.keySet().isEmpty());
+    }
+
+    @Test
+    public void testToBinaryKeyMapNodesWithDegreeZeroAreNotPresent()
+    {
+        Graph<String, Double> graph = createGraph();
+        Node<String, Double> node0 = graph.createNode("node0");
+        Node<String, Double> node1 = graph.createNode("node1");
+        graph.createEdge(node0, node0, 1.0d);
+        BinaryKeyMap<String, String, Double> binaryKeyMap = toBinaryKeyMap(graph);
+        assertEquals(1, binaryKeyMap.size());
+        assertEquals(1.0d, binaryKeyMap.get("node0", "node0"), TOLERANCE);
+        assertFalse(binaryKeyMap.containsKey("node0", "node1"));
+        assertFalse(binaryKeyMap.containsKey("node1", "node0"));
+        assertFalse(binaryKeyMap.containsKey("node1", "node1"));
+    }
+
+    @Test
+    public void testToBinaryKeyMapGraph()
+    {
+        Graph<String, Double> graph = createGraph();
+        Node<String, Double> node0 = graph.createNode("node0");
+        Node<String, Double> node1 = graph.createNode("node1");
+        graph.createEdge(node0, node1, 1.0d);
+        graph.createEdge(node1, node0, 2.0d);
+        BinaryKeyMap<String, String, Double> binaryKeyMap = toBinaryKeyMap(graph);
+        assertEquals(2, binaryKeyMap.size());
+        assertEquals(1.0d, binaryKeyMap.get("node0", "node1"), TOLERANCE);
+        assertEquals(2.0d, binaryKeyMap.get("node1", "node0"), TOLERANCE);
+    }
+
     @Test(expected=IllegalArgumentException.class)
     public void testToBinaryKeyMapNullMatrix()
     {
         toBinaryKeyMap((Matrix2D<Double>) null);
+    }
+
+    @Test
+    public void testToBinaryKeyMapZeroSizeMatrix()
+    {
+        Matrix2D<Double> matrix = createSparseMatrix2D(0, 0);
+        BinaryKeyMap<Long, Long, Double> binaryKeyMap = toBinaryKeyMap(matrix);
+        assertNotNull(binaryKeyMap);
+        assertTrue(binaryKeyMap.isEmpty());
+        assertTrue(binaryKeyMap.keySet().isEmpty());
+    }
+
+    @Test
+    public void testToBinaryKeyMapEmptyMatrix()
+    {
+        Matrix2D<Double> matrix = createSparseMatrix2D(10, 10);
+        BinaryKeyMap<Long, Long, Double> binaryKeyMap = toBinaryKeyMap(matrix);
+        assertNotNull(binaryKeyMap);
+        assertTrue(binaryKeyMap.isEmpty());
+        assertTrue(binaryKeyMap.keySet().isEmpty());
+    }
+
+    @Test(expected=IllegalArgumentException.class)
+    public void testToBinaryKeyMapUnbalancedMatrix()
+    {
+        Matrix2D<Double> matrix = createSparseMatrix2D(10, 20);
+        toBinaryKeyMap(matrix);
     }
 
     @Test(expected=IllegalArgumentException.class)
@@ -77,12 +145,114 @@ public final class AnalysisUtilsTest
         toBinaryKeyMap(matrix, null);
     }
 
+    @Test
+    public void testToBinaryKeyMapIncompleteKeyMapping()
+    {
+        Matrix2D<Double> matrix = createSparseMatrix2D(4, 4);
+        matrix.set(0, 1, 1.0d);
+        matrix.set(1, 0, 2.0d);
+        matrix.set(2, 3, 3.0d);
+        matrix.set(3, 2, 4.0d);
+
+        UnaryFunction<Long, String> incompleteMapping = new UnaryFunction<Long, String>()
+            {
+                @Override
+                public String evaluate(final Long value)
+                {
+                    if (value < 2)
+                    {
+                        return value.toString();
+                    }
+                    return null;
+                }
+            };
+        BinaryKeyMap<String, String, Double> binaryKeyMap = toBinaryKeyMap(matrix, incompleteMapping);
+        assertEquals(1.0d, binaryKeyMap.get("0", "1"), TOLERANCE);
+        assertEquals(2.0d, binaryKeyMap.get("1", "0"), TOLERANCE);
+        assertFalse(binaryKeyMap.containsKey("2", "3"));
+        assertFalse(binaryKeyMap.containsKey("3", "2"));
+    }
+
+    @Test
+    public void testToBinaryKeyMapMatrix()
+    {
+        Matrix2D<Double> matrix = createSparseMatrix2D(4, 4);
+        matrix.set(0, 1, 1.0d);
+        matrix.set(1, 0, 2.0d);
+        matrix.set(2, 3, 3.0d);
+        matrix.set(3, 2, 4.0d);
+
+        UnaryFunction<Long, String> mapping = new UnaryFunction<Long, String>()
+            {
+                @Override
+                public String evaluate(final Long value)
+                {
+                    return value.toString();
+                }
+            };
+        BinaryKeyMap<String, String, Double> binaryKeyMap = toBinaryKeyMap(matrix, mapping);
+        assertEquals(1.0d, binaryKeyMap.get("0", "1"), TOLERANCE);
+        assertEquals(2.0d, binaryKeyMap.get("1", "0"), TOLERANCE);
+        assertEquals(3.0d, binaryKeyMap.get("2", "3"), TOLERANCE);
+        assertEquals(4.0d, binaryKeyMap.get("3", "2"), TOLERANCE);
+        assertFalse(binaryKeyMap.containsKey("0", "0"));
+        assertFalse(binaryKeyMap.containsKey("0", "3"));
+        assertFalse(binaryKeyMap.containsKey("3", "0"));
+    }
+
     // --> graph
 
     @Test(expected=IllegalArgumentException.class)
     public void testToGraphNullBinaryKeyMap()
     {
         toGraph((BinaryKeyMap<String, String, Double>) null);
+    }
+
+    @Test
+    public void testToGraphEmptyBinaryKeyMap()
+    {
+        BinaryKeyMap<String, String, Double>binaryKeyMap = createBinaryKeyMap(); 
+        Graph<String, Double> graph = toGraph(binaryKeyMap);
+        assertTrue(graph.isEmpty());
+        assertTrue(graph.nodes().isEmpty());
+        assertTrue(graph.edges().isEmpty());
+    }
+
+    @Test
+    public void testToGraphBinaryKeyMap()
+    {
+        BinaryKeyMap<String, String, Double>binaryKeyMap = createBinaryKeyMap(); 
+        binaryKeyMap.put("node0", "node1", 1.0d);
+        binaryKeyMap.put("node1", "node0", 2.0d);
+        binaryKeyMap.put("node2", "node2", null);
+        Graph<String, Double> graph = toGraph(binaryKeyMap);
+        assertFalse(graph.isEmpty());
+        assertEquals(3, graph.nodeCount());
+        assertEquals(2, graph.edgeCount());
+        for (Edge<String, Double> edge : graph.edges())
+        {
+            if ("node0".equals(edge.source().getValue()))
+            {
+                assertEquals("node1", edge.target().getValue());
+                assertEquals(1.0d, edge.getValue(), TOLERANCE);
+            }
+            else if ("node1".equals(edge.source().getValue()))
+            {
+                assertEquals("node0", edge.target().getValue());
+                assertEquals(2.0d, edge.getValue(), TOLERANCE);
+            }
+            else
+            {
+                fail("only expected source node values node0 and node1");
+            }
+        }
+    }
+
+    @Test(expected=IllegalArgumentException.class)
+    public void testToGraphBinaryKeyMapNullPredicate()
+    {
+        BinaryKeyMap<String, String, Double>binaryKeyMap = createBinaryKeyMap();
+        toGraph(binaryKeyMap, null);
     }
 
     @Test(expected=IllegalArgumentException.class)
@@ -178,6 +348,21 @@ public final class AnalysisUtilsTest
         toGraph(matrix, null);
     }
 
+    @Test(expected=IllegalArgumentException.class)
+    public void testToGraphNullPredicate()
+    {
+        Matrix2D<Double> matrix = createSparseMatrix2D(4, 4);
+        UnaryFunction<Long, String> nodeValues = new UnaryFunction<Long, String>()
+        {
+            @Override
+            public String evaluate(final Long value)
+            {
+                return value.toString();
+            }
+        };
+        toGraph(matrix, nodeValues, null);
+    }
+
     // --> sparse matrix
 
     @Test(expected=IllegalArgumentException.class)
@@ -204,6 +389,13 @@ public final class AnalysisUtilsTest
                                return Long.valueOf(0L);
                            }
                        });
+    }
+
+    @Test(expected=IllegalArgumentException.class)
+    public void testToSparseMatrixNullKeyIndicesMap()
+    {
+        BinaryKeyMap<String, String, Double> binaryKeyMap = createBinaryKeyMap();
+        toSparseMatrix(binaryKeyMap, (Map<String, Long>) null);
     }
 
     @Test(expected=IllegalArgumentException.class)
@@ -265,6 +457,13 @@ public final class AnalysisUtilsTest
         assertEquals(1.0d, matrix.get(0, 1), TOLERANCE);
         assertEquals(2.0d, matrix.get(1, 0), TOLERANCE);
         assertFalse(matrix.isEmpty());
+    }
+
+    @Test(expected=IllegalArgumentException.class)
+    public void testToSparseMatrixNullNodeIndicesMap()
+    {
+        Graph<String, Double> graph = createGraph();
+        toSparseMatrix(graph, (Map<Node<String, Double>, Long>) null);
     }
 
     @Test(expected=IllegalArgumentException.class)

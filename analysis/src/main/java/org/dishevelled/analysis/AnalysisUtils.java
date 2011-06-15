@@ -37,6 +37,7 @@ import org.dishevelled.graph.Node;
 import static org.dishevelled.graph.impl.GraphUtils.createGraph;
 
 import org.dishevelled.functor.UnaryFunction;
+import org.dishevelled.functor.UnaryPredicate;
 import org.dishevelled.functor.UnaryProcedure;
 import org.dishevelled.functor.TernaryProcedure;
 
@@ -84,7 +85,8 @@ public final class AnalysisUtils
         {
             throw new IllegalArgumentException("graph must not be null");
         }
-        final BinaryKeyMap<N, N, E> binaryKeyMap = createBinaryKeyMap(graph.edgeCount());
+        int e = Math.max(16, graph.edgeCount());
+        final BinaryKeyMap<N, N, E> binaryKeyMap = createBinaryKeyMap(e);
         graph.forEachEdge(new UnaryProcedure<Edge<N, E>>()
                           {
                               @Override
@@ -136,7 +138,7 @@ public final class AnalysisUtils
         {
             throw new IllegalArgumentException("keys must not be null");
         }
-        int e = (int) matrix.cardinality();
+        int e = Math.max(16, (int) matrix.cardinality());
         final BinaryKeyMap<N, N, E> binaryKeyMap = createBinaryKeyMap(e);
         matrix.forEach(new TernaryProcedure<Long, Long, E>()
                        {
@@ -146,7 +148,7 @@ public final class AnalysisUtils
                                N firstKey = keys.evaluate(row);
                                N secondKey = keys.evaluate(column);
 
-                               if (firstKey != null && secondKey != null)
+                               if (firstKey != null && secondKey != null && value != null)
                                {
                                   // todo:  provide "merge strategy" for multiple mappings
                                    binaryKeyMap.put(firstKey, secondKey, value);
@@ -171,12 +173,32 @@ public final class AnalysisUtils
      */
     public static <N, E> Graph<N, E> toGraph(final BinaryKeyMap<N, N, E> binaryKeyMap)
     {
+        return toGraph(binaryKeyMap, new AcceptAll<E>());
+    }
+
+    /**
+     * Convert the specified binary key map to a graph, adding edges for values accepted
+     * by the specified predicate.  The first key value will be the source node and the second
+     * key value the target node in edges in the returned graph.
+     *
+     * @param <N> binary key map key type and graph node type
+     * @param <E> binary key map value type and graph edge type
+     * @param binaryKeyMap binary key map to convert, must not be null
+     * @param predicate binary key map value predicate, must not be null
+     * @return the specified binary key map converted to a graph
+     */
+    public static <N, E> Graph<N, E> toGraph(final BinaryKeyMap<N, N, E> binaryKeyMap, final UnaryPredicate<E> predicate)
+    {
         if (binaryKeyMap == null)
         {
             throw new IllegalArgumentException("binaryKeyMap must not be null");
         }
-        int n = binaryKeyMap.keySet().size();
-        int e = binaryKeyMap.size();
+        if (predicate == null)
+        {
+            throw new IllegalArgumentException("predicate must not be null");
+        }
+        int n = Math.max(16, binaryKeyMap.keySet().size());
+        int e = Math.max(16, binaryKeyMap.size());
         Map<N, Node<N, E>> nodes = createMap(n);
         Graph<N, E> graph = createGraph(n, e);
         for (Map.Entry<BinaryKey<N, N>, E> entry : binaryKeyMap.entrySet())
@@ -192,11 +214,10 @@ public final class AnalysisUtils
             {
                 nodes.put(targetValue, graph.createNode(targetValue));
             }
-            if (value != null)
+            if (value != null && predicate.test(value))
             {
-                // todo:  add a predicate to choose whether an edge gets created (e.g. value cutoff)
                 graph.createEdge(nodes.get(sourceValue), nodes.get(targetValue), value);
-            }            
+            }
         }
         return graph;
     }
@@ -224,6 +245,23 @@ public final class AnalysisUtils
      */
     public static <N, E> Graph<N, E> toGraph(final Matrix2D<E> matrix, final UnaryFunction<Long, N> nodeValues)
     {
+        return toGraph(matrix, nodeValues, new AcceptAll<E>());
+    }
+
+    /**
+     * Convert the specified matrix to a graph, adding edges for values accepted by the specified predicate.
+     *
+     * @param <N> graph node type
+     * @param <E> matrix type and graph edge type
+     * @param matrix matrix to convert, must not be null
+     * @param nodeValues mapping of node values by long indices, must not be null
+     * @param predicate matrix value predicate, must not be null
+     * @return the specified matrix converted to a graph
+     */
+    public static <N, E> Graph<N, E> toGraph(final Matrix2D<E> matrix,
+                                             final UnaryFunction<Long, N> nodeValues,
+                                             final UnaryPredicate<E> predicate)
+    {
         if (matrix == null)
         {
             throw new IllegalArgumentException("matrix must not be null");
@@ -244,8 +282,12 @@ public final class AnalysisUtils
         {
             throw new IllegalArgumentException("nodeValues must not be null");
         }
-        int n = (int) matrix.rows();
-        int e = (int) matrix.cardinality();
+        if (predicate == null)
+        {
+            throw new IllegalArgumentException("predicate must not be null");
+        }
+        int n = Math.max(16, (int) matrix.rows());
+        int e = Math.max(16, (int) matrix.cardinality());
         // todo:  compare to createLongNonBlockingMap
         final Map<Long, Node<N, E>> nodes = createMap(n);
         final Graph<N, E> graph = createGraph(n, e);
@@ -262,9 +304,8 @@ public final class AnalysisUtils
                                {
                                    nodes.put(column, graph.createNode(nodeValues.evaluate(column)));
                                }
-                               if (value != null)
+                               if (value != null && predicate.test(value))
                                {
-                                   // todo:  add a predicate to choose whether an edge gets created (e.g. value cutoff)
                                    graph.createEdge(nodes.get(row), nodes.get(column), value);
                                }
                            }
@@ -429,6 +470,20 @@ public final class AnalysisUtils
             return value;
         }
     };
+
+    /**
+     * Accept all values predicate.
+     *
+     * @param <E> value type
+     */
+    private static class AcceptAll<E> implements UnaryPredicate<E>
+    {
+        @Override
+        public boolean test(final E value)
+        {
+            return true;
+        }
+    }
 
     /**
      * Index of key mapping function.
