@@ -514,7 +514,8 @@ public final class AnalysisUtils
         @Override
         public Long evaluate(final N key)
         {
-            return Long.valueOf(keys.indexOf(key));
+            int index = keys.indexOf(key);
+            return (index < 0) ? null : Long.valueOf(index);
         }
     }
 
@@ -548,7 +549,8 @@ public final class AnalysisUtils
         @Override
         public Long evaluate(final Node<N, E> node)
         {
-            return Long.valueOf(nodes.indexOf(node));
+            int index = nodes.indexOf(node);
+            return (index < 0) ? null : Long.valueOf(index);
         }
     }
 

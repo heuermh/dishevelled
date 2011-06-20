@@ -255,6 +255,45 @@ public final class AnalysisUtilsTest
         toGraph(binaryKeyMap, null);
     }
 
+    @Test
+    public void testToGraphBinaryKeyMapPredicate()
+    {
+        BinaryKeyMap<String, String, Double>binaryKeyMap = createBinaryKeyMap(); 
+        binaryKeyMap.put("node0", "node1", 1.0d);
+        binaryKeyMap.put("node1", "node0", 2.0d);
+        binaryKeyMap.put("node2", "node2", 3.0d);
+        UnaryPredicate<Double> predicate = new UnaryPredicate<Double>()
+            {
+                @Override
+                public boolean test(final Double value)
+                {
+                    return (value < 3.0d);
+                }
+            };
+
+        Graph<String, Double> graph = toGraph(binaryKeyMap, predicate);
+        assertFalse(graph.isEmpty());
+        assertEquals(3, graph.nodeCount());
+        assertEquals(2, graph.edgeCount());
+        for (Edge<String, Double> edge : graph.edges())
+        {
+            if ("node0".equals(edge.source().getValue()))
+            {
+                assertEquals("node1", edge.target().getValue());
+                assertEquals(1.0d, edge.getValue(), TOLERANCE);
+            }
+            else if ("node1".equals(edge.source().getValue()))
+            {
+                assertEquals("node0", edge.target().getValue());
+                assertEquals(2.0d, edge.getValue(), TOLERANCE);
+            }
+            else
+            {
+                fail("only expected source node values node0 and node1");
+            }
+        }
+    }
+
     @Test(expected=IllegalArgumentException.class)
     public void testToGraphNullMatrix()
     {
@@ -341,6 +380,54 @@ public final class AnalysisUtilsTest
         }
     }        
 
+    @Test
+    public void testToGraphMatrixPredicate()
+    {
+        Matrix2D<Double> matrix = createSparseMatrix2D(4, 4);
+        matrix.setQuick(0, 1, 1.0d);
+        matrix.setQuick(1, 0, 2.0d);
+        matrix.setQuick(2, 2, 3.0d);
+
+        UnaryFunction<Long, String> nodeValues = new UnaryFunction<Long, String>()
+            {
+                @Override
+                public String evaluate(final Long value)
+                {
+                    return "node" + value.toString();
+                }
+            };
+        UnaryPredicate<Double> predicate = new UnaryPredicate<Double>()
+            {
+                @Override
+                public boolean test(final Double value)
+                {
+                    return (value < 3.0d);
+                }
+            };
+
+        Graph<String, Double> graph = toGraph(matrix, nodeValues, predicate);
+        assertFalse(graph.isEmpty());
+        assertEquals(4, graph.nodeCount());
+        assertEquals(2, graph.edgeCount());
+        for (Edge<String, Double> edge : graph.edges())
+        {
+            if ("node0".equals(edge.source().getValue()))
+            {
+                assertEquals("node1", edge.target().getValue());
+                assertEquals(1.0d, edge.getValue(), TOLERANCE);
+            }
+            else if ("node1".equals(edge.source().getValue()))
+            {
+                assertEquals("node0", edge.target().getValue());
+                assertEquals(2.0d, edge.getValue(), TOLERANCE);
+            }
+            else
+            {
+                fail("only expected source node values node0 and node1");
+            }
+        }
+    }
+
     @Test(expected=IllegalArgumentException.class)
     public void testToGraphNullNodeValues()
     {
@@ -353,13 +440,13 @@ public final class AnalysisUtilsTest
     {
         Matrix2D<Double> matrix = createSparseMatrix2D(4, 4);
         UnaryFunction<Long, String> nodeValues = new UnaryFunction<Long, String>()
-        {
-            @Override
-            public String evaluate(final Long value)
             {
-                return value.toString();
-            }
-        };
+                @Override
+                public String evaluate(final Long value)
+                {
+                    return value.toString();
+                }
+            };
         toGraph(matrix, nodeValues, null);
     }
 
@@ -403,6 +490,79 @@ public final class AnalysisUtilsTest
     {
         BinaryKeyMap<String, String, Double> binaryKeyMap = createBinaryKeyMap();
         toSparseMatrix(binaryKeyMap, (UnaryFunction<String, Long>) null);
+    }
+
+    @Test
+    public void testToSparseMatrixEmptyBinaryKeyMap()
+    {
+        BinaryKeyMap<String, String, Double> binaryKeyMap = createBinaryKeyMap();
+        List<String> keys = emptyList();
+        Matrix2D<Double> matrix = toSparseMatrix(binaryKeyMap, keys);
+        assertEquals(0, matrix.rows());
+        assertEquals(0, matrix.columns());
+        assertEquals(0, matrix.cardinality());
+    }
+
+    @Test
+    public void testToSparseMatrixBinaryKeyMapEmptyKeys()
+    {
+        BinaryKeyMap<String, String, Double> binaryKeyMap = createBinaryKeyMap();
+        binaryKeyMap.put("node0", "node1", 1.0d);
+        binaryKeyMap.put("node1", "node0", 2.0d);
+        List<String> keys = emptyList();
+        Matrix2D<Double> matrix = toSparseMatrix(binaryKeyMap, keys);
+        // or should this be an empty matrix?
+        assertEquals(2, matrix.rows());
+        assertEquals(2, matrix.columns());
+        assertEquals(0, matrix.cardinality());
+    }
+
+    @Test
+    public void testToSparseMatrixBinaryKeyMap()
+    {
+        BinaryKeyMap<String, String, Double> binaryKeyMap = createBinaryKeyMap();
+        binaryKeyMap.put("node0", "node1", 1.0d);
+        binaryKeyMap.put("node1", "node0", 2.0d);
+        List<String> keys = asList("node0", "node1");
+        Matrix2D<Double> matrix = toSparseMatrix(binaryKeyMap, keys);
+        assertEquals(2, matrix.rows());
+        assertEquals(2, matrix.columns());
+        assertEquals(2, matrix.cardinality());
+        assertEquals(1.0d, matrix.get(0, 1), TOLERANCE);
+        assertEquals(2.0d, matrix.get(1, 0), TOLERANCE);
+    }
+
+    @Test
+    public void testToSparseMatrixBinaryKeyMapKeyIndices()
+    {
+        BinaryKeyMap<String, String, Double> binaryKeyMap = createBinaryKeyMap();
+        binaryKeyMap.put("node0", "node1", 1.0d);
+        binaryKeyMap.put("node1", "node0", 2.0d);
+        binaryKeyMap.put("node2", "node0", 3.0d);
+        binaryKeyMap.put("node0", "node2", 4.0d);
+        UnaryFunction<String, Long> keyIndices = new UnaryFunction<String, Long>()
+            {
+                @Override
+                public Long evaluate(final String key)
+                {
+                    if ("node0".equals(key))
+                    {
+                        return Long.valueOf(0);
+                    }
+                    else if ("node1".equals(key))
+                    {
+                        return Long.valueOf(1);
+                    }
+                    return null;
+                }
+            };
+
+        Matrix2D<Double> matrix = toSparseMatrix(binaryKeyMap, keyIndices);
+        assertEquals(3, matrix.rows());
+        assertEquals(3, matrix.columns());
+        assertEquals(2, matrix.cardinality());
+        assertEquals(1.0d, matrix.get(0, 1), TOLERANCE);
+        assertEquals(2.0d, matrix.get(1, 0), TOLERANCE);
     }
 
     @Test(expected=IllegalArgumentException.class)
