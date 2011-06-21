@@ -33,6 +33,7 @@ import org.junit.Test;
 import static org.dishevelled.analysis.AnalysisUtils.*;
 
 import static org.dishevelled.collect.Lists.*;
+import static org.dishevelled.collect.Maps.*;
 
 import org.dishevelled.functor.UnaryFunction;
 import org.dishevelled.functor.UnaryPredicate;
@@ -533,6 +534,26 @@ public final class AnalysisUtilsTest
     }
 
     @Test
+    public void testToSparseMatrixBinaryKeyMapKeyIndicesMap()
+    {
+        BinaryKeyMap<String, String, Double> binaryKeyMap = createBinaryKeyMap();
+        binaryKeyMap.put("node0", "node1", 1.0d);
+        binaryKeyMap.put("node1", "node0", 2.0d);
+        binaryKeyMap.put("node2", "node0", 3.0d);
+        binaryKeyMap.put("node0", "node2", 4.0d);
+        Map<String, Long> keyIndices = createMap();
+        keyIndices.put("node0", 0L);
+        keyIndices.put("node1", 1L);
+
+        Matrix2D<Double> matrix = toSparseMatrix(binaryKeyMap, keyIndices);
+        assertEquals(3, matrix.rows());
+        assertEquals(3, matrix.columns());
+        assertEquals(2, matrix.cardinality());
+        assertEquals(1.0d, matrix.get(0, 1), TOLERANCE);
+        assertEquals(2.0d, matrix.get(1, 0), TOLERANCE);
+    }
+
+    @Test
     public void testToSparseMatrixBinaryKeyMapKeyIndices()
     {
         BinaryKeyMap<String, String, Double> binaryKeyMap = createBinaryKeyMap();
@@ -619,6 +640,27 @@ public final class AnalysisUtilsTest
         assertFalse(matrix.isEmpty());
     }
 
+    @Test
+    public void testToSparseMatrixGraphNodes()
+    {
+        Graph<String, Double> graph = createGraph();
+        Node<String, Double> node0 = graph.createNode("node0");
+        Node<String, Double> node1 = graph.createNode("node1");
+        Node<String, Double> node2 = graph.createNode("node2");
+        graph.createEdge(node0, node1, 1.0d);
+        graph.createEdge(node1, node0, 2.0d);
+        graph.createEdge(node2, node0, 3.0d);
+        graph.createEdge(node0, node2, 4.0d);
+
+        Matrix2D<Double> matrix = toSparseMatrix(graph, asList(node0, node1));
+        assertEquals(3, matrix.rows());
+        assertEquals(3, matrix.columns());
+        assertEquals(2, matrix.cardinality());
+        assertEquals(1.0d, matrix.get(0, 1), TOLERANCE);
+        assertEquals(2.0d, matrix.get(1, 0), TOLERANCE);
+        assertFalse(matrix.isEmpty());
+    }
+
     @Test(expected=IllegalArgumentException.class)
     public void testToSparseMatrixNullNodeIndicesMap()
     {
@@ -631,5 +673,66 @@ public final class AnalysisUtilsTest
     {
         Graph<String, Double> graph = createGraph();
         toSparseMatrix(graph, (UnaryFunction<Node<String, Double>, Long>) null);
+    }
+
+    @Test
+    public void testToSparseMatrixGraphNodeIndicesMap()
+    {
+        Graph<String, Double> graph = createGraph();
+        Node<String, Double> node0 = graph.createNode("node0");
+        Node<String, Double> node1 = graph.createNode("node1");
+        Node<String, Double> node2 = graph.createNode("node2");
+        graph.createEdge(node0, node1, 1.0d);
+        graph.createEdge(node1, node0, 2.0d);
+        graph.createEdge(node2, node0, 3.0d);
+        graph.createEdge(node0, node2, 4.0d);
+        Map<Node<String, Double>, Long> nodeIndices = createMap();
+        nodeIndices.put(node0, 0L);
+        nodeIndices.put(node1, 1L);
+
+        Matrix2D<Double> matrix = toSparseMatrix(graph, nodeIndices);
+        assertEquals(3, matrix.rows());
+        assertEquals(3, matrix.columns());
+        assertEquals(2, matrix.cardinality());
+        assertEquals(1.0d, matrix.get(0, 1), TOLERANCE);
+        assertEquals(2.0d, matrix.get(1, 0), TOLERANCE);
+        assertFalse(matrix.isEmpty());
+    }
+
+    @Test
+    public void testToSparseMatrixGraphNodeIndices()
+    {
+        Graph<String, Double> graph = createGraph();
+        Node<String, Double> node0 = graph.createNode("node0");
+        Node<String, Double> node1 = graph.createNode("node1");
+        Node<String, Double> node2 = graph.createNode("node2");
+        graph.createEdge(node0, node1, 1.0d);
+        graph.createEdge(node1, node0, 2.0d);
+        graph.createEdge(node2, node0, 3.0d);
+        graph.createEdge(node0, node2, 4.0d);
+        UnaryFunction<Node<String, Double>, Long> nodeIndices = new UnaryFunction<Node<String, Double>, Long>()
+            {
+                @Override
+                public Long evaluate(final Node<String, Double> node)
+                {
+                    if ("node0".equals(node.getValue()))
+                    {
+                        return Long.valueOf(0);
+                    }
+                    else if ("node1".equals(node.getValue()))
+                    {
+                        return Long.valueOf(1);
+                    }
+                    return null;
+                }
+            };
+
+        Matrix2D<Double> matrix = toSparseMatrix(graph, nodeIndices);
+        assertEquals(3, matrix.rows());
+        assertEquals(3, matrix.columns());
+        assertEquals(2, matrix.cardinality());
+        assertEquals(1.0d, matrix.get(0, 1), TOLERANCE);
+        assertEquals(2.0d, matrix.get(1, 0), TOLERANCE);
+        assertFalse(matrix.isEmpty());
     }
 }
