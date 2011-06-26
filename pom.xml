@@ -21,6 +21,7 @@
   <reporting/>
   <modules>
     <module>affinity</module>
+    <module>analysis</module>
     <module>archetype</module>
     <module>brainstorm</module>
     <module>cluster</module>
