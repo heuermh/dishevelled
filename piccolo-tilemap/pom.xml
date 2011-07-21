@@ -45,6 +45,11 @@
       <scope>compile</scope>
     </dependency>
     <dependency>
+      <groupId>net.sf.stax</groupId>
+      <artifactId>stax</artifactId>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <scope>test</scope>
