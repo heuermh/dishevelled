@@ -259,7 +259,10 @@ public class TmxTileMapReader
                 List<Sprite> tileSprites = new ArrayList<Sprite>(tiles.size());
                 for (Image tile : tiles)
                 {
-                    tileSprites.add(new Sprite(Animations.createAnimation(tile)));
+                    Sprite tileSprite = new Sprite(Animations.createAnimation(tile));
+                    tileSprite.setWidth(tileWidth);
+                    tileSprite.setHeight(tileHeight);
+                    tileSprites.add(tileSprite);
                 }
                 return tileSprites;
             }
