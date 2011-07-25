@@ -106,7 +106,7 @@ public final class SparseTileMapExample
         PLayer layer = canvas.getLayer();
         layer.addChild(tileMap);
 
-        Timer timer = new Timer((int) (1000 / 3), new ActionListener()
+        Timer timer = new Timer(1000 / 3, new ActionListener()
             {
                 /** {@inheritDoc} */
                 public void actionPerformed(final ActionEvent e)
