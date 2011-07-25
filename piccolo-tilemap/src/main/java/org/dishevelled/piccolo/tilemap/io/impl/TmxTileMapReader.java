@@ -24,15 +24,10 @@
 package org.dishevelled.piccolo.tilemap.io.impl;
 
 import java.awt.Image;
-import java.awt.image.BufferedImage;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-
-import java.net.URL;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -103,7 +98,8 @@ public class TmxTileMapReader
         }
         catch (SAXException e)
         {
-            throw new IOException("could not read input stream", e);
+            //throw new IOException("could not read input stream", e);  // jdk 1.6+ only
+            throw new IOException("could not read input stream, " + e.getMessage());
         }
         return mapHandler.getTileMap();
    }

@@ -24,39 +24,20 @@
 package org.dishevelled.piccolo.tilemap.examples;
 
 import java.awt.BorderLayout;
-import java.awt.Image;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import java.io.File;
 import java.io.InputStream;
 import java.io.IOException;
-
-import java.util.List;
-import java.util.Arrays;
-import java.util.Collections;
-
-import javax.imageio.ImageIO;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
-import javax.swing.Timer;
 
 import org.piccolo2d.PLayer;
 import org.piccolo2d.PCanvas;
 
 import org.piccolo2d.util.PPaintContext;
 
-import org.dishevelled.piccolo.sprite.Animation;
-import org.dishevelled.piccolo.sprite.Animations;
-import org.dishevelled.piccolo.sprite.LoopedFramesAnimation;
-import org.dishevelled.piccolo.sprite.SingleFrameAnimation;
-import org.dishevelled.piccolo.sprite.Sprite;
-
 import org.dishevelled.piccolo.tilemap.AbstractTileMap;
-import org.dishevelled.piccolo.tilemap.SparseTileMap;
 
 import org.dishevelled.piccolo.tilemap.io.impl.TmxTileMapReader;
 
