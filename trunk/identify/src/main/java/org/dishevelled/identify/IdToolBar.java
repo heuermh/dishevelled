@@ -56,10 +56,10 @@ import org.dishevelled.iconbundle.IconTextDirection;
 public final class IdToolBar
     extends JToolBar
 {
-	/** Action selected key, Action.SELECTED_KEY only available in JDK 1.6+. */
-	private static final String SELECTED_KEY = "SwingSelectedKey";
+    /** Action selected key, Action.SELECTED_KEY only available in JDK 1.6+. */
+    private static final String SELECTED_KEY = "SwingSelectedKey";
 
-	/** Display icons action. */
+    /** Display icons action. */
     private final AbstractAction displayIcons = new AbstractAction("Display icons")
         {
             /** {@inheritDoc} */
@@ -273,6 +273,32 @@ public final class IdToolBar
 
         super.add(idButton);
         return idButton;
+    }
+
+    /**
+     * Remove the identifiable button for the specified identifiable action from
+     * this tool bar, if such exists.
+     *
+     * @param identifiableAction identifiable action to remove from this tool bar
+     * @return the identifiable button removed from this tool bar, or null if no such button exists
+     */
+    public IdButton remove(final IdentifiableAction identifiableAction)
+    {        
+        for (int i = 0; i < getComponentCount(); i++)
+        {
+            Component c = getComponent(i);
+            if (c instanceof IdButton)
+            {
+                IdButton idButton = (IdButton) c;
+                Action action = idButton.getAction();
+                if (action != null && action.equals(identifiableAction))
+                {
+                    remove(idButton);
+                    return idButton;
+                }
+            }
+        }
+        return null;
     }
 
     /**
