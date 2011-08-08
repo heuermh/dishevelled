@@ -35,6 +35,7 @@ import java.util.List;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
@@ -51,6 +52,7 @@ import org.dishevelled.iconbundle.IconSize;
 
 import org.dishevelled.iconbundle.tango.TangoProject;
 
+import org.dishevelled.identify.ContextMenuButton;
 import org.dishevelled.identify.ContextMenuListener;
 import org.dishevelled.identify.IdPopupMenu;
 import org.dishevelled.identify.IdToolBar;
@@ -68,6 +70,9 @@ public class ElementsList<E>
     /** List. */
     private final JList list;
 
+    /** Label. */
+    private final JLabel label;
+
     /** Tool bar. */
     private final IdToolBar toolBar;
 
@@ -76,6 +81,9 @@ public class ElementsList<E>
 
     /** Tool bar context menu. */
     private final JPopupMenu toolBarContextMenu;
+
+    /** Tool bar context menu button. */
+    private final ContextMenuButton contextMenuButton;
 
 
     /**
@@ -89,6 +97,10 @@ public class ElementsList<E>
 
         list = new JList(new EventListModel<E>(getModel()));
         list.setSelectionModel(new ListSelectionModelAdapter());
+
+        label = new JLabel();
+        label.setAlignmentY(-1.0f);
+        label.setBorder(new EmptyBorder(0, 2, 2, 0));
 
         contextMenu = new IdPopupMenu();
         contextMenu.add(getCutAction(), TangoProject.EXTRA_SMALL);
@@ -105,10 +117,10 @@ public class ElementsList<E>
         list.addMouseListener(new ContextMenuListener(contextMenu));
 
         toolBar = new IdToolBar();
-        toolBar.setBorder(new EmptyBorder(2, 2, 2, 2));
+        toolBar.setBorder(new EmptyBorder(0, 0, 0, 0));
         toolBar.add(getAddAction());
         toolBar.add(getRemoveAction());
-        toolBar.add(contextMenu);
+        contextMenuButton = toolBar.add(contextMenu);
 
         toolBarContextMenu = new JPopupMenu();
         for (Object menuItem : toolBar.getDisplayMenuItems())
@@ -164,6 +176,16 @@ public class ElementsList<E>
     }
 
     /**
+     * Return the label for this elements list.
+     *
+     * @return the label for this elements list
+     */
+    protected final JLabel getLabel()
+    {
+        return label;
+    }
+
+    /**
      * Return the tool bar for this elements list.
      *
      * @return the tool bar for this elements list
@@ -194,6 +216,16 @@ public class ElementsList<E>
     }
 
     /**
+     * Return the tool bar context menu button for this elements list.
+     *
+     * @return the tool bar context menu button for this elements list
+     */
+    protected final ContextMenuButton getToolBarContextMenuButton()
+    {
+        return contextMenuButton;
+    }
+
+    /**
      * Create and return a new tool bar panel.
      *
      * @return a new tool bar panel
@@ -202,6 +234,7 @@ public class ElementsList<E>
     {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+        panel.add(label);
         panel.add(Box.createGlue());
         panel.add(Box.createGlue());
         panel.add(toolBar);
