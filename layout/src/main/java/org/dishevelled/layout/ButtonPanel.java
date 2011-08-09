@@ -39,6 +39,9 @@ import javax.swing.JPanel;
 public final class ButtonPanel
     extends JPanel
 {
+    /** Default button spacing, <code>10</code>. */
+    private static final int DEFAULT_BUTTON_SPACING = 10;
+
 
     /**
      * Create a new button panel.
@@ -72,7 +75,7 @@ public final class ButtonPanel
         }
         else
         {
-            int buttonSpacing = 10; // todo:  look up in L&F docs
+            int buttonSpacing = DEFAULT_BUTTON_SPACING; // todo:  look up in L&F docs
             super.add(Box.createHorizontalStrut(buttonSpacing));
         }
     }
@@ -81,6 +84,7 @@ public final class ButtonPanel
      * Add the specified button to this button panel.
      *
      * @param button button to add
+     * @return a reference to the added button
      */
     public JButton add(final JButton button)
     {
