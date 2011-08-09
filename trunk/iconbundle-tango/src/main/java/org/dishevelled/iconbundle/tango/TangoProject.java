@@ -366,10 +366,10 @@ public final class TangoProject
     //public static final IconBundle VIEW_RESTORE = new CachingIconBundle(new TangoProjectIconBundle("actions", "view-restore"));
 
     /** Icon bundle for <code>actions/view-sort-ascending</code>. */
-    //public static final IconBundle VIEW_SORT_ASCENDING = new CachingIconBundle(new TangoProjectIconBundle("actions", "view-sort-ascending"));
+    public static final IconBundle VIEW_SORT_ASCENDING = new CachingIconBundle(new TangoProjectIconBundle("actions", "view-sort-ascending"));
 
     /** Icon bundle for <code>actions/view-sort-descending</code>. */
-    //public static final IconBundle VIEW_SORT_DESCENDING = new CachingIconBundle(new TangoProjectIconBundle("actions", "view-sort-descending"));
+    public static final IconBundle VIEW_SORT_DESCENDING = new CachingIconBundle(new TangoProjectIconBundle("actions", "view-sort-descending"));
 
     /** Icon bundle for <code>actions/window-close</code>. */
     //public static final IconBundle WINDOW_CLOSE = new CachingIconBundle(new TangoProjectIconBundle("actions", "window-close"));

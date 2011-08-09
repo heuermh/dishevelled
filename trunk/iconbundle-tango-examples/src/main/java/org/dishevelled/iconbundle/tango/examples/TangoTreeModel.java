@@ -201,8 +201,8 @@ final class TangoTreeModel
         //multimap.put("actions", new Icon("tools-check-spelling", TangoProject.TOOLS_CHECK_SPELLING));
         multimap.put("actions", new Icon("view-fullscreen", TangoProject.VIEW_FULLSCREEN));
         multimap.put("actions", new Icon("view-refresh", TangoProject.VIEW_REFRESH));
-        //multimap.put("actions", new Icon("view-sort-ascending", TangoProject.VIEW_SORT_ASCENDING));
-        //multimap.put("actions", new Icon("view-sort-descending", TangoProject.VIEW_SORT_DESCENDING));
+        multimap.put("actions", new Icon("view-sort-ascending", TangoProject.VIEW_SORT_ASCENDING));
+        multimap.put("actions", new Icon("view-sort-descending", TangoProject.VIEW_SORT_DESCENDING));
         //multimap.put("actions", new Icon("window-close", TangoProject.WINDOW_CLOSE));
         multimap.put("actions", new Icon("window-new", TangoProject.WINDOW_NEW));
         //multimap.put("actions", new Icon("zoom-best-fit", TangoProject.ZOOM_BEST_FIT));
