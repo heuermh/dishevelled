@@ -464,15 +464,6 @@ public final class TangoExample
         f.setJMenuBar(createMenuBar());
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.setBounds(100, 100, 750, 650);
-
-        SwingUtilities.invokeLater(new Runnable()
-            {
-                /** {@inheritDoc} */
-                public void run()
-                {
-                    f.setVisible(true);
-                }
-            });
     }
 
 
@@ -502,7 +493,6 @@ public final class TangoExample
      */
     public static void main(final String[] args)
     {
-        Runnable r = new TangoExample();
-        r.run();
+        SwingUtilities.invokeLater(new TangoExample());
     }
 }
