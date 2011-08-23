@@ -204,8 +204,7 @@
         <version>0.8.90</version>
       </dependency>
       <dependency>
-        <!-- must download manually -->
-        <groupId>org.cliffc</groupId>
+        <groupId>com.github.stephenc.high-scale-lib</groupId>
         <artifactId>high-scale-lib</artifactId>
         <version>1.1.2</version>
       </dependency>

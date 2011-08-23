@@ -37,7 +37,7 @@
       <scope>compile</scope>
     </dependency>
     <dependency>
-      <groupId>org.cliffc</groupId>
+      <groupId>com.github.stephenc.high-scale-lib</groupId>
       <artifactId>high-scale-lib</artifactId>
       <scope>compile</scope>
     </dependency>
