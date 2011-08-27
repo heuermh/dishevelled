@@ -350,15 +350,11 @@ abstract class AbstractMatrix2D<E>
         {
             throw new IllegalArgumentException("function must not be null");
         }
-
         if (size() == 0)
         {
             return null;
         }
-
-        long lastRow = (rows - 1L);
-        long lastColumn = (columns - 1L);
-        E a = function.evaluate(getQuick(lastRow, lastColumn));
+        E a = function.evaluate(getQuick(rows - 1L, columns - 1L));
         long skip = 1L;
         for (long row = rows; --row >= 0;)
         {

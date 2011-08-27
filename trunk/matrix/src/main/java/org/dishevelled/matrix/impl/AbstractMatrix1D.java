@@ -291,12 +291,10 @@ abstract class AbstractMatrix1D<E>
         {
             throw new IllegalArgumentException("function must not be null");
         }
-
         if (size == 0)
         {
             return null;
         }
-
         long last = (size - 1L);
         E a = function.evaluate(getQuick(last));
         for (long index = last; --index >= 0;)
