@@ -521,7 +521,125 @@ public abstract class AbstractMatrix3DTest
 
     public void testAggregate()
     {
-        // TODO
+        Matrix3D<String> m0 = createMatrix3D(2, 2, 2);
+        Matrix3D<String> m1 = createMatrix3D(2, 2, 2);
+
+        m0.assign("foo");
+
+        BinaryFunction<String, String, String> append = new BinaryFunction<String, String, String>()
+            {
+                public String evaluate(final String s0, final String s1)
+                {
+                    StringBuffer sb = new StringBuffer(s0);
+                    sb.append(" ");
+                    sb.append(s1);
+                    return sb.toString();
+                }
+            };
+
+        UnaryFunction<String,String> passThru = new UnaryFunction<String, String>()
+            {
+                public String evaluate(final String s)
+                {
+                    return s;
+                }
+            };
+
+        String result0 = m0.aggregate(append, passThru);
+        assertNotNull("result0 not null", result0);
+        assertEquals("result0 == foo foo foo foo foo foo foo foo", "foo foo foo foo foo foo foo foo", result0);
+
+        try
+        {
+            m0.aggregate(null, passThru);
+            fail("aggregate(null,) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+
+        try
+        {
+            m0.aggregate(append, null);
+            fail("aggregate(,null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+
+        BinaryFunction<String, String, String> combine = new BinaryFunction<String, String, String>()
+            {
+                public String evaluate(final String s0, final String s1)
+                {
+                    return (s0 + s1);
+                }
+            };
+
+        m0.assign("foo");
+        m1.assign("bar");
+        String result1 = m0.aggregate(m1, append, combine);
+        assertNotNull("result1 not null", result1);
+        assertEquals("result1 == foobar foobar foobar foobar foobar foobar foobar foobar",
+                     "foobar foobar foobar foobar foobar foobar foobar foobar", result1);
+
+        try
+        {
+            m0.aggregate(null, append, combine);
+            fail("aggregate(null,,) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+
+        try
+        {
+            Matrix3D<String> tooSmall = createMatrix3D(1, 2, 2);
+            m0.aggregate(tooSmall, append, combine);
+            fail("aggregate(tooSmall,,) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+
+        try
+        {
+            Matrix3D<String> tooBig = createMatrix3D(3, 2, 2);
+            m0.aggregate(tooBig, append, combine);
+            fail("aggregate(tooBig,,) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+
+        try
+        {
+            m0.aggregate(m1, null, combine);
+            fail("aggregate(,null,) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+
+        try
+        {
+            m0.aggregate(m1, append, null);
+            fail("aggregate(,,null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+
+        Matrix3D<String> empty0 = createMatrix3D(0, 0, 0);
+        Matrix3D<String> empty1 = createMatrix3D(0, 0, 0);
+        assertEquals(null, empty0.aggregate(append, passThru));
+        assertEquals(null, empty0.aggregate(empty1, append, combine));
     }
 
     public void testIterator()

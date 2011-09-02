@@ -430,27 +430,26 @@ abstract class AbstractMatrix3D<E>
         {
             throw new IllegalArgumentException("function must not be null");
         }
-
         if (size() == 0)
         {
             return null;
         }
-
         long lastSlice = (slices - 1L);
         long lastRow = (rows - 1L);
         long lastColumn = (columns - 1L);
         E a = function.evaluate(getQuick(lastSlice, lastRow, lastColumn),
                                 other.getQuick(lastSlice, lastRow, lastColumn));
-        for (long slice = lastSlice; --slice >= 0;)
+        long skip = 1L;
+        for (long slice = slices; --slice >= 0;)
         {
-            for (long row = lastRow; --row >= 0;)
+            for (long row = rows; --row >= 0;)
             {
-                for (long column = lastColumn; --column >= 0;)
+                for (long column = (columns - skip); --column >= 0;)
                 {
-                    a = aggr.evaluate(a,
-                                      function.evaluate(getQuick(slice, row, column),
-                                                        other.getQuick(slice, row, column)));
+                    a = aggr.evaluate(a, function.evaluate(getQuick(slice, row, column),
+                                                           other.getQuick(slice, row, column)));                    
                 }
+                skip = 0L;
             }
         }
         return a;
