@@ -534,7 +534,7 @@ public abstract class AbstractMatrix2DTest
         m1.assign("bar");
         String result1 = m0.aggregate(m1, append, combine);
         assertNotNull("result1 not null", result1);
-        assertEquals("result1 == foobar foobar foobar foobar foobar foobar foobar foobar foobar foobar",
+        assertEquals("result1 == foobar foobar foobar foobar foobar foobar foobar foobar foobar",
                      "foobar foobar foobar foobar foobar foobar foobar foobar foobar", result1);
 
         try
