@@ -48,6 +48,7 @@ public final class SparseMatrixUtils
     /**
      * Create and return a new sparse 1D matrix with the specified size.
      *
+     * @param <T> 1D matrix type
      * @param size size, must be <code>&gt;= 0</code>
      * @throws IllegalArgumentException if <code>size</code> is negative
      * @return a new sparse 1D matrix with the specified size
@@ -61,13 +62,16 @@ public final class SparseMatrixUtils
      * Create and return a new sparse 1D matrix with the specified size,
      * initial capacity, and load factor.
      *
+     * @param <T> 1D matrix type
      * @param size size, must be <code>&gt;= 0</code>
      * @param initialCapacity initial capacity, must be <code>&gt;= 0</code>
      * @param loadFactor load factor, must be <code>&gt; 0</code>
      * @return a new sparse 1D matrix with the specified size,
      *    initial capacity, and load factor
      */
-    public static <T> Matrix1D<T> createSparseMatrix1D(final long size, final int initialCapacity, final float loadFactor)
+    public static <T> Matrix1D<T> createSparseMatrix1D(final long size,
+                                                       final int initialCapacity,
+                                                       final float loadFactor)
     {
         return new SparseMatrix1D<T>(size, initialCapacity, loadFactor);
     }
@@ -76,6 +80,7 @@ public final class SparseMatrixUtils
      * Create and return a new sparse 2D matrix with the specified number
      * of rows and columns.
      *
+     * @param <T> 2D matrix type
      * @param rows rows, must be <code>&gt;= 0</code>
      * @param columns columns, must be <code>&gt;= 0</code>
      * @throws IllegalArgumentException if either <code>rows</code>
@@ -92,6 +97,7 @@ public final class SparseMatrixUtils
      * Create and return a new sparse 2D matrix with the specified number
      * of rows and columns, initial capacity, and load factor.
      *
+     * @param <T> 2D matrix type
      * @param rows rows, must be <code>&gt;= 0</code>
      * @param columns columns, must be <code>&gt;= 0</code>
      * @param initialCapacity initial capacity, must be <code>&gt;= 0</code>
@@ -99,7 +105,10 @@ public final class SparseMatrixUtils
      * @return a new sparse 2D matrix with the specified number
      *    of rows and columns, initial capacity, and load factor
      */
-    public static <T> Matrix2D<T> createSparseMatrix2D(final long rows, final long columns, final int initialCapacity, final float loadFactor)
+    public static <T> Matrix2D<T> createSparseMatrix2D(final long rows,
+                                                       final long columns,
+                                                       final int initialCapacity,
+                                                       final float loadFactor)
     {
         return new SparseMatrix2D<T>(rows, columns, initialCapacity, loadFactor);
     }
@@ -108,6 +117,7 @@ public final class SparseMatrixUtils
      * Create and return a new sparse 3D matrix with the specified number
      * of slices, rows, and columns.
      *
+     * @param <T> 3D matrix type
      * @param slices slices, must be <code>&gt;= 0</code>
      * @param rows rows, must be <code>&gt;= 0</code>
      * @param columns columns, must be <code>&gt;= 0</code>
@@ -125,6 +135,7 @@ public final class SparseMatrixUtils
      * Create and return a new sparse 3D matrix with the specified number
      * of slices, rows, and columns, initial capacity, and load factor.
      *
+     * @param <T> 3D matrix type
      * @param slices slices, must be <code>&gt;= 0</code>
      * @param rows rows, must be <code>&gt;= 0</code>
      * @param columns columns, must be <code>&gt;= 0</code>
