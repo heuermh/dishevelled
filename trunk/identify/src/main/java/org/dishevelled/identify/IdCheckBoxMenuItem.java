@@ -190,8 +190,8 @@ public final class IdCheckBoxMenuItem
         {
             if (orientation != null)
             {
-                iconTextDirection = orientation.isLeftToRight() ?
-                    IconTextDirection.LEFT_TO_RIGHT : IconTextDirection.RIGHT_TO_LEFT;
+                iconTextDirection = orientation.isLeftToRight()
+                    ? IconTextDirection.LEFT_TO_RIGHT : IconTextDirection.RIGHT_TO_LEFT;
 
                 setDirty(true);
             }
@@ -209,8 +209,8 @@ public final class IdCheckBoxMenuItem
         {
             if (orientation != null)
             {
-                iconTextDirection = orientation.isLeftToRight() ?
-                    IconTextDirection.LEFT_TO_RIGHT : IconTextDirection.RIGHT_TO_LEFT;
+                iconTextDirection = orientation.isLeftToRight()
+                    ? IconTextDirection.LEFT_TO_RIGHT : IconTextDirection.RIGHT_TO_LEFT;
 
                 setDirty(true);
             }

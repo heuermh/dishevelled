@@ -202,8 +202,8 @@ public final class IdButton
         {
             if (orientation != null)
             {
-                iconTextDirection = orientation.isLeftToRight() ?
-                    IconTextDirection.LEFT_TO_RIGHT : IconTextDirection.RIGHT_TO_LEFT;
+                iconTextDirection = orientation.isLeftToRight()
+                    ? IconTextDirection.LEFT_TO_RIGHT : IconTextDirection.RIGHT_TO_LEFT;
 
                 rebuild();
             }
@@ -221,8 +221,8 @@ public final class IdButton
         {
             if (orientation != null)
             {
-                iconTextDirection = orientation.isLeftToRight() ?
-                    IconTextDirection.LEFT_TO_RIGHT : IconTextDirection.RIGHT_TO_LEFT;
+                iconTextDirection = orientation.isLeftToRight()
+                    ? IconTextDirection.LEFT_TO_RIGHT : IconTextDirection.RIGHT_TO_LEFT;
 
                 rebuild();
             }

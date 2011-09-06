@@ -283,7 +283,7 @@ public final class IdToolBar
      * @return the identifiable button removed from this tool bar, or null if no such button exists
      */
     public IdButton remove(final IdentifiableAction identifiableAction)
-    {        
+    {
         for (int i = 0; i < getComponentCount(); i++)
         {
             Component c = getComponent(i);
