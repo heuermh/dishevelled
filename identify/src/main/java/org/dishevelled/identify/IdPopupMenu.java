@@ -64,6 +64,7 @@ public class IdPopupMenu
      *
      * @param action identifiable action to add
      * @param iconSize icon size, must not be null
+     * @return the new menu item for the specified identifiable action with the specified icon size
      */
     public IdMenuItem add(final IdentifiableAction action, final IconSize iconSize)
     {
