@@ -447,7 +447,7 @@ abstract class AbstractMatrix3D<E>
                 for (long column = (columns - skip); --column >= 0;)
                 {
                     a = aggr.evaluate(a, function.evaluate(getQuick(slice, row, column),
-                                                           other.getQuick(slice, row, column)));                    
+                                                           other.getQuick(slice, row, column)));
                 }
                 skip = 0L;
             }
