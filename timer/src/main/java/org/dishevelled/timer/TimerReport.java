@@ -35,7 +35,33 @@ import java.util.Map;
  */
 public interface TimerReport
 {
+
+    /**
+     * Append the specified map of timers keyed by runnables to the specified appendable.
+     *
+     * @param <T> extends Appendable
+     * @param timers map of timers keyed by runnables to append, must not be null
+     * @param appendable appendable to append the specified map of timers keyed by runnables to, must not be null
+     * @return the specified appendable with the specified map of timers keyed by runnables appended
+     * @throws IOException if an IO error occurs
+     */
     <T extends Appendable> T append(Map<? extends Runnable, Timer> timers, T appendable) throws IOException;
+
+    /**
+     * Write the specified map of timers keyed by runnables to the specified file.
+     *
+     * @param timers map of timers keyed by runnables to append, must not be null
+     * @param file file to write to, must not be null
+     * @throws IOException if an IO error occurs
+     */
     void write(Map<? extends Runnable, Timer> timers, File file) throws IOException;
+
+    /**
+     * Write the specified map of timers keyed by runnables to the specified output stream.
+     *
+     * @param timers map of timers keyed by runnables to append, must not be null
+     * @param outputStream output stream to write to, must not be null
+     * @throws IOException if an IO error occurs
+     */
     void write(Map<? extends Runnable, Timer> timers, OutputStream outputStream) throws IOException;
 }
