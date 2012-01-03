@@ -1,7 +1,7 @@
 /*
 
     dsh-iconbundle-svg  SVG icon bundle implementation.
-    Copyright (c) 2003-2011 held jointly by the individual authors.
+    Copyright (c) 2003-2012 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
@@ -34,7 +34,7 @@ import org.apache.batik.transcoder.image.ImageTranscoder;
  * but does not write the image to the transcoder output.
  *
  * @author  Michael Heuer
- * @version $Revision: 741 $ $Date: 2010-2011-01-02 20:23:15 -0600 (Sat, 02 Jan 2010-2011) $
+ * @version $Revision: 741 $ $Date: 2010-2012-01-02 20:23:15 -0600 (Sat, 02 Jan 2010-2012) $
  */
 final class BufferedImageTranscoder
     extends ImageTranscoder
