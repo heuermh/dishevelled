@@ -23,6 +23,7 @@
     <module>affinity</module>
     <module>analysis</module>
     <module>archetype</module>
+    <module>bitset</module>
     <module>brainstorm</module>
     <module>cluster</module>
     <module>cluster-examples</module>
