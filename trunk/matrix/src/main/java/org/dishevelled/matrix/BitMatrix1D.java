@@ -425,7 +425,8 @@ public final class BitMatrix1D
             // less efficient
             for (long i = 0; i < size; i++)
             {
-                if (!bitset.getQuick(i)) {
+                if (!bitset.getQuick(i))
+                {
                     procedure.run(Long.valueOf(i));
                 }
             }
