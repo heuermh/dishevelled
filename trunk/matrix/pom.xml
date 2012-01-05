@@ -51,6 +51,12 @@
   <dependencies>
     <dependency>
       <groupId>org.dishevelled</groupId>
+      <artifactId>dsh-bitset</artifactId>
+      <version>${project.version}</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.dishevelled</groupId>
       <artifactId>dsh-functor</artifactId>
       <version>${project.version}</version>
       <scope>compile</scope>
