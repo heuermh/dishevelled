@@ -23,46 +23,30 @@
 */
 package org.dishevelled.matrix;
 
-import java.util.List;
-import java.util.BitSet;
-import java.util.ArrayList;
+import org.dishevelled.bitset.MutableBitSet;
 
 import org.dishevelled.functor.UnaryProcedure;
 
 /**
- * Fixed size bit matrix in one dimension, indexed by
- * <code>long</code>s.
+ * Fixed size bit matrix in one dimension, indexed by <code>long</code>s.
  *
- * <p>The size of this bit matrix is limited by the <code>BitSet</code>s
- * underlying this implementation to
- * <pre>
- * ((long) Integer.MAX_VALUE) * ((long) Integer.MAX_VALUE) - 1L
- * </pre>
- * This value is the public constant <code>MAX_SIZE</code>.</p>
- *
- * @see #MAX_SIZE
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
 public final class BitMatrix1D
 {
-    /** List of bit sets. */
-    private final List<BitSet> bitSets;
+    /** Bit set. */
+    private final MutableBitSet bitset;
 
     /** Size. */
     private final long size;
-
-    /** Maximum size. */
-    public static final long MAX_SIZE = ((long) Integer.MAX_VALUE) * ((long) Integer.MAX_VALUE) - 1L;
 
 
     /**
      * Create a new 1D bit matrix of the specified size.
      *
-     * @see #MAX_SIZE
-     * @param size size, must be <code>&gt;= 0</code> and <code>&lt; MAX_SIZE</code>
+     * @param size size, must be <code>&gt;= 0</code>
      * @throws IllegalArgumentException if <code>size</code> is negative
-     *    or greater than or equal to the maximum size
      */
     public BitMatrix1D(final long size)
     {
@@ -70,40 +54,10 @@ public final class BitMatrix1D
         {
             throw new IllegalArgumentException("size must be >= 0");
         }
-        if (size >= MAX_SIZE)
-        {
-            throw new IllegalArgumentException("size must be < MAX_SIZE");
-        }
-
         this.size = size;
-
-        int i = (int) (size / Integer.MAX_VALUE);
-        int j = (int) (size % Integer.MAX_VALUE);
-
-        bitSets = new ArrayList<BitSet>(i);
-
-        for (int k = 0; k < i; k++)
-        {
-            bitSets.add(new BitSet());
-            //bitSets.add(new BitSet(Integer.MAX_VALUE));
-        }
-        if (j > 0)
-        {
-            bitSets.add(new BitSet());
-            //bitSets.add(new BitSet(j));
-        }
+        this.bitset = new MutableBitSet(size);
     }
 
-
-    /**
-     * Return the list of bit sets backing this 1D bit matrix.
-     *
-     * @return the list of bit sets backing this 1D bit matrix
-     */
-    private List<BitSet> getBitSets()
-    {
-        return bitSets;
-    }
 
     /**
      * Return the size of this 1D bit matrix.
@@ -123,12 +77,7 @@ public final class BitMatrix1D
      */
     public long cardinality()
     {
-        long cardinality = 0;
-        for (BitSet bs : bitSets)
-        {
-            cardinality += bs.cardinality();
-        }
-        return cardinality;
+        return bitset.cardinality();
     }
 
     /**
@@ -138,7 +87,7 @@ public final class BitMatrix1D
      */
     public boolean isEmpty()
     {
-        return (0 == cardinality());
+        return bitset.isEmpty();
     }
 
     /**
@@ -146,9 +95,9 @@ public final class BitMatrix1D
      */
     public void clear()
     {
-        for (BitSet bs : bitSets)
+        for (long i = bitset.nextSetBit(0); i >= 0; i = bitset.nextSetBit(i + 1))
         {
-            bs.clear();
+            bitset.clear(i);
         }
     }
 
@@ -162,16 +111,26 @@ public final class BitMatrix1D
      */
     public boolean get(final long index)
     {
+        if (index < 0)
+        {
+            throw new IndexOutOfBoundsException(index + " < 0");
+        }
         if (index >= size)
         {
             throw new IndexOutOfBoundsException(index + " >= " + size);
         }
+        return getQuick(index);
+    }
 
-        int i = (int) (index / Integer.MAX_VALUE);
-        int j = (int) (index % Integer.MAX_VALUE);
-
-        BitSet bs = bitSets.get(i);
-        return bs.get(j);
+    /**
+     * Return the bit value at the specified index without checking bounds.
+     *
+     * @param index index
+     * @return the bit value at the specified index
+     */
+    public boolean getQuick(final long index)
+    {
+        return bitset.getQuick(index);
     }
 
     /**
@@ -184,16 +143,33 @@ public final class BitMatrix1D
      */
     public void set(final long index, final boolean value)
     {
+        if (index < 0)
+        {
+            throw new IndexOutOfBoundsException(index + " < 0");
+        }
         if (index >= size)
         {
             throw new IndexOutOfBoundsException(index + " >= " + size);
         }
+        setQuick(index, value);
+    }
 
-        int i = (int) (index / Integer.MAX_VALUE);
-        int j = (int) (index % Integer.MAX_VALUE);
-
-        BitSet bs = bitSets.get(i);
-        bs.set(j, value);
+    /**
+     * Set the bit value at the specified index to <code>value</code> without checking bounds.
+     *
+     * @param index index
+     * @param value value
+     */
+    public void setQuick(final long index, final boolean value)
+    {
+        if (value)
+        {
+            bitset.setQuick(index);
+        }
+        else
+        {
+            bitset.clearQuick(index);
+        }
     }
 
     /**
@@ -220,10 +196,13 @@ public final class BitMatrix1D
         {
             throw new IndexOutOfBoundsException(index1 + " > " + size);
         }
-
-        for (long i = index0; i < index1; i++)
+        if (value)
         {
-            set(i, value);
+            bitset.set(index0, index1);
+        }
+        else
+        {
+            bitset.clear(index0, index1);
         }
     }
 
@@ -237,16 +216,26 @@ public final class BitMatrix1D
      */
     public void flip(final long index)
     {
+        if (index < 0)
+        {
+            throw new IndexOutOfBoundsException(index + " < 0");
+        }
         if (index >= size)
         {
             throw new IndexOutOfBoundsException(index + " >= " + size);
         }
+        flipQuick(index);
+    }
 
-        int i = (int) (index / Integer.MAX_VALUE);
-        int j = (int) (index % Integer.MAX_VALUE);
-
-        BitSet bs = bitSets.get(i);
-        bs.flip(j);
+    /**
+     * Set the bit value at the specified index to the complement
+     * of its current bit value without checking bounds.
+     *
+     * @param index index
+     */
+    public void flipQuick(final long index)
+    {
+        bitset.flipQuick(index);
     }
 
     /**
@@ -273,11 +262,7 @@ public final class BitMatrix1D
         {
             throw new IndexOutOfBoundsException(index1 + " > " + size);
         }
-
-        for (long i = index0; i < index1; i++)
-        {
-            flip(i);
-        }
+        bitset.flip(index0, index1);
     }
 
     /**
@@ -316,15 +301,7 @@ public final class BitMatrix1D
         {
             throw new IllegalArgumentException("this and other must be the same size");
         }
-
-        for (int i = 0, j = bitSets.size(); i < j; i++)
-        {
-            if (bitSets.get(i).intersects(other.getBitSets().get(i)))
-            {
-                return true;
-            }
-        }
-        return false;
+        return bitset.intersects(other.bitset);
     }
 
     /**
@@ -347,11 +324,7 @@ public final class BitMatrix1D
         {
             throw new IllegalArgumentException("this and other must be the same size");
         }
-
-        for (int i = 0, j = bitSets.size(); i < j; i++)
-        {
-            bitSets.get(i).and(other.getBitSets().get(i));
-        }
+        bitset.and(other.bitset);
         return this;
     }
 
@@ -375,11 +348,7 @@ public final class BitMatrix1D
         {
             throw new IllegalArgumentException("this and other must be the same size");
         }
-
-        for (int i = 0, j = bitSets.size(); i < j; i++)
-        {
-            bitSets.get(i).andNot(other.getBitSets().get(i));
-        }
+        bitset.andNot(other.bitset);
         return this;
     }
 
@@ -403,11 +372,7 @@ public final class BitMatrix1D
         {
             throw new IllegalArgumentException("this and other must be the same size");
         }
-
-        for (int i = 0, j = bitSets.size(); i < j; i++)
-        {
-            bitSets.get(i).or(other.getBitSets().get(i));
-        }
+        bitset.or(other.bitset);
         return this;
     }
 
@@ -431,11 +396,7 @@ public final class BitMatrix1D
         {
             throw new IllegalArgumentException("this and other must be the same size");
         }
-
-        for (int i = 0, j = bitSets.size(); i < j; i++)
-        {
-            bitSets.get(i).xor(other.getBitSets().get(i));
-        }
+        bitset.xor(other.bitset);
         return this;
     }
 
@@ -452,12 +413,21 @@ public final class BitMatrix1D
         {
             throw new IllegalArgumentException("procedure must not be null");
         }
-
-        for (long index = 0; index < size; index++)
+        if (value)
         {
-            if (get(index) == value)
+            for (long i = bitset.nextSetBit(0); i >= 0; i = bitset.nextSetBit(i + 1))
             {
-                procedure.run(index);
+                procedure.run(Long.valueOf(i));
+            }
+        }
+        else
+        {
+            // less efficient
+            for (long i = 0; i < size; i++)
+            {
+                if (!bitset.getQuick(i)) {
+                    procedure.run(Long.valueOf(i));
+                }
             }
         }
     }
@@ -480,21 +450,15 @@ public final class BitMatrix1D
         {
             return false;
         }
-
-        for (int i = 0, j = bitSets.size(); i < j; i++)
-        {
-            if (!bitSets.get(i).equals(bm.getBitSets().get(i)))
-            {
-                return false;
-            }
-        }
-        return true;
+        return bitset.equals(bm.bitset);
     }
 
     /** {@inheritDoc} */
     public int hashCode()
     {
-        // TODO
-        return 0;
+        int hashCode = 37;
+        hashCode = 17 * hashCode + (int) (size ^ (size >>> 32));
+        hashCode = 17 * hashCode + bitset.hashCode();
+        return hashCode;
     }
 }

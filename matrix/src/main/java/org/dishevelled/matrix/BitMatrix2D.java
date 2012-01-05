@@ -23,31 +23,20 @@
 */
 package org.dishevelled.matrix;
 
-import java.util.List;
-import java.util.BitSet;
-import java.util.ArrayList;
+import org.dishevelled.bitset.MutableBitSet;
 
 import org.dishevelled.functor.BinaryProcedure;
 
 /**
- * Fixed size bit matrix in two dimensions, indexed by
- * <code>long</code>s.
+ * Fixed size bit matrix in two dimensions, indexed by <code>long</code>s.
  *
- * <p>The size of this bit matrix is limited by the <code>BitSet</code>s
- * underlying this implementation to
- * <pre>
- * ((long) Integer.MAX_VALUE) * ((long) Integer.MAX_VALUE) - 1L
- * </pre>
- * This value is the public constant <code>MAX_SIZE</code>.</p>
- *
- * @see #MAX_SIZE
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
 public final class BitMatrix2D
 {
-    /** List of bit sets. */
-    private final List<BitSet> bitSets;
+    /** Bit set. */
+    private final MutableBitSet bitset;
 
     /** Number of rows. */
     private final long rows;
@@ -58,22 +47,14 @@ public final class BitMatrix2D
     /** Size. */
     private final long size;
 
-    /** Maximum number of rows and columns. */
-    public static final long MAX_SIZE = ((long) Integer.MAX_VALUE) * ((long) Integer.MAX_VALUE) - 1L;
-
 
     /**
-     * Create a new 2D bit matrix with the specified number
-     * of rows and columns.  The size (<code>rows * columns</code>) must be
-     * less than <code>MAX_SIZE</code>.
+     * Create a new 2D bit matrix with the specified number of rows and columns.
      *
-     * @see #MAX_SIZE
      * @param rows number of rows, must be <code>&gt;= 0</code>
      * @param columns number of columns, must be <code>&gt;= 0</code>
      * @throws IllegalArgumentException if either <code>rows</code> or
-     *    <code>columns</code> is negative or if the product of
-     *    <code>rows</code> and <code>columns</code> is greater than or
-     *    equal to the maximum size
+     *    <code>columns</code> is negative
      */
     public BitMatrix2D(final long rows, final long columns)
     {
@@ -85,42 +66,12 @@ public final class BitMatrix2D
         {
             throw new IllegalArgumentException("columns must be >= 0");
         }
-        if ((rows * columns) >= MAX_SIZE)
-        {
-            throw new IllegalArgumentException("size must be < MAX_SIZE");
-        }
-
         this.rows = rows;
         this.columns = columns;
         this.size = (rows * columns);
-
-        int i = (int) (size / Integer.MAX_VALUE);
-        int j = (int) (size % Integer.MAX_VALUE);
-
-        bitSets = new ArrayList<BitSet>(i);
-
-        for (int k = 0; k < i; k++)
-        {
-            bitSets.add(new BitSet());
-            //bitSets.add(new BitSet(Integer.MAX_VALUE));
-        }
-        if (j > 0)
-        {
-            bitSets.add(new BitSet());
-            //bitSets.add(new BitSet(j));
-        }
+        this.bitset = new MutableBitSet(this.size);
     }
 
-
-    /**
-     * Return the list of bit sets backing this 2D bit matrix.
-     *
-     * @return the list of bit sets backing this 2D bit matrix
-     */
-    private List<BitSet> getBitSets()
-    {
-        return bitSets;
-    }
 
     /**
      * Return the size of this 2D bit matrix.
@@ -160,12 +111,7 @@ public final class BitMatrix2D
      */
     public long cardinality()
     {
-        long cardinality = 0;
-        for (BitSet bs : bitSets)
-        {
-            cardinality += bs.cardinality();
-        }
-        return cardinality;
+        return bitset.cardinality();
     }
 
     /**
@@ -183,9 +129,9 @@ public final class BitMatrix2D
      */
     public void clear()
     {
-        for (BitSet bs : bitSets)
+        for (long i = bitset.nextSetBit(0); i >= 0; i = bitset.nextSetBit(i + 1))
         {
-            bs.clear();
+            bitset.clear(i);
         }
     }
 
@@ -201,21 +147,35 @@ public final class BitMatrix2D
      */
     public boolean get(final long row, final long column)
     {
+        if (row < 0)
+        {
+            throw new IndexOutOfBoundsException(row + " < 0");
+        }
         if (row >= rows)
         {
             throw new IndexOutOfBoundsException(row + " >= " + rows);
+        }
+        if (column < 0)
+        {
+            throw new IndexOutOfBoundsException(column + " < 0");
         }
         if (column >= columns)
         {
             throw new IndexOutOfBoundsException(column + " >= " + columns);
         }
+        return getQuick(row, column);
+    }
 
-        long index = (columns * row) + column;
-        int i = (int) (index / Integer.MAX_VALUE);
-        int j = (int) (index % Integer.MAX_VALUE);
-
-        BitSet bs = bitSets.get(i);
-        return bs.get(j);
+    /**
+     * Return the bit value at the specified row and column without checking bounds.
+     *
+     * @param row row index
+     * @param column column index
+     * @return the bit value at the specified row and column
+     */
+    public boolean getQuick(final long row, final long column)
+    {
+        return bitset.getQuick(index(row, column));
     }
 
     /**
@@ -230,21 +190,43 @@ public final class BitMatrix2D
      */
     public void set(final long row, final long column, final boolean value)
     {
+        if (row < 0)
+        {
+            throw new IndexOutOfBoundsException(row + " < 0");
+        }
         if (row >= rows)
         {
             throw new IndexOutOfBoundsException(row + " >= " + rows);
+        }
+        if (column < 0)
+        {
+            throw new IndexOutOfBoundsException(column + " < 0");
         }
         if (column >= columns)
         {
             throw new IndexOutOfBoundsException(column + " >= " + columns);
         }
+        setQuick(row, column, value);
+    }
 
-        long index = (columns * row) + column;
-        int i = (int) (index / Integer.MAX_VALUE);
-        int j = (int) (index % Integer.MAX_VALUE);
-
-        BitSet bs = bitSets.get(i);
-        bs.set(j, value);
+    /**
+     * Set the bit value at the specified row and column to <code>value</code> without checking bounds.
+     *
+     * @param row row index
+     * @param column column index
+     * @param value value
+     */
+    public void setQuick(final long row, final long column, final boolean value)
+    {
+        long index = index(row, column);
+        if (value)
+        {
+            bitset.setQuick(index);
+        }
+        else
+        {
+            bitset.clearQuick(index);
+        }
     }
 
     /**
@@ -270,17 +252,33 @@ public final class BitMatrix2D
     public void set(final long row0, final long column0,
                     final long row1, final long column1, final boolean value)
     {
+        if (row0 < 0)
+        {
+            throw new IndexOutOfBoundsException(row0 + " < 0");
+        }
         if (row0 >= rows)
         {
             throw new IndexOutOfBoundsException(row0 + " >= " + rows);
+        }
+        if (column0 < 0)
+        {
+            throw new IndexOutOfBoundsException(column0 + " < 0");
         }
         if (column0 >= columns)
         {
             throw new IndexOutOfBoundsException(column0 + " >= " + columns);
         }
+        if (row1 < 0)
+        {
+            throw new IndexOutOfBoundsException(row1 + " < 0");
+        }
         if (row1 > rows)
         {
             throw new IndexOutOfBoundsException(row1 + " > " + rows);
+        }
+        if (column1 < 0)
+        {
+            throw new IndexOutOfBoundsException(column1 + " < 0");
         }
         if (column1 > columns)
         {
@@ -291,7 +289,7 @@ public final class BitMatrix2D
         {
             for (long column = column0; column < column1; column++)
             {
-                set(row, column, value);
+                setQuick(row, column, value);
             }
         }
     }
@@ -308,21 +306,35 @@ public final class BitMatrix2D
      */
     public void flip(final long row, final long column)
     {
+        if (row < 0)
+        {
+            throw new IndexOutOfBoundsException(row + " < 0");
+        }
         if (row >= rows)
         {
             throw new IndexOutOfBoundsException(row + " >= " + rows);
+        }
+        if (column < 0)
+        {
+            throw new IndexOutOfBoundsException(column + " < 0");
         }
         if (column >= columns)
         {
             throw new IndexOutOfBoundsException(column + " >= " + columns);
         }
+        flipQuick(row, column);
+    }
 
-        long index = (columns * row) + column;
-        int i = (int) (index / Integer.MAX_VALUE);
-        int j = (int) (index % Integer.MAX_VALUE);
-
-        BitSet bs = bitSets.get(i);
-        bs.flip(j);
+    /**
+     * Set the bit value at the specified row and column to the complement
+     * of its current bit value without checking bounds.
+     *
+     * @param row row index
+     * @param column column index
+     */
+    public void flipQuick(final long row, final long column)
+    {
+        bitset.flipQuick(index(row, column));
     }
 
     /**
@@ -348,17 +360,33 @@ public final class BitMatrix2D
     public void flip(final long row0, final long column0,
                      final long row1, final long column1)
     {
+        if (row0 < 0)
+        {
+            throw new IndexOutOfBoundsException(row0 + " < 0");
+        }
         if (row0 >= rows)
         {
             throw new IndexOutOfBoundsException(row0 + " >= " + rows);
+        }
+        if (column0 < 0)
+        {
+            throw new IndexOutOfBoundsException(column0 + " < 0");
         }
         if (column0 >= columns)
         {
             throw new IndexOutOfBoundsException(column0 + " >= " + columns);
         }
+        if (row1 < 0)
+        {
+            throw new IndexOutOfBoundsException(row1 + " < 0");
+        }
         if (row1 > rows)
         {
             throw new IndexOutOfBoundsException(row1 + " > " + rows);
+        }
+        if (column1 < 0)
+        {
+            throw new IndexOutOfBoundsException(column1 + " < 0");
         }
         if (column1 > columns)
         {
@@ -369,7 +397,7 @@ public final class BitMatrix2D
         {
             for (long column = column0; column < column1; column++)
             {
-                flip(row, column);
+                flipQuick(row, column);
             }
         }
     }
@@ -408,15 +436,7 @@ public final class BitMatrix2D
         {
             throw new IllegalArgumentException("this and other must have the same dimensions");
         }
-
-        for (int i = 0, j = bitSets.size(); i < j; i++)
-        {
-            if (bitSets.get(i).intersects(other.getBitSets().get(i)))
-            {
-                return true;
-            }
-        }
-        return false;
+        return bitset.intersects(other.bitset);
     }
 
     /**
@@ -437,11 +457,7 @@ public final class BitMatrix2D
         {
             throw new IllegalArgumentException("this and other must have the same dimensions");
         }
-
-        for (int i = 0, j = bitSets.size(); i < j; i++)
-        {
-            bitSets.get(i).and(other.getBitSets().get(i));
-        }
+        bitset.and(other.bitset);
         return this;
     }
 
@@ -463,11 +479,7 @@ public final class BitMatrix2D
         {
             throw new IllegalArgumentException("this and other must have the same dimensions");
         }
-
-        for (int i = 0, j = bitSets.size(); i < j; i++)
-        {
-            bitSets.get(i).andNot(other.getBitSets().get(i));
-        }
+        bitset.andNot(other.bitset);
         return this;
     }
 
@@ -489,11 +501,7 @@ public final class BitMatrix2D
         {
             throw new IllegalArgumentException("this and other must have the same dimensions");
         }
-
-        for (int i = 0, j = bitSets.size(); i < j; i++)
-        {
-            bitSets.get(i).or(other.getBitSets().get(i));
-        }
+        bitset.or(other.bitset);
         return this;
     }
 
@@ -515,11 +523,7 @@ public final class BitMatrix2D
         {
             throw new IllegalArgumentException("this and other must have the same dimensions");
         }
-
-        for (int i = 0, j = bitSets.size(); i < j; i++)
-        {
-            bitSets.get(i).xor(other.getBitSets().get(i));
-        }
+        bitset.xor(other.bitset);
         return this;
     }
 
@@ -541,9 +545,9 @@ public final class BitMatrix2D
         {
             for (long column = 0; column < columns; column++)
             {
-                if (get(row, column) == value)
+                if (getQuick(row, column) == value)
                 {
-                    procedure.run(row, column);
+                    procedure.run(Long.valueOf(row), Long.valueOf(column));
                 }
             }
         }
@@ -567,21 +571,29 @@ public final class BitMatrix2D
         {
             return false;
         }
-
-        for (int i = 0, j = bitSets.size(); i < j; i++)
-        {
-            if (!bitSets.get(i).equals(bm.getBitSets().get(i)))
-            {
-                return false;
-            }
-        }
-        return true;
+        return bitset.equals(bm.bitset);
     }
 
     /** {@inheritDoc} */
     public int hashCode()
     {
-        // TODO
-        return 0;
+        int hashCode = 37;
+        hashCode = 17 * hashCode + (int) (size ^ (size >>> 32));
+        hashCode = 17 * hashCode + (int) (rows ^ (rows >>> 32));
+        hashCode = 17 * hashCode + (int) (columns ^ (columns >>> 32));
+        hashCode = 17 * hashCode + bitset.hashCode();
+        return hashCode;
+    }
+
+    /**
+     * Return the index for the specified row and column.
+     *
+     * @param row row index
+     * @param column column index
+     * @return the index for the specified row and column
+     */
+    private long index(final long row, final long column)
+    {
+        return (columns * row) + column;
     }
 }
