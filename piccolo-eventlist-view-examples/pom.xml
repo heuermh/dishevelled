@@ -51,6 +51,12 @@
     </dependency>
     <dependency>
       <groupId>org.dishevelled</groupId>
+      <artifactId>dsh-layout</artifactId>
+      <version>${project.version}</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.dishevelled</groupId>
       <artifactId>dsh-piccolo-eventlist-view</artifactId>
       <version>${project.version}</version>
       <scope>compile</scope>

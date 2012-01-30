@@ -26,7 +26,10 @@ package org.dishevelled.piccolo.eventlist.view.examples;
 import ca.odell.glazedlists.EventList;
 import ca.odell.glazedlists.GlazedLists;
 
+import ca.odell.glazedlists.swing.EventListModel;
+
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -35,11 +38,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JFrame;
+import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
+import javax.swing.border.EmptyBorder;
+
 import org.dishevelled.functor.UnaryFunction;
+
+import org.dishevelled.layout.LabelFieldPanel;
 
 import org.dishevelled.piccolo.eventlist.view.CountLabelNode;
 import org.dishevelled.piccolo.eventlist.view.ElementsLabelNode;
@@ -141,8 +150,23 @@ public final class EventListNodeExample
         t.setRepeats(true);
         t.start();
 
+        JList list = new JList();
+        list.setModel(new EventListModel<String>(eventList));
+        list.setPrototypeCellValue("0123456789012345678");
+
+        LabelFieldPanel left = new LabelFieldPanel();
+        left.addLabel("List:");
+        left.addFinalField(new JScrollPane(list));
+        left.setBorder(new EmptyBorder(20, 20, 20, 20));
+
+        LabelFieldPanel right = new LabelFieldPanel();
+        right.addLabel("Canvas:");
+        right.addFinalField(new JScrollPane(canvas));
+        right.setBorder(new EmptyBorder(20, 0, 20, 20));
+
         setLayout(new BorderLayout());
-        add("Center", canvas);
+        add("West", left);
+        add("Center", right);
     }
 
 
@@ -152,7 +176,7 @@ public final class EventListNodeExample
         JFrame f = new JFrame("Event List Node Example");
         f.setContentPane(this);
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        f.setBounds(100, 100, 600, 600);
+        f.setBounds(100, 100, 900, 600);
         f.setVisible(true);
     }
 
