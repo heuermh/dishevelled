@@ -26,6 +26,8 @@ package org.dishevelled.piccolo.eventlist.view.examples;
 import ca.odell.glazedlists.EventList;
 import ca.odell.glazedlists.GlazedLists;
 
+import ca.odell.glazedlists.swing.EventListModel;
+
 import java.awt.BorderLayout;
 
 import java.awt.event.ActionEvent;
@@ -34,16 +36,23 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JList;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
+import javax.swing.border.EmptyBorder;
+
 import org.dishevelled.identify.Identifiable;
+import org.dishevelled.identify.IdListCellRenderer;
 
 import org.dishevelled.iconbundle.IconBundle;
 
 import org.dishevelled.iconbundle.tango.TangoProject;
+
+import org.dishevelled.layout.LabelFieldPanel;
 
 import org.dishevelled.piccolo.eventlist.view.CountLabelNode;
 import org.dishevelled.piccolo.eventlist.view.ElementsLabelNode;
@@ -106,14 +115,14 @@ public final class IdEventListNodeExample
         label2.offset(20.0d, 140.0d);
         layer.addChild(label2);
         IdElementsSummaryNode<IdentifiableString> elementsSummary = new IdElementsSummaryNode<IdentifiableString>(eventList);
-        elementsSummary.offset(200.0d, 140.0d);
+        elementsSummary.offset(200.0d, 160.0d);
         layer.addChild(elementsSummary);
 
-        PText label3 = new PText("Identifiable lements node:");
-        label3.offset(20.0d, 200.0d);
+        PText label3 = new PText("Identifiable elements node:");
+        label3.offset(20.0d, 260.0d);
         layer.addChild(label3);
         IdElementsNode<IdentifiableString> elements = new IdElementsNode<IdentifiableString>(eventList);
-        elements.offset(200.0d, 200.0d);
+        elements.offset(200.0d, 260.0d);
         layer.addChild(elements);
 
         PText label4 = new PText("Identifiable event list node:");
@@ -137,8 +146,24 @@ public final class IdEventListNodeExample
         t.setRepeats(true);
         t.start();
 
+        JList list = new JList();
+        list.setModel(new EventListModel<IdentifiableString>(eventList));
+        list.setCellRenderer(new IdListCellRenderer(TangoProject.EXTRA_SMALL));
+        list.setPrototypeCellValue(new IdentifiableString("0123456789012345678"));
+
+        LabelFieldPanel left = new LabelFieldPanel();
+        left.addLabel("List:");
+        left.addFinalField(new JScrollPane(list));
+        left.setBorder(new EmptyBorder(20, 20, 20, 20));
+
+        LabelFieldPanel right = new LabelFieldPanel();
+        right.addLabel("Canvas:");
+        right.addFinalField(new JScrollPane(canvas));
+        right.setBorder(new EmptyBorder(20, 0, 20, 20));
+
         setLayout(new BorderLayout());
-        add("Center", canvas);
+        add("West", left);
+        add("Center", right);
     }
 
 
@@ -148,7 +173,7 @@ public final class IdEventListNodeExample
         JFrame f = new JFrame("Identifiable Event List Node Example");
         f.setContentPane(this);
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        f.setBounds(100, 100, 600, 600);
+        f.setBounds(100, 100, 900, 600);
         f.setVisible(true);
     }
 
