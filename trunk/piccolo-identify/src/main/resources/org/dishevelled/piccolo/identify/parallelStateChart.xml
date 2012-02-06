@@ -30,97 +30,97 @@
 
     <state id="mouseButton">
       <initial>
-	<transition target="mouseReleased"/>
+        <transition target="mouseReleased"/>
       </initial>
       <state id="mouseReleased">
-	<transition event="mousePressed" target="mousePressed"/>
+        <transition event="mousePressed" target="mousePressed"/>
       </state>
       <state id="mousePressed">
-	<transition event="mouseReleased" target="mouseReleased"/>
+        <transition event="mouseReleased" target="mouseReleased"/>
       </state>
     </state>
 
     <state id="mouseover">
       <initial>
-	<transition target="mouseExited"/>
+        <transition target="mouseExited"/>
       </initial>
       <state id="mouseExited">
-	<transition event="mouseEntered" target="mouseEntered"/>
+        <transition event="mouseEntered" target="mouseEntered"/>
       </state>
       <state id="mouseEntered">
-	<transition event="mouseExited" target="mouseExited"/>
+        <transition event="mouseExited" target="mouseExited"/>
       </state>
     </state>
 
     <state id="selection">
       <initial>
-	<transition target="deselected"/>
+        <transition target="deselected"/>
       </initial>
       <state id="deselected">
-	<transition event="select" target="selected"/>
+        <transition event="select" target="selected"/>
       </state>
       <state id="selected">
-	<transition event="deselect" target="deselected"/>
+        <transition event="deselect" target="deselected"/>
       </state>
     </state>
 
     <state id="dragging">
       <initial>
-	<transition target="dragEnded"/>
+        <transition target="dragEnded"/>
       </initial>
       <state id="dragEnded">
-	<transition event="startDrag" target="dragStarted"/>
+        <transition event="startDrag" target="dragStarted"/>
       </state>
       <state id="dragStarted">
-	<transition event="endDrag" target="dragEnded"/>
+        <transition event="endDrag" target="dragEnded"/>
       </state>
     </state>
 
     <state id="state">
       <initial>
-	<transition target="enabled"/>
+        <transition target="enabled"/>
       </initial>
       <state id="disabled">
-	<transition event="enable" target="enabled"/>
+        <transition event="enable" target="enabled"/>
       </state>
       <state id="enabled">
-	<transition event="disable" target="disabled"/>
+        <transition event="disable" target="disabled"/>
       </state>
     </state>
 
     <state id="focus">
       <initial>
-	<transition target="lostFocus"/>
+        <transition target="lostFocus"/>
       </initial>
       <state id="lostFocus">
-	<transition event="gainFocus" target="gainedFocus"/>
+        <transition event="gainFocus" target="gainedFocus"/>
       </state>
       <state id="gainedFocus">
-	<transition event="loseFocus" target="lostFocus"/>
+        <transition event="loseFocus" target="lostFocus"/>
       </state>
     </state>
 
     <state id="edit">
       <initial>
-	<transition target="editEnded"/>
+        <transition target="editEnded"/>
       </initial>
       <state id="editEnded">
-	<transition event="startEdit" target="editStarted"/>
+        <transition event="startEdit" target="editStarted"/>
       </state>
       <state id="editStarted">
-	<transition event="endEdit" target="editEnded"/>
+        <transition event="endEdit" target="editEnded"/>
       </state>
     </state>
 
     <state id="video">
       <initial>
-	<transition target="normalVideo"/>
+        <transition target="normalVideo"/>
       </initial>
       <state id="normalVideo">
-	<transition event="reverseVideo" target="reversedVideo"/>
+        <transition event="reverseVideo" target="reversedVideo"/>
       </state>
       <state id="reversedVideo">
-	<transition event="reverseVideo" target="normalVideo"/>
+        <transition event="reverseVideo" target="normalVideo"/>
       </state>
     </state>
   </parallel>

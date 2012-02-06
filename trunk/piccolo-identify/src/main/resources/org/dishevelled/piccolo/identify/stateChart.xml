@@ -33,23 +33,22 @@
     
   <state id="dragging">
     <transition event="disable" target="disabled"/>
-    <!-- todo:  this isn't correct if being dragged along with something else that has the mouse pointer on it -->
     <transition event="endDrag" target="selectedMouseover"/>
     <transition event="reverseVideo" target="reverseDragging"/>
   </state>
 
   <state id="mouseover">
     <transition event="disable" target="disabled"/>
-    <!-- todo: mousePressed to selected should be handled by selection model -->
-    <transition event="mousePressed" target="selectedMouseover"/>
     <transition event="mouseExited" target="normal"/>
+    <transition event="select" target="selectedMouseover"/>
     <transition event="reverseVideo" target="reverseMouseover"/>
   </state>
 
   <state id="selectedMouseover">
     <transition event="disable" target="disabled"/>
-    <transition event="startDrag" target="dragging"/>
+    <transition event="deselect" target="mouseover"/>
     <transition event="mouseExited" target="selected"/>
+    <transition event="startDrag" target="dragging"/>
     <transition event="reverseVideo" target="reverseSelectedMouseover"/>
   </state>
 
@@ -62,9 +61,8 @@
 
   <state id="selected">
     <transition event="disable" target="disabled"/>
-    <transition event="startDrag" target="dragging"/>
-    <transition event="mouseEntered" target="selectedMouseover"/>
     <transition event="deselect" target="normal"/>
+    <transition event="mouseEntered" target="selectedMouseover"/>
     <transition event="reverseVideo" target="reverseSelected"/>
   </state>
 
@@ -77,23 +75,22 @@
     
   <state id="reverseDragging">
     <transition event="disable" target="reverseDisabled"/>
-    <!-- todo:  this isn't correct if being dragged along with something else that has the mouse pointer on it -->
     <transition event="endDrag" target="reverseSelectedMouseover"/>
     <transition event="reverseVideo" target="dragging"/>
   </state>
 
   <state id="reverseMouseover">
     <transition event="disable" target="reverseDisabled"/>
-    <!-- todo: mousePressed to selected should be handled by selection model -->
-    <transition event="mousePressed" target="reverseSelectedMouseover"/>
     <transition event="mouseExited" target="reverseNormal"/>
+    <transition event="select" target="reverseSelectedMouseover"/>
     <transition event="reverseVideo" target="mouseover"/>
   </state>
 
   <state id="reverseSelectedMouseover">
     <transition event="disable" target="disabled"/>
-    <transition event="startDrag" target="reverseDragging"/>
+    <transition event="deselect" target="reverseMouseover"/>
     <transition event="mouseExited" target="reverseSelected"/>
+    <transition event="startDrag" target="reverseDragging"/>
     <transition event="reverseVideo" target="selectedMouseover"/>
   </state>
 
@@ -106,9 +103,8 @@
 
   <state id="reverseSelected">
     <transition event="disable" target="reverseDisabled"/>
-    <transition event="startDrag" target="reverseDragging"/>
-    <transition event="mouseEntered" target="reverseSelectedMouseover"/>
     <transition event="deselect" target="reverseNormal"/>
+    <transition event="mouseEntered" target="reverseSelectedMouseover"/>
     <transition event="reverseVideo" target="selected"/>
   </state>
 </scxml>
