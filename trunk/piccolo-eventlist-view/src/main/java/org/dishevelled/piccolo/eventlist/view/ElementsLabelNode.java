@@ -84,7 +84,7 @@ public final class ElementsLabelNode<E>
         super(model);
         elements = new PText();
         updateLabelText();
-        addListeners();
+        getModel().addListEventListener(listener);
         addChild(elements);
     }
 
@@ -204,14 +204,6 @@ public final class ElementsLabelNode<E>
             }
         }
         elements.setText(sb.toString());
-    }
-
-    /**
-     * Add listeners.
-     */
-    private void addListeners()
-    {
-        getModel().addListEventListener(listener);
     }
 
     /**

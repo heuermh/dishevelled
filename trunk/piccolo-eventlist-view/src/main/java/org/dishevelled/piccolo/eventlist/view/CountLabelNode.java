@@ -66,7 +66,7 @@ public final class CountLabelNode<E>
         super(model);
         count = new PText();
         updateLabelText();
-        addListeners();
+        getModel().addListEventListener(listener);
         addChild(count);
     }
 
@@ -111,14 +111,6 @@ public final class CountLabelNode<E>
     private void updateLabelText()
     {
         count.setText(String.valueOf(getModel().size()));
-    }
-
-    /**
-     * Add listeners.
-     */
-    private void addListeners()
-    {
-        getModel().addListEventListener(listener);
     }
 
     /**
