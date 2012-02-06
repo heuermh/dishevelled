@@ -31,7 +31,7 @@ import org.dishevelled.iconbundle.IconSize;
 
 import org.dishevelled.iconbundle.tango.TangoProject;
 
-import org.dishevelled.piccolo.identify.GenericIdNode;
+import org.dishevelled.piccolo.identify.NautilusIdNode;
 
 /**
  * Identifiable elements summary node.
@@ -50,12 +50,14 @@ public final class IdElementsSummaryNode<E>
     public static final IconSize DEFAULT_ICON_SIZE = TangoProject.MEDIUM;
 
     /** Model to view mapping. */
-    private final UnaryFunction<E, GenericIdNode> modelToView = new UnaryFunction<E, GenericIdNode>()
+    private final UnaryFunction<E, NautilusIdNode> modelToView = new UnaryFunction<E, NautilusIdNode>()
         {
             /** {@inheritDoc} */
-            public GenericIdNode evaluate(final E element)
+            public NautilusIdNode evaluate(final E element)
             {
-                return new GenericIdNode(element, iconSize);
+                NautilusIdNode idNode = new NautilusIdNode(element, iconSize);
+                idNode.removeInputEventListener(idNode.getDragHandler());
+                return idNode;
             }
         };
 
@@ -106,9 +108,9 @@ public final class IdElementsSummaryNode<E>
     {
         for (Object o : getChildrenReference())
         {
-            if (o instanceof GenericIdNode)
+            if (o instanceof NautilusIdNode)
             {
-                GenericIdNode idNode = (GenericIdNode) o;
+                NautilusIdNode idNode = (NautilusIdNode) o;
                 idNode.setIconSize(iconSize);
             }
         }

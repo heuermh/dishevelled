@@ -29,6 +29,7 @@ import ca.odell.glazedlists.event.ListEvent;
 import ca.odell.glazedlists.event.ListEventListener;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.swing.JCheckBoxMenuItem;
@@ -77,7 +78,35 @@ public class ElementsNode<E>
             /** @{inheritDoc} */
             public void listChanged(final ListEvent<E> event)
             {
-                updateNodes();
+                while (event.nextBlock())
+                {
+                    int start = event.getBlockStartIndex();
+                    int end = event.getBlockEndIndex();
+                    switch (event.getType())
+                    {
+                    case ListEvent.INSERT:
+                        for (int i = start; i < (end + 1); i++)
+                        {
+                            addChild(i, modelToView.evaluate(getModel().get(i)));
+                        }
+                        break;
+                    case ListEvent.UPDATE:
+                        for (int i = start; i < (end + 1); i++)
+                        {
+                            removeChild(i);
+                            addChild(i, modelToView.evaluate(getModel().get(i)));
+                        }
+                        break;
+                    case ListEvent.DELETE:
+                        for (int i = end; i > (start - 1); i--)
+                        {
+                            removeChild(i);
+                        }
+                        break;
+                    default:
+                        break;
+                    }
+                }
             }
         };
 
@@ -91,6 +120,7 @@ public class ElementsNode<E>
     {
         super(model);
         getModel().addListEventListener(listener);
+        getModel().getPublisher().setRelatedListener(getSelectionModel(), listener);
 
         contextMenu = new IdPopupMenu();
         contextMenu.add(getCutAction(), TangoProject.EXTRA_SMALL);
@@ -135,7 +165,6 @@ public class ElementsNode<E>
     public ElementsNode(final EventList<E> model, final UnaryFunction<E, ? extends PNode> modelToView)
     {
         this(model);
-        getModel().addListEventListener(listener);
         setModelToView(modelToView);
     }
 
@@ -228,7 +257,6 @@ public class ElementsNode<E>
      */
     private void updateNodes()
     {
-        // todo:  fine grained updates
         removeAllChildren();
         if (!isEmpty())
         {
@@ -244,14 +272,6 @@ public class ElementsNode<E>
             }
             addChildren(children);
         }
-    }
-
-    /**
-     * Add listeners.
-     */
-    private void addListeners()
-    {
-        getModel().addListEventListener(listener);
     }
 
     /**

@@ -24,6 +24,7 @@
 package org.dishevelled.piccolo.eventlist.view;
 
 import ca.odell.glazedlists.EventList;
+import ca.odell.glazedlists.ListSelection;
 
 import org.dishevelled.functor.UnaryFunction;
 
@@ -31,7 +32,12 @@ import org.dishevelled.iconbundle.IconSize;
 
 import org.dishevelled.iconbundle.tango.TangoProject;
 
-import org.dishevelled.piccolo.identify.GenericIdNode;
+import org.dishevelled.piccolo.identify.NautilusIdNode;
+
+import org.piccolo2d.PNode;
+
+import org.piccolo2d.event.PBasicInputEventHandler;
+import org.piccolo2d.event.PInputEvent;
 
 /**
  * Identifiable elements node.
@@ -50,12 +56,64 @@ public final class IdElementsNode<E>
     public static final IconSize DEFAULT_ICON_SIZE = TangoProject.LARGE;
 
     /** Model to view mapping. */
-    private final UnaryFunction<E, GenericIdNode> modelToView = new UnaryFunction<E, GenericIdNode>()
+    private final UnaryFunction<E, NautilusIdNode> modelToView = new UnaryFunction<E, NautilusIdNode>()
         {
             /** {@inheritDoc} */
-            public GenericIdNode evaluate(final E element)
+            public NautilusIdNode evaluate(final E element)
             {
-                return new GenericIdNode(element, iconSize);
+                final NautilusIdNode idNode = new NautilusIdNode(element, iconSize);
+                idNode.removeInputEventListener(idNode.getDragHandler());
+                // todo:  will need to dispose this listener at some point
+                idNode.addInputEventListener(new PBasicInputEventHandler()
+                    {
+                        /** {@inheritDoc} */
+                        public void mousePressed(final PInputEvent event) {
+                            if (event.isLeftMouseButton()) {
+                                int indexInParent = indexOfChild(idNode);
+                                if (getSelectionModel().isSelected(indexInParent))
+                                {
+                                    if (!(event.isShiftDown()))
+                                    {
+                                        getSelectionModel().deselect(indexInParent);
+                                    }
+                                }
+                                else
+                                {
+                                    if (!(event.isShiftDown()) && !(event.isControlDown()))
+                                    {
+                                        getSelectionModel().deselectAll();
+                                    }
+                                    getSelectionModel().select(indexInParent);
+                                }
+                            }
+                        }
+                    });
+                return idNode;
+            }
+        };
+
+    /** Selection listener. */
+    private final ListSelection.Listener selectionListener = new ListSelection.Listener()
+        {
+            /** {@inheritDoc} */
+            public void selectionChanged(final int changeStart, final int changeEnd)
+            {
+                for (int i = changeStart; i < (changeEnd + 1); i++)
+                {
+                    PNode child = getChild(i);
+                    if (child instanceof NautilusIdNode)
+                    {
+                        NautilusIdNode idNode = (NautilusIdNode) child;
+                        if (getSelectionModel().isSelected(i))
+                        {
+                            idNode.select();
+                        }
+                        else
+                        {
+                            idNode.deselect();
+                        }
+                    }
+                }
             }
         };
 
@@ -69,6 +127,7 @@ public final class IdElementsNode<E>
     {
         super(model);
         setModelToView(modelToView);
+        getSelectionModel().addSelectionListener(selectionListener);
     }
 
 
@@ -106,11 +165,26 @@ public final class IdElementsNode<E>
     {
         for (Object o : getChildrenReference())
         {
-            if (o instanceof GenericIdNode)
+            if (o instanceof NautilusIdNode)
             {
-                GenericIdNode idNode = (GenericIdNode) o;
+                NautilusIdNode idNode = (NautilusIdNode) o;
                 idNode.setIconSize(iconSize);
             }
         }
+    }
+
+    /**
+     * Remove listeners.
+     */
+    private void removeListeners()
+    {
+        getSelectionModel().removeSelectionListener(selectionListener);
+    }
+
+    /** {@inheritDoc} */
+    public void dispose()
+    {
+        super.dispose();
+        removeListeners();
     }
 }
