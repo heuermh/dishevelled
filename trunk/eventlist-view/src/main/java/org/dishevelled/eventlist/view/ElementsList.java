@@ -170,7 +170,7 @@ public class ElementsList<E>
      *
      * @return the list for this elements list
      */
-    protected final JList getList()
+    public final JList getList()
     {
         return list;
     }
@@ -268,7 +268,7 @@ public class ElementsList<E>
         private ListSelectionModelAdapter()
         {
             listenerList = new EventListenerList();
-            // will need to dispose this listener at some point
+            // todo:  will need to dispose this listener at some point
             getSelectionModel().addSelectionListener(new ListSelection.Listener()
                 {
                     /** {@inheritDoc} */
