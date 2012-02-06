@@ -36,6 +36,7 @@ import java.net.URL;
 
 import org.piccolo2d.PNode;
 
+import org.piccolo2d.event.PBasicInputEventHandler;
 import org.piccolo2d.event.PInputEvent;
 import org.piccolo2d.event.PDragSequenceEventHandler;
 
@@ -64,7 +65,7 @@ import org.dishevelled.identify.IdentifyUtils;
  *
  * <p>This node is backed by a state machine which is responsible
  * for managing all state transitions.  Mouse events are translated
- * into state transitions by a default mouse event handler.  Clients
+ * into state transitions by drag and mouseover event handlers.  Clients
  * may fire additional state transitions using methods on this class (see e.g.
  * <a href="#enable"><code>enable()</code>.</a>  Invalid state transitions
  * are ignored.</p>
@@ -128,6 +129,12 @@ public abstract class AbstractIdNode
     /** Default icon text direction, left to right. */
     public static final IconTextDirection DEFAULT_ICON_TEXT_DIRECTION = IconTextDirection.LEFT_TO_RIGHT;
 
+    /** Drag handler. */
+    private DragHandler dragHandler;
+
+    /** Mouseover handler. */
+    private MouseoverHandler mouseoverHandler;
+
 
     /**
      * Create a new abstract id node with the specified value.
@@ -143,62 +150,10 @@ public abstract class AbstractIdNode
         iconBundleImageNode = new IconBundleImageNode();
         nameTextNode = new NameTextNode();
 
-        // TODO:  split into drag, mouseover, selection handlers
-        PDragSequenceEventHandler dragSequenceEventHandler = new PDragSequenceEventHandler()
-            {
-                /** {@inheritDoc} */
-                protected void drag(final PInputEvent event)
-                {
-                    Dimension2D delta = event.getDeltaRelativeTo(AbstractIdNode.this);
-                    AbstractIdNode.this.translate(delta.getWidth(), delta.getHeight());
-                    event.setHandled(true);
-                }
-
-                /** {@inheritDoc} */
-                protected void startDrag(final PInputEvent event)
-                {
-                    AbstractIdNode.this.moveToFront();
-                    AbstractIdNode.this.startDrag();
-                    super.startDrag(event);
-                }
-
-                /** {@inheritDoc} */
-                protected void endDrag(final PInputEvent event)
-                {
-                    AbstractIdNode.this.endDrag();
-                    super.endDrag(event);
-                }
-
-                /** {@inheritDoc} */
-                public void mouseEntered(final PInputEvent event)
-                {
-                    AbstractIdNode.this.mouseEntered();
-                    super.mouseEntered(event);
-                }
-
-                /** {@inheritDoc} */
-                public void mouseExited(final PInputEvent event)
-                {
-                    AbstractIdNode.this.mouseExited();
-                    super.mouseExited(event);
-                }
-
-                /** {@inheritDoc} */
-                public void mousePressed(final PInputEvent event)
-                {
-                    AbstractIdNode.this.mousePressed();
-                    super.mousePressed(event);
-                }
-
-                /** {@inheritDoc} */
-                public void mouseReleased(final PInputEvent event)
-                {
-                    AbstractIdNode.this.mouseReleased();
-                    super.mouseReleased(event);
-                }
-            };
-        dragSequenceEventHandler.setMinDragStartDistance(4.0d);
-        addInputEventListener(dragSequenceEventHandler);
+        dragHandler = new DragHandler();
+        mouseoverHandler = new MouseoverHandler();
+        addInputEventListener(dragHandler);
+        addInputEventListener(mouseoverHandler);
 
         if (stateMachine == null)
         {
@@ -356,6 +311,26 @@ public abstract class AbstractIdNode
     protected final NameTextNode getNameTextNode()
     {
         return nameTextNode;
+    }
+
+    /**
+     * Return the drag handler for this id node.
+     *
+     * @return the drag handler for this id node
+     */
+    public final DragHandler getDragHandler()
+    {
+        return dragHandler;
+    }
+
+    /**
+     * Return the mouseover handler for this id node.
+     *
+     * @return the mouseover handler for this id node
+     */
+    public final MouseoverHandler getMouseoverHandler()
+    {
+        return mouseoverHandler;
     }
 
     /**
@@ -547,6 +522,76 @@ public abstract class AbstractIdNode
         public void propertyChange(final PropertyChangeEvent event)
         {
             update();
+        }
+    }
+
+    /**
+     * Drag handler.
+     */
+    private final class DragHandler extends PDragSequenceEventHandler
+    {
+        /**
+         * Create a new drag handler.
+         */
+        private DragHandler()
+        {
+            super();
+            setMinDragStartDistance(4.0d);
+        }
+
+        /** {@inheritDoc} */
+        protected void drag(final PInputEvent event)
+        {
+            Dimension2D delta = event.getDeltaRelativeTo(AbstractIdNode.this);
+            AbstractIdNode.this.translate(delta.getWidth(), delta.getHeight());
+            event.setHandled(true);
+        }
+
+        /** {@inheritDoc} */
+        protected void startDrag(final PInputEvent event)
+        {
+            AbstractIdNode.this.moveToFront();
+            AbstractIdNode.this.startDrag();
+            super.startDrag(event);
+        }
+
+        /** {@inheritDoc} */
+        protected void endDrag(final PInputEvent event)
+        {
+            AbstractIdNode.this.endDrag();
+            super.endDrag(event);
+        }
+
+        /** {@inheritDoc} */
+        public void mousePressed(final PInputEvent event)
+        {
+            AbstractIdNode.this.mousePressed();
+            super.mousePressed(event);
+        }
+
+        /** {@inheritDoc} */
+        public void mouseReleased(final PInputEvent event)
+        {
+            AbstractIdNode.this.mouseReleased();
+            super.mouseReleased(event);
+        }
+    }
+
+    /**
+     * Mouseover handler.
+     */
+    private final class MouseoverHandler extends PBasicInputEventHandler
+    {
+        /** {@inheritDoc} */
+        public void mouseEntered(final PInputEvent event)
+        {
+            AbstractIdNode.this.mouseEntered();
+        }
+
+        /** {@inheritDoc} */
+        public void mouseExited(final PInputEvent event)
+        {
+            AbstractIdNode.this.mouseExited();
         }
     }
 }
