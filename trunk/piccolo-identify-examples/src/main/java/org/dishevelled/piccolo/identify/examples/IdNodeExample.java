@@ -31,7 +31,9 @@ import java.awt.event.ActionEvent;
 
 import java.net.URL;
 
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Set;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -251,25 +253,33 @@ public final class IdNodeExample
         canvas.getInputMap().put(KeyStroke.getKeyStroke("ctrl R"), "reverseVideo");
         canvas.getActionMap().put("reverseVideo", reverseVideo);
 
-        // simulate a selection model by deselecting all when clicking outside a pickable node
+        // simulate a selection model; handles shift & ctrl click, missing marquee and drag all selected
+        final Set<AbstractIdNode> selection = new HashSet<AbstractIdNode>();
+        for (Iterator i = canvas.getLayer().getChildrenIterator(); i.hasNext(); )
+        {
+            PNode node = (PNode) i.next();
+            if (node instanceof AbstractIdNode)
+            {
+                AbstractIdNode idNode = (AbstractIdNode) node;
+                idNode.addInputEventListener(new SelectionHandler(idNode, selection));
+            }
+        }
         canvas.getCamera().addInputEventListener(new PBasicInputEventHandler()
             {
                 /** {@inheritDoc} */
                 public void mousePressed(final PInputEvent event)
                 {
-                    if (event.getCamera().equals(event.getPickedNode())
-                        || lightBackground.equals(event.getPickedNode())
-                        || darkBackground.equals(event.getPickedNode()))
+                    PNode pickedNode = event.getPickedNode();
+                    if (event.getCamera().equals(pickedNode)
+                        || lightBackground.equals(pickedNode)
+                        || darkBackground.equals(pickedNode))
                     {
-                        for (Iterator i = canvas.getLayer().getChildrenIterator(); i.hasNext(); )
+                        System.out.println("deselecting all, selection=" + selection);
+                        for (Iterator i = selection.iterator(); i.hasNext(); )
                         {
-                            PNode node = (PNode) i.next();
-                            if (node instanceof AbstractIdNode)
-                            {
-                                AbstractIdNode idNode = (AbstractIdNode) node;
-                                idNode.deselect();
-                            }
+                            ((AbstractIdNode) i.next()).deselect();
                         }
+                        selection.clear();
                     }
                 }
             });
@@ -413,6 +423,52 @@ public final class IdNodeExample
         public String getName()
         {
             return "My Computer";
+        }
+    }
+
+    /**
+     * Selection handler.
+     */
+    private static class SelectionHandler extends PBasicInputEventHandler
+    {
+        private final AbstractIdNode idNode;
+        private final Set<AbstractIdNode> selection;
+
+        private SelectionHandler(final AbstractIdNode idNode, final Set<AbstractIdNode> selection)
+        {
+            super();
+            this.idNode = idNode;
+            this.selection = selection;
+        }
+
+        /** {@inheritDoc} */
+        public void mousePressed(final PInputEvent event)
+        {
+            System.out.println("selectionHandler mousePressed");
+            if (selection.contains(idNode))
+            {
+                if (!(event.isShiftDown()))
+                {
+                    System.out.println("deselecting " + idNode + ", selection=" + selection);
+                    idNode.deselect();
+                    selection.remove(idNode);
+                }
+            }
+            else
+            {
+                if (!(event.isShiftDown()) && !(event.isControlDown()))
+                {
+                    // deselect all others first
+                    for (Iterator i = selection.iterator(); i.hasNext(); )
+                    {
+                        ((AbstractIdNode) i.next()).deselect();
+                    }
+                    selection.clear();
+                }
+                System.out.println("selecting " + idNode + ", selection=" + selection);
+                idNode.select();
+                selection.add(idNode);
+            }
         }
     }
 
