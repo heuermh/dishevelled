@@ -36,7 +36,6 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JList;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -44,6 +43,8 @@ import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
 import javax.swing.border.EmptyBorder;
+
+import org.dishevelled.eventlist.view.IdElementsList;
 
 import org.dishevelled.identify.Identifiable;
 import org.dishevelled.identify.IdListCellRenderer;
@@ -146,14 +147,12 @@ public final class IdEventListNodeExample
         t.setRepeats(true);
         t.start();
 
-        JList list = new JList();
-        list.setModel(new EventListModel<IdentifiableString>(eventList));
-        list.setCellRenderer(new IdListCellRenderer(TangoProject.EXTRA_SMALL));
-        list.setPrototypeCellValue(new IdentifiableString("0123456789012345678"));
+        IdElementsList<IdentifiableString> elementsList = new IdElementsList<IdentifiableString>(eventList);
+        elementsList.getList().setPrototypeCellValue(new IdentifiableString("0123456789012345678"));
 
         LabelFieldPanel left = new LabelFieldPanel();
         left.addLabel("List:");
-        left.addFinalField(new JScrollPane(list));
+        left.addFinalField(elementsList);
         left.setBorder(new EmptyBorder(20, 20, 20, 20));
 
         LabelFieldPanel right = new LabelFieldPanel();
