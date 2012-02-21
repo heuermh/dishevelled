@@ -41,9 +41,9 @@ public final class TernaryVennModelImplTest
 {
 
     /** {@inheritDoc} */
-    protected <T> TernaryVennModel<T> createTernaryVennModel3(final Set<? extends T> first,
-            final Set<? extends T> second,
-            final Set<? extends T> third)
+    protected <T> TernaryVennModel<T> createTernaryVennModel(final Set<? extends T> first,
+                                                             final Set<? extends T> second,
+                                                             final Set<? extends T> third)
     {
         return new TernaryVennModelImpl<T>(first, second, third);
     }

@@ -152,21 +152,67 @@ public abstract class AbstractQuaternaryVennModelTest
      * @return a new instance of an implementation of QuaternaryVennModel with the
      *    specified sets to test
      */
-    protected abstract <T> QuaternaryVennModel<T> createQuaternaryVennModel3(Set<? extends T> first,
+    protected abstract <T> QuaternaryVennModel<T> createQuaternaryVennModel(Set<? extends T> first,
                                                                             Set<? extends T> second,
                                                                             Set<? extends T> third,
                                                                             Set<? extends T> fourth);
 
 
-    public void testCreateQuaternaryVennModel3()
+    public void testCreateQuaternaryVennModel()
     {
-        QuaternaryVennModel<String> quaternaryVennModel = createQuaternaryVennModel3(FIRST, SECOND, THIRD, FOURTH);
+        QuaternaryVennModel<String> quaternaryVennModel = createQuaternaryVennModel(FIRST, SECOND, THIRD, FOURTH);
         assertNotNull(quaternaryVennModel);
+
+        try
+        {
+            createQuaternaryVennModel(null, SECOND, THIRD, FOURTH);
+            fail("createQuaternaryVennModel(null,,,) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+        try
+        {
+            createQuaternaryVennModel(FIRST, null, THIRD, FOURTH);
+            fail("createQuaternaryVennModel(,null,,) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+        try
+        {
+            createQuaternaryVennModel(FIRST, SECOND, null, FOURTH);
+            fail("createQuaternaryVennModel(,,null,) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+        try
+        {
+            createQuaternaryVennModel(FIRST, SECOND, THIRD, null);
+            fail("createQuaternaryVennModel(,,,null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+        try
+        {
+            createQuaternaryVennModel(null, null, null, null);
+            fail("createQuaternaryVennModel(null, null, null, null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
     }
 
     public void testFirst()
     {
-        QuaternaryVennModel<String> quaternaryVennModel = createQuaternaryVennModel3(FIRST, SECOND, THIRD, FOURTH);
+        QuaternaryVennModel<String> quaternaryVennModel = createQuaternaryVennModel(FIRST, SECOND, THIRD, FOURTH);
         Set<String> first = quaternaryVennModel.first();
         assertNotNull(first);
         assertEquals(8, first.size());
@@ -183,7 +229,7 @@ public abstract class AbstractQuaternaryVennModelTest
 
     public void testFirstListener()
     {
-        QuaternaryVennModel<String> quaternaryVennModel = createQuaternaryVennModel3(FIRST, SECOND, THIRD, FOURTH);
+        QuaternaryVennModel<String> quaternaryVennModel = createQuaternaryVennModel(FIRST, SECOND, THIRD, FOURTH);
         ObservableSet<String> first = quaternaryVennModel.first();
         Listener listener = new Listener();
         first.addSetChangeListener(listener);
@@ -194,7 +240,7 @@ public abstract class AbstractQuaternaryVennModelTest
 
     public void testSecond()
     {
-        QuaternaryVennModel<String> quaternaryVennModel = createQuaternaryVennModel3(FIRST, SECOND, THIRD, FOURTH);
+        QuaternaryVennModel<String> quaternaryVennModel = createQuaternaryVennModel(FIRST, SECOND, THIRD, FOURTH);
         Set<String> second = quaternaryVennModel.second();
         assertNotNull(second);
         assertEquals(8, second.size());
@@ -211,7 +257,7 @@ public abstract class AbstractQuaternaryVennModelTest
 
     public void testSecondListener()
     {
-        QuaternaryVennModel<String> quaternaryVennModel = createQuaternaryVennModel3(FIRST, SECOND, THIRD, FOURTH);
+        QuaternaryVennModel<String> quaternaryVennModel = createQuaternaryVennModel(FIRST, SECOND, THIRD, FOURTH);
         ObservableSet<String> second = quaternaryVennModel.second();
         Listener listener = new Listener();
         second.addSetChangeListener(listener);
@@ -222,7 +268,7 @@ public abstract class AbstractQuaternaryVennModelTest
 
     public void testThird()
     {
-        QuaternaryVennModel<String> quaternaryVennModel = createQuaternaryVennModel3(FIRST, SECOND, THIRD, FOURTH);
+        QuaternaryVennModel<String> quaternaryVennModel = createQuaternaryVennModel(FIRST, SECOND, THIRD, FOURTH);
         Set<String> third = quaternaryVennModel.third();
         assertNotNull(third);
         assertEquals(8, third.size());
@@ -239,7 +285,7 @@ public abstract class AbstractQuaternaryVennModelTest
 
     public void testThirdListener()
     {
-        QuaternaryVennModel<String> quaternaryVennModel = createQuaternaryVennModel3(FIRST, SECOND, THIRD, FOURTH);
+        QuaternaryVennModel<String> quaternaryVennModel = createQuaternaryVennModel(FIRST, SECOND, THIRD, FOURTH);
         ObservableSet<String> third = quaternaryVennModel.third();
         Listener listener = new Listener();
         third.addSetChangeListener(listener);
@@ -250,7 +296,7 @@ public abstract class AbstractQuaternaryVennModelTest
 
     public void testFourth()
     {
-        QuaternaryVennModel<String> quaternaryVennModel = createQuaternaryVennModel3(FIRST, SECOND, THIRD, FOURTH);
+        QuaternaryVennModel<String> quaternaryVennModel = createQuaternaryVennModel(FIRST, SECOND, THIRD, FOURTH);
         Set<String> fourth = quaternaryVennModel.fourth();
         assertNotNull(fourth);
         assertEquals(8, fourth.size());
@@ -267,7 +313,7 @@ public abstract class AbstractQuaternaryVennModelTest
 
     public void testFourthListener()
     {
-        QuaternaryVennModel<String> quaternaryVennModel = createQuaternaryVennModel3(FIRST, SECOND, THIRD, FOURTH);
+        QuaternaryVennModel<String> quaternaryVennModel = createQuaternaryVennModel(FIRST, SECOND, THIRD, FOURTH);
         ObservableSet<String> third = quaternaryVennModel.third();
         Listener listener = new Listener();
         third.addSetChangeListener(listener);
@@ -278,7 +324,7 @@ public abstract class AbstractQuaternaryVennModelTest
 
     public void testFirstOnly()
     {
-        QuaternaryVennModel<String> quaternaryVennModel = createQuaternaryVennModel3(FIRST, SECOND, THIRD, FOURTH);
+        QuaternaryVennModel<String> quaternaryVennModel = createQuaternaryVennModel(FIRST, SECOND, THIRD, FOURTH);
         Set<String> first = quaternaryVennModel.first();
         Set<String> firstOnly = quaternaryVennModel.firstOnly();
         assertNotNull(firstOnly);
@@ -302,7 +348,7 @@ public abstract class AbstractQuaternaryVennModelTest
 
     public void testSecondOnly()
     {
-        QuaternaryVennModel<String> quaternaryVennModel = createQuaternaryVennModel3(FIRST, SECOND, THIRD, FOURTH);
+        QuaternaryVennModel<String> quaternaryVennModel = createQuaternaryVennModel(FIRST, SECOND, THIRD, FOURTH);
         Set<String> second = quaternaryVennModel.second();
         Set<String> secondOnly = quaternaryVennModel.secondOnly();
         assertNotNull(secondOnly);
@@ -326,7 +372,7 @@ public abstract class AbstractQuaternaryVennModelTest
 
     public void testThirdOnly()
     {
-        QuaternaryVennModel<String> quaternaryVennModel = createQuaternaryVennModel3(FIRST, SECOND, THIRD, FOURTH);
+        QuaternaryVennModel<String> quaternaryVennModel = createQuaternaryVennModel(FIRST, SECOND, THIRD, FOURTH);
         Set<String> third = quaternaryVennModel.third();
         Set<String> thirdOnly = quaternaryVennModel.thirdOnly();
         assertNotNull(thirdOnly);
@@ -350,7 +396,7 @@ public abstract class AbstractQuaternaryVennModelTest
 
     public void testFourthOnly()
     {
-        QuaternaryVennModel<String> quaternaryVennModel = createQuaternaryVennModel3(FIRST, SECOND, THIRD, FOURTH);
+        QuaternaryVennModel<String> quaternaryVennModel = createQuaternaryVennModel(FIRST, SECOND, THIRD, FOURTH);
         Set<String> fourth = quaternaryVennModel.fourth();
         Set<String> fourthOnly = quaternaryVennModel.fourthOnly();
         assertNotNull(fourthOnly);
@@ -374,7 +420,7 @@ public abstract class AbstractQuaternaryVennModelTest
 
     public void testFirstSecond()
     {
-        QuaternaryVennModel<String> quaternaryVennModel = createQuaternaryVennModel3(FIRST, SECOND, THIRD, FOURTH);
+        QuaternaryVennModel<String> quaternaryVennModel = createQuaternaryVennModel(FIRST, SECOND, THIRD, FOURTH);
         Set<String> firstSecond = quaternaryVennModel.firstSecond();
         assertNotNull(firstSecond);
         assertTrue(firstSecond.contains("f n s - t - r"));
@@ -397,7 +443,7 @@ public abstract class AbstractQuaternaryVennModelTest
 
     public void testFirstThird()
     {
-        QuaternaryVennModel<String> quaternaryVennModel = createQuaternaryVennModel3(FIRST, SECOND, THIRD, FOURTH);
+        QuaternaryVennModel<String> quaternaryVennModel = createQuaternaryVennModel(FIRST, SECOND, THIRD, FOURTH);
         Set<String> firstThird = quaternaryVennModel.firstThird();
         assertNotNull(firstThird);
         assertTrue(firstThird.contains("f n t - s - r"));
@@ -420,7 +466,7 @@ public abstract class AbstractQuaternaryVennModelTest
 
     public void testFirstFourth()
     {
-        QuaternaryVennModel<String> quaternaryVennModel = createQuaternaryVennModel3(FIRST, SECOND, THIRD, FOURTH);
+        QuaternaryVennModel<String> quaternaryVennModel = createQuaternaryVennModel(FIRST, SECOND, THIRD, FOURTH);
         Set<String> firstFourth = quaternaryVennModel.firstFourth();
         assertNotNull(firstFourth);
         assertTrue(firstFourth.contains("f n r - s - t"));
@@ -443,7 +489,7 @@ public abstract class AbstractQuaternaryVennModelTest
 
     public void testSecondThird()
     {
-        QuaternaryVennModel<String> quaternaryVennModel = createQuaternaryVennModel3(FIRST, SECOND, THIRD, FOURTH);
+        QuaternaryVennModel<String> quaternaryVennModel = createQuaternaryVennModel(FIRST, SECOND, THIRD, FOURTH);
         Set<String> secondThird = quaternaryVennModel.secondThird();
         assertNotNull(secondThird);
         assertTrue(secondThird.contains("s n t - f - r"));
@@ -466,7 +512,7 @@ public abstract class AbstractQuaternaryVennModelTest
 
     public void testSecondFourth()
     {
-        QuaternaryVennModel<String> quaternaryVennModel = createQuaternaryVennModel3(FIRST, SECOND, THIRD, FOURTH);
+        QuaternaryVennModel<String> quaternaryVennModel = createQuaternaryVennModel(FIRST, SECOND, THIRD, FOURTH);
         Set<String> secondFourth = quaternaryVennModel.secondFourth();
         assertNotNull(secondFourth);
         assertTrue(secondFourth.contains("s n r - f - t"));
@@ -489,7 +535,7 @@ public abstract class AbstractQuaternaryVennModelTest
 
     public void testThirdFourth()
     {
-        QuaternaryVennModel<String> quaternaryVennModel = createQuaternaryVennModel3(FIRST, SECOND, THIRD, FOURTH);
+        QuaternaryVennModel<String> quaternaryVennModel = createQuaternaryVennModel(FIRST, SECOND, THIRD, FOURTH);
         Set<String> thirdFourth = quaternaryVennModel.thirdFourth();
         assertNotNull(thirdFourth);
         assertTrue(thirdFourth.contains("t n r - f - s"));
@@ -512,7 +558,7 @@ public abstract class AbstractQuaternaryVennModelTest
 
     public void testFirstSecondThird()
     {
-        QuaternaryVennModel<String> quaternaryVennModel = createQuaternaryVennModel3(FIRST, SECOND, THIRD, FOURTH);
+        QuaternaryVennModel<String> quaternaryVennModel = createQuaternaryVennModel(FIRST, SECOND, THIRD, FOURTH);
         Set<String> firstSecondThird = quaternaryVennModel.firstSecondThird();
         assertNotNull(firstSecondThird);
         assertTrue(firstSecondThird.contains("f u s u t - r"));
@@ -537,7 +583,7 @@ public abstract class AbstractQuaternaryVennModelTest
 
     public void testFirstSecondFourth()
     {
-        QuaternaryVennModel<String> quaternaryVennModel = createQuaternaryVennModel3(FIRST, SECOND, THIRD, FOURTH);
+        QuaternaryVennModel<String> quaternaryVennModel = createQuaternaryVennModel(FIRST, SECOND, THIRD, FOURTH);
         Set<String> firstSecondFourth = quaternaryVennModel.firstSecondFourth();
         assertNotNull(firstSecondFourth);
         assertTrue(firstSecondFourth.contains("f u s u r - t"));
@@ -562,7 +608,7 @@ public abstract class AbstractQuaternaryVennModelTest
 
     public void testSecondThirdFourth()
     {
-        QuaternaryVennModel<String> quaternaryVennModel = createQuaternaryVennModel3(FIRST, SECOND, THIRD, FOURTH);
+        QuaternaryVennModel<String> quaternaryVennModel = createQuaternaryVennModel(FIRST, SECOND, THIRD, FOURTH);
         Set<String> secondThirdFourth = quaternaryVennModel.secondThirdFourth();
         assertNotNull(secondThirdFourth);
         assertTrue(secondThirdFourth.contains("s u t u r - f"));
@@ -587,7 +633,7 @@ public abstract class AbstractQuaternaryVennModelTest
 
     public void testFirstThirdFourth()
     {
-        QuaternaryVennModel<String> quaternaryVennModel = createQuaternaryVennModel3(FIRST, SECOND, THIRD, FOURTH);
+        QuaternaryVennModel<String> quaternaryVennModel = createQuaternaryVennModel(FIRST, SECOND, THIRD, FOURTH);
         Set<String> firstThirdFourth = quaternaryVennModel.firstThirdFourth();
         assertNotNull(firstThirdFourth);
         assertTrue(firstThirdFourth.contains("f u t u r - s"));
@@ -612,7 +658,7 @@ public abstract class AbstractQuaternaryVennModelTest
 
     public void testIntersection()
     {
-        QuaternaryVennModel<String> quaternaryVennModel = createQuaternaryVennModel3(FIRST, SECOND, THIRD, FOURTH);
+        QuaternaryVennModel<String> quaternaryVennModel = createQuaternaryVennModel(FIRST, SECOND, THIRD, FOURTH);
         Set<String> intersection = quaternaryVennModel.intersection();
         assertNotNull(intersection);
         assertEquals(1, intersection.size());
@@ -640,7 +686,7 @@ public abstract class AbstractQuaternaryVennModelTest
 
     public void testUnion()
     {
-        QuaternaryVennModel<String> quaternaryVennModel = createQuaternaryVennModel3(FIRST, SECOND, THIRD, FOURTH);
+        QuaternaryVennModel<String> quaternaryVennModel = createQuaternaryVennModel(FIRST, SECOND, THIRD, FOURTH);
         Set<String> union = quaternaryVennModel.union();
         assertNotNull(union);
         assertEquals(UNION.size(), union.size());
@@ -680,7 +726,7 @@ public abstract class AbstractQuaternaryVennModelTest
 
     public void testSelection()
     {
-        QuaternaryVennModel<String> quaternaryVennModel = createQuaternaryVennModel3(FIRST, SECOND, THIRD, FOURTH);
+        QuaternaryVennModel<String> quaternaryVennModel = createQuaternaryVennModel(FIRST, SECOND, THIRD, FOURTH);
         Set<String> first = quaternaryVennModel.first();
         Set<String> second = quaternaryVennModel.second();
         Set<String> third = quaternaryVennModel.third();
@@ -752,7 +798,7 @@ public abstract class AbstractQuaternaryVennModelTest
 
     public void testSelectionListener()
     {
-        QuaternaryVennModel<String> quaternaryVennModel = createQuaternaryVennModel3(FIRST, SECOND, THIRD, FOURTH);
+        QuaternaryVennModel<String> quaternaryVennModel = createQuaternaryVennModel(FIRST, SECOND, THIRD, FOURTH);
         ObservableSet<String> selection = quaternaryVennModel.selection();
         Listener listener = new Listener();
         selection.addSetChangeListener(listener);
