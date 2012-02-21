@@ -41,10 +41,10 @@ public final class QuaternaryVennModelImplTest
 {
 
     /** {@inheritDoc} */
-    protected <T> QuaternaryVennModel<T> createQuaternaryVennModel3(final Set<? extends T> first,
-                                                                     final Set<? extends T> second,
-                                                                     final Set<? extends T> third,
-                                                                     final Set<? extends T> fourth)
+    protected <T> QuaternaryVennModel<T> createQuaternaryVennModel(final Set<? extends T> first,
+                                                                   final Set<? extends T> second,
+                                                                   final Set<? extends T> third,
+                                                                   final Set<? extends T> fourth)
     {
         return new QuaternaryVennModelImpl<T>(first, second, third, fourth);
     }

@@ -41,7 +41,7 @@ public final class BinaryVennModelImplTest
 {
 
     /** {@inheritDoc} */
-    protected <T> BinaryVennModel<T> createBinaryVennModel3(final Set<? extends T> first, final Set<? extends T> second)
+    protected <T> BinaryVennModel<T> createBinaryVennModel(final Set<? extends T> first, final Set<? extends T> second)
     {
         return new BinaryVennModelImpl<T>(first, second);
     }
