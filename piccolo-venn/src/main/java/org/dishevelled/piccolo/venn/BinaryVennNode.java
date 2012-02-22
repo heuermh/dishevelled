@@ -56,6 +56,16 @@ import org.dishevelled.venn.BinaryVennModel;
 public class BinaryVennNode<E>
     extends AbstractBinaryVennNode<E>
 {
+    // to support VennLayout:
+    //   add VennLayout ctr parameter
+    //   boundingRectangle, performanceHints?
+    //   first and second should be lazy initialized
+    //   call vennLayout.layout in layoutChildren
+    //   check if empty areas occur
+    //   place size labels at lune centers, i.e. offset
+    //   consider using lune center x for labelLeft, labelRight
+    //   call layoutChildren from updateContents, care not to infinite loop
+
     /** Path node for the first set. */
     private final PPath first = new PPath.Double(FIRST_SHAPE, STROKE);
 

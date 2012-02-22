@@ -249,9 +249,9 @@ public class QuaternaryVennNode<E>
      * @param fourth fourth set, must not be null
      */
     public QuaternaryVennNode(final String firstLabelText, final Set<? extends E> first,
-                               final String secondLabelText, final Set<? extends E> second,
-                               final String thirdLabelText, final Set<? extends E> third,
-                               final String fourthLabelText, final Set<? extends E> fourth)
+                              final String secondLabelText, final Set<? extends E> second,
+                              final String thirdLabelText, final Set<? extends E> third,
+                              final String fourthLabelText, final Set<? extends E> fourth)
     {
         super(firstLabelText, first, secondLabelText, second, thirdLabelText, third, fourthLabelText, fourth);
         initNodes();

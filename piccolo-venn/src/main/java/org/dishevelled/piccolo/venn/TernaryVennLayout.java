@@ -40,7 +40,10 @@ public final class TernaryVennLayout
     private final Shape thirdShape;
     private final Point2D firstOnlyLuneCenter;
     private final Point2D secondOnlyLuneCenter;
-    // todo:  rest of label centers . . .
+    private final Point2D thirdOnlyLuneCenter;
+    private final Point2D firstSecondLuneCenter;
+    private final Point2D firstThirdLuneCenter;
+    private final Point2D secondThirdLuneCenter;
     private final Point2D intersectionLuneCenter;
     private final Rectangle2D boundingRectangle;
     private final double score;
@@ -51,6 +54,10 @@ public final class TernaryVennLayout
                       final Shape thirdShape,
                       final Point2D firstOnlyLuneCenter,
                       final Point2D secondOnlyLuneCenter,
+                      final Point2D thirdOnlyLuneCenter,
+                      final Point2D firstSecondLuneCenter,
+                      final Point2D firstThirdLuneCenter,
+                      final Point2D secondThirdLuneCenter,
                       final Point2D intersectionLuneCenter,
                       final Rectangle2D boundingRectangle,
                       final double score)
@@ -60,6 +67,10 @@ public final class TernaryVennLayout
         this.thirdShape = thirdShape;
         this.firstOnlyLuneCenter = firstOnlyLuneCenter;
         this.secondOnlyLuneCenter = secondOnlyLuneCenter;
+        this.thirdOnlyLuneCenter = thirdOnlyLuneCenter;
+        this.firstSecondLuneCenter = firstSecondLuneCenter;
+        this.firstThirdLuneCenter = firstThirdLuneCenter;
+        this.secondThirdLuneCenter = secondThirdLuneCenter;
         this.intersectionLuneCenter = intersectionLuneCenter;
         this.boundingRectangle = boundingRectangle;
         this.score = score;
@@ -89,6 +100,26 @@ public final class TernaryVennLayout
     public Point2D secondOnlyLuneCenter()
     {
         return secondOnlyLuneCenter;
+    }
+
+    public Point2D thirdOnlyLuneCenter()
+    {
+        return thirdOnlyLuneCenter;
+    }
+
+    public Point2D firstSecondLuneCenter()
+    {
+        return firstSecondLuneCenter;
+    }
+
+    public Point2D firstThirdLuneCenter()
+    {
+        return firstThirdLuneCenter;
+    }
+
+    public Point2D secondThirdLuneCenter()
+    {
+        return secondThirdLuneCenter;
     }
 
     public Point2D intersectionLuneCenter()

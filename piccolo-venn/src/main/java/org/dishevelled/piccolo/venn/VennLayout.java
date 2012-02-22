@@ -38,10 +38,37 @@ public interface VennLayout
 {
 
     // let the algorithm choose the best answer
+
+    // or Future<BinaryVennLayout> ?
+
+    /**
+     * Layout the specified binary venn diagram within the specified bounding rectangle.
+     *
+     * @param model binary venn model, must not be null
+     * @param boundingRectangle bounding rectangle, must not be null
+     * @param performanceHint performance hint, must not be null
+     * @return the result of the layout operation
+     */
     BinaryVennLayout layout(BinaryVennModel<?> model, Rectangle2D boundingRectangle, PerformanceHint performanceHint);
 
+    /**
+     * Layout the specified ternary venn diagram within the specified bounding rectangle.
+     *
+     * @param model ternary venn model, must not be null
+     * @param boundingRectangle bounding rectangle, must not be null
+     * @param performanceHint performance hint, must not be null
+     * @return the result of the layout operation
+     */
     TernaryVennLayout layout(TernaryVennModel<?> model, Rectangle2D boundingRectangle, PerformanceHint performanceHint);
 
+    /**
+     * Layout the specified quaternary venn diagram within the specified bounding rectangle.
+     *
+     * @param model quaternary venn model, must not be null
+     * @param boundingRectangle bounding rectangle, must not be null
+     * @param performanceHint performance hint, must not be null
+     * @return the result of the layout operation
+     */
     QuaternaryVennLayout layout(QuaternaryVennModel<?> model, Rectangle2D boundingRectangle, PerformanceHint performanceHint);
 
 
