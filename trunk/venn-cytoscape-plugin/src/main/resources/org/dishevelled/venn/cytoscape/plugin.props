@@ -13,7 +13,7 @@ pluginName=VennDiagrams
 pluginDescription=Cytoscape plugin for venn diagrams.<p>This plugin is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation; either version 3 of the License, or (at your option) any later version.</p><p>This plugin has dependencies on libraries released under other free and/or open source licenses, see website for details.</p><p><a href="http://www.dishevelled.org/venn-cytoscape-plugin">http://www.dishevelled.org/venn-cytoscape-plugin</a></p>
 
 # Plugin version number, this must be two numbers separated by a decimlal.  Ex. 0.2, 14.03
-pluginVersion=0.3
+pluginVersion=0.4
 
 # Compatible Cytoscape version. If there are more than one version, seperate by ",".
 cytoscapeVersion=2.7,2.8
@@ -31,7 +31,7 @@ projectURL=http://www.dishevelled.org/venn-cytoscape-plugin
 pluginAuthorsInstitutions=Michael Heuer:dishevelled.org
 
 # Date this plugin/plugin version was released
-releaseDate=November 15 2010
+releaseDate=March 01 2012
 
 # If this plugin is never meant to be downloaded except as part of a plugin (not common) add this property.  Default is "no"
 themeOnly=no

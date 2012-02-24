@@ -30,6 +30,7 @@ import java.awt.Dialog;
 import java.awt.FileDialog;
 import java.awt.Image;
 import java.awt.Paint;
+import java.awt.Rectangle;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.InputEvent;
@@ -41,6 +42,7 @@ import java.awt.geom.Point2D;
 import java.awt.image.RenderedImage;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 
 import java.util.Iterator;
@@ -59,6 +61,10 @@ import cytoscape.CyNode;
 import cytoscape.CyNetwork;
 import cytoscape.Cytoscape;
 
+import org.apache.batik.dom.GenericDOMImplementation;
+
+import org.apache.batik.svggen.SVGGraphics2D;
+
 import org.dishevelled.piccolo.venn.AbstractVennNode;
 import org.dishevelled.piccolo.venn.BinaryVennNode;
 import org.dishevelled.piccolo.venn.TernaryVennNode;
@@ -73,10 +79,14 @@ import org.piccolo2d.nodes.PText;
 import org.piccolo2d.event.PBasicInputEventHandler;
 import org.piccolo2d.event.PInputEvent;
 import org.piccolo2d.event.PInputEventFilter;
+import org.piccolo2d.event.PMouseWheelZoomEventHandler;
 import org.piccolo2d.event.PPanEventHandler;
 
 import org.piccolo2d.util.PPaintContext;
 import org.piccolo2d.util.PPickPath;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.DOMImplementation;
 
 /**
  * Diagram view.
@@ -87,6 +97,9 @@ import org.piccolo2d.util.PPickPath;
 final class DiagramView
     extends JPanel
 {
+    /** SVG namespace. */
+    private static final String SVG_NS = "http://www.w3.org/2000/svg";
+
     /** Canvas. */
     private final PCanvas canvas;
 
@@ -97,6 +110,16 @@ final class DiagramView
             public void actionPerformed(final ActionEvent event)
             {
                 exportToPNG();
+            }
+        };
+
+    /** Export to SNG image action. */
+    private final Action exportToSVG = new AbstractAction("Export to SVG...") // i18n
+        {
+            /** {@inheritDoc} */
+            public void actionPerformed(final ActionEvent event)
+            {
+                exportToSVG();
             }
         };
 
@@ -176,10 +199,11 @@ final class DiagramView
         canvas.removeInputEventListener(canvas.getZoomEventHandler());
         canvas.addKeyListener(new ModeEventHandler());
         canvas.addInputEventListener(new PanEventHandler());
-        canvas.addInputEventListener(new ZoomEventHandler());
+        canvas.addInputEventListener(new PMouseWheelZoomEventHandler());
 
         JPopupMenu contextMenu = new JPopupMenu();
         contextMenu.add(exportToPNG);
+        contextMenu.add(exportToSVG);
         contextMenu.addSeparator();
         contextMenu.add(selectAll);
         contextMenu.add(clearSelection);
@@ -318,6 +342,48 @@ final class DiagramView
             catch (IOException e)
             {
                 // ignore
+            }
+        }
+    }
+
+    /**
+     * Export to SVG.
+     */
+    private void exportToSVG()
+    {
+        // unsafe cast, if this view isn't rooted in a dialog
+        FileDialog fileDialog = new FileDialog((Dialog) windowForComponent(this), "Export to SVG...", FileDialog.SAVE);
+        fileDialog.setVisible(true);
+
+        String directory = fileDialog.getDirectory();
+        String fileName = fileDialog.getFile();
+
+        if (fileName != null && directory != null)
+        {
+            FileWriter writer = null;
+            try
+            {
+                writer = new FileWriter(new File(directory, fileName));
+                DOMImplementation domImpl = GenericDOMImplementation.getDOMImplementation();
+                Document document = domImpl.createDocument(SVG_NS, "svg", null);
+                SVGGraphics2D svgGenerator = new SVGGraphics2D(document);
+                canvas.paint(svgGenerator);
+                svgGenerator.stream(writer, true);
+            }
+            catch (IOException e)
+            {
+                // ignore
+            }
+            finally
+            {
+                try
+                {
+                    writer.close();
+                }
+                catch (Exception e)
+                {
+                    // ignore
+                }
             }
         }
     }
@@ -510,7 +576,7 @@ final class DiagramView
      * Pan event handler.
      */
     private class PanEventHandler
-            extends PPanEventHandler
+        extends PPanEventHandler
     {
 
         /**
@@ -528,35 +594,6 @@ final class DiagramView
                         return super.acceptsEvent(event, type) && (Mode.PAN == mode);
                     }
                 });
-        }
-    }
-
-    /**
-     * Zoom event handler.
-     */
-    private class ZoomEventHandler
-        extends PBasicInputEventHandler
-    {
-        /**
-         * Create a new zoom event handler.
-         */
-        ZoomEventHandler()
-        {
-            super();
-            PInputEventFilter eventFilter = new PInputEventFilter();
-            eventFilter.rejectAllEventTypes();
-            eventFilter.setAcceptsMouseWheelRotated(true);
-            setEventFilter(eventFilter);
-        }
-
-
-        /** {@inheritDoc} */
-        public void mouseWheelRotated(final PInputEvent event)
-        {
-            PCamera camera = event.getCamera();
-            double scale = 1.0d + event.getWheelRotation() * SCALE_FACTOR;
-            Point2D center = camera.getBoundsReference().getCenter2D();
-            camera.scaleViewAboutPoint(scale, center.getX(), center.getY());
         }
     }
 }
