@@ -49,6 +49,16 @@
       <scope>compile</scope>
     </dependency>
     <dependency>
+      <groupId>org.apache.xmlgraphics</groupId>
+      <artifactId>batik-svg-dom</artifactId>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.xmlgraphics</groupId>
+      <artifactId>batik-svggen</artifactId>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
       <groupId>org.cytoscape</groupId>
       <artifactId>cytoscape</artifactId>
       <version>2.7.0</version>
