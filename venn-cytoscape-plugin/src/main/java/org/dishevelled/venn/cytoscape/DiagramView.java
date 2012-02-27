@@ -199,7 +199,9 @@ final class DiagramView
         canvas.removeInputEventListener(canvas.getZoomEventHandler());
         canvas.addKeyListener(new ModeEventHandler());
         canvas.addInputEventListener(new PanEventHandler());
-        canvas.addInputEventListener(new PMouseWheelZoomEventHandler());
+        PMouseWheelZoomEventHandler mouseWheelZoomEventHandler = new PMouseWheelZoomEventHandler();
+        mouseWheelZoomEventHandler.zoomAboutViewCenter();
+        canvas.addInputEventListener(mouseWheelZoomEventHandler);
 
         JPopupMenu contextMenu = new JPopupMenu();
         contextMenu.add(exportToPNG);
