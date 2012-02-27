@@ -1,6 +1,6 @@
 /*
 
-    dsh-piccolo-venn  Piccolo2D venn diagram nodes and supporting classes.
+    dsh-venn  Lightweight components for venn diagrams.
     Copyright (c) 2009-2012 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
@@ -21,7 +21,7 @@
     > http://www.opensource.org/licenses/lgpl-license.php
 
 */
-package org.dishevelled.piccolo.venn.layout;
+package org.dishevelled.venn.layout;
 
 import java.awt.geom.Rectangle2D;
 
@@ -29,10 +29,10 @@ import org.dishevelled.venn.BinaryVennModel;
 import org.dishevelled.venn.TernaryVennModel;
 import org.dishevelled.venn.QuaternaryVennModel;
 
-import org.dishevelled.piccolo.venn.BinaryVennLayout;
-import org.dishevelled.piccolo.venn.TernaryVennLayout;
-import org.dishevelled.piccolo.venn.QuaternaryVennLayout;
-import org.dishevelled.piccolo.venn.VennLayout;
+import org.dishevelled.venn.BinaryVennLayout;
+import org.dishevelled.venn.TernaryVennLayout;
+import org.dishevelled.venn.QuaternaryVennLayout;
+import org.dishevelled.venn.VennLayout;
 
 /**
  * Venn layout.
