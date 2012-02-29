@@ -33,107 +33,83 @@ import java.awt.geom.Rectangle2D;
  *
  * @author  Michael Heuer
  */
-public final class TernaryVennLayout
+public interface TernaryVennLayout
 {
-    private final Shape firstShape;
-    private final Shape secondShape;
-    private final Shape thirdShape;
-    private final Point2D firstOnlyLuneCenter;
-    private final Point2D secondOnlyLuneCenter;
-    private final Point2D thirdOnlyLuneCenter;
-    private final Point2D firstSecondLuneCenter;
-    private final Point2D firstThirdLuneCenter;
-    private final Point2D secondThirdLuneCenter;
-    private final Point2D intersectionLuneCenter;
-    private final Rectangle2D boundingRectangle;
-    private final double score;
 
+    /**
+     * Return the shape for the first set.
+     *
+     * @return the shape for the first set
+     */
+    Shape firstShape();
 
-    TernaryVennLayout(final Shape firstShape,
-                      final Shape secondShape,
-                      final Shape thirdShape,
-                      final Point2D firstOnlyLuneCenter,
-                      final Point2D secondOnlyLuneCenter,
-                      final Point2D thirdOnlyLuneCenter,
-                      final Point2D firstSecondLuneCenter,
-                      final Point2D firstThirdLuneCenter,
-                      final Point2D secondThirdLuneCenter,
-                      final Point2D intersectionLuneCenter,
-                      final Rectangle2D boundingRectangle,
-                      final double score)
-    {
-        this.firstShape = firstShape;
-        this.secondShape = secondShape;
-        this.thirdShape = thirdShape;
-        this.firstOnlyLuneCenter = firstOnlyLuneCenter;
-        this.secondOnlyLuneCenter = secondOnlyLuneCenter;
-        this.thirdOnlyLuneCenter = thirdOnlyLuneCenter;
-        this.firstSecondLuneCenter = firstSecondLuneCenter;
-        this.firstThirdLuneCenter = firstThirdLuneCenter;
-        this.secondThirdLuneCenter = secondThirdLuneCenter;
-        this.intersectionLuneCenter = intersectionLuneCenter;
-        this.boundingRectangle = boundingRectangle;
-        this.score = score;
-    }
+    /**
+     * Return the shape for the second set.
+     *
+     * @return the shape for the second set
+     */
+    Shape secondShape();
 
+    /**
+     * Return the shape for the third set.
+     *
+     * @return the shape for the third set
+     */
+    Shape thirdShape();
 
-    public Shape firstShape()
-    {
-        return firstShape;
-    }
+    /**
+     * Return the lune center of the first only area.
+     *
+     * @return the lune center of the first only area
+     */
+    Point2D firstOnlyLuneCenter();
 
-    public Shape secondShape()
-    {
-        return secondShape;
-    }
+    /**
+     * Return the lune center of the second only area.
+     *
+     * @return the lune center of the second only area
+     */
+    Point2D secondOnlyLuneCenter();
 
-    public Shape thirdShape()
-    {
-        return thirdShape;
-    }
+    /**
+     * Return the lune center of the third only area.
+     *
+     * @return the lune center of the third only area
+     */
+    Point2D thirdOnlyLuneCenter();
 
-    public Point2D firstOnlyLuneCenter()
-    {
-        return firstOnlyLuneCenter;
-    }
+    /**
+     * Return the lune center of the first second area.
+     *
+     * @return the lune center of the first second area
+     */
+    Point2D firstSecondLuneCenter();
 
-    public Point2D secondOnlyLuneCenter()
-    {
-        return secondOnlyLuneCenter;
-    }
+    /**
+     * Return the lune center of the first third area.
+     *
+     * @return the lune center of the first third area
+     */
+    Point2D firstThirdLuneCenter();
 
-    public Point2D thirdOnlyLuneCenter()
-    {
-        return thirdOnlyLuneCenter;
-    }
+    /**
+     * Return the lune center of the second third area.
+     *
+     * @return the lune center of the second third area
+     */
+    Point2D secondThirdLuneCenter();
 
-    public Point2D firstSecondLuneCenter()
-    {
-        return firstSecondLuneCenter;
-    }
+    /**
+     * Return the lune center of the intersection area.
+     *
+     * @return the lune center of the intersection area
+     */
+    Point2D intersectionLuneCenter();
 
-    public Point2D firstThirdLuneCenter()
-    {
-        return firstThirdLuneCenter;
-    }
-
-    public Point2D secondThirdLuneCenter()
-    {
-        return secondThirdLuneCenter;
-    }
-
-    public Point2D intersectionLuneCenter()
-    {
-        return intersectionLuneCenter;
-    }
-
-    public Rectangle2D boundingRectangle()
-    {
-        return boundingRectangle;
-    }
-
-    public double score()
-    {
-        return score;
-    }
+    /**
+     * Return the bounding rectangle of this layout.
+     *
+     * @return the bounding rectangle of this layout
+     */
+    Rectangle2D boundingRectangle();
 }
