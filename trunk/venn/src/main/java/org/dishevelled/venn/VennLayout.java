@@ -25,10 +25,6 @@ package org.dishevelled.venn;
 
 import java.awt.geom.Rectangle2D;
 
-import org.dishevelled.venn.BinaryVennModel;
-import org.dishevelled.venn.TernaryVennModel;
-import org.dishevelled.venn.QuaternaryVennModel;
-
 /**
  * Venn layout.
  *
@@ -47,7 +43,9 @@ public interface VennLayout
      * @param performanceHint performance hint, must not be null
      * @return the result of the layout operation
      */
-    BinaryVennLayout layout(BinaryVennModel<?> model, Rectangle2D boundingRectangle, PerformanceHint performanceHint);
+    BinaryVennLayout layout(BinaryVennModel<?> model,
+                            Rectangle2D boundingRectangle,
+                            PerformanceHint performanceHint);
 
     /**
      * Layout the specified ternary venn diagram within the specified bounding rectangle.
@@ -57,7 +55,9 @@ public interface VennLayout
      * @param performanceHint performance hint, must not be null
      * @return the result of the layout operation
      */
-    TernaryVennLayout layout(TernaryVennModel<?> model, Rectangle2D boundingRectangle, PerformanceHint performanceHint);
+    TernaryVennLayout layout(TernaryVennModel<?> model,
+                             Rectangle2D boundingRectangle,
+                             PerformanceHint performanceHint);
 
     /**
      * Layout the specified quaternary venn diagram within the specified bounding rectangle.
@@ -67,7 +67,9 @@ public interface VennLayout
      * @param performanceHint performance hint, must not be null
      * @return the result of the layout operation
      */
-    QuaternaryVennLayout layout(QuaternaryVennModel<?> model, Rectangle2D boundingRectangle, PerformanceHint performanceHint);
+    QuaternaryVennLayout layout(QuaternaryVennModel<?> model,
+                                Rectangle2D boundingRectangle,
+                                PerformanceHint performanceHint);
 
 
     // allow the caller to choose the best answer
@@ -78,7 +80,7 @@ public interface VennLayout
                                       ScoringFunction<BinaryVennLayout> scoringFunction,
                                       ScorePredicate scorePredicate,
                                       PerformanceHint performanceHint);
-                               
+
     interface ScoringFunction<E>
     {
         double score(E layout);
@@ -90,9 +92,15 @@ public interface VennLayout
     }
     */
 
+    /**
+     * Performance hint.
+     */
     enum PerformanceHint
     {
+        /** Optimize for speed. */
         OPTIMIZE_FOR_SPEED,
+
+        /** Optimize for correctness. */
         OPTIMIZE_FOR_CORRECTNESS;
     }
 }
