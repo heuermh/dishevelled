@@ -384,7 +384,7 @@ public final class TernaryVennList<E>
 
         panel.add(Box.createGlue());
         panel.add(Box.createGlue());
- 
+
         LabelFieldPanel fs = new LabelFieldPanel();
         fs.addLabel(getFirstSecondLabel());
         fs.addFinalField(new JScrollPane(firstSecond));

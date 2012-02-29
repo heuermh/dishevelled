@@ -38,8 +38,18 @@ public final class VennModels
 {
 
     /**
+     * Private no-arg constructor.
+     */
+    private VennModels()
+    {
+        // empty
+    }
+
+
+    /**
      * Create and return a new binary venn model with the specified sets.
      *
+     * @param <E> value type
      * @param first first set, must not be null
      * @param second second set, must not be null
      * @return a new binary venn model with the specified sets
@@ -53,6 +63,7 @@ public final class VennModels
     /**
      * Create and return a new ternary venn model with the specified sets.
      *
+     * @param <E> value type
      * @param first first set, must not be null
      * @param second second set, must not be null
      * @param third third set, must not be null
@@ -68,6 +79,7 @@ public final class VennModels
     /**
      * Create and return a new quaternary venn model with the specified sets.
      *
+     * @param <E> value type
      * @param first first set, must not be null
      * @param second second set, must not be null
      * @param third third set, must not be null
