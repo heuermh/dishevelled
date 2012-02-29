@@ -39,8 +39,6 @@ public interface VennLayout
 
     // let the algorithm choose the best answer
 
-    // or Future<BinaryVennLayout> ?
-
     /**
      * Layout the specified binary venn diagram within the specified bounding rectangle.
      *
@@ -75,15 +73,21 @@ public interface VennLayout
     // allow the caller to choose the best answer
 
     /*
-      or Iterable<Future<BinaryVennLayout>> ?
-      or SortedSet<BinaryVennLayout> sorted by score ?
-      or WeightedMap<BinaryVennLayout> ?
-
-    Iterable<BinaryVennLayout> layout(BinaryVennModel<?> model,
+    Iterator<BinaryVennLayout> layout(BinaryVennModel<?> model,
                                       Rectangle2D boundingRectangle,
-                                      Function<BinaryVennLayout, Double> scoringFunction, // return a score for each layout
-                                      Predicate<Double> evaluationPredicate, // return true if a score meets the cutoff
+                                      ScoringFunction<BinaryVennLayout> scoringFunction,
+                                      ScorePredicate scorePredicate,
                                       PerformanceHint performanceHint);
+                               
+    interface ScoringFunction<E>
+    {
+        double score(E layout);
+    }
+
+    interface ScorePredicate
+    {
+        boolean evaluate(double score);
+    }
     */
 
     enum PerformanceHint

@@ -21,60 +21,33 @@
     > http://www.opensource.org/licenses/lgpl-license.php
 
 */
-package org.dishevelled.venn;
+package org.dishevelled.venn.layout;
 
 import java.awt.Shape;
-
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
+import org.dishevelled.venn.AbstractTernaryVennLayoutTest;
+import org.dishevelled.venn.TernaryVennLayout;
+
 /**
- * Result of a binary venn diagram layout operation.
+ * Unit test for TernaryVennLayoutImpl.
  *
  * @author  Michael Heuer
  */
-public interface BinaryVennLayout
+public final class TernaryVennLayoutImplTest
+    extends AbstractTernaryVennLayoutTest
 {
 
-    /**
-     * Return the shape for the first set.
-     *
-     * @return the shape for the first set
-     */
-    Shape firstShape();
+    /** {@inheritDoc} */
+    protected TernaryVennLayout createTernaryVennLayout()
+    {
+        Shape shape = new Rectangle2D.Double(0.0d, 0.0d, 100.0d, 100.0d);
+        Point2D center = new Point2D.Double(50.0d, 50.0);
+        Rectangle2D boundingRectangle = new Rectangle2D.Double(-10.0d, -10.0d, 110.0d, 110.0d);
 
-    /**
-     * Return the shape for the second set.
-     *
-     * @return the shape for the second set
-     */
-    Shape secondShape();
-
-    /**
-     * Return the lune center of the first only area.
-     *
-     * @return the lune center of the first only area
-     */
-    Point2D firstOnlyLuneCenter(); // todo:  or just firstOnlyCenter()?
-
-    /**
-     * Return the lune center of the second only area.
-     *
-     * @return the lune center of the second only area
-     */
-    Point2D secondOnlyLuneCenter();
-
-    /**
-     * Return the lune center of the intersection area.
-     *
-     * @return the lune center of the intersection area
-     */
-    Point2D intersectionLuneCenter();
-
-    /**
-     * Return the bounding rectangle of this layout.
-     *
-     * @return the bounding rectangle of this layout
-     */
-    Rectangle2D boundingRectangle();
+        return new TernaryVennLayoutImpl(shape, shape, shape,
+                                         center, center, center, center, center,
+                                         center, center, boundingRectangle);
+    }
 }
