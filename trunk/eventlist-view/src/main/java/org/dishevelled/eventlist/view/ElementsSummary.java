@@ -268,14 +268,6 @@ public class ElementsSummary<E>
     }
 
     /**
-     * Add listeners.
-     */
-    private void addListeners()
-    {
-        getModel().addListEventListener(listener);
-    }
-
-    /**
      * Remove listeners.
      */
     private void removeListeners()
