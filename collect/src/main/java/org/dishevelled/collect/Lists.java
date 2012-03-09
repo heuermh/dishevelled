@@ -135,7 +135,7 @@ public final class Lists
      */
     public static <T> List<T> asImmutableList(final T... elements)
     {
-        return ImmutableList.of(elements);
+        return ImmutableList.copyOf(elements);
     }
 
     /**
