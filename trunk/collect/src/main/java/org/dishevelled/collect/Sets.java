@@ -264,7 +264,7 @@ public final class Sets
      */
     public static <T> Set<T> asImmutableSet(final T... elements)
     {
-        return ImmutableSet.of(elements);
+        return ImmutableSet.copyOf(elements);
     }
 
    /**
@@ -316,7 +316,7 @@ public final class Sets
      */
     public static <T extends Comparable<? super T>> SortedSet<T> asImmutableSortedSet(final T... elements)
     {
-        return ImmutableSortedSet.of(elements);
+        return ImmutableSortedSet.copyOf(elements);
     }
 
    /**
