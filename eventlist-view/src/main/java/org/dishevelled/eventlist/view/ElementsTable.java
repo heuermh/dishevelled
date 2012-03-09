@@ -32,7 +32,6 @@ import javax.swing.JTable;
 
 import ca.odell.glazedlists.EventList;
 import ca.odell.glazedlists.SortedList;
-import ca.odell.glazedlists.ListSelection;
 
 import ca.odell.glazedlists.gui.TableFormat;
 
