@@ -26,11 +26,11 @@ package org.dishevelled.venn;
 import java.awt.geom.Rectangle2D;
 
 /**
- * Venn layout.
+ * Venn layout algorithm.
  *
  * @author  Michael Heuer
  */
-public interface VennLayout
+public interface VennLayoutAlgorithm
 {
 
     // let the algorithm choose the best answer
