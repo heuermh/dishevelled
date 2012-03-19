@@ -23,6 +23,8 @@
 */
 package org.dishevelled.venn.layout;
 
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
 import org.dishevelled.venn.BinaryVennModel;
@@ -59,7 +61,24 @@ public final class VennLayoutImpl implements VennLayout
         {
             throw new IllegalArgumentException("performanceHint must not be null");
         }
-        return null;
+
+        double w = boundingRectangle.getWidth();
+        double h = boundingRectangle.getHeight();
+        double cx = w / 2.0d;
+        double cy = h / 2.0d;
+        double d = Math.min(h, 3.0d * w / 5.0d);
+        double r = d / 2.0d;
+        double x = cx - 5.0d * d / 6.0d;
+        double y = cy - d / 2.0d;
+
+        Ellipse2D firstShape = new Ellipse2D.Double(x, y, d, d);
+        Ellipse2D secondShape = new Ellipse2D.Double(x + 2.0d * d / 3.0d, y, d, d);
+        Point2D firstOnlyCenter = new Point2D.Double(cx - r, cy);
+        Point2D secondOnlyCenter = new Point2D.Double(cx + r, cy);
+        Point2D intersectionCenter = new Point2D.Double(cx, cy);
+
+        return new BinaryVennLayoutImpl(firstShape, secondShape,
+                                        firstOnlyCenter, secondOnlyCenter, intersectionCenter, boundingRectangle);
     }
 
     /** {@inheritDoc} */

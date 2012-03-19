@@ -103,6 +103,12 @@ public final class BinaryVennModelImpl<E>
 
 
     /** {@inheritDoc} */
+    public int size()
+    {
+        return 2;
+    }
+
+    /** {@inheritDoc} */
     public ObservableSet<E> first()
     {
         return first;
@@ -112,6 +118,24 @@ public final class BinaryVennModelImpl<E>
     public ObservableSet<E> second()
     {
         return second;
+    }
+
+    /** {@inheritDoc} */
+    public Set<E> set(final int index)
+    {
+        if (index < 0 || index > 1)
+        {
+            throw new IndexOutOfBoundsException("index out of bounds");
+        }
+        switch (index)
+        {
+        case 0:
+            return first;
+        case 1:
+            return second;
+        default:
+        }
+        throw new IllegalStateException("invalid index " + index);
     }
 
     /** {@inheritDoc} */
@@ -130,6 +154,48 @@ public final class BinaryVennModelImpl<E>
     public Set<E> intersection()
     {
         return intersection;
+    }
+
+    /** {@inheritDoc} */
+    public Set<E> exclusiveTo(final int index, final int additional...)
+    {
+        int maxIndex = size() - 1;
+        if (index < 0 || index > maxIndex)
+        {
+            throw new IndexOutOfBoundsException("index out of bounds")
+        }
+        if (additional != null && additional.length > 0)
+        {
+            throw new IndexOutOfBoundsException("too many indices provided")
+        }
+        switch (index)
+        {
+        case 0:
+            return firstOnly();
+        case 1:
+            return secondOnly();
+        default:
+        }
+        throw new IllegalStateException("");
+    }
+
+
+    /** {@inheritDoc} */
+    public Set<E> intersectionOf(final int index0, final int index0, final int additional...)
+    {
+        if (index0 < 0 || index0 > 1)
+        {
+            throw new IndexOutOfBoundsException("index0 out of bounds")
+        }
+        if (index1 < 0 || index1 > 1)
+        {
+            throw new IndexOutOfBoundsException("index1 out of bounds")
+        }
+        if (additional != null && additional.length > 0)
+        {
+            throw new IndexOutOfBoundsException("too many indices provided")
+        }
+        return intersection();
     }
 
     /** {@inheritDoc} */

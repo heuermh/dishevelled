@@ -34,7 +34,7 @@ import org.dishevelled.observable.ObservableSet;
  * @author  Michael Heuer
  * @version $Revision$ $Date$
  */
-public interface QuaternaryVennModel<E>
+public interface QuaternaryVennModel<E> extends VennModel<E>
 {
 
     /**
