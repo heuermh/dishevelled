@@ -178,6 +178,12 @@ public final class QuaternaryVennModelImpl<E>
 
 
     /** {@inheritDoc} */
+    public void size()
+    {
+        return 4;
+    }
+
+    /** {@inheritDoc} */
     public ObservableSet<E> first()
     {
         return first;
@@ -199,6 +205,28 @@ public final class QuaternaryVennModelImpl<E>
     public ObservableSet<E> fourth()
     {
         return fourth;
+    }
+
+    /** {@inheritDoc} */
+    public Set<E> set(final int index)
+    {
+        if (index < 0 || index > 3)
+        {
+            throw new IndexOutOfBoundsException("index out of bounds");
+        }
+        switch (index)
+        {
+        case 0:
+            return first;
+        case 1:
+            return second;
+        case 2:
+            return third;
+        case 3:
+            return fourth;
+        default:
+        }
+        throw new IllegalStateException("invalid index " + index);
     }
 
     /** {@inheritDoc} */

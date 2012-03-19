@@ -97,8 +97,8 @@ public final class TernaryVennModelImpl<E>
      * @param third third set, must not be null
      */
     public TernaryVennModelImpl(final Set<? extends E> first,
-                                  final Set<? extends E> second,
-                                  final Set<? extends E> third)
+                                final Set<? extends E> second,
+                                final Set<? extends E> third)
     {
         if (first == null)
         {
@@ -135,6 +135,12 @@ public final class TernaryVennModelImpl<E>
 
 
     /** {@inheritDoc} */
+    public void size()
+    {
+        return 3;
+    }
+
+    /** {@inheritDoc} */
     public ObservableSet<E> first()
     {
         return first;
@@ -150,6 +156,26 @@ public final class TernaryVennModelImpl<E>
     public ObservableSet<E> third()
     {
         return third;
+    }
+
+    /** {@inheritDoc} */
+    public Set<E> set(final int index)
+    {
+        if (index < 0 || index > 2)
+        {
+            throw new IndexOutOfBoundsException("index out of bounds");
+        }
+        switch (index)
+        {
+        case 0:
+            return first;
+        case 1:
+            return second;
+        case 2:
+            return third;
+        default:
+        }
+        throw new IllegalStateException("invalid index " + index);
     }
 
     /** {@inheritDoc} */
@@ -192,6 +218,150 @@ public final class TernaryVennModelImpl<E>
     public Set<E> intersection()
     {
         return intersection;
+    }
+
+    /*
+
+    public Set<E> exclusiveTo(final int indices...)
+    {
+        return exclusives.get(createMask(mask));
+    }
+
+    static int createMask(final int values...)
+    {
+        if (values == null)
+        {
+            return 0;
+        }
+        if (values.length > size())
+        {
+            throw new IllegalArgumentException("too many values provided");
+        }
+        int mask = 0;
+        for (int i = 0; i < values; i++)
+        {
+            if (values[i] > size() - 1)
+            {
+                throw new IndexOutOfBoundsException("index " + values[i] + " out of bounds");
+            }
+            mask |= 1 << values[i];
+        }
+        return mask;
+    }
+
+        if (index < 0 || index > maxIndex)
+        {
+            throw new IndexOutOfBoundsException("index out of bounds")
+        }
+        if (additional != null && additional.length > 0)
+        {
+            if (additional.length + 2 > size())
+            {
+                throw new IndexOutOfBoundsException("too many indices provided");
+            }
+            for (int i = 0, size = additional.length; i < size; i++)
+            {
+                if (additional[i] < 0 || additional[i] > maxIndex)
+                {
+                    throw new IndexOutOfBoundsException("additional index [" + i + "] out of bounds");
+                }
+            }
+        }
+
+
+        switch (index)
+        {
+        case 0:
+            return firstOnly();
+        case 1:
+            return secondOnly();
+        default:
+        }
+        throw new IllegalStateException("");
+    }
+    */
+
+    /** {@inheritDoc} */
+    public Set<E> intersectionOf(final int index0, final int index0, final int additional...)
+    {
+        if (index0 < 0 || index0 > 2)
+        {
+            throw new IndexOutOfBoundsException("index0 out of bounds")
+        }
+        if (index1 < 0 || index1 > 2)
+        {
+            throw new IndexOutOfBoundsException("index1 out of bounds")
+        }
+        if (additional != null && additional.length > 1)
+        {
+            throw new IndexOutOfBoundsException("too many indices provided")
+        }
+        List<Integer> indices = Lists.newArrayListWithExpectedSize(3);
+        indices.add(index0);
+        indices.add(index1);
+        if (additional != null)
+        {
+            indices.add(additional);
+        }
+        Collections.sort(indices);
+        BitSet key = new BitSet(3);
+        for (Integer index : indices)
+        {
+            key.set(index);
+        }
+        // or use Map<BitSet, Set<E>>, or Map<ImmutableBitSet, Set<E>>
+        if (key.get(0))
+        {
+            if (key.get(1))
+            {
+                if (key.get(2))
+                {
+                    return intersection();
+                }
+                else
+                {
+                    return firstSecond();
+                }
+            }
+            else
+            {
+                if (key.get(2))
+                {
+                    return firstThird();
+                }
+                else
+                {
+                    return firstOnly();
+                }
+
+            }
+        }
+        else
+        {
+            if (key.get(1))
+            {
+                if (key.get(2))
+                {
+                    return secondThird();
+                }
+                else
+                {
+                    return secondOnly();
+                }
+            }
+            else
+            {
+                if (key.get(2))
+                {
+                    return thirdOnly();
+                }
+                else
+                {
+                    throw new IllegalStateException("invalid combination of indices");
+                }
+            }
+        }
+        throw new IllegalStateException("invalid combination of indices");
     }
 
     /** {@inheritDoc} */
