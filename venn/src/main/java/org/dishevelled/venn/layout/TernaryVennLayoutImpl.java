@@ -28,7 +28,14 @@ import java.awt.Shape;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.dishevelled.bitset.ImmutableBitSet;
+
 import org.dishevelled.venn.TernaryVennLayout;
+
+import static org.dishevelled.venn.layout.VennLayoutUtils.toImmutableBitSet;
 
 /**
  * Immutable implementation of TernaryVennLayout.
@@ -68,6 +75,9 @@ public final class TernaryVennLayoutImpl
     /** Lune center of the intersection area. */
     private final Point2D intersectionLuneCenter;
 
+    /** Map of lune centers keyed by bit set. */
+    private final Map<ImmutableBitSet, Point2D> luneCenters;
+
     /** Bounding rectangle. */
     private final Rectangle2D boundingRectangle;
 
@@ -78,13 +88,13 @@ public final class TernaryVennLayoutImpl
      * @param firstShape shape for the first set, must not be null
      * @param secondShape shape for the second set, must not be null
      * @param thirdShape shape for the third set, must not be null
-     * @param firstOnlyLuneCenter lune center for the first only area, must not be null
-     * @param secondOnlyLuneCenter lune center for the second only area, must not be null
-     * @param thirdOnlyLuneCenter lune center for the third only area, must not be null
-     * @param firstSecondLuneCenter lune center for the first second area, must not be null
-     * @param firstThirdLuneCenter lune center for the first third area, must not be null
-     * @param secondThirdLuneCenter lune center for the second third area, must not be null
-     * @param intersectionLuneCenter lune center for the intersection area, must not be null
+     * @param firstOnlyLuneCenter lune center for the first only area
+     * @param secondOnlyLuneCenter lune center for the second only area
+     * @param thirdOnlyLuneCenter lune center for the third only area
+     * @param firstSecondLuneCenter lune center for the first second area
+     * @param firstThirdLuneCenter lune center for the first third area
+     * @param secondThirdLuneCenter lune center for the second third area
+     * @param intersectionLuneCenter lune center for the intersection area
      * @param boundingRectangle bounding rectangle, must not be null
      */
     public TernaryVennLayoutImpl(final Shape firstShape,
@@ -111,34 +121,6 @@ public final class TernaryVennLayoutImpl
         {
             throw new IllegalArgumentException("thirdShape must not be null");
         }
-        if (firstOnlyLuneCenter == null)
-        {
-            throw new IllegalArgumentException("firstOnlyLuneCenter must not be null");
-        }
-        if (secondOnlyLuneCenter == null)
-        {
-            throw new IllegalArgumentException("secondOnlyLuneCenter must not be null");
-        }
-        if (thirdOnlyLuneCenter == null)
-        {
-            throw new IllegalArgumentException("thirdOnlyLuneCenter must not be null");
-        }
-        if (firstSecondLuneCenter == null)
-        {
-            throw new IllegalArgumentException("firstSecondLuneCenter must not be null");
-        }
-        if (firstThirdLuneCenter == null)
-        {
-            throw new IllegalArgumentException("firstThirdLuneCenter must not be null");
-        }
-        if (secondThirdLuneCenter == null)
-        {
-            throw new IllegalArgumentException("secondThirdLuneCenter must not be null");
-        }
-        if (intersectionLuneCenter == null)
-        {
-            throw new IllegalArgumentException("intersectionLuneCenter must not be null");
-        }
         if (boundingRectangle == null)
         {
             throw new IllegalArgumentException("boundingRectangle must not be null");
@@ -154,6 +136,18 @@ public final class TernaryVennLayoutImpl
         this.secondThirdLuneCenter = secondThirdLuneCenter;
         this.intersectionLuneCenter = intersectionLuneCenter;
         this.boundingRectangle = boundingRectangle;
+
+        luneCenters = new HashMap<ImmutableBitSet, Point2D>(7);
+
+        luneCenters.put(toImmutableBitSet(0), this.firstOnlyLuneCenter);
+        luneCenters.put(toImmutableBitSet(1), this.secondOnlyLuneCenter);
+        luneCenters.put(toImmutableBitSet(2), this.thirdOnlyLuneCenter);
+
+        luneCenters.put(toImmutableBitSet(0, 1), this.firstSecondLuneCenter);
+        luneCenters.put(toImmutableBitSet(0, 2), this.firstThirdLuneCenter);
+        luneCenters.put(toImmutableBitSet(1, 2), this.secondThirdLuneCenter);
+
+        luneCenters.put(toImmutableBitSet(0, 1, 2), this.intersectionLuneCenter);
     }
 
 
@@ -215,6 +209,58 @@ public final class TernaryVennLayoutImpl
     public Point2D intersectionLuneCenter()
     {
         return intersectionLuneCenter;
+    }
+
+    /** {@inheritDoc} */
+    public int size()
+    {
+        return 2;
+    }
+
+    /** {@inheritDoc} */
+    public Shape get(final int index)
+    {
+        if (index < 0 || index > 1)
+        {
+            throw new IndexOutOfBoundsException("index out of bounds");
+        }
+        switch (index)
+        {
+        case 0:
+            return firstShape;
+        case 1:
+            return secondShape;
+        case 2:
+            return thirdShape;
+        default:
+            break;
+        }
+        throw new IllegalStateException("invalid index " + index);
+    }
+
+    /** {@inheritDoc} */
+    public Point2D luneCenter(final int index, final int... additional)
+    {
+        int maxIndex = size() - 1;
+        if (index < 0 || index > maxIndex)
+        {
+            throw new IndexOutOfBoundsException("index out of bounds");
+        }
+        if (additional != null && additional.length > 0)
+        {
+            if (additional.length > maxIndex)
+            {
+                throw new IndexOutOfBoundsException("too many indices provided");
+            }
+            for (int i = 0, size = additional.length; i < size; i++)
+            {
+                if (additional[i] < 0 || additional[i] > maxIndex)
+                {
+                    throw new IndexOutOfBoundsException("additional index [" + i + "] out of bounds");
+                }
+            }
+        }
+        return luneCenters.get(toImmutableBitSet(index, additional));
     }
 
     /** {@inheritDoc} */

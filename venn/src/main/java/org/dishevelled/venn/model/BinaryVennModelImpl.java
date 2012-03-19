@@ -121,7 +121,7 @@ public final class BinaryVennModelImpl<E>
     }
 
     /** {@inheritDoc} */
-    public Set<E> set(final int index)
+    public Set<E> get(final int index)
     {
         if (index < 0 || index > 1)
         {
@@ -134,6 +134,7 @@ public final class BinaryVennModelImpl<E>
         case 1:
             return second;
         default:
+            break;
         }
         throw new IllegalStateException("invalid index " + index);
     }
@@ -157,45 +158,27 @@ public final class BinaryVennModelImpl<E>
     }
 
     /** {@inheritDoc} */
-    public Set<E> exclusiveTo(final int index, final int additional...)
+    public Set<E> exclusiveTo(final int index, final int... additional)
     {
         int maxIndex = size() - 1;
         if (index < 0 || index > maxIndex)
         {
-            throw new IndexOutOfBoundsException("index out of bounds")
+            throw new IndexOutOfBoundsException("index out of bounds");
         }
         if (additional != null && additional.length > 0)
         {
-            throw new IndexOutOfBoundsException("too many indices provided")
+            throw new IndexOutOfBoundsException("too many indices provided");
         }
         switch (index)
         {
         case 0:
-            return firstOnly();
+            return firstOnly;
         case 1:
-            return secondOnly();
+            return secondOnly;
         default:
+            break;
         }
-        throw new IllegalStateException("");
-    }
-
-
-    /** {@inheritDoc} */
-    public Set<E> intersectionOf(final int index0, final int index0, final int additional...)
-    {
-        if (index0 < 0 || index0 > 1)
-        {
-            throw new IndexOutOfBoundsException("index0 out of bounds")
-        }
-        if (index1 < 0 || index1 > 1)
-        {
-            throw new IndexOutOfBoundsException("index1 out of bounds")
-        }
-        if (additional != null && additional.length > 0)
-        {
-            throw new IndexOutOfBoundsException("too many indices provided")
-        }
-        return intersection();
+        throw new IllegalStateException("invalid index " + index);
     }
 
     /** {@inheritDoc} */

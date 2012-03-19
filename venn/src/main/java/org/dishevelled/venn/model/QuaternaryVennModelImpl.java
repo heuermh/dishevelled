@@ -178,7 +178,7 @@ public final class QuaternaryVennModelImpl<E>
 
 
     /** {@inheritDoc} */
-    public void size()
+    public int size()
     {
         return 4;
     }
@@ -208,7 +208,7 @@ public final class QuaternaryVennModelImpl<E>
     }
 
     /** {@inheritDoc} */
-    public Set<E> set(final int index)
+    public Set<E> get(final int index)
     {
         if (index < 0 || index > 3)
         {
@@ -225,6 +225,7 @@ public final class QuaternaryVennModelImpl<E>
         case 3:
             return fourth;
         default:
+            break;
         }
         throw new IllegalStateException("invalid index " + index);
     }
@@ -317,6 +318,12 @@ public final class QuaternaryVennModelImpl<E>
     public Set<E> intersection()
     {
         return intersection;
+    }
+
+    /** {@inheritDoc} */
+    public Set<E> exclusiveTo(final int index, final int... additional)
+    {
+        return null;
     }
 
     /** {@inheritDoc} */

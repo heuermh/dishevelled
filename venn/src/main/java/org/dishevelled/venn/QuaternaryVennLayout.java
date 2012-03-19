@@ -33,7 +33,7 @@ import java.awt.geom.Rectangle2D;
  *
  * @author  Michael Heuer
  */
-public interface QuaternaryVennLayout
+public interface QuaternaryVennLayout extends VennLayout
 {
 
     /**
@@ -168,11 +168,4 @@ public interface QuaternaryVennLayout
      * @return the lune center of the intersection area
      */
     Point2D intersectionLuneCenter();
-
-    /**
-     * Return the bounding rectangle of this layout.
-     *
-     * @return the bounding rectangle of this layout
-     */
-    Rectangle2D boundingRectangle();
 }
