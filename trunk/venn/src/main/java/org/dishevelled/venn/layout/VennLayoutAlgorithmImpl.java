@@ -1,3 +1,4 @@
+
 /*
 
     dsh-venn  Lightweight components for venn diagrams.
@@ -27,24 +28,46 @@ import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
-import org.dishevelled.venn.BinaryVennModel;
-import org.dishevelled.venn.TernaryVennModel;
-import org.dishevelled.venn.QuaternaryVennModel;
+import java.util.Iterator;
 
-import org.dishevelled.venn.BinaryVennLayout;
-import org.dishevelled.venn.TernaryVennLayout;
-import org.dishevelled.venn.QuaternaryVennLayout;
+import org.dishevelled.venn.VennModel;
+//import org.dishevelled.venn.BinaryVennModel;
+//import org.dishevelled.venn.TernaryVennModel;
+//import org.dishevelled.venn.QuaternaryVennModel;
+
+//import org.dishevelled.venn.BinaryVennLayout;
+//import org.dishevelled.venn.TernaryVennLayout;
+//import org.dishevelled.venn.QuaternaryVennLayout;
 import org.dishevelled.venn.VennLayout;
+import org.dishevelled.venn.VennLayoutAlgorithm;
 
 /**
- * Venn layout.
+ * Venn layout algorithm.
  *
  * @author  Michael Heuer
  */
-public final class VennLayoutImpl implements VennLayout
+public final class VennLayoutAlgorithmImpl implements VennLayoutAlgorithm
 {
 
     /** {@inheritDoc} */
+    public VennLayout layout(final VennModel<?> model,
+                             final Rectangle2D boundingRectangle,
+                             final PerformanceHint performanceHint)
+    {
+        return null;
+    }
+
+    /** {@inheritDoc} */
+    public Iterator<VennLayout> layout(final VennModel<?> model,
+                                       final Rectangle2D boundingRectangle,
+                                       final ScoringFunction scoringFunction,
+                                       final ScorePredicate scorePredicate,
+                                       final PerformanceHint performanceHint)
+    {
+        return null;
+    }
+
+    /*
     public BinaryVennLayout layout(final BinaryVennModel<?> model,
                                    final Rectangle2D boundingRectangle,
                                    final PerformanceHint performanceHint)
@@ -81,7 +104,6 @@ public final class VennLayoutImpl implements VennLayout
                                         firstOnlyCenter, secondOnlyCenter, intersectionCenter, boundingRectangle);
     }
 
-    /** {@inheritDoc} */
     public TernaryVennLayout layout(final TernaryVennModel<?> model,
                                     final Rectangle2D boundingRectangle,
                                     final PerformanceHint performanceHint)
@@ -101,7 +123,6 @@ public final class VennLayoutImpl implements VennLayout
         return null;
     }
 
-    /** {@inheritDoc} */
     public QuaternaryVennLayout layout(final QuaternaryVennModel<?> model,
                                        final Rectangle2D boundingRectangle,
                                        final PerformanceHint performanceHint)
@@ -120,4 +141,5 @@ public final class VennLayoutImpl implements VennLayout
         }
         return null;
     }
+    */
 }

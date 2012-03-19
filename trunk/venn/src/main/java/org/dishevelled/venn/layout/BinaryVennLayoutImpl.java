@@ -28,7 +28,14 @@ import java.awt.Shape;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.dishevelled.bitset.ImmutableBitSet;
+
 import org.dishevelled.venn.BinaryVennLayout;
+
+import static org.dishevelled.venn.layout.VennLayoutUtils.toImmutableBitSet;
 
 /**
  * Immutable implementation of BinaryVennLayout.
@@ -53,6 +60,9 @@ public final class BinaryVennLayoutImpl
     /** Lune center of the intersection area. */
     private final Point2D intersectionLuneCenter;
 
+    /** Map of lune centers keyed by bit set. */
+    private final Map<ImmutableBitSet, Point2D> luneCenters;
+
     /** Bounding rectangle. */
     private final Rectangle2D boundingRectangle;
 
@@ -62,9 +72,9 @@ public final class BinaryVennLayoutImpl
      *
      * @param firstShape shape for the first set, must not be null
      * @param secondShape shape for the second set, must not be null
-     * @param firstOnlyLuneCenter lune center for the first only area, must not be null
-     * @param secondOnlyLuneCenter lune center for the second only area, must not be null
-     * @param intersectionLuneCenter lune center for the intersection area, must not be null
+     * @param firstOnlyLuneCenter lune center for the first only area
+     * @param secondOnlyLuneCenter lune center for the second only area
+     * @param intersectionLuneCenter lune center for the intersection area
      * @param boundingRectangle bounding rectangle, must not be null
      */
     public BinaryVennLayoutImpl(final Shape firstShape,
@@ -82,18 +92,6 @@ public final class BinaryVennLayoutImpl
         {
             throw new IllegalArgumentException("secondShape must not be null");
         }
-        if (firstOnlyLuneCenter == null)
-        {
-            throw new IllegalArgumentException("firstOnlyLuneCenter must not be null");
-        }
-        if (secondOnlyLuneCenter == null)
-        {
-            throw new IllegalArgumentException("secondOnlyLuneCenter must not be null");
-        }
-        if (intersectionLuneCenter == null)
-        {
-            throw new IllegalArgumentException("intersectionLuneCenter must not be null");
-        }
         if (boundingRectangle == null)
         {
             throw new IllegalArgumentException("boundingRectangle must not be null");
@@ -105,6 +103,14 @@ public final class BinaryVennLayoutImpl
         this.secondOnlyLuneCenter = secondOnlyLuneCenter;
         this.intersectionLuneCenter = intersectionLuneCenter;
         this.boundingRectangle = boundingRectangle;
+
+        luneCenters = new HashMap<ImmutableBitSet, Point2D>(3);
+
+        luneCenters.put(toImmutableBitSet(0), this.firstOnlyLuneCenter);
+        luneCenters.put(toImmutableBitSet(1), this.secondOnlyLuneCenter);
+
+        luneCenters.put(toImmutableBitSet(0, 1), this.intersectionLuneCenter);
+        // copy to immutable map?
     }
 
 
@@ -137,6 +143,56 @@ public final class BinaryVennLayoutImpl
     public Point2D intersectionLuneCenter()
     {
         return intersectionLuneCenter;
+    }
+
+    /** {@inheritDoc} */
+    public int size()
+    {
+        return 2;
+    }
+
+    /** {@inheritDoc} */
+    public Shape get(final int index)
+    {
+        if (index < 0 || index > 1)
+        {
+            throw new IndexOutOfBoundsException("index out of bounds");
+        }
+        switch (index)
+        {
+        case 0:
+            return firstShape;
+        case 1:
+            return secondShape;
+        default:
+            break;
+        }
+        throw new IllegalStateException("invalid index " + index);
+    }
+
+    /** {@inheritDoc} */
+    public Point2D luneCenter(final int index, final int... additional)
+    {
+        int maxIndex = size() - 1;
+        if (index < 0 || index > maxIndex)
+        {
+            throw new IndexOutOfBoundsException("index out of bounds");
+        }
+        if (additional != null && additional.length > 0)
+        {
+            if (additional.length > maxIndex)
+            {
+                throw new IndexOutOfBoundsException("too many indices provided");
+            }
+            for (int i = 0, size = additional.length; i < size; i++)
+            {
+                if (additional[i] < 0 || additional[i] > maxIndex)
+                {
+                    throw new IndexOutOfBoundsException("additional index [" + i + "] out of bounds");
+                }
+            }
+        }
+        return luneCenters.get(toImmutableBitSet(index, additional));
     }
 
     /** {@inheritDoc} */

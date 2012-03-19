@@ -25,6 +25,8 @@ package org.dishevelled.venn;
 
 import java.awt.geom.Rectangle2D;
 
+import java.util.Iterator;
+
 /**
  * Venn layout algorithm.
  *
@@ -36,61 +38,66 @@ public interface VennLayoutAlgorithm
     // let the algorithm choose the best answer
 
     /**
-     * Layout the specified binary venn diagram within the specified bounding rectangle.
+     * Layout the specified venn diagram within the specified bounding rectangle.
      *
-     * @param model binary venn model, must not be null
+     * @param model venn model, must not be null
      * @param boundingRectangle bounding rectangle, must not be null
      * @param performanceHint performance hint, must not be null
      * @return the result of the layout operation
      */
-    BinaryVennLayout layout(BinaryVennModel<?> model,
-                            Rectangle2D boundingRectangle,
-                            PerformanceHint performanceHint);
-
-    /**
-     * Layout the specified ternary venn diagram within the specified bounding rectangle.
-     *
-     * @param model ternary venn model, must not be null
-     * @param boundingRectangle bounding rectangle, must not be null
-     * @param performanceHint performance hint, must not be null
-     * @return the result of the layout operation
-     */
-    TernaryVennLayout layout(TernaryVennModel<?> model,
-                             Rectangle2D boundingRectangle,
-                             PerformanceHint performanceHint);
-
-    /**
-     * Layout the specified quaternary venn diagram within the specified bounding rectangle.
-     *
-     * @param model quaternary venn model, must not be null
-     * @param boundingRectangle bounding rectangle, must not be null
-     * @param performanceHint performance hint, must not be null
-     * @return the result of the layout operation
-     */
-    QuaternaryVennLayout layout(QuaternaryVennModel<?> model,
-                                Rectangle2D boundingRectangle,
-                                PerformanceHint performanceHint);
-
+    VennLayout layout(VennModel<?> model,
+                      Rectangle2D boundingRectangle,
+                      PerformanceHint performanceHint);
 
     // allow the caller to choose the best answer
 
-    /*
-    Iterator<BinaryVennLayout> layout(BinaryVennModel<?> model,
-                                      Rectangle2D boundingRectangle,
-                                      ScoringFunction<BinaryVennLayout> scoringFunction,
-                                      ScorePredicate scorePredicate,
-                                      PerformanceHint performanceHint);
+    /**
+     * Layout the specified venn diagram within the specified bounding rectangle,
+     * returning zero or more possible layouts that satisfy the specified scoring
+     * function and score predicate.
+     *
+     * @param model venn model, must not be null
+     * @param boundingRectangle bounding rectangle, must not be null
+     * @param scoringFunction scoring function, must not be null
+     * @param scorePredicate score predicate, must not be null
+     * @param performanceHint performance hint, must not be null
+     * @return zero or more possible layouts that satisfy the specified scoring
+     *    function and score predicate
+     */
+    Iterator<VennLayout> layout(VennModel<?> model,
+                                Rectangle2D boundingRectangle,
+                                ScoringFunction scoringFunction,
+                                ScorePredicate scorePredicate,
+                                PerformanceHint performanceHint);
 
-    interface ScoringFunction<E>
+
+    /**
+     * Scoring function.
+     */
+    interface ScoringFunction
     {
-        double score(E layout);
+        /**
+         * Return a score for the specified venn layout.
+         *
+         * @param layout venn layout to score
+         * @return a score for the specified venn layout
+         */
+        double score(VennLayout layout);
     }
 
+    /**
+     * Score predicate.
+     */
     interface ScorePredicate
     {
+        /**
+         * Return true if the specified score satisfies this predicate.
+         *
+         * @param score score to evaluate
+         * @return true if the specified score satisfies this predicate
+         */
         boolean evaluate(double score);
     }
-    */
 
     /**
      * Performance hint.

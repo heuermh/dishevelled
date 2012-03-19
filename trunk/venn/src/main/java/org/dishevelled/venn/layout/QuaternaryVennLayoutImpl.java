@@ -28,7 +28,14 @@ import java.awt.Shape;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.dishevelled.bitset.ImmutableBitSet;
+
 import org.dishevelled.venn.QuaternaryVennLayout;
+
+import static org.dishevelled.venn.layout.VennLayoutUtils.toImmutableBitSet;
 
 /**
  * Immutable implementation of QuaternaryVennLayout.
@@ -95,6 +102,9 @@ public final class QuaternaryVennLayoutImpl
     /** Lune center of the intersection area. */
     private final Point2D intersectionLuneCenter;
 
+    /** Map of lune centers keyed by bit set. */
+    private final Map<ImmutableBitSet, Point2D> luneCenters;
+
     /** Bounding rectangle. */
     private final Rectangle2D boundingRectangle;
 
@@ -106,21 +116,21 @@ public final class QuaternaryVennLayoutImpl
      * @param secondShape shape for the second set, must not be null
      * @param thirdShape shape for the third set, must not be null
      * @param fourthShape shape for the fourth set, must not be null
-     * @param firstOnlyLuneCenter lune center for the first only area, must not be null
-     * @param secondOnlyLuneCenter lune center for the second only area, must not be null
-     * @param thirdOnlyLuneCenter lune center for the third only area, must not be null
-     * @param fourthOnlyLuneCenter lune center for the fourth only area, must not be null
-     * @param firstSecondLuneCenter lune center for the first second area, must not be null
-     * @param firstThirdLuneCenter lune center for the first third area, must not be null
-     * @param secondThirdLuneCenter lune center for the second third area, must not be null
-     * @param firstFourthLuneCenter lune center for the first fourth area, must not be null
-     * @param secondFourthLuneCenter lune center for the second fourth area, must not be null
-     * @param thirdFourthLuneCenter lune center for the third fourth area, must not be null
-     * @param firstSecondThirdLuneCenter lune center for the first second third area, must not be null
-     * @param firstSecondFourthLuneCenter lune center for the first second fourth area, must not be null
-     * @param firstThirdFourthLuneCenter lune center for the first third fourth area, must not be null
-     * @param secondThirdFourthLuneCenter lune center for the second third fourth area, must not be null
-     * @param intersectionLuneCenter lune center for the intersection area, must not be null
+     * @param firstOnlyLuneCenter lune center for the first only area
+     * @param secondOnlyLuneCenter lune center for the second only area
+     * @param thirdOnlyLuneCenter lune center for the third only area
+     * @param fourthOnlyLuneCenter lune center for the fourth only area
+     * @param firstSecondLuneCenter lune center for the first second area
+     * @param firstThirdLuneCenter lune center for the first third area
+     * @param secondThirdLuneCenter lune center for the second third area
+     * @param firstFourthLuneCenter lune center for the first fourth area
+     * @param secondFourthLuneCenter lune center for the second fourth area
+     * @param thirdFourthLuneCenter lune center for the third fourth area
+     * @param firstSecondThirdLuneCenter lune center for the first second third area
+     * @param firstSecondFourthLuneCenter lune center for the first second fourth area
+     * @param firstThirdFourthLuneCenter lune center for the first third fourth area
+     * @param secondThirdFourthLuneCenter lune center for the second third fourth area
+     * @param intersectionLuneCenter lune center for the intersection area
      * @param boundingRectangle bounding rectangle, must not be null
      */
     public QuaternaryVennLayoutImpl(final Shape firstShape,
@@ -160,66 +170,6 @@ public final class QuaternaryVennLayoutImpl
         {
             throw new IllegalArgumentException("fourthShape must not be null");
         }
-        if (firstOnlyLuneCenter == null)
-        {
-            throw new IllegalArgumentException("firstOnlyLuneCenter must not be null");
-        }
-        if (secondOnlyLuneCenter == null)
-        {
-            throw new IllegalArgumentException("secondOnlyLuneCenter must not be null");
-        }
-        if (thirdOnlyLuneCenter == null)
-        {
-            throw new IllegalArgumentException("thirdOnlyLuneCenter must not be null");
-        }
-        if (fourthOnlyLuneCenter == null)
-        {
-            throw new IllegalArgumentException("fourthOnlyLuneCenter must not be null");
-        }
-        if (firstSecondLuneCenter == null)
-        {
-            throw new IllegalArgumentException("firstSecondLuneCenter must not be null");
-        }
-        if (firstThirdLuneCenter == null)
-        {
-            throw new IllegalArgumentException("firstThirdLuneCenter must not be null");
-        }
-        if (secondThirdLuneCenter == null)
-        {
-            throw new IllegalArgumentException("secondThirdLuneCenter must not be null");
-        }
-        if (firstFourthLuneCenter == null)
-        {
-            throw new IllegalArgumentException("firstFourthLuneCenter must not be null");
-        }
-        if (secondFourthLuneCenter == null)
-        {
-            throw new IllegalArgumentException("secondFourthLuneCenter must not be null");
-        }
-        if (thirdFourthLuneCenter == null)
-        {
-            throw new IllegalArgumentException("thirdFourthLuneCenter must not be null");
-        }
-        if (firstSecondThirdLuneCenter == null)
-        {
-            throw new IllegalArgumentException("firstSecondThirdLuneCenter must not be null");
-        }
-        if (firstSecondFourthLuneCenter == null)
-        {
-            throw new IllegalArgumentException("firstSecondFourthLuneCenter must not be null");
-        }
-        if (firstThirdFourthLuneCenter == null)
-        {
-            throw new IllegalArgumentException("firstThirdFourthLuneCenter must not be null");
-        }
-        if (secondThirdFourthLuneCenter == null)
-        {
-            throw new IllegalArgumentException("secondThirdFourthLuneCenter must not be null");
-        }
-        if (intersectionLuneCenter == null)
-        {
-            throw new IllegalArgumentException("intersectionLuneCenter must not be null");
-        }
         if (boundingRectangle == null)
         {
             throw new IllegalArgumentException("boundingRectangle must not be null");
@@ -244,6 +194,27 @@ public final class QuaternaryVennLayoutImpl
         this.secondThirdFourthLuneCenter = secondThirdFourthLuneCenter;
         this.intersectionLuneCenter = intersectionLuneCenter;
         this.boundingRectangle = boundingRectangle;
+
+        luneCenters = new HashMap<ImmutableBitSet, Point2D>(15);
+
+        luneCenters.put(toImmutableBitSet(0), this.firstOnlyLuneCenter);
+        luneCenters.put(toImmutableBitSet(1), this.secondOnlyLuneCenter);
+        luneCenters.put(toImmutableBitSet(2), this.thirdOnlyLuneCenter);
+        luneCenters.put(toImmutableBitSet(3), this.fourthOnlyLuneCenter);
+
+        luneCenters.put(toImmutableBitSet(0, 1), this.firstSecondLuneCenter);
+        luneCenters.put(toImmutableBitSet(0, 2), this.firstThirdLuneCenter);
+        luneCenters.put(toImmutableBitSet(0, 3), this.firstFourthLuneCenter);
+        luneCenters.put(toImmutableBitSet(1, 2), this.secondThirdLuneCenter);
+        luneCenters.put(toImmutableBitSet(1, 3), this.secondFourthLuneCenter);
+        luneCenters.put(toImmutableBitSet(2, 3), this.thirdFourthLuneCenter);
+
+        luneCenters.put(toImmutableBitSet(0, 1, 2), this.firstSecondThirdLuneCenter);
+        luneCenters.put(toImmutableBitSet(0, 1, 3), this.firstSecondFourthLuneCenter);
+        luneCenters.put(toImmutableBitSet(0, 2, 3), this.firstThirdFourthLuneCenter);
+        luneCenters.put(toImmutableBitSet(1, 2, 3), this.secondThirdFourthLuneCenter);
+
+        luneCenters.put(toImmutableBitSet(0, 1, 2, 3), this.intersectionLuneCenter);
     }
 
 
@@ -359,6 +330,60 @@ public final class QuaternaryVennLayoutImpl
     public Point2D intersectionLuneCenter()
     {
         return intersectionLuneCenter;
+    }
+
+    /** {@inheritDoc} */
+    public int size()
+    {
+        return 2;
+    }
+
+    /** {@inheritDoc} */
+    public Shape get(final int index)
+    {
+        if (index < 0 || index > 1)
+        {
+            throw new IndexOutOfBoundsException("index out of bounds");
+        }
+        switch (index)
+        {
+        case 0:
+            return firstShape;
+        case 1:
+            return secondShape;
+        case 2:
+            return thirdShape;
+        case 3:
+            return fourthShape;
+        default:
+            break;
+        }
+        throw new IllegalStateException("invalid index " + index);
+    }
+
+    /** {@inheritDoc} */
+    public Point2D luneCenter(final int index, final int... additional)
+    {
+        int maxIndex = size() - 1;
+        if (index < 0 || index > maxIndex)
+        {
+            throw new IndexOutOfBoundsException("index out of bounds");
+        }
+        if (additional != null && additional.length > 0)
+        {
+            if (additional.length > maxIndex)
+            {
+                throw new IndexOutOfBoundsException("too many indices provided");
+            }
+            for (int i = 0, size = additional.length; i < size; i++)
+            {
+                if (additional[i] < 0 || additional[i] > maxIndex)
+                {
+                    throw new IndexOutOfBoundsException("additional index [" + i + "] out of bounds");
+                }
+            }
+        }
+        return luneCenters.get(toImmutableBitSet(index, additional));
     }
 
     /** {@inheritDoc} */
