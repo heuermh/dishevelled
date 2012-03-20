@@ -32,7 +32,7 @@ import java.util.Iterator;
  *
  * @author  Michael Heuer
  */
-public interface VennLayoutAlgorithm
+public interface VennLayouter
 {
 
     // let the algorithm choose the best answer
