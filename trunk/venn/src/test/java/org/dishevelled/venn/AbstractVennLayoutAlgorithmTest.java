@@ -40,7 +40,7 @@ import static org.dishevelled.venn.VennLayoutAlgorithm.PerformanceHint.OPTIMIZE_
  *
  * @author  Michael Heuer
  */
-public abstract class AbstractVennLayoutTest
+public abstract class AbstractVennLayoutAlgorithmTest
     extends TestCase
 {
     protected VennLayoutAlgorithm vennLayoutAlgorithm;
@@ -51,7 +51,7 @@ public abstract class AbstractVennLayoutTest
 
     public void setUp()
     {
-        vennLayout = createVennLayout();
+        vennLayoutAlgorithm = createVennLayoutAlgorithm();
         boundingRectangle = new Rectangle2D.Double(0.0d, 0.0d, 1000.0d, 1000.0d);
     }
 
