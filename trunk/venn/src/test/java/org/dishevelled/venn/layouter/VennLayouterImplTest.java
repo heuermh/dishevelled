@@ -21,22 +21,22 @@
     > http://www.opensource.org/licenses/lgpl-license.php
 
 */
-package org.dishevelled.venn.layout;
+package org.dishevelled.venn.layouter;
 
-import org.dishevelled.venn.AbstractVennLayoutAlgorithmTest;
-import org.dishevelled.venn.VennLayoutAlgorithm;
+import org.dishevelled.venn.AbstractVennLayouterTest;
+import org.dishevelled.venn.VennLayouter;
 
 /**
- * Unit test for VennLayoutAlgorithmImpl.
+ * Unit test for VennLayouterImpl.
  *
  * @author  Michael Heuer
  */
-public final class VennLayoutAlgorithmImplTest extends AbstractVennLayoutAlgorithmTest
+public final class VennLayouterImplTest extends AbstractVennLayouterTest
 {
 
     /** {@inheritDoc} */
-    protected VennLayoutAlgorithm createVennLayoutAlgorithm()
+    protected VennLayouter createVennLayouter()
     {
-        return new VennLayoutAlgorithmImpl();
+        return new VennLayouterImpl();
     }
 }

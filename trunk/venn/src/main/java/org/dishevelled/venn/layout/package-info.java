@@ -23,6 +23,6 @@
 */
 
 /**
- * Layout algorithms for venn diagrams.
+ * Layouts for venn diagrams.
  */
 package org.dishevelled.venn.layout;

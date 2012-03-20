@@ -22,7 +22,7 @@
     > http://www.opensource.org/licenses/lgpl-license.php
 
 */
-package org.dishevelled.venn.layout;
+package org.dishevelled.venn.layouter;
 
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
@@ -39,14 +39,14 @@ import org.dishevelled.venn.VennModel;
 //import org.dishevelled.venn.TernaryVennLayout;
 //import org.dishevelled.venn.QuaternaryVennLayout;
 import org.dishevelled.venn.VennLayout;
-import org.dishevelled.venn.VennLayoutAlgorithm;
+import org.dishevelled.venn.VennLayouter;
 
 /**
  * Venn layout algorithm.
  *
  * @author  Michael Heuer
  */
-public final class VennLayoutAlgorithmImpl implements VennLayoutAlgorithm
+public final class VennLayouterImpl implements VennLayouter
 {
 
     /** {@inheritDoc} */
