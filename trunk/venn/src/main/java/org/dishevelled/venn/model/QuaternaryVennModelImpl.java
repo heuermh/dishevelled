@@ -26,13 +26,20 @@ package org.dishevelled.venn.model;
 import java.util.HashSet;
 import java.util.Set;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.google.common.collect.Sets;
+
+import org.dishevelled.bitset.ImmutableBitSet;
 
 import org.dishevelled.observable.ObservableSet;
 
 import org.dishevelled.observable.impl.ObservableSetImpl;
 
 import org.dishevelled.venn.QuaternaryVennModel;
+
+import static org.dishevelled.venn.model.VennModelUtils.toImmutableBitSet;
 
 /**
  * Quaternary venn model implementation.
@@ -107,6 +114,9 @@ public final class QuaternaryVennModelImpl<E>
     /** Selection view. */
     private final ObservableSet<E> selection;
 
+    /** Map of exclusive set views keyed by bit set. */
+    private final Map<ImmutableBitSet, Set<E>> exclusives;
+
 
     /**
      * Create a new empty quaternary venn model.
@@ -174,6 +184,27 @@ public final class QuaternaryVennModelImpl<E>
         intersection = Sets.intersection(f, Sets.intersection(s, Sets.intersection(t, r))); // f n s n t n r
         union = Sets.union(f, Sets.union(s, Sets.union(t, r))); // f u s u t u r
         selection = new SelectionView<E>(union, f, s, t, r);
+
+        exclusives = new HashMap<ImmutableBitSet, Set<E>>(15);
+
+        exclusives.put(toImmutableBitSet(0), firstOnly);
+        exclusives.put(toImmutableBitSet(1), secondOnly);
+        exclusives.put(toImmutableBitSet(2), thirdOnly);
+        exclusives.put(toImmutableBitSet(3), fourthOnly);
+
+        exclusives.put(toImmutableBitSet(0, 1), firstSecond);
+        exclusives.put(toImmutableBitSet(0, 2), firstThird);
+        exclusives.put(toImmutableBitSet(0, 3), firstFourth);
+        exclusives.put(toImmutableBitSet(1, 2), secondThird);
+        exclusives.put(toImmutableBitSet(1, 3), secondFourth);
+        exclusives.put(toImmutableBitSet(2, 3), thirdFourth);
+
+        exclusives.put(toImmutableBitSet(0, 1, 2), firstSecondThird);
+        exclusives.put(toImmutableBitSet(0, 1, 3), firstSecondFourth);
+        exclusives.put(toImmutableBitSet(0, 2, 3), firstThirdFourth);
+        exclusives.put(toImmutableBitSet(1, 2, 3), secondThirdFourth);
+
+        exclusives.put(toImmutableBitSet(0, 1, 2, 3), intersection);
     }
 
 
@@ -323,7 +354,26 @@ public final class QuaternaryVennModelImpl<E>
     /** {@inheritDoc} */
     public Set<E> exclusiveTo(final int index, final int... additional)
     {
-        return null;
+        int maxIndex = size() - 1;
+        if (index < 0 || index > maxIndex)
+        {
+            throw new IndexOutOfBoundsException("index out of bounds");
+        }
+        if (additional != null && additional.length > 0)
+        {
+            if (additional.length > maxIndex)
+            {
+                throw new IndexOutOfBoundsException("too many indices provided");
+            }
+            for (int i = 0, size = additional.length; i < size; i++)
+            {
+                if (additional[i] < 0 || additional[i] > maxIndex)
+                {
+                    throw new IndexOutOfBoundsException("additional index [" + i + "] out of bounds");
+                }
+            }
+        }
+        return exclusives.get(toImmutableBitSet(index, additional));
     }
 
     /** {@inheritDoc} */

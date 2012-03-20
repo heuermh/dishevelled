@@ -26,13 +26,20 @@ package org.dishevelled.venn.model;
 import java.util.HashSet;
 import java.util.Set;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.google.common.collect.Sets;
+
+import org.dishevelled.bitset.ImmutableBitSet;
 
 import org.dishevelled.observable.ObservableSet;
 
 import org.dishevelled.observable.impl.ObservableSetImpl;
 
 import org.dishevelled.venn.BinaryVennModel;
+
+import static org.dishevelled.venn.model.VennModelUtils.toImmutableBitSet;
 
 /**
  * Binary venn model implementation.
@@ -64,6 +71,9 @@ public final class BinaryVennModelImpl<E>
 
     /** Selection view. */
     private final ObservableSet<E> selection;
+
+    /** Map of exclusive set views keyed by bit set. */
+    private final Map<ImmutableBitSet, Set<E>> exclusives;
 
 
     /**
@@ -99,6 +109,14 @@ public final class BinaryVennModelImpl<E>
         intersection = Sets.intersection(this.first, this.second);
         union = Sets.union(this.first, this.second);
         selection = new SelectionView<E>(union, this.first, this.second);
+
+        exclusives = new HashMap<ImmutableBitSet, Set<E>>(3);
+
+        exclusives.put(toImmutableBitSet(0), firstOnly);
+        exclusives.put(toImmutableBitSet(1), secondOnly);
+
+        exclusives.put(toImmutableBitSet(0, 1), intersection);
+        // copy to immutable map?
     }
 
 
@@ -167,18 +185,19 @@ public final class BinaryVennModelImpl<E>
         }
         if (additional != null && additional.length > 0)
         {
-            throw new IndexOutOfBoundsException("too many indices provided");
+            if (additional.length > maxIndex)
+            {
+                throw new IndexOutOfBoundsException("too many indices provided");
+            }
+            for (int i = 0, size = additional.length; i < size; i++)
+            {
+                if (additional[i] < 0 || additional[i] > maxIndex)
+                {
+                    throw new IndexOutOfBoundsException("additional index [" + i + "] out of bounds");
+                }
+            }
         }
-        switch (index)
-        {
-        case 0:
-            return firstOnly;
-        case 1:
-            return secondOnly;
-        default:
-            break;
-        }
-        throw new IllegalStateException("invalid index " + index);
+        return exclusives.get(toImmutableBitSet(index, additional));
     }
 
     /** {@inheritDoc} */
