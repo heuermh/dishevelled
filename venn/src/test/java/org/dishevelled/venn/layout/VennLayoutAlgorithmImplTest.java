@@ -23,20 +23,20 @@
 */
 package org.dishevelled.venn.layout;
 
-import org.dishevelled.venn.AbstractVennLayoutTest;
-import org.dishevelled.venn.VennLayout;
+import org.dishevelled.venn.AbstractVennLayoutAlgorithmTest;
+import org.dishevelled.venn.VennLayoutAlgorithm;
 
 /**
- * Unit test for VennLayoutImpl.
+ * Unit test for VennLayoutAlgorithmImpl.
  *
  * @author  Michael Heuer
  */
-public final class VennLayoutImplTest extends AbstractVennLayoutTest
+public final class VennLayoutAlgorithmImplTest extends AbstractVennLayoutAlgorithmTest
 {
 
     /** {@inheritDoc} */
-    protected VennLayout createVennLayout()
+    protected VennLayoutAlgorithm createVennLayoutAlgorithm()
     {
-        return new VennLayoutImpl();
+        return new VennLayoutAlgorithmImpl();
     }
 }
