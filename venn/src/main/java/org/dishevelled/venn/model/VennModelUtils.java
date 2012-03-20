@@ -21,28 +21,29 @@
     > http://www.opensource.org/licenses/lgpl-license.php
 
 */
-package org.dishevelled.venn.layout;
+package org.dishevelled.venn.model;
 
 import org.dishevelled.bitset.ImmutableBitSet;
 import org.dishevelled.bitset.MutableBitSet;
 
 /**
- * Static utility methods for venn layout.
+ * Static utility methods for venn models.
  *
  * @author  Michael Heuer
  */
-final class VennLayoutUtils
+final class VennModelUtils
 {
 
     /**
      * Private no-arg constructor.
      */
-    private VennLayoutUtils()
+    private VennModelUtils()
     {
         // empty
     }
 
 
+    // copied from VennLayoutUtils.java here to keep package-private visibility
     /**
      * Create and return a new immutable bit set with the specified bits set to true.
      *
