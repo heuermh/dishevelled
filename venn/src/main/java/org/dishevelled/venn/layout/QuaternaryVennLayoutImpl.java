@@ -28,8 +28,9 @@ import java.awt.Shape;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
-import java.util.HashMap;
 import java.util.Map;
+
+import com.google.common.collect.Maps;
 
 import org.dishevelled.bitset.ImmutableBitSet;
 
@@ -195,7 +196,7 @@ public final class QuaternaryVennLayoutImpl
         this.intersectionLuneCenter = intersectionLuneCenter;
         this.boundingRectangle = boundingRectangle;
 
-        luneCenters = new HashMap<ImmutableBitSet, Point2D>(15);
+        luneCenters = Maps.newHashMapWithExpectedSize(15);
 
         luneCenters.put(toImmutableBitSet(0), this.firstOnlyLuneCenter);
         luneCenters.put(toImmutableBitSet(1), this.secondOnlyLuneCenter);
