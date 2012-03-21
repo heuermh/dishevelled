@@ -30,7 +30,7 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
 /**
- * Venn layout.
+ * Result of a venn diagram layout operation.
  *
  * @author  Michael Heuer
  */
