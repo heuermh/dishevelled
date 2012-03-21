@@ -74,7 +74,7 @@ public interface VennLayouter
     /**
      * Scoring function.
      */
-    interface ScoringFunction
+    interface ScoringFunction // or just use UnaryFunction<VennLayout,Double> ?
     {
         /**
          * Return a score for the specified venn layout.
@@ -88,7 +88,7 @@ public interface VennLayouter
     /**
      * Score predicate.
      */
-    interface ScorePredicate
+    interface ScorePredicate // or just use UnaryPredicate<Double> ?
     {
         /**
          * Return true if the specified score satisfies this predicate.
