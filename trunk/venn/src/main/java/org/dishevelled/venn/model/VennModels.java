@@ -23,11 +23,13 @@
 */
 package org.dishevelled.venn.model;
 
+import java.util.List;
 import java.util.Set;
 
 import org.dishevelled.venn.BinaryVennModel;
 import org.dishevelled.venn.TernaryVennModel;
 import org.dishevelled.venn.QuaternaryVennModel;
+import org.dishevelled.venn.VennModel;
 
 /**
  * Venn models.
@@ -45,6 +47,36 @@ public final class VennModels
         // empty
     }
 
+
+    /**
+     * Create and return a new venn model with the specified sets.
+     *
+     * @param <E> value type
+     * @param sets list of sets, must not be null and must contain at least two sets
+     * @return a new venn model with the specified sets
+     */
+    public static <E> VennModel<E> createVennModel(final List<Set<E>> sets)
+    {
+        if (sets == null)
+        {
+            throw new IllegalArgumentException("sets must not be null");
+        }
+        switch (sets.size())
+        {
+        case 0:
+        case 1:
+            throw new IllegalArgumentException("sets must contain at least two sets");
+        case 2:
+            return createVennModel(sets.get(0), sets.get(1));
+        case 3:
+            return createVennModel(sets.get(0), sets.get(1), sets.get(2));
+        case 4:
+            return createVennModel(sets.get(0), sets.get(1), sets.get(2), sets.get(3));
+        default:
+            break;
+        }
+        return new VennModelImpl<E>(sets);
+    }
 
     /**
      * Create and return a new binary venn model with the specified sets.

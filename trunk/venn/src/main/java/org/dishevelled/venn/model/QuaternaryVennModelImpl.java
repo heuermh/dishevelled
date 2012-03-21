@@ -177,10 +177,10 @@ public final class QuaternaryVennModelImpl<E>
         secondThird = Sets.difference(Sets.difference(Sets.intersection(s, t), f), r); // s n t - f - r
         secondFourth = Sets.difference(Sets.difference(Sets.intersection(s, r), f), t); // s n r - f - t
         thirdFourth = Sets.difference(Sets.difference(Sets.intersection(t, r), f), s); // t n r - f - s
-        firstSecondThird = Sets.difference(Sets.intersection(f, Sets.intersection(s, t)), r); // f u s u t - r
-        firstSecondFourth = Sets.difference(Sets.intersection(f, Sets.intersection(s, r)), t); // f u s u r - t
-        firstThirdFourth = Sets.difference(Sets.intersection(f, Sets.intersection(t, r)), s); // f u t u r - s
-        secondThirdFourth = Sets.difference(Sets.intersection(s, Sets.intersection(t, r)), f); // s u t u r - f
+        firstSecondThird = Sets.difference(Sets.intersection(f, Sets.intersection(s, t)), r); // f n s n t - r
+        firstSecondFourth = Sets.difference(Sets.intersection(f, Sets.intersection(s, r)), t); // f n s n r - t
+        firstThirdFourth = Sets.difference(Sets.intersection(f, Sets.intersection(t, r)), s); // f n t n r - s
+        secondThirdFourth = Sets.difference(Sets.intersection(s, Sets.intersection(t, r)), f); // s n t n r - f
         intersection = Sets.intersection(f, Sets.intersection(s, Sets.intersection(t, r))); // f n s n t n r
         union = Sets.union(f, Sets.union(s, Sets.union(t, r))); // f u s u t u r
         selection = new SelectionView<E>(union, f, s, t, r);

@@ -23,6 +23,8 @@
 */
 package org.dishevelled.venn.model;
 
+import java.util.Set;
+
 import org.dishevelled.bitset.ImmutableBitSet;
 import org.dishevelled.bitset.MutableBitSet;
 
@@ -62,6 +64,31 @@ final class VennModelUtils
             {
                 mutableBitSet.set(additional[i]);
             }
+        }
+        mutableBitSet.trimTrailingZeros();
+        return mutableBitSet.immutableCopy();
+    }
+
+    /**
+     * Create and return a new immutable bit set with the specified bits set to true.
+     *
+     * @param indices set of indicies to set to true, must not be null and must not be empty
+     * @return a new immutable bit set with the specified bits set to true
+     */
+    static ImmutableBitSet toImmutableBitSet(final Set<Integer> indices)
+    {
+        if (indices == null)
+        {
+            throw new IllegalArgumentException("indices must not be null");
+        }
+        if (indices.isEmpty())
+        {
+            throw new IllegalArgumentException("indices must not be empty");
+        }
+        MutableBitSet mutableBitSet = new MutableBitSet(indices.size());
+        for (Integer index : indices)
+        {
+            mutableBitSet.set(index);
         }
         mutableBitSet.trimTrailingZeros();
         return mutableBitSet.immutableCopy();

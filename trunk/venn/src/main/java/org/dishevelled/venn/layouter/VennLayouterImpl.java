@@ -54,6 +54,19 @@ public final class VennLayouterImpl implements VennLayouter
                              final Rectangle2D boundingRectangle,
                              final PerformanceHint performanceHint)
     {
+        if (model == null)
+        {
+            throw new IllegalArgumentException("model must not be null");
+        }
+        if (boundingRectangle == null)
+        {
+            throw new IllegalArgumentException("boundingRectangle must not be null");
+        }
+        if (performanceHint == null)
+        {
+            throw new IllegalArgumentException("performanceHint must not be null");
+        }
+
         return null;
     }
 
@@ -64,6 +77,27 @@ public final class VennLayouterImpl implements VennLayouter
                                        final ScorePredicate scorePredicate,
                                        final PerformanceHint performanceHint)
     {
+        if (model == null)
+        {
+            throw new IllegalArgumentException("model must not be null");
+        }
+        if (boundingRectangle == null)
+        {
+            throw new IllegalArgumentException("boundingRectangle must not be null");
+        }
+        if (scoringFunction == null)
+        {
+            throw new IllegalArgumentException("scoringFunction must not be null");
+        }
+        if (scorePredicate == null)
+        {
+            throw new IllegalArgumentException("scorePredicate must not be null");
+        }
+        if (performanceHint == null)
+        {
+            throw new IllegalArgumentException("performanceHint must not be null");
+        }
+
         return null;
     }
 
