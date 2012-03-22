@@ -202,7 +202,8 @@ public final class VennModelImpl<E> implements VennModel<E>
                     }
                 }
 
-                exclusives.put(toImmutableBitSet(set), view);
+                // add to exclusives map
+                map.put(toImmutableBitSet(set), view);
             }
         }
 
