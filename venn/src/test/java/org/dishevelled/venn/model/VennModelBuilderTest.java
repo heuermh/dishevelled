@@ -42,7 +42,7 @@ public final class VennModelBuilderTest
 
     public void testConstructor()
     {
-        assertNotNull(new VennModelBuilder());
+        assertNotNull(new VennModelBuilder<String>());
     }
 
     public void testWithSetNullSet()
@@ -75,7 +75,7 @@ public final class VennModelBuilderTest
     {
         try
         {
-            new VennModelBuilder().build();
+            new VennModelBuilder<String>().build();
             fail("build with empty sets expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
@@ -88,7 +88,7 @@ public final class VennModelBuilderTest
     {
         try
         {
-            VennModelBuilder builder = new VennModelBuilder();
+            VennModelBuilder<String> builder = new VennModelBuilder<String>();
             Set<String> set = Sets.newHashSet();
             set.add("foo");
             builder.withSet(set).build();
@@ -102,7 +102,7 @@ public final class VennModelBuilderTest
 
     public void testBuild()
     {
-        VennModelBuilder builder = new VennModelBuilder();
+        VennModelBuilder<String> builder = new VennModelBuilder<String>();
 
         Set<String> set = Sets.newHashSet();
         set.add("foo");

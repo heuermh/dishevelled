@@ -26,7 +26,6 @@ package org.dishevelled.venn;
 import java.awt.Shape;
 
 import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
 
 /**
  * Result of a quaternary venn diagram layout operation.
