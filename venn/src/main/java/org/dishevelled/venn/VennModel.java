@@ -72,9 +72,9 @@ public interface VennModel<E>
      * Set&lt;String&gt; first = vennModel.get(0);
      * Set&lt;String&gt; second = vennModel.get(1);
      * Set&lt;String&gt; third = vennModel.get(2);
-     * Set&lt;String&lt; firstOnly = vennModel.exclusiveTo(0);
-     * Set&lt;String&lt; firstSecond = vennModel.exclusiveTo(0, 1);
-     * Set&lt;String&lt; intersection = vennModel.exclusiveTo(0, 1, 2);
+     * Set&lt;String&gt; firstOnly = vennModel.exclusiveTo(0);
+     * Set&lt;String&gt; firstSecond = vennModel.exclusiveTo(0, 1);
+     * Set&lt;String&gt; intersection = vennModel.exclusiveTo(0, 1, 2);
      * </pre>
      * <p>
      * This is equivalent to the difference of the intersection of the sets in this venn model
