@@ -66,7 +66,7 @@ public interface VennModel<E>
 
     /**
      * Return an immutable set view of the elements exclusive to the sets in this venn model
-     * identified by the specified indices.  For example,
+     * identified by the specified indices.  For example, for <code>n = 3</code>
      * <pre>
      * VennModel&lt;String&gt; vennModel = ...;
      * Set&lt;String&gt; first = vennModel.get(0);
