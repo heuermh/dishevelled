@@ -51,25 +51,40 @@ public interface VennModel<E>
     Set<E> get(int index);
 
     /**
-     * Return an immutable view of the union of the sets in this venn model.
+     * Return an immutable set view of the union of the sets in this venn model.
      *
-     * @return an immutable view of the union of the sets in this venn model
+     * @return an immutable set view of the union of the sets in this venn model
      */
     Set<E> union();
 
     /**
-     * Return an immutable view of the intersection of the sets in this venn model.
+     * Return an immutable set view of the intersection of the sets in this venn model.
      *
-     * @return an immutable view of the intersection of the sets in this venn model
+     * @return an immutable set view of the intersection of the sets in this venn model
      */
     Set<E> intersection();
 
     /**
-     * Return an immutable view of the exclusive . . . defined by the specified indices.
+     * Return an immutable set view of the elements exclusive to the sets in this venn model
+     * identified by the specified indices.  For example,
+     * <pre>
+     * VennModel&lt;String&gt; vennModel = ...;
+     * Set&lt;String&gt; first = vennModel.get(0);
+     * Set&lt;String&gt; second = vennModel.get(1);
+     * Set&lt;String&gt; third = vennModel.get(2);
+     * Set&lt;String&lt; firstOnly = vennModel.exclusiveTo(0);
+     * Set&lt;String&lt; firstSecond = vennModel.exclusiveTo(0, 1);
+     * Set&lt;String&lt; intersection = vennModel.exclusiveTo(0, 1, 2);
+     * </pre>
+     * <p>
+     * This is equivalent to the difference of the intersection of the sets in this venn model
+     * identified by the specified indices and the union of the remainder sets in this venn model.
+     * </p>
      *
      * @param index first index
      * @param additional variable number of additional indices, if any
-     * @return an immutable view of the exclusive . . . area defined by the specified indices
+     * @return an immutable set view of the elements exclusive to the sets in this venn model
+     *    identified by the specified indices
      * @throws IndexOutOfBoundsException if <code>index</code> or any of <code>additional</code>
      *    are out of bounds, or if too many indices are specified
      */
