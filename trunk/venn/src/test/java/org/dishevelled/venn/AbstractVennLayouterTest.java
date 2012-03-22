@@ -32,8 +32,8 @@ import junit.framework.TestCase;
 //import org.dishevelled.venn.model.TernaryVennModelImpl;
 //import org.dishevelled.venn.model.QuaternaryVennModelImpl;
 
-import static org.dishevelled.venn.VennLayouter.PerformanceHint.OPTIMIZE_FOR_SPEED;
-import static org.dishevelled.venn.VennLayouter.PerformanceHint.OPTIMIZE_FOR_CORRECTNESS;
+//import static org.dishevelled.venn.VennLayouter.PerformanceHint.OPTIMIZE_FOR_SPEED;
+//import static org.dishevelled.venn.VennLayouter.PerformanceHint.OPTIMIZE_FOR_CORRECTNESS;
 
 /**
  * Abstract unit test for implementations of VennLayouter.

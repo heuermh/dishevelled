@@ -56,7 +56,7 @@ public final class VennModelBuilder<E>
      *
      * @return this venn model builder
      */
-    public VennModelBuilder clear()
+    public VennModelBuilder<E> clear()
     {
         sets.clear();
         return this;
@@ -69,7 +69,7 @@ public final class VennModelBuilder<E>
      * @param set set for this venn model builder, must not be null
      * @return this venn model builder configured with the specified set
      */
-    public VennModelBuilder withSet(final Set<E> set)
+    public VennModelBuilder<E> withSet(final Set<E> set)
     {
         if (set == null)
         {
@@ -86,7 +86,7 @@ public final class VennModelBuilder<E>
      * @param sets variable number of sets for this venn model builder, must not be null
      * @return this venn model builder configured with the specified sets
      */
-    public VennModelBuilder withSets(final Set<E>... sets)
+    public VennModelBuilder<E> withSets(final Set<E>... sets)
     {
         if (sets == null)
         {
