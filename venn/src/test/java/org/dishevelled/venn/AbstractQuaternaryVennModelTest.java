@@ -57,10 +57,10 @@ public abstract class AbstractQuaternaryVennModelTest
             "s n t - f - r",
             "s n r - f - t",
             "t n r - f - s",
-            "f u s u t - r",
-            "f u s u r - t",
-            "f u t u r - s",
-            "s u t u r - f",
+            "f n s n t - r",
+            "f n s n r - t",
+            "f n t n r - s",
+            "s n t n r - f",
             "f n s n t n r"
         });
 
@@ -71,9 +71,9 @@ public abstract class AbstractQuaternaryVennModelTest
             "f n s - t - r",
             "f n t - s - r",
             "f n r - s - t",
-            "f u s u t - r",
-            "f u s u r - t",
-            "f u t u r - s",
+            "f n s n t - r",
+            "f n s n r - t",
+            "f n t n r - s",
             "f n s n t n r",
         }));
 
@@ -84,9 +84,9 @@ public abstract class AbstractQuaternaryVennModelTest
             "f n s - t - r",
             "s n t - f - r",
             "s n r - f - t",
-            "f u s u t - r",
-            "f u s u r - t",
-            "s u t u r - f",
+            "f n s n t - r",
+            "f n s n r - t",
+            "s n t n r - f",
             "f n s n t n r",
         }));
 
@@ -97,9 +97,9 @@ public abstract class AbstractQuaternaryVennModelTest
             "f n t - s - r",
             "s n t - f - r",
             "t n r - f - s",
-            "f u s u t - r",
-            "f u t u r - s",
-            "s u t u r - f",
+            "f n s n t - r",
+            "f n t n r - s",
+            "s n t n r - f",
             "f n s n t n r",
         }));
 
@@ -110,9 +110,9 @@ public abstract class AbstractQuaternaryVennModelTest
             "f n r - s - t",
             "s n r - f - t",
             "t n r - f - s",
-            "f u s u r - t",
-            "f u t u r - s",
-            "s u t u r - f",
+            "f n s n r - t",
+            "f n t n r - s",
+            "s n t n r - f",
             "f n s n t n r"
         }));
 
@@ -561,7 +561,7 @@ public abstract class AbstractQuaternaryVennModelTest
         QuaternaryVennModel<String> quaternaryVennModel = createQuaternaryVennModel(FIRST, SECOND, THIRD, FOURTH);
         Set<String> firstSecondThird = quaternaryVennModel.firstSecondThird();
         assertNotNull(firstSecondThird);
-        assertTrue(firstSecondThird.contains("f u s u t - r"));
+        assertTrue(firstSecondThird.contains("f n s n t - r"));
 
         quaternaryVennModel.first().add("garply");
         quaternaryVennModel.second().add("garply");
@@ -586,7 +586,7 @@ public abstract class AbstractQuaternaryVennModelTest
         QuaternaryVennModel<String> quaternaryVennModel = createQuaternaryVennModel(FIRST, SECOND, THIRD, FOURTH);
         Set<String> firstSecondFourth = quaternaryVennModel.firstSecondFourth();
         assertNotNull(firstSecondFourth);
-        assertTrue(firstSecondFourth.contains("f u s u r - t"));
+        assertTrue(firstSecondFourth.contains("f n s n r - t"));
 
         quaternaryVennModel.first().add("garply");
         quaternaryVennModel.second().add("garply");
@@ -611,7 +611,7 @@ public abstract class AbstractQuaternaryVennModelTest
         QuaternaryVennModel<String> quaternaryVennModel = createQuaternaryVennModel(FIRST, SECOND, THIRD, FOURTH);
         Set<String> secondThirdFourth = quaternaryVennModel.secondThirdFourth();
         assertNotNull(secondThirdFourth);
-        assertTrue(secondThirdFourth.contains("s u t u r - f"));
+        assertTrue(secondThirdFourth.contains("s n t n r - f"));
 
         quaternaryVennModel.second().add("garply");
         quaternaryVennModel.third().add("garply");
@@ -636,7 +636,7 @@ public abstract class AbstractQuaternaryVennModelTest
         QuaternaryVennModel<String> quaternaryVennModel = createQuaternaryVennModel(FIRST, SECOND, THIRD, FOURTH);
         Set<String> firstThirdFourth = quaternaryVennModel.firstThirdFourth();
         assertNotNull(firstThirdFourth);
-        assertTrue(firstThirdFourth.contains("f u t u r - s"));
+        assertTrue(firstThirdFourth.contains("f n t n r - s"));
 
         quaternaryVennModel.first().add("garply");
         quaternaryVennModel.third().add("garply");

@@ -23,9 +23,14 @@
 */
 package org.dishevelled.venn.model;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 
 import junit.framework.TestCase;
+
+import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 
 import org.dishevelled.venn.AbstractBinaryVennModelTest;
 import org.dishevelled.venn.AbstractTernaryVennModelTest;
@@ -33,6 +38,7 @@ import org.dishevelled.venn.AbstractQuaternaryVennModelTest;
 import org.dishevelled.venn.BinaryVennModel;
 import org.dishevelled.venn.TernaryVennModel;
 import org.dishevelled.venn.QuaternaryVennModel;
+import org.dishevelled.venn.VennModel;
 
 import static org.dishevelled.venn.model.VennModels.createVennModel;
 
@@ -44,7 +50,70 @@ import static org.dishevelled.venn.model.VennModels.createVennModel;
 public final class VennModelsTest extends TestCase
 {
 
+    public void testCreateVennModelNullSets()
+    {
+        try
+        {
+            VennModels.createVennModel(null);
+            fail("createVennModel(null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+    }
+
+    public void testCreateVennModelEmptySets()
+    {
+        try
+        {
+            List<Set<String>> emptySets = Collections.emptyList();
+            VennModels.createVennModel(emptySets);
+            fail("createVennModel(emptySets) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+    }
+
+    public void testCreateVennModelLessThanTwoSets()
+    {
+        try
+        {
+            Set<String> set = Sets.newHashSet();
+            set.add("foo");
+            List<Set<String>> singleSet = Lists.newArrayList();
+            singleSet.add(set);
+            VennModels.createVennModel(singleSet);
+            fail("createVennModel(singleSet) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+    }
+
     public void testCreateVennModel()
+    {
+        Set<String> set = Sets.newHashSet();
+        set.add("foo");
+        List<Set<String>> sets = Lists.newArrayList();
+
+        for (int i = 2; i < 6; i++)
+        {
+            sets.clear();
+            for (int j = 0; j < i; j++)
+            {
+                sets.add(set);
+            }
+            VennModel<String> vennModel = VennModels.createVennModel(sets);
+            assertNotNull(vennModel);
+            assertEquals(i, vennModel.size());
+        }
+    }
+
+    public void testCreateVennModels()
     {
         CreateBinaryVennModelTest createBinaryVennModelTest = new CreateBinaryVennModelTest();
         createBinaryVennModelTest.testCreateBinaryVennModel();
