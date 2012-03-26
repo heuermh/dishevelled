@@ -89,6 +89,10 @@
           <artifactId>maven-install-plugin</artifactId>
           <version>2.3.1</version>
         </plugin>
+	<plugin>
+	  <artifactId>maven-gpg-plugin</artifactId>
+	  <version>1.1</version>
+	</plugin>
         <plugin>
           <artifactId>maven-jar-plugin</artifactId>
           <version>2.4</version>
@@ -96,6 +100,11 @@
         <plugin>
           <artifactId>maven-release-plugin</artifactId>
           <version>2.2.1</version>
+	  <configuration>
+	    <mavenExecutorId>forked-path</mavenExecutorId>
+	    <useReleaseProfile>false</useReleaseProfile>
+	    <arguments>-Psonatype-oss-release</arguments>
+	  </configuration>
         </plugin>
         <plugin>
           <artifactId>maven-resources-plugin</artifactId>
@@ -314,4 +323,65 @@
       </plugin>
     </plugins>
   </reporting>
+
+  <!-- release configuration derived from Sonatype OSS oss-parent-7.pom -->
+  <repositories>
+    <repository>
+      <id>sonatype-nexus-snapshots</id>
+      <name>Sonatype Nexus Snapshots</name>
+      <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+      <releases>
+	<enabled>false</enabled>
+      </releases>
+      <snapshots>
+	<enabled>true</enabled>
+      </snapshots>
+    </repository>
+  </repositories>
+  <distributionManagement>
+    <snapshotRepository>
+      <id>sonatype-nexus-snapshots</id>
+      <name>Sonatype Nexus Snapshots</name>
+      <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+    </snapshotRepository>
+    <repository>
+      <id>sonatype-nexus-staging</id>
+      <name>Nexus Release Repository</name>
+      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+    </repository>
+  </distributionManagement>
+
+  <!-- Sonatype OSS release profile -->
+  <profiles>
+    <profile>
+      <id>sonatype-oss-release</id>
+      <build>
+	<plugins>
+	  <plugin>
+	    <artifactId>maven-javadoc-plugin</artifactId>
+	    <executions>
+	      <execution>
+		<id>attach-javadocs</id>
+		<goals>
+		  <goal>jar</goal>
+		</goals>
+	      </execution>
+	    </executions>
+	  </plugin>
+	  <plugin>
+	    <artifactId>maven-gpg-plugin</artifactId>
+	    <executions>
+	      <execution>
+		<id>sign-artifacts</id>
+		<phase>verify</phase>
+		<goals>
+		  <goal>sign</goal>
+		</goals>
+	      </execution>
+	    </executions>
+	  </plugin>
+	</plugins>
+      </build>
+    </profile>
+  </profiles>
 </project>
