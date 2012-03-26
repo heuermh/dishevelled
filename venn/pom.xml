@@ -34,7 +34,7 @@
     </dependency>
     <dependency>
       <groupId>org.dishevelled</groupId>
-      <artifactId>dsh-matrix</artifactId>
+      <artifactId>dsh-bitset</artifactId>
       <version>${project.version}</version>
       <scope>compile</scope>
     </dependency>
