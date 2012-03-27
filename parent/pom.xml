@@ -366,13 +366,6 @@
               <verbose>false</verbose>
               <show>package</show>
             </configuration>
-            <reportSets>
-              <reportSet>
-		<reports>
-		  <report>javadoc</report>
-		</reports>
-              </reportSet>
-            </reportSets>
 	    <executions>
 	      <execution>
 		<id>attach-javadocs</id>
