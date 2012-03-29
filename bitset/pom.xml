@@ -10,14 +10,14 @@
   <artifactId>dsh-bitset</artifactId>
   <packaging>jar</packaging>
   <name>dishevelled.org bitset</name>
-  <version>1.0</version>
+  <version>1.1-SNAPSHOT</version>
   <description>High performance bit set implementations.</description>
   <url>http://www.dishevelled.org/bitset</url>
   <inceptionYear>2011</inceptionYear>
   <scm>
-    <connection>scm:svn|http://dishevelled.svn.sourceforge.net/svnroot/dishevelled/tags/dsh-bitset-1.0</connection>
-    <developerConnection>scm:svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/tags/dsh-bitset-1.0</developerConnection>
-    <url>http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/tags/dsh-bitset-1.0</url>
+    <connection>scm:svn|http://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/bitset</connection>
+    <developerConnection>scm:svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/bitset</developerConnection>
+    <url>http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/trunk/bitset</url>
   </scm>
   <distributionManagement>
     <site>
