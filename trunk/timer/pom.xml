@@ -10,14 +10,14 @@
   <artifactId>dsh-timer</artifactId>
   <packaging>jar</packaging>
   <name>dishevelled.org timer</name>
-  <version>1.0-SNAPSHOT</version>
+  <version>1.0</version>
   <description>Timer with nanosecond resolution and summary statistics on recorded elapsed times.</description>
   <url>http://www.dishevelled.org/timer</url>
   <inceptionYear>2004</inceptionYear>
   <scm>
-    <connection>scm:svn|http://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/timer</connection>
-    <developerConnection>scm:svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/timer</developerConnection>
-    <url>http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/trunk/timer</url>
+    <connection>scm:svn|http://dishevelled.svn.sourceforge.net/svnroot/dishevelled/tags/dsh-timer-1.0</connection>
+    <developerConnection>scm:svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/tags/dsh-timer-1.0</developerConnection>
+    <url>http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/tags/dsh-timer-1.0</url>
   </scm>
   <distributionManagement>
     <site>
