@@ -18,7 +18,6 @@
 package org.dishevelled.bitset; // repackaged again for package private visibility
 
 /**  A variety of high efficiency bit twiddling routines.
- * @lucene.internal
  */
 final class BitUtil {
 
