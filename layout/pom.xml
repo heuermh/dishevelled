@@ -10,14 +10,14 @@
   <artifactId>dsh-layout</artifactId>
   <packaging>jar</packaging>
   <name>dishevelled.org layout</name>
-  <version>1.0</version>
+  <version>1.1-SNAPSHOT</version>
   <description>Layout managers for lightweight components.</description>
   <url>http://www.dishevelled.org/layout</url>
   <inceptionYear>2003</inceptionYear>
   <scm>
-    <connection>scm:svn|http://dishevelled.svn.sourceforge.net/svnroot/dishevelled/tags/dsh-layout-1.0</connection>
-    <developerConnection>scm:svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/tags/dsh-layout-1.0</developerConnection>
-    <url>http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/tags/dsh-layout-1.0</url>
+    <connection>scm:svn|http://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/layout</connection>
+    <developerConnection>scm:svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/layout</developerConnection>
+    <url>http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/trunk/layout</url>
   </scm>
   <distributionManagement>
     <site>
