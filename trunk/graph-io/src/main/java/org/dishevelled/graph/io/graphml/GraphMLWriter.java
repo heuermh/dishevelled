@@ -223,7 +223,7 @@ public final class GraphMLWriter<N, E>
      *
      * @param <V> value type
      */
-    interface ValueHandler<V>
+    public interface ValueHandler<V>
     {
 
         /**
