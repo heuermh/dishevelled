@@ -256,7 +256,6 @@
         <version>1.2.0</version>
       </dependency>
       <dependency>
-        <!-- must download manually -->
         <groupId>traer.physics</groupId>
         <artifactId>physics</artifactId>
         <version>3.0</version>
