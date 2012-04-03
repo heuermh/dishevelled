@@ -5,7 +5,7 @@
   <artifactId>dsh-parent</artifactId>
   <packaging>pom</packaging>
   <name>dishevelled.org parent</name>
-  <version>1-SNAPSHOT</version>
+  <version>1</version>
   <description>dishevelled.org parent</description>
   <url>http://www.dishevelled.org/parent</url>
   <inceptionYear>2009</inceptionYear>
@@ -49,9 +49,9 @@
     </license>
   </licenses>
   <scm>
-    <connection>scm:svn|http://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/parent</connection>
-    <developerConnection>scm:svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/parent</developerConnection>
-    <url>http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/trunk/parent</url>
+    <connection>scm:svn|http://dishevelled.svn.sourceforge.net/svnroot/dishevelled/tags/dsh-parent-1</connection>
+    <developerConnection>scm:svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/tags/dsh-parent-1</developerConnection>
+    <url>http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/tags/dsh-parent-1</url>
   </scm>
   <organization>
     <name>dishevelled.org</name>
