@@ -499,6 +499,20 @@ public final class AnalysisUtils
     }
 
     /**
+     * Convert the specified matrix to a graph with long indices as node values, adding edges
+     * for values accepted by the specified predicate.
+     *
+     * @param <E> matrix type and graph edge type
+     * @param matrix matrix to convert, must not be null
+     * @param predicate matrix value predicate, must not be null
+     * @return the specified matrix converted to a graph with long indices as node values
+     */
+    public static <E> Graph<Long, E> toGraph(final Matrix2D<E> matrix, final UnaryPredicate<E> predicate)
+    {
+        return toGraph(matrix, IDENTITY, predicate);
+    }
+
+    /**
      * Convert the specified matrix to a graph.
      *
      * @param <N> graph node type
