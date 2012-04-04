@@ -23,6 +23,8 @@
 */
 package org.dishevelled.graph.impl;
 
+import java.util.Set;
+
 import junit.framework.TestCase;
 
 import org.dishevelled.functor.UnaryProcedure;
@@ -113,6 +115,125 @@ public final class GraphUtilsTest
         {
             // expected
         }
+    }
+
+    public void testConnectedComponentsNullGraph()
+    {
+        try
+        {
+            GraphUtils.connectedComponents(null);
+            fail("connectedComponents(null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+    }
+
+    public void testConnectedComponentsEmptyGraph()
+    {
+        Graph<String, Integer> empty = GraphUtils.createGraph();
+        Set<Set<Node<String, Integer>>> connectedComponents = GraphUtils.connectedComponents(empty);
+        assertNotNull(connectedComponents);
+        assertTrue(connectedComponents.isEmpty());
+    }
+
+    public void testConnectedComponentsOneNode()
+    {
+        Graph<String, Integer> graph = GraphUtils.createGraph();
+        Node<String, Integer> node = graph.createNode("foo");
+        Set<Set<Node<String, Integer>>> connectedComponents = GraphUtils.connectedComponents(graph);
+        assertNotNull(connectedComponents);
+        assertFalse(connectedComponents.isEmpty());
+        assertEquals(1, connectedComponents.size());
+        Set<Node<String, Integer>> connectedComponent = connectedComponents.iterator().next();
+        assertNotNull(connectedComponent);
+        assertFalse(connectedComponent.isEmpty());
+        assertEquals(1, connectedComponent.size());
+        assertTrue(connectedComponent.contains(node));
+    }
+
+    public void testConnectedComponentsTwoDisconnectedNodes()
+    {
+        Graph<String, Integer> graph = GraphUtils.createGraph();
+        Node<String, Integer> node0 = graph.createNode("foo");
+        Node<String, Integer> node1 = graph.createNode("bar");
+        Set<Set<Node<String, Integer>>> connectedComponents = GraphUtils.connectedComponents(graph);
+        assertNotNull(connectedComponents);
+        assertFalse(connectedComponents.isEmpty());
+        assertEquals(2, connectedComponents.size());
+        for (Set<Node<String, Integer>> connectedComponent : connectedComponents)
+        {
+            assertNotNull(connectedComponent);
+            assertFalse(connectedComponent.isEmpty());
+            assertEquals(1, connectedComponent.size());
+            assertTrue(connectedComponent.contains(node0) || connectedComponent.contains(node1));
+        }
+    }
+
+    public void testConnectedComponentsOneComponent()
+    {
+        Graph<String, Integer> graph = GraphUtils.createGraph();
+        Node<String, Integer> node0 = graph.createNode("foo");
+        Node<String, Integer> node1 = graph.createNode("bar");
+        graph.createEdge(node0, node1, 1);
+        Set<Set<Node<String, Integer>>> connectedComponents = GraphUtils.connectedComponents(graph);
+        assertNotNull(connectedComponents);
+        assertFalse(connectedComponents.isEmpty());
+        assertEquals(1, connectedComponents.size());
+        Set<Node<String, Integer>> connectedComponent = connectedComponents.iterator().next();
+        assertNotNull(connectedComponent);
+        assertFalse(connectedComponent.isEmpty());
+        assertEquals(2, connectedComponent.size());
+        assertTrue(connectedComponent.contains(node0));
+        assertTrue(connectedComponent.contains(node1));
+    }
+
+    public void testConnectedComponentsMultipleComponents()
+    {
+        Graph<String, Integer> graph = GraphUtils.createGraph();
+        Node<String, Integer> node0 = graph.createNode("foo");
+        Node<String, Integer> node1 = graph.createNode("bar");
+        Node<String, Integer> node2 = graph.createNode("qux");
+        Node<String, Integer> node3 = graph.createNode("garply");
+        graph.createEdge(node0, node1, 1);
+        graph.createEdge(node2, node3, 1);
+        Set<Set<Node<String, Integer>>> connectedComponents = GraphUtils.connectedComponents(graph);
+        assertNotNull(connectedComponents);
+        assertFalse(connectedComponents.isEmpty());
+        assertEquals(2, connectedComponents.size());
+        for (Set<Node<String, Integer>> connectedComponent : connectedComponents)
+        {
+            assertNotNull(connectedComponent);
+            assertFalse(connectedComponent.isEmpty());
+            assertEquals(2, connectedComponent.size());
+            assertTrue((connectedComponent.contains(node0) && connectedComponent.contains(node1))
+                       || (connectedComponent.contains(node2) && connectedComponent.contains(node3)));
+        }
+    }
+
+    public void testConnectedComponentsDeepSearch()
+    {
+        Graph<String, Integer> graph = GraphUtils.createGraph();
+        Node<String, Integer> node0 = graph.createNode("foo");
+        Node<String, Integer> node1 = graph.createNode("bar");
+        Node<String, Integer> node2 = graph.createNode("qux");
+        Node<String, Integer> node3 = graph.createNode("garply");
+        graph.createEdge(node0, node1, 1);
+        graph.createEdge(node1, node2, 1);
+        graph.createEdge(node2, node3, 1);
+        Set<Set<Node<String, Integer>>> connectedComponents = GraphUtils.connectedComponents(graph);
+        assertNotNull(connectedComponents);
+        assertFalse(connectedComponents.isEmpty());
+        assertEquals(1, connectedComponents.size());
+        Set<Node<String, Integer>> connectedComponent = connectedComponents.iterator().next();
+        assertNotNull(connectedComponent);
+        assertFalse(connectedComponent.isEmpty());
+        assertEquals(4, connectedComponent.size());
+        assertTrue(connectedComponent.contains(node0));
+        assertTrue(connectedComponent.contains(node1));
+        assertTrue(connectedComponent.contains(node2));
+        assertTrue(connectedComponent.contains(node3));
     }
 
     public void testDepthFirstSearch()
