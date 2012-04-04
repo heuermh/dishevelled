@@ -23,8 +23,11 @@
 */
 package org.dishevelled.graph.impl;
 
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Queue;
+import java.util.Set;
 
 import java.util.concurrent.ArrayBlockingQueue;
 
@@ -92,6 +95,47 @@ public final class GraphUtils
     public static <N, E> Graph<N, E> createGraph(final Graph<N, E> graph)
     {
         return new GraphImpl<N, E>(graph);
+    }
+
+    /**
+     * Find the connected components of the specified graph.
+     *
+     * @param <N> node value type
+     * @param <E> edge value type
+     * @param graph graph, must not be null
+     * @return a set of the connected components of the specified graph
+     */
+    public static <N, E> Set<Set<Node<N, E>>> connectedComponents(final Graph<N, E> graph)
+    {
+        if (graph == null)
+        {
+            throw new IllegalArgumentException("graph must not be null");
+        }
+        final Set<Node<N, E>> empty = Collections.emptySet();
+        final Set<Set<Node<N, E>>> connectedComponents = new HashSet<Set<Node<N, E>>>();
+        final Map<Node<N, E>, Set<Node<N, E>>> componentsPerNode = graph.nodeMap(empty);
+
+        for (Node<N, E> node : graph.nodes())
+        {
+            if (empty.equals(componentsPerNode.get(node)))
+            {
+                final Set<Node<N, E>> collect = new HashSet<Node<N, E>>();
+                undirectedBreadthFirstSearch(graph, node, new UnaryProcedure<Node<N, E>>()
+                                             {
+                                                 @Override
+                                                 public void run(final Node<N, E> node)
+                                                 {
+                                                     collect.add(node);
+                                                 }
+                                             });
+                for (Node<N, E> connected : collect)
+                {
+                    componentsPerNode.put(connected, collect);
+                }
+                connectedComponents.add(collect);
+            }
+        }
+        return connectedComponents;
     }
 
     /**
