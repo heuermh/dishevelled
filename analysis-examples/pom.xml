@@ -27,6 +27,11 @@
   </distributionManagement>
   <dependencies>
     <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-math</artifactId>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
       <groupId>org.dishevelled</groupId>
       <artifactId>dsh-analysis</artifactId>
       <version>${project.version}</version>
