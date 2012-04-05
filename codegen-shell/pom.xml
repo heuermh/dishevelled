@@ -4,20 +4,20 @@
   <parent>
     <groupId>org.dishevelled</groupId>
     <artifactId>dsh-parent</artifactId>
-    <version>1-SNAPSHOT</version>
+    <version>1</version>
     <relativePath>../parent/pom.xml</relativePath>
   </parent>
   <artifactId>dsh-codegen-shell</artifactId>
   <packaging>jar</packaging>
   <name>dishevelled.org codegen-shell</name>
-  <version>1.0-SNAPSHOT</version>
+  <version>1.0</version>
   <description>Runnable shell for the codegen library.</description>
   <url>http://www.dishevelled.org/codegen-shell</url>
   <inceptionYear>2004</inceptionYear>
   <scm>
-    <connection>scm:svn|http://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/codegen-shell</connection>
-    <developerConnection>scm:svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/codegen-shell</developerConnection>
-    <url>http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/trunk/codegen-shell</url>
+    <connection>scm:svn|http://dishevelled.svn.sourceforge.net/svnroot/dishevelled/tags/dsh-codegen-shell-1.0</connection>
+    <developerConnection>scm:svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/tags/dsh-codegen-shell-1.0</developerConnection>
+    <url>http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/tags/dsh-codegen-shell-1.0</url>
   </scm>
   <distributionManagement>
     <site>
@@ -46,13 +46,13 @@
     <dependency>
       <groupId>org.dishevelled</groupId>
       <artifactId>dsh-codegen</artifactId>
-      <version>${project.version}</version>
+      <version>1.0</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>org.dishevelled</groupId>
       <artifactId>dsh-commandline</artifactId>
-      <version>${project.version}</version>
+      <version>1.0</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
