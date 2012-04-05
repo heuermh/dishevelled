@@ -29,7 +29,7 @@
 <body>
 <section name="Summary">
 <p>
-<b>dishevelled.org</b> hosts Free and Open Source libraries for various Java Swing
+<b>dishevelled.org</b> hosts Free and Open Source libraries for various
 user interface components and supporting code, with emphasis on views and editors for
 complex data structures, like collections, sets, lists, maps, graphs, and matrices.
 </p>
@@ -42,6 +42,11 @@ Subscribe to the dishevelled.org developer mailing list at <a href="mailto:dishe
 </section>
 
 <section name="Releases">
+<p>
+Several dishevelled.org projects have been released to the Maven Central Repository.<br/>
+&gt; <a href="http://search.maven.org/#search|ga|1|g%3A%22org.dishevelled%22">http://search.maven.org/#search|ga|1|g%3A%22org.dishevelled%22</a>
+</p>
+
 </section>
 
 <section name="Projects">
