@@ -4,20 +4,20 @@
   <parent>
     <groupId>org.dishevelled</groupId>
     <artifactId>dsh-parent</artifactId>
-    <version>1-SNAPSHOT</version>
+    <version>1</version>
     <relativePath>../parent/pom.xml</relativePath>
   </parent>
   <artifactId>dsh-iconbundle</artifactId>
   <packaging>jar</packaging>
   <name>dishevelled.org iconbundle</name>
-  <version>1.0-SNAPSHOT</version>
+  <version>1.0</version>
   <description>Bundles of variants for icon images.</description>
   <url>http://www.dishevelled.org/iconbundle</url>
   <inceptionYear>2003</inceptionYear>
   <scm>
-    <connection>scm:svn|http://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/iconbundle</connection>
-    <developerConnection>scm:svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/iconbundle</developerConnection>
-    <url>http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/trunk/iconbundle</url>
+    <connection>scm:svn|http://dishevelled.svn.sourceforge.net/svnroot/dishevelled/tags/dsh-iconbundle-1.0</connection>
+    <developerConnection>scm:svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/tags/dsh-iconbundle-1.0</developerConnection>
+    <url>http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/tags/dsh-iconbundle-1.0</url>
   </scm>
   <distributionManagement>
     <site>
