@@ -22,6 +22,7 @@
   <modules>
     <module>affinity</module>
     <module>analysis</module>
+    <module>analysis-examples</module>
     <module>archetype</module>
     <module>bitset</module>
     <module>brainstorm</module>
