@@ -4,20 +4,20 @@
   <parent>
     <groupId>org.dishevelled</groupId>
     <artifactId>dsh-parent</artifactId>
-    <version>1</version>
+    <version>2-SNAPSHOT</version>
     <relativePath>../parent/pom.xml</relativePath>
   </parent>
   <artifactId>dsh-vocabulary</artifactId>
   <packaging>jar</packaging>
   <name>dishevelled.org vocabulary</name>
-  <version>1.1</version>
+  <version>1.2-SNAPSHOT</version>
   <description>A description of concepts and their relations in a domain.</description>
   <url>http://www.dishevelled.org/vocabulary</url>
   <inceptionYear>2002</inceptionYear>
   <scm>
-    <connection>scm:svn|http://dishevelled.svn.sourceforge.net/svnroot/dishevelled/tags/dsh-vocabulary-1.1</connection>
-    <developerConnection>scm:svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/tags/dsh-vocabulary-1.1</developerConnection>
-    <url>http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/tags/dsh-vocabulary-1.1</url>
+    <connection>scm:svn|http://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/vocabulary</connection>
+    <developerConnection>scm:svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/vocabulary</developerConnection>
+    <url>http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/trunk/vocabulary</url>
   </scm>
   <distributionManagement>
     <site>
