@@ -1,0 +1,128 @@
+<?xml version="1.0"?>
+<!--
+
+    dsh-interpolate  Interpolation and easing functions.
+    Copyright (c) 2009-2012 held jointly by the individual authors.
+
+    This library is free software; you can redistribute it and/or modify it
+    under the terms of the GNU Lesser General Public License as published
+    by the Free Software Foundation; either version 3 of the License, or (at
+    your option) any later version.
+
+    This library is distributed in the hope that it will be useful, but WITHOUT
+    ANY WARRANTY; with out even the implied warranty of MERCHANTABILITY or
+    FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
+    License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with this library;  if not, write to the Free Software Foundation,
+    Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307  USA.
+
+    > http://www.fsf.org/licensing/licenses/lgpl.html
+    > http://www.opensource.org/licenses/lgpl-license.php
+
+-->
+<document>
+  <properties>
+    <title>interpolate</title>
+  </properties>
+<body>
+
+<section name="Summary">
+
+<p>
+dishevelled.org <b>interpolate</b> provides interpolation and easing functions.
+The interpolate library requires java version 1.5 or later.
+</p>
+</section>
+
+<section name="Easing functions">
+<table>
+  <tr>
+    <th width="75%">Function class</th>
+    <th colspan="3">Ease in, ease out, ease in-out</th>
+  </tr>
+  <tr>
+    <td>Linear</td>
+    <td colspan="3"><img src="images/linear.png" alt="linear easing graph"/></td>
+  </tr>
+  <tr>
+    <td>Quadratic</td>
+    <td><img src="images/ease-in-quadratic.png" alt="ease-in quadratic graph"/></td>
+    <td><img src="images/ease-out-quadratic.png" alt="ease-out quadratic graph"/></td>
+    <td><img src="images/ease-in-out-quadratic.png" alt="ease-in-out quadratic graph"/></td>
+  </tr>
+  <tr>
+    <td>Cubic</td>
+    <td><img src="images/ease-in-cubic.png" alt="ease-in cubic graph"/></td>
+    <td><img src="images/ease-out-cubic.png" alt="ease-out cubic graph"/></td>
+    <td><img src="images/ease-in-out-cubic.png" alt="ease-in-out cubic graph"/></td>
+  </tr>
+  <tr>
+    <td>Quartic</td>
+    <td><img src="images/ease-in-quartic.png" alt="ease-in quartic graph"/></td>
+    <td><img src="images/ease-out-quartic.png" alt="ease-out quartic graph"/></td>
+    <td><img src="images/ease-in-out-quartic.png" alt="ease-in-out quartic graph"/></td>
+  </tr>
+  <tr>
+    <td>Quintic</td>
+    <td><img src="images/ease-in-quintic.png" alt="ease-in quintic graph"/></td>
+    <td><img src="images/ease-out-quintic.png" alt="ease-out quintic graph"/></td>
+    <td><img src="images/ease-in-out-quintic.png" alt="ease-in-out quintic graph"/></td>
+  </tr>
+  <tr>
+    <td>Sine</td>
+    <td><img src="images/ease-in-sine.png" alt="ease-in sine graph"/></td>
+    <td><img src="images/ease-out-sine.png" alt="ease-out sine graph"/></td>
+    <td><img src="images/ease-in-out-sine.png" alt="ease-in-out sine graph"/></td>
+  </tr>
+  <tr>
+    <td>Exponential (base 10)</td>
+    <td><img src="images/ease-in-exponential.png" alt="ease-in exponential graph"/></td>
+    <td><img src="images/ease-out-exponential.png" alt="ease-out exponential graph"/></td>
+    <td><img src="images/ease-in-out-exponential.png" alt="ease-in-out exponential graph"/></td>
+  </tr>
+  <tr>
+    <td>Circular</td>
+    <td><img src="images/ease-in-circular.png" alt="ease-in circular graph"/></td>
+    <td><img src="images/ease-out-circular.png" alt="ease-out circular graph"/></td>
+    <td><img src="images/ease-in-out-circular.png" alt="ease-in-out circular graph"/></td>
+  </tr>
+  <tr>
+    <td>Elastic</td>
+    <td><img src="images/ease-in-elastic.png" alt="ease-in elastic graph"/></td>
+    <td><img src="images/ease-out-elastic.png" alt="ease-out elastic graph"/></td>
+    <td><img src="images/ease-in-out-elastic.png" alt="ease-in-out elastic graph"/></td>
+  </tr>
+  <tr>
+    <td>Back</td>
+    <td><img src="images/ease-in-back.png" alt="ease-in back graph"/></td>
+    <td><img src="images/ease-out-back.png" alt="ease-out back graph"/></td>
+    <td><img src="images/ease-in-out-back.png" alt="ease-in-out back graph"/></td>
+  </tr>
+  <tr>
+    <td>Bounce</td>
+    <td><img src="images/ease-in-bounce.png" alt="ease-in bounce graph"/></td>
+    <td><img src="images/ease-out-bounce.png" alt="ease-out bounce graph"/></td>
+    <td><img src="images/ease-in-out-bounce.png" alt="ease-in-out bounce graph"/></td>
+  </tr>
+  <tr>
+    <td>Random floor</td>
+    <td colspan="3"><img src="images/random-floor.png" alt="random-floor graph"/></td>
+  </tr>
+  <tr>
+    <td>Random threshold</td>
+    <td colspan="3"><img src="images/random-threshold.png" alt="random-threshold graph"/></td>
+  </tr>
+</table>
+</section>
+
+<section name="Acknowledgements">
+  <ul>
+    <li>Powered by Apache <a href="http://maven.apache.org">Maven</a>.</li>
+    <li>Project hosting by <a href="http://sourceforge.net">SourceForge.net</a>.</li>
+  </ul>
+  <p><img src="http://sourceforge.net/sflogo.php?group_id=113165&amp;type=1" width="88" height="31" border="0" alt="SourceForge.net Logo"/></p>
+</section>
+</body>
+</document>
