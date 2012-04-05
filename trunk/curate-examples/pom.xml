@@ -4,20 +4,20 @@
   <parent>
     <groupId>org.dishevelled</groupId>
     <artifactId>dsh-parent</artifactId>
-    <version>1</version>
+    <version>2-SNAPSHOT</version>
     <relativePath>../parent/pom.xml</relativePath>
   </parent>
   <artifactId>dsh-curate-examples</artifactId>
   <packaging>jar</packaging>
   <name>dishevelled.org curate-examples</name>
-  <version>1.0</version>
+  <version>1.1-SNAPSHOT</version>
   <description>Examples for the curate library.</description>
   <url>http://www.dishevelled.org/curate-examples</url>
   <inceptionYear>2007</inceptionYear>
   <scm>
-    <connection>scm:svn|http://dishevelled.svn.sourceforge.net/svnroot/dishevelled/tags/dsh-curate-examples-1.0</connection>
-    <developerConnection>scm:svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/tags/dsh-curate-examples-1.0</developerConnection>
-    <url>http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/tags/dsh-curate-examples-1.0</url>
+    <connection>scm:svn|http://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/curate-examples</connection>
+    <developerConnection>scm:svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/curate-examples</developerConnection>
+    <url>http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/trunk/curate-examples</url>
   </scm>
   <distributionManagement>
     <site>
@@ -46,7 +46,7 @@
     <dependency>
       <groupId>org.dishevelled</groupId>
       <artifactId>dsh-curate</artifactId>
-      <version>1.0</version>
+      <version>1.1-SNAPSHOT</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
