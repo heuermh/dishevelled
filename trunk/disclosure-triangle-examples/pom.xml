@@ -4,20 +4,20 @@
   <parent>
     <groupId>org.dishevelled</groupId>
     <artifactId>dsh-parent</artifactId>
-    <version>1-SNAPSHOT</version>
+    <version>1</version>
     <relativePath>../parent/pom.xml</relativePath>
   </parent>
   <artifactId>dsh-disclosure-triangle-examples</artifactId>
   <packaging>jar</packaging>
   <name>dishevelled.org disclosure-triangle-examples</name>
-  <version>1.0-SNAPSHOT</version>
+  <version>1.0</version>
   <description>Examples for the disclosure-triangle library.</description>
   <url>http://www.dishevelled.org/disclosure-triangle-examples</url>
   <inceptionYear>2007</inceptionYear>
   <scm>
-    <connection>scm:svn|http://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/disclosure-triangle-examples</connection>
-    <developerConnection>scm:svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/disclosure-triangle-examples</developerConnection>
-    <url>http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/trunk/disclosure-triangle-examples</url>
+    <connection>scm:svn|http://dishevelled.svn.sourceforge.net/svnroot/dishevelled/tags/dsh-disclosure-triangle-examples-1.0</connection>
+    <developerConnection>scm:svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/tags/dsh-disclosure-triangle-examples-1.0</developerConnection>
+    <url>http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/tags/dsh-disclosure-triangle-examples-1.0</url>
   </scm>
   <distributionManagement>
     <site>
@@ -46,13 +46,13 @@
     <dependency>
       <groupId>org.dishevelled</groupId>
       <artifactId>dsh-disclosure-triangle</artifactId>
-      <version>${project.version}</version>
+      <version>1.0</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>org.dishevelled</groupId>
       <artifactId>dsh-layout</artifactId>
-      <version>${project.version}</version>
+      <version>1.0</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
