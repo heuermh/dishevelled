@@ -4,20 +4,20 @@
   <parent>
     <groupId>org.dishevelled</groupId>
     <artifactId>dsh-parent</artifactId>
-    <version>1-SNAPSHOT</version>
+    <version>1</version>
     <relativePath>../parent/pom.xml</relativePath>
   </parent>
   <artifactId>dsh-disclosure-triangle</artifactId>
   <packaging>jar</packaging>
   <name>dishevelled.org disclosure-triangle</name>
-  <version>1.0-SNAPSHOT</version>
+  <version>1.0</version>
   <description>Disclosure triangle container.</description>
   <url>http://www.dishevelled.org/disclosure-triangle</url>
   <inceptionYear>2007</inceptionYear>
   <scm>
-    <connection>scm:svn|http://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/disclosure-triangle</connection>
-    <developerConnection>scm:svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/disclosure-triangle</developerConnection>
-    <url>http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/trunk/disclosure-triangle</url>
+    <connection>scm:svn|http://dishevelled.svn.sourceforge.net/svnroot/dishevelled/tags/dsh-disclosure-triangle-1.0</connection>
+    <developerConnection>scm:svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/tags/dsh-disclosure-triangle-1.0</developerConnection>
+    <url>http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/tags/dsh-disclosure-triangle-1.0</url>
   </scm>
   <distributionManagement>
     <site>
