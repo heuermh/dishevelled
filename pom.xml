@@ -1,91 +1,75 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="ISO-8859-1"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.dishevelled</groupId>
     <artifactId>dsh-parent</artifactId>
-    <version>1-SNAPSHOT</version>
-    <relativePath>./parent/pom.xml</relativePath>
+    <version>1</version>
+    <relativePath>../parent/pom.xml</relativePath>
   </parent>
-  <artifactId>dsh-multi-module</artifactId>
-  <packaging>pom</packaging>
-  <name>dishevelled.org multi-module</name>
-  <version>1.0-SNAPSHOT</version>
-  <description>Multi-module build for all dishevelled.org projects.</description>
+  <artifactId>dsh-graph-io</artifactId>
+  <packaging>jar</packaging>
+  <name>dishevelled.org graph-io</name>
+  <version>1.0</version>
+  <description>Directed graph readers and writers.</description>
+  <url>http://www.dishevelled.org/graph-io</url>
+  <inceptionYear>2008</inceptionYear>
   <scm>
-    <connection>scm:svn|http://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk</connection>
-    <developerConnection>scm:svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk</developerConnection>
-    <url>http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/trunk</url>
+    <connection>scm:svn|http://dishevelled.svn.sourceforge.net/svnroot/dishevelled/tags/dsh-graph-io-1.0</connection>
+    <developerConnection>scm:svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/tags/dsh-graph-io-1.0</developerConnection>
+    <url>http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/tags/dsh-graph-io-1.0</url>
   </scm>
-  <build/>
-  <reporting/>
-  <modules>
-    <module>affinity</module>
-    <module>analysis</module>
-    <module>analysis-examples</module>
-    <module>archetype</module>
-    <module>bitset</module>
-    <module>brainstorm</module>
-    <module>cluster</module>
-    <module>cluster-examples</module>
-    <module>codegen</module>
-    <module>codegen-shell</module>
-    <module>collect</module>
-    <module>color-scheme</module>
-    <module>commandline</module>
-    <module>curate</module>
-    <module>curate-examples</module>
-    <module>disclosure-triangle</module>
-    <module>disclosure-triangle-examples</module>
-    <module>eventlist-view</module>
-    <module>eventlist-view-examples</module>
-    <module>evolve</module>
-    <module>evolve-examples</module>
-    <module>functor</module>
-    <module>graph</module>
-    <module>graph-io</module>
-    <module>iconbundle</module>
-    <module>iconbundle-svg</module>
-    <module>iconbundle-tango</module>
-    <module>iconbundle-tango-examples</module>
-    <module>iconbundle-tools</module>
-    <module>identify</module>
-    <module>interpolate</module>
-    <module>layout</module>
-    <module>layout-examples</module>
-    <module>matrix</module>
-    <module>matrix-io</module>
-    <module>matrix-nonblocking</module>
-    <module>matrix-io-nonblocking</module>
-    <module>multi-map</module>
-    <module>observable</module>
-    <module>observable-graph</module>
-    <module>piccolo-ease</module>
-    <module>piccolo-ease-examples</module>
-    <module>piccolo-eventlist-view</module>
-    <module>piccolo-eventlist-view-examples</module>
-    <module>piccolo-identify</module>
-    <module>piccolo-identify-examples</module>
-    <module>piccolo-physics</module>
-    <module>piccolo-physics-examples</module>
-    <module>piccolo-ribbon</module>
-    <module>piccolo-ribbon-examples</module>
-    <module>piccolo-sprite</module>
-    <module>piccolo-sprite-examples</module>
-    <module>piccolo-state-machine-sprite</module>
-    <module>piccolo-state-machine-sprite-examples</module>
-    <module>piccolo-tilemap</module>
-    <module>piccolo-tilemap-examples</module>
-    <module>piccolo-venn</module>
-    <module>piccolo-venn-examples</module>
-    <module>site-skin</module>
-    <module>swarm</module>
-    <module>swarm-examples</module>
-    <module>timer</module>
-    <module>venn</module>
-    <module>venn-examples</module>
-    <module>venn-tools</module>
-    <module>vocabulary</module>
-    <module>weighted</module>
-  </modules>
+  <distributionManagement>
+    <site>
+      <id>dishevelled.sf.net</id>
+      <url>scp://shell.sourceforge.net/home/project-web/dishevelled/htdocs/graph-io-${project.version}</url>
+    </site>
+  </distributionManagement>
+  <dependencies>
+    <dependency>
+      <groupId>org.dishevelled</groupId>
+      <artifactId>dsh-graph</artifactId>
+      <version>1.0</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>net.sf.stax</groupId>
+      <artifactId>stax</artifactId>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>stax</groupId>
+      <artifactId>stax</artifactId>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+  <properties>
+    <jdk.version>1.5</jdk.version>
+  </properties>
+  <reporting>
+    <plugins>
+      <plugin>
+        <artifactId>maven-checkstyle-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <configuration>
+          <!-- todo:  must manually update the copyright dates here -->
+          <bottom>Copyright (c) 2008-2012 held jointly by the individual authors. Licensed under the &lt;a href="http://www.fsf.org/licensing/licenses/lgpl.html"&gt;GNU Lesser General Public License&lt;a&gt; (LGPL).</bottom>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-jxr-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>cobertura-maven-plugin</artifactId>
+      </plugin>
+    </plugins>
+  </reporting>
 </project>
