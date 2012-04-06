@@ -4,20 +4,20 @@
   <parent>
     <groupId>org.dishevelled</groupId>
     <artifactId>dsh-parent</artifactId>
-    <version>1</version>
+    <version>2-SNAPSHOT</version>
     <relativePath>../parent/pom.xml</relativePath>
   </parent>
   <artifactId>dsh-observable-graph</artifactId>
   <packaging>jar</packaging>
   <name>dishevelled.org observable-graph</name>
-  <version>1.0</version>
+  <version>1.1-SNAPSHOT</version>
   <description>Observable decorators for graph interfaces.</description>
   <url>http://www.dishevelled.org/observable-graph</url>
   <inceptionYear>2008</inceptionYear>
   <scm>
-    <connection>scm:svn|http://dishevelled.svn.sourceforge.net/svnroot/dishevelled/tags/dsh-observable-graph-1.0</connection>
-    <developerConnection>scm:svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/tags/dsh-observable-graph-1.0</developerConnection>
-    <url>http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/tags/dsh-observable-graph-1.0</url>
+    <connection>scm:svn|http://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/observable-graph</connection>
+    <developerConnection>scm:svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/observable-graph</developerConnection>
+    <url>http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/trunk/observable-graph</url>
   </scm>
   <distributionManagement>
     <site>
@@ -29,7 +29,7 @@
     <dependency>
       <groupId>org.dishevelled</groupId>
       <artifactId>dsh-graph</artifactId>
-      <version>1.0</version>
+      <version>1.1-SNAPSHOT</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
