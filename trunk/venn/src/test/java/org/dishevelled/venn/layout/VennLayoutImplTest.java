@@ -24,70 +24,51 @@
 package org.dishevelled.venn.layout;
 
 import java.awt.Shape;
+
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
-import org.dishevelled.venn.AbstractTernaryVennLayoutTest;
-import org.dishevelled.venn.TernaryVennLayout;
+import java.util.List;
+
+import com.google.common.collect.ImmutableList;
+
+import junit.framework.TestCase;
 
 /**
- * Unit test for TernaryVennLayoutImpl.
+ * Unit test for VennLayoutImpl.
  *
  * @author  Michael Heuer
  */
-public final class TernaryVennLayoutImplTest
-    extends AbstractTernaryVennLayoutTest
+public final class VennLayoutImplTest
+    extends TestCase
 {
     private Shape shape = new Rectangle2D.Double(0.0d, 0.0d, 100.0d, 100.0d);
     private Point2D center = new Point2D.Double(50.0d, 50.0);
     private Rectangle2D boundingRectangle = new Rectangle2D.Double(-10.0d, -10.0d, 110.0d, 110.0d);
+    private VennLayoutImpl vennLayout;
 
-    /** {@inheritDoc} */
-    protected TernaryVennLayout createTernaryVennLayout()
+    public void setUp()
     {
-        return new TernaryVennLayoutImpl(shape, shape, shape,
-                                         center, center, center, center, center,
-                                         center, center, boundingRectangle);
+        List<Shape> shapes = ImmutableList.of(shape, shape, shape, shape, shape);
+        vennLayout = new VennLayoutImpl(shapes, boundingRectangle);
+        vennLayout.addLuneCenter(center, 0);
+        vennLayout.addLuneCenter(center, 1);
+        vennLayout.addLuneCenter(center, 2);
+        vennLayout.addLuneCenter(center, 3);
+        vennLayout.addLuneCenter(center, 4);
+        vennLayout.addLuneCenter(center, 0, 1);
+        vennLayout.addLuneCenter(center, 0, 2);
+        vennLayout.addLuneCenter(center, 0, 3);
+        vennLayout.addLuneCenter(center, 0, 4);
+        vennLayout.addLuneCenter(center, 0, 1, 2, 3, 4);
     }
 
-    public void testConstructorNullFirstShape()
+    public void testConstructorNullShapes()
     {
         try
         {
-            new TernaryVennLayoutImpl(null, shape, shape,
-                                      center, center, center, center, center,
-                                      center, center, boundingRectangle);
-            fail("ctr(null first) expected IllegalArgumentException");
-        }
-        catch (IllegalArgumentException e)
-        {
-            // expected
-        }
-    }
-
-    public void testConstructorNullSecondShape()
-    {
-        try
-        {
-            new TernaryVennLayoutImpl(shape, null, shape,
-                                      center, center, center, center, center,
-                                      center, center, boundingRectangle);
-            fail("ctr(null second) expected IllegalArgumentException");
-        }
-        catch (IllegalArgumentException e)
-        {
-            // expected
-        }
-    }
-
-    public void testConstructorNullThirdShape()
-    {
-        try
-        {
-            new TernaryVennLayoutImpl(shape, shape, null,
-                                      center, center, center, center, center,
-                                      center, center, boundingRectangle);
-            fail("ctr(null third) expected IllegalArgumentException");
+            new VennLayoutImpl(null, boundingRectangle);
+            fail("ctr(null, ) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
         {
@@ -99,10 +80,47 @@ public final class TernaryVennLayoutImplTest
     {
         try
         {
-            new TernaryVennLayoutImpl(shape, shape, shape,
-                                      center, center, center, center, center,
-                                      center, center, null);
-            fail("ctr(null boundingRectangle) expected IllegalArgumentException");
+            new VennLayoutImpl(ImmutableList.of(shape, shape), null);
+            fail("ctr(, null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+    }
+
+    public void testSize()
+    {
+        assertEquals(5, vennLayout.size());
+    }
+
+    public void testBoundingRectangle()
+    {
+        assertEquals(boundingRectangle, vennLayout.boundingRectangle());
+    }
+
+    public void testLuneCenter()
+    {
+        assertEquals(center, vennLayout.luneCenter(0));
+        assertEquals(center, vennLayout.luneCenter(1));
+        assertEquals(center, vennLayout.luneCenter(2));
+        assertEquals(center, vennLayout.luneCenter(3));
+        assertEquals(center, vennLayout.luneCenter(4));
+        assertEquals(center, vennLayout.luneCenter(0, 1));
+        assertEquals(center, vennLayout.luneCenter(0, 1));
+        assertEquals(center, vennLayout.luneCenter(0, 1));
+        assertEquals(center, vennLayout.luneCenter(0, 1));
+        assertEquals(center, vennLayout.luneCenter(0, 1));
+        assertEquals(center, vennLayout.luneCenter(0, 1, 2, 3, 4));
+        assertNull(vennLayout.luneCenter(0, 1, 2));
+    }
+
+    public void testAddLuneCenterNullLuneCenter()
+    {
+        try
+        {
+            vennLayout.addLuneCenter(null, 0);
+            fail("addLuneCenter(null, ) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
         {
@@ -114,12 +132,12 @@ public final class TernaryVennLayoutImplTest
     {
         try
         {
-            ternaryVennLayout.get(-1);
+            vennLayout.get(-1);
             fail("expected IllegalArgumentException");
         }
         catch (IndexOutOfBoundsException e)
         {
-            // expected
+            // ignore
         }
     }
 
@@ -127,12 +145,12 @@ public final class TernaryVennLayoutImplTest
     {
         try
         {
-            ternaryVennLayout.get(99);
+            vennLayout.get(99);
             fail("expected IllegalArgumentException");
         }
         catch (IndexOutOfBoundsException e)
         {
-            // expected
+            // ignore
         }
     }
 
@@ -140,12 +158,12 @@ public final class TernaryVennLayoutImplTest
     {
         try
         {
-            ternaryVennLayout.luneCenter(-1);
+            vennLayout.luneCenter(-1);
             fail("expected IllegalArgumentException");
         }
         catch (IndexOutOfBoundsException e)
         {
-            // expected
+            // ignore
         }
     }
 
@@ -153,12 +171,12 @@ public final class TernaryVennLayoutImplTest
     {
         try
         {
-            ternaryVennLayout.luneCenter(99);
+            vennLayout.luneCenter(99);
             fail("expected IllegalArgumentException");
         }
         catch (IndexOutOfBoundsException e)
         {
-            // expected
+            // ignore
         }
     }
 
@@ -166,12 +184,12 @@ public final class TernaryVennLayoutImplTest
     {
         try
         {
-            ternaryVennLayout.luneCenter(0, -1);
+            vennLayout.luneCenter(0, -1);
             fail("expected IllegalArgumentException");
         }
         catch (IndexOutOfBoundsException e)
         {
-            // expected
+            // ignore
         }
     }
 
@@ -179,12 +197,12 @@ public final class TernaryVennLayoutImplTest
     {
         try
         {
-            ternaryVennLayout.luneCenter(0, 99);
+            vennLayout.luneCenter(0, 99);
             fail("expected IllegalArgumentException");
         }
         catch (IndexOutOfBoundsException e)
         {
-            // expected
+            // ignore
         }
     }
 
@@ -192,12 +210,12 @@ public final class TernaryVennLayoutImplTest
     {
         try
         {
-            ternaryVennLayout.luneCenter(0, 1, 2, 3);
+            vennLayout.luneCenter(0, 1, 2, 3, 4, 5);
             fail("expected IllegalArgumentException");
         }
         catch (IndexOutOfBoundsException e)
         {
-            // expected
+            // ignore
         }
     }
 }
