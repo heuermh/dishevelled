@@ -42,7 +42,7 @@ import org.dishevelled.venn.TernaryVennModel;
 import static org.dishevelled.venn.model.VennModelUtils.toImmutableBitSet;
 
 /**
- * Tertiary venn model implementation.
+ * Immutable implementation of TernaryVennModel.
  *
  * @param <E> value type
  * @author  Michael Heuer

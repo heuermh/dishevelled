@@ -215,13 +215,13 @@ public final class TernaryVennLayoutImpl
     /** {@inheritDoc} */
     public int size()
     {
-        return 2;
+        return 3;
     }
 
     /** {@inheritDoc} */
     public Shape get(final int index)
     {
-        if (index < 0 || index > 1)
+        if (index < 0 || index > 2)
         {
             throw new IndexOutOfBoundsException("index out of bounds");
         }

@@ -41,11 +41,10 @@ import org.dishevelled.venn.VennLayout;
 import static org.dishevelled.venn.layout.VennLayoutUtils.toImmutableBitSet;
 
 /**
- * Venn layout.
+ * Implementation of a venn diagram layout for an arbitrary number of sets.
  *
  * @author  Michael Heuer
  */
-// provide a mutable and an immutable version?
 public final class VennLayoutImpl implements VennLayout
 {
     /** List of shapes. */
@@ -89,13 +88,13 @@ public final class VennLayoutImpl implements VennLayout
     }
 
     /** {@inheritDoc} */
-    public Shape get(int index)
+    public Shape get(final int index)
     {
         return shapes.get(index);
     }
 
     /** {@inheritDoc} */
-    public Point2D luneCenter(int index, int... additional)
+    public Point2D luneCenter(final int index, final int... additional)
     {
         checkIndices(index, additional);
         return luneCenters.get(toImmutableBitSet(index, additional));

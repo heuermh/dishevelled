@@ -42,7 +42,7 @@ import org.dishevelled.venn.BinaryVennModel;
 import static org.dishevelled.venn.model.VennModelUtils.toImmutableBitSet;
 
 /**
- * Binary venn model implementation.
+ * Immutable implementation of BinaryVennModel.
  *
  * @param <E> value type
  * @author  Michael Heuer

@@ -40,7 +40,7 @@ import org.dishevelled.venn.VennModel;
 import static org.dishevelled.venn.model.VennModelUtils.toImmutableBitSet;
 
 /**
- * Venn model.
+ * Implementation of a venn diagram model for an arbitrary number of sets.
  *
  * @param <E> value type
  * @author  Michael Heuer
@@ -86,7 +86,7 @@ public final class VennModelImpl<E> implements VennModel<E>
     }
 
     /** {@inheritDoc} */
-    public Set<E> get(int index)
+    public Set<E> get(final int index)
     {
         return sets.get(index);
     }
@@ -104,7 +104,7 @@ public final class VennModelImpl<E> implements VennModel<E>
     }
 
     /** {@inheritDoc} */
-    public Set<E> exclusiveTo(int index, int... additional)
+    public Set<E> exclusiveTo(final int index, final int... additional)
     {
         int maxIndex = size() - 1;
         if (index < 0 || index > maxIndex)

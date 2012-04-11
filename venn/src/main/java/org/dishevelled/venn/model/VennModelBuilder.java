@@ -31,7 +31,7 @@ import com.google.common.collect.Lists;
 import org.dishevelled.venn.VennModel;
 
 /**
- * Venn model builder.
+ * Venn diagram model builder.
  *
  * @param <E> value type
  * @author  Michael Heuer
