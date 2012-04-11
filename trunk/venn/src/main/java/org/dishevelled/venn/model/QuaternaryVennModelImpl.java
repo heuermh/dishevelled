@@ -42,7 +42,7 @@ import org.dishevelled.venn.QuaternaryVennModel;
 import static org.dishevelled.venn.model.VennModelUtils.toImmutableBitSet;
 
 /**
- * Quaternary venn model implementation.
+ * Immutable implementation of QuaternaryVennModel.
  *
  * @param <E> value type
  * @author  Michael Heuer

@@ -23,6 +23,6 @@
 */
 
 /**
- * Implementation of the venn diagram model interfaces.
+ * Models for venn diagrams.
  */
 package org.dishevelled.venn.model;

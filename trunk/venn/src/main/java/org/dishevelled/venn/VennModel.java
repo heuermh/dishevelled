@@ -26,7 +26,7 @@ package org.dishevelled.venn;
 import java.util.Set;
 
 /**
- * Venn model.
+ * Venn diagram model.
  *
  * @param <E> value type
  * @author  Michael Heuer

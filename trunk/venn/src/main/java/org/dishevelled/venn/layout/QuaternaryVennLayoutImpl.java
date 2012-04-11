@@ -336,13 +336,13 @@ public final class QuaternaryVennLayoutImpl
     /** {@inheritDoc} */
     public int size()
     {
-        return 2;
+        return 4;
     }
 
     /** {@inheritDoc} */
     public Shape get(final int index)
     {
-        if (index < 0 || index > 1)
+        if (index < 0 || index > 3)
         {
             throw new IndexOutOfBoundsException("index out of bounds");
         }

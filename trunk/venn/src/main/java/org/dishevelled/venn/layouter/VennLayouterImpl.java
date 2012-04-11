@@ -1,4 +1,3 @@
-
 /*
 
     dsh-venn  Lightweight components for venn diagrams.
@@ -28,7 +27,7 @@ package org.dishevelled.venn.layouter;
 //import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
-import java.util.Iterator;
+//import java.util.Iterator;
 
 import org.dishevelled.venn.VennModel;
 //import org.dishevelled.venn.BinaryVennModel;
@@ -71,6 +70,7 @@ public final class VennLayouterImpl implements VennLayouter
     }
 
     /** {@inheritDoc} */
+    /*
     public Iterator<VennLayout> layout(final VennModel<?> model,
                                        final Rectangle2D boundingRectangle,
                                        final ScoringFunction scoringFunction,
@@ -101,7 +101,6 @@ public final class VennLayouterImpl implements VennLayouter
         return null;
     }
 
-    /*
     public BinaryVennLayout layout(final BinaryVennModel<?> model,
                                    final Rectangle2D boundingRectangle,
                                    final PerformanceHint performanceHint)

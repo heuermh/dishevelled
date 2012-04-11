@@ -25,10 +25,10 @@ package org.dishevelled.venn;
 
 import java.awt.geom.Rectangle2D;
 
-import java.util.Iterator;
+//import java.util.Iterator;
 
 /**
- * Venn layout algorithm.
+ * Venn diagram layout algorithm.
  *
  * @author  Michael Heuer
  */
@@ -64,43 +64,43 @@ public interface VennLayouter
      * @return zero or more possible layouts that satisfy the specified scoring
      *    function and score predicate
      */
-    Iterator<VennLayout> layout(VennModel<?> model,
-                                Rectangle2D boundingRectangle,
-                                ScoringFunction scoringFunction,
-                                ScorePredicate scorePredicate,
-                                PerformanceHint performanceHint);
+    //    Iterator<VennLayout> layout(VennModel<?> model,
+    //                                Rectangle2D boundingRectangle,
+    //                                ScoringFunction scoringFunction,
+    //                                ScorePredicate scorePredicate,
+    //                                PerformanceHint performanceHint);
 
 
     /**
      * Scoring function.
      */
-    interface ScoringFunction // or just use UnaryFunction<VennLayout,Double> ?
-    {
+    //    interface ScoringFunction // or just use UnaryFunction<VennLayout,Double> ?
+    //    {
         /**
          * Return a score for the specified venn layout.
          *
          * @param layout venn layout to score
          * @return a score for the specified venn layout
          */
-        double score(VennLayout layout);
-    }
+    //        double score(VennLayout layout);
+    //    }
 
     /**
      * Score predicate.
      */
-    interface ScorePredicate // or just use UnaryPredicate<Double> ?
-    {
+    //    interface ScorePredicate // or just use UnaryPredicate<Double> ?
+    //    {
         /**
          * Return true if the specified score satisfies this predicate.
          *
          * @param score score to evaluate
          * @return true if the specified score satisfies this predicate
          */
-        boolean evaluate(double score);
-    }
+    //        boolean evaluate(double score);
+    //    }
 
     /**
-     * Performance hint.
+     * Venn diagram layout algorithm performance hint.
      */
     enum PerformanceHint
     {

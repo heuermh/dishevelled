@@ -27,7 +27,7 @@ import org.dishevelled.bitset.ImmutableBitSet;
 import org.dishevelled.bitset.MutableBitSet;
 
 /**
- * Static utility methods for venn layout.
+ * Static utility methods for venn diagram layouts.
  *
  * @author  Michael Heuer
  */

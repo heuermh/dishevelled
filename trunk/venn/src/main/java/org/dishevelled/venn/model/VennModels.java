@@ -32,7 +32,7 @@ import org.dishevelled.venn.QuaternaryVennModel;
 import org.dishevelled.venn.VennModel;
 
 /**
- * Venn models.
+ * Venn diagram model implementations.
  *
  * @author  Michael Heuer
  */
