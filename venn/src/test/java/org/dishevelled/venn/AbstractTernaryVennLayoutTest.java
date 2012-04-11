@@ -48,14 +48,37 @@ public abstract class AbstractTernaryVennLayoutTest
 
     public void testTernaryVennLayout()
     {
+        assertEquals(3, ternaryVennLayout.size());
+        assertNotNull(ternaryVennLayout.get(0));
+        assertNotNull(ternaryVennLayout.get(1));
+        assertNotNull(ternaryVennLayout.get(2));
         assertNotNull(ternaryVennLayout.firstShape());
         assertNotNull(ternaryVennLayout.secondShape());
         assertNotNull(ternaryVennLayout.thirdShape());
+        assertEquals(ternaryVennLayout.firstShape(), ternaryVennLayout.get(0));
+        assertEquals(ternaryVennLayout.secondShape(), ternaryVennLayout.get(1));
+        assertEquals(ternaryVennLayout.thirdShape(), ternaryVennLayout.get(2));
+        assertNotNull(ternaryVennLayout.luneCenter(0));
+        assertNotNull(ternaryVennLayout.luneCenter(1));
+        assertNotNull(ternaryVennLayout.luneCenter(2));
+        assertNotNull(ternaryVennLayout.luneCenter(0, 1));
+        assertNotNull(ternaryVennLayout.luneCenter(0, 2));
+        assertNotNull(ternaryVennLayout.luneCenter(1, 2));
+        assertNotNull(ternaryVennLayout.luneCenter(0, 1, 2));
         assertNotNull(ternaryVennLayout.firstOnlyLuneCenter());
         assertNotNull(ternaryVennLayout.secondOnlyLuneCenter());
         assertNotNull(ternaryVennLayout.thirdOnlyLuneCenter());
-
+        assertNotNull(ternaryVennLayout.firstSecondLuneCenter());
+        assertNotNull(ternaryVennLayout.firstThirdLuneCenter());
+        assertNotNull(ternaryVennLayout.secondThirdLuneCenter());
         assertNotNull(ternaryVennLayout.intersectionLuneCenter());
+        assertEquals(ternaryVennLayout.firstOnlyLuneCenter(), ternaryVennLayout.luneCenter(0));
+        assertEquals(ternaryVennLayout.secondOnlyLuneCenter(), ternaryVennLayout.luneCenter(1));
+        assertEquals(ternaryVennLayout.thirdOnlyLuneCenter(), ternaryVennLayout.luneCenter(2));
+        assertEquals(ternaryVennLayout.firstSecondLuneCenter(), ternaryVennLayout.luneCenter(0, 1));
+        assertEquals(ternaryVennLayout.firstThirdLuneCenter(), ternaryVennLayout.luneCenter(0, 2));
+        assertEquals(ternaryVennLayout.secondThirdLuneCenter(), ternaryVennLayout.luneCenter(1, 2));
+        assertEquals(ternaryVennLayout.intersectionLuneCenter(), ternaryVennLayout.luneCenter(0, 1, 2));
         assertNotNull(ternaryVennLayout.boundingRectangle());
     }
 }

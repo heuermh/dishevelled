@@ -48,11 +48,22 @@ public abstract class AbstractBinaryVennLayoutTest
 
     public void testBinaryVennLayout()
     {
+        assertEquals(2, binaryVennLayout.size());
+        assertNotNull(binaryVennLayout.get(0));
+        assertNotNull(binaryVennLayout.get(1));
         assertNotNull(binaryVennLayout.firstShape());
         assertNotNull(binaryVennLayout.secondShape());
+        assertEquals(binaryVennLayout.firstShape(), binaryVennLayout.get(0));
+        assertEquals(binaryVennLayout.secondShape(), binaryVennLayout.get(1));
+        assertNotNull(binaryVennLayout.luneCenter(0));
+        assertNotNull(binaryVennLayout.luneCenter(1));
+        assertNotNull(binaryVennLayout.luneCenter(0, 1));
         assertNotNull(binaryVennLayout.firstOnlyLuneCenter());
         assertNotNull(binaryVennLayout.secondOnlyLuneCenter());
         assertNotNull(binaryVennLayout.intersectionLuneCenter());
+        assertEquals(binaryVennLayout.firstOnlyLuneCenter(), binaryVennLayout.luneCenter(0));
+        assertEquals(binaryVennLayout.secondOnlyLuneCenter(), binaryVennLayout.luneCenter(0));
+        assertEquals(binaryVennLayout.intersectionLuneCenter(), binaryVennLayout.luneCenter(0, 1));
         assertNotNull(binaryVennLayout.boundingRectangle());
     }
 }

@@ -38,14 +38,143 @@ import org.dishevelled.venn.BinaryVennLayout;
 public final class BinaryVennLayoutImplTest
     extends AbstractBinaryVennLayoutTest
 {
+    private Shape shape = new Rectangle2D.Double(0.0d, 0.0d, 100.0d, 100.0d);
+    private Point2D center = new Point2D.Double(50.0d, 50.0);
+    private Rectangle2D boundingRectangle = new Rectangle2D.Double(-10.0d, -10.0d, 110.0d, 110.0d);
 
     /** {@inheritDoc} */
     protected BinaryVennLayout createBinaryVennLayout()
     {
-        Shape shape = new Rectangle2D.Double(0.0d, 0.0d, 100.0d, 100.0d);
-        Point2D center = new Point2D.Double(50.0d, 50.0);
-        Rectangle2D boundingRectangle = new Rectangle2D.Double(-10.0d, -10.0d, 110.0d, 110.0d);
-
         return new BinaryVennLayoutImpl(shape, shape, center, center, center, boundingRectangle);
+    }
+
+    public void testConstructorNullFirstShape()
+    {
+        try
+        {
+            new BinaryVennLayoutImpl(null, shape, center, center, center, boundingRectangle);
+            fail("ctr(null,,,,) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+    }
+
+    public void testConstructorNullSecondShape()
+    {
+        try
+        {
+            new BinaryVennLayoutImpl(shape, null, center, center, center, boundingRectangle);
+            fail("ctr(,null,,,) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+    }
+
+    public void testConstructorNullBoundingRectangle()
+    {
+        try
+        {
+            new BinaryVennLayoutImpl(shape, shape, center, center, center, null);
+            fail("ctr(,,,,null) expected IllegalArgumentException");
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+    }
+
+    public void testGetIndexTooSmall()
+    {
+        try
+        {
+            binaryVennLayout.get(-1);
+            fail("expected IllegalArgumentException");
+        }
+        catch (IndexOutOfBoundsException e)
+        {
+            // expected
+        }
+    }
+
+    public void testGetIndexTooLarge()
+    {
+        try
+        {
+            binaryVennLayout.get(99);
+            fail("expected IllegalArgumentException");
+        }
+        catch (IndexOutOfBoundsException e)
+        {
+            // expected
+        }
+    }
+
+    public void testLuneCenterIndexToSmall()
+    {
+        try
+        {
+            binaryVennLayout.luneCenter(-1);
+            fail("expected IllegalArgumentException");
+        }
+        catch (IndexOutOfBoundsException e)
+        {
+            // expected
+        }
+    }
+
+    public void testLuneCenterIndexTooLarge()
+    {
+        try
+        {
+            binaryVennLayout.luneCenter(99);
+            fail("expected IllegalArgumentException");
+        }
+        catch (IndexOutOfBoundsException e)
+        {
+            // expected
+        }
+    }
+
+    public void testLuneCenterAdditionalTooSmall()
+    {
+        try
+        {
+            binaryVennLayout.luneCenter(0, -1);
+            fail("expected IllegalArgumentException");
+        }
+        catch (IndexOutOfBoundsException e)
+        {
+            // expected
+        }
+    }
+
+    public void testLuneCenterAdditionalTooLarge()
+    {
+        try
+        {
+            binaryVennLayout.luneCenter(0, 99);
+            fail("expected IllegalArgumentException");
+        }
+        catch (IndexOutOfBoundsException e)
+        {
+            // expected
+        }
+    }
+
+    public void testLuneCenterTooManyIndices()
+    {
+        try
+        {
+            binaryVennLayout.luneCenter(0, 1, 2);
+            fail("expected IllegalArgumentException");
+        }
+        catch (IndexOutOfBoundsException e)
+        {
+            // expected
+        }
     }
 }
