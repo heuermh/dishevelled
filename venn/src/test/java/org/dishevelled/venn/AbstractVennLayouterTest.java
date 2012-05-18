@@ -50,6 +50,8 @@ public abstract class AbstractVennLayouterTest
     protected VennLayouter vennLayouter;
     protected Rectangle2D boundingRectangle;
     @Mock
+    protected VennModel<String> model;
+    @Mock
     protected BinaryVennModel<String> binaryModel;
     @Mock
     protected TernaryVennModel<String> ternaryModel;
@@ -76,6 +78,24 @@ public abstract class AbstractVennLayouterTest
     public void testCreateVennLayouter()
     {
         assertNotNull(vennLayouter);
+    }
+
+    @Test(expected=IllegalArgumentException.class)
+    public void testLayoutNullModel()
+    {
+        vennLayouter.layout((VennModel<String>) null, boundingRectangle, OPTIMIZE_FOR_SPEED);
+    }
+
+    @Test(expected=IllegalArgumentException.class)
+    public void testLayoutNullBoundingRectangle()
+    {
+        vennLayouter.layout(model, null, OPTIMIZE_FOR_SPEED);
+    }
+
+    @Test(expected=IllegalArgumentException.class)
+    public void testLayoutNullPerformanceHint()
+    {
+        vennLayouter.layout(model, boundingRectangle, null);
     }
 
     @Test(expected=IllegalArgumentException.class)
