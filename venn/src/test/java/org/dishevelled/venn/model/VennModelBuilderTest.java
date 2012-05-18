@@ -119,4 +119,35 @@ public final class VennModelBuilderTest
             assertEquals(i, vennModel.size());
         }
     }
+
+    public void testBuildVarargSets()
+    {
+        VennModelBuilder<String> builder = new VennModelBuilder<String>();
+
+        Set<String> set = Sets.newHashSet();
+        set.add("foo");
+
+        builder.withSets(set, set);
+        VennModel<String> binaryModel = builder.build();
+        assertNotNull(binaryModel);
+        assertEquals(2, binaryModel.size());
+
+        builder.clear();
+        builder.withSets(set, set, set);
+        VennModel<String> ternaryModel = builder.build();
+        assertNotNull(ternaryModel);
+        assertEquals(3, ternaryModel.size());
+
+        builder.clear();
+        builder.withSets(set, set, set, set);
+        VennModel<String> quaternaryModel = builder.build();
+        assertNotNull(quaternaryModel);
+        assertEquals(4, quaternaryModel.size());
+
+        builder.clear();
+        builder.withSets(set, set, set, set, set);
+        VennModel<String> model = builder.build();
+        assertNotNull(model);
+        assertEquals(5, model.size());
+    }
 }
