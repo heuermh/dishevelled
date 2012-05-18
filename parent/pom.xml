@@ -89,11 +89,10 @@
           <artifactId>maven-install-plugin</artifactId>
           <version>2.3.1</version>
         </plugin>
-	<plugin>
-	  <artifactId>maven-gpg-plugin</artifactId>
-	  <!-- <version>1.4</version> -->
-	  <version>1.1</version>
-	</plugin>
+          <plugin>
+            <artifactId>maven-gpg-plugin</artifactId>
+            <version>1.4</version>
+        </plugin>
         <plugin>
           <artifactId>maven-jar-plugin</artifactId>
           <version>2.4</version>
@@ -101,11 +100,11 @@
         <plugin>
           <artifactId>maven-release-plugin</artifactId>
           <version>2.3</version>
-	  <configuration>
-	    <mavenExecutorId>forked-path</mavenExecutorId>
-	    <useReleaseProfile>false</useReleaseProfile>
-	    <arguments>-Psonatype-oss-release</arguments>
-	  </configuration>
+            <configuration>
+            <mavenExecutorId>forked-path</mavenExecutorId>
+            <useReleaseProfile>false</useReleaseProfile>
+            <arguments>-Psonatype-oss-release</arguments>
+          </configuration>
         </plugin>
         <plugin>
           <artifactId>maven-resources-plugin</artifactId>
@@ -331,10 +330,10 @@
       <name>Sonatype Nexus Snapshots</name>
       <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
       <releases>
-	<enabled>false</enabled>
+        <enabled>false</enabled>
       </releases>
       <snapshots>
-	<enabled>true</enabled>
+        <enabled>true</enabled>
       </snapshots>
     </repository>
   </repositories>
