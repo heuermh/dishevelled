@@ -23,17 +23,22 @@
 */
 package org.dishevelled.venn;
 
+import static org.junit.Assert.assertNotNull;
+
 import java.awt.geom.Rectangle2D;
 
-import junit.framework.TestCase;
+import org.junit.Before;
+import org.junit.Test;
 
-// move to junit 4, reimplement with mocks when the time comes
-//import org.dishevelled.venn.model.BinaryVennModelImpl;
-//import org.dishevelled.venn.model.TernaryVennModelImpl;
-//import org.dishevelled.venn.model.QuaternaryVennModelImpl;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
-//import static org.dishevelled.venn.VennLayouter.PerformanceHint.OPTIMIZE_FOR_SPEED;
-//import static org.dishevelled.venn.VennLayouter.PerformanceHint.OPTIMIZE_FOR_CORRECTNESS;
+import org.dishevelled.venn.model.BinaryVennModelImpl;
+import org.dishevelled.venn.model.TernaryVennModelImpl;
+import org.dishevelled.venn.model.QuaternaryVennModelImpl;
+
+import static org.dishevelled.venn.VennLayouter.PerformanceHint.OPTIMIZE_FOR_SPEED;
+import static org.dishevelled.venn.VennLayouter.PerformanceHint.OPTIMIZE_FOR_CORRECTNESS;
 
 /**
  * Abstract unit test for implementations of VennLayouter.
@@ -41,132 +46,89 @@ import junit.framework.TestCase;
  * @author  Michael Heuer
  */
 public abstract class AbstractVennLayouterTest
-    extends TestCase
 {
     protected VennLayouter vennLayouter;
     protected Rectangle2D boundingRectangle;
+    @Mock
+    protected BinaryVennModel<String> binaryModel;
+    @Mock
+    protected TernaryVennModel<String> ternaryModel;
+    @Mock
+    protected QuaternaryVennModel<String> quaternaryModel;
 
+    /**
+     * Create and return a new instance of VennLayouter to test.
+     *
+     * @return a new instance of VennLayouter to test
+     */
     protected abstract VennLayouter createVennLayouter();
 
 
+    @Before
     public void setUp()
     {
+        MockitoAnnotations.initMocks(this);
         vennLayouter = createVennLayouter();
         boundingRectangle = new Rectangle2D.Double(0.0d, 0.0d, 1000.0d, 1000.0d);
     }
 
+    @Test
     public void testCreateVennLayouter()
     {
         assertNotNull(vennLayouter);
     }
 
-    /*
+    @Test(expected=IllegalArgumentException.class)
     public void testLayoutBinaryNullModel()
     {
-        try
-        {
-            vennLayout.layout((BinaryVennModel<String>) null, boundingRectangle, OPTIMIZE_FOR_SPEED);
-        }
-        catch (IllegalArgumentException e)
-        {
-            // expected
-        }
+        vennLayouter.layout((BinaryVennModel<String>) null, boundingRectangle, OPTIMIZE_FOR_SPEED);
     }
 
+    @Test(expected=IllegalArgumentException.class)
     public void testLayoutBinaryNullBoundingRectangle()
     {
-        try
-        {
-            vennLayout.layout(new BinaryVennModelImpl<String>(), null, OPTIMIZE_FOR_SPEED);
-        }
-        catch (IllegalArgumentException e)
-        {
-            // expected
-        }
+        vennLayouter.layout(binaryModel, null, OPTIMIZE_FOR_SPEED);
     }
 
+    @Test(expected=IllegalArgumentException.class)
     public void testLayoutBinaryNullPerformanceHint()
     {
-        try
-        {
-            vennLayout.layout(new BinaryVennModelImpl<String>(), boundingRectangle, null);
-        }
-        catch (IllegalArgumentException e)
-        {
-            // expected
-        }
+        vennLayouter.layout(binaryModel, boundingRectangle, null);
     }
 
+    @Test(expected=IllegalArgumentException.class)
     public void testLayoutTernaryNullModel()
     {
-        try
-        {
-            vennLayout.layout((TernaryVennModel<String>) null, boundingRectangle, OPTIMIZE_FOR_SPEED);
-        }
-        catch (IllegalArgumentException e)
-        {
-            // expected
-        }
+        vennLayouter.layout((TernaryVennModel<String>) null, boundingRectangle, OPTIMIZE_FOR_SPEED);
     }
 
+    @Test(expected=IllegalArgumentException.class)
     public void testLayoutTernaryNullBoundingRectangle()
     {
-        try
-        {
-            vennLayout.layout(new TernaryVennModelImpl<String>(), null, OPTIMIZE_FOR_SPEED);
-        }
-        catch (IllegalArgumentException e)
-        {
-            // expected
-        }
+        vennLayouter.layout(ternaryModel, null, OPTIMIZE_FOR_SPEED);
     }
 
+    @Test(expected=IllegalArgumentException.class)
     public void testLayoutTernaryNullPerformanceHint()
     {
-        try
-        {
-            vennLayout.layout(new TernaryVennModelImpl<String>(), boundingRectangle, null);
-        }
-        catch (IllegalArgumentException e)
-        {
-            // expected
-        }
+        vennLayouter.layout(ternaryModel, boundingRectangle, null);
     }
 
+    @Test(expected=IllegalArgumentException.class)
     public void testLayoutQuaternaryNullModel()
     {
-        try
-        {
-            vennLayout.layout((QuaternaryVennModel<String>) null, boundingRectangle, OPTIMIZE_FOR_SPEED);
-        }
-        catch (IllegalArgumentException e)
-        {
-            // expected
-        }
+        vennLayouter.layout((QuaternaryVennModel<String>) null, boundingRectangle, OPTIMIZE_FOR_SPEED);
     }
 
+    @Test(expected=IllegalArgumentException.class)
     public void testLayoutQuaternaryNullBoundingRectangle()
     {
-        try
-        {
-            vennLayout.layout(new QuaternaryVennModelImpl<String>(), null, OPTIMIZE_FOR_SPEED);
-        }
-        catch (IllegalArgumentException e)
-        {
-            // expected
-        }
+        vennLayouter.layout(quaternaryModel, null, OPTIMIZE_FOR_SPEED);
     }
 
+    @Test(expected=IllegalArgumentException.class)
     public void testLayoutQuaternaryNullPerformanceHint()
     {
-        try
-        {
-            vennLayout.layout(new QuaternaryVennModelImpl<String>(), boundingRectangle, null);
-        }
-        catch (IllegalArgumentException e)
-        {
-            // expected
-        }
+        vennLayouter.layout(quaternaryModel, boundingRectangle, null);
     }
-    */
 }
