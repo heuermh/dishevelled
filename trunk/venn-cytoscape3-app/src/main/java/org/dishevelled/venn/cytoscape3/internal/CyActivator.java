@@ -23,6 +23,8 @@
 */
 package org.dishevelled.venn.cytoscape3.internal;
 
+import java.util.Properties;
+
 import org.cytoscape.application.swing.CyAction;
 import org.cytoscape.application.swing.CySwingApplication;
 import org.cytoscape.service.util.AbstractCyActivator;
@@ -38,8 +40,12 @@ public final class CyActivator extends AbstractCyActivator
     @Override
     public void start(final BundleContext bundleContext)
     {
+        if (bundleContext == null) {
+            throw new NullPointerException("bundleContext must not be null");
+        }
         CySwingApplication cySwingApplication = getService(bundleContext, CySwingApplication.class);
         VennDiagramsAction vennDiagramsAction = new VennDiagramsAction();
-        registerService(bundleContext, vennDiagramsAction, CyAction.class, null);
+        Properties properties = new Properties();
+        registerService(bundleContext, vennDiagramsAction, CyAction.class, properties);
     }
 }
