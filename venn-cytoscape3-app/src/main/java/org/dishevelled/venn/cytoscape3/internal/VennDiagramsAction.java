@@ -46,6 +46,8 @@ final class VennDiagramsAction extends AbstractCyAction
     @Override
     public void actionPerformed(final ActionEvent event)
     {
-        // empty
+        if (event == null) {
+            throw new NullPointerException("event must not be null");
+        }
     }
 }
