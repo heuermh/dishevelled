@@ -25,20 +25,44 @@ package org.dishevelled.venn.cytoscape3.internal;
 
 import java.awt.event.ActionEvent;
 
+import javax.swing.JDialog;
+
+import org.cytoscape.application.CyApplicationManager;
 import org.cytoscape.application.swing.AbstractCyAction;
+import org.cytoscape.group.CyGroupManager;
 
 /**
  * Venn diagrams action.
  */
 final class VennDiagramsAction extends AbstractCyAction
 {
+    /** Application manager. */
+    private final CyApplicationManager applicationManager;
+
+    /** Group manager. */
+    private final CyGroupManager groupManager;
+
 
     /**
      * Create a new venn diagrams action.
+     *
+     * @param applicationManager application manager, must not be null
+     * @param groupManager group manager, must not be null
      */
-    VennDiagramsAction()
+    VennDiagramsAction(final CyApplicationManager applicationManager, final CyGroupManager groupManager)
     {
         super("Venn Diagrams");
+        if (applicationManager == null)
+        {
+            throw new IllegalArgumentException("applicationManager must not be null");
+        }
+        if (groupManager == null)
+        {
+            throw new IllegalArgumentException("groupManager must not be null");
+        }
+        this.applicationManager = applicationManager;
+        this.groupManager = groupManager;
+
         setPreferredMenu("Apps");
     }
 
@@ -46,8 +70,15 @@ final class VennDiagramsAction extends AbstractCyAction
     @Override
     public void actionPerformed(final ActionEvent event)
     {
-        if (event == null) {
+        if (event == null)
+        {
             throw new NullPointerException("event must not be null");
         }
+        // add groups view to a new dialog or internal panel and make visible
+        //JDialog dialog = new JDialog(Cytoscape.getDesktop(), "Venn Diagrams"); // i18n
+        JDialog dialog = new JDialog((javax.swing.JFrame) null, "Venn Diagrams"); // i18n
+        dialog.setContentPane(new GroupsView(applicationManager, groupManager));
+        dialog.setBounds(200, 200, 400, 400);
+        dialog.setVisible(true);
     }
 }
