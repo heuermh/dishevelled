@@ -25,8 +25,10 @@ package org.dishevelled.venn.cytoscape3.internal;
 
 import java.util.Properties;
 
+import org.cytoscape.application.CyApplicationManager;
 import org.cytoscape.application.swing.CyAction;
-import org.cytoscape.application.swing.CySwingApplication;
+//import org.cytoscape.application.swing.CySwingApplication;
+import org.cytoscape.group.CyGroupManager;
 import org.cytoscape.service.util.AbstractCyActivator;
 
 import org.osgi.framework.BundleContext;
@@ -36,15 +38,18 @@ import org.osgi.framework.BundleContext;
  */
 public final class CyActivator extends AbstractCyActivator
 {
-
     @Override
     public void start(final BundleContext bundleContext)
     {
-        if (bundleContext == null) {
+        if (bundleContext == null)
+        {
             throw new NullPointerException("bundleContext must not be null");
         }
-        CySwingApplication cySwingApplication = getService(bundleContext, CySwingApplication.class);
-        VennDiagramsAction vennDiagramsAction = new VennDiagramsAction();
+        //CySwingApplication swingApplication = getService(bundleContext, CySwingApplication.class);
+        CyApplicationManager applicationManager = getService(bundleContext, CyApplicationManager.class);
+        CyGroupManager groupManager = getService(bundleContext, CyGroupManager.class);
+
+        VennDiagramsAction vennDiagramsAction = new VennDiagramsAction(applicationManager, groupManager);
         Properties properties = new Properties();
         registerService(bundleContext, vennDiagramsAction, CyAction.class, properties);
     }
