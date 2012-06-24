@@ -433,7 +433,7 @@ public final class AnalysisUtilsTest
     public void testToGraphNullNodeValues()
     {
         Matrix2D<Double> matrix = createSparseMatrix2D(4, 4);
-        toGraph(matrix, null);
+        toGraph(matrix, (UnaryFunction<Long, String>) null);
     }
 
     @Test(expected=IllegalArgumentException.class)
