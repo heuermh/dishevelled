@@ -25,7 +25,9 @@ package org.dishevelled.venn.cytoscape3.internal;
 
 import static org.junit.Assert.assertNotNull;
 
+import org.cytoscape.application.CyApplicationManager;
 import org.cytoscape.application.swing.CySwingApplication;
+import org.cytoscape.group.CyGroupManager;
 import org.cytoscape.service.util.internal.FakeBundleContext;
 
 import org.junit.Before;
@@ -44,6 +46,10 @@ public final class CyActivatorTest
     private CyActivator cyActivator;
     private BundleContext bundleContext;
     @Mock
+    private CyApplicationManager applicationManager;
+    @Mock
+    private CyGroupManager groupManager;
+    @Mock
     private CySwingApplication cySwingApplication;
 
     @Before
@@ -51,7 +57,7 @@ public final class CyActivatorTest
     {
         MockitoAnnotations.initMocks(this);
         cyActivator = new CyActivator();
-        bundleContext = new FakeBundleContext(CySwingApplication.class);
+        bundleContext = new FakeBundleContext(CyApplicationManager.class, CyGroupManager.class, CySwingApplication.class);
     }
 
     @Test

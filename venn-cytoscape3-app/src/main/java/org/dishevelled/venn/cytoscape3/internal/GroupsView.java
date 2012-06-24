@@ -355,7 +355,9 @@ final class GroupsView
     @Override
     public void handleEvent(final GroupAboutToBeRemovedEvent event)
     {
-        groups.remove(event.getGroup());
+        if (event.getNetwork().equals(applicationManager.getCurrentNetwork())) {
+            groups.remove((CyGroup) event.getSource());
+        }
     }
 
     @Override

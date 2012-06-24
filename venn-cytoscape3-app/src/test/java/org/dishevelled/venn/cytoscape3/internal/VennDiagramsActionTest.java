@@ -27,6 +27,9 @@ import static org.junit.Assert.assertNotNull;
 
 import java.awt.event.ActionEvent;
 
+import org.cytoscape.application.CyApplicationManager;
+import org.cytoscape.group.CyGroupManager;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -41,12 +44,16 @@ public final class VennDiagramsActionTest
     private VennDiagramsAction vennDiagramsAction;
     @Mock
     private ActionEvent actionEvent;
+    @Mock
+    private CyApplicationManager applicationManager;
+    @Mock
+    private CyGroupManager groupManager;
 
     @Before
     public void setUp()
     {
         MockitoAnnotations.initMocks(this);
-        vennDiagramsAction = new VennDiagramsAction();
+        vennDiagramsAction = new VennDiagramsAction(applicationManager, groupManager);
     }
 
     @Test
