@@ -52,7 +52,7 @@
     <dependency>
       <groupId>org.dishevelled</groupId>
       <artifactId>dsh-layout</artifactId>
-      <version>${project.version}</version>
+      <version>1.0</version>
       <scope>compile</scope>
     </dependency>
     <dependency>

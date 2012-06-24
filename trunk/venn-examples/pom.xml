@@ -46,19 +46,19 @@
     <dependency>
       <groupId>org.dishevelled</groupId>
       <artifactId>dsh-venn</artifactId>
-      <version>${project.version}</version>
+      <version>1.0</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>org.dishevelled</groupId>
       <artifactId>dsh-iconbundle-tango</artifactId>
-      <version>${project.version}</version>
+      <version>1.0</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>org.dishevelled</groupId>
       <artifactId>dsh-identify</artifactId>
-      <version>${project.version}</version>
+      <version>1.0</version>
       <scope>compile</scope>
     </dependency>
     <dependency>

@@ -34,7 +34,7 @@
     <dependency>
       <groupId>org.dishevelled</groupId>
       <artifactId>dsh-collect</artifactId>
-      <version>1.0-SNAPSHOT</version>
+      <version>1.0</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
@@ -46,19 +46,19 @@
     <dependency>
       <groupId>org.dishevelled</groupId>
       <artifactId>dsh-matrix</artifactId>
-      <version>${project.version}</version>
+      <version>1.0</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>org.dishevelled</groupId>
       <artifactId>dsh-multi-map</artifactId>
-      <version>${project.version}</version>
+      <version>1.0</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>org.dishevelled</groupId>
       <artifactId>dsh-weighted</artifactId>
-      <version>${project.version}</version>
+      <version>1.0</version>
       <scope>compile</scope>
     </dependency>
     <dependency>

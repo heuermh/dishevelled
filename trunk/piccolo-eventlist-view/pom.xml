@@ -34,31 +34,31 @@
     <dependency>
       <groupId>org.dishevelled</groupId>
       <artifactId>dsh-eventlist-view</artifactId>
-      <version>${project.version}</version>
+      <version>1.0</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>org.dishevelled</groupId>
       <artifactId>dsh-functor</artifactId>
-      <version>${project.version}</version>
+      <version>1.0</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>org.dishevelled</groupId>
       <artifactId>dsh-identify</artifactId>
-      <version>${project.version}</version>
+      <version>1.0</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>org.dishevelled</groupId>
       <artifactId>dsh-iconbundle-tango</artifactId>
-      <version>${project.version}</version>
+      <version>1.0</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>org.dishevelled</groupId>
       <artifactId>dsh-piccolo-identify</artifactId>
-      <version>${project.version}</version>
+      <version>1.0-SNAPSHOT</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
