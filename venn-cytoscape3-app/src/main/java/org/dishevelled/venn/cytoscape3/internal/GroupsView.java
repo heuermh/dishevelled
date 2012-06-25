@@ -29,6 +29,7 @@ import java.awt.event.ActionEvent;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Properties;
 import java.util.Set;
 
 import javax.swing.AbstractAction;
@@ -65,6 +66,8 @@ import org.cytoscape.group.events.GroupAddedEvent;
 import org.cytoscape.group.events.GroupAddedListener;
 import org.cytoscape.group.events.GroupAddedToNetworkEvent;
 import org.cytoscape.group.events.GroupAddedToNetworkListener;
+import org.cytoscape.model.CyNode;
+import org.cytoscape.service.util.CyServiceRegistrar;
 
 import org.dishevelled.iconbundle.IconBundle;
 import org.dishevelled.iconbundle.IconSize;
@@ -205,14 +208,18 @@ final class GroupsView
     /** Group manager. */
     private final CyGroupManager groupManager;
 
+    /** Service registrar. */
+    private final CyServiceRegistrar serviceRegistrar;
+
 
     /**
      * Create a new groups view.
      *
      * @param applicationManager application manager, must not be null
      * @param groupManager group manager, must not be null
+     * @param serviceRegistrar service registrar, must not be null
      */
-    GroupsView(final CyApplicationManager applicationManager, final CyGroupManager groupManager)
+    GroupsView(final CyApplicationManager applicationManager, final CyGroupManager groupManager, final CyServiceRegistrar serviceRegistrar)
     {
         super();
         if (applicationManager == null)
@@ -223,8 +230,13 @@ final class GroupsView
         {
             throw new IllegalArgumentException("groupManager must not be null");
         }
+        if (serviceRegistrar == null)
+        {
+            throw new IllegalArgumentException("serviceRegistrar must not be null");
+        }
         this.applicationManager = applicationManager;
         this.groupManager = groupManager;
+        this.serviceRegistrar = serviceRegistrar;
 
         Set<CyGroup> groupSet = groupManager.getGroupSet(applicationManager.getCurrentNetwork());
         groups = GlazedLists.eventList(new ArrayList<CyGroup>(groupSet));
@@ -245,6 +257,13 @@ final class GroupsView
         details.setEnabled(false);
 
         layoutComponents();
+
+        Properties properties = new Properties();
+        serviceRegistrar.registerService(this, GroupAboutToBeDestroyedListener.class, properties);
+        serviceRegistrar.registerService(this, GroupAboutToBeRemovedListener.class, properties);
+        serviceRegistrar.registerService(this, GroupAddedListener.class, properties);
+        serviceRegistrar.registerService(this, GroupAddedToNetworkListener.class, properties);
+        // todo: serviceRegistrar.unregisterAllServices(this); when closing
     }
 
 
@@ -309,6 +328,20 @@ final class GroupsView
      */
     private void binaryDiagram()
     {
+        String firstLabel = selected.get(0).toString();
+        String secondLabel = selected.get(1).toString();
+        //String firstLabel = selected.get(0).getGroupName();
+        //String secondLabel = selected.get(1).getGroupName();
+        Set<CyNode> first = new HashSet<CyNode>(selected.get(0).getNodeList());
+        Set<CyNode> second = new HashSet<CyNode>(selected.get(1).getNodeList());
+        BinaryVennNode<CyNode> binaryVennNode = new BinaryVennNode<CyNode>(firstLabel, first, secondLabel, second);
+
+        JDialog dialog = new JDialog(windowForComponent(this), firstLabel + ", " + secondLabel + " Diagram");
+        dialog.setContentPane(new DiagramView(binaryVennNode, applicationManager));
+
+        // todo: offset per parent dialog
+        dialog.setBounds(100, 100, 400, 400);
+        dialog.setVisible(true);
     }
 
     /**
@@ -316,6 +349,23 @@ final class GroupsView
      */
     private void ternaryDiagram()
     {
+        String firstLabel = selected.get(0).toString();
+        String secondLabel = selected.get(1).toString();
+        String thirdLabel = selected.get(2).toString();
+        //String firstLabel = selected.get(0).getGroupName();
+        //String secondLabel = selected.get(1).getGroupName();
+        //String thirdLabel = selected.get(2).getGroupName();
+        Set<CyNode> first = new HashSet<CyNode>(selected.get(0).getNodeList());
+        Set<CyNode> second = new HashSet<CyNode>(selected.get(1).getNodeList());
+        Set<CyNode> third = new HashSet<CyNode>(selected.get(2).getNodeList());
+        TernaryVennNode<CyNode> ternaryVennNode = new TernaryVennNode<CyNode>(firstLabel, first, secondLabel, second, thirdLabel, third);
+
+        JDialog dialog = new JDialog(windowForComponent(this), firstLabel + ", " + secondLabel + ", " + thirdLabel + " Diagram");
+        dialog.setContentPane(new DiagramView(ternaryVennNode, applicationManager));
+
+        // todo: offset per parent dialog
+        dialog.setBounds(100, 100, 400, 400);
+        dialog.setVisible(true);
     }
 
     /**
@@ -323,6 +373,26 @@ final class GroupsView
      */
     private void quaternaryDiagram()
     {
+        String firstLabel = selected.get(0).toString();
+        String secondLabel = selected.get(1).toString();
+        String thirdLabel = selected.get(2).toString();
+        String fourthLabel = selected.get(3).toString();
+        //String firstLabel = selected.get(0).getGroupName();
+        //String secondLabel = selected.get(1).getGroupName();
+        //String thirdLabel = selected.get(2).getGroupName();
+        //String fourthLabel = selected.get(3).getGroupName();
+        Set<CyNode> first = new HashSet<CyNode>(selected.get(0).getNodeList());
+        Set<CyNode> second = new HashSet<CyNode>(selected.get(1).getNodeList());
+        Set<CyNode> third = new HashSet<CyNode>(selected.get(2).getNodeList());
+        Set<CyNode> fourth = new HashSet<CyNode>(selected.get(3).getNodeList());
+        QuaternaryVennNode<CyNode> quaternaryVennNode = new QuaternaryVennNode<CyNode>(firstLabel, first, secondLabel, second, thirdLabel, third, fourthLabel, fourth);
+
+        JDialog dialog = new JDialog(windowForComponent(this), firstLabel + ", " + secondLabel + ", " + thirdLabel + ", " + fourthLabel + " Diagram");
+        dialog.setContentPane(new DiagramView(quaternaryVennNode, applicationManager));
+
+        // todo: offset per parent dialog
+        dialog.setBounds(100, 100, 600, 600);
+        dialog.setVisible(true);
     }
 
     /**
@@ -330,6 +400,20 @@ final class GroupsView
      */
     private void binaryDetails()
     {
+        String firstLabel = selected.get(0).toString();
+        String secondLabel = selected.get(1).toString();
+        //String firstLabel = selected.get(0).getGroupName();  // CyGroup.getGroupName() has gone missing
+        //String secondLabel = selected.get(1).getGroupName();
+        Set<CyNode> first = new HashSet<CyNode>(selected.get(0).getNodeList());
+        Set<CyNode> second = new HashSet<CyNode>(selected.get(1).getNodeList());
+        final BinaryVennList<CyNode> binaryVennList = new BinaryVennList<CyNode>(firstLabel, first, secondLabel, second);
+
+        JDialog dialog = new JDialog(windowForComponent(this), firstLabel + ", " + secondLabel + " Details");
+        dialog.setContentPane(new DetailsView(binaryVennList, applicationManager));
+
+        // todo: offset per parent dialog
+        dialog.setBounds(100, 100, 600, 450);
+        dialog.setVisible(true);
     }
 
     /**
@@ -337,6 +421,23 @@ final class GroupsView
      */
     private void ternaryDetails()
     {
+        String firstLabel = selected.get(0).toString();
+        String secondLabel = selected.get(1).toString();
+        String thirdLabel = selected.get(2).toString();
+        //String firstLabel = selected.get(0).getGroupName();
+        //String secondLabel = selected.get(1).getGroupName();
+        //String thirdLabel = selected.get(2).getGroupName();
+        Set<CyNode> first = new HashSet<CyNode>(selected.get(0).getNodeList());
+        Set<CyNode> second = new HashSet<CyNode>(selected.get(1).getNodeList());
+        Set<CyNode> third = new HashSet<CyNode>(selected.get(2).getNodeList());
+        final TernaryVennList<CyNode> ternaryVennList = new TernaryVennList<CyNode>(firstLabel, first, secondLabel, second, thirdLabel, third);
+
+        JDialog dialog = new JDialog(windowForComponent(this), firstLabel + ", " + secondLabel + ", " + thirdLabel + " Details");
+        dialog.setContentPane(new DetailsView(ternaryVennList, applicationManager));
+
+        // todo: offset per parent dialog
+        dialog.setBounds(100, 100, 747, 669);
+        dialog.setVisible(true);
     }
 
     /**
@@ -344,6 +445,25 @@ final class GroupsView
      */
     private void quaternaryDetails()
     {
+        String firstLabel = selected.get(0).toString();
+        String secondLabel = selected.get(1).toString();
+        String thirdLabel = selected.get(2).toString();
+        String fourthLabel = selected.get(3).toString();
+        //String firstLabel = selected.get(0).getGroupName();
+        //String secondLabel = selected.get(1).getGroupName();
+        //String thirdLabel = selected.get(2).getGroupName();
+        //String fourthLabel = selected.get(3).getGroupName();
+        Set<CyNode> first = new HashSet<CyNode>(selected.get(0).getNodeList());
+        Set<CyNode> second = new HashSet<CyNode>(selected.get(1).getNodeList());
+        Set<CyNode> third = new HashSet<CyNode>(selected.get(2).getNodeList());
+        Set<CyNode> fourth = new HashSet<CyNode>(selected.get(3).getNodeList());
+        final QuaternaryVennList<CyNode> quaternaryVennList = new QuaternaryVennList<CyNode>(firstLabel, first, secondLabel, second, thirdLabel, third, fourthLabel, fourth);
+        JDialog dialog = new JDialog(windowForComponent(this), firstLabel + ", " + secondLabel + ", " + thirdLabel + ", " + fourthLabel + " Details");
+        dialog.setContentPane(new DetailsView(quaternaryVennList, applicationManager));
+
+        // todo: offset per parent dialog
+        dialog.setBounds(100, 100, 894, 888);
+        dialog.setVisible(true);
     }
 
     @Override

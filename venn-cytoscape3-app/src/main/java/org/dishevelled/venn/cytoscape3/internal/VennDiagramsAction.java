@@ -30,8 +30,9 @@ import javax.swing.JDialog;
 import org.cytoscape.application.CyApplicationManager;
 import org.cytoscape.application.swing.AbstractCyAction;
 import org.cytoscape.group.CyGroupManager;
+import org.cytoscape.service.util.CyServiceRegistrar;
 
-/**
+/**s
  * Venn diagrams action.
  */
 final class VennDiagramsAction extends AbstractCyAction
@@ -42,14 +43,18 @@ final class VennDiagramsAction extends AbstractCyAction
     /** Group manager. */
     private final CyGroupManager groupManager;
 
+    /** Service registrar. */
+    private final CyServiceRegistrar serviceRegistrar;
+
 
     /**
      * Create a new venn diagrams action.
      *
      * @param applicationManager application manager, must not be null
      * @param groupManager group manager, must not be null
+     * @param serviceRegistrar service registrar, must not be null
      */
-    VennDiagramsAction(final CyApplicationManager applicationManager, final CyGroupManager groupManager)
+    VennDiagramsAction(final CyApplicationManager applicationManager, final CyGroupManager groupManager, final CyServiceRegistrar serviceRegistrar)
     {
         super("Venn Diagrams");
         if (applicationManager == null)
@@ -60,8 +65,13 @@ final class VennDiagramsAction extends AbstractCyAction
         {
             throw new IllegalArgumentException("groupManager must not be null");
         }
+        if (serviceRegistrar == null)
+        {
+            throw new IllegalArgumentException("serviceRegistrar must not be null");
+        }
         this.applicationManager = applicationManager;
         this.groupManager = groupManager;
+        this.serviceRegistrar = serviceRegistrar;
 
         setPreferredMenu("Apps");
     }
@@ -77,7 +87,7 @@ final class VennDiagramsAction extends AbstractCyAction
         // add groups view to a new dialog or internal panel and make visible
         //JDialog dialog = new JDialog(Cytoscape.getDesktop(), "Venn Diagrams"); // i18n
         JDialog dialog = new JDialog((javax.swing.JFrame) null, "Venn Diagrams"); // i18n
-        dialog.setContentPane(new GroupsView(applicationManager, groupManager));
+        dialog.setContentPane(new GroupsView(applicationManager, groupManager, serviceRegistrar));
         dialog.setBounds(200, 200, 400, 400);
         dialog.setVisible(true);
     }
