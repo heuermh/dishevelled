@@ -28,6 +28,7 @@ import static org.junit.Assert.assertNotNull;
 import org.cytoscape.application.CyApplicationManager;
 import org.cytoscape.application.swing.CySwingApplication;
 import org.cytoscape.group.CyGroupManager;
+import org.cytoscape.service.util.CyServiceRegistrar;
 import org.cytoscape.service.util.internal.FakeBundleContext;
 
 import org.junit.Before;
@@ -50,14 +51,14 @@ public final class CyActivatorTest
     @Mock
     private CyGroupManager groupManager;
     @Mock
-    private CySwingApplication cySwingApplication;
+    private CyServiceRegistrar serviceRegistrar;
 
     @Before
     public void setUp()
     {
         MockitoAnnotations.initMocks(this);
         cyActivator = new CyActivator();
-        bundleContext = new FakeBundleContext(CyApplicationManager.class, CyGroupManager.class, CySwingApplication.class);
+        bundleContext = new FakeBundleContext(CyApplicationManager.class, CyGroupManager.class, CyServiceRegistrar.class);
     }
 
     @Test

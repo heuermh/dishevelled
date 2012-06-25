@@ -29,6 +29,7 @@ import java.awt.event.ActionEvent;
 
 import org.cytoscape.application.CyApplicationManager;
 import org.cytoscape.group.CyGroupManager;
+import org.cytoscape.service.util.CyServiceRegistrar;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -48,12 +49,14 @@ public final class VennDiagramsActionTest
     private CyApplicationManager applicationManager;
     @Mock
     private CyGroupManager groupManager;
+    @Mock
+    private CyServiceRegistrar serviceRegistrar;
 
     @Before
     public void setUp()
     {
         MockitoAnnotations.initMocks(this);
-        vennDiagramsAction = new VennDiagramsAction(applicationManager, groupManager);
+        vennDiagramsAction = new VennDiagramsAction(applicationManager, groupManager, serviceRegistrar);
     }
 
     @Test

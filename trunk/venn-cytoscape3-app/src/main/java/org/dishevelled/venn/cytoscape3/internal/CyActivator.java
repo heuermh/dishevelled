@@ -27,9 +27,9 @@ import java.util.Properties;
 
 import org.cytoscape.application.CyApplicationManager;
 import org.cytoscape.application.swing.CyAction;
-//import org.cytoscape.application.swing.CySwingApplication;
 import org.cytoscape.group.CyGroupManager;
 import org.cytoscape.service.util.AbstractCyActivator;
+import org.cytoscape.service.util.CyServiceRegistrar;
 
 import org.osgi.framework.BundleContext;
 
@@ -45,11 +45,11 @@ public final class CyActivator extends AbstractCyActivator
         {
             throw new NullPointerException("bundleContext must not be null");
         }
-        //CySwingApplication swingApplication = getService(bundleContext, CySwingApplication.class);
         CyApplicationManager applicationManager = getService(bundleContext, CyApplicationManager.class);
         CyGroupManager groupManager = getService(bundleContext, CyGroupManager.class);
+        CyServiceRegistrar serviceRegistrar = getService(bundleContext, CyServiceRegistrar.class);
 
-        VennDiagramsAction vennDiagramsAction = new VennDiagramsAction(applicationManager, groupManager);
+        VennDiagramsAction vennDiagramsAction = new VennDiagramsAction(applicationManager, groupManager, serviceRegistrar);
         Properties properties = new Properties();
         registerService(bundleContext, vennDiagramsAction, CyAction.class, properties);
     }
