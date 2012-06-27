@@ -443,8 +443,9 @@ public final class DiskUtilityExample
 
         JPanel detailsColumns = new JPanel();
         detailsColumns.setLayout(new BoxLayout(detailsColumns, BoxLayout.X_AXIS));
+        detailsColumns.setBorder(new EmptyBorder(0, 20, 0, 0));
         detailsColumns.add(column1);
-        detailsColumns.add(Box.createHorizontalStrut(40));
+        detailsColumns.add(Box.createHorizontalStrut(20));
         detailsColumns.add(column2);
         detailsColumns.add(Box.createGlue());
         return detailsColumns;
