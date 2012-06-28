@@ -157,6 +157,54 @@ final class DetailsView
         this.quaternaryVennList = quaternaryVennList;
         this.applicationManager = applicationManager;
 
+        // suck.
+        if (this.binaryVennList != null)
+        {
+            this.binaryVennList.getFirst().setCellRenderer(new CyNodeListCellRenderer(applicationManager));
+            this.binaryVennList.getFirstOnly().setCellRenderer(new CyNodeListCellRenderer(applicationManager));
+            this.binaryVennList.getIntersection().setCellRenderer(new CyNodeListCellRenderer(applicationManager));
+            this.binaryVennList.getSecond().setCellRenderer(new CyNodeListCellRenderer(applicationManager));
+            this.binaryVennList.getSecondOnly().setCellRenderer(new CyNodeListCellRenderer(applicationManager));
+            this.binaryVennList.getUnion().setCellRenderer(new CyNodeListCellRenderer(applicationManager));
+        }
+        if (this.ternaryVennList != null)
+        {
+            this.ternaryVennList.getFirst().setCellRenderer(new CyNodeListCellRenderer(applicationManager));
+            this.ternaryVennList.getFirstOnly().setCellRenderer(new CyNodeListCellRenderer(applicationManager));
+            this.ternaryVennList.getFirstSecond().setCellRenderer(new CyNodeListCellRenderer(applicationManager));
+            this.ternaryVennList.getFirstThird().setCellRenderer(new CyNodeListCellRenderer(applicationManager));
+            this.ternaryVennList.getIntersection().setCellRenderer(new CyNodeListCellRenderer(applicationManager));
+            this.ternaryVennList.getSecond().setCellRenderer(new CyNodeListCellRenderer(applicationManager));
+            this.ternaryVennList.getSecondOnly().setCellRenderer(new CyNodeListCellRenderer(applicationManager));
+            this.ternaryVennList.getSecondThird().setCellRenderer(new CyNodeListCellRenderer(applicationManager));
+            this.ternaryVennList.getThird().setCellRenderer(new CyNodeListCellRenderer(applicationManager));
+            this.ternaryVennList.getThirdOnly().setCellRenderer(new CyNodeListCellRenderer(applicationManager));
+            this.ternaryVennList.getUnion().setCellRenderer(new CyNodeListCellRenderer(applicationManager));
+        }
+        if (this.quaternaryVennList != null)
+        {
+            this.quaternaryVennList.getFirst().setCellRenderer(new CyNodeListCellRenderer(applicationManager));
+            this.quaternaryVennList.getFirstFourth().setCellRenderer(new CyNodeListCellRenderer(applicationManager));
+            this.quaternaryVennList.getFirstOnly().setCellRenderer(new CyNodeListCellRenderer(applicationManager));
+            this.quaternaryVennList.getFirstSecond().setCellRenderer(new CyNodeListCellRenderer(applicationManager));
+            this.quaternaryVennList.getFirstSecondFourth().setCellRenderer(new CyNodeListCellRenderer(applicationManager));
+            this.quaternaryVennList.getFirstSecondThird().setCellRenderer(new CyNodeListCellRenderer(applicationManager));
+            this.quaternaryVennList.getFirstThird().setCellRenderer(new CyNodeListCellRenderer(applicationManager));
+            this.quaternaryVennList.getFirstThirdFourth().setCellRenderer(new CyNodeListCellRenderer(applicationManager));
+            this.quaternaryVennList.getFourth().setCellRenderer(new CyNodeListCellRenderer(applicationManager));
+            this.quaternaryVennList.getFourthOnly().setCellRenderer(new CyNodeListCellRenderer(applicationManager));
+            this.quaternaryVennList.getIntersection().setCellRenderer(new CyNodeListCellRenderer(applicationManager));
+            this.quaternaryVennList.getSecond().setCellRenderer(new CyNodeListCellRenderer(applicationManager));
+            this.quaternaryVennList.getSecondFourth().setCellRenderer(new CyNodeListCellRenderer(applicationManager));
+            this.quaternaryVennList.getSecondOnly().setCellRenderer(new CyNodeListCellRenderer(applicationManager));
+            this.quaternaryVennList.getSecondThird().setCellRenderer(new CyNodeListCellRenderer(applicationManager));
+            this.quaternaryVennList.getSecondThirdFourth().setCellRenderer(new CyNodeListCellRenderer(applicationManager));
+            this.quaternaryVennList.getThird().setCellRenderer(new CyNodeListCellRenderer(applicationManager));
+            this.quaternaryVennList.getThirdFourth().setCellRenderer(new CyNodeListCellRenderer(applicationManager));
+            this.quaternaryVennList.getThirdOnly().setCellRenderer(new CyNodeListCellRenderer(applicationManager));
+            this.quaternaryVennList.getUnion().setCellRenderer(new CyNodeListCellRenderer(applicationManager));
+        }
+
         JPopupMenu contextMenu = new JPopupMenu();
         contextMenu.add(selectAll);
         contextMenu.add(clearSelection);
