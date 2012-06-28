@@ -66,7 +66,10 @@ import org.cytoscape.group.events.GroupAddedEvent;
 import org.cytoscape.group.events.GroupAddedListener;
 import org.cytoscape.group.events.GroupAddedToNetworkEvent;
 import org.cytoscape.group.events.GroupAddedToNetworkListener;
+import org.cytoscape.model.CyNetwork;
 import org.cytoscape.model.CyNode;
+import org.cytoscape.model.CyRow;
+import org.cytoscape.model.CyTable;
 import org.cytoscape.service.util.CyServiceRegistrar;
 
 import org.dishevelled.iconbundle.IconBundle;
@@ -246,6 +249,7 @@ final class GroupsView
         selectionModel.addListSelectionListener(listSelectionListener); // or use event list listener
         groupList = new JList(listModel);
         groupList.setSelectionModel(selectionModel);
+        groupList.setCellRenderer(new CyGroupListCellRenderer(applicationManager));
         contextMenu = new JPopupMenu();
         contextMenu.add(new IdMenuItem(eulerDiagram));
         contextMenu.add(new IdMenuItem(vennDiagram));
@@ -328,10 +332,8 @@ final class GroupsView
      */
     private void binaryDiagram()
     {
-        String firstLabel = selected.get(0).toString();
-        String secondLabel = selected.get(1).toString();
-        //String firstLabel = selected.get(0).getGroupName();
-        //String secondLabel = selected.get(1).getGroupName();
+        String firstLabel = nameOf(selected.get(0));
+        String secondLabel = nameOf(selected.get(1));
         Set<CyNode> first = new HashSet<CyNode>(selected.get(0).getNodeList());
         Set<CyNode> second = new HashSet<CyNode>(selected.get(1).getNodeList());
         BinaryVennNode<CyNode> binaryVennNode = new BinaryVennNode<CyNode>(firstLabel, first, secondLabel, second);
@@ -349,12 +351,9 @@ final class GroupsView
      */
     private void ternaryDiagram()
     {
-        String firstLabel = selected.get(0).toString();
-        String secondLabel = selected.get(1).toString();
-        String thirdLabel = selected.get(2).toString();
-        //String firstLabel = selected.get(0).getGroupName();
-        //String secondLabel = selected.get(1).getGroupName();
-        //String thirdLabel = selected.get(2).getGroupName();
+        String firstLabel = nameOf(selected.get(0));
+        String secondLabel = nameOf(selected.get(1));
+        String thirdLabel = nameOf(selected.get(2));
         Set<CyNode> first = new HashSet<CyNode>(selected.get(0).getNodeList());
         Set<CyNode> second = new HashSet<CyNode>(selected.get(1).getNodeList());
         Set<CyNode> third = new HashSet<CyNode>(selected.get(2).getNodeList());
@@ -373,14 +372,10 @@ final class GroupsView
      */
     private void quaternaryDiagram()
     {
-        String firstLabel = selected.get(0).toString();
-        String secondLabel = selected.get(1).toString();
-        String thirdLabel = selected.get(2).toString();
-        String fourthLabel = selected.get(3).toString();
-        //String firstLabel = selected.get(0).getGroupName();
-        //String secondLabel = selected.get(1).getGroupName();
-        //String thirdLabel = selected.get(2).getGroupName();
-        //String fourthLabel = selected.get(3).getGroupName();
+        String firstLabel = nameOf(selected.get(0));
+        String secondLabel = nameOf(selected.get(1));
+        String thirdLabel = nameOf(selected.get(2));
+        String fourthLabel = nameOf(selected.get(3));
         Set<CyNode> first = new HashSet<CyNode>(selected.get(0).getNodeList());
         Set<CyNode> second = new HashSet<CyNode>(selected.get(1).getNodeList());
         Set<CyNode> third = new HashSet<CyNode>(selected.get(2).getNodeList());
@@ -400,10 +395,8 @@ final class GroupsView
      */
     private void binaryDetails()
     {
-        String firstLabel = selected.get(0).toString();
-        String secondLabel = selected.get(1).toString();
-        //String firstLabel = selected.get(0).getGroupName();  // CyGroup.getGroupName() has gone missing
-        //String secondLabel = selected.get(1).getGroupName();
+        String firstLabel = nameOf(selected.get(0));
+        String secondLabel = nameOf(selected.get(1));
         Set<CyNode> first = new HashSet<CyNode>(selected.get(0).getNodeList());
         Set<CyNode> second = new HashSet<CyNode>(selected.get(1).getNodeList());
         final BinaryVennList<CyNode> binaryVennList = new BinaryVennList<CyNode>(firstLabel, first, secondLabel, second);
@@ -421,12 +414,9 @@ final class GroupsView
      */
     private void ternaryDetails()
     {
-        String firstLabel = selected.get(0).toString();
-        String secondLabel = selected.get(1).toString();
-        String thirdLabel = selected.get(2).toString();
-        //String firstLabel = selected.get(0).getGroupName();
-        //String secondLabel = selected.get(1).getGroupName();
-        //String thirdLabel = selected.get(2).getGroupName();
+        String firstLabel = nameOf(selected.get(0));
+        String secondLabel = nameOf(selected.get(1));
+        String thirdLabel = nameOf(selected.get(2));
         Set<CyNode> first = new HashSet<CyNode>(selected.get(0).getNodeList());
         Set<CyNode> second = new HashSet<CyNode>(selected.get(1).getNodeList());
         Set<CyNode> third = new HashSet<CyNode>(selected.get(2).getNodeList());
@@ -445,14 +435,10 @@ final class GroupsView
      */
     private void quaternaryDetails()
     {
-        String firstLabel = selected.get(0).toString();
-        String secondLabel = selected.get(1).toString();
-        String thirdLabel = selected.get(2).toString();
-        String fourthLabel = selected.get(3).toString();
-        //String firstLabel = selected.get(0).getGroupName();
-        //String secondLabel = selected.get(1).getGroupName();
-        //String thirdLabel = selected.get(2).getGroupName();
-        //String fourthLabel = selected.get(3).getGroupName();
+        String firstLabel = nameOf(selected.get(0));
+        String secondLabel = nameOf(selected.get(1));
+        String thirdLabel = nameOf(selected.get(2));
+        String fourthLabel = nameOf(selected.get(3));
         Set<CyNode> first = new HashSet<CyNode>(selected.get(0).getNodeList());
         Set<CyNode> second = new HashSet<CyNode>(selected.get(1).getNodeList());
         Set<CyNode> third = new HashSet<CyNode>(selected.get(2).getNodeList());
@@ -464,6 +450,14 @@ final class GroupsView
         // todo: offset per parent dialog
         dialog.setBounds(100, 100, 894, 888);
         dialog.setVisible(true);
+    }
+
+    private String nameOf(final CyGroup group)
+    {
+        CyNetwork network = applicationManager.getCurrentNetwork();
+        CyTable nodeTable = network.getDefaultNodeTable();
+        CyRow nodeRow = nodeTable.getRow(group.getGroupNode());
+        return nodeRow.get(CyNetwork.NAME, String.class);
     }
 
     @Override
