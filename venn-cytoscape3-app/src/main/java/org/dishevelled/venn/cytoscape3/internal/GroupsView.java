@@ -456,7 +456,7 @@ final class GroupsView
     {
         CyNetwork network = applicationManager.getCurrentNetwork();
         CyTable nodeTable = network.getDefaultNodeTable();
-        CyRow nodeRow = nodeTable.getRow(group.getGroupNode());
+        CyRow nodeRow = nodeTable.getRow(group.getGroupNode().getSUID());
         return nodeRow.get(CyNetwork.NAME, String.class);
     }
 

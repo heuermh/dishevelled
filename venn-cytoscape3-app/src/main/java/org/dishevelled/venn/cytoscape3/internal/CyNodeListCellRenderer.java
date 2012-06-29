@@ -75,7 +75,7 @@ final class CyNodeListCellRenderer extends DefaultListCellRenderer//IdListCellRe
             CyNode node = (CyNode) value;
             CyNetwork network = applicationManager.getCurrentNetwork();
             CyTable nodeTable = network.getDefaultNodeTable();
-            CyRow nodeRow = nodeTable.getRow(node);
+            CyRow nodeRow = nodeTable.getRow(node.getSUID());
             String name = nodeRow.get(CyNetwork.NAME, String.class);
             if (name != null)
             {
