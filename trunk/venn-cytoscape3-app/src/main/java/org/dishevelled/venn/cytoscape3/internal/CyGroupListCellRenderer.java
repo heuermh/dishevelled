@@ -75,7 +75,7 @@ final class CyGroupListCellRenderer extends DefaultListCellRenderer //IdListCell
             CyGroup group = (CyGroup) value;
             CyNetwork network = applicationManager.getCurrentNetwork();
             CyTable nodeTable = network.getDefaultNodeTable();
-            CyRow nodeRow = nodeTable.getRow(group.getGroupNode());
+            CyRow nodeRow = nodeTable.getRow(group.getGroupNode().getSUID());
             String name = nodeRow.get(CyNetwork.NAME, String.class);
             if (name != null)
             {
