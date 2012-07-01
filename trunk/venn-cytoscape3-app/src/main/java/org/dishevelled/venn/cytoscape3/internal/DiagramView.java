@@ -293,7 +293,11 @@ final class DiagramView
     DiagramView(final VennNode<CyNode> vennNode, final CyApplicationManager applicationManager)
     {
         this(applicationManager);
-        //? vennNode.offset(vennNode.getWidth() / 2.0d, vennNode.getHeight() / 2.0d);
+        for (PNode node : vennNode.nodes())
+        {
+            node.addInputEventListener(new ToolTipTextListener());
+            node.addInputEventListener(new MousePressedListener());
+        }
         canvas.getLayer().addChild(vennNode);
     }
 

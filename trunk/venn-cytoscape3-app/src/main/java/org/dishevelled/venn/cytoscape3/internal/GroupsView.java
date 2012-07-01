@@ -44,6 +44,7 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JToolBar;
+import javax.swing.SwingUtilities;
 
 import static javax.swing.SwingUtilities.windowForComponent;
 
@@ -57,6 +58,8 @@ import ca.odell.glazedlists.GlazedLists;
 
 import ca.odell.glazedlists.swing.EventListModel;
 import ca.odell.glazedlists.swing.EventSelectionModel;
+
+import com.google.common.base.Joiner;
 
 import org.cytoscape.application.CyApplicationManager;
 import org.cytoscape.group.CyGroup;
@@ -348,16 +351,31 @@ final class GroupsView
             labels.add(nameOf(selectedGroup));
             sets.add(new HashSet<CyNode>(selectedGroup.getNodeList()));
         }
-        VennModel<CyNode> model = VennModels.createVennModel(sets);
-        VennLayout layout = vennLayouter.layout(model, new Rectangle2D.Double(0.0d, 0.0d, 800.0d, 600.0d), PerformanceHint.OPTIMIZE_FOR_SPEED);
-        VennNode<CyNode> vennNode = new VennNode<CyNode>(model, layout);
+        final VennModel<CyNode> model = VennModels.createVennModel(sets);
+        final VennNode<CyNode> vennNode = new VennNode<CyNode>(model);
+        // add ctr that takes List<String> labels as parameter?
+        for (int i = 0, size = labels.size(); i < size; i++)
+        {
+            vennNode.setLabelText(i, labels.get(i));
+        }
 
-        JDialog dialog = new JDialog(windowForComponent(this), "Euler Diagram");
+        JDialog dialog = new JDialog(windowForComponent(this), Joiner.on(",").join(labels) + " Euler Diagram");
         dialog.setContentPane(new DiagramView(vennNode, applicationManager));
 
         // todo: offset per parent dialog
         dialog.setBounds(100, 100, 800, 600);
         dialog.setVisible(true);
+
+        // run in a cytoscape task?
+        SwingUtilities.invokeLater(new Runnable()
+            {
+                /** {@inheritDoc} */
+                public void run()
+                {
+                    VennLayout layout = vennLayouter.layout(model, new Rectangle2D.Double(0.0d, 0.0d, 800.0d, 600.0d), PerformanceHint.OPTIMIZE_FOR_SPEED);
+                    vennNode.setLayout(layout);
+                }
+            });
     }
 
     /**
@@ -371,7 +389,7 @@ final class GroupsView
         Set<CyNode> second = new HashSet<CyNode>(selected.get(1).getNodeList());
         BinaryVennNode<CyNode> binaryVennNode = new BinaryVennNode<CyNode>(firstLabel, first, secondLabel, second);
 
-        JDialog dialog = new JDialog(windowForComponent(this), firstLabel + ", " + secondLabel + " Diagram");
+        JDialog dialog = new JDialog(windowForComponent(this), firstLabel + ", " + secondLabel + " Venn Diagram");
         dialog.setContentPane(new DiagramView(binaryVennNode, applicationManager));
 
         // todo: offset per parent dialog
@@ -392,7 +410,7 @@ final class GroupsView
         Set<CyNode> third = new HashSet<CyNode>(selected.get(2).getNodeList());
         TernaryVennNode<CyNode> ternaryVennNode = new TernaryVennNode<CyNode>(firstLabel, first, secondLabel, second, thirdLabel, third);
 
-        JDialog dialog = new JDialog(windowForComponent(this), firstLabel + ", " + secondLabel + ", " + thirdLabel + " Diagram");
+        JDialog dialog = new JDialog(windowForComponent(this), firstLabel + ", " + secondLabel + ", " + thirdLabel + " Venn Diagram");
         dialog.setContentPane(new DiagramView(ternaryVennNode, applicationManager));
 
         // todo: offset per parent dialog
@@ -415,7 +433,7 @@ final class GroupsView
         Set<CyNode> fourth = new HashSet<CyNode>(selected.get(3).getNodeList());
         QuaternaryVennNode<CyNode> quaternaryVennNode = new QuaternaryVennNode<CyNode>(firstLabel, first, secondLabel, second, thirdLabel, third, fourthLabel, fourth);
 
-        JDialog dialog = new JDialog(windowForComponent(this), firstLabel + ", " + secondLabel + ", " + thirdLabel + ", " + fourthLabel + " Diagram");
+        JDialog dialog = new JDialog(windowForComponent(this), firstLabel + ", " + secondLabel + ", " + thirdLabel + ", " + fourthLabel + " Venn Diagram");
         dialog.setContentPane(new DiagramView(quaternaryVennNode, applicationManager));
 
         // todo: offset per parent dialog
@@ -490,7 +508,8 @@ final class GroupsView
         CyNetwork network = applicationManager.getCurrentNetwork();
         CyTable nodeTable = network.getDefaultNodeTable();
         CyRow nodeRow = nodeTable.getRow(group.getGroupNode().getSUID());
-        return nodeRow.get(CyNetwork.NAME, String.class);
+        String name = nodeRow.get(CyNetwork.NAME, String.class);
+        return (name == null) ? group.toString() : name;
     }
 
     @Override
