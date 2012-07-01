@@ -111,6 +111,10 @@ public class TernaryVennNode<E>
     private final List<PNode> nodes = Arrays.asList(new PNode[] { firstOnly, secondOnly, thirdOnly,
                                                                   firstSecond, firstThird, secondThird, intersection });
 
+    /** List of size labels. */
+    private final List<PText> sizeLabels = Arrays.asList(new PText[] { firstOnlySize, secondOnlySize, thirdOnlySize,
+                                                                  firstSecondSize, firstThirdSize, secondThirdSize, intersectionSize });
+
     /** Cached area. */
     private Area f;
 
@@ -562,6 +566,12 @@ public class TernaryVennNode<E>
             return getIntersectionLabelText();
         }
         return null;
+    }
+
+    /** {@inheritDoc} */
+    public Iterable<PText> sizeLabels()
+    {
+        return sizeLabels;
     }
 
     /** {@inheritDoc} */

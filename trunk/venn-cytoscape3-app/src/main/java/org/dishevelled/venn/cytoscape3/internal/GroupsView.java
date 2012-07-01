@@ -363,7 +363,7 @@ final class GroupsView
         dialog.setContentPane(new DiagramView(vennNode, applicationManager));
 
         // todo: offset per parent dialog
-        dialog.setBounds(100, 100, 800, 600);
+        dialog.setBounds(100, 100, 600, 600);
         dialog.setVisible(true);
 
         // run in a cytoscape task?
@@ -372,7 +372,7 @@ final class GroupsView
                 /** {@inheritDoc} */
                 public void run()
                 {
-                    VennLayout layout = vennLayouter.layout(model, new Rectangle2D.Double(0.0d, 0.0d, 800.0d, 600.0d), PerformanceHint.OPTIMIZE_FOR_SPEED);
+                    VennLayout layout = vennLayouter.layout(model, new Rectangle2D.Double(0.0d, 0.0d, 400.0d, 400.0d), PerformanceHint.OPTIMIZE_FOR_SPEED);
                     vennNode.setLayout(layout);
                 }
             });

@@ -51,7 +51,9 @@ import java.util.Set;
 import javax.imageio.ImageIO;
 
 import javax.swing.AbstractAction;
+import javax.swing.AbstractButton;
 import javax.swing.Action;
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 
@@ -163,6 +165,26 @@ final class DiagramView
             }
         };
 
+    /** Toggle set label should display sizes. */
+    private final Action displaySizes = new AbstractAction("Display sizes in set labels") // i18n
+        {
+            /** {@inheritDoc} */
+            public void actionPerformed(final ActionEvent event)
+            {
+                displaySizes(((AbstractButton) event.getSource()).isSelected());
+            }
+        };
+
+    /** Toggle display sizes for empty areas. */
+    private final Action displaySizesForEmptyAreas = new AbstractAction("Display sizes for empty areas") // i18n
+        {
+            /** {@inheritDoc} */
+            public void actionPerformed(final ActionEvent event)
+            {
+                displaySizesForEmptyAreas(((AbstractButton) event.getSource()).isSelected());
+            }
+        };
+
     /** Area color. */
     private static final Color AREA_COLOR = new Color(0, 0, 0, 0);
 
@@ -217,6 +239,13 @@ final class DiagramView
         JPopupMenu contextMenu = new JPopupMenu();
         contextMenu.add(exportToPNG);
         contextMenu.add(exportToSVG);
+        contextMenu.addSeparator();
+        JCheckBoxMenuItem displaySizesMenuItem = new JCheckBoxMenuItem(displaySizes);
+        displaySizesMenuItem.setSelected(true);
+        contextMenu.add(displaySizesMenuItem);
+        JCheckBoxMenuItem displaySizesForEmptyAreasMenuItem = new JCheckBoxMenuItem(displaySizesForEmptyAreas);
+        displaySizesForEmptyAreasMenuItem.setSelected(true);
+        contextMenu.add(displaySizesForEmptyAreasMenuItem);
         contextMenu.addSeparator();
         contextMenu.add(selectAll);
         contextMenu.add(clearSelection);
@@ -293,6 +322,7 @@ final class DiagramView
     DiagramView(final VennNode<CyNode> vennNode, final CyApplicationManager applicationManager)
     {
         this(applicationManager);
+        vennNode.offset(100.0d, 100.0d);
         for (PNode node : vennNode.nodes())
         {
             node.addInputEventListener(new ToolTipTextListener());
@@ -417,6 +447,50 @@ final class DiagramView
                 catch (Exception e)
                 {
                     // ignore
+                }
+            }
+        }
+    }
+
+    /**
+     * Display sizes.
+     *
+     * @param displaySizes true if labels should display sizes
+     */
+    private void displaySizes(final boolean displaySizes)
+    {
+        for (Iterator i = canvas.getLayer().getChildrenIterator(); i.hasNext(); )
+        {
+            PNode node = (PNode) i.next();
+            if (node instanceof AbstractVennNode)
+            {
+                AbstractVennNode<CyNode> vennNode = (AbstractVennNode<CyNode>) node;
+                vennNode.setDisplaySizes(displaySizes);
+            }
+        }
+    }
+
+    /**
+     * Display sizes for empty areas.
+     *
+     * @param displaySizesForEmptyAreas true if labels should display sizes for empty areas
+     */
+    private void displaySizesForEmptyAreas(final boolean displaySizesForEmptyAreas)
+    {
+        for (Iterator i = canvas.getLayer().getChildrenIterator(); i.hasNext(); )
+        {
+            PNode node = (PNode) i.next();
+            if (node instanceof AbstractVennNode)
+            {
+                AbstractVennNode<CyNode> vennNode = (AbstractVennNode<CyNode>) node;
+                for (PText sizeLabel : vennNode.sizeLabels())
+                {
+                    if ("0".equals(sizeLabel.getText()))
+                    {
+                        // todo:  should also consider whether assocated areaNode is empty
+                        //   maybe distinguish between empty areas and those that contain zero CyNodes
+                        sizeLabel.setVisible(displaySizesForEmptyAreas);
+                    }
                 }
             }
         }

@@ -73,6 +73,10 @@ public abstract class AbstractVennNode<E>
         return sb.toString();
     }
 
+    /**
+     * Update labels.
+     */
+    protected abstract void updateLabels();
 
     /**
      * Return the nodes for this venn diagram node.
@@ -87,6 +91,13 @@ public abstract class AbstractVennNode<E>
      * @return the labels for this venn diagram node
      */
     public abstract Iterable<PText> labels();
+
+    /**
+     * Return the size labels for this venn diagram node.
+     *
+     * @return the size labels for this venn diagram node
+     */
+    public abstract Iterable<PText> sizeLabels();
 
     /**
      * Return the label for the specified node, if any.
@@ -137,6 +148,6 @@ public abstract class AbstractVennNode<E>
         boolean oldDisplaySizes = this.displaySizes;
         this.displaySizes = displaySizes;
         firePropertyChange(-1, "displaySizes", oldDisplaySizes, this.displaySizes);
-        // updateLabels()?
+        updateLabels();
     }
 }

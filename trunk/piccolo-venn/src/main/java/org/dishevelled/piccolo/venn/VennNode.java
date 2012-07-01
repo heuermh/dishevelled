@@ -40,7 +40,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import java.util.concurrent.Executors;
+import java.util.concurrent.ExecutorService;
+
 import javax.swing.SwingUtilities;
+import javax.swing.SwingWorker;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
@@ -72,6 +76,12 @@ import org.piccolo2d.util.PBounds;
 public class VennNode<E>
     extends AbstractVennNode<E>
 {
+    /** Thread pool executor service. */
+    private static final ExecutorService EXECUTOR_SERVICE = Executors.newFixedThreadPool(2);
+
+    /** Animation length, in milliseconds, <code>2000L</code>. */
+    private static final long MS = 2000L;
+
     /** Area paint. */
     private static final Paint AREA_PAINT = new Color(0, 0, 0, 0);
 
@@ -221,6 +231,10 @@ public class VennNode<E>
             }
         }
 
+        for (PText label : labels)
+        {
+            addChild(label);
+        }
         for (PPath pathNode : pathNodes)
         {
             addChild(pathNode);
@@ -232,10 +246,6 @@ public class VennNode<E>
         for (PArea areaNode : areaNodes.values())
         {
             addChild(areaNode);
-        }
-        for (PText label : labels)
-        {
-            addChild(label);
         }
     }
 
@@ -284,16 +294,16 @@ public class VennNode<E>
             PText sizeLabel = sizeLabels.get(key);
             PBounds sizeLabelBounds = sizeLabel.getBoundsReference();
             sizeLabel.setVisible(!areaNode.isEmpty());
+            // offset to lune center now
             sizeLabel.setOffset(luneCenter.getX() - sizeLabelBounds.getWidth() / 2.0d,
                                 luneCenter.getY() - sizeLabelBounds.getHeight() / 2.0d);
-
+            // delay offset to area centroids
+            EXECUTOR_SERVICE.submit(new LayoutWorker(areaNode.getAreaReference(), sizeLabel));
         }
     }
 
-    /**
-     * Update labels.
-     */
-    private void updateLabels()
+    /** {@inheritDoc} */
+    protected void updateLabels()
     {
         for (int i = 0; i < size(); i++)
         {
@@ -470,7 +480,7 @@ public class VennNode<E>
     /** {@inheritDoc} */
     public Iterable<PText> labels()
     {
-        return Iterables.concat(labels, sizeLabels.values());
+        return labels;
     }
 
     /** {@inheritDoc} */
@@ -515,6 +525,12 @@ public class VennNode<E>
             }
         }
         return null;
+    }
+
+    /** {@inheritDoc} */
+    public Iterable<PText> sizeLabels()
+    {
+        return sizeLabels.values();
     }
 
     /** {@inheritDoc} */
@@ -759,6 +775,56 @@ public class VennNode<E>
         public Rectangle2D boundingRectangle()
         {
             return empty;
+        }
+    }
+
+    // copied from QuaternaryVennNode.java
+    /**
+     * Layout worker.
+     */
+    private final class LayoutWorker
+        extends SwingWorker<Point2D, Object>
+    {
+        /** Area for this layout worker. */
+        private Area area;
+
+        /** Size label for this layout worker. */
+        private PText size;
+
+
+        /**
+         * Create a new layout worker for the specified area and size label.
+         *
+         * @param area area
+         * @param size size label
+         */
+        private LayoutWorker(final Area area, final PText size)
+        {
+            this.area = area;
+            this.size = size;
+        }
+
+
+        /** {@inheritDoc} */
+        public Point2D doInBackground()
+        {
+            return Centers.centroidOf(area);
+        }
+
+        /** {@inheritDoc} */
+        protected void done()
+        {
+            try
+            {
+                Rectangle2D bounds = size.getFullBoundsReference();
+                Point2D centroid = get();
+                size.animateToPositionScaleRotation(centroid.getX() - (bounds.getWidth() / 2.0d),
+                                                    centroid.getY() - (bounds.getHeight() / 2.0d), 1.0d, 0.0d, MS);
+            }
+            catch (Exception e)
+            {
+                // ignore
+            }
         }
     }
 }
