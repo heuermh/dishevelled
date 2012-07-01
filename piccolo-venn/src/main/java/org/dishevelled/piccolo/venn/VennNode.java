@@ -27,10 +27,12 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Paint;
+import java.awt.Shape;
 import java.awt.Stroke;
 
 import java.awt.geom.Area;
 import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -38,8 +40,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.swing.SwingUtilities;
+
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Iterables;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 
@@ -56,6 +61,8 @@ import org.piccolo2d.jdk16.nodes.PPath;
 
 import org.piccolo2d.nodes.PText;
 
+import org.piccolo2d.util.PBounds;
+
 /**
  * Venn diagram node.
  *
@@ -65,6 +72,15 @@ import org.piccolo2d.nodes.PText;
 public class VennNode<E>
     extends AbstractVennNode<E>
 {
+    /** Area paint. */
+    private static final Paint AREA_PAINT = new Color(0, 0, 0, 0);
+
+    /** Area stroke. */
+    private static final Stroke AREA_STROKE = null;
+
+    /** Area stroke paint. */
+    private static final Paint AREA_STROKE_PAINT = null;
+
     /** Paints. */
     private static final Paint[] PAINTS = new Color[]
     {
@@ -73,6 +89,7 @@ public class VennNode<E>
         new Color(255, 100, 5, 50),
         new Color(11, 255, 5, 50),
         // next twelve colors copied from set-3-12 qualitative color scheme
+        //    might need to increase alpha
         new Color(141, 211, 199, 50),
         new Color(255, 255, 179, 50),
         new Color(190, 186, 218, 50),
@@ -86,6 +103,12 @@ public class VennNode<E>
         new Color(204, 235, 197, 50),
         new Color(255, 237, 111, 50),
     };
+
+    /** Stroke. */
+    private static final Stroke STROKE = new BasicStroke(0.5f);
+
+    /** Stroke paint. */
+    private static final Paint STROKE_PAINT = new Color(20, 20, 20);
 
     /** Default label text. */
     private static final String[] DEFAULT_LABEL_TEXT = new String[]
@@ -108,137 +131,99 @@ public class VennNode<E>
         "Sixteenth set"
     };
 
-    /** Area paint. */
-    private static final Paint AREA_PAINT = new Color(0, 0, 0, 0);
-
-    /** Area stroke. */
-    private static final Stroke AREA_STROKE = null;
-
-    /** Stroke. */
-    private static final Stroke STROKE = new BasicStroke(0.5f);
-
-    /** Stroke paint. */
-    private static final Paint STROKE_PAINT = new Color(20, 20, 20);
-
-    /** Shape nodes. */
-    private final List<PPath> shapeNodes;
+    /** Path nodes. */
+    private final List<PPath> pathNodes;
 
     /** Labels. */
     private final List<PText> labels;
 
     /** Label text. */
-    private final List<String> labelText;
+    private final List<String> labelTexts;
 
     /** Area nodes. */
     private final Map<ImmutableBitSet, PArea> areaNodes;
 
     /** Area label text, for tooltips. */
-    private final Map<ImmutableBitSet, String> areaLabelText;
+    private final Map<ImmutableBitSet, String> areaLabelTexts;
 
     /** Size labels. */
     private final Map<ImmutableBitSet, PText> sizeLabels;
 
     /** Venn layout. */
-    private final VennLayout layout;
+    private VennLayout layout;
 
     /** Venn model. */
     private final VennModel model;
 
 
-    public VennNode(final VennModel model, final VennLayout layout) // need to pass in labels
+    /**
+     * Create a new venn node with the specified model.
+     *
+     * @param model model for this venn node, must not be null
+     */
+    public VennNode(final VennModel model)
     {
         super();
-
         if (model == null)
         {
             throw new IllegalArgumentException("model must not be null");
         }
-        if (layout == null)
-        {
-            throw new IllegalArgumentException("layout must not be null");
-        }
         this.model = model;
-        this.layout = layout;
+        this.layout = new InitialLayout();
 
-        shapeNodes = new ArrayList<PPath>(layout.size());
-        labels = new ArrayList<PText>(layout.size());
-        labelText = new ArrayList<String>(layout.size());
+        pathNodes = new ArrayList<PPath>(this.model.size());
+        labels = new ArrayList<PText>(this.model.size());
+        labelTexts = new ArrayList<String>(this.model.size());
         areaNodes = new HashMap<ImmutableBitSet, PArea>();
-        areaLabelText = new HashMap<ImmutableBitSet, String>();
+        areaLabelTexts = new HashMap<ImmutableBitSet, String>();
         sizeLabels = new HashMap<ImmutableBitSet, PText>();
 
         createNodes();
         updateLabels();
     }
 
+
     /**
      * Create nodes.
      */
     private void createNodes()
     {
-        for (int i = 0, size = layout.size(); i < size; i++)
+        for (int i = 0, size = size(); i < size; i++)
         {
-            PPath path = new PPath.Double(layout.get(i));
-            path.setPaint(PAINTS[i]);
-            path.setStroke(STROKE);
-            path.setStrokePaint(STROKE_PAINT);
-            shapeNodes.add(path);
+            PPath pathNode = new PPath.Double();
+            pathNode.setPaint(PAINTS[i]);
+            pathNode.setStroke(STROKE);
+            pathNode.setStrokePaint(STROKE_PAINT);
+            pathNodes.add(pathNode);
+
+            labelTexts.add(DEFAULT_LABEL_TEXT[i]);
 
             PText label = new PText();
-            //label.setText(DEFAULT_LABEL_TEXT[i]);
-            label.setHorizontalAlignment(Component.CENTER_ALIGNMENT);
-            label.offset(path.getBounds().getWidth() / 2.0d - label.getWidth() / 2.0d,
-                         path.getBounds().getHeight() / 2.0d - label.getHeight() - 12.0d);
-
             labels.add(label);
-            labelText.add(DEFAULT_LABEL_TEXT[i]);
         }
 
         // calculate the power set (note n > 30 will overflow int)
-        ImmutableSet<Integer> range = range(layout.size());
-        Set<Set<Integer>> powerSet = Sets.powerSet(range);
+        Set<Set<Integer>> powerSet = Sets.powerSet(range(size()));
         for (Set<Integer> set : powerSet)
         {
             if (!set.isEmpty())
             {
-                int first = first(set);
-                int[] additional = additional(set);
+                ImmutableBitSet key = toImmutableBitSet(set);
 
-                PArea areaNode = new PArea(AREA_STROKE);
+                PArea areaNode = new PArea();
                 areaNode.setPaint(AREA_PAINT);
-
-                areaNode.add(new Area(layout.get(first)));
-                for (Integer index : set)
-                {
-                    areaNode.intersect(new Area(shapeNodes.get(index.intValue()).getPathReference()));
-                }
-                for (Integer index : range)
-                {
-                    if (!set.contains(index))
-                    {
-                        areaNode.subtract(new Area(shapeNodes.get(index.intValue()).getPathReference()));
-                    }
-                }
-
-                Set<?> view = model.exclusiveTo(first, additional);
-                Point2D luneCenter = layout.luneCenter(first, additional);
+                areaNode.setStroke(AREA_STROKE);
+                areaNode.setStrokePaint(AREA_STROKE_PAINT);
+                areaNodes.put(key, areaNode);
 
                 PText sizeLabel = new PText();
-                //sizeLabel.setText(view.size());
-                sizeLabel.setHorizontalAlignment(Component.CENTER_ALIGNMENT);
-                sizeLabel.setOffset(luneCenter.getX() - sizeLabel.getWidth() / 2.0d,
-                                    luneCenter.getY() - sizeLabel.getHeight() / 2.0d);
-
-                ImmutableBitSet bitSet = toImmutableBitSet(set);
-                areaNodes.put(bitSet, areaNode);
-                areaLabelText.put(bitSet, "");
-                sizeLabels.put(bitSet, sizeLabel);
+                sizeLabels.put(key, sizeLabel);
             }
         }
 
-        for (PPath shapeNode : shapeNodes)
+        for (PPath pathNode : pathNodes)
         {
-            addChild(shapeNode);
+            addChild(pathNode);
         }
         for (PText sizeLabel : sizeLabels.values())
         {
@@ -255,50 +240,327 @@ public class VennNode<E>
     }
 
     /**
+     * Layout nodes.
+     */
+    private void layoutNodes()
+    {
+        for (int i = 0, size = size(); i < size; i++)
+        {
+            PPath pathNode = pathNodes.get(i);
+            pathNode.reset();
+            pathNode.append(layout.get(i), false);
+            PBounds pathNodeBounds = pathNode.getBoundsReference();
+
+            PText label = labels.get(i);
+            PBounds labelBounds = label.getBoundsReference();
+            // consider layout on bottom of path if (x, y) is in bottom half of boundingRectangle
+            label.setOffset(pathNodeBounds.getX() + pathNodeBounds.getWidth() / 2.0d - label.getWidth() / 2.0d,
+                            pathNodeBounds.getY() - label.getHeight() / 2.0d - 12.0d);
+        }
+
+        for (ImmutableBitSet key : areaNodes.keySet())
+        {
+            int first = first(key);
+            int[] additional = additional(key);
+
+            PArea areaNode = areaNodes.get(key);
+            areaNode.reset();
+            areaNode.add(new Area(layout.get(first)));
+            // intersect with all indices in additional
+            for (int i = 0, size = additional.length; i < size; i++)
+            {
+                areaNode.intersect(new Area(layout.get(additional[i])));
+            }
+            // subtract everything else
+            for (int i = 0, size = size(); i < size; i++)
+            {
+                if (!key.getQuick(i))
+                {
+                    areaNode.subtract(new Area(layout.get(i)));
+                }
+            }
+
+            Point2D luneCenter = layout.luneCenter(first, additional);
+            PText sizeLabel = sizeLabels.get(key);
+            PBounds sizeLabelBounds = sizeLabel.getBoundsReference();
+            sizeLabel.setVisible(!areaNode.isEmpty());
+            sizeLabel.setOffset(luneCenter.getX() - sizeLabelBounds.getWidth() / 2.0d,
+                                luneCenter.getY() - sizeLabelBounds.getHeight() / 2.0d);
+
+        }
+    }
+
+    /**
      * Update labels.
      */
     private void updateLabels()
     {
-        for (int i = 0; i < layout.size(); i++)
+        for (int i = 0; i < size(); i++)
         {
-            labels.get(i).setText(buildLabel(labelText.get(i), model.get(i).size()));
+            labels.get(i).setText(buildLabel(labelTexts.get(i), model.get(i).size()));
         }
-        for (ImmutableBitSet key : areaNodes.keySet()) // assumes keys are identical for all of {areaNodes, areaLabels, areaLabelText}
+        for (ImmutableBitSet key : areaNodes.keySet())
         {
-            int size = model.exclusiveTo(first(key), additional(key)).size();
+            int first = first(key);
+            int[] additional = additional(key);
+            int size = model.exclusiveTo(first, additional).size();
             sizeLabels.get(key).setText(String.valueOf(size));
-            //areaLabels.get(key).setText(buildLabel(areaLabelText.get(key), size));
+            areaLabelTexts.put(key, buildAreaLabel(first, additional));
         }
+    }
+
+    /**
+     * Return the size of this venn node.
+     *
+     * @return the size of this venn node
+     */
+    public final int size()
+    {
+        return model.size();
+    }
+
+    /**
+     * Return the layout for this venn node.  The layout will not be null.
+     *
+     * @return the layout for this venn node
+     */
+    public final VennLayout getLayout()
+    {
+        return layout;
+    }
+
+    /**
+     * Set the layout for this venn node to <code>layout</code>.
+     *
+     * <p>This is a bound property.</p>
+     *
+     * @param layout layout for this venn node, must not be null
+     */
+    public final void setLayout(final VennLayout layout)
+    {
+        if (layout == null)
+        {
+            throw new IllegalArgumentException("layout must not be null");
+        }
+        VennLayout oldLayout = this.layout;
+        this.layout = layout;
+        firePropertyChange(-1, "layout", oldLayout, this.layout);
+
+        // consider showing a "Layout . . ." label here
+        SwingUtilities.invokeLater(new Runnable()
+            {
+                /** {@inheritDoc} */
+                public void run()
+                {
+                    layoutNodes();
+                    // ... and hiding it here
+                }
+            });
+    }
+
+    /**
+     * Return the model for this venn node.  The model will not be null.
+     *
+     * @return the model for this venn node
+     */
+    public final VennModel<E> getModel()
+    {
+        return model;
+    }
+
+    /**
+     * Return the path node for the set at the specified index.
+     *
+     * @param index index
+     * @return the path node for the set at the specified index
+     * @throws IndexOutOfBoundsException if <code>index</code> is out of bounds
+     */
+    public final PPath getPath(final int index)
+    {
+        return pathNodes.get(index);
+    }
+
+    /**
+     * Return the label text for the set at the specified index.  Defaults to {@link #DEFAULT_LABEL_TEXT}<code>.get(index)</code>.
+     *
+     * @param index index
+     * @return the label text for the set at the specified index
+     * @throws IndexOutOfBoundsException if <code>index</code> is out of bounds
+     */
+    public final String getLabelText(final int index)
+    {
+        return labelTexts.get(index);
+    }
+
+    /**
+     * Set the label text for the set at the specified index to <code>labelText</code>.
+     *
+     * <p>This is a bound property.</p>
+     *
+     * @param index index
+     * @param labelText label text for the set at the specified index
+     * @throws IndexOutOfBoundsException if <code>index</code> is out of bounds
+     */
+    public final void setLabelText(final int index, final String labelText)
+    {
+        String oldLabelText = labelTexts.get(index);
+        labelTexts.set(index, labelText);
+        firePropertyChange(-1, "labelTexts", oldLabelText, labelTexts.get(index));
+        updateLabels();
+    }
+
+    /**
+     * Return the label for the set at the specified index.  The text for the returned PText
+     * should not be changed, as the text is synchronized to the venn model backing this venn
+     * diagram.  Use methods {@link #setLabelText(int, String)} and {@link #setDisplaySizes(boolean)}
+     * to set the label text and whether to display sizes respectively.
+     *
+     * @return the label for the set at the specified index
+     */
+    public final PText getLabel(final int index)
+    {
+        return labels.get(index);
+    }
+
+    /**
+     * Return the area node for the intersecting area defined by the specified indices.
+     *
+     * @param index first index
+     * @param additional variable number of additional indices, if any
+     * @return the area node for the intersecting area defined by the specified indices
+     * @throws IndexOutOfBoundsException if <code>index</code> or any of <code>additional</code>
+     *    are out of bounds, or if too many indices are specified
+     */
+    public final PArea getArea(final int index, final int... additional)
+    {
+        checkIndices(index, additional);
+        return areaNodes.get(toImmutableBitSet(index, additional));
+    }
+
+    /**
+     * Return the area label text for the intersecting area defined by the specified indices.
+     *
+     * @param index first index
+     * @param additional variable number of additional indices, if any
+     * @return the area label text for the intersecting area defined by the specified indices
+     * @throws IndexOutOfBoundsException if <code>index</code> or any of <code>additional</code>
+     *    are out of bounds, or if too many indices are specified
+     */
+    public final String getAreaLabelText(final int index, final int... additional)
+    {
+        checkIndices(index, additional);
+        return areaLabelTexts.get(toImmutableBitSet(index, additional));
+    }
+
+    /**
+     * Return the size label for the intersecting area defined by the specified indices.
+     *
+     * @param index first index
+     * @param additional variable number of additional indices, if any
+     * @return the size label for the intersecting area defined by the specified indices
+     * @throws IndexOutOfBoundsException if <code>index</code> or any of <code>additional</code>
+     *    are out of bounds, or if too many indices are specified
+     */
+    public final PText getSizeLabel(final int index, final int... additional)
+    {
+        checkIndices(index, additional);
+        return sizeLabels.get(toImmutableBitSet(index, additional));
     }
 
     /** {@inheritDoc} */
     public Iterable<PText> labels()
     {
-        return null;
+        return Iterables.concat(labels, sizeLabels.values());
     }
 
     /** {@inheritDoc} */
     public Iterable<PNode> nodes()
     {
-        return null;
+        List<PNode> nodes = new ArrayList<PNode>(pathNodes.size() + areaNodes.size());
+        nodes.addAll(pathNodes);
+        nodes.addAll(areaNodes.values());
+        return nodes;
     }
 
     /** {@inheritDoc} */
     public PText labelForNode(final PNode node)
     {
+        if (node instanceof PPath)
+        {
+            PPath pathNode = (PPath) node;
+            int index = pathNodes.indexOf(pathNode);
+            return labels.get(index);
+        }
         return null;
     }
 
     /** {@inheritDoc} */
     public String labelTextForNode(final PNode node)
     {
+        if (node instanceof PPath)
+        {
+            PPath pathNode = (PPath) node;
+            int index = pathNodes.indexOf(pathNode);
+            return labelTexts.get(index);
+        }
+        else if (node instanceof PArea)
+        {
+            PArea areaNode = (PArea) node;
+            for (Map.Entry<ImmutableBitSet, PArea> entry : areaNodes.entrySet())
+            {
+                if (entry.getValue().equals(areaNode))
+                {
+                    return areaLabelTexts.get(entry.getKey());
+                }
+            }
+        }
         return null;
     }
 
     /** {@inheritDoc} */
     public Set<E> viewForNode(final PNode node)
     {
+        if (node instanceof PPath)
+        {
+            PPath pathNode = (PPath) node;
+            int index = pathNodes.indexOf(pathNode);
+            return model.get(index);
+        }
+        else if (node instanceof PArea)
+        {
+            PArea areaNode = (PArea) node;
+            for (Map.Entry<ImmutableBitSet, PArea> entry : areaNodes.entrySet())
+            {
+                if (entry.getValue().equals(areaNode))
+                {
+                    ImmutableBitSet key = entry.getKey();
+                    return model.exclusiveTo(first(key), additional(key));
+                }
+            }
+        }
         return null;
+    }
+
+    /**
+     * Build and return area label text.
+     *
+     * @param index index
+     * @param additional variable number of additional indices
+     * @throws IndexOutOfBoundsException if <code>index</code> or any of <code>additional</code>
+     *    are out of bounds, or if too many indices are specified
+     */
+    protected final String buildAreaLabel(final int index, final int... additional)
+    {
+        checkIndices(index, additional);
+        StringBuilder sb = new StringBuilder();
+        sb.append(labelTexts.get(index));
+        for (int i = 0, size = additional.length; i < size; i++)
+        {
+            sb.append(" and ");
+            sb.append(labelTexts.get(additional[i]));
+        }
+        sb.append(" only");
+        return sb.toString();
     }
 
     /**
@@ -309,10 +571,9 @@ public class VennNode<E>
      * @throws IndexOutOfBoundsException if <code>index</code> or any of <code>additional</code>
      *    are out of bounds, or if too many indices are specified
      */
-    /*
-    static void checkIndices(final int index, final int... additional)
+    private void checkIndices(final int index, final int... additional)
     {
-        int maxIndex = layout.size() - 1;
+        int maxIndex = size() - 1;
         if (index < 0 || index > maxIndex)
         {
             throw new IndexOutOfBoundsException("index out of bounds");
@@ -332,7 +593,6 @@ public class VennNode<E>
             }
         }
     }
-    */
 
     /**
      * Return an immutable set of the integers between <code>0</code> and <code>n</code>, exclusive.
@@ -459,5 +719,46 @@ public class VennNode<E>
         }
         mutableBitSet.trimTrailingZeros();
         return mutableBitSet.immutableCopy();
+    }
+
+    /**
+     * Intial layout.
+     */
+    private final class InitialLayout implements VennLayout {
+        /** Origin. */
+        private final Point2D origin = new Point2D.Double(0.0d, 0.0d);
+
+        /** Empty. */
+        private final Rectangle2D empty = new Rectangle2D.Double(0.0d, 0.0d, 0.0d, 0.0d);
+
+
+        /** {@inheritDoc} */
+        public int size()
+        {
+            return VennNode.this.size();
+        }
+
+        /** {@inheritDoc} */
+        public Shape get(final int index)
+        {
+            if (index < 0 || index >= size())
+            {
+                throw new IndexOutOfBoundsException("index " + index + " out of bounds");
+            }
+            return empty;
+        }
+
+        /** {@inheritDoc} */
+        public Point2D luneCenter(final int index, final int... additional)
+        {
+            checkIndices(index, additional);
+            return origin;
+        }
+
+        /** {@inheritDoc} */
+        public Rectangle2D boundingRectangle()
+        {
+            return empty;
+        }
     }
 }
