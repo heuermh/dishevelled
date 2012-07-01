@@ -93,6 +93,9 @@ public class BinaryVennNode<E>
     /** List of nodes. */
     private final List<PNode> nodes = Arrays.asList(new PNode[] { firstOnly, secondOnly, intersection });
 
+    /** List of size labels. */
+    private final List<PText> sizeLabels = Arrays.asList(new PText[] { firstOnlySize, secondOnlySize, intersectionSize });
+
     /** Cached area. */
     private Area f;
 
@@ -387,6 +390,12 @@ public class BinaryVennNode<E>
             return getIntersectionLabelText();
         }
         return null;
+    }
+
+    /** {@inheritDoc} */
+    public Iterable<PText> sizeLabels()
+    {
+        return sizeLabels;
     }
 
     /** {@inheritDoc} */

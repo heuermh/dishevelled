@@ -171,6 +171,13 @@ public class QuaternaryVennNode<E>
                                                                   firstSecondFourth, firstThirdFourth,
                                                                   secondThirdFourth, intersection });
 
+    /** List of size labels. */
+    private final List<PText> sizeLabels = Arrays.asList(new PText[] { firstOnlySize, secondOnlySize, thirdOnlySize, fourthOnlySize,
+                                                                  firstSecondSize, firstThirdSize, secondThirdSize, firstFourthSize,
+                                                                  secondFourthSize, thirdFourthSize, firstSecondThirdSize,
+                                                                  firstSecondFourthSize, firstThirdFourthSize,
+                                                                  secondThirdFourthSize, intersectionSize });
+
     /** Cached area. */
     private Area f;
 
@@ -946,6 +953,12 @@ public class QuaternaryVennNode<E>
             return getIntersectionLabelText();
         }
         return null;
+    }
+
+    /** {@inheritDoc} */
+    public Iterable<PText> sizeLabels()
+    {
+        return sizeLabels;
     }
 
     /** {@inheritDoc} */

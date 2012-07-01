@@ -190,10 +190,8 @@ public abstract class AbstractBinaryVennNode<E>
         model.second().removeSetChangeListener(update);
     }
 
-    /**
-     * Update labels.
-     */
-    private void updateLabels()
+    /** {@inheritDoc} */
+    protected void updateLabels()
     {
         firstLabel.setText(buildLabel(firstLabelText, model.first().size()));
         secondLabel.setText(buildLabel(secondLabelText, model.second().size()));
