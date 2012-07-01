@@ -71,6 +71,7 @@ import org.dishevelled.piccolo.venn.AbstractVennNode;
 import org.dishevelled.piccolo.venn.BinaryVennNode;
 import org.dishevelled.piccolo.venn.TernaryVennNode;
 import org.dishevelled.piccolo.venn.QuaternaryVennNode;
+import org.dishevelled.piccolo.venn.VennNode;
 
 import org.piccolo2d.PCamera;
 import org.piccolo2d.PCanvas;
@@ -283,10 +284,18 @@ final class DiagramView
         canvas.getLayer().addChild(quaternaryVennNode);
     }
 
-    // ?
-    //DiagramView(final EulerVennNode<CyNode> eulerVennNode)
-    //{
-    //}
+    /**
+     * Create a new diagram view with the specified venn node.
+     *
+     * @param vennNode venn node
+     * @param applicationManager application manager, must not be null
+     */
+    DiagramView(final VennNode<CyNode> vennNode, final CyApplicationManager applicationManager)
+    {
+        this(applicationManager);
+        //? vennNode.offset(vennNode.getWidth() / 2.0d, vennNode.getHeight() / 2.0d);
+        canvas.getLayer().addChild(vennNode);
+    }
 
 
     /**

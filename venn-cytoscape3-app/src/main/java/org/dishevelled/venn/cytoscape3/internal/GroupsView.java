@@ -27,8 +27,11 @@ import java.awt.BorderLayout;
 
 import java.awt.event.ActionEvent;
 
+import java.awt.geom.Rectangle2D;
+
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 
@@ -90,10 +93,20 @@ import org.dishevelled.layout.LabelFieldPanel;
 import org.dishevelled.piccolo.venn.BinaryVennNode;
 import org.dishevelled.piccolo.venn.TernaryVennNode;
 import org.dishevelled.piccolo.venn.QuaternaryVennNode;
+import org.dishevelled.piccolo.venn.VennNode;
+
+import org.dishevelled.venn.VennModel;
+import org.dishevelled.venn.VennLayout;
+import org.dishevelled.venn.VennLayouter;
+import org.dishevelled.venn.VennLayouter.PerformanceHint;
+
+import org.dishevelled.venn.model.VennModels;
 
 import org.dishevelled.venn.swing.BinaryVennList;
 import org.dishevelled.venn.swing.TernaryVennList;
 import org.dishevelled.venn.swing.QuaternaryVennList;
+
+import org.cytoscape.venneuler.VennEulerLayouter;
 
 /**
  * Groups view.
@@ -123,7 +136,7 @@ final class GroupsView
             /** {@inheritDoc} */
             public void actionPerformed(final ActionEvent event)
             {
-                if (selected.size() > 2)
+                if (selected.size() > 1)
                 {
                     eulerDiagram();
                 }
@@ -213,6 +226,9 @@ final class GroupsView
 
     /** Service registrar. */
     private final CyServiceRegistrar serviceRegistrar;
+
+    /** Venn euler layouter. */
+    private final VennLayouter vennLayouter = new VennEulerLayouter();
 
 
     /**
@@ -325,6 +341,23 @@ final class GroupsView
      */
     private void eulerDiagram()
     {
+        List<String> labels = new ArrayList<String>(selected.size());
+        List<Set<CyNode>> sets = new ArrayList<Set<CyNode>>(selected.size());
+        for (CyGroup selectedGroup : selected)
+        {
+            labels.add(nameOf(selectedGroup));
+            sets.add(new HashSet<CyNode>(selectedGroup.getNodeList()));
+        }
+        VennModel<CyNode> model = VennModels.createVennModel(sets);
+        VennLayout layout = vennLayouter.layout(model, new Rectangle2D.Double(0.0d, 0.0d, 800.0d, 600.0d), PerformanceHint.OPTIMIZE_FOR_SPEED);
+        VennNode<CyNode> vennNode = new VennNode<CyNode>(model, layout);
+
+        JDialog dialog = new JDialog(windowForComponent(this), "Euler Diagram");
+        dialog.setContentPane(new DiagramView(vennNode, applicationManager));
+
+        // todo: offset per parent dialog
+        dialog.setBounds(100, 100, 800, 600);
+        dialog.setVisible(true);
     }
 
     /**
