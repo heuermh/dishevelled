@@ -45,13 +45,14 @@ import org.dishevelled.venn.layout.QuaternaryVennLayoutImpl;
 /**
  * Venn layout algorithm.
  *
+ * @param <E> value type
  * @author  Michael Heuer
  */
-public final class VennLayouterImpl implements VennLayouter
+public final class VennLayouterImpl<E> implements VennLayouter<E>
 {
 
     /** {@inheritDoc} */
-    public VennLayout layout(final VennModel<?> model,
+    public VennLayout layout(final VennModel<E> model,
                              final Rectangle2D boundingRectangle,
                              final PerformanceHint performanceHint)
     {
@@ -70,15 +71,15 @@ public final class VennLayouterImpl implements VennLayouter
 
         if (model instanceof BinaryVennModel)
         {
-            return layout((BinaryVennModel<?>) model, boundingRectangle);
+            return layout((BinaryVennModel<E>) model, boundingRectangle);
         }
         else if (model instanceof TernaryVennModel)
         {
-            return layout((TernaryVennModel<?>) model, boundingRectangle);
+            return layout((TernaryVennModel<E>) model, boundingRectangle);
         }
         else if (model instanceof QuaternaryVennModel)
         {
-            return layout((QuaternaryVennModel<?>) model, boundingRectangle);
+            return layout((QuaternaryVennModel<E>) model, boundingRectangle);
         }
 
         // todo: apply venn/euler algorithm
@@ -93,7 +94,7 @@ public final class VennLayouterImpl implements VennLayouter
      * @param boundingRectangle bounding rectangle, must not be null
      * @return the result of the layout operation
      */
-    BinaryVennLayout layout(final BinaryVennModel<?> model,
+    BinaryVennLayout layout(final BinaryVennModel<E> model,
                             final Rectangle2D boundingRectangle)
     {
         double w = boundingRectangle.getWidth();
@@ -122,7 +123,7 @@ public final class VennLayouterImpl implements VennLayouter
      * @param boundingRectangle bounding rectangle, must not be null
      * @return the result of the layout operation
      */
-    TernaryVennLayout layout(final TernaryVennModel<?> model,
+    TernaryVennLayout layout(final TernaryVennModel<E> model,
                              final Rectangle2D boundingRectangle)
     {
         double w = boundingRectangle.getWidth();
@@ -191,7 +192,7 @@ public final class VennLayouterImpl implements VennLayouter
      * @param boundingRectangle bounding rectangle, must not be null
      * @return the result of the layout operation
      */
-    QuaternaryVennLayout layout(final QuaternaryVennModel<?> model,
+    QuaternaryVennLayout layout(final QuaternaryVennModel<E> model,
                                 final Rectangle2D boundingRectangle)
     {
         return null;
