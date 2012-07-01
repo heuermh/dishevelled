@@ -30,9 +30,10 @@ import java.awt.geom.Rectangle2D;
 /**
  * Venn diagram layout algorithm.
  *
+ * @param <E> value type
  * @author  Michael Heuer
  */
-public interface VennLayouter
+public interface VennLayouter<E>
 {
 
     // let the algorithm choose the best answer
@@ -45,7 +46,7 @@ public interface VennLayouter
      * @param performanceHint performance hint, must not be null
      * @return the result of the layout operation
      */
-    VennLayout layout(VennModel<?> model,
+    VennLayout layout(VennModel<E> model,
                       Rectangle2D boundingRectangle,
                       PerformanceHint performanceHint);
 
@@ -64,7 +65,7 @@ public interface VennLayouter
      * @return zero or more possible layouts that satisfy the specified scoring
      *    function and score predicate
      */
-    //    Iterator<VennLayout> layout(VennModel<?> model,
+    //    Iterator<VennLayout> layout(VennModel<E> model,
     //                                Rectangle2D boundingRectangle,
     //                                ScoringFunction scoringFunction,
     //                                ScorePredicate scorePredicate,
