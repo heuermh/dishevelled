@@ -165,7 +165,27 @@ final class DiagramView
             }
         };
 
-    /** Toggle set label should display sizes. */
+    /** Toggle display labels. */
+    private final Action displayLabels = new AbstractAction("Display set labels") // i18n
+        {
+            /** {@inheritDoc} */
+            public void actionPerformed(final ActionEvent event)
+            {
+                displayLabels(((AbstractButton) event.getSource()).isSelected());
+            }
+        };
+
+    /** Toggle display size labels. */
+    private final Action displaySizeLabels = new AbstractAction("Display size labels") // i18n
+        {
+            /** {@inheritDoc} */
+            public void actionPerformed(final ActionEvent event)
+            {
+                displaySizeLabels(((AbstractButton) event.getSource()).isSelected());
+            }
+        };
+
+    /** Toggle display sizes in set labels. */
     private final Action displaySizes = new AbstractAction("Display sizes in set labels") // i18n
         {
             /** {@inheritDoc} */
@@ -240,13 +260,21 @@ final class DiagramView
         contextMenu.add(exportToPNG);
         contextMenu.add(exportToSVG);
         contextMenu.addSeparator();
+
+        JCheckBoxMenuItem displayLabelsMenuItem = new JCheckBoxMenuItem(displayLabels);
+        displayLabelsMenuItem.setSelected(true);
+        contextMenu.add(displayLabelsMenuItem);
         JCheckBoxMenuItem displaySizesMenuItem = new JCheckBoxMenuItem(displaySizes);
         displaySizesMenuItem.setSelected(true);
         contextMenu.add(displaySizesMenuItem);
+        JCheckBoxMenuItem displaySizeLabelsMenuItem = new JCheckBoxMenuItem(displaySizeLabels);
+        displaySizeLabelsMenuItem.setSelected(true);
+        contextMenu.add(displaySizeLabelsMenuItem);
         JCheckBoxMenuItem displaySizesForEmptyAreasMenuItem = new JCheckBoxMenuItem(displaySizesForEmptyAreas);
         displaySizesForEmptyAreasMenuItem.setSelected(true);
         contextMenu.add(displaySizesForEmptyAreasMenuItem);
         contextMenu.addSeparator();
+
         contextMenu.add(selectAll);
         contextMenu.add(clearSelection);
         contextMenu.addSeparator();
@@ -453,6 +481,24 @@ final class DiagramView
     }
 
     /**
+     * Display set labels.
+     *
+     * @param displayLabels true if labels should display set labels
+     */
+    private void displayLabels(final boolean displayLabels)
+    {
+        for (Iterator i = canvas.getLayer().getChildrenIterator(); i.hasNext(); )
+        {
+            PNode node = (PNode) i.next();
+            if (node instanceof AbstractVennNode)
+            {
+                AbstractVennNode<CyNode> vennNode = (AbstractVennNode<CyNode>) node;
+                vennNode.setDisplayLabels(displayLabels);
+            }
+        }
+    }
+
+    /**
      * Display sizes.
      *
      * @param displaySizes true if labels should display sizes
@@ -471,6 +517,24 @@ final class DiagramView
     }
 
     /**
+     * Display size labels.
+     *
+     * @param displaySizeLabels true if labels should display size labels
+     */
+    private void displaySizeLabels(final boolean displaySizeLabels)
+    {
+        for (Iterator i = canvas.getLayer().getChildrenIterator(); i.hasNext(); )
+        {
+            PNode node = (PNode) i.next();
+            if (node instanceof AbstractVennNode)
+            {
+                AbstractVennNode<CyNode> vennNode = (AbstractVennNode<CyNode>) node;
+                vennNode.setDisplaySizeLabels(displaySizeLabels);
+            }
+        }
+    }
+
+    /**
      * Display sizes for empty areas.
      *
      * @param displaySizesForEmptyAreas true if labels should display sizes for empty areas
@@ -483,15 +547,7 @@ final class DiagramView
             if (node instanceof AbstractVennNode)
             {
                 AbstractVennNode<CyNode> vennNode = (AbstractVennNode<CyNode>) node;
-                for (PText sizeLabel : vennNode.sizeLabels())
-                {
-                    if ("0".equals(sizeLabel.getText()))
-                    {
-                        // todo:  should also consider whether assocated areaNode is empty
-                        //   maybe distinguish between empty areas and those that contain zero CyNodes
-                        sizeLabel.setVisible(displaySizesForEmptyAreas);
-                    }
-                }
+                vennNode.setDisplaySizesForEmptyAreas(displaySizesForEmptyAreas);
             }
         }
     }
