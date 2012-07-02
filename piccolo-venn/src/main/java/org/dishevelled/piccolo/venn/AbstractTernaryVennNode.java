@@ -260,6 +260,18 @@ public abstract class AbstractTernaryVennNode<E>
         secondThirdLabel.setText(buildLabel(secondThirdLabelText, model.secondThird().size()));
         intersectionLabel.setText(buildLabel(intersectionLabelText, model.intersection().size()));
         unionLabel.setText(buildLabel(unionLabelText, model.union().size()));
+
+        firstLabel.setVisible(getDisplayLabels());
+        secondLabel.setVisible(getDisplayLabels());
+        thirdLabel.setVisible(getDisplayLabels());
+        firstOnlyLabel.setVisible(getDisplayLabels());
+        secondOnlyLabel.setVisible(getDisplayLabels());
+        thirdOnlyLabel.setVisible(getDisplayLabels());
+        firstSecondLabel.setVisible(getDisplayLabels());
+        firstThirdLabel.setVisible(getDisplayLabels());
+        secondThirdLabel.setVisible(getDisplayLabels());
+        intersectionLabel.setVisible(getDisplayLabels());
+        unionLabel.setVisible(getDisplayLabels());
     }
 
     /**

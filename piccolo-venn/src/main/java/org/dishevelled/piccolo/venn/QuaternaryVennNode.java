@@ -384,6 +384,31 @@ public class QuaternaryVennNode<E>
     }
 
     /** {@inheritDoc} */
+    protected void updateLabels()
+    {
+        super.updateLabels();
+
+        if (firstOnlySize != null)
+        {
+            firstOnlySize.setVisible(getDisplaySizeLabels() && (getDisplaySizesForEmptyAreas() || !getModel().firstOnly().isEmpty()));
+            secondOnlySize.setVisible(getDisplaySizeLabels() && (getDisplaySizesForEmptyAreas() || !getModel().secondOnly().isEmpty()));
+            thirdOnlySize.setVisible(getDisplaySizeLabels() && (getDisplaySizesForEmptyAreas() || !getModel().thirdOnly().isEmpty()));
+            fourthOnlySize.setVisible(getDisplaySizeLabels() && (getDisplaySizesForEmptyAreas() || !getModel().thirdOnly().isEmpty()));
+            firstSecondSize.setVisible(getDisplaySizeLabels() && (getDisplaySizesForEmptyAreas() || !getModel().firstSecond().isEmpty()));
+            firstThirdSize.setVisible(getDisplaySizeLabels() && (getDisplaySizesForEmptyAreas() || !getModel().firstThird().isEmpty()));
+            secondThirdSize.setVisible(getDisplaySizeLabels() && (getDisplaySizesForEmptyAreas() || !getModel().secondThird().isEmpty()));
+            firstFourthSize.setVisible(getDisplaySizeLabels() && (getDisplaySizesForEmptyAreas() || !getModel().firstFourth().isEmpty()));
+            secondFourthSize.setVisible(getDisplaySizeLabels() && (getDisplaySizesForEmptyAreas() || !getModel().secondFourth().isEmpty()));
+            thirdFourthSize.setVisible(getDisplaySizeLabels() && (getDisplaySizesForEmptyAreas() || !getModel().thirdFourth().isEmpty()));
+            firstSecondThirdSize.setVisible(getDisplaySizeLabels() && (getDisplaySizesForEmptyAreas() || !getModel().firstSecondThird().isEmpty()));
+            firstSecondFourthSize.setVisible(getDisplaySizeLabels() && (getDisplaySizesForEmptyAreas() || !getModel().firstSecondFourth().isEmpty()));
+            firstThirdFourthSize.setVisible(getDisplaySizeLabels() && (getDisplaySizesForEmptyAreas() || !getModel().firstThirdFourth().isEmpty()));
+            secondThirdFourthSize.setVisible(getDisplaySizeLabels() && (getDisplaySizesForEmptyAreas() || !getModel().secondThirdFourth().isEmpty()));
+            intersectionSize.setVisible(getDisplaySizeLabels() && (getDisplaySizesForEmptyAreas() || !getModel().intersection().isEmpty()));
+        }
+    }
+
+    /** {@inheritDoc} */
     protected void updateContents()
     {
         firstOnlySize.setText(String.valueOf(getModel().firstOnly().size()));
@@ -401,6 +426,22 @@ public class QuaternaryVennNode<E>
         firstThirdFourthSize.setText(String.valueOf(getModel().firstThirdFourth().size()));
         secondThirdFourthSize.setText(String.valueOf(getModel().secondThirdFourth().size()));
         intersectionSize.setText(String.valueOf(getModel().intersection().size()));
+
+        firstOnlySize.setVisible(getDisplaySizeLabels() && (getDisplaySizesForEmptyAreas() || !getModel().firstOnly().isEmpty()));
+        secondOnlySize.setVisible(getDisplaySizeLabels() && (getDisplaySizesForEmptyAreas() || !getModel().secondOnly().isEmpty()));
+        thirdOnlySize.setVisible(getDisplaySizeLabels() && (getDisplaySizesForEmptyAreas() || !getModel().thirdOnly().isEmpty()));
+        fourthOnlySize.setVisible(getDisplaySizeLabels() && (getDisplaySizesForEmptyAreas() || !getModel().thirdOnly().isEmpty()));
+        firstSecondSize.setVisible(getDisplaySizeLabels() && (getDisplaySizesForEmptyAreas() || !getModel().firstSecond().isEmpty()));
+        firstThirdSize.setVisible(getDisplaySizeLabels() && (getDisplaySizesForEmptyAreas() || !getModel().firstThird().isEmpty()));
+        secondThirdSize.setVisible(getDisplaySizeLabels() && (getDisplaySizesForEmptyAreas() || !getModel().secondThird().isEmpty()));
+        firstFourthSize.setVisible(getDisplaySizeLabels() && (getDisplaySizesForEmptyAreas() || !getModel().firstFourth().isEmpty()));
+        secondFourthSize.setVisible(getDisplaySizeLabels() && (getDisplaySizesForEmptyAreas() || !getModel().secondFourth().isEmpty()));
+        thirdFourthSize.setVisible(getDisplaySizeLabels() && (getDisplaySizesForEmptyAreas() || !getModel().thirdFourth().isEmpty()));
+        firstSecondThirdSize.setVisible(getDisplaySizeLabels() && (getDisplaySizesForEmptyAreas() || !getModel().firstSecondThird().isEmpty()));
+        firstSecondFourthSize.setVisible(getDisplaySizeLabels() && (getDisplaySizesForEmptyAreas() || !getModel().firstSecondFourth().isEmpty()));
+        firstThirdFourthSize.setVisible(getDisplaySizeLabels() && (getDisplaySizesForEmptyAreas() || !getModel().firstThirdFourth().isEmpty()));
+        secondThirdFourthSize.setVisible(getDisplaySizeLabels() && (getDisplaySizesForEmptyAreas() || !getModel().secondThirdFourth().isEmpty()));
+        intersectionSize.setVisible(getDisplaySizeLabels() && (getDisplaySizesForEmptyAreas() || !getModel().intersection().isEmpty()));
 
         layoutNodes();
     }

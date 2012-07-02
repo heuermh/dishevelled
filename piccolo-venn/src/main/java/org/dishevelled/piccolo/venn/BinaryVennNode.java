@@ -207,11 +207,28 @@ public class BinaryVennNode<E>
     }
 
     /** {@inheritDoc} */
+    protected void updateLabels()
+    {
+        super.updateLabels();
+
+        if (firstOnlySize != null) // updateLabels is called in super constructor
+        {
+            firstOnlySize.setVisible(getDisplaySizeLabels() && (getDisplaySizesForEmptyAreas() || !getModel().firstOnly().isEmpty()));
+            secondOnlySize.setVisible(getDisplaySizeLabels() && (getDisplaySizesForEmptyAreas() || !getModel().secondOnly().isEmpty()));
+            intersectionSize.setVisible(getDisplaySizeLabels() && (getDisplaySizesForEmptyAreas() || !getModel().intersection().isEmpty()));
+        }
+    }
+
+    /** {@inheritDoc} */
     protected void updateContents()
     {
         firstOnlySize.setText(String.valueOf(getModel().firstOnly().size()));
         secondOnlySize.setText(String.valueOf(getModel().secondOnly().size()));
         intersectionSize.setText(String.valueOf(getModel().intersection().size()));
+
+        firstOnlySize.setVisible(getDisplaySizeLabels() && (getDisplaySizesForEmptyAreas() || !getModel().firstOnly().isEmpty()));
+        secondOnlySize.setVisible(getDisplaySizeLabels() && (getDisplaySizesForEmptyAreas() || !getModel().secondOnly().isEmpty()));
+        intersectionSize.setVisible(getDisplaySizeLabels() && (getDisplaySizesForEmptyAreas() || !getModel().intersection().isEmpty()));
     }
 
     /** {@inheritDoc} */

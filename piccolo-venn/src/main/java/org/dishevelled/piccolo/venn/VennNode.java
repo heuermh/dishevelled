@@ -293,7 +293,6 @@ public class VennNode<E>
             Point2D luneCenter = layout.luneCenter(first, additional);
             PText sizeLabel = sizeLabels.get(key);
             PBounds sizeLabelBounds = sizeLabel.getBoundsReference();
-            sizeLabel.setVisible(!areaNode.isEmpty());
             // offset to lune center now
             sizeLabel.setOffset(luneCenter.getX() - sizeLabelBounds.getWidth() / 2.0d,
                                 luneCenter.getY() - sizeLabelBounds.getHeight() / 2.0d);
@@ -307,14 +306,22 @@ public class VennNode<E>
     {
         for (int i = 0; i < size(); i++)
         {
-            labels.get(i).setText(buildLabel(labelTexts.get(i), model.get(i).size()));
+            PText label = labels.get(i);
+            label.setText(buildLabel(labelTexts.get(i), model.get(i).size()));
+            label.setVisible(getDisplayLabels());
         }
         for (ImmutableBitSet key : areaNodes.keySet())
         {
             int first = first(key);
             int[] additional = additional(key);
             int size = model.exclusiveTo(first, additional).size();
-            sizeLabels.get(key).setText(String.valueOf(size));
+            boolean isEmpty = (size == 0);
+
+            PArea areaNode = areaNodes.get(key);
+            PText sizeLabel = sizeLabels.get(key);
+            sizeLabel.setText(String.valueOf(size));
+            sizeLabel.setVisible(getDisplaySizeLabels() && !areaNode.isEmpty() && (getDisplaySizesForEmptyAreas() || !isEmpty));
+
             areaLabelTexts.put(key, buildAreaLabel(first, additional));
         }
     }

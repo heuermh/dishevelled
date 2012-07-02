@@ -199,6 +199,13 @@ public abstract class AbstractBinaryVennNode<E>
         secondOnlyLabel.setText(buildLabel(secondOnlyLabelText, model.secondOnly().size()));
         intersectionLabel.setText(buildLabel(intersectionLabelText, model.intersection().size()));
         unionLabel.setText(buildLabel(unionLabelText, model.union().size()));
+
+        firstLabel.setVisible(getDisplayLabels());
+        secondLabel.setVisible(getDisplayLabels());
+        firstOnlyLabel.setVisible(getDisplayLabels());
+        secondOnlyLabel.setVisible(getDisplayLabels());
+        intersectionLabel.setVisible(getDisplayLabels());
+        unionLabel.setVisible(getDisplayLabels());
     }
 
     /**
