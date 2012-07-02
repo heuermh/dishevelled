@@ -43,7 +43,6 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
-import javax.swing.JToolBar;
 import javax.swing.SwingUtilities;
 
 import static javax.swing.SwingUtilities.windowForComponent;
@@ -231,7 +230,7 @@ final class GroupsView
     private final CyServiceRegistrar serviceRegistrar;
 
     /** Venn euler layouter. */
-    private final VennLayouter vennLayouter = new VennEulerLayouter();
+    private final VennLayouter<CyNode> vennLayouter = new VennEulerLayouter<CyNode>();
 
 
     /**
