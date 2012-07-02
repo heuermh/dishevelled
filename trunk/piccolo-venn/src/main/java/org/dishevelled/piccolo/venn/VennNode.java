@@ -25,7 +25,6 @@ package org.dishevelled.piccolo.venn;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Paint;
 import java.awt.Shape;
 import java.awt.Stroke;
@@ -46,10 +45,7 @@ import java.util.concurrent.ExecutorService;
 import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 
 import org.dishevelled.bitset.MutableBitSet;
@@ -163,7 +159,7 @@ public class VennNode<E>
     private VennLayout layout;
 
     /** Venn model. */
-    private final VennModel model;
+    private final VennModel<E> model;
 
 
     /**
@@ -171,7 +167,7 @@ public class VennNode<E>
      *
      * @param model model for this venn node, must not be null
      */
-    public VennNode(final VennModel model)
+    public VennNode(final VennModel<E> model)
     {
         super();
         if (model == null)
@@ -264,8 +260,8 @@ public class VennNode<E>
             PText label = labels.get(i);
             PBounds labelBounds = label.getBoundsReference();
             // consider layout on bottom of path if (x, y) is in bottom half of boundingRectangle
-            label.setOffset(pathNodeBounds.getX() + pathNodeBounds.getWidth() / 2.0d - label.getWidth() / 2.0d,
-                            pathNodeBounds.getY() - label.getHeight() / 2.0d - 12.0d);
+            label.setOffset(pathNodeBounds.getX() + pathNodeBounds.getWidth() / 2.0d - labelBounds.getWidth() / 2.0d,
+                            pathNodeBounds.getY() - labelBounds.getHeight() / 2.0d - 12.0d);
         }
 
         for (ImmutableBitSet key : areaNodes.keySet())
@@ -723,7 +719,7 @@ public class VennNode<E>
     /**
      * Create and return a new immutable bit set with the specified bits set to true.
      *
-     * @param indices set of indicies to set to true, must not be null and must not be empty
+     * @param indices set of indices to set to true, must not be null and must not be empty
      * @return a new immutable bit set with the specified bits set to true
      */
     static ImmutableBitSet toImmutableBitSet(final Set<Integer> indices)
