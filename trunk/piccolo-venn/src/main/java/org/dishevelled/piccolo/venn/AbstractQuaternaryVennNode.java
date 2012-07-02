@@ -367,6 +367,27 @@ public abstract class AbstractQuaternaryVennNode<E>
         secondThirdFourthLabel.setText(buildLabel(secondThirdFourthLabelText, model.secondThirdFourth().size()));
         intersectionLabel.setText(buildLabel(intersectionLabelText, model.intersection().size()));
         unionLabel.setText(buildLabel(unionLabelText, model.union().size()));
+
+        firstLabel.setVisible(getDisplayLabels());
+        secondLabel.setVisible(getDisplayLabels());
+        thirdLabel.setVisible(getDisplayLabels());
+        fourthLabel.setVisible(getDisplayLabels());
+        firstOnlyLabel.setVisible(getDisplayLabels());
+        secondOnlyLabel.setVisible(getDisplayLabels());
+        thirdOnlyLabel.setVisible(getDisplayLabels());
+        fourthOnlyLabel.setVisible(getDisplayLabels());
+        firstSecondLabel.setVisible(getDisplayLabels());
+        firstThirdLabel.setVisible(getDisplayLabels());
+        secondThirdLabel.setVisible(getDisplayLabels());
+        firstFourthLabel.setVisible(getDisplayLabels());
+        secondFourthLabel.setVisible(getDisplayLabels());
+        thirdFourthLabel.setVisible(getDisplayLabels());
+        firstSecondThirdLabel.setVisible(getDisplayLabels());
+        firstSecondFourthLabel.setVisible(getDisplayLabels());
+        firstThirdFourthLabel.setVisible(getDisplayLabels());
+        secondThirdFourthLabel.setVisible(getDisplayLabels());
+        intersectionLabel.setVisible(getDisplayLabels());
+        unionLabel.setVisible(getDisplayLabels());
     }
 
     /**

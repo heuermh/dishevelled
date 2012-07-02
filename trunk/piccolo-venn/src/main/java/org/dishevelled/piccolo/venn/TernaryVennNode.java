@@ -254,6 +254,23 @@ public class TernaryVennNode<E>
     }
 
     /** {@inheritDoc} */
+    protected void updateLabels()
+    {
+        super.updateLabels();
+
+        if (firstOnlySize != null)
+        {
+            firstOnlySize.setVisible(getDisplaySizeLabels() && (getDisplaySizesForEmptyAreas() || !getModel().firstOnly().isEmpty()));
+            secondOnlySize.setVisible(getDisplaySizeLabels() && (getDisplaySizesForEmptyAreas() || !getModel().secondOnly().isEmpty()));
+            thirdOnlySize.setVisible(getDisplaySizeLabels() && (getDisplaySizesForEmptyAreas() || !getModel().thirdOnly().isEmpty()));
+            firstSecondSize.setVisible(getDisplaySizeLabels() && (getDisplaySizesForEmptyAreas() || !getModel().firstSecond().isEmpty()));
+            firstThirdSize.setVisible(getDisplaySizeLabels() && (getDisplaySizesForEmptyAreas() || !getModel().firstThird().isEmpty()));
+            secondThirdSize.setVisible(getDisplaySizeLabels() && (getDisplaySizesForEmptyAreas() || !getModel().secondThird().isEmpty()));
+            intersectionSize.setVisible(getDisplaySizeLabels() && (getDisplaySizesForEmptyAreas() || !getModel().intersection().isEmpty()));
+        }
+    }
+
+    /** {@inheritDoc} */
     protected void updateContents()
     {
         firstOnlySize.setText(String.valueOf(getModel().firstOnly().size()));
@@ -263,6 +280,14 @@ public class TernaryVennNode<E>
         firstThirdSize.setText(String.valueOf(getModel().firstThird().size()));
         secondThirdSize.setText(String.valueOf(getModel().secondThird().size()));
         intersectionSize.setText(String.valueOf(getModel().intersection().size()));
+
+        firstOnlySize.setVisible(getDisplaySizeLabels() && (getDisplaySizesForEmptyAreas() || !getModel().firstOnly().isEmpty()));
+        secondOnlySize.setVisible(getDisplaySizeLabels() && (getDisplaySizesForEmptyAreas() || !getModel().secondOnly().isEmpty()));
+        thirdOnlySize.setVisible(getDisplaySizeLabels() && (getDisplaySizesForEmptyAreas() || !getModel().thirdOnly().isEmpty()));
+        firstSecondSize.setVisible(getDisplaySizeLabels() && (getDisplaySizesForEmptyAreas() || !getModel().firstSecond().isEmpty()));
+        firstThirdSize.setVisible(getDisplaySizeLabels() && (getDisplaySizesForEmptyAreas() || !getModel().firstThird().isEmpty()));
+        secondThirdSize.setVisible(getDisplaySizeLabels() && (getDisplaySizesForEmptyAreas() || !getModel().secondThird().isEmpty()));
+        intersectionSize.setVisible(getDisplaySizeLabels() && (getDisplaySizesForEmptyAreas() || !getModel().intersection().isEmpty()));
     }
 
     /** {@inheritDoc} */

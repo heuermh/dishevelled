@@ -39,8 +39,17 @@ import org.piccolo2d.nodes.PText;
 public abstract class AbstractVennNode<E>
     extends PNode
 {
+    /** True if should display labels. */
+    private boolean displayLabels = true;
+
     /** True if labels should display sizes. */
     private boolean displaySizes = true;
+
+    /** True if should display size labels. */
+    private boolean displaySizeLabels = true;
+
+    /** True if should display size labels for empty areas. */
+    private boolean displaySizesForEmptyAreas = true;
 
 
     /**
@@ -148,6 +157,81 @@ public abstract class AbstractVennNode<E>
         boolean oldDisplaySizes = this.displaySizes;
         this.displaySizes = displaySizes;
         firePropertyChange(-1, "displaySizes", oldDisplaySizes, this.displaySizes);
+        updateLabels();
+    }
+
+    /**
+     * Return true if this venn node should display set labels.  Defaults to <code>true</code>.
+     *
+     * @return true if this venn node should display set labels
+     */
+    public final boolean getDisplayLabels()
+    {
+        return displayLabels;
+    }
+
+    /**
+     * Set to true if this venn node should display set labels.
+     *
+     * <p>This is a bound property.</p>
+     *
+     * @param displayLabels true if this venn node should display set labels
+     */
+    public final void setDisplayLabels(final boolean displayLabels)
+    {
+        boolean oldDisplayLabels = this.displayLabels;
+        this.displayLabels = displayLabels;
+        firePropertyChange(-1, "displayLabels", oldDisplayLabels, this.displayLabels);
+        updateLabels();
+    }
+
+    /**
+     * Return true if this venn node should display size labels.  Defaults to <code>true</code>.
+     *
+     * @return true if this venn node should display size labels
+     */
+    public final boolean getDisplaySizeLabels()
+    {
+        return displaySizeLabels;
+    }
+
+    /**
+     * Set to true if this venn node should display size labels.
+     *
+     * <p>This is a bound property.</p>
+     *
+     * @param displaySizeLabels true if this venn node should display size labels
+     */
+    public final void setDisplaySizeLabels(final boolean displaySizeLabels)
+    {
+        boolean oldDisplaySizeLabels = this.displaySizeLabels;
+        this.displaySizeLabels = displaySizeLabels;
+        firePropertyChange(-1, "displaySizeLabels", oldDisplaySizeLabels, this.displaySizeLabels);
+        updateLabels();
+    }
+
+    /**
+     * Return true if this venn node should display sizes for empty areas.  Defaults to <code>true</code>.
+     *
+     * @return true if this venn node should display sizes for empty areas
+     */
+    public final boolean getDisplaySizesForEmptyAreas()
+    {
+        return displaySizesForEmptyAreas;
+    }
+
+    /**
+     * Set to true if this venn node should display sizes for empty areas.
+     *
+     * <p>This is a bound property.</p>
+     *
+     * @param displaySizesForEmptyAreas true if this venn node should display sizes for empty areas
+     */
+    public final void setDisplaySizesForEmptyAreas(final boolean displaySizesForEmptyAreas)
+    {
+        boolean oldDisplaySizesForEmptyAreas = this.displaySizesForEmptyAreas;
+        this.displaySizesForEmptyAreas = displaySizesForEmptyAreas;
+        firePropertyChange(-1, "displaySizesForEmptyAreas", oldDisplaySizesForEmptyAreas, this.displaySizesForEmptyAreas);
         updateLabels();
     }
 }
