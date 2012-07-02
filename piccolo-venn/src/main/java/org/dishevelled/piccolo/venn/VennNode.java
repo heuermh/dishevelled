@@ -318,9 +318,11 @@ public class VennNode<E>
             boolean isEmpty = (size == 0);
 
             PArea areaNode = areaNodes.get(key);
+            boolean areaNodeIsEmpty = !(layout instanceof VennNode.InitialLayout) && areaNode.isEmpty();
+
             PText sizeLabel = sizeLabels.get(key);
             sizeLabel.setText(String.valueOf(size));
-            sizeLabel.setVisible(getDisplaySizeLabels() && !areaNode.isEmpty() && (getDisplaySizesForEmptyAreas() || !isEmpty));
+            sizeLabel.setVisible(getDisplaySizeLabels() && !areaNodeIsEmpty && (getDisplaySizesForEmptyAreas() || !isEmpty));
 
             areaLabelTexts.put(key, buildAreaLabel(first, additional));
         }
@@ -363,14 +365,13 @@ public class VennNode<E>
         this.layout = layout;
         firePropertyChange(-1, "layout", oldLayout, this.layout);
 
-        // consider showing a "Layout . . ." label here
         SwingUtilities.invokeLater(new Runnable()
             {
                 /** {@inheritDoc} */
                 public void run()
                 {
                     layoutNodes();
-                    // ... and hiding it here
+                    updateLabels();
                 }
             });
     }
@@ -748,11 +749,11 @@ public class VennNode<E>
      * Intial layout.
      */
     private final class InitialLayout implements VennLayout {
-        /** Origin. */
-        private final Point2D origin = new Point2D.Double(0.0d, 0.0d);
+        /** Offscreen left. */
+        private final Point2D offscreenLeft = new Point2D.Double(-10000.0d, 0.0d);
 
         /** Empty. */
-        private final Rectangle2D empty = new Rectangle2D.Double(0.0d, 0.0d, 0.0d, 0.0d);
+        private final Rectangle2D empty = new Rectangle2D.Double(-10000.0d, 0.0d, 0.0d, 0.0d);
 
 
         /** {@inheritDoc} */
@@ -775,7 +776,7 @@ public class VennNode<E>
         public Point2D luneCenter(final int index, final int... additional)
         {
             checkIndices(index, additional);
-            return origin;
+            return offscreenLeft;
         }
 
         /** {@inheritDoc} */

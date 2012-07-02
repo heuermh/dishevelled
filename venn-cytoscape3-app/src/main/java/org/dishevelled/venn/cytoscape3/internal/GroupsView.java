@@ -359,7 +359,7 @@ final class GroupsView
             vennNode.setLabelText(i, labels.get(i));
         }
 
-        JDialog dialog = new JDialog(windowForComponent(this), Joiner.on(",").join(labels) + " Euler Diagram");
+        JDialog dialog = new JDialog(windowForComponent(this), Joiner.on(", ").join(labels) + " Euler Diagram");
         dialog.setContentPane(new DiagramView(vennNode, applicationManager));
 
         // todo: offset per parent dialog
