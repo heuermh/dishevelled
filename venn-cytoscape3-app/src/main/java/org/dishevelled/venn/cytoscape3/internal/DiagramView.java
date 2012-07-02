@@ -253,7 +253,8 @@ final class DiagramView
         canvas.addKeyListener(new ModeEventHandler());
         canvas.addInputEventListener(new PanEventHandler());
         PMouseWheelZoomEventHandler mouseWheelZoomEventHandler = new PMouseWheelZoomEventHandler();
-        mouseWheelZoomEventHandler.zoomAboutViewCenter();
+        mouseWheelZoomEventHandler.zoomAboutCanvasCenter();
+        mouseWheelZoomEventHandler.setScaleFactor(1.0E-02d);
         canvas.addInputEventListener(mouseWheelZoomEventHandler);
 
         JPopupMenu contextMenu = new JPopupMenu();
@@ -609,6 +610,7 @@ final class DiagramView
     {
         PCamera camera = canvas.getCamera();
         double scale = 1.0d + 4.0d * SCALE_FACTOR;
+        // todo: should limit scale to some reasonable maximum
         Point2D center = camera.getBoundsReference().getCenter2D();
         camera.scaleViewAboutPoint(scale, center.getX(), center.getY());
     }
@@ -620,6 +622,7 @@ final class DiagramView
     {
         PCamera camera = canvas.getCamera();
         double scale = 1.0d - 2.0d * SCALE_FACTOR;
+        // todo: should limit scale to some reasonable minimum
         Point2D center = camera.getBoundsReference().getCenter2D();
         camera.scaleViewAboutPoint(scale, center.getX(), center.getY());
     }
@@ -760,7 +763,8 @@ final class DiagramView
         PanEventHandler()
         {
             super();
-            // @todo  cytoscape main network view uses middle-click + drag to pan
+            // todo: cytoscape main network view uses middle-click + drag to pan
+            //    adding BUTTON2_MASK didn't seem to help, may need to fully subclass PPanEventHandler
             setEventFilter(new PInputEventFilter(InputEvent.BUTTON1_MASK)
                 {
                     /** {@inheritDoc} */
