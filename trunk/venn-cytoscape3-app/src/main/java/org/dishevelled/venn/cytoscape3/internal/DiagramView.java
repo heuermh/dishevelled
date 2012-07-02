@@ -30,7 +30,6 @@ import java.awt.Dialog;
 import java.awt.FileDialog;
 import java.awt.Image;
 import java.awt.Paint;
-import java.awt.Rectangle;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.InputEvent;
@@ -78,8 +77,6 @@ import org.dishevelled.piccolo.venn.VennNode;
 import org.piccolo2d.PCamera;
 import org.piccolo2d.PCanvas;
 import org.piccolo2d.PNode;
-
-import org.piccolo2d.nodes.PText;
 
 import org.piccolo2d.event.PBasicInputEventHandler;
 import org.piccolo2d.event.PInputEvent;
@@ -376,7 +373,7 @@ final class DiagramView
             PNode node = (PNode) i.next();
             if (node instanceof AbstractVennNode)
             {
-                AbstractVennNode abstractVennNode = (AbstractVennNode) node;
+                AbstractVennNode<CyNode> abstractVennNode = (AbstractVennNode<CyNode>) node;
                 String labelText = abstractVennNode.labelTextForNode(pickedNode);
                 if (labelText != null)
                 {
@@ -564,7 +561,7 @@ final class DiagramView
             PNode node = (PNode) i.next();
             if (node instanceof BinaryVennNode)
             {
-                BinaryVennNode<CyNode> binaryVennNode = (BinaryVennNode<CyNode>) node;                
+                BinaryVennNode<CyNode> binaryVennNode = (BinaryVennNode<CyNode>) node;
                 for (CyNode cyNode : currentNetwork.getNodeList())
                 {
                     currentNetwork.getRow(cyNode).set(CyNetwork.SELECTED, binaryVennNode.getModel().union().contains(cyNode));
@@ -572,7 +569,7 @@ final class DiagramView
             }
             else if (node instanceof TernaryVennNode)
             {
-                TernaryVennNode<CyNode> ternaryVennNode = (TernaryVennNode<CyNode>) node;                
+                TernaryVennNode<CyNode> ternaryVennNode = (TernaryVennNode<CyNode>) node;
                 for (CyNode cyNode : currentNetwork.getNodeList())
                 {
                     currentNetwork.getRow(cyNode).set(CyNetwork.SELECTED, ternaryVennNode.getModel().union().contains(cyNode));
@@ -580,7 +577,7 @@ final class DiagramView
             }
             else if (node instanceof QuaternaryVennNode)
             {
-                QuaternaryVennNode<CyNode> quaternaryVennNode = (QuaternaryVennNode<CyNode>) node;                
+                QuaternaryVennNode<CyNode> quaternaryVennNode = (QuaternaryVennNode<CyNode>) node;
                 for (CyNode cyNode : currentNetwork.getNodeList())
                 {
                     currentNetwork.getRow(cyNode).set(CyNetwork.SELECTED, quaternaryVennNode.getModel().union().contains(cyNode));
