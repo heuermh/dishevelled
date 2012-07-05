@@ -44,8 +44,6 @@ public final class VennDiagramsActionTest
 {
     private VennDiagramsAction vennDiagramsAction;
     @Mock
-    private ActionEvent actionEvent;
-    @Mock
     private CyApplicationManager applicationManager;
     @Mock
     private CyGroupManager groupManager;
@@ -69,11 +67,5 @@ public final class VennDiagramsActionTest
     public void testActionPerformedNullActionEvent()
     {
         vennDiagramsAction.actionPerformed(null);
-    }
-
-    @Test
-    public void testActionPerformed()
-    {
-        vennDiagramsAction.actionPerformed(actionEvent);
     }
 }
