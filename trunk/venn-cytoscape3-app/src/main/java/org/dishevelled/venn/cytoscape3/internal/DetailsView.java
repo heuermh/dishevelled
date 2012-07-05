@@ -87,6 +87,7 @@ final class DetailsView
             }
         };
 
+    // todo: use identifiable actions for these, if a clear selection icon can be found
     /** Select all action. */
     private final Action selectAll = new AbstractAction("Select all") // i18n
         {

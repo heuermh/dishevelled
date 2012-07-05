@@ -23,9 +23,13 @@
 */
 package org.dishevelled.venn.cytoscape3.internal;
 
+import static javax.swing.SwingUtilities.windowForComponent;
+
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 
 import org.cytoscape.application.CyApplicationManager;
 import org.cytoscape.application.swing.AbstractCyAction;
@@ -56,7 +60,7 @@ final class VennDiagramsAction extends AbstractCyAction
      */
     VennDiagramsAction(final CyApplicationManager applicationManager, final CyGroupManager groupManager, final CyServiceRegistrar serviceRegistrar)
     {
-        super("Venn Diagrams");
+        super("Venn/Euler Diagrams");
         if (applicationManager == null)
         {
             throw new IllegalArgumentException("applicationManager must not be null");
@@ -84,9 +88,8 @@ final class VennDiagramsAction extends AbstractCyAction
         {
             throw new NullPointerException("event must not be null");
         }
-        // add groups view to a new dialog or internal panel and make visible
-        //JDialog dialog = new JDialog(Cytoscape.getDesktop(), "Venn Diagrams"); // i18n
-        JDialog dialog = new JDialog((javax.swing.JFrame) null, "Venn Diagrams"); // i18n
+        JFrame frame = (JFrame) windowForComponent((Component) event.getSource());
+        JDialog dialog = new JDialog(frame, "Venn/Euler Diagrams"); // i18n
         dialog.setContentPane(new GroupsView(applicationManager, groupManager, serviceRegistrar));
         dialog.setBounds(200, 200, 400, 400);
         dialog.setVisible(true);
