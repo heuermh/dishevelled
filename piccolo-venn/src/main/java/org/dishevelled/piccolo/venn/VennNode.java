@@ -574,10 +574,14 @@ public class VennNode<E>
         checkIndices(index, additional);
         StringBuilder sb = new StringBuilder();
         sb.append(labelTexts.get(index));
-        for (int i = 0, size = additional.length; i < size; i++)
-        {
+        if (additional.length > 0) {
+            for (int i = 0, size = additional.length - 1; i < size; i++)
+            {
+                sb.append(", ");
+                sb.append(labelTexts.get(additional[i]));
+            }
             sb.append(" and ");
-            sb.append(labelTexts.get(additional[i]));
+            sb.append(labelTexts.get(additional[Math.max(0, additional.length - 1)]));
         }
         sb.append(" only");
         return sb.toString();
