@@ -28,6 +28,7 @@ import static org.dishevelled.venn.cytoscape3.internal.VennDiagramsUtils.install
 import static org.dishevelled.venn.cytoscape3.internal.VennDiagramsUtils.nameOf;
 
 import java.awt.BorderLayout;
+import java.awt.Toolkit;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.InputEvent;
@@ -279,9 +280,10 @@ final class GroupsView
         groupList.setCellRenderer(new CyGroupListCellRenderer(applicationManager));
 
         InputMap inputMap = getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
-        KeyStroke ctrlShiftE = KeyStroke.getKeyStroke(KeyEvent.VK_E, InputEvent.CTRL_DOWN_MASK | InputEvent.SHIFT_DOWN_MASK);
-        KeyStroke ctrlShiftV = KeyStroke.getKeyStroke(KeyEvent.VK_V, InputEvent.CTRL_DOWN_MASK | InputEvent.SHIFT_DOWN_MASK);
-        KeyStroke ctrlShiftD = KeyStroke.getKeyStroke(KeyEvent.VK_D, InputEvent.CTRL_DOWN_MASK | InputEvent.SHIFT_DOWN_MASK);
+        int menuKeyMask = Toolkit.getDefaultToolkit().getMenuShortcutKeyMask();
+        KeyStroke ctrlShiftE = KeyStroke.getKeyStroke(KeyEvent.VK_E, menuKeyMask | InputEvent.SHIFT_DOWN_MASK);
+        KeyStroke ctrlShiftV = KeyStroke.getKeyStroke(KeyEvent.VK_V, menuKeyMask | InputEvent.SHIFT_DOWN_MASK);
+        KeyStroke ctrlShiftD = KeyStroke.getKeyStroke(KeyEvent.VK_D, menuKeyMask | InputEvent.SHIFT_DOWN_MASK);
         inputMap.put(ctrlShiftE, "eulerDiagram");
         inputMap.put(ctrlShiftV, "vennDiagram");
         inputMap.put(ctrlShiftD, "details");
