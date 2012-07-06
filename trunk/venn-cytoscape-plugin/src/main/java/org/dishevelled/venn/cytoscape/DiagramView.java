@@ -30,7 +30,7 @@ import java.awt.Dialog;
 import java.awt.FileDialog;
 import java.awt.Image;
 import java.awt.Paint;
-import java.awt.Rectangle;
+import java.awt.Toolkit;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.InputEvent;
@@ -51,30 +51,37 @@ import java.util.Set;
 import javax.imageio.ImageIO;
 
 import javax.swing.AbstractAction;
+import javax.swing.AbstractButton;
 import javax.swing.Action;
+import javax.swing.InputMap;
+import javax.swing.KeyStroke;
+import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JComponent;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 
 import static javax.swing.SwingUtilities.windowForComponent;
 
+import org.apache.batik.dom.GenericDOMImplementation;
+
+import org.apache.batik.svggen.SVGGraphics2D;
+
 import cytoscape.CyNode;
 import cytoscape.CyNetwork;
 import cytoscape.Cytoscape;
 
-import org.apache.batik.dom.GenericDOMImplementation;
-
-import org.apache.batik.svggen.SVGGraphics2D;
+import org.dishevelled.identify.ContextMenuListener;
 
 import org.dishevelled.piccolo.venn.AbstractVennNode;
 import org.dishevelled.piccolo.venn.BinaryVennNode;
 import org.dishevelled.piccolo.venn.TernaryVennNode;
 import org.dishevelled.piccolo.venn.QuaternaryVennNode;
+import org.dishevelled.piccolo.venn.VennNode;
 
 import org.piccolo2d.PCamera;
 import org.piccolo2d.PCanvas;
 import org.piccolo2d.PNode;
-
-import org.piccolo2d.nodes.PText;
 
 import org.piccolo2d.event.PBasicInputEventHandler;
 import org.piccolo2d.event.PInputEvent;
@@ -90,9 +97,6 @@ import org.w3c.dom.DOMImplementation;
 
 /**
  * Diagram view.
- *
- * @author  Michael Heuer
- * @version $Revision$ $Date$
  */
 final class DiagramView
     extends JPanel
@@ -163,6 +167,46 @@ final class DiagramView
             }
         };
 
+    /** Toggle display labels. */
+    private final Action displayLabels = new AbstractAction("Display set labels") // i18n
+        {
+            /** {@inheritDoc} */
+            public void actionPerformed(final ActionEvent event)
+            {
+                displayLabels(((AbstractButton) event.getSource()).isSelected());
+            }
+        };
+
+    /** Toggle display size labels. */
+    private final Action displaySizeLabels = new AbstractAction("Display size labels") // i18n
+        {
+            /** {@inheritDoc} */
+            public void actionPerformed(final ActionEvent event)
+            {
+                displaySizeLabels(((AbstractButton) event.getSource()).isSelected());
+            }
+        };
+
+    /** Toggle display sizes in set labels. */
+    private final Action displaySizes = new AbstractAction("Display sizes in set labels") // i18n
+        {
+            /** {@inheritDoc} */
+            public void actionPerformed(final ActionEvent event)
+            {
+                displaySizes(((AbstractButton) event.getSource()).isSelected());
+            }
+        };
+
+    /** Toggle display sizes for empty areas. */
+    private final Action displaySizesForEmptyAreas = new AbstractAction("Display sizes for empty areas") // i18n
+        {
+            /** {@inheritDoc} */
+            public void actionPerformed(final ActionEvent event)
+            {
+                displaySizesForEmptyAreas(((AbstractButton) event.getSource()).isSelected());
+            }
+        };
+
     /** Area color. */
     private static final Color AREA_COLOR = new Color(0, 0, 0, 0);
 
@@ -200,18 +244,67 @@ final class DiagramView
         canvas.addKeyListener(new ModeEventHandler());
         canvas.addInputEventListener(new PanEventHandler());
         PMouseWheelZoomEventHandler mouseWheelZoomEventHandler = new PMouseWheelZoomEventHandler();
-        mouseWheelZoomEventHandler.zoomAboutViewCenter();
+        mouseWheelZoomEventHandler.zoomAboutCanvasCenter();
+        mouseWheelZoomEventHandler.setScaleFactor(1.0E-02d);
         canvas.addInputEventListener(mouseWheelZoomEventHandler);
 
+        InputMap inputMap = getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+        int menuKeyMask = Toolkit.getDefaultToolkit().getMenuShortcutKeyMask();
+        KeyStroke ctrlShiftP = KeyStroke.getKeyStroke(KeyEvent.VK_P, menuKeyMask | InputEvent.SHIFT_DOWN_MASK);
+        KeyStroke ctrlShiftS = KeyStroke.getKeyStroke(KeyEvent.VK_S, menuKeyMask | InputEvent.SHIFT_DOWN_MASK);
+        KeyStroke ctrlShiftA = KeyStroke.getKeyStroke(KeyEvent.VK_A, menuKeyMask | InputEvent.SHIFT_DOWN_MASK);
+        KeyStroke ctrlShiftC = KeyStroke.getKeyStroke(KeyEvent.VK_C, menuKeyMask | InputEvent.SHIFT_DOWN_MASK);
+        KeyStroke ctrlShiftPeriod = KeyStroke.getKeyStroke(KeyEvent.VK_COMMA, menuKeyMask | InputEvent.SHIFT_DOWN_MASK);
+        KeyStroke ctrlShiftComma = KeyStroke.getKeyStroke(KeyEvent.VK_PERIOD, menuKeyMask | InputEvent.SHIFT_DOWN_MASK);
+        inputMap.put(ctrlShiftP, "exportToPNG");
+        inputMap.put(ctrlShiftS, "exportToSVG");
+        inputMap.put(ctrlShiftA, "selectAll");
+        inputMap.put(ctrlShiftC, "clearSelection");
+        inputMap.put(ctrlShiftComma, "zoomIn");
+        inputMap.put(ctrlShiftPeriod, "zoomOut");
+        getActionMap().put("exportToPNG", exportToPNG);
+        getActionMap().put("exportToSVG", exportToSVG);
+        getActionMap().put("selectAll", selectAll);
+        getActionMap().put("clearSelection", clearSelection);
+        getActionMap().put("zoomIn", zoomIn);
+        getActionMap().put("zoomOut", zoomOut);
+
+        JMenuItem exportToPNGMenuItem = new JMenuItem(exportToPNG);
+        exportToPNGMenuItem.setAccelerator(ctrlShiftP);
+        JMenuItem exportToSVGMenuItem = new JMenuItem(exportToSVG);
+        exportToSVGMenuItem.setAccelerator(ctrlShiftS);
+
+        JCheckBoxMenuItem displayLabelsMenuItem = new JCheckBoxMenuItem(displayLabels);
+        displayLabelsMenuItem.setSelected(true);
+        JCheckBoxMenuItem displaySizesMenuItem = new JCheckBoxMenuItem(displaySizes);
+        displaySizesMenuItem.setSelected(true);
+        JCheckBoxMenuItem displaySizeLabelsMenuItem = new JCheckBoxMenuItem(displaySizeLabels);
+        displaySizeLabelsMenuItem.setSelected(true);
+        JCheckBoxMenuItem displaySizesForEmptyAreasMenuItem = new JCheckBoxMenuItem(displaySizesForEmptyAreas);
+        displaySizesForEmptyAreasMenuItem.setSelected(true);
+        JMenuItem selectAllMenuItem = new JMenuItem(selectAll);
+        selectAllMenuItem.setAccelerator(ctrlShiftA);
+        JMenuItem clearSelectionMenuItem = new JMenuItem(clearSelection);
+        clearSelectionMenuItem.setAccelerator(ctrlShiftC);
+        JMenuItem zoomInMenuItem = new JMenuItem(zoomIn);
+        zoomInMenuItem.setAccelerator(ctrlShiftPeriod);
+        JMenuItem zoomOutMenuItem = new JMenuItem(zoomOut);
+        zoomOutMenuItem.setAccelerator(ctrlShiftComma);
+
         JPopupMenu contextMenu = new JPopupMenu();
-        contextMenu.add(exportToPNG);
-        contextMenu.add(exportToSVG);
+        contextMenu.add(exportToPNGMenuItem);
+        contextMenu.add(exportToSVGMenuItem);
         contextMenu.addSeparator();
-        contextMenu.add(selectAll);
-        contextMenu.add(clearSelection);
+        contextMenu.add(displayLabelsMenuItem);
+        contextMenu.add(displaySizesMenuItem);
+        contextMenu.add(displaySizeLabelsMenuItem);
+        contextMenu.add(displaySizesForEmptyAreasMenuItem);
         contextMenu.addSeparator();
-        contextMenu.add(zoomIn);
-        contextMenu.add(zoomOut);
+        contextMenu.add(selectAllMenuItem);
+        contextMenu.add(clearSelectionMenuItem);
+        contextMenu.addSeparator();
+        contextMenu.add(zoomInMenuItem);
+        contextMenu.add(zoomOutMenuItem);
         canvas.addMouseListener(new ContextMenuListener(contextMenu));
 
         setLayout(new BorderLayout());
@@ -226,6 +319,7 @@ final class DiagramView
     DiagramView(final BinaryVennNode<CyNode> binaryVennNode)
     {
         this();
+        // todo:  use bounding rect provided by layout
         binaryVennNode.offset(92.0d, 124.0d);
         for (PNode node : binaryVennNode.nodes())
         {
@@ -269,6 +363,23 @@ final class DiagramView
         canvas.getLayer().addChild(quaternaryVennNode);
     }
 
+    /**
+     * Create a new diagram view with the specified venn node.
+     *
+     * @param vennNode venn node
+     */
+    DiagramView(final VennNode<CyNode> vennNode)
+    {
+        this();
+        vennNode.offset(100.0d, 100.0d);
+        for (PNode node : vennNode.nodes())
+        {
+            node.addInputEventListener(new ToolTipTextListener());
+            node.addInputEventListener(new MousePressedListener());
+        }
+        canvas.getLayer().addChild(vennNode);
+    }
+
 
     /**
      * Return the label text for the picked node for the specified pick path, if any.
@@ -285,7 +396,7 @@ final class DiagramView
             PNode node = (PNode) i.next();
             if (node instanceof AbstractVennNode)
             {
-                AbstractVennNode abstractVennNode = (AbstractVennNode) node;
+                AbstractVennNode<CyNode> abstractVennNode = (AbstractVennNode<CyNode>) node;
                 String labelText = abstractVennNode.labelTextForNode(pickedNode);
                 if (labelText != null)
                 {
@@ -391,6 +502,78 @@ final class DiagramView
     }
 
     /**
+     * Display set labels.
+     *
+     * @param displayLabels true if labels should display set labels
+     */
+    private void displayLabels(final boolean displayLabels)
+    {
+        for (Iterator i = canvas.getLayer().getChildrenIterator(); i.hasNext(); )
+        {
+            PNode node = (PNode) i.next();
+            if (node instanceof AbstractVennNode)
+            {
+                AbstractVennNode<CyNode> vennNode = (AbstractVennNode<CyNode>) node;
+                vennNode.setDisplayLabels(displayLabels);
+            }
+        }
+    }
+
+    /**
+     * Display sizes.
+     *
+     * @param displaySizes true if labels should display sizes
+     */
+    private void displaySizes(final boolean displaySizes)
+    {
+        for (Iterator i = canvas.getLayer().getChildrenIterator(); i.hasNext(); )
+        {
+            PNode node = (PNode) i.next();
+            if (node instanceof AbstractVennNode)
+            {
+                AbstractVennNode<CyNode> vennNode = (AbstractVennNode<CyNode>) node;
+                vennNode.setDisplaySizes(displaySizes);
+            }
+        }
+    }
+
+    /**
+     * Display size labels.
+     *
+     * @param displaySizeLabels true if labels should display size labels
+     */
+    private void displaySizeLabels(final boolean displaySizeLabels)
+    {
+        for (Iterator i = canvas.getLayer().getChildrenIterator(); i.hasNext(); )
+        {
+            PNode node = (PNode) i.next();
+            if (node instanceof AbstractVennNode)
+            {
+                AbstractVennNode<CyNode> vennNode = (AbstractVennNode<CyNode>) node;
+                vennNode.setDisplaySizeLabels(displaySizeLabels);
+            }
+        }
+    }
+
+    /**
+     * Display sizes for empty areas.
+     *
+     * @param displaySizesForEmptyAreas true if labels should display sizes for empty areas
+     */
+    private void displaySizesForEmptyAreas(final boolean displaySizesForEmptyAreas)
+    {
+        for (Iterator i = canvas.getLayer().getChildrenIterator(); i.hasNext(); )
+        {
+            PNode node = (PNode) i.next();
+            if (node instanceof AbstractVennNode)
+            {
+                AbstractVennNode<CyNode> vennNode = (AbstractVennNode<CyNode>) node;
+                vennNode.setDisplaySizesForEmptyAreas(displaySizesForEmptyAreas);
+            }
+        }
+    }
+
+    /**
      * Select all.
      */
     private void selectAll()
@@ -399,23 +582,30 @@ final class DiagramView
         for (Iterator i = canvas.getLayer().getChildrenIterator(); i.hasNext(); )
         {
             PNode node = (PNode) i.next();
+            // todo:  getModel (and possibly also setModel, get/setLayout) should be refactored to AbstractVennNode
             if (node instanceof BinaryVennNode)
             {
-                BinaryVennNode<CyNode> binaryVennNode = (BinaryVennNode<CyNode>) node;                
+                BinaryVennNode<CyNode> binaryVennNode = (BinaryVennNode<CyNode>) node;
                 currentNetwork.unselectAllNodes();
                 currentNetwork.setSelectedNodeState(binaryVennNode.getModel().union(), true);
             }
             else if (node instanceof TernaryVennNode)
             {
-                TernaryVennNode<CyNode> ternaryVennNode = (TernaryVennNode<CyNode>) node;                
+                TernaryVennNode<CyNode> ternaryVennNode = (TernaryVennNode<CyNode>) node;
                 currentNetwork.unselectAllNodes();
                 currentNetwork.setSelectedNodeState(ternaryVennNode.getModel().union(), true);
             }
             else if (node instanceof QuaternaryVennNode)
             {
-                QuaternaryVennNode<CyNode> quaternaryVennNode = (QuaternaryVennNode<CyNode>) node;                
+                QuaternaryVennNode<CyNode> quaternaryVennNode = (QuaternaryVennNode<CyNode>) node;
                 currentNetwork.unselectAllNodes();
                 currentNetwork.setSelectedNodeState(quaternaryVennNode.getModel().union(), true);
+            }
+            else if (node instanceof VennNode)
+            {
+                VennNode<CyNode> vennNode = (VennNode<CyNode>) node;
+                currentNetwork.unselectAllNodes();
+                currentNetwork.setSelectedNodeState(vennNode.getModel().union(), true);
             }
         }
         Cytoscape.getCurrentNetworkView().updateView();
@@ -438,6 +628,7 @@ final class DiagramView
     {
         PCamera camera = canvas.getCamera();
         double scale = 1.0d + 4.0d * SCALE_FACTOR;
+        // todo: should limit scale to some reasonable maximum
         Point2D center = camera.getBoundsReference().getCenter2D();
         camera.scaleViewAboutPoint(scale, center.getX(), center.getY());
     }
@@ -449,6 +640,7 @@ final class DiagramView
     {
         PCamera camera = canvas.getCamera();
         double scale = 1.0d - 2.0d * SCALE_FACTOR;
+        // todo: should limit scale to some reasonable minimum
         Point2D center = camera.getBoundsReference().getCenter2D();
         camera.scaleViewAboutPoint(scale, center.getX(), center.getY());
     }
@@ -494,9 +686,6 @@ final class DiagramView
     private class MousePressedListener
         extends PBasicInputEventHandler
     {
-        /** Last color. */
-        private Color lastColor;
-
 
         /**
          * Create a new mouse pressed listener.
@@ -521,7 +710,6 @@ final class DiagramView
                 return;
             }
             PNode pickedNode = event.getPickedNode();
-            lastColor = (Color) pickedNode.getPaint();
             pickedNode.setPaint(AREA_PRESSED_PAINT);
 
             Set<CyNode> selection = getViewForPickedNode(event.getPath());
@@ -587,7 +775,8 @@ final class DiagramView
         PanEventHandler()
         {
             super();
-            // @todo  cytoscape main network view uses middle-click + drag to pan
+            // todo: cytoscape main network view uses middle-click + drag to pan
+            //    adding BUTTON2_MASK didn't seem to help, may need to fully subclass PPanEventHandler
             setEventFilter(new PInputEventFilter(InputEvent.BUTTON1_MASK)
                 {
                     /** {@inheritDoc} */
