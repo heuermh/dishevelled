@@ -33,7 +33,6 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
-import java.awt.event.WindowEvent;
 
 import java.awt.geom.Rectangle2D;
 
@@ -53,7 +52,6 @@ import javax.swing.JDialog;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
-import javax.swing.JRootPane;
 import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 
@@ -83,8 +81,6 @@ import org.cytoscape.group.events.GroupAddedToNetworkEvent;
 import org.cytoscape.group.events.GroupAddedToNetworkListener;
 import org.cytoscape.model.CyNetwork;
 import org.cytoscape.model.CyNode;
-import org.cytoscape.model.CyRow;
-import org.cytoscape.model.CyTable;
 import org.cytoscape.service.util.CyServiceRegistrar;
 
 import org.dishevelled.iconbundle.IconBundle;

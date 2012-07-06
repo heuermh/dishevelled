@@ -38,7 +38,6 @@ import javax.swing.JComponent;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
-import javax.swing.JToolBar;
 
 import javax.swing.border.EmptyBorder;
 
@@ -219,7 +218,6 @@ final class DetailsView
 
         InputMap inputMap = getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
         int menuKeyMask = Toolkit.getDefaultToolkit().getMenuShortcutKeyMask();
-        KeyStroke ctrlShiftP = KeyStroke.getKeyStroke(KeyEvent.VK_P, menuKeyMask | InputEvent.SHIFT_DOWN_MASK);
         KeyStroke ctrlShiftA = KeyStroke.getKeyStroke(KeyEvent.VK_A, menuKeyMask | InputEvent.SHIFT_DOWN_MASK);
         KeyStroke ctrlShiftC = KeyStroke.getKeyStroke(KeyEvent.VK_C, menuKeyMask | InputEvent.SHIFT_DOWN_MASK);
         inputMap.put(ctrlShiftA, "selectAll");

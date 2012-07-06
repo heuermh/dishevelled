@@ -34,8 +34,6 @@ import javax.swing.JList;
 import org.cytoscape.application.CyApplicationManager;
 import org.cytoscape.group.CyGroup;
 import org.cytoscape.model.CyNetwork;
-import org.cytoscape.model.CyRow;
-import org.cytoscape.model.CyTable;
 
 /**
  * List cell renderer for <code>CyGroup</code>.
