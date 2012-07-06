@@ -130,7 +130,7 @@ final class GroupsView
     private final JPopupMenu contextMenu;
 
     /** Euler diagram action icon bundle. */
-    private final IconBundle eulerDiagramIconBundle = new CachingIconBundle(new PNGIconBundle("/org/dishevelled/venn/cytoscape3/internal/eulerDiagram"));
+    private final IconBundle eulerDiagramIconBundle = new CachingIconBundle(new PNGIconBundle("/org/dishevelled/venn/cytoscape/eulerDiagram"));
 
     /** Euler diagram action. */
     private final IdentifiableAction eulerDiagram = new IdentifiableAction("Euler Diagram...", eulerDiagramIconBundle) // i18n
@@ -146,7 +146,7 @@ final class GroupsView
         };
 
     /** Venn diagram action icon bundle. */
-    private final IconBundle vennDiagramIconBundle = new CachingIconBundle(new PNGIconBundle("/org/dishevelled/venn/cytoscape3/internal/vennDiagram"));
+    private final IconBundle vennDiagramIconBundle = new CachingIconBundle(new PNGIconBundle("/org/dishevelled/venn/cytoscape/vennDiagram"));
 
     /** Venn diagram action. */
     private final IdentifiableAction vennDiagram = new IdentifiableAction("Venn Diagram...", vennDiagramIconBundle) // i18n
@@ -172,7 +172,7 @@ final class GroupsView
         };
 
     /** Details action icon bundle. */
-    private final IconBundle detailsIconBundle = new CachingIconBundle(new PNGIconBundle("/org/dishevelled/venn/cytoscape3/internal/details"));
+    private final IconBundle detailsIconBundle = new CachingIconBundle(new PNGIconBundle("/org/dishevelled/venn/cytoscape/details"));
 
     /** Details action. */
     private final IdentifiableAction details = new IdentifiableAction("Details...", detailsIconBundle) // i18n
