@@ -26,7 +26,6 @@ package org.dishevelled.venn.cytoscape3.internal;
 import java.awt.Toolkit;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
 
@@ -81,7 +80,7 @@ final class VennDiagramsUtils
     }
 
     /**
-     * Install a close action binding to <code>Ctrl-C</code> for the specified dialog.
+     * Install a close action binding to <code>Ctrl-C</code>/<code>Command-C</code> for the specified dialog.
      *
      * @param dialog dialog, must not be null
      */

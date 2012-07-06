@@ -712,9 +712,6 @@ final class DiagramView
     private class MousePressedListener
         extends PBasicInputEventHandler
     {
-        /** Last color. */
-        private Color lastColor;
-
 
         /**
          * Create a new mouse pressed listener.
@@ -739,7 +736,6 @@ final class DiagramView
                 return;
             }
             PNode pickedNode = event.getPickedNode();
-            lastColor = (Color) pickedNode.getPaint();
             pickedNode.setPaint(AREA_PRESSED_PAINT);
 
             Set<CyNode> selection = getViewForPickedNode(event.getPath());
