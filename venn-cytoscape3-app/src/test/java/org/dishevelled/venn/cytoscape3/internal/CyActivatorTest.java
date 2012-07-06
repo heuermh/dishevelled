@@ -41,6 +41,8 @@ import org.osgi.framework.BundleContext;
 
 /**
  * Unit test for CyActivator.
+ *
+ * @author  Michael Heuer
  */
 public final class CyActivatorTest
 {

@@ -35,6 +35,8 @@ import org.osgi.framework.BundleContext;
 
 /**
  * Activator.
+ *
+ * @author  Michael Heuer
  */
 public final class CyActivator extends AbstractCyActivator
 {
