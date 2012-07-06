@@ -39,8 +39,10 @@ import org.cytoscape.model.CyTable;
 
 /**
  * List cell renderer for <code>CyNode</code>.
+ *
+ * @author  Michael Heuer
  */
-final class CyNodeListCellRenderer extends DefaultListCellRenderer//IdListCellRenderer
+final class CyNodeListCellRenderer extends DefaultListCellRenderer //IdListCellRenderer
 {
     /** Application manager. */
     private final CyApplicationManager applicationManager;

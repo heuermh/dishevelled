@@ -39,6 +39,8 @@ import org.cytoscape.model.CyTable;
 
 /**
  * List cell renderer for <code>CyGroup</code>.
+ *
+ * @author  Michael Heuer
  */
 final class CyGroupListCellRenderer extends DefaultListCellRenderer //IdListCellRenderer
 {

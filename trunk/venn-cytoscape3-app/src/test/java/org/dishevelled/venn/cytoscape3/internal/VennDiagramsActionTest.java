@@ -39,6 +39,8 @@ import org.mockito.MockitoAnnotations;
 
 /**
  * Unit test for VennDiagramsAction.
+ *
+ * @author  Michael Heuer
  */
 public final class VennDiagramsActionTest
 {

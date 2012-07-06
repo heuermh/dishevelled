@@ -57,6 +57,8 @@ import org.dishevelled.venn.swing.QuaternaryVennList;
 
 /**
  * Details view.
+ *
+ * @author  Michael Heuer
  */
 final class DetailsView
     extends JPanel

@@ -39,6 +39,8 @@ import org.cytoscape.service.util.CyServiceRegistrar;
 
 /**s
  * Venn diagrams action.
+ *
+ * @author  Michael Heuer
  */
 final class VennDiagramsAction extends AbstractCyAction
 {
