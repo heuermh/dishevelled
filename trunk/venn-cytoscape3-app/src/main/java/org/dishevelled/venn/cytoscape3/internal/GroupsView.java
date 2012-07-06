@@ -23,9 +23,16 @@
 */
 package org.dishevelled.venn.cytoscape3.internal;
 
+import static javax.swing.SwingUtilities.windowForComponent;
+import static org.dishevelled.venn.cytoscape3.internal.VennDiagramsUtils.installCloseKeyBinding;
+import static org.dishevelled.venn.cytoscape3.internal.VennDiagramsUtils.nameOf;
+
 import java.awt.BorderLayout;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.WindowEvent;
 
 import java.awt.geom.Rectangle2D;
 
@@ -37,15 +44,17 @@ import java.util.Set;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
+import javax.swing.InputMap;
+import javax.swing.KeyStroke;
 import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
+import javax.swing.JRootPane;
 import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
-
-import static javax.swing.SwingUtilities.windowForComponent;
 
 import javax.swing.border.EmptyBorder;
 
@@ -268,10 +277,29 @@ final class GroupsView
         groupList = new JList(listModel);
         groupList.setSelectionModel(selectionModel);
         groupList.setCellRenderer(new CyGroupListCellRenderer(applicationManager));
+
+        InputMap inputMap = getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+        KeyStroke ctrlShiftE = KeyStroke.getKeyStroke(KeyEvent.VK_E, InputEvent.CTRL_DOWN_MASK | InputEvent.SHIFT_DOWN_MASK);
+        KeyStroke ctrlShiftV = KeyStroke.getKeyStroke(KeyEvent.VK_V, InputEvent.CTRL_DOWN_MASK | InputEvent.SHIFT_DOWN_MASK);
+        KeyStroke ctrlShiftD = KeyStroke.getKeyStroke(KeyEvent.VK_D, InputEvent.CTRL_DOWN_MASK | InputEvent.SHIFT_DOWN_MASK);
+        inputMap.put(ctrlShiftE, "eulerDiagram");
+        inputMap.put(ctrlShiftV, "vennDiagram");
+        inputMap.put(ctrlShiftD, "details");
+        getActionMap().put("eulerDiagram", eulerDiagram);
+        getActionMap().put("vennDiagram", vennDiagram);
+        getActionMap().put("details", details);
+
+        IdMenuItem eulerDiagramMenuItem = new IdMenuItem(eulerDiagram);
+        eulerDiagramMenuItem.setAccelerator(ctrlShiftE);
+        IdMenuItem vennDiagramMenuItem = new IdMenuItem(vennDiagram);
+        vennDiagramMenuItem.setAccelerator(ctrlShiftV);
+        IdMenuItem detailsMenuItem = new IdMenuItem(details);
+        detailsMenuItem.setAccelerator(ctrlShiftD);
+
         contextMenu = new JPopupMenu();
-        contextMenu.add(new IdMenuItem(eulerDiagram));
-        contextMenu.add(new IdMenuItem(vennDiagram));
-        contextMenu.add(new IdMenuItem(details));
+        contextMenu.add(eulerDiagramMenuItem);
+        contextMenu.add(vennDiagramMenuItem);
+        contextMenu.add(detailsMenuItem);
         groupList.addMouseListener(new ContextMenuListener(contextMenu));
 
         eulerDiagram.setEnabled(false);
@@ -287,7 +315,6 @@ final class GroupsView
         serviceRegistrar.registerService(this, GroupAddedToNetworkListener.class, properties);
         // todo: serviceRegistrar.unregisterAllServices(this); when closing
     }
-
 
     /**
      * Layout components.
@@ -336,6 +363,7 @@ final class GroupsView
     private void done()
     {
         windowForComponent(this).setVisible(false);
+        // todo:  unregister listeners and dispose?
     }
 
     /**
@@ -343,11 +371,12 @@ final class GroupsView
      */
     private void eulerDiagram()
     {
+        CyNetwork network = applicationManager.getCurrentNetwork();
         List<String> labels = new ArrayList<String>(selected.size());
         List<Set<CyNode>> sets = new ArrayList<Set<CyNode>>(selected.size());
         for (CyGroup selectedGroup : selected)
         {
-            labels.add(nameOf(selectedGroup));
+            labels.add(nameOf(selectedGroup, network));
             sets.add(new HashSet<CyNode>(selectedGroup.getNodeList()));
         }
         final VennModel<CyNode> model = VennModels.createVennModel(sets);
@@ -360,6 +389,8 @@ final class GroupsView
 
         JDialog dialog = new JDialog(windowForComponent(this), Joiner.on(", ").join(labels) + " Euler Diagram");
         dialog.setContentPane(new DiagramView(vennNode, applicationManager));
+        dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        installCloseKeyBinding(dialog);
 
         // todo: offset per parent dialog
         dialog.setBounds(100, 100, 600, 600);
@@ -382,14 +413,17 @@ final class GroupsView
      */
     private void binaryDiagram()
     {
-        String firstLabel = nameOf(selected.get(0));
-        String secondLabel = nameOf(selected.get(1));
+        CyNetwork network = applicationManager.getCurrentNetwork();
+        String firstLabel = nameOf(selected.get(0), network);
+        String secondLabel = nameOf(selected.get(1), network);
         Set<CyNode> first = new HashSet<CyNode>(selected.get(0).getNodeList());
         Set<CyNode> second = new HashSet<CyNode>(selected.get(1).getNodeList());
         BinaryVennNode<CyNode> binaryVennNode = new BinaryVennNode<CyNode>(firstLabel, first, secondLabel, second);
 
         JDialog dialog = new JDialog(windowForComponent(this), firstLabel + ", " + secondLabel + " Venn Diagram");
         dialog.setContentPane(new DiagramView(binaryVennNode, applicationManager));
+        dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        installCloseKeyBinding(dialog);
 
         // todo: offset per parent dialog
         dialog.setBounds(100, 100, 400, 400);
@@ -401,9 +435,10 @@ final class GroupsView
      */
     private void ternaryDiagram()
     {
-        String firstLabel = nameOf(selected.get(0));
-        String secondLabel = nameOf(selected.get(1));
-        String thirdLabel = nameOf(selected.get(2));
+        CyNetwork network = applicationManager.getCurrentNetwork();
+        String firstLabel = nameOf(selected.get(0), network);
+        String secondLabel = nameOf(selected.get(1), network);
+        String thirdLabel = nameOf(selected.get(2), network);
         Set<CyNode> first = new HashSet<CyNode>(selected.get(0).getNodeList());
         Set<CyNode> second = new HashSet<CyNode>(selected.get(1).getNodeList());
         Set<CyNode> third = new HashSet<CyNode>(selected.get(2).getNodeList());
@@ -411,6 +446,8 @@ final class GroupsView
 
         JDialog dialog = new JDialog(windowForComponent(this), firstLabel + ", " + secondLabel + ", " + thirdLabel + " Venn Diagram");
         dialog.setContentPane(new DiagramView(ternaryVennNode, applicationManager));
+        dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        installCloseKeyBinding(dialog);
 
         // todo: offset per parent dialog
         dialog.setBounds(100, 100, 400, 400);
@@ -422,10 +459,11 @@ final class GroupsView
      */
     private void quaternaryDiagram()
     {
-        String firstLabel = nameOf(selected.get(0));
-        String secondLabel = nameOf(selected.get(1));
-        String thirdLabel = nameOf(selected.get(2));
-        String fourthLabel = nameOf(selected.get(3));
+        CyNetwork network = applicationManager.getCurrentNetwork();
+        String firstLabel = nameOf(selected.get(0), network);
+        String secondLabel = nameOf(selected.get(1), network);
+        String thirdLabel = nameOf(selected.get(2), network);
+        String fourthLabel = nameOf(selected.get(3), network);
         Set<CyNode> first = new HashSet<CyNode>(selected.get(0).getNodeList());
         Set<CyNode> second = new HashSet<CyNode>(selected.get(1).getNodeList());
         Set<CyNode> third = new HashSet<CyNode>(selected.get(2).getNodeList());
@@ -434,6 +472,8 @@ final class GroupsView
 
         JDialog dialog = new JDialog(windowForComponent(this), firstLabel + ", " + secondLabel + ", " + thirdLabel + ", " + fourthLabel + " Venn Diagram");
         dialog.setContentPane(new DiagramView(quaternaryVennNode, applicationManager));
+        dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        installCloseKeyBinding(dialog);
 
         // todo: offset per parent dialog
         dialog.setBounds(100, 100, 600, 600);
@@ -445,14 +485,17 @@ final class GroupsView
      */
     private void binaryDetails()
     {
-        String firstLabel = nameOf(selected.get(0));
-        String secondLabel = nameOf(selected.get(1));
+        CyNetwork network = applicationManager.getCurrentNetwork();
+        String firstLabel = nameOf(selected.get(0), network);
+        String secondLabel = nameOf(selected.get(1), network);
         Set<CyNode> first = new HashSet<CyNode>(selected.get(0).getNodeList());
         Set<CyNode> second = new HashSet<CyNode>(selected.get(1).getNodeList());
         final BinaryVennList<CyNode> binaryVennList = new BinaryVennList<CyNode>(firstLabel, first, secondLabel, second);
 
         JDialog dialog = new JDialog(windowForComponent(this), firstLabel + ", " + secondLabel + " Details");
         dialog.setContentPane(new DetailsView(binaryVennList, applicationManager));
+        dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        installCloseKeyBinding(dialog);
 
         // todo: offset per parent dialog
         dialog.setBounds(100, 100, 600, 450);
@@ -464,9 +507,10 @@ final class GroupsView
      */
     private void ternaryDetails()
     {
-        String firstLabel = nameOf(selected.get(0));
-        String secondLabel = nameOf(selected.get(1));
-        String thirdLabel = nameOf(selected.get(2));
+        CyNetwork network = applicationManager.getCurrentNetwork();
+        String firstLabel = nameOf(selected.get(0), network);
+        String secondLabel = nameOf(selected.get(1), network);
+        String thirdLabel = nameOf(selected.get(2), network);
         Set<CyNode> first = new HashSet<CyNode>(selected.get(0).getNodeList());
         Set<CyNode> second = new HashSet<CyNode>(selected.get(1).getNodeList());
         Set<CyNode> third = new HashSet<CyNode>(selected.get(2).getNodeList());
@@ -474,6 +518,8 @@ final class GroupsView
 
         JDialog dialog = new JDialog(windowForComponent(this), firstLabel + ", " + secondLabel + ", " + thirdLabel + " Details");
         dialog.setContentPane(new DetailsView(ternaryVennList, applicationManager));
+        dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        installCloseKeyBinding(dialog);
 
         // todo: offset per parent dialog
         dialog.setBounds(100, 100, 747, 669);
@@ -485,30 +531,25 @@ final class GroupsView
      */
     private void quaternaryDetails()
     {
-        String firstLabel = nameOf(selected.get(0));
-        String secondLabel = nameOf(selected.get(1));
-        String thirdLabel = nameOf(selected.get(2));
-        String fourthLabel = nameOf(selected.get(3));
+        CyNetwork network = applicationManager.getCurrentNetwork();
+        String firstLabel = nameOf(selected.get(0), network);
+        String secondLabel = nameOf(selected.get(1), network);
+        String thirdLabel = nameOf(selected.get(2), network);
+        String fourthLabel = nameOf(selected.get(3), network);
         Set<CyNode> first = new HashSet<CyNode>(selected.get(0).getNodeList());
         Set<CyNode> second = new HashSet<CyNode>(selected.get(1).getNodeList());
         Set<CyNode> third = new HashSet<CyNode>(selected.get(2).getNodeList());
         Set<CyNode> fourth = new HashSet<CyNode>(selected.get(3).getNodeList());
         final QuaternaryVennList<CyNode> quaternaryVennList = new QuaternaryVennList<CyNode>(firstLabel, first, secondLabel, second, thirdLabel, third, fourthLabel, fourth);
+
         JDialog dialog = new JDialog(windowForComponent(this), firstLabel + ", " + secondLabel + ", " + thirdLabel + ", " + fourthLabel + " Details");
         dialog.setContentPane(new DetailsView(quaternaryVennList, applicationManager));
+        dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        installCloseKeyBinding(dialog);
 
         // todo: offset per parent dialog
         dialog.setBounds(100, 100, 894, 888);
         dialog.setVisible(true);
-    }
-
-    private String nameOf(final CyGroup group)
-    {
-        CyNetwork network = applicationManager.getCurrentNetwork();
-        CyTable nodeTable = network.getDefaultNodeTable();
-        CyRow nodeRow = nodeTable.getRow(group.getGroupNode().getSUID());
-        String name = nodeRow.get(CyNetwork.NAME, String.class);
-        return (name == null) ? group.toString() : name;
     }
 
     @Override

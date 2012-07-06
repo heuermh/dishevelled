@@ -23,6 +23,8 @@
 */
 package org.dishevelled.venn.cytoscape3.internal;
 
+import static org.dishevelled.venn.cytoscape3.internal.VennDiagramsUtils.nameOf;
+
 import java.awt.Component;
 
 import javax.swing.DefaultListCellRenderer;
@@ -74,13 +76,7 @@ final class CyGroupListCellRenderer extends DefaultListCellRenderer //IdListCell
         {
             CyGroup group = (CyGroup) value;
             CyNetwork network = applicationManager.getCurrentNetwork();
-            CyTable nodeTable = network.getDefaultNodeTable();
-            CyRow nodeRow = nodeTable.getRow(group.getGroupNode().getSUID());
-            String name = nodeRow.get(CyNetwork.NAME, String.class);
-            if (name != null)
-            {
-                label.setText(name);
-            }
+            label.setText(nameOf(group, network));
         }
         return label;
     }

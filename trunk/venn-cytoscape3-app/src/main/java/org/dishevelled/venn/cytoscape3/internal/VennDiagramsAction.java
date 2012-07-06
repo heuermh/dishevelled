@@ -24,6 +24,7 @@
 package org.dishevelled.venn.cytoscape3.internal;
 
 import static javax.swing.SwingUtilities.windowForComponent;
+import static org.dishevelled.venn.cytoscape3.internal.VennDiagramsUtils.installCloseKeyBinding;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;
@@ -91,6 +92,8 @@ final class VennDiagramsAction extends AbstractCyAction
         JFrame frame = (JFrame) windowForComponent((Component) event.getSource());
         JDialog dialog = new JDialog(frame, "Venn/Euler Diagrams"); // i18n
         dialog.setContentPane(new GroupsView(applicationManager, groupManager, serviceRegistrar));
+        dialog.setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
+        installCloseKeyBinding(dialog);
         dialog.setBounds(200, 200, 400, 400);
         dialog.setVisible(true);
     }
