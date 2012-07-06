@@ -23,29 +23,20 @@
 */
 package org.dishevelled.venn.cytoscape;
 
+import static javax.swing.SwingUtilities.windowForComponent;
+import static org.dishevelled.venn.cytoscape.VennDiagramsUtils.installCloseKeyBinding;
+
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 
 import cytoscape.Cytoscape;
 
 import cytoscape.plugin.CytoscapePlugin;
-
-/*
-
-  todos:
-
-  layout dialogs with regards to main Cytoscape frame
-  update icon/text for actions on selection change
-  additional information in CyGroup list cell renderer, or use table
-  additional information in CyNode list cell renderer, or use table
-  provide keyboard access to pan & zoom
-  add dependencies report to site, or list/link dependency licenses explicitly
-  implement export or remove action, currently removed
-
- */
 
 /**
  * Cytoscape plugin for venn diagrams.
@@ -62,8 +53,11 @@ public final class VennDiagrams
             /** {@inheritDoc} */
             public void actionPerformed(final ActionEvent event)
             {
-                JDialog dialog = new JDialog(Cytoscape.getDesktop(), "Venn Diagrams"); // i18n
+                JFrame frame = (JFrame) windowForComponent((Component) event.getSource());
+                JDialog dialog = new JDialog(frame, "Venn/Euler Diagrams"); // i18n
                 dialog.setContentPane(new GroupsView());
+                dialog.setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
+                installCloseKeyBinding(dialog);
                 dialog.setBounds(200, 200, 400, 400);
                 dialog.setVisible(true);
             }

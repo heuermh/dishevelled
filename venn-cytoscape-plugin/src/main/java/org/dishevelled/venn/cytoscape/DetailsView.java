@@ -24,14 +24,20 @@
 package org.dishevelled.venn.cytoscape;
 
 import java.awt.BorderLayout;
+import java.awt.Toolkit;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
+import javax.swing.InputMap;
+import javax.swing.KeyStroke;
+import javax.swing.JComponent;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
-import javax.swing.JToolBar;
 
 import javax.swing.border.EmptyBorder;
 
@@ -39,9 +45,13 @@ import cytoscape.CyNode;
 import cytoscape.CyNetwork;
 import cytoscape.Cytoscape;
 
+import org.dishevelled.identify.ContextMenuListener;
+import org.dishevelled.identify.IdToolBar;
+
 import org.dishevelled.observable.event.SetChangeEvent;
 import org.dishevelled.observable.event.SetChangeListener;
 
+import org.dishevelled.venn.cytoscape.CyNodeListCellRenderer;
 import org.dishevelled.venn.swing.BinaryVennList;
 import org.dishevelled.venn.swing.TernaryVennList;
 import org.dishevelled.venn.swing.QuaternaryVennList;
@@ -50,7 +60,6 @@ import org.dishevelled.venn.swing.QuaternaryVennList;
  * Details view.
  *
  * @author  Michael Heuer
- * @version $Revision$ $Date$
  */
 final class DetailsView
     extends JPanel
@@ -63,8 +72,6 @@ final class DetailsView
 
     /** Maximum number of nodes above which selection sync should be disabled for quaternary details views. */
     private final int QUATERNARY_SELECTION_SYNC_MAXIMUM = 20000;
-
-    // todo:  would be nice if *VennList had a shared superclass or interface
 
     /** Binary venn list. */
     private final BinaryVennList<CyNode> binaryVennList;
@@ -89,6 +96,8 @@ final class DetailsView
             }
         };
 
+    // todo: use identifiable actions for these, if a clear selection icon can be found
+    //   ...there is EDIT_SELECT_ALL but 24x24 is not one of the tango icon sizes
     /** Select all action. */
     private final Action selectAll = new AbstractAction("Select all") // i18n
         {
@@ -144,18 +153,81 @@ final class DetailsView
                         final QuaternaryVennList<CyNode> quaternaryVennList)
     {
         super();
-
         this.binaryVennList = binaryVennList;
         this.ternaryVennList = ternaryVennList;
         this.quaternaryVennList = quaternaryVennList;
 
-        JPopupMenu contextMenu = new JPopupMenu();
-        contextMenu.add(selectAll);
-        contextMenu.add(clearSelection);
+        // suck.
+        if (this.binaryVennList != null)
+        {
+            this.binaryVennList.getFirst().setCellRenderer(new CyNodeListCellRenderer());
+            this.binaryVennList.getFirstOnly().setCellRenderer(new CyNodeListCellRenderer());
+            this.binaryVennList.getIntersection().setCellRenderer(new CyNodeListCellRenderer());
+            this.binaryVennList.getSecond().setCellRenderer(new CyNodeListCellRenderer());
+            this.binaryVennList.getSecondOnly().setCellRenderer(new CyNodeListCellRenderer());
+            this.binaryVennList.getUnion().setCellRenderer(new CyNodeListCellRenderer());
+        }
+        if (this.ternaryVennList != null)
+        {
+            this.ternaryVennList.getFirst().setCellRenderer(new CyNodeListCellRenderer());
+            this.ternaryVennList.getFirstOnly().setCellRenderer(new CyNodeListCellRenderer());
+            this.ternaryVennList.getFirstSecond().setCellRenderer(new CyNodeListCellRenderer());
+            this.ternaryVennList.getFirstThird().setCellRenderer(new CyNodeListCellRenderer());
+            this.ternaryVennList.getIntersection().setCellRenderer(new CyNodeListCellRenderer());
+            this.ternaryVennList.getSecond().setCellRenderer(new CyNodeListCellRenderer());
+            this.ternaryVennList.getSecondOnly().setCellRenderer(new CyNodeListCellRenderer());
+            this.ternaryVennList.getSecondThird().setCellRenderer(new CyNodeListCellRenderer());
+            this.ternaryVennList.getThird().setCellRenderer(new CyNodeListCellRenderer());
+            this.ternaryVennList.getThirdOnly().setCellRenderer(new CyNodeListCellRenderer());
+            this.ternaryVennList.getUnion().setCellRenderer(new CyNodeListCellRenderer());
+        }
+        if (this.quaternaryVennList != null)
+        {
+            this.quaternaryVennList.getFirst().setCellRenderer(new CyNodeListCellRenderer());
+            this.quaternaryVennList.getFirstFourth().setCellRenderer(new CyNodeListCellRenderer());
+            this.quaternaryVennList.getFirstOnly().setCellRenderer(new CyNodeListCellRenderer());
+            this.quaternaryVennList.getFirstSecond().setCellRenderer(new CyNodeListCellRenderer());
+            this.quaternaryVennList.getFirstSecondFourth().setCellRenderer(new CyNodeListCellRenderer());
+            this.quaternaryVennList.getFirstSecondThird().setCellRenderer(new CyNodeListCellRenderer());
+            this.quaternaryVennList.getFirstThird().setCellRenderer(new CyNodeListCellRenderer());
+            this.quaternaryVennList.getFirstThirdFourth().setCellRenderer(new CyNodeListCellRenderer());
+            this.quaternaryVennList.getFourth().setCellRenderer(new CyNodeListCellRenderer());
+            this.quaternaryVennList.getFourthOnly().setCellRenderer(new CyNodeListCellRenderer());
+            this.quaternaryVennList.getIntersection().setCellRenderer(new CyNodeListCellRenderer());
+            this.quaternaryVennList.getSecond().setCellRenderer(new CyNodeListCellRenderer());
+            this.quaternaryVennList.getSecondFourth().setCellRenderer(new CyNodeListCellRenderer());
+            this.quaternaryVennList.getSecondOnly().setCellRenderer(new CyNodeListCellRenderer());
+            this.quaternaryVennList.getSecondThird().setCellRenderer(new CyNodeListCellRenderer());
+            this.quaternaryVennList.getSecondThirdFourth().setCellRenderer(new CyNodeListCellRenderer());
+            this.quaternaryVennList.getThird().setCellRenderer(new CyNodeListCellRenderer());
+            this.quaternaryVennList.getThirdFourth().setCellRenderer(new CyNodeListCellRenderer());
+            this.quaternaryVennList.getThirdOnly().setCellRenderer(new CyNodeListCellRenderer());
+            this.quaternaryVennList.getUnion().setCellRenderer(new CyNodeListCellRenderer());
+        }
 
-        JToolBar toolBar = new JToolBar();
+        InputMap inputMap = getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+        int menuKeyMask = Toolkit.getDefaultToolkit().getMenuShortcutKeyMask();
+        KeyStroke ctrlShiftA = KeyStroke.getKeyStroke(KeyEvent.VK_A, menuKeyMask | InputEvent.SHIFT_DOWN_MASK);
+        KeyStroke ctrlShiftC = KeyStroke.getKeyStroke(KeyEvent.VK_C, menuKeyMask | InputEvent.SHIFT_DOWN_MASK);
+        inputMap.put(ctrlShiftA, "selectAll");
+        inputMap.put(ctrlShiftC, "clearSelection");
+        getActionMap().put("selectAll", selectAll);
+        getActionMap().put("clearSelection", clearSelection);
+
+        JMenuItem selectAllMenuItem = new JMenuItem(selectAll);
+        selectAllMenuItem.setAccelerator(ctrlShiftA);
+        JMenuItem clearSelectionMenuItem = new JMenuItem(clearSelection);
+        clearSelectionMenuItem.setAccelerator(ctrlShiftC);
+
+        JPopupMenu contextMenu = new JPopupMenu();
+        contextMenu.add(selectAllMenuItem);
+        contextMenu.add(clearSelectionMenuItem);
+
+        IdToolBar toolBar = new IdToolBar();
+        // todo:  odd border decorations on Win L&F
         toolBar.add(selectAll);
         toolBar.add(clearSelection);
+        toolBar.displayText();
 
         setLayout(new BorderLayout());
         add("North", toolBar);
