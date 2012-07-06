@@ -52,7 +52,11 @@ import javax.imageio.ImageIO;
 import javax.swing.AbstractAction;
 import javax.swing.AbstractButton;
 import javax.swing.Action;
+import javax.swing.InputMap;
+import javax.swing.KeyStroke;
 import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JComponent;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 
@@ -254,30 +258,62 @@ final class DiagramView
         mouseWheelZoomEventHandler.setScaleFactor(1.0E-02d);
         canvas.addInputEventListener(mouseWheelZoomEventHandler);
 
-        JPopupMenu contextMenu = new JPopupMenu();
-        contextMenu.add(exportToPNG);
-        contextMenu.add(exportToSVG);
-        contextMenu.addSeparator();
+        InputMap inputMap = getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+        KeyStroke ctrlShiftP = KeyStroke.getKeyStroke(KeyEvent.VK_P, InputEvent.CTRL_DOWN_MASK | InputEvent.SHIFT_DOWN_MASK);
+        KeyStroke ctrlShiftS = KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_DOWN_MASK | InputEvent.SHIFT_DOWN_MASK);
+        KeyStroke ctrlShiftA = KeyStroke.getKeyStroke(KeyEvent.VK_A, InputEvent.CTRL_DOWN_MASK | InputEvent.SHIFT_DOWN_MASK);
+        KeyStroke ctrlShiftC = KeyStroke.getKeyStroke(KeyEvent.VK_C, InputEvent.CTRL_DOWN_MASK | InputEvent.SHIFT_DOWN_MASK);
+        KeyStroke ctrlShiftPeriod = KeyStroke.getKeyStroke(KeyEvent.VK_COMMA, InputEvent.CTRL_DOWN_MASK | InputEvent.SHIFT_DOWN_MASK);
+        KeyStroke ctrlShiftComma = KeyStroke.getKeyStroke(KeyEvent.VK_PERIOD, InputEvent.CTRL_DOWN_MASK | InputEvent.SHIFT_DOWN_MASK);
+        inputMap.put(ctrlShiftP, "exportToPNG");
+        inputMap.put(ctrlShiftS, "exportToSVG");
+        inputMap.put(ctrlShiftA, "selectAll");
+        inputMap.put(ctrlShiftC, "clearSelection");
+        inputMap.put(ctrlShiftComma, "zoomIn");
+        inputMap.put(ctrlShiftPeriod, "zoomOut");
+        getActionMap().put("exportToPNG", exportToPNG);
+        getActionMap().put("exportToSVG", exportToSVG);
+        getActionMap().put("selectAll", selectAll);
+        getActionMap().put("clearSelection", clearSelection);
+        getActionMap().put("zoomIn", zoomIn);
+        getActionMap().put("zoomOut", zoomOut);
+
+        JMenuItem exportToPNGMenuItem = new JMenuItem(exportToPNG);
+        exportToPNGMenuItem.setAccelerator(ctrlShiftP);
+        JMenuItem exportToSVGMenuItem = new JMenuItem(exportToSVG);
+        exportToSVGMenuItem.setAccelerator(ctrlShiftS);
 
         JCheckBoxMenuItem displayLabelsMenuItem = new JCheckBoxMenuItem(displayLabels);
         displayLabelsMenuItem.setSelected(true);
-        contextMenu.add(displayLabelsMenuItem);
         JCheckBoxMenuItem displaySizesMenuItem = new JCheckBoxMenuItem(displaySizes);
         displaySizesMenuItem.setSelected(true);
-        contextMenu.add(displaySizesMenuItem);
         JCheckBoxMenuItem displaySizeLabelsMenuItem = new JCheckBoxMenuItem(displaySizeLabels);
         displaySizeLabelsMenuItem.setSelected(true);
-        contextMenu.add(displaySizeLabelsMenuItem);
         JCheckBoxMenuItem displaySizesForEmptyAreasMenuItem = new JCheckBoxMenuItem(displaySizesForEmptyAreas);
         displaySizesForEmptyAreasMenuItem.setSelected(true);
+        JMenuItem selectAllMenuItem = new JMenuItem(selectAll);
+        selectAllMenuItem.setAccelerator(ctrlShiftA);
+        JMenuItem clearSelectionMenuItem = new JMenuItem(clearSelection);
+        clearSelectionMenuItem.setAccelerator(ctrlShiftC);
+        JMenuItem zoomInMenuItem = new JMenuItem(zoomIn);
+        zoomInMenuItem.setAccelerator(ctrlShiftPeriod);
+        JMenuItem zoomOutMenuItem = new JMenuItem(zoomOut);
+        zoomOutMenuItem.setAccelerator(ctrlShiftComma);
+
+        JPopupMenu contextMenu = new JPopupMenu();
+        contextMenu.add(exportToPNGMenuItem);
+        contextMenu.add(exportToSVGMenuItem);
+        contextMenu.addSeparator();
+        contextMenu.add(displayLabelsMenuItem);
+        contextMenu.add(displaySizesMenuItem);
+        contextMenu.add(displaySizeLabelsMenuItem);
         contextMenu.add(displaySizesForEmptyAreasMenuItem);
         contextMenu.addSeparator();
-
-        contextMenu.add(selectAll);
-        contextMenu.add(clearSelection);
+        contextMenu.add(selectAllMenuItem);
+        contextMenu.add(clearSelectionMenuItem);
         contextMenu.addSeparator();
-        contextMenu.add(zoomIn);
-        contextMenu.add(zoomOut);
+        contextMenu.add(zoomInMenuItem);
+        contextMenu.add(zoomOutMenuItem);
         canvas.addMouseListener(new ContextMenuListener(contextMenu));
 
         setLayout(new BorderLayout());
@@ -559,6 +595,7 @@ final class DiagramView
         for (Iterator i = canvas.getLayer().getChildrenIterator(); i.hasNext(); )
         {
             PNode node = (PNode) i.next();
+            // todo:  getModel (and possibly also setModel, get/setLayout) should be refactored to AbstractVennNode
             if (node instanceof BinaryVennNode)
             {
                 BinaryVennNode<CyNode> binaryVennNode = (BinaryVennNode<CyNode>) node;
@@ -581,6 +618,14 @@ final class DiagramView
                 for (CyNode cyNode : currentNetwork.getNodeList())
                 {
                     currentNetwork.getRow(cyNode).set(CyNetwork.SELECTED, quaternaryVennNode.getModel().union().contains(cyNode));
+                }
+            }
+            else if (node instanceof VennNode)
+            {
+                VennNode<CyNode> vennNode = (VennNode<CyNode>) node;
+                for (CyNode cyNode : currentNetwork.getNodeList())
+                {
+                    currentNetwork.getRow(cyNode).set(CyNetwork.SELECTED, vennNode.getModel().union().contains(cyNode));
                 }
             }
         }

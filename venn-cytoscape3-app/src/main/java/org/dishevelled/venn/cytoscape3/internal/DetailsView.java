@@ -26,9 +26,15 @@ package org.dishevelled.venn.cytoscape3.internal;
 import java.awt.BorderLayout;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
+import javax.swing.InputMap;
+import javax.swing.KeyStroke;
+import javax.swing.JComponent;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JToolBar;
@@ -40,6 +46,7 @@ import org.cytoscape.model.CyNetwork;
 import org.cytoscape.model.CyNode;
 
 import org.dishevelled.identify.ContextMenuListener;
+import org.dishevelled.identify.IdToolBar;
 
 import org.dishevelled.observable.event.SetChangeEvent;
 import org.dishevelled.observable.event.SetChangeListener;
@@ -88,6 +95,7 @@ final class DetailsView
         };
 
     // todo: use identifiable actions for these, if a clear selection icon can be found
+    //   ...there is EDIT_SELECT_ALL but 24x24 is not one of the tango icon sizes
     /** Select all action. */
     private final Action selectAll = new AbstractAction("Select all") // i18n
         {
@@ -206,13 +214,29 @@ final class DetailsView
             this.quaternaryVennList.getUnion().setCellRenderer(new CyNodeListCellRenderer(applicationManager));
         }
 
-        JPopupMenu contextMenu = new JPopupMenu();
-        contextMenu.add(selectAll);
-        contextMenu.add(clearSelection);
+        InputMap inputMap = getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+        KeyStroke ctrlShiftP = KeyStroke.getKeyStroke(KeyEvent.VK_P, InputEvent.CTRL_DOWN_MASK | InputEvent.SHIFT_DOWN_MASK);
+        KeyStroke ctrlShiftA = KeyStroke.getKeyStroke(KeyEvent.VK_A, InputEvent.CTRL_DOWN_MASK | InputEvent.SHIFT_DOWN_MASK);
+        KeyStroke ctrlShiftC = KeyStroke.getKeyStroke(KeyEvent.VK_C, InputEvent.CTRL_DOWN_MASK | InputEvent.SHIFT_DOWN_MASK);
+        inputMap.put(ctrlShiftA, "selectAll");
+        inputMap.put(ctrlShiftC, "clearSelection");
+        getActionMap().put("selectAll", selectAll);
+        getActionMap().put("clearSelection", clearSelection);
 
-        JToolBar toolBar = new JToolBar();
+        JMenuItem selectAllMenuItem = new JMenuItem(selectAll);
+        selectAllMenuItem.setAccelerator(ctrlShiftA);
+        JMenuItem clearSelectionMenuItem = new JMenuItem(clearSelection);
+        clearSelectionMenuItem.setAccelerator(ctrlShiftC);
+
+        JPopupMenu contextMenu = new JPopupMenu();
+        contextMenu.add(selectAllMenuItem);
+        contextMenu.add(clearSelectionMenuItem);
+
+        IdToolBar toolBar = new IdToolBar();
+        // todo:  odd border decorations on Win L&F
         toolBar.add(selectAll);
         toolBar.add(clearSelection);
+        toolBar.displayText();
 
         setLayout(new BorderLayout());
         add("North", toolBar);
