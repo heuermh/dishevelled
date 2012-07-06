@@ -23,6 +23,8 @@
 */
 package org.dishevelled.venn.cytoscape3.internal;
 
+import java.awt.Toolkit;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
@@ -93,7 +95,8 @@ final class VennDiagramsUtils
                     dialog.dispatchEvent(new WindowEvent(dialog, WindowEvent.WINDOW_CLOSING));
                 }
             };
-        KeyStroke closeStroke = KeyStroke.getKeyStroke(KeyEvent.VK_W, InputEvent.CTRL_DOWN_MASK);
+        int menuKeyMask = Toolkit.getDefaultToolkit().getMenuShortcutKeyMask();
+        KeyStroke closeStroke = KeyStroke.getKeyStroke(KeyEvent.VK_W, menuKeyMask);
         JRootPane rootPane = dialog.getRootPane();
         rootPane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(closeStroke, "close");
         rootPane.getActionMap().put("close", close);

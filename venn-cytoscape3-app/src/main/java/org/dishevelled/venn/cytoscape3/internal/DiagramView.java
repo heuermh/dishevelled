@@ -30,6 +30,7 @@ import java.awt.Dialog;
 import java.awt.FileDialog;
 import java.awt.Image;
 import java.awt.Paint;
+import java.awt.Toolkit;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.InputEvent;
@@ -259,12 +260,13 @@ final class DiagramView
         canvas.addInputEventListener(mouseWheelZoomEventHandler);
 
         InputMap inputMap = getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
-        KeyStroke ctrlShiftP = KeyStroke.getKeyStroke(KeyEvent.VK_P, InputEvent.CTRL_DOWN_MASK | InputEvent.SHIFT_DOWN_MASK);
-        KeyStroke ctrlShiftS = KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_DOWN_MASK | InputEvent.SHIFT_DOWN_MASK);
-        KeyStroke ctrlShiftA = KeyStroke.getKeyStroke(KeyEvent.VK_A, InputEvent.CTRL_DOWN_MASK | InputEvent.SHIFT_DOWN_MASK);
-        KeyStroke ctrlShiftC = KeyStroke.getKeyStroke(KeyEvent.VK_C, InputEvent.CTRL_DOWN_MASK | InputEvent.SHIFT_DOWN_MASK);
-        KeyStroke ctrlShiftPeriod = KeyStroke.getKeyStroke(KeyEvent.VK_COMMA, InputEvent.CTRL_DOWN_MASK | InputEvent.SHIFT_DOWN_MASK);
-        KeyStroke ctrlShiftComma = KeyStroke.getKeyStroke(KeyEvent.VK_PERIOD, InputEvent.CTRL_DOWN_MASK | InputEvent.SHIFT_DOWN_MASK);
+        int menuKeyMask = Toolkit.getDefaultToolkit().getMenuShortcutKeyMask();
+        KeyStroke ctrlShiftP = KeyStroke.getKeyStroke(KeyEvent.VK_P, menuKeyMask | InputEvent.SHIFT_DOWN_MASK);
+        KeyStroke ctrlShiftS = KeyStroke.getKeyStroke(KeyEvent.VK_S, menuKeyMask | InputEvent.SHIFT_DOWN_MASK);
+        KeyStroke ctrlShiftA = KeyStroke.getKeyStroke(KeyEvent.VK_A, menuKeyMask | InputEvent.SHIFT_DOWN_MASK);
+        KeyStroke ctrlShiftC = KeyStroke.getKeyStroke(KeyEvent.VK_C, menuKeyMask | InputEvent.SHIFT_DOWN_MASK);
+        KeyStroke ctrlShiftPeriod = KeyStroke.getKeyStroke(KeyEvent.VK_COMMA, menuKeyMask | InputEvent.SHIFT_DOWN_MASK);
+        KeyStroke ctrlShiftComma = KeyStroke.getKeyStroke(KeyEvent.VK_PERIOD, menuKeyMask | InputEvent.SHIFT_DOWN_MASK);
         inputMap.put(ctrlShiftP, "exportToPNG");
         inputMap.put(ctrlShiftS, "exportToSVG");
         inputMap.put(ctrlShiftA, "selectAll");
