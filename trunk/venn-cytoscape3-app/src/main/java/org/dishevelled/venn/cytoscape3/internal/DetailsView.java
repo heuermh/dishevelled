@@ -64,13 +64,13 @@ final class DetailsView
     extends JPanel
 {
     /** Maximum number of nodes above which selection sync should be disabled for binary details views. */
-    private final int BINARY_SELECTION_SYNC_MAXIMUM = Integer.MAX_VALUE;
+    private static final int BINARY_SELECTION_SYNC_MAXIMUM = Integer.MAX_VALUE;
 
     /** Maximum number of nodes above which selection sync should be disabled for ternary details views. */
-    private final int TERNARY_SELECTION_SYNC_MAXIMUM = 2000000;
+    private static final int TERNARY_SELECTION_SYNC_MAXIMUM = 2000000;
 
     /** Maximum number of nodes above which selection sync should be disabled for quaternary details views. */
-    private final int QUATERNARY_SELECTION_SYNC_MAXIMUM = 20000;
+    private static final int QUATERNARY_SELECTION_SYNC_MAXIMUM = 20000;
 
     /** Binary venn list. */
     private final BinaryVennList<CyNode> binaryVennList;

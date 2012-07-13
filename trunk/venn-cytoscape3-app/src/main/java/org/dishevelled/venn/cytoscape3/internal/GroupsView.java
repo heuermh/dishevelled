@@ -392,7 +392,8 @@ final class GroupsView
 
         // todo: offset per parent dialog
         dialog.setBounds(100, 100, 600, 600);
-        if (model.size() > 4) {
+        if (model.size() > 4)
+        {
             dialog.setBounds(100, 100, 800, 800);
         }
         dialog.setVisible(true);
@@ -404,7 +405,8 @@ final class GroupsView
                 public void run()
                 {
                     Rectangle2D.Double boundingRectangle = new Rectangle2D.Double(0.0d, 0.0d, 400.0d, 400.0d);
-                    if (model.size() > 4) {
+                    if (model.size() > 4)
+                    {
                         boundingRectangle.setRect(0.0d, 0.0d, 600.0d, 600.0d);
                     }
                     VennLayout layout = vennLayouter.layout(model, boundingRectangle, PerformanceHint.OPTIMIZE_FOR_SPEED);
