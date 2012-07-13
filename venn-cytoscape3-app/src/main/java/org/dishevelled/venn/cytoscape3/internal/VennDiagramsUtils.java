@@ -51,6 +51,15 @@ final class VennDiagramsUtils
 {
 
     /**
+     * Private no-arg constructor.
+     */
+    private VennDiagramUtils()
+    {
+        // empty
+    }
+
+
+    /**
      * Return the name of the specified group in the specified network.
      *
      * @param group group
@@ -70,6 +79,7 @@ final class VennDiagramsUtils
      *
      * @param node node
      * @param network network
+     * @return the name of the specified node in the specified network
      */
     static String nameOf(final CyNode node, final CyNetwork network)
     {
