@@ -229,12 +229,6 @@ final class GroupsView
     /** Application manager. */
     private final CyApplicationManager applicationManager;
 
-    /** Group manager. */
-    private final CyGroupManager groupManager;
-
-    /** Service registrar. */
-    private final CyServiceRegistrar serviceRegistrar;
-
     /** Venn euler layouter. */
     private final VennLayouter<CyNode> vennLayouter = new VennEulerLayouter<CyNode>();
 
@@ -262,8 +256,6 @@ final class GroupsView
             throw new IllegalArgumentException("serviceRegistrar must not be null");
         }
         this.applicationManager = applicationManager;
-        this.groupManager = groupManager;
-        this.serviceRegistrar = serviceRegistrar;
 
         Set<CyGroup> groupSet = groupManager.getGroupSet(applicationManager.getCurrentNetwork());
         groups = GlazedLists.eventList(new ArrayList<CyGroup>(groupSet));
