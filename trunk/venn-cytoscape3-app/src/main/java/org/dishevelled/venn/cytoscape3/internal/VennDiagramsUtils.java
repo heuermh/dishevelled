@@ -53,7 +53,7 @@ final class VennDiagramsUtils
     /**
      * Private no-arg constructor.
      */
-    private VennDiagramUtils()
+    private VennDiagramsUtils()
     {
         // empty
     }
