@@ -31,49 +31,69 @@
 <section name="Summary">
 
 <p>
-dishevelled.org <b>venn-cytoscape-plugin</b> provides venn diagrams for
-Cytoscape [<a href="#1">1</a>] as a plugin.  The venn diagram Cytoscape plugin
+dishevelled.org <b>venn-cytoscape-plugin</b> provides Venn and Euler diagrams for
+Cytoscape [<a href="#1">1</a>] as a plugin.  The Venn and Euler diagram Cytoscape plugin
 requires java version 1.6 or later and Cytoscape version 2.7.0 or later.
 </p>
 </section>
 
-<section name="Venn Diagrams">
+<section name="Venn and Euler Diagrams">
 <p>
-The plugin provides a diagram view and a details view for comparing two to four
+The plugin provides a diagram view and a details view for comparing two or more
 Cytoscape groups at a time.
 </p>
 
 <p>
-The diagram view is an interactive venn diagram showing the number of nodes in each
-logical grouping.  Clicking on any area in the diagram selects the corresponding
+The diagram view is an interactive Venn or Euler diagram showing the number of nodes
+in each logical grouping.  Clicking on any area in the diagram selects the corresponding
 nodes in the current Cytoscape network view.  The diagram can be exported to an
-image file in PNG format.
+image file in PNG and SVG formats.
 </p>
+
+<p>
+The Venn diagram view uses a symmetrical layout that supports two to four Cytoscape groups.
+Venn diagram views for two and three Cytoscape groups use two and three circles respectively.
+For four Cytoscape groups, a symmetrical construction of four ellipses is used.
+</p>
+
+<!-- 2n, 3n, 4n venn diagrams -->
+
+<p>
+The Euler diagram view uses an area-proportional layout that supports two or more
+Cytoscape groups.  A Euler diagram is similar to a Venn diagram but does
+not display all possible intersections.  The Euler layout allows an exact area-proportional
+Venn or Euler diagram to be generated when the data allow it and a statistically-justified
+approximation of a Venn or Euler diagram when the data do not [<a href="#2">2</a>,
+<a href="#3">3</a>].
+</p>
+
+<!-- 2n, 3n, 4n euler diagrams -->
 
 <p>
 The details view shows the nodes in each logical grouping.  The selection model
 of the details view synchronizes the selection for all of the list views (i.e.
 selecting a node in any one list will select it in all lists) and exports the
 selection to the current Cytoscape network view (selecting a node in the details view
-will select it in the current Cytoscape network view, but not vice versa).
+will select it in the current Cytoscape network view, but not vice versa).  The
+details view supports two to four Cytoscape groups.
 </p>
 
 <p>
-Screenshot showing the diagram and detail views for comparing two groups:
+Screenshot showing the venn diagram and detail views for comparing two groups:
 </p>
 <p>
 <a href="images/binary.jpg"><img src="images/binary-thumb.jpg" width="500" height="364" alt="Screenshot of binary diagram and details"/></a>
 </p>
 
 <p>
-Screenshot showing the diagram and detail views for comparing three groups:
+Screenshot showing the venn diagram and detail views for comparing three groups:
 </p>
 <p>
 <a href="images/ternary.jpg"><img src="images/ternary-thumb.jpg" width="500" height="366" alt="Screenshot of ternary diagram and details"/></a>
 </p>
 
 <p>
-Screenshot showing the diagram and detail views for comparing four groups:
+Screenshot showing the venn diagram and detail views for comparing four groups:
 </p>
 <p>
 <a href="images/quaternary.jpg"><img src="images/quaternary-thumb.jpg" width="500" height="312" alt="Screenshot of quaternary diagram and details"/></a>
@@ -81,15 +101,39 @@ Screenshot showing the diagram and detail views for comparing four groups:
 </section>
 
 <p>
-Screencast demonstrating the diagram views and interactions with the group plugin:
+Screencast demonstrating the venn diagram views and interactions with the group plugin:
 </p>
 
 <iframe width="640" height="510" src="https://www.youtube.com/embed/UtoW0nVwOV4" frameborder="0"></iframe>
+
+<section name="Availability">
+
+<p>
+The Venn and Euler diagram Cytoscape plugin is available for download via the SourceForge project download page<br/>
+
+&gt; <a href="https://sourceforge.net/projects/dishevelled/files/venn-cytoscape-plugin">https://sourceforge.net/projects/dishevelled/files/venn-cytoscape-plugin</a>
+</p>
+
+<p>
+or via the <a href="http://apps.cytoscape.org/">Cytoscape App Store</a> at<br/>
+
+&gt; <a href="http://apps.cytoscape.org/apps/venndiagrams">http://apps.cytoscape.org/apps/venndiagrams</a>
+</p>
+
+</section>
 
 <section name="References">
 <p id="1">
 [1] Cytoscape<br/>
 &gt; <a href="http://cytoscape.org">http://cytoscape.org</a>
+</p>
+<p id="2">
+[2] VennDiagramGenerator<br/>
+&gt; <a href="http://apps.cytoscape.org/apps/venndiagramgenerator">http://apps.cytoscape.org/apps/venndiagramgenerator</a>
+</p>
+<p id="3">
+[3] Leland Wilkinson, "Exact and Approximate Area-Proportional Circular Venn and Euler Diagrams," IEEE Transactions on Visualization and Computer Graphics, pp. 321-331, February, 2012<br/>
+&gt; <a href="http://www.computer.org/portal/web/csdl/doi/10.1109/TVCG.2011.56">http://www.computer.org/portal/web/csdl/doi/10.1109/TVCG.2011.56</a>
 </p>
 </section>
 
