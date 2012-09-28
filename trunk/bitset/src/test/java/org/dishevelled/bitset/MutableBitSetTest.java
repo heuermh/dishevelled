@@ -123,6 +123,28 @@ public class MutableBitSetTest extends AbstractBitSetTest {
     }
 
     @Test
+    public void testNextClearBit() {
+        assertEquals(-1L, empty.nextClearBit(0L));
+        assertEquals(0L, partial.nextClearBit(0L));
+        assertEquals(-1L, full.nextClearBit(0L));
+
+        assertEquals(-1L, empty.nextClearBit(N - 1L));
+        assertEquals(-1L, partial.nextClearBit(N - 1L));
+        assertEquals(-1L, full.nextClearBit(N - 1L));
+    }
+
+    @Test
+    public void testPrevClearBit() {
+        assertEquals(-1L, empty.prevClearBit(0L));
+        assertEquals(-1L, partial.prevClearBit(0L));
+        assertEquals(-1L, full.prevClearBit(0L));
+
+        assertEquals(-1L, empty.prevClearBit(N - 1L));
+        assertEquals((N / 2L) - 1L, partial.prevClearBit(N - 1L));
+        assertEquals(-1L, full.prevClearBit(N - 1L));
+    }
+
+    @Test
     public void testNextSetBit() {
         assertEquals(-1L, empty.nextSetBit(0L));
         assertEquals((N / 2L), partial.nextSetBit(0L));
