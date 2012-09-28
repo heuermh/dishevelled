@@ -84,6 +84,26 @@ public abstract class AbstractBitSet {
     public abstract boolean getQuick(long index);
 
     /**
+     * Return the index of the next bit set to false on or after the specified index, or
+     * <code>-1</code> if no such bit exists.
+     *
+     * @param index index
+     * @return the index of the next bit set to false on or after the specified index, or
+     *    <code>-1</code> if no such bit exists
+     */
+    public abstract long nextClearBit(long index);
+
+    /**
+     * Return the index of the previous bit set to false on or before the specified index, or
+     * <code>-1</code> if no such bit exists.
+     *
+     * @param index index
+     * @return the index of the previous bit set to false on or before the specified index, or
+     *    <code>-1</code> if no such bit exists
+     */
+    public abstract long prevClearBit(long index);
+
+    /**
      * Return the index of the next bit set to true on or after the specified index, or
      * <code>-1</code> if no such bit exists.
      *

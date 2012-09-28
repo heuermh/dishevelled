@@ -88,7 +88,7 @@ public final class ImmutableBitSet extends AbstractBitSet implements Serializabl
 
     @Override
     public boolean isEmpty() {
-        return cardinality() == 0;
+        return cardinality() == 0L;
     }
 
     @Override
@@ -112,10 +112,36 @@ public final class ImmutableBitSet extends AbstractBitSet implements Serializabl
     }
 
     @Override
+    public long nextClearBit(final long index) {
+        if ((int) (index >>> 6) >= wlen) {
+            return -1L;
+        }
+        for (long i = index, last = prevSetBit(capacity()); i < last; i++) {
+            if (!get(i)) {
+                return i;
+            }
+        }
+        return -1L;
+    }
+
+    @Override
+    public long prevClearBit(final long index) {
+        if ((int) (index >>> 6) >= wlen) {
+            return -1L;
+        }
+        for (long i = Math.min(index, prevSetBit(capacity())); i > 0L; i--) {
+            if (!get(i)) {
+                return i;
+            }
+        }
+        return -1L;
+    }
+
+    @Override
     public long nextSetBit(final long index) {
         int i = (int) (index >>> 6);
         if (i >= wlen) {
-            return -1;
+            return -1L;
         }
         int subIndex = (int) index & 0x3f; // index within the word
         long word = bits[i] >>> subIndex; // skip all the bits to the right of index
@@ -130,7 +156,7 @@ public final class ImmutableBitSet extends AbstractBitSet implements Serializabl
                 return (((long) i) << 6) + BitUtil.ntz(word);
             }
         }
-        return -1;
+        return -1L;
     }
 
     @Override
@@ -141,14 +167,14 @@ public final class ImmutableBitSet extends AbstractBitSet implements Serializabl
         if (i >= wlen) {
             i = wlen - 1;
             if (i < 0) {
-                return -1;
+                return -1L;
             }
             subIndex = 63; // last possible bit
             word = bits[i];
         }
         else {
             if (i < 0) {
-                return -1;
+                return -1L;
             }
             subIndex = (int) index & 0x3f; // index within the word
             word = (bits[i] << (63 - subIndex)); // skip all the bits to the left of index
@@ -164,7 +190,7 @@ public final class ImmutableBitSet extends AbstractBitSet implements Serializabl
                 return (((long) i) << 6) + 63 - Long.numberOfLeadingZeros(word);
             }
         }
-        return -1;
+        return -1L;
     }
 
     @Override
