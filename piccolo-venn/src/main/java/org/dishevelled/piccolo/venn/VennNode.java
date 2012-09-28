@@ -670,7 +670,8 @@ public class VennNode<E>
     /**
      * Return the first int value in the specified set of values.
      *
-     *
+     * @param values set of values
+     * @return the first int value int the specified set of values
      */
     static int first(final Set<Integer> values)
     {
@@ -681,6 +682,12 @@ public class VennNode<E>
         return values.iterator().next().intValue();
     }
 
+    /**
+     * Return the additional int values in the specified set of values.
+     *
+     * @param values set of values
+     * @return the additional it values in the specified set of values
+     */
     static int[] additional(final Set<Integer> values)
     {
         int[] additional = new int[Math.max(0, values.size() - 1)];
