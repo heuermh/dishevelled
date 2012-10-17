@@ -112,7 +112,8 @@
         </plugin>
         <plugin>
           <artifactId>maven-site-plugin</artifactId>
-          <version>3.0</version>
+          <version>3.2</version>
+          <!-- not sure this is still necessary, 3.2 pulls in wagon-ssh 1.0-beta-7 -->
           <dependencies>
             <dependency>
               <groupId>org.apache.maven.wagon</groupId>
