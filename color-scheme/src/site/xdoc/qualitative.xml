@@ -74,6 +74,10 @@ See <a href="http://colorbrewer.org">http://colorbrewer.org</a> for further deta
 <p><object data="images/continuous-bl-rd-bu-wh-4.svg" type="image/svg+xml" width="810" height="80"></object></p>
 <p><object data="images/discrete-bl-rd-bu-wh-4.svg" type="image/svg+xml" width="810" height="80"></object></p>
 </subsection>
+<subsection name="BuRd" id="bu-rd">
+<p><object data="images/continuous-bu-rd-2.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-bu-rd-2.svg" type="image/svg+xml" width="810" height="80"></object></p>
+</subsection>
 <subsection name="Dark 2" id="dark-2">
 <p><object data="images/continuous-dark-2-3.svg" type="image/svg+xml" width="810" height="80"></object></p>
 <p><object data="images/discrete-dark-2-3.svg" type="image/svg+xml" width="810" height="80"></object></p>
@@ -89,6 +93,7 @@ See <a href="http://colorbrewer.org">http://colorbrewer.org</a> for further deta
 <p><object data="images/discrete-dark-2-8.svg" type="image/svg+xml" width="810" height="80"></object></p>
 </subsection>
 <subsection name="GnGy" id="gn-gy">
+<p><object data="images/continuous-gn-gy-2.svg" type="image/svg+xml" width="810" height="80"></object></p>
 <p><object data="images/discrete-gn-gy-2.svg" type="image/svg+xml" width="810" height="80"></object></p>
 </subsection>
 <subsection name="Paired" id="paired">
@@ -144,9 +149,11 @@ See <a href="http://colorbrewer.org">http://colorbrewer.org</a> for further deta
 <p><object data="images/discrete-pastel-2-8.svg" type="image/svg+xml" width="810" height="80"></object></p>
 </subsection>
 <subsection name="PiGy" id="pi-gy">
+<p><object data="images/continuous-pi-gy-2.svg" type="image/svg+xml" width="810" height="80"></object></p>
 <p><object data="images/discrete-pi-gy-2.svg" type="image/svg+xml" width="810" height="80"></object></p>
 </subsection>
 <subsection name="PuBuGy" id="pu-bu-gy">
+<p><object data="images/continuous-pu-bu-gy-3.svg" type="image/svg+xml" width="810" height="80"></object></p>
 <p><object data="images/discrete-pu-bu-gy-3.svg" type="image/svg+xml" width="810" height="80"></object></p>
 </subsection>
 <subsection name="Set 1" id="set-1">
@@ -220,6 +227,10 @@ See <a href="http://colorbrewer.org">http://colorbrewer.org</a> for further deta
 <p><object data="images/discrete-spectral-10.svg" type="image/svg+xml" width="810" height="80"></object></p>
 <p><object data="images/continuous-spectral-11.svg" type="image/svg+xml" width="810" height="80"></object></p>
 <p><object data="images/discrete-spectral-11.svg" type="image/svg+xml" width="810" height="80"></object></p>
+</subsection>
+<subsection name="Steel" id="steel">
+<p><object data="images/continuous-steel-3.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-steel-3.svg" type="image/svg+xml" width="810" height="80"></object></p>
 </subsection>
 <subsection name="Syn" id="syn">
 <p><object data="images/continuous-syn-3.svg" type="image/svg+xml" width="810" height="80"></object></p>
