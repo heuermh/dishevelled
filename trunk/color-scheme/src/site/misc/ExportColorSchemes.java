@@ -629,9 +629,9 @@ public final class ExportColorSchemes
         export(getContinuousColorScheme("syn", 6, Interpolations.LINEAR), "continuous-syn-6");
         */
 
-        export(getDiscreteColorScheme("pi-gy", 2, Interpolations.LINEAR), "discrete-pi-gy-2");
-        export(getDiscreteColorScheme("gn-gy", 2, Interpolations.LINEAR), "discrete-gn-gy-2");
-        export(getDiscreteColorScheme("pu-bu-gy", 3, Interpolations.LINEAR), "discrete-pu-bu-gy-3");
+        export(getContinuousColorScheme("pi-gy", 2, Interpolations.LINEAR), "continuous-pi-gy-2");
+        export(getContinuousColorScheme("gn-gy", 2, Interpolations.LINEAR), "continuous-gn-gy-2");
+        export(getContinuousColorScheme("pu-bu-gy", 3, Interpolations.LINEAR), "continuous-pu-bu-gy-3");
 
         export(getContinuousColorScheme("bu-rd", 2, Interpolations.LINEAR), "continuous-bu-rd-2");
         export(getContinuousColorScheme("steel", 3, Interpolations.LINEAR), "continuous-steel-3");
@@ -660,7 +660,7 @@ public final class ExportColorSchemes
                 Color color = colorScheme.getColor(value);
                 writer.print(toHex(color));
                 writer.print(";fill-opacity:1;opacity:");
-                writer.print((float) color.getAlpha() / 255.0f);
+                writer.print(((float) color.getAlpha()) / 255.0f);
                 writer.println(";stroke:none;stroke-width:1;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1\"/>");
                 x += 20;
             }
@@ -681,6 +681,6 @@ public final class ExportColorSchemes
 
     private static String toHex(final Color color)
     {
-        return Integer.toHexString((color.getRGB() & 0xffffff) | 0x1000000).substring(1) ;
+        return Integer.toHexString((color.getRGB() & 0xffffff) | 0x1000000).substring(1);
     }
 }
