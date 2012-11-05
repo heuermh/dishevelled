@@ -101,6 +101,7 @@ See <a href="http://colorbrewer.org">http://colorbrewer.org</a> for further deta
   <ul>
     <li><a href="qualitative.html#accent">Accent</a></li>
     <li><a href="qualitative.html#bl-rd-bu-wh">BlRdBuWh</a></li>
+    <li><a href="qualitative.html#bu-rd">BuRd</a></li>
     <li><a href="qualitative.html#dark-2">Dark 2</a></li>
     <li><a href="qualitative.html#gn-gy">GnGy</a></li>
     <li><a href="qualitative.html#paired">Paired</a></li>
@@ -112,6 +113,7 @@ See <a href="http://colorbrewer.org">http://colorbrewer.org</a> for further deta
     <li><a href="qualitative.html#set-2">Set 2</a></li>
     <li><a href="qualitative.html#set-3">Set 3</a></li>
     <li><a href="qualitative.html#spectral">Spectral</a></li>
+    <li><a href="qualitative.html#steel">Steel</a></li>
     <li><a href="qualitative.html#syn">Syn</a></li>
   </ul>
 </ul>

@@ -7,11 +7,11 @@ import java.io.PrintWriter;
 
 import org.apache.commons.io.IOUtils;
 
-import org.dishevelled.colorscheme.ColorScheme;
+import org.dishevelled.color.scheme.ColorScheme;
 
-import static org.dishevelled.colorscheme.impl.ColorSchemes.*;
+import static org.dishevelled.color.scheme.impl.ColorSchemes.*;
 
-import org.dishevelled.colorscheme.interpolate.Interpolations;
+import org.dishevelled.color.scheme.interpolate.Interpolations;
 
 public final class ExportColorSchemes
 {
@@ -613,7 +613,6 @@ public final class ExportColorSchemes
         export(getContinuousColorScheme("blues", 4, Interpolations.LINEAR), "continuous-blues-4-linear");
         export(getContinuousColorScheme("blues", 4, Interpolations.LOG_2), "continuous-blues-4-log-2");
         export(getContinuousColorScheme("blues", 4, Interpolations.LOG_10), "continuous-blues-4-log-10");
-        */
 
         export(getDiscreteColorScheme("pi-gy", 2, Interpolations.LINEAR), "discrete-pi-gy-2");
         export(getDiscreteColorScheme("gn-gy", 2, Interpolations.LINEAR), "discrete-gn-gy-2");
@@ -628,6 +627,17 @@ public final class ExportColorSchemes
         export(getContinuousColorScheme("syn", 4, Interpolations.LINEAR), "continuous-syn-4");
         export(getContinuousColorScheme("syn", 5, Interpolations.LINEAR), "continuous-syn-5");
         export(getContinuousColorScheme("syn", 6, Interpolations.LINEAR), "continuous-syn-6");
+        */
+
+        export(getDiscreteColorScheme("pi-gy", 2, Interpolations.LINEAR), "discrete-pi-gy-2");
+        export(getDiscreteColorScheme("gn-gy", 2, Interpolations.LINEAR), "discrete-gn-gy-2");
+        export(getDiscreteColorScheme("pu-bu-gy", 3, Interpolations.LINEAR), "discrete-pu-bu-gy-3");
+
+        export(getContinuousColorScheme("bu-rd", 2, Interpolations.LINEAR), "continuous-bu-rd-2");
+        export(getContinuousColorScheme("steel", 3, Interpolations.LINEAR), "continuous-steel-3");
+        export(getDiscreteColorScheme("bu-rd", 2, Interpolations.LINEAR), "discrete-bu-rd-2");
+        export(getDiscreteColorScheme("steel", 3, Interpolations.LINEAR), "discrete-steel-3");
+
     }
 
     private static final void export(final ColorScheme colorScheme, final String fileName)
