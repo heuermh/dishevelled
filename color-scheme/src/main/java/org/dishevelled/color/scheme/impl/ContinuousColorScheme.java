@@ -74,11 +74,11 @@ public final class ContinuousColorScheme
      * @param interpolation interpolation, must not be null
      */
     public ContinuousColorScheme(final String name,
-                               final List<Color> colors,
-                               final double minimumValue,
-                               final double maximumValue,
-                               final ColorFactory colorFactory,
-                               final Interpolation interpolation)
+                                 final List<Color> colors,
+                                 final double minimumValue,
+                                 final double maximumValue,
+                                 final ColorFactory colorFactory,
+                                 final Interpolation interpolation)
     {
         if (colors == null)
         {
@@ -236,12 +236,12 @@ public final class ContinuousColorScheme
                 int r = (int) interpolation.interpolate(value, lowerAnchor, upperAnchor,
                                                         (double) lowerColor.getRed(), (double) upperColor.getRed());
                 int g = (int) interpolation.interpolate(value, lowerAnchor, upperAnchor,
-                                                        (double) lowerColor.getGreen(), (double) upperColor.getGreen());
+                                                       (double) lowerColor.getGreen(), (double) upperColor.getGreen());
                 int b = (int) interpolation.interpolate(value, lowerAnchor, upperAnchor,
                                                         (double) lowerColor.getBlue(), (double) upperColor.getBlue());
                 int a = (int) interpolation.interpolate(value, lowerAnchor, upperAnchor,
-                                                        (double) lowerColor.getAlpha(), (double) upperColor.getAlpha());
-                return colorFactory.createColor(r, g, b, a);
+                                                       (double) lowerColor.getAlpha(), (double) upperColor.getAlpha());
+                return colorFactory.createColor(r, g, b, ((float) a) / 255.0f);
             }
         }
         return getMaximumColor();
