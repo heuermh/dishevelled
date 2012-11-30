@@ -63,7 +63,7 @@ final class VennDiagramsAction extends AbstractCyAction
      */
     VennDiagramsAction(final CyApplicationManager applicationManager, final CyGroupManager groupManager, final CyServiceRegistrar serviceRegistrar)
     {
-        super("Venn/Euler Diagrams");
+        super("Venn and Euler Diagrams");
         if (applicationManager == null)
         {
             throw new IllegalArgumentException("applicationManager must not be null");
