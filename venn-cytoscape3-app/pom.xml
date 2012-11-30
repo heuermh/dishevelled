@@ -213,7 +213,7 @@
         <extensions>true</extensions>
         <configuration>
           <instructions>
-            <Bundle-Name>Venn/Euler Diagrams</Bundle-Name>
+            <Bundle-Name>Venn and Euler Diagrams</Bundle-Name>
             <Bundle-SymbolicName>${bundle.symbolicName}</Bundle-SymbolicName>
             <Bundle-Version>${project.version}</Bundle-Version>
             <Export-Package>!${bundle.namespace}.*</Export-Package>
