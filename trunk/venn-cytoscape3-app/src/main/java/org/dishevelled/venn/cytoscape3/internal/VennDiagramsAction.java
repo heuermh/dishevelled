@@ -1,6 +1,6 @@
 /*
 
-    dsh-venn-cytoscape3-app  Cytoscape3 app for venn diagrams.
+    dsh-venn-cytoscape3-app  Cytoscape3 app for venn and euler diagrams.
     Copyright (c) 2012 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
@@ -37,7 +37,7 @@ import org.cytoscape.application.swing.AbstractCyAction;
 import org.cytoscape.group.CyGroupManager;
 import org.cytoscape.service.util.CyServiceRegistrar;
 
-/**s
+/**
  * Venn diagrams action.
  *
  * @author  Michael Heuer

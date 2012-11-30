@@ -1,6 +1,6 @@
 /*
 
-    dsh-venn-cytoscape3-app  Cytoscape3 app for venn diagrams.
+    dsh-venn-cytoscape3-app  Cytoscape3 app for venn and euler diagrams.
     Copyright (c) 2012 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
@@ -23,6 +23,6 @@
 */
 
 /**
- * Internal implementation package for Cytoscape3 app for venn diagrams.
+ * Internal implementation package for Cytoscape3 app for venn and euler diagrams.
  */
 package org.dishevelled.venn.cytoscape3.internal;

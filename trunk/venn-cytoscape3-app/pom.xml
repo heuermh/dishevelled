@@ -11,7 +11,7 @@
   <packaging>bundle</packaging>
   <name>dishevelled.org venn-cytoscape3-app</name>
   <version>1.1-SNAPSHOT</version>
-  <description>Cytoscape3 app for venn diagrams.</description>
+  <description>Cytoscape3 app for venn and euler diagrams.</description>
   <url>http://www.dishevelled.org/venn-cytoscape3-app</url>
   <inceptionYear>2012</inceptionYear>
   <scm>

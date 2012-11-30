@@ -1,6 +1,6 @@
 /*
 
-    dsh-venn-cytoscape3-app  Cytoscape3 app for venn diagrams.
+    dsh-venn-cytoscape3-app  Cytoscape3 app for venn and euler diagrams.
     Copyright (c) 2012 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
@@ -26,16 +26,12 @@ package org.dishevelled.venn.cytoscape3.internal;
 import static org.junit.Assert.assertNotNull;
 
 import org.cytoscape.application.CyApplicationManager;
-import org.cytoscape.application.swing.CySwingApplication;
 import org.cytoscape.group.CyGroupManager;
 import org.cytoscape.service.util.CyServiceRegistrar;
 import org.cytoscape.service.util.internal.FakeBundleContext;
 
 import org.junit.Before;
 import org.junit.Test;
-
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 
 import org.osgi.framework.BundleContext;
 
@@ -48,17 +44,10 @@ public final class CyActivatorTest
 {
     private CyActivator cyActivator;
     private BundleContext bundleContext;
-    @Mock
-    private CyApplicationManager applicationManager;
-    @Mock
-    private CyGroupManager groupManager;
-    @Mock
-    private CyServiceRegistrar serviceRegistrar;
 
     @Before
     public void setUp()
     {
-        MockitoAnnotations.initMocks(this);
         cyActivator = new CyActivator();
         bundleContext = new FakeBundleContext(CyApplicationManager.class, CyGroupManager.class, CyServiceRegistrar.class);
     }
