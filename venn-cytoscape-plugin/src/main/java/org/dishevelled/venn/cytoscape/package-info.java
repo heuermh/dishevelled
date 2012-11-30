@@ -1,6 +1,6 @@
 /*
 
-    dsh-venn-cytoscape-plugin  Cytoscape plugin for venn diagrams.
+    dsh-venn-cytoscape-plugin  Cytoscape plugin for venn and euler diagrams.
     Copyright (c) 2010-2012 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
@@ -23,6 +23,6 @@
 */
 
 /**
- * Cytoscape plugin for venn diagrams.
+ * Cytoscape plugin for venn and euler diagrams.
  */
 package org.dishevelled.venn.cytoscape;

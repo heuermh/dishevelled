@@ -1,6 +1,6 @@
 /*
 
-    dsh-venn-cytoscape-plugin  Cytoscape plugin for venn diagrams.
+    dsh-venn-cytoscape-plugin  Cytoscape plugin for venn and euler diagrams.
     Copyright (c) 2010-2012 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
@@ -39,7 +39,7 @@ import cytoscape.Cytoscape;
 import cytoscape.plugin.CytoscapePlugin;
 
 /**
- * Cytoscape plugin for venn diagrams.
+ * Cytoscape plugin for venn and euler diagrams.
  *
  * @author  Michael Heuer
  * @version $Revision$ $Date$
@@ -48,13 +48,13 @@ public final class VennDiagrams
     extends CytoscapePlugin
 {
     /** Venn diagrams action. */
-    private final Action vennDiagrams = new AbstractAction("Venn Diagrams...")
+    private final Action vennDiagrams = new AbstractAction("Venn and Euler Diagrams...")
         {
             /** {@inheritDoc} */
             public void actionPerformed(final ActionEvent event)
             {
                 JFrame frame = (JFrame) windowForComponent((Component) event.getSource());
-                JDialog dialog = new JDialog(frame, "Venn/Euler Diagrams"); // i18n
+                JDialog dialog = new JDialog(frame, "Venn and Euler Diagrams"); // i18n
                 dialog.setContentPane(new GroupsView());
                 dialog.setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
                 installCloseKeyBinding(dialog);
@@ -65,7 +65,7 @@ public final class VennDiagrams
 
 
     /**
-     * Create a new cytoscape plugin for venn diagrams.
+     * Create a new Cytoscape plugin for venn and euler diagrams.
      */
     public VennDiagrams()
     {

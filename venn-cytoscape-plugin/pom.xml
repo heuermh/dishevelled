@@ -11,7 +11,7 @@
   <packaging>jar</packaging>
   <name>dishevelled.org venn-cytoscape-plugin</name>
   <version>1.0-SNAPSHOT</version>
-  <description>Cytoscape plugin for venn diagrams.</description>
+  <description>Cytoscape plugin for venn and euler diagrams.</description>
   <url>http://www.dishevelled.org/venn-cytoscape-plugin</url>
   <inceptionYear>2010</inceptionYear>
   <scm>
