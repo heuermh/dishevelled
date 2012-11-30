@@ -92,7 +92,7 @@ final class VennDiagramsAction extends AbstractCyAction
             throw new NullPointerException("event must not be null");
         }
         JFrame frame = (JFrame) windowForComponent((Component) event.getSource());
-        JDialog dialog = new JDialog(frame, "Venn/Euler Diagrams"); // i18n
+        JDialog dialog = new JDialog(frame, "Venn and Euler Diagrams"); // i18n
         dialog.setContentPane(new GroupsView(applicationManager, groupManager, serviceRegistrar));
         dialog.setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
         installCloseKeyBinding(dialog);
