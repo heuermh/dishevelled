@@ -429,7 +429,7 @@ public final class Venn4
             {
                 if (args.length < 4)
                 {
-                    throw new IllegalArgumentException("must have at least two file arguments, first, second, third and fourth input files");
+                    throw new IllegalArgumentException("must have at least four file arguments, first, second, third and fourth input files");
                 }
                 File first = new File(args[args.length - 4]);
                 File second = new File(args[args.length - 3]);
@@ -437,7 +437,7 @@ public final class Venn4
                 File fourth = new File(args[args.length - 1]);
                 if (first.getName().startsWith("-") || second.getName().startsWith("-") || third.getName().startsWith("-") || fourth.getName().startsWith("-"))
                 {
-                    throw new IllegalArgumentException("must have at least two file arguments, first, second, third and fourth input files");
+                    throw new IllegalArgumentException("must have at least four file arguments, first, second, third and fourth input files");
                 }
                 File f = defaultIfFound(firstOnly, first, second, third, fourth, STDOUT);
                 File s = defaultIfFound(secondOnly, first, second, third, fourth, STDOUT);

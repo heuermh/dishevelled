@@ -277,14 +277,14 @@ public final class Venn3
             {
                 if (args.length < 3)
                 {
-                    throw new IllegalArgumentException("must have at least two file arguments, first, second, and third input files");
+                    throw new IllegalArgumentException("must have at least three file arguments, first, second, and third input files");
                 }
                 File first = new File(args[args.length - 3]);
                 File second = new File(args[args.length - 2]);
                 File third = new File(args[args.length - 1]);
                 if (first.getName().startsWith("-") || second.getName().startsWith("-") || third.getName().startsWith("-"))
                 {
-                    throw new IllegalArgumentException("must have at least two file arguments, first, second, and third input files");
+                    throw new IllegalArgumentException("must have at least three file arguments, first, second, and third input files");
                 }
                 File f = defaultIfFound(firstOnly, first, second, third, STDOUT);
                 File s = defaultIfFound(secondOnly, first, second, third, STDOUT);
