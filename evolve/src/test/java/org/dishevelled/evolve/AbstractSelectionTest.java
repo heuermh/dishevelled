@@ -1,7 +1,7 @@
 /*
 
     dsh-evolve  Framework for evolutionary algorithms.
-    Copyright (c) 2005-2012 held jointly by the individual authors.
+    Copyright (c) 2005-2013 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
@@ -35,7 +35,6 @@ import org.dishevelled.weighted.HashWeightedMap;
  * Abstract unit test for implementations of Selection.
  *
  * @author  Michael Heuer
- * @version $Revision$ $Date$
  */
 public abstract class AbstractSelectionTest
     extends TestCase

@@ -1,7 +1,7 @@
 /*
 
     dsh-iconbundle-tango  Icon bundles for the Tango Project icon theme.
-    Copyright (c) 2005-2012 held jointly by the individual authors.
+    Copyright (c) 2005-2013 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
@@ -48,7 +48,6 @@ import org.dishevelled.iconbundle.impl.svg.SVGIconBundleUtils;
  * Tango project icon bundle.
  *
  * @author  Michael Heuer
- * @version $Revision$ $Date$
  */
 final class TangoProjectIconBundle
     implements IconBundle
