@@ -1,7 +1,7 @@
 /*
 
     dsh-weighted  Weighted map interface and implementation.
-    Copyright (c) 2005-2012 held jointly by the individual authors.
+    Copyright (c) 2005-2013 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
@@ -29,7 +29,6 @@ import java.util.Random;
  * Unit test for HashWeightedMap.
  *
  * @author  Michael Heuer
- * @version $Revision$ $Date$
  */
 public class HashWeightedMapTest
     extends AbstractWeightedMapTest

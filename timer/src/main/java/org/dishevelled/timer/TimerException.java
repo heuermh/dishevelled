@@ -2,7 +2,7 @@
 
     dsh-timer  Timer with nanosecond resolution and summary statistics
     on recorded elapsed times.
-    Copyright (c) 2004-2012 held jointly by the individual authors.
+    Copyright (c) 2004-2013 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
@@ -31,7 +31,6 @@ package org.dishevelled.timer;
  * @see Timer#start
  * @see Timer#stop
  * @author  Michael Heuer
- * @version $Revision$ $Date$
  */
 public class TimerException
     extends RuntimeException
