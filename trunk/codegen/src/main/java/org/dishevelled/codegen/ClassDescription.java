@@ -1,7 +1,7 @@
 /*
 
     dsh-codegen  Source code generation suite.
-    Copyright (c) 2004-2012 held jointly by the individual authors.
+    Copyright (c) 2004-2013 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
@@ -31,7 +31,6 @@ import java.util.Collections;
  * A description of the attributes and associations for a class.
  *
  * @author  Michael Heuer
- * @version $Revision$ $Date$
  */
 public final class ClassDescription
 {
