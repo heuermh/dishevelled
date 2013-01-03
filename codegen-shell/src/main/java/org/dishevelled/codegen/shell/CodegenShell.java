@@ -1,7 +1,7 @@
 /*
 
     dsh-codegen-shell  Runnable shell for the codegen library.
-    Copyright (c) 2004-2012 held jointly by the individual authors.
+    Copyright (c) 2004-2013 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
@@ -44,7 +44,6 @@ import org.dishevelled.commandline.argument.FileArgument;
  * Runnable shell for the codegen library.
  *
  * @author  Michael Heuer
- * @version $Revision$ $Date$
  */
 public final class CodegenShell
     implements Runnable
@@ -109,7 +108,7 @@ public final class CodegenShell
         if (inputFile == null)
         {
             System.out.println("Shell interface to org.dishevelled.codegen.Codegen");
-            System.out.println("Copyright (c) 2004-2012 held jointly by the individual authors.");
+            System.out.println("Copyright (c) 2004-2013 held jointly by the individual authors.");
             bsh.run();
         }
     }
@@ -168,7 +167,7 @@ public final class CodegenShell
     private static void help()
     {
         System.out.println("Shell interface to org.dishevelled.codegen.Codegen");
-        System.out.println("Copyright (c) 2004-2012 held jointly by the individual authors.");
+        System.out.println("Copyright (c) 2004-2013 held jointly by the individual authors.");
         System.out.println("  example:");
         System.out.println("");
         System.out.println("bsh % ClassDescription foo = new ClassDescription(\"example\", \"Foo\");");

@@ -1,7 +1,7 @@
 /*
 
     dsh-commandline  Command line parser based on typed arguments.
-    Copyright (c) 2004-2012 held jointly by the individual authors.
+    Copyright (c) 2004-2013 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
@@ -29,7 +29,6 @@ import java.net.URL;
  * An URL argument.
  *
  * @author  Michael Heuer
- * @version $Revision$ $Date$
  */
 public final class URLArgument
     extends AbstractArgument<URL>
