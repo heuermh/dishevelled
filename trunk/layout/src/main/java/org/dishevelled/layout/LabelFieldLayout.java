@@ -1,7 +1,7 @@
 /*
 
     dsh-layout  Layout managers for lightweight components.
-    Copyright (c) 2003-2012 held jointly by the individual authors.
+    Copyright (c) 2003-2013 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
@@ -96,7 +96,6 @@ import java.awt.GridBagConstraints;
  * for fields.</p>
  *
  * @author  Michael Heuer
- * @version $Revision$ $Date$
  */
 public final class LabelFieldLayout
     extends GridBagLayout

@@ -1,7 +1,7 @@
 /*
 
     dsh-iconbundle  Bundles of variants for icon images.
-    Copyright (c) 2003-2012 held jointly by the individual authors.
+    Copyright (c) 2003-2013 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
@@ -41,7 +41,6 @@ import java.io.ObjectStreamException;
  * and optionally override readResolve to support serialization.</p>
  *
  * @author  Michael Heuer
- * @version $Revision$ $Date$
  */
 public abstract class IconSize
     implements Serializable

@@ -1,7 +1,7 @@
 /*
 
     dsh-matrix  long-addressable bit and typed object matrix implementations.
-    Copyright (c) 2004-2012 held jointly by the individual authors.
+    Copyright (c) 2004-2013 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
@@ -47,7 +47,6 @@ import org.dishevelled.matrix.Matrix2D;
  *
  * @param <E> type for this sparse 3D matrix
  * @author  Michael Heuer
- * @version $Revision$ $Date$
  */
 public class SparseMatrix3D<E>
     extends AbstractMatrix3D<E>

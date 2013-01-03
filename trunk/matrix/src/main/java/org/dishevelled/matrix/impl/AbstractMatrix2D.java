@@ -1,7 +1,7 @@
 /*
 
     dsh-matrix  long-addressable bit and typed object matrix implementations.
-    Copyright (c) 2004-2012 held jointly by the individual authors.
+    Copyright (c) 2004-2013 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
@@ -42,7 +42,6 @@ import org.dishevelled.functor.TernaryProcedure;
  *
  * @param <E> type of this abstract 2D matrix
  * @author  Michael Heuer
- * @version $Revision$ $Date$
  */
 abstract class AbstractMatrix2D<E>
     implements Matrix2D<E>

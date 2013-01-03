@@ -1,7 +1,7 @@
 /*
 
     dsh-iconbundle-tools  Command line icon bundle tools.
-    Copyright (c) 2003-2012 held jointly by the individual authors.
+    Copyright (c) 2003-2013 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
@@ -43,7 +43,6 @@ import org.dishevelled.iconbundle.IconTextDirection;
  * Show all variants runnable.
  *
  * @author  Michael Heuer
- * @version $Revision$ $Date$
  */
 public final class ShowAllVariants
     implements Runnable
