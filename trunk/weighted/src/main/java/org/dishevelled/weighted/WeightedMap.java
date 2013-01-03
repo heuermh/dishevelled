@@ -1,7 +1,7 @@
 /*
 
     dsh-weighted  Weighted map interface and implementation.
-    Copyright (c) 2005-2012 held jointly by the individual authors.
+    Copyright (c) 2005-2013 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
@@ -55,7 +55,6 @@ import java.util.Map;
  * @param <E> the type of elements maintained by this weighted map
  * @author  Michael Heuer
  * @author  Mark Schreiber
- * @version $Revision$ $Date$
  */
 public interface WeightedMap<E>
     extends Map<E, Double>

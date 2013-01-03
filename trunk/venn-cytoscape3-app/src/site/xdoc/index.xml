@@ -2,7 +2,7 @@
 <!--
 
     dsh-venn-cytoscape3-app  Cytoscape3 app for venn and euler diagrams.
-    Copyright (c) 2012 held jointly by the individual authors.
+    Copyright (c) 2012-2013 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
@@ -89,7 +89,7 @@ details view supports two to four Cytoscape groups.
 &gt; <a href="http://apps.cytoscape.org/apps/venndiagramgenerator">http://apps.cytoscape.org/apps/venndiagramgenerator</a>
 </p>
 <p id="3">
-[3] Leland Wilkinson, "Exact and Approximate Area-Proportional Circular Venn and Euler Diagrams," IEEE Transactions on Visualization and Computer Graphics, pp. 321-331, February, 2012<br/>
+[3] Leland Wilkinson, "Exact and Approximate Area-Proportional Circular Venn and Euler Diagrams," IEEE Transactions on Visualization and Computer Graphics, pp. 321-331, February, 2012-2013<br/>
 &gt; <a href="http://www.computer.org/portal/web/csdl/doi/10.1109/TVCG.2011.56">http://www.computer.org/portal/web/csdl/doi/10.1109/TVCG.2011.56</a>
 </p>
 </section>

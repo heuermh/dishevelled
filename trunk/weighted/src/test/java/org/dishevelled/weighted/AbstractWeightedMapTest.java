@@ -1,7 +1,7 @@
 /*
 
     dsh-weighted  Weighted map interface and implementation.
-    Copyright (c) 2005-2012 held jointly by the individual authors.
+    Copyright (c) 2005-2013 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
@@ -35,7 +35,6 @@ import junit.framework.TestCase;
  *
  * @author  Michael Heuer
  * @author  Mark Schreiber
- * @version $Revision$ $Date$
  */
 public abstract class AbstractWeightedMapTest
     extends TestCase
