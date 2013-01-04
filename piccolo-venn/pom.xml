@@ -44,11 +44,6 @@
       <scope>compile</scope>
     </dependency>
     <dependency>
-      <groupId>org.piccolo2d</groupId>
-      <artifactId>piccolo2d-jdk16</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <scope>test</scope>

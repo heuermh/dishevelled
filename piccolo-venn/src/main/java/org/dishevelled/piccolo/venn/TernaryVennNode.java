@@ -39,9 +39,8 @@ import java.util.Set;
 
 import org.piccolo2d.PNode;
 
-import org.piccolo2d.jdk16.nodes.PArea;
-import org.piccolo2d.jdk16.nodes.PPath;
-
+import org.piccolo2d.nodes.PArea;
+import org.piccolo2d.nodes.PPath;
 import org.piccolo2d.nodes.PText;
 
 import org.dishevelled.venn.TernaryVennModel;

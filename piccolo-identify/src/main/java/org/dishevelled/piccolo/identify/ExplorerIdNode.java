@@ -111,7 +111,7 @@ public final class ExplorerIdNode
      */
     private void createNodes()
     {
-        textSelection = new PPath();
+        textSelection = new PPath.Double();
         textShadow = new PShadow(getNameTextNode().toImage(), Color.BLACK, BLUR_RADIUS);
         addChild(textSelection);
         addChild(textShadow);
@@ -241,7 +241,8 @@ public final class ExplorerIdNode
 
         Shape textSelectionRect = new Rectangle2D.Double(0.0d, 0.0d,
                                                          textBounds.getWidth() + 2 * textSelectionWidthMargin, textBounds.getHeight() + 2 * textSelectionHeightMargin);
-        textSelection.setPathTo(textSelectionRect);
+        textSelection.reset();
+        textSelection.append(textSelectionRect, false);
 
         PBounds textSelectionBounds = textSelection.getBoundsReference();
         Point2D textSelectionCenter = textSelectionBounds.getCenter2D();
