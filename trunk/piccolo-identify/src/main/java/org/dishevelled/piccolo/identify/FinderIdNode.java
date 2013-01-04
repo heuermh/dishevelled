@@ -115,16 +115,16 @@ public final class FinderIdNode
      */
     private void createNodes()
     {
-        iconSelection = new PPath();
+        iconSelection = new PPath.Double();
         iconSelection.setPaint(TEXT_SELECTION_PAINT);
         iconSelection.setStroke(ICON_SELECTION_STROKE);
         iconSelection.setStrokePaint(ICON_SELECTION_STROKE_PAINT);
 
-        textSelection = new PPath();
+        textSelection = new PPath.Double();
         textSelection.setPaint(TEXT_SELECTION_PAINT);
         textSelection.setStroke(null);
 
-        textSelectionShadow = new PPath();
+        textSelectionShadow = new PPath.Double();
         textSelectionShadow.setPaint(TEXT_SELECTION_PAINT);
         textSelectionShadow.setStroke(null);
 
@@ -227,7 +227,8 @@ public final class FinderIdNode
                                                               iconBounds.getWidth() + 2.0d * iconSelectionMargin, iconBounds.getHeight() + 2.0d * iconSelectionMargin,
                                                               2.0d, 2.0d);
 
-        iconSelection.setPathTo(iconSelectionRect);
+        iconSelection.reset();
+        iconSelection.append(iconSelectionRect, false);
 
         PBounds iconSelectionBounds = iconSelection.getBoundsReference();
         Point2D iconSelectionCenter = iconSelectionBounds.getCenter2D();
@@ -251,8 +252,10 @@ public final class FinderIdNode
                                                               textBounds.getWidth() + 2.0d * textSelectionWidthMargin, textBounds.getHeight() + textSelectionHeightTopMargin + textSelectionHeightBottomMargin,
                                                               12.0d, 12.0d);
 
-        textSelection.setPathTo(textSelectionRect);
-        textSelectionShadow.setPathTo(textSelectionRect);
+        textSelection.reset();
+        textSelection.append(textSelectionRect, false);
+        textSelectionShadow.reset();
+        textSelectionShadow.append(textSelectionRect, false);
         PBounds textSelectionBounds = textSelection.getBoundsReference();
         Point2D textSelectionCenter = textSelectionBounds.getCenter2D();
 

@@ -111,7 +111,7 @@ public final class NautilusIdNode
      */
     private void createNodes()
     {
-        textSelection = new PPath();
+        textSelection = new PPath.Double();
         textShadow = new PShadow(getNameTextNode().toImage(), Color.BLACK, BLUR_RADIUS);
         addChild(textShadow);
         addChild(textSelection);
@@ -271,7 +271,8 @@ public final class NautilusIdNode
         Shape textSelectionRect = new RoundRectangle2D.Double(0.0d, 0.0d,
                                                               textBounds.getWidth() + 2.0d * textSelectionWidthMargin, textBounds.getHeight() + 2.0d * textSelectionHeightMargin,
                                                               6.0d, 6.0d);
-        textSelection.setPathTo(textSelectionRect);
+        textSelection.reset();
+        textSelection.append(textSelectionRect, false);
         PBounds textSelectionBounds = textSelection.getBoundsReference();
         Point2D textSelectionCenter = textSelectionBounds.getCenter2D();
         textSelection.setOffset(-textSelectionCenter.getX(), iconCenter.getY() + iconTextGap - textSelectionHeightMargin);
