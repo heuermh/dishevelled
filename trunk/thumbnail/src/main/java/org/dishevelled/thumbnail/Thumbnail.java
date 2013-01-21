@@ -55,7 +55,7 @@ import org.w3c.dom.NodeList;
  *
  * @author  Michael Heuer
  */
-public final class Thumbnail
+final class Thumbnail
 {
     /** URI for the original image. */
     private final URI uri;
@@ -97,7 +97,7 @@ public final class Thumbnail
      *
      * @return the URI for the original image
      */
-    public URI getURI()
+    URI getURI()
     {
         return uri;
     }
@@ -107,7 +107,7 @@ public final class Thumbnail
      *
      * @return the modification time for the original image in seconds since 01 January 1970
      */
-    public long getModificationTime()
+    long getModificationTime()
     {
         return modificationTime;
     }
@@ -117,9 +117,9 @@ public final class Thumbnail
      *
      * @reutrn the width of the original image in pixels
      */
-    public int getWidth()
+    int getWidth()
     {
-        return height;
+        return width;
     }
 
     /**
@@ -127,7 +127,7 @@ public final class Thumbnail
      *
      * @reutrn the height of the original image in pixels
      */
-    public int getHeight()
+    int getHeight()
     {
         return height;
     }
@@ -137,7 +137,7 @@ public final class Thumbnail
      *
      * @return the thumbnail image
      */
-    public BufferedImage getImage()
+    BufferedImage getImage()
     {
         return image;
     }
@@ -148,7 +148,7 @@ public final class Thumbnail
      * @param file file to read, must not be null and must be readable
      * @throws IOException if an I/O error occurs
      */
-    public static Thumbnail read(final File file) throws IOException
+    static Thumbnail read(final File file) throws IOException
     {
         if (file == null)
         {
@@ -249,7 +249,7 @@ public final class Thumbnail
      * @param file file to write to, must not be null and must be writeable
      * @throws IOException if an I/O error occurs
      */
-    public void write(final File file) throws IOException
+    void write(final File file) throws IOException
     {
         if (file == null)
         {
