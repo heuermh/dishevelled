@@ -57,16 +57,16 @@ import org.w3c.dom.NodeList;
  */
 public final class Thumbnail
 {
-    /** URI for the original file. */
+    /** URI for the original image. */
     private final URI uri;
 
-    /** Modification time for the original file. */
+    /** Modification time for the original image. */
     private final long modificationTime;
 
-    /** Width of the original file image in pixels. */
+    /** Width of the original image in pixels. */
     private final int width;
 
-    /** Height of the original file image in pixels. */
+    /** Height of the original image in pixels. */
     private final int height;
 
     /** Thumbnail image. */
@@ -76,10 +76,10 @@ public final class Thumbnail
     /**
      * Create a new thumbnail.
      *
-     * @param uri URI for the original file
-     * @param modificationTime modification time for the original file
-     * @param width width of the original file image in pixels
-     * @param height height of the original file image in pixels
+     * @param uri URI for the original image
+     * @param modificationTime modification time for the original image
+     * @param width width of the original image in pixels
+     * @param height height of the original image in pixels
      * @param image thumbnail image
      */
     Thumbnail(final URI uri, final long modificationTime, final int width, final int height, final BufferedImage image)
@@ -93,9 +93,9 @@ public final class Thumbnail
 
 
     /**
-     * Return the URI for the original file.
+     * Return the URI for the original image.
      *
-     * @return the URI for the original file
+     * @return the URI for the original image
      */
     public URI getURI()
     {
@@ -103,9 +103,9 @@ public final class Thumbnail
     }
 
     /**
-     * Return the modification time for the original file in seconds since 01 January 1970.
+     * Return the modification time for the original image in seconds since 01 January 1970.
      *
-     * @return the modification time for the original file in seconds since 01 January 1970
+     * @return the modification time for the original image in seconds since 01 January 1970
      */
     public long getModificationTime()
     {
@@ -113,9 +113,9 @@ public final class Thumbnail
     }
 
     /**
-     * Return the width of the original file image in pixels.
+     * Return the width of the original image in pixels.
      *
-     * @reutrn the width of the original file image in pixels
+     * @reutrn the width of the original image in pixels
      */
     public int getWidth()
     {
@@ -123,9 +123,9 @@ public final class Thumbnail
     }
 
     /**
-     * Return the height of the original file image in pixels.
+     * Return the height of the original image in pixels.
      *
-     * @reutrn the height of the original file image in pixels
+     * @reutrn the height of the original image in pixels
      */
     public int getHeight()
     {
