@@ -58,6 +58,12 @@ public abstract class AbstractThumbnailManager implements ThumbnailManager
     /** Directory for metadata about failed thumbnail images. */
     private final File failDirectory;
 
+
+    /**
+     * Create a new abstract thumbnail manager with the specified root thumbnail directory.
+     *
+     * @param directory root thumbnail directory, must not be null
+     */
     protected AbstractThumbnailManager(final File directory)
     {
         if (directory == null)
@@ -80,6 +86,11 @@ public abstract class AbstractThumbnailManager implements ThumbnailManager
     }
 
 
+    /**
+     * Fix the permissions of the specified file.
+     *
+     * @param file file
+     */
     private void fixPermissions(final File file)
     {
         // set to 600
@@ -88,6 +99,11 @@ public abstract class AbstractThumbnailManager implements ThumbnailManager
         file.setExecutable(false);
     }
 
+    /**
+     * Fix the permissions of the specified directory.
+     *
+     * @param directory directory
+     */
     private void fixDirectoryPermissions(final File directory)
     {
         // set to 700
@@ -96,7 +112,20 @@ public abstract class AbstractThumbnailManager implements ThumbnailManager
         directory.setExecutable(true, true);
     }
 
-    private BufferedImage createThumbnail(final URI uri, final long modificationTime, final File thumbnailDirectory, final int size) throws IOException
+     /**
+     * Create and return a thumbnail image for the specified URI.
+     *
+     * @param uri URI for the original image, must not be null
+     * @param modificationTime modification time for the original image
+     * @param thumbnailDirectory thumbnail directory
+     * @param size size
+     * @return a thumbnail image for the specified URI
+     * @throws IOException if an I/O error occurs
+     */
+    private BufferedImage createThumbnail(final URI uri,
+                                          final long modificationTime,
+                                          final File thumbnailDirectory,
+                                          final int size) throws IOException
     {
         if (uri == null)
         {
@@ -114,8 +143,10 @@ public abstract class AbstractThumbnailManager implements ThumbnailManager
         }
 
         URL url = uri.toURL();
+        // likely place for IOException to be thrown
         BufferedImage image = ImageIO.read(url);
-        Thumbnail thumbnail = new Thumbnail(uri, modificationTime, image.getWidth(), image.getHeight(), Scalr.resize(image, size));
+        Thumbnail thumbnail = new Thumbnail(uri, modificationTime, image.getWidth(), image.getHeight(),
+                                            Scalr.resize(image, size));
 
         File tmp = File.createTempFile("tmp", ".png", thumbnailDirectory);
         fixPermissions(tmp);
