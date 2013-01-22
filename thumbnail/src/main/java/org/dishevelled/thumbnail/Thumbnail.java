@@ -115,7 +115,7 @@ final class Thumbnail
     /**
      * Return the width of the original image in pixels.
      *
-     * @reutrn the width of the original image in pixels
+     * @return the width of the original image in pixels
      */
     int getWidth()
     {
@@ -125,7 +125,7 @@ final class Thumbnail
     /**
      * Return the height of the original image in pixels.
      *
-     * @reutrn the height of the original image in pixels
+     * @return the height of the original image in pixels
      */
     int getHeight()
     {
@@ -146,6 +146,7 @@ final class Thumbnail
      * Read the specified file and return a thumbnail.
      *
      * @param file file to read, must not be null and must be readable
+     * @return a thumbnail read from the specified file
      * @throws IOException if an I/O error occurs
      */
     static Thumbnail read(final File file) throws IOException
@@ -168,7 +169,7 @@ final class Thumbnail
             IIOMetadata metadata = imageReader.getImageMetadata(0);
 
             // this cast helps getting the contents
-            PNGMetadata pngMetadata = (PNGMetadata) metadata; 
+            PNGMetadata pngMetadata = (PNGMetadata) metadata;
             NodeList childNodes = pngMetadata.getStandardTextNode().getChildNodes();
 
             URI uri = null; // default values?
@@ -177,7 +178,8 @@ final class Thumbnail
             int height = 0;
             BufferedImage image = null;
 
-            for (int i = 0; i < childNodes.getLength(); i++) {
+            for (int i = 0; i < childNodes.getLength(); i++)
+            {
                 Node node = childNodes.item(i);
                 String keyword = node.getAttributes().getNamedItem("keyword").getNodeValue();
                 String value = node.getAttributes().getNamedItem("value").getNodeValue();
@@ -207,7 +209,7 @@ final class Thumbnail
             }
             image = imageReader.read(0);
             return new Thumbnail(uri, modificationTime, width, height, image);
-        }        
+        }
         catch (IOException e)
         {
             throw e;
