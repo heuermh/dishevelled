@@ -32,7 +32,7 @@
 
 <p>
 dishevelled.org <b>thumbnail</b> provides an implementation of the freedesktop.org thumbnail specification [<a href="#1">1</a>].
-The thumbnail library requires java version 1.6 or later.
+The thumbnail library requires java version 1.7 or later.
 </p>
 </section>
 

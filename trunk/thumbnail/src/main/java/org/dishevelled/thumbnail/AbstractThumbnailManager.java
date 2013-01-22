@@ -31,9 +31,14 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URL;
 
-import javax.imageio.ImageIO;
+import java.nio.file.Files;
 
-import com.google.common.io.Files;
+import java.nio.file.attribute.PosixFilePermission;
+
+import java.util.EnumSet;
+import java.util.Set;
+
+import javax.imageio.ImageIO;
 
 import org.apache.commons.codec.digest.DigestUtils;
 
@@ -57,6 +62,20 @@ public abstract class AbstractThumbnailManager implements ThumbnailManager
 
     /** Directory for metadata about failed thumbnail images. */
     private final File failDirectory;
+
+    /** Normal (128x128 pixel) size. */
+    private static final int NORMAL_SIZE = 128;
+
+    /** Large (256x256 pixel) size. */
+    private static final int LARGE_SIZE = 256;
+
+    /** Directory permissions. */
+    private static final Set<PosixFilePermission> DIRECTORY_PERMISSIONS = EnumSet.of(PosixFilePermission.OWNER_READ,
+                                                                                     PosixFilePermission.OWNER_WRITE,
+                                                                                     PosixFilePermission.OWNER_EXECUTE);
+    /** File permissions. */
+    private static final Set<PosixFilePermission> FILE_PERMISSIONS = EnumSet.of(PosixFilePermission.OWNER_READ,
+                                                                                PosixFilePermission.OWNER_WRITE);
 
 
     /**
@@ -93,10 +112,15 @@ public abstract class AbstractThumbnailManager implements ThumbnailManager
      */
     private void fixPermissions(final File file)
     {
-        // set to 600
-        file.setReadable(true, true);
-        file.setWritable(true, true);
-        file.setExecutable(false);
+        try
+        {
+            // set to 600
+            Files.setPosixFilePermissions(file.toPath(), FILE_PERMISSIONS);
+        }
+        catch (Exception e)
+        {
+            // ignore
+        }
     }
 
     /**
@@ -106,10 +130,15 @@ public abstract class AbstractThumbnailManager implements ThumbnailManager
      */
     private void fixDirectoryPermissions(final File directory)
     {
-        // set to 700
-        directory.setReadable(true, true);
-        directory.setWritable(true, true);
-        directory.setExecutable(true, true);
+        try
+        {
+            // set to 700
+            Files.setPosixFilePermissions(directory.toPath(), DIRECTORY_PERMISSIONS);
+        }
+        catch (Exception e)
+        {
+            // ignore
+        }
     }
 
      /**
@@ -151,7 +180,7 @@ public abstract class AbstractThumbnailManager implements ThumbnailManager
         File tmp = File.createTempFile("tmp", ".png", thumbnailDirectory);
         fixPermissions(tmp);
         thumbnail.write(tmp);
-        Files.move(tmp, thumbnailFile);
+        com.google.common.io.Files.move(tmp, thumbnailFile);
 
         return thumbnail.getImage();
     }
@@ -159,12 +188,12 @@ public abstract class AbstractThumbnailManager implements ThumbnailManager
     @Override
     public final BufferedImage createThumbnail(final URI uri, final long modificationTime) throws IOException
     {
-        return createThumbnail(uri, modificationTime, normalDirectory, 128);
+        return createThumbnail(uri, modificationTime, normalDirectory, NORMAL_SIZE);
     }
 
     @Override
     public final BufferedImage createLargeThumbnail(final URI uri, final long modificationTime) throws IOException
     {
-        return createThumbnail(uri, modificationTime, largeDirectory, 256);
+        return createThumbnail(uri, modificationTime, largeDirectory, LARGE_SIZE);
     }
 }

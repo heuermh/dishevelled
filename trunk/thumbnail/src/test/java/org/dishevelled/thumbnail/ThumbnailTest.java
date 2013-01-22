@@ -25,8 +25,11 @@ package org.dishevelled.thumbnail;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.awt.image.BufferedImage;
+
+import java.io.File;
 
 import java.net.URI;
 
@@ -98,4 +101,30 @@ public final class ThumbnailTest
     {
     }
     */
+
+    @Test
+    public void testWrite() throws Exception
+    {
+        Thumbnail thumbnail = new Thumbnail(uri, 1L, 10, 100, image);
+        File thumbnailFile = File.createTempFile("thumbnailTest", ".png");
+        thumbnail.write(thumbnailFile);
+        assertTrue(thumbnailFile.exists());
+        assertTrue(thumbnailFile.canRead());
+    }
+
+    @Test
+    public void testWriteThenRead() throws Exception
+    {
+        Thumbnail thumbnail = new Thumbnail(uri, 1L, 10, 100, image);
+        File thumbnailFile = File.createTempFile("thumbnailTest", ".png");
+        thumbnail.write(thumbnailFile);
+
+        Thumbnail thumbnailCopy = Thumbnail.read(thumbnailFile);
+        assertNotNull(thumbnailCopy);
+        assertEquals(thumbnail.getURI(), thumbnailCopy.getURI());
+        assertEquals(thumbnail.getModificationTime(), thumbnailCopy.getModificationTime());
+        assertEquals(thumbnail.getWidth(), thumbnailCopy.getWidth());
+        assertEquals(thumbnail.getHeight(), thumbnailCopy.getHeight());
+        assertNotNull(thumbnailCopy.getImage());
+    }
 }
