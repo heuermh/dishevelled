@@ -174,6 +174,10 @@ public abstract class AbstractThumbnailManager implements ThumbnailManager
         URL url = uri.toURL();
         // likely place for IOException to be thrown
         BufferedImage image = ImageIO.read(url);
+        if (image == null)
+        {
+            throw new IOException("cannot create a thumbnail image for " + uri);
+        }
         Thumbnail thumbnail = new Thumbnail(uri, modificationTime, image.getWidth(), image.getHeight(),
                                             Scalr.resize(image, size));
 
