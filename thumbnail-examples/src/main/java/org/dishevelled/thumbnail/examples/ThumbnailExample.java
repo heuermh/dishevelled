@@ -74,7 +74,6 @@ public final class ThumbnailExample extends JPanel implements Runnable
         uris = GlazedLists.eventList(Collections.<URI>emptyList());
         count = new CountLabel<URI>(uris);
         list = new UriList(uris);
-        list.getList().setCellRenderer(new ThumbnailListCellRenderer(new XdgThumbnailManager()));
 
         setLayout(new BorderLayout());
         setBorder(new EmptyBorder(12, 12, 12, 12));
@@ -122,6 +121,8 @@ public final class ThumbnailExample extends JPanel implements Runnable
         UriList(final EventList<URI> eventList)
         {
             super(eventList);
+            getLabel().setText("Thumbnails");
+            getList().setCellRenderer(new ThumbnailListCellRenderer(new XdgThumbnailManager()));
         }
 
         @Override
