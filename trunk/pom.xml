@@ -81,6 +81,8 @@
     <module>site-skin</module>
     <module>swarm</module>
     <module>swarm-examples</module>
+    <module>thumbnail</module>
+    <module>thumbnail-examples</module>
     <module>timer</module>
     <module>venn</module>
     <module>venn-examples</module>
