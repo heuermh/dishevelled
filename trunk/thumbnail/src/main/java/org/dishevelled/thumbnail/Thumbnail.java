@@ -280,10 +280,12 @@ final class Thumbnail
         }
         metadata.mergeTree("javax_imageio_png_1.0", root);
 
+        FileOutputStream fileOutputStream = null;
         ImageOutputStream imageOutputStream = null;
         try
         {
-            imageOutputStream = ImageIO.createImageOutputStream(new FileOutputStream(file));
+            fileOutputStream = new FileOutputStream(file);
+            imageOutputStream = ImageIO.createImageOutputStream(fileOutputStream);
             writer.setOutput(imageOutputStream);
             writer.write(metadata, new IIOImage(image, null, metadata), writeParam);
         }
@@ -293,6 +295,14 @@ final class Thumbnail
         }
         finally
         {
+            try
+            {
+                fileOutputStream.close();
+            }
+            catch (Exception e)
+            {
+                // ignore
+            }
             try
             {
                 imageOutputStream.close();
