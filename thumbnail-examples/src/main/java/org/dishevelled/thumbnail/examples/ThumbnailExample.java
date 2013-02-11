@@ -31,6 +31,9 @@ import java.net.URI;
 
 import java.util.Collections;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import javax.swing.JFrame;
 import javax.swing.JFileChooser;
 import javax.swing.JPanel;
@@ -63,6 +66,9 @@ public final class ThumbnailExample extends JPanel implements Runnable
 
     /** Event list of URIs. */
     private final EventList<URI> uris;
+
+    /** Match common image file extensions. */
+    private static final Pattern IMAGE_FILE_EXTENSIONS = Pattern.compile("^.+\\.(?i)(?:jpe?g|png|gif)$");
 
 
     /**
@@ -109,7 +115,13 @@ public final class ThumbnailExample extends JPanel implements Runnable
         // todo:  background this
         for (File file : directory.listFiles())
         {
-            uris.add(file.toURI());
+            // sucks
+            // String mimeType = Files.probeContentType(file.toPath());
+            Matcher matcher = IMAGE_FILE_EXTENSIONS.matcher(file.getPath());
+            if (matcher.matches())
+            {
+                uris.add(file.toURI());
+            }
         }
     }
 
@@ -123,6 +135,7 @@ public final class ThumbnailExample extends JPanel implements Runnable
             super(eventList);
             getLabel().setText("Thumbnails");
             getList().setCellRenderer(new ThumbnailListCellRenderer(new XdgThumbnailManager()));
+            getPasteAction().setEnabled(false);
         }
 
         @Override
@@ -140,6 +153,7 @@ public final class ThumbnailExample extends JPanel implements Runnable
         @Override
         public void paste()
         {
+            // empty
         }
     }
 
