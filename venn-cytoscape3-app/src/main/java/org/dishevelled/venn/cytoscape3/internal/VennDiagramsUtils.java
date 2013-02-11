@@ -90,6 +90,24 @@ final class VennDiagramsUtils
     }
 
     /**
+     * Set the name of the specified group in the specified network to <code>name</code>.
+     *
+     * @param group group
+     * @param network network
+     * @param name name
+     */
+    static void rename(final CyGroup group, final CyNetwork network, final String name)
+    {
+        if (name == null)
+        {
+            return;
+        }
+        CyTable nodeTable = network.getDefaultNodeTable();
+        CyRow nodeRow = nodeTable.getRow(group.getGroupNode().getSUID());        
+        nodeRow.set(CyNetwork.NAME, name);
+    }
+
+    /**
      * Install a close action binding to <code>Ctrl-C</code>/<code>Command-C</code> for the specified dialog.
      *
      * @param dialog dialog, must not be null

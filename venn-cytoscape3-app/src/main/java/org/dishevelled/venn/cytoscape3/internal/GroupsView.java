@@ -26,6 +26,7 @@ package org.dishevelled.venn.cytoscape3.internal;
 import static javax.swing.SwingUtilities.windowForComponent;
 import static org.dishevelled.venn.cytoscape3.internal.VennDiagramsUtils.installCloseKeyBinding;
 import static org.dishevelled.venn.cytoscape3.internal.VennDiagramsUtils.nameOf;
+import static org.dishevelled.venn.cytoscape3.internal.VennDiagramsUtils.rename;
 
 import java.awt.BorderLayout;
 import java.awt.Toolkit;
@@ -50,6 +51,8 @@ import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JList;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
@@ -213,6 +216,16 @@ final class GroupsView
             }
         };
 
+    /** Rename group action. */
+    private final Action renameGroup = new AbstractAction("Rename group...")
+        {
+            /** {@inheritDoc} */
+            public void actionPerformed(final ActionEvent event)
+            {
+                renameGroup();
+            }
+        };
+
     /** List selection listener. */
     private final ListSelectionListener listSelectionListener = new ListSelectionListener()
         {
@@ -223,6 +236,7 @@ final class GroupsView
                 eulerDiagram.setEnabled(size > 1);
                 vennDiagram.setEnabled(size > 1 && size < 5);
                 details.setEnabled(size > 1 && size < 5);
+                renameGroup.setEnabled(size == 1);
             }
         };
 
@@ -272,12 +286,15 @@ final class GroupsView
         KeyStroke ctrlShiftE = KeyStroke.getKeyStroke(KeyEvent.VK_E, menuKeyMask | InputEvent.SHIFT_DOWN_MASK);
         KeyStroke ctrlShiftV = KeyStroke.getKeyStroke(KeyEvent.VK_V, menuKeyMask | InputEvent.SHIFT_DOWN_MASK);
         KeyStroke ctrlShiftD = KeyStroke.getKeyStroke(KeyEvent.VK_D, menuKeyMask | InputEvent.SHIFT_DOWN_MASK);
+        KeyStroke ctrlShiftR = KeyStroke.getKeyStroke(KeyEvent.VK_R, menuKeyMask | InputEvent.SHIFT_DOWN_MASK);
         inputMap.put(ctrlShiftE, "eulerDiagram");
         inputMap.put(ctrlShiftV, "vennDiagram");
         inputMap.put(ctrlShiftD, "details");
+        inputMap.put(ctrlShiftR, "renameGroup");
         getActionMap().put("eulerDiagram", eulerDiagram);
         getActionMap().put("vennDiagram", vennDiagram);
         getActionMap().put("details", details);
+        getActionMap().put("renameGroup", renameGroup);
 
         IdMenuItem eulerDiagramMenuItem = new IdMenuItem(eulerDiagram);
         eulerDiagramMenuItem.setAccelerator(ctrlShiftE);
@@ -285,16 +302,21 @@ final class GroupsView
         vennDiagramMenuItem.setAccelerator(ctrlShiftV);
         IdMenuItem detailsMenuItem = new IdMenuItem(details);
         detailsMenuItem.setAccelerator(ctrlShiftD);
+        JMenuItem renameGroupMenuItem = new JMenuItem(renameGroup);
+        renameGroupMenuItem.setAccelerator(ctrlShiftR);
 
         contextMenu = new JPopupMenu();
         contextMenu.add(eulerDiagramMenuItem);
         contextMenu.add(vennDiagramMenuItem);
         contextMenu.add(detailsMenuItem);
+        contextMenu.addSeparator();
+        contextMenu.add(renameGroupMenuItem);
         groupList.addMouseListener(new ContextMenuListener(contextMenu));
 
         eulerDiagram.setEnabled(false);
         vennDiagram.setEnabled(false);
         details.setEnabled(false);
+        renameGroup.setEnabled(false);
 
         layoutComponents();
 
@@ -549,6 +571,19 @@ final class GroupsView
         // todo: offset per parent dialog
         dialog.setBounds(100, 100, 894, 888);
         dialog.setVisible(true);
+    }
+
+    /**
+     * Rename the selected group if any.
+     */
+    private void renameGroup()
+    {
+        if (selected.size() == 1)
+        {
+            CyNetwork network = applicationManager.getCurrentNetwork();
+            CyGroup group = selected.get(0);
+            rename(group, network, JOptionPane.showInputDialog(windowForComponent(this), "Please enter a new name for this group:", nameOf(group, network)));
+        }
     }
 
     @Override
