@@ -26,6 +26,7 @@ package org.dishevelled.thumbnail.swing;
 import java.awt.Component;
 import java.awt.Image;
 
+import java.io.File;
 import java.io.IOException;
 
 import java.net.URI;
@@ -82,7 +83,18 @@ public final class LargeThumbnailRenderer implements Renderer
         {
             try
             {
-                Image thumbnail = thumbnailManager.createThumbnail((URI) value, -1L);
+                URI uri = (URI) value;
+                long lastModified = 0L;
+                try
+                {
+                    File file = new File(uri);
+                    lastModified = file.lastModified();
+                }
+                catch (IllegalArgumentException e)
+                {
+                    // ignore
+                }
+                Image thumbnail = thumbnailManager.createThumbnail(uri, lastModified);
                 if (imageIcon == null)
                 {
                     imageIcon = new ImageIcon(thumbnail);
