@@ -38,6 +38,7 @@ import javax.swing.JFrame;
 import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+import javax.swing.SwingWorker;
 
 import javax.swing.border.EmptyBorder;
 
@@ -112,17 +113,24 @@ public final class ThumbnailExample extends JPanel implements Runnable
 
     private void addDirectory(final File directory)
     {
-        // todo:  background this
-        for (File file : directory.listFiles())
+        new SwingWorker<Void, Void>()
         {
-            // sucks
-            // String mimeType = Files.probeContentType(file.toPath());
-            Matcher matcher = IMAGE_FILE_EXTENSIONS.matcher(file.getPath());
-            if (matcher.matches())
+            @Override
+            protected Void doInBackground() throws Exception
             {
-                uris.add(file.toURI());
+                for (File file : directory.listFiles())
+                {
+                    // sucks
+                    // String mimeType = Files.probeContentType(file.toPath());
+                    Matcher matcher = IMAGE_FILE_EXTENSIONS.matcher(file.getPath());
+                    if (matcher.matches())
+                    {
+                        uris.add(file.toURI());
+                    }
+                }
+                return null;
             }
-        }
+        }.run();
     }
 
     /**
