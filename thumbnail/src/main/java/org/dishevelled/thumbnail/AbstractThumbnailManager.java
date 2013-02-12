@@ -38,7 +38,13 @@ import java.nio.file.attribute.PosixFilePermission;
 import java.util.EnumSet;
 import java.util.Set;
 
+import java.util.concurrent.TimeUnit;
+
 import javax.imageio.ImageIO;
+
+import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.CacheLoader;
+import com.google.common.cache.LoadingCache;
 
 import org.apache.commons.codec.digest.DigestUtils;
 
@@ -62,6 +68,19 @@ public abstract class AbstractThumbnailManager implements ThumbnailManager
 
     /** Directory for metadata about failed thumbnail images. */
     private final File failDirectory;
+
+    /** Cache of thumbnails keyed by thumbnail file. */
+    private final LoadingCache<File, Thumbnail> cache = CacheBuilder.newBuilder()
+        .maximumSize(1000)
+        .expireAfterWrite(30, TimeUnit.SECONDS)
+        .build(new CacheLoader<File, Thumbnail>()
+               {
+                   @Override
+                   public Thumbnail load(final File key) throws IOException
+                   {
+                       return Thumbnail.read(key);
+                   }
+               });
 
     /** Normal (128x128 pixel) size. */
     private static final int NORMAL_SIZE = 128;
@@ -90,7 +109,6 @@ public abstract class AbstractThumbnailManager implements ThumbnailManager
             throw new IllegalArgumentException("directory must not be null");
         }
         this.directory = directory;
-
         normalDirectory = new File(this.directory, "normal");
         largeDirectory = new File(this.directory, "large");
         failDirectory = new File(this.directory, "fail");
@@ -164,7 +182,7 @@ public abstract class AbstractThumbnailManager implements ThumbnailManager
         File thumbnailFile = new File(thumbnailDirectory, DigestUtils.md5Hex(uri.toString()) + ".png");
         if (thumbnailFile.exists())
         {
-            Thumbnail thumbnail = Thumbnail.read(thumbnailFile);
+            Thumbnail thumbnail = cache.getUnchecked(thumbnailFile);
             if (thumbnail.getModificationTime() == modificationTime)
             {
                 return thumbnail.getImage();
