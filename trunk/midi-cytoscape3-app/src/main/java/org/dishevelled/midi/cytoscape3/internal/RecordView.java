@@ -58,7 +58,7 @@ final class RecordView extends JPanel
         super();
         if (input == null)
         {
-            throw new IllegalArgumentException("MIDI input must not be null");
+            throw new IllegalArgumentException("input must not be null");
         }
         input.plug(this, 1); // pass channel in?
 
