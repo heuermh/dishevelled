@@ -58,12 +58,12 @@ final class PlaybackView extends JPanel
      * @param output MIDI output, must not be null
      * @param random source of randomness, must not be null
      */
-    PlaybackView(final MidiOutput output, final Random random) // node or node id to start with?
+    PlaybackView(final MidiOutput output, final Random random) // node or node id to start from?
     {
         super();
         if (output == null)
         {
-            throw new IllegalArgumentException("MIDI output must not be null");
+            throw new IllegalArgumentException("output must not be null");
         }
         if (random == null)
         {
