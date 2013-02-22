@@ -26,6 +26,7 @@ package org.dishevelled.midi.cytoscape3.internal;
 import static javax.swing.SwingUtilities.windowForComponent;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.GridLayout;
 
 import java.awt.event.ActionEvent;
@@ -34,6 +35,7 @@ import java.util.Arrays;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
+import javax.swing.JDialog;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -46,9 +48,13 @@ import ca.odell.glazedlists.GlazedLists;
 import ca.odell.glazedlists.swing.EventListModel;
 import ca.odell.glazedlists.swing.EventSelectionModel;
 
+import org.cytoscape.model.CyNetwork;
+import org.cytoscape.application.CyApplicationManager;
+
 import org.dishevelled.layout.ButtonPanel;
 import org.dishevelled.layout.LabelFieldPanel;
 
+import rwmidi.MidiInputDevice;
 import rwmidi.RWMidi;
 
 /**
@@ -58,6 +64,9 @@ import rwmidi.RWMidi;
  */
 final class DeviceView extends JPanel
 {
+    /** Application manager. */
+    private final CyApplicationManager applicationManager;
+
     /** List of MIDI input devices. */
     private final EventList<String> inputDevices;
 
@@ -70,10 +79,20 @@ final class DeviceView extends JPanel
     /** Output device list. */
     private final JList outputDeviceList;
 
+    /** Record action. */
+    private final Action record = new AbstractAction("Record") // i18n
+        {
+            @Override
+            public void actionPerformed(final ActionEvent event)
+            {
+                record();
+            }
+        };
+
     /** Done action. */
     private final Action done = new AbstractAction("Done") // i18n
         {
-            /** {@inheritDoc} */
+            @Override
             public void actionPerformed(final ActionEvent event)
             {
                 done();
@@ -84,9 +103,14 @@ final class DeviceView extends JPanel
     /**
      * Create a new device view.
      */
-    DeviceView()
+    DeviceView(final CyApplicationManager applicationManager)
     {
         super();
+        if (applicationManager == null)
+        {
+            throw new IllegalArgumentException("applicationManager must not be null");
+        }
+        this.applicationManager = applicationManager;
 
         inputDevices = GlazedLists.eventList(Arrays.asList(RWMidi.getInputDeviceNames()));
         EventListModel<String> inputDeviceModel = new EventListModel<String>(inputDevices);
@@ -126,6 +150,7 @@ final class DeviceView extends JPanel
 
         ButtonPanel buttonPanel = new ButtonPanel();
         buttonPanel.setBorder(new EmptyBorder(24, 12, 12, 12));
+        buttonPanel.add(record);
         buttonPanel.add(done);
 
         setLayout(new BorderLayout());
@@ -139,5 +164,25 @@ final class DeviceView extends JPanel
     private void done()
     {
         windowForComponent(this).setVisible(false);
+    }
+
+    /**
+     * Record.
+     */
+    private void record()
+    {
+        String inputDeviceName = (String) inputDeviceList.getSelectedValue();
+        MidiInputDevice inputDevice = RWMidi.getInputDevice(inputDeviceName);
+        CyNetwork network = applicationManager.getCurrentNetwork();
+
+        System.out.println("inputDeviceName=" + inputDeviceName + " inputDevice=" + inputDevice + " network=" + network);
+
+        JDialog parent = (JDialog) windowForComponent(this);
+        JDialog dialog = new JDialog(parent, "Record"); // i18n
+        dialog.setContentPane(new RecordView(inputDevice, network));
+        dialog.setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
+        //installCloseKeyBinding(dialog);
+        dialog.setBounds(400, 400, 400, 400);
+        dialog.setVisible(true);
     }
 }

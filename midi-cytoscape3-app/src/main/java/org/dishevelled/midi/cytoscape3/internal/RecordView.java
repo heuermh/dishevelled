@@ -23,10 +23,34 @@
 */
 package org.dishevelled.midi.cytoscape3.internal;
 
+import static org.dishevelled.midi.cytoscape3.internal.MidiNetworksUtils.nameOf;
+import static org.dishevelled.midi.cytoscape3.internal.MidiNetworksUtils.typeOf;
+
+import java.awt.BorderLayout;
+
+import java.awt.event.ActionEvent;
+
+import java.util.concurrent.atomic.AtomicInteger;
+
 import javax.swing.JPanel;
+import javax.swing.JToggleButton;
+
+import org.cytoscape.model.CyEdge;
+import org.cytoscape.model.CyNetwork;
+import org.cytoscape.model.CyNode;
+import org.cytoscape.model.CyRow;
+import org.cytoscape.model.CyTable;
+
+import org.dishevelled.iconbundle.tango.TangoProject;
+
+import org.dishevelled.identify.IdentifiableAction;
+//import org.dishevelled.identify.IdToggleButton;
+
+import org.dishevelled.layout.ButtonPanel;
 
 import rwmidi.Controller;
 import rwmidi.MidiInput;
+import rwmidi.MidiInputDevice;
 import rwmidi.Note;
 import rwmidi.ProgramChange;
 import rwmidi.SysexMessage;
@@ -36,31 +60,57 @@ import rwmidi.SysexMessage;
  *
  * @author  Michael Heuer
  */
-final class RecordView extends JPanel
+public final class RecordView extends JPanel // needs to be public for reflection to work
 {
+    /** Network. */
+    private final CyNetwork network;
+
+    /** Id. */
+    private final AtomicInteger id = new AtomicInteger();
+
     /** Last timestamp. */
     private long last;
 
-    /** Last node id. */
-    private String lastId;
+    /** Last node. */
+    private CyNode lastNode;
 
     /** True if recording. */
     private boolean recording = false;
 
+    /** Record action. */
+    private final IdentifiableAction record = new IdentifiableAction("Record", TangoProject.MEDIA_RECORD)
+        {
+            @Override
+            public void actionPerformed(final ActionEvent event)
+            {
+                start();
+            }
+        };
+
+    /** Record button. */
+    private final JToggleButton recordButton = new JToggleButton(record);
+
 
     /**
-     * Create a new record view with the specified MIDI input.
+     * Create a new record view with the specified MIDI input device.
      *
-     * @param input MIDI input, must not be null
+     * @param inputDevice MIDI input device, must not be null
+     * @param network current network, must not be null
      */
-    RecordView(final MidiInput input)
+    RecordView(final MidiInputDevice inputDevice, final CyNetwork network)
     {
         super();
-        if (input == null)
+        if (inputDevice == null)
         {
-            throw new IllegalArgumentException("input must not be null");
+            throw new IllegalArgumentException("inputDevice must not be null");
         }
+        if (network == null)
+        {
+            throw new IllegalArgumentException("network must not be null");
+        }
+        MidiInput input = inputDevice.createInput(this);
         input.plug(this, 1); // pass channel in?
+        this.network = network;
 
         layoutComponents();
     }
@@ -71,7 +121,11 @@ final class RecordView extends JPanel
      */
     private void layoutComponents()
     {
-        // empty
+        ButtonPanel buttonPanel = new ButtonPanel();
+        buttonPanel.add(recordButton);
+
+        setLayout(new BorderLayout());
+        add("South", buttonPanel);
     }
 
     /**
@@ -80,6 +134,7 @@ final class RecordView extends JPanel
     public void start()
     {
         recording = true;
+        System.out.println("start " + recording);
     }
 
     /**
@@ -88,6 +143,7 @@ final class RecordView extends JPanel
     public void stop()
     {
         recording = false;
+        System.out.println("stop " + recording);
     }
 
     /**
@@ -96,6 +152,7 @@ final class RecordView extends JPanel
     public void toggle()
     {
         recording = !recording;
+        System.out.println("toggle " + recording);
     }
 
     /**
@@ -105,16 +162,23 @@ final class RecordView extends JPanel
      */
     public void noteOnReceived(final Note note)
     {
+        System.out.println("note on " + note.getPitch() + " " + note.getVelocity() + " " + recording);
+        // use nanopad button 12 as toggle
+        if (note.getPitch() == 46)
+        {
+            toggle();
+            recordButton.setSelected(recording);
+        }
         if (recording)
         {
-            String currentId = createNoteOn(note.getPitch(), note.getVelocity());
+            CyNode currentNode = createNoteOn(note.getPitch(), note.getVelocity());
             long current = System.currentTimeMillis();
-            if (((current - last) > 0) && (lastId != null))
+            if (((current - last) > 0) && (lastNode != null))
             {
-                createWait(lastId, currentId, (current - last), 1.0d);
+                createWait(lastNode, currentNode, (current - last), 1.0d);
             }
             last = current;
-            lastId = currentId;
+            lastNode = currentNode;
         }
     }
 
@@ -125,16 +189,17 @@ final class RecordView extends JPanel
      */
     public void noteOffReceived(final Note note)
     {
+        System.out.println("note off " + note.getPitch() + " " + note.getVelocity() + " " + recording);
         if (recording)
         {
-            String currentId = createNoteOff(note.getPitch(), note.getVelocity());
+            CyNode currentNode = createNoteOff(note.getPitch(), note.getVelocity());
             long current = System.currentTimeMillis();
-            if (((current - last) > 0) && (lastId != null))
+            if (((current - last) > 0) && (lastNode != null))
             {
-                createWait(lastId, currentId, (current - last), 1.0d);
+                createWait(lastNode, currentNode, (current - last), 1.0d);
             }
             last = current;
-            lastId = currentId;
+            lastNode = currentNode;
         }
     }
 
@@ -169,40 +234,117 @@ final class RecordView extends JPanel
     }
 
     /**
-     * Create a new note on node.
+     * Create and return a new note on node.
      *
      * @param note note
      * @param velocity velocity
-     * @return the new note on node id
+     * @return the new note on node
      */
-    private String createNoteOn(final int note, final int velocity)
+    private CyNode createNoteOn(final int note, final int velocity)
     {
-        return null;
+        return createNode("noteOn", note, velocity);
     }
 
     /**
-     * Create a new note off node.
+     * Create and return a new note off node.
      *
      * @param note note
      * @param velocity velocity
-     * @return the new note off node id
+     * @return the new note off node
      */
-    private String createNoteOff(final int note, final int velocity)
+    private CyNode createNoteOff(final int note, final int velocity)
     {
-        return null;
+        return createNode("noteOff", note, velocity);
+    }
+
+    /**
+     * Create and return a new node.
+     *
+     * @param type type
+     * @param note note
+     * @param velocity velocity
+     * @return the new node
+     */
+    private CyNode createNode(final String type, final int note, final int velocity)
+    {
+        CyNode node = network.addNode();
+        CyTable table = network.getDefaultNodeTable();
+        CyRow row = table.getRow(node.getSUID());
+
+        if (table.getColumn(CyNetwork.NAME) == null)
+        {
+            table.createColumn(CyNetwork.NAME, String.class, false);
+        }
+        if (table.getColumn("type") == null)
+        {
+            table.createColumn("type", String.class, false);
+        }
+        if (table.getColumn("note") == null)
+        {
+            table.createColumn("note", Integer.class, false);
+        }
+        if (table.getColumn("velocity") == null)
+        {
+            table.createColumn("velocity", Integer.class, false);
+        }
+
+        row.set(CyNetwork.NAME, type + id.getAndIncrement());
+        row.set("type", type);
+        row.set("note", note);
+        row.set("velocity", velocity);
+
+        return node;
     }
 
     /**
      * Create a new wait edge.
      *
-     * @param sourceId source node id
-     * @param targetId target node id
+     * @param source source node
+     * @param target target node
      * @param duration duration
      * @param weight weight
-     * @return the new wait edge id
+     * @return the new wait edge
      */
-    private String createWait(final String sourceId, final String targetId, final long duration, final double weight)
+    private CyEdge createWait(final CyNode source, final CyNode target, final long duration, final double weight)
     {
-        return null;
+        CyEdge edge = network.addEdge(source, target, true);
+        CyTable table = network.getDefaultEdgeTable();
+        CyRow row = table.getRow(edge.getSUID());
+
+        if (table.getColumn(CyNetwork.NAME) == null)
+        {
+            table.createColumn(CyNetwork.NAME, String.class, false);
+        }
+        if (table.getColumn("type") == null)
+        {
+            table.createColumn("type", String.class, false, "wait");
+        }
+        if (table.getColumn("duration") == null)
+        {
+            table.createColumn("duration", Long.class, false);
+        }
+        if (table.getColumn("weight") == null)
+        {
+            table.createColumn("weight", Double.class, false);
+        }
+
+        String sourceName = nameOf(source, network);
+        String targetName = nameOf(target, network);
+        String sourceType = typeOf(source, network);
+        String targetType = typeOf(target, network);
+
+        row.set(CyNetwork.NAME, sourceName + " --> " + targetName);
+        if ("noteOn".equals(sourceType) && "noteOff".equals(targetType))
+        {
+            row.set("type", "note");
+        }
+        else if ("noteOff".equals(sourceType) && "noteOn".equals(targetType))
+        {
+            row.set("type", "rest");
+        }
+        row.set("duration", duration);
+        row.set("weight", weight);
+
+        return edge;
     }
 }
