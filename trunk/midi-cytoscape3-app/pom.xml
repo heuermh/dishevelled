@@ -47,6 +47,16 @@
     </dependency>
     <dependency>
       <groupId>org.dishevelled</groupId>
+      <artifactId>dsh-iconbundle-tango</artifactId>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.dishevelled</groupId>
+      <artifactId>dsh-identify</artifactId>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.dishevelled</groupId>
       <artifactId>dsh-layout</artifactId>
       <scope>compile</scope>
     </dependency>
@@ -151,6 +161,16 @@
         <artifactId>service-api</artifactId>
         <type>test-jar</type>
         <version>${cytoscape.api.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.dishevelled</groupId>
+        <artifactId>dsh-iconbundle-tango</artifactId>
+        <version>1.0</version>
+      </dependency>
+      <dependency>
+        <groupId>org.dishevelled</groupId>
+        <artifactId>dsh-identify</artifactId>
+        <version>1.0</version>
       </dependency>
       <dependency>
         <groupId>org.dishevelled</groupId>

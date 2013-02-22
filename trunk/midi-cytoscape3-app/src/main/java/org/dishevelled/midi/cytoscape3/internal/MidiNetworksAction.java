@@ -83,7 +83,7 @@ final class MidiNetworksAction extends AbstractCyAction
         }
         JFrame frame = (JFrame) windowForComponent((Component) event.getSource());
         JDialog dialog = new JDialog(frame, "Midi Networks"); // i18n
-        dialog.setContentPane(new DeviceView());
+        dialog.setContentPane(new DeviceView(applicationManager));
         dialog.setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
         installCloseKeyBinding(dialog);
         dialog.setBounds(200, 200, 600, 400);

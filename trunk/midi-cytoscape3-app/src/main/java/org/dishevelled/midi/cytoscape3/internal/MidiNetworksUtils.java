@@ -36,6 +36,12 @@ import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JRootPane;
 
+import org.cytoscape.model.CyEdge;
+import org.cytoscape.model.CyNetwork;
+import org.cytoscape.model.CyNode;
+import org.cytoscape.model.CyRow;
+import org.cytoscape.model.CyTable;
+
 /**
  * Utility methods.
  *
@@ -73,5 +79,34 @@ final class MidiNetworksUtils
         JRootPane rootPane = dialog.getRootPane();
         rootPane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(closeStroke, "close");
         rootPane.getActionMap().put("close", close);
+    }
+
+    /**
+     * Return the name of the specified node in the specified network.
+     *
+     * @param node node
+     * @param network network
+     * @return the name of the specified node in the specified network
+     */
+    static String nameOf(final CyNode node, final CyNetwork network)
+    {
+        CyTable nodeTable = network.getDefaultNodeTable();
+        CyRow nodeRow = nodeTable.getRow(node.getSUID());
+        String name = nodeRow.get(CyNetwork.NAME, String.class);
+        return (name == null) ? node.toString() : name;
+    }
+
+    /**
+     * Return the type of the specified node in the specified network.
+     *
+     * @param node node
+     * @param network network
+     * @return the type of the specified node in the specified network
+     */
+    static String typeOf(final CyNode node, final CyNetwork network)
+    {
+        CyTable nodeTable = network.getDefaultNodeTable();
+        CyRow nodeRow = nodeTable.getRow(node.getSUID());
+        return nodeRow.get("type", String.class);
     }
 }
