@@ -82,11 +82,25 @@ final class MidiNetworksUtils
     }
 
     /**
-     * Return the name of the specified node in the specified network.
+     * Return the duration of the specified edge.
+     *
+     * @param edge edge
+     * @param network network
+     * @return the duration of the specified edge
+     */
+    static Long durationOf(final CyEdge edge, final CyNetwork network)
+    {
+        CyTable edgeTable = network.getDefaultEdgeTable();
+        CyRow edgeRow = edgeTable.getRow(edge.getSUID());
+        return edgeRow.get("duration", Long.class);
+    }
+
+    /**
+     * Return the name of the specified node.
      *
      * @param node node
      * @param network network
-     * @return the name of the specified node in the specified network
+     * @return the name of the specified node
      */
     static String nameOf(final CyNode node, final CyNetwork network)
     {
@@ -97,16 +111,84 @@ final class MidiNetworksUtils
     }
 
     /**
-     * Return the type of the specified node in the specified network.
+     * Return the note of the specified node.
      *
      * @param node node
      * @param network network
-     * @return the type of the specified node in the specified network
+     * @return the note of the specified node
+     */
+    static Integer noteOf(final CyNode node, final CyNetwork network)
+    {
+        CyTable nodeTable = network.getDefaultNodeTable();
+        CyRow nodeRow = nodeTable.getRow(node.getSUID());
+        return nodeRow.get("note", Integer.class);
+    }
+
+    /**
+     * Return the type of the specified edge.
+     *
+     * @param edge edge
+     * @param network network
+     * @return the type of the specified edge
+     */
+    static String typeOf(final CyEdge edge, final CyNetwork network)
+    {
+        CyTable edgeTable = network.getDefaultEdgeTable();
+        CyRow edgeRow = edgeTable.getRow(edge.getSUID());
+        return edgeRow.get("type", String.class);
+    }
+
+    /**
+     * Return the type of the specified node.
+     *
+     * @param node node
+     * @param network network
+     * @return the type of the specified node
      */
     static String typeOf(final CyNode node, final CyNetwork network)
     {
         CyTable nodeTable = network.getDefaultNodeTable();
         CyRow nodeRow = nodeTable.getRow(node.getSUID());
         return nodeRow.get("type", String.class);
+    }
+
+    /**
+     * Return the velocity of the specified node.
+     *
+     * @param node node
+     * @param network network
+     * @return the velocity of the specified node
+     */
+    static Integer velocityOf(final CyNode node, final CyNetwork network)
+    {
+        CyTable nodeTable = network.getDefaultNodeTable();
+        CyRow nodeRow = nodeTable.getRow(node.getSUID());
+        return nodeRow.get("velocity", Integer.class);
+    }
+
+    /**
+     * Return the weight of the specified edge.
+     *
+     * @param edge edge
+     * @param network network
+     * @return the weight of the specified edge
+     */
+    static Double weightOf(final CyEdge edge, final CyNetwork network)
+    {
+        CyTable edgeTable = network.getDefaultEdgeTable();
+        CyRow edgeRow = edgeTable.getRow(edge.getSUID());
+        return edgeRow.get("weight", Double.class);
+    }
+
+    /**
+     * Return the out edges for the specified node in the specified network.
+     *
+     * @param node node
+     * @param network network
+     * @return the out edges for the specified node in the specified network
+     */
+    static Iterable<CyEdge> outEdges(final CyNode node, final CyNetwork network)
+    {
+        return network.getAdjacentEdgeIterable(node, CyEdge.Type.OUTGOING);
     }
 }
