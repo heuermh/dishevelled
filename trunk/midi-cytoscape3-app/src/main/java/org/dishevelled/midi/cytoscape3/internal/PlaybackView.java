@@ -23,9 +23,25 @@
 */
 package org.dishevelled.midi.cytoscape3.internal;
 
+import java.awt.BorderLayout;
+
+import java.awt.event.ActionEvent;
+
 import java.util.Random;
 
 import javax.swing.JPanel;
+
+import javax.swing.border.EmptyBorder;
+
+import org.cytoscape.model.CyNetwork;
+import org.cytoscape.model.CyNode;
+import org.cytoscape.model.CyEdge;
+
+import org.dishevelled.iconbundle.tango.TangoProject;
+
+import org.dishevelled.identify.IdentifiableAction;
+
+import org.dishevelled.layout.ButtonPanel;
 
 import rwmidi.Controller;
 import rwmidi.MidiOutput;
@@ -46,10 +62,20 @@ final class PlaybackView extends JPanel
     /** Source of randomness. */
     private final Random random;
 
-    // channel, bpm, humanize, etc.
+    /** Network. */
+    private final CyNetwork network;
 
-    /** True if playing. */
-    private boolean playing = false;
+    /** Play action. */  // enable only if a single node is selected
+    private final IdentifiableAction play = new IdentifiableAction("Play", TangoProject.MEDIA_PLAYBACK_START)
+        {
+            @Override
+            public void actionPerformed(final ActionEvent event)
+            {
+                play();
+            }
+        };
+
+    // channel, bpm, humanize, etc.
 
 
     /**
@@ -57,8 +83,9 @@ final class PlaybackView extends JPanel
      *
      * @param output MIDI output, must not be null
      * @param random source of randomness, must not be null
+     * @param network network, must not be null
      */
-    PlaybackView(final MidiOutput output, final Random random) // node or node id to start from?
+    PlaybackView(final MidiOutput output, final Random random, final CyNetwork network)
     {
         super();
         if (output == null)
@@ -69,8 +96,13 @@ final class PlaybackView extends JPanel
         {
             throw new IllegalArgumentException("random must not be null");
         }
+        if (network == null)
+        {
+            throw new IllegalArgumentException("network must not be null");
+        }
         this.output = output;
         this.random = random;
+        this.network = network;
 
         layoutComponents();
     }
@@ -81,32 +113,23 @@ final class PlaybackView extends JPanel
      */
     private void layoutComponents()
     {
-        // empty
+        JPanel mainPanel = new JPanel();        
+
+        ButtonPanel buttonPanel = new ButtonPanel();
+        buttonPanel.setBorder(new EmptyBorder(24, 12, 12, 12));
+        buttonPanel.add(play);
+
+        setLayout(new BorderLayout());
+        add("Center", mainPanel);
+        add("South", buttonPanel);
     }
 
     /**
-     * Start playing.
+     * Play.
      */
-    public void start()
+    private void play()
     {
-        playing = true;
+        // capture selected node
+        // start playback task
     }
-
-    /**
-     * Stop playing.
-     */
-    public void stop()
-    {
-        playing = false;
-    }
-
-    /**
-     * Toggle playing.
-     */
-    public void toggle()
-    {
-        playing = !playing;
-    }
-
-    // reset?
 }
