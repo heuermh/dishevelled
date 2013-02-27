@@ -107,8 +107,8 @@ final class DeviceView extends JPanel
     /** Output device list. */
     private final JList outputDeviceList;
 
-    /** Play action. */ // enable if output device is selected and only one node is selected and current network is not null
-    private final IdentifiableAction play = new IdentifiableAction("Play", TangoProject.MEDIA_PLAYBACK_START)
+    /** Play action. */
+    private final IdentifiableAction play = new IdentifiableAction("Play", TangoProject.MEDIA_PLAYBACK_START) // i18n
         {
             @Override
             public void actionPerformed(final ActionEvent event)
@@ -117,8 +117,8 @@ final class DeviceView extends JPanel
             }
         };
 
-    /** Record action. */ // enable if input device is selected and current network is not null
-    private final IdentifiableAction record = new IdentifiableAction("Record", TangoProject.MEDIA_RECORD)
+    /** Record action. */
+    private final IdentifiableAction record = new IdentifiableAction("Record", TangoProject.MEDIA_RECORD) // i18n
         {
             @Override
             public void actionPerformed(final ActionEvent event)
@@ -171,7 +171,13 @@ final class DeviceView extends JPanel
                     record.setEnabled((size == 1) && (applicationManager.getCurrentNetwork() != null));
                 }
             });
+        // todo:  need to listen for changes to current network
         record.setEnabled(false);
+
+        IdMenuItem recordMenuItem = new IdMenuItem(record);
+        JPopupMenu inputDeviceContextMenu = new JPopupMenu();
+        inputDeviceContextMenu.add(recordMenuItem);
+        inputDeviceList.addMouseListener(new ContextMenuListener(inputDeviceContextMenu));
 
         outputDevices = GlazedLists.eventList(Arrays.asList(RWMidi.getOutputDeviceNames()));
         EventListModel<String> outputDeviceModel = new EventListModel<String>(outputDevices);
@@ -189,16 +195,13 @@ final class DeviceView extends JPanel
                     play.setEnabled((size == 1) && (applicationManager.getCurrentNetwork() != null));
                 }
             });
+        // todo:  need to listen for changes in node selection
         play.setEnabled(false);
 
-        IdMenuItem recordMenuItem = new IdMenuItem(record);
         IdMenuItem playMenuItem = new IdMenuItem(play);
-
-        JPopupMenu contextMenu = new JPopupMenu();
-        contextMenu.add(recordMenuItem);
-        contextMenu.add(playMenuItem);
-        inputDeviceList.addMouseListener(new ContextMenuListener(contextMenu));
-        outputDeviceList.addMouseListener(new ContextMenuListener(contextMenu));
+        JPopupMenu outputDeviceContextMenu = new JPopupMenu();
+        outputDeviceContextMenu.add(playMenuItem);
+        outputDeviceList.addMouseListener(new ContextMenuListener(outputDeviceContextMenu));
 
         layoutComponents();
     }
