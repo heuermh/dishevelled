@@ -38,12 +38,17 @@ import java.util.Random;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JDialog;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 
 import javax.swing.border.EmptyBorder;
+
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import ca.odell.glazedlists.EventList;
 import ca.odell.glazedlists.GlazedLists;
@@ -51,17 +56,18 @@ import ca.odell.glazedlists.GlazedLists;
 import ca.odell.glazedlists.swing.EventListModel;
 import ca.odell.glazedlists.swing.EventSelectionModel;
 
+import org.cytoscape.application.CyApplicationManager;
 import org.cytoscape.model.CyNetwork;
 import org.cytoscape.model.CyNode;
-
 import org.cytoscape.work.swing.DialogTaskManager;
-
-import org.cytoscape.application.CyApplicationManager;
 
 import org.dishevelled.iconbundle.tango.TangoProject;
 
+import org.dishevelled.identify.ContextMenuListener;
 import org.dishevelled.identify.IdentifiableAction;
 import org.dishevelled.identify.IdButton;
+import org.dishevelled.identify.IdMenuItem;
+import org.dishevelled.identify.IdToolBar;
 
 import org.dishevelled.layout.ButtonPanel;
 import org.dishevelled.layout.LabelFieldPanel;
@@ -88,6 +94,12 @@ final class DeviceView extends JPanel
 
     /** List of MIDI output devices. */
     private final EventList<String> outputDevices;
+
+    /** List of selected MIDI input devices. */
+    private final EventList<String> selectedInputDevices;
+
+    /** List of selected MIDI output devices. */
+    private final EventList<String> selectedOutputDevices;
 
     /** Input device list. */
     private final JList inputDeviceList;
@@ -146,14 +158,47 @@ final class DeviceView extends JPanel
         inputDevices = GlazedLists.eventList(Arrays.asList(RWMidi.getInputDeviceNames()));
         EventListModel<String> inputDeviceModel = new EventListModel<String>(inputDevices);
         EventSelectionModel<String> inputDeviceSelectionModel = new EventSelectionModel<String>(inputDevices);
+        selectedInputDevices = inputDeviceSelectionModel.getSelected();
         inputDeviceList = new JList(inputDeviceModel);
         inputDeviceList.setSelectionModel(inputDeviceSelectionModel);
+        inputDeviceSelectionModel.setSelectionMode(EventSelectionModel.SINGLE_SELECTION);
+        inputDeviceSelectionModel.addListSelectionListener(new ListSelectionListener()
+            {
+                @Override
+                public void valueChanged(final ListSelectionEvent event)
+                {
+                    int size = selectedInputDevices.size();
+                    record.setEnabled((size == 1) && (applicationManager.getCurrentNetwork() != null));
+                }
+            });
+        record.setEnabled(false);
 
         outputDevices = GlazedLists.eventList(Arrays.asList(RWMidi.getOutputDeviceNames()));
         EventListModel<String> outputDeviceModel = new EventListModel<String>(outputDevices);
         EventSelectionModel<String> outputDeviceSelectionModel = new EventSelectionModel<String>(outputDevices);
+        selectedOutputDevices = outputDeviceSelectionModel.getSelected();
         outputDeviceList = new JList(outputDeviceModel);
         outputDeviceList.setSelectionModel(outputDeviceSelectionModel);
+        outputDeviceSelectionModel.setSelectionMode(EventSelectionModel.SINGLE_SELECTION);
+        outputDeviceSelectionModel.addListSelectionListener(new ListSelectionListener()
+            {
+                @Override
+                public void valueChanged(final ListSelectionEvent event)
+                {
+                    int size = selectedInputDevices.size();
+                    play.setEnabled((size == 1) && (applicationManager.getCurrentNetwork() != null));
+                }
+            });
+        play.setEnabled(false);
+
+        IdMenuItem recordMenuItem = new IdMenuItem(record);
+        IdMenuItem playMenuItem = new IdMenuItem(play);
+
+        JPopupMenu contextMenu = new JPopupMenu();
+        contextMenu.add(recordMenuItem);
+        contextMenu.add(playMenuItem);
+        inputDeviceList.addMouseListener(new ContextMenuListener(contextMenu));
+        outputDeviceList.addMouseListener(new ContextMenuListener(contextMenu));
 
         layoutComponents();
     }
@@ -179,17 +224,35 @@ final class DeviceView extends JPanel
         mainPanel.add(inputDevicePanel);
         mainPanel.add(outputDevicePanel);
 
+        IdToolBar toolBar = new IdToolBar();
+        IdButton recordButton = toolBar.add(record);
+        recordButton.setBorderPainted(false);
+        recordButton.setFocusPainted(false);
+        IdButton playButton = toolBar.add(play);
+        playButton.setBorderPainted(false);
+        playButton.setFocusPainted(false);
+
+        JPopupMenu toolBarContextMenu = new JPopupMenu();
+        for (Object menuItem : toolBar.getDisplayMenuItems())
+        {
+            toolBarContextMenu.add((JCheckBoxMenuItem) menuItem);
+        }
+        toolBarContextMenu.addSeparator();
+        toolBarContextMenu.add(toolBar.createIconSizeMenuItem(TangoProject.EXTRA_SMALL));
+        toolBarContextMenu.add(toolBar.createIconSizeMenuItem(TangoProject.SMALL));
+        toolBarContextMenu.add(toolBar.createIconSizeMenuItem(TangoProject.MEDIUM));
+        toolBarContextMenu.add(toolBar.createIconSizeMenuItem(TangoProject.LARGE));
+        toolBar.addMouseListener(new ContextMenuListener(toolBarContextMenu));
+
+        toolBar.displayIcons();
+        toolBar.setIconSize(TangoProject.MEDIUM);
+
         ButtonPanel buttonPanel = new ButtonPanel();
         buttonPanel.setBorder(new EmptyBorder(24, 12, 12, 12));
-
-        // todo: buttons with icons look strange on osx, wrong font and odd drop shadow
-        IdButton recordButton = new IdButton(record, TangoProject.EXTRA_SMALL);
-        IdButton playButton = new IdButton(play, TangoProject.EXTRA_SMALL);
-        buttonPanel.add(recordButton);
-        buttonPanel.add(playButton);
         buttonPanel.add(done);
 
         setLayout(new BorderLayout());
+        add("North", toolBar);
         add("Center", mainPanel);
         add("South", buttonPanel);
     }
@@ -199,7 +262,7 @@ final class DeviceView extends JPanel
      */
     private void play()
     {
-        String outputDeviceName = (String) outputDeviceList.getSelectedValue();
+        String outputDeviceName = selectedOutputDevices.get(0);
         MidiOutputDevice outputDevice = RWMidi.getOutputDevice(outputDeviceName);
         Random random = new Random();
         CyNetwork network = applicationManager.getCurrentNetwork();
@@ -215,7 +278,7 @@ final class DeviceView extends JPanel
      */
     private void record()
     {
-        String inputDeviceName = (String) inputDeviceList.getSelectedValue();
+        String inputDeviceName = selectedInputDevices.get(0);
         MidiInputDevice inputDevice = RWMidi.getInputDevice(inputDeviceName);
         CyNetwork network = applicationManager.getCurrentNetwork();
 

@@ -96,6 +96,11 @@
       <artifactId>rwmidi</artifactId>
       <scope>compile</scope>
     </dependency>
+    <dependency>
+      <groupId>xerces</groupId>
+      <artifactId>xercesImpl</artifactId>
+      <scope>runtime</scope>
+    </dependency>
   </dependencies>
   <properties>
     <jdk.version>1.6</jdk.version>
@@ -201,6 +206,12 @@
         <groupId>rwmidi</groupId>
         <artifactId>rwmidi</artifactId>
         <version>0.2</version>
+      </dependency>
+      <!-- todo:  not pulled in as runtime dep by iconbundle-tango apparently -->
+      <dependency>
+        <groupId>xerces</groupId>
+        <artifactId>xercesImpl</artifactId>
+        <version>2.10.0</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
