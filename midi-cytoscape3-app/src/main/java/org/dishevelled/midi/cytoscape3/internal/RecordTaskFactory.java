@@ -37,11 +37,37 @@ import rwmidi.MidiInputDevice;
  */
 final class RecordTaskFactory extends AbstractTaskFactory
 {
+    /** MIDI input device. */
+    private final MidiInputDevice inputDevice;
+
+    /** Network. */
+    private final CyNetwork network;
+
+
+    /**
+     * Create a new record task factory with the specified MIDI input device.
+     *
+     * @param inputDevice MIDI input device, must not be null
+     * @param network network, must not be null
+     */
+    RecordTaskFactory(final MidiInputDevice inputDevice, final CyNetwork network)
+    {
+        if (inputDevice == null)
+        {
+            throw new IllegalArgumentException("inputDevice must not be null");
+        }
+        if (network == null)
+        {
+            throw new IllegalArgumentException("network must not be null");
+        }
+        this.inputDevice = inputDevice;
+        this.network = network;
+    }
+
+
     @Override
     public TaskIterator createTaskIterator()
     {
-        MidiInputDevice inputDevice = null;
-        CyNetwork network = null;
         RecordTask recordTask = new RecordTask(inputDevice, network);
         return new TaskIterator(recordTask);
     }

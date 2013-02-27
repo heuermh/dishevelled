@@ -35,6 +35,7 @@ import javax.swing.JFrame;
 import org.cytoscape.application.CyApplicationManager;
 import org.cytoscape.application.swing.AbstractCyAction;
 import org.cytoscape.service.util.CyServiceRegistrar;
+import org.cytoscape.work.swing.DialogTaskManager;
 
 /**
  * Midi networks action.
@@ -49,14 +50,20 @@ final class MidiNetworksAction extends AbstractCyAction
     /** Service registrar. */
     private final CyServiceRegistrar serviceRegistrar;
 
+    /** Dialog task manager. */
+    private final DialogTaskManager dialogTaskManager;
+
 
     /**
      * Create a new midi networks action.
      *
      * @param applicationManager application manager, must not be null
      * @param serviceRegistrar service registrar, must not be null
+     * @param dialogTaskManager dialog task manager, must not be null
      */
-    MidiNetworksAction(final CyApplicationManager applicationManager, final CyServiceRegistrar serviceRegistrar)
+    MidiNetworksAction(final CyApplicationManager applicationManager,
+                       final CyServiceRegistrar serviceRegistrar,
+                       final DialogTaskManager dialogTaskManager)
     {
         super("Midi Networks");
         if (applicationManager == null)
@@ -67,8 +74,13 @@ final class MidiNetworksAction extends AbstractCyAction
         {
             throw new IllegalArgumentException("serviceRegistrar must not be null");
         }
+        if (dialogTaskManager == null)
+        {
+            throw new IllegalArgumentException("dialogTaskManager must not be null");
+        }
         this.applicationManager = applicationManager;
         this.serviceRegistrar = serviceRegistrar;
+        this.dialogTaskManager = dialogTaskManager;
 
         setPreferredMenu("Apps");
     }
@@ -83,7 +95,7 @@ final class MidiNetworksAction extends AbstractCyAction
         }
         JFrame frame = (JFrame) windowForComponent((Component) event.getSource());
         JDialog dialog = new JDialog(frame, "Midi Networks"); // i18n
-        dialog.setContentPane(new DeviceView(applicationManager));
+        dialog.setContentPane(new DeviceView(applicationManager, dialogTaskManager));
         dialog.setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
         installCloseKeyBinding(dialog);
         dialog.setBounds(200, 200, 600, 400);

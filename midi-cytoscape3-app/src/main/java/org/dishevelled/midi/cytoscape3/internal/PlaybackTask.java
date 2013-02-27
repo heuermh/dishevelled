@@ -45,6 +45,7 @@ import org.dishevelled.weighted.WeightedMaps;
 
 import rwmidi.Controller;
 import rwmidi.MidiOutput;
+import rwmidi.MidiOutputDevice;
 import rwmidi.Note;
 import rwmidi.ProgramChange;
 import rwmidi.SysexMessage;
@@ -72,19 +73,19 @@ final class PlaybackTask extends AbstractTask
 
 
     /**
-     * Create a new playback task with the specified MIDI output.
+     * Create a new playback task with the specified MIDI output device.
      *
-     * @param output MIDI output, must not be null
+     * @param output MIDI output device, must not be null
      * @param random source of randomness, must not be null
      * @param start node to start from, must not be null
      * @param network network, must not be null
      */
-    PlaybackTask(final MidiOutput output, final Random random, final CyNode start, final CyNetwork network)
+    PlaybackTask(final MidiOutputDevice outputDevice, final Random random, final CyNode start, final CyNetwork network)
     {
         super();
-        if (output == null)
+        if (outputDevice == null)
         {
-            throw new IllegalArgumentException("output must not be null");
+            throw new IllegalArgumentException("outputDevice must not be null");
         }
         if (random == null)
         {
@@ -98,7 +99,7 @@ final class PlaybackTask extends AbstractTask
         {
             throw new IllegalArgumentException("network must not be null");
         }
-        this.output = output;
+        this.output = outputDevice.createOutput();
         this.random = random;
         this.start = start;
         this.network = network;
@@ -118,6 +119,7 @@ final class PlaybackTask extends AbstractTask
             int note = noteOf(current, network);
             int velocity = velocityOf(current, network);
             taskMonitor.setStatusMessage(nodeType + " " + note + " " + velocity);
+            System.out.println(nodeType + " " + note + " " + velocity);
 
             if ("noteOn".equals(nodeType))
             {
@@ -137,7 +139,12 @@ final class PlaybackTask extends AbstractTask
             // break if no outgoing edges
             if (outEdges.isEmpty())
             {
+                System.out.println("outEdges is empty, breaking...");
                 break;
+            }
+            else
+            {
+                System.out.println("outEdges size " + outEdges.size());
             }
 
             // wait on sampled edge
@@ -145,6 +152,7 @@ final class PlaybackTask extends AbstractTask
             String edgeType = typeOf(edge, network);
             long duration = durationOf(edge, network);
             taskMonitor.setStatusMessage(edgeType + " "  + duration + " ms");
+            System.out.println(edgeType + " " + duration + " ms");
 
             try
             {
@@ -154,6 +162,10 @@ final class PlaybackTask extends AbstractTask
             {
                 // ok
             }
+            current = edge.getTarget();
+
+            System.out.println("done sleeping");
         }
+        System.out.println("break or cancelled");
     }
 }
