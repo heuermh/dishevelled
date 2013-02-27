@@ -63,7 +63,7 @@ public final class RecordTask extends AbstractTask // needs to be public for ref
      * Create a new record task with the specified MIDI input device.
      *
      * @param inputDevice MIDI input device, must not be null
-     * @param network current network, must not be null
+     * @param network network, must not be null
      */
     RecordTask(final MidiInputDevice inputDevice, final CyNetwork network)
     {

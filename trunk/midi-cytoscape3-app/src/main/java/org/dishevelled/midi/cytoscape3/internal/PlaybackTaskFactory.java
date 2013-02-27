@@ -31,7 +31,7 @@ import org.cytoscape.model.CyNode;
 import org.cytoscape.work.AbstractTaskFactory;
 import org.cytoscape.work.TaskIterator;
 
-import rwmidi.MidiOutput;
+import rwmidi.MidiOutputDevice;
 
 /**
  * Playback task factory.
@@ -40,14 +40,59 @@ import rwmidi.MidiOutput;
  */
 final class PlaybackTaskFactory extends AbstractTaskFactory
 {
+    /** Node to start from. */
+    private final CyNode start;
+
+    /** Network. */
+    private final CyNetwork network;
+
+    /** MIDI output device. */
+    private final MidiOutputDevice outputDevice;
+
+    /** Source of randomness. */
+    private final Random random;
+
+    // channel, bpm, humanize, etc.
+
+
+    /**
+     * Create a new playback task factory with the specified MIDI output device.
+     *
+     * @param output MIDI output device, must not be null
+     * @param random source of randomness, must not be null
+     * @param start node to start from, must not be null
+     * @param network network, must not be null
+     */
+    PlaybackTaskFactory(final MidiOutputDevice outputDevice, final Random random, final CyNode start, final CyNetwork network)
+    {
+        super();
+        if (outputDevice == null)
+        {
+            throw new IllegalArgumentException("outputDevice must not be null");
+        }
+        if (random == null)
+        {
+            throw new IllegalArgumentException("random must not be null");
+        }
+        if (start == null)
+        {
+            throw new IllegalArgumentException("start must not be null");
+        }
+        if (network == null)
+        {
+            throw new IllegalArgumentException("network must not be null");
+        }
+        this.outputDevice = outputDevice;
+        this.random = random;
+        this.start = start;
+        this.network = network;
+    }
+
+
     @Override
     public TaskIterator createTaskIterator()
     {
-        MidiOutput output = null;
-        Random random = null;
-        CyNode start = null;
-        CyNetwork network = null;
-        PlaybackTask playbackTask = new PlaybackTask(output, random, start, network);
+        PlaybackTask playbackTask = new PlaybackTask(outputDevice, random, start, network);
         return new TaskIterator(playbackTask);
     }
 }

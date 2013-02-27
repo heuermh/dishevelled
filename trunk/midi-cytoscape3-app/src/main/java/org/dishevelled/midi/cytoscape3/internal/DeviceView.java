@@ -23,6 +23,8 @@
 */
 package org.dishevelled.midi.cytoscape3.internal;
 
+import static org.dishevelled.midi.cytoscape3.internal.MidiNetworksUtils.selectedNode;
+
 import static javax.swing.SwingUtilities.windowForComponent;
 
 import java.awt.BorderLayout;
@@ -32,6 +34,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 
 import java.util.Arrays;
+import java.util.Random;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -49,12 +52,22 @@ import ca.odell.glazedlists.swing.EventListModel;
 import ca.odell.glazedlists.swing.EventSelectionModel;
 
 import org.cytoscape.model.CyNetwork;
+import org.cytoscape.model.CyNode;
+
+import org.cytoscape.work.swing.DialogTaskManager;
+
 import org.cytoscape.application.CyApplicationManager;
+
+import org.dishevelled.iconbundle.tango.TangoProject;
+
+import org.dishevelled.identify.IdentifiableAction;
+import org.dishevelled.identify.IdButton;
 
 import org.dishevelled.layout.ButtonPanel;
 import org.dishevelled.layout.LabelFieldPanel;
 
 import rwmidi.MidiInputDevice;
+import rwmidi.MidiOutputDevice;
 import rwmidi.RWMidi;
 
 /**
@@ -66,6 +79,9 @@ final class DeviceView extends JPanel
 {
     /** Application manager. */
     private final CyApplicationManager applicationManager;
+
+    /** Dialog task manager. */
+    private final DialogTaskManager dialogTaskManager;
 
     /** List of MIDI input devices. */
     private final EventList<String> inputDevices;
@@ -79,8 +95,18 @@ final class DeviceView extends JPanel
     /** Output device list. */
     private final JList outputDeviceList;
 
-    /** Record action. */
-    private final Action record = new AbstractAction("Record") // i18n
+    /** Play action. */ // enable if output device is selected and only one node is selected and current network is not null
+    private final IdentifiableAction play = new IdentifiableAction("Play", TangoProject.MEDIA_PLAYBACK_START)
+        {
+            @Override
+            public void actionPerformed(final ActionEvent event)
+            {
+                play();
+            }
+        };
+
+    /** Record action. */ // enable if input device is selected and current network is not null
+    private final IdentifiableAction record = new IdentifiableAction("Record", TangoProject.MEDIA_RECORD)
         {
             @Override
             public void actionPerformed(final ActionEvent event)
@@ -103,14 +129,19 @@ final class DeviceView extends JPanel
     /**
      * Create a new device view.
      */
-    DeviceView(final CyApplicationManager applicationManager)
+    DeviceView(final CyApplicationManager applicationManager, final DialogTaskManager dialogTaskManager)
     {
         super();
         if (applicationManager == null)
         {
             throw new IllegalArgumentException("applicationManager must not be null");
         }
+        if (dialogTaskManager == null)
+        {
+            throw new IllegalArgumentException("dialogTaskManager must not be null");
+        }
         this.applicationManager = applicationManager;
+        this.dialogTaskManager = dialogTaskManager;
 
         inputDevices = GlazedLists.eventList(Arrays.asList(RWMidi.getInputDeviceNames()));
         EventListModel<String> inputDeviceModel = new EventListModel<String>(inputDevices);
@@ -150,7 +181,12 @@ final class DeviceView extends JPanel
 
         ButtonPanel buttonPanel = new ButtonPanel();
         buttonPanel.setBorder(new EmptyBorder(24, 12, 12, 12));
-        buttonPanel.add(record);
+
+        // todo: buttons with icons look strange on osx, wrong font and odd drop shadow
+        IdButton recordButton = new IdButton(record, TangoProject.EXTRA_SMALL);
+        IdButton playButton = new IdButton(play, TangoProject.EXTRA_SMALL);
+        buttonPanel.add(recordButton);
+        buttonPanel.add(playButton);
         buttonPanel.add(done);
 
         setLayout(new BorderLayout());
@@ -159,11 +195,19 @@ final class DeviceView extends JPanel
     }
 
     /**
-     * Done.
+     * Play.
      */
-    private void done()
+    private void play()
     {
-        windowForComponent(this).setVisible(false);
+        String outputDeviceName = (String) outputDeviceList.getSelectedValue();
+        MidiOutputDevice outputDevice = RWMidi.getOutputDevice(outputDeviceName);
+        Random random = new Random();
+        CyNetwork network = applicationManager.getCurrentNetwork();
+        CyNode start = selectedNode(network);
+
+        // start playback task
+        PlaybackTaskFactory playbackTaskFactory = new PlaybackTaskFactory(outputDevice, random, start, network);
+        dialogTaskManager.execute(playbackTaskFactory.createTaskIterator());
     }
 
     /**
@@ -175,14 +219,16 @@ final class DeviceView extends JPanel
         MidiInputDevice inputDevice = RWMidi.getInputDevice(inputDeviceName);
         CyNetwork network = applicationManager.getCurrentNetwork();
 
-        System.out.println("inputDeviceName=" + inputDeviceName + " inputDevice=" + inputDevice + " network=" + network);
+        // start record task
+        RecordTaskFactory recordTaskFactory = new RecordTaskFactory(inputDevice, network);
+        dialogTaskManager.execute(recordTaskFactory.createTaskIterator());
+    }
 
-        JDialog parent = (JDialog) windowForComponent(this);
-        JDialog dialog = new JDialog(parent, "Record"); // i18n
-        dialog.setContentPane(new RecordView(inputDevice, network));
-        dialog.setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
-        //installCloseKeyBinding(dialog);
-        dialog.setBounds(400, 400, 400, 400);
-        dialog.setVisible(true);
+    /**
+     * Done.
+     */
+    private void done()
+    {
+        windowForComponent(this).setVisible(false);
     }
 }

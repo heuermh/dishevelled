@@ -26,9 +26,13 @@ package org.dishevelled.midi.cytoscape3.internal;
 import java.util.Properties;
 
 import org.cytoscape.application.CyApplicationManager;
+
 import org.cytoscape.application.swing.CyAction;
+
 import org.cytoscape.service.util.AbstractCyActivator;
 import org.cytoscape.service.util.CyServiceRegistrar;
+
+import org.cytoscape.work.swing.DialogTaskManager;
 
 import org.osgi.framework.BundleContext;
 
@@ -48,8 +52,9 @@ public final class CyActivator extends AbstractCyActivator
         }
         CyApplicationManager applicationManager = getService(bundleContext, CyApplicationManager.class);
         CyServiceRegistrar serviceRegistrar = getService(bundleContext, CyServiceRegistrar.class);
+        DialogTaskManager dialogTaskManager = getService(bundleContext, DialogTaskManager.class);
 
-        MidiNetworksAction midiNetworksAction = new MidiNetworksAction(applicationManager, serviceRegistrar);
+        MidiNetworksAction midiNetworksAction = new MidiNetworksAction(applicationManager, serviceRegistrar, dialogTaskManager);
         Properties properties = new Properties();
         registerService(bundleContext, midiNetworksAction, CyAction.class, properties);
     }

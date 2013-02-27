@@ -27,6 +27,7 @@ import static org.junit.Assert.assertNotNull;
 
 import org.cytoscape.application.CyApplicationManager;
 import org.cytoscape.service.util.CyServiceRegistrar;
+import org.cytoscape.work.swing.DialogTaskManager;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -46,12 +47,14 @@ public final class MidiNetworksActionTest
     private CyApplicationManager applicationManager;
     @Mock
     private CyServiceRegistrar serviceRegistrar;
+    @Mock
+    private DialogTaskManager dialogTaskManager;
 
     @Before
     public void setUp()
     {
         MockitoAnnotations.initMocks(this);
-        midiNetworksAction = new MidiNetworksAction(applicationManager, serviceRegistrar);
+        midiNetworksAction = new MidiNetworksAction(applicationManager, serviceRegistrar, dialogTaskManager);
     }
 
     @Test

@@ -29,6 +29,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
 
+import java.util.List;
+
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.KeyStroke;
@@ -41,6 +43,7 @@ import org.cytoscape.model.CyNetwork;
 import org.cytoscape.model.CyNode;
 import org.cytoscape.model.CyRow;
 import org.cytoscape.model.CyTable;
+import org.cytoscape.model.CyTableUtil;
 
 /**
  * Utility methods.
@@ -190,5 +193,17 @@ final class MidiNetworksUtils
     static Iterable<CyEdge> outEdges(final CyNode node, final CyNetwork network)
     {
         return network.getAdjacentEdgeIterable(node, CyEdge.Type.OUTGOING);
+    }
+
+    /**
+     * Return the selected node in the specified network or null if none or more than one are selected.
+     *
+     * @param network network
+     * @return the selected node in the specified network or null if none or more than one are selected
+     */
+    static CyNode selectedNode(final CyNetwork network)
+    {
+        List<CyNode> selectedNodes = CyTableUtil.getNodesInState(network, "selected", true);
+        return (selectedNodes.size() == 1) ? selectedNodes.get(0) : null;
     }
 }
