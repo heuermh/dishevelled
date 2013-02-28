@@ -29,6 +29,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.InputStreamReader;
+import java.io.IOException;
+import java.io.PrintWriter;
+
 import java.util.List;
 
 import javax.swing.AbstractAction;
@@ -205,5 +212,58 @@ final class MidiNetworksUtils
     {
         List<CyNode> selectedNodes = CyTableUtil.getNodesInState(network, "selected", true);
         return (selectedNodes.size() == 1) ? selectedNodes.get(0) : null;
+    }
+
+    /**
+     * Write the default vizmap styles to a temporary file.
+     *
+     * @return the default vizmap styles written to a temporary file
+     */
+    static File writeVizmapToTempFile()
+    {
+        File tmp = null;
+        BufferedReader reader = null;
+        PrintWriter writer = null;
+        try
+        {
+            tmp = File.createTempFile("midi-networks-vizmap", "xml");
+            reader = new BufferedReader(new InputStreamReader(MidiNetworksUtils.class.getResourceAsStream("midi-networks-vizmap.xml")));
+            writer = new PrintWriter(new FileWriter(tmp), true);
+
+            while (reader.ready())
+            {
+                String line = reader.readLine();
+                if (line == null)
+                {
+                    break;
+                }
+                writer.write(line);
+            }
+            return tmp;
+        }
+        catch (IOException e)
+        {
+            // ignore
+        }
+        finally
+        {
+            try
+            {
+                reader.close();
+            }
+            catch (Exception e)
+            {
+                // ignore
+            }
+            try
+            {
+                writer.close();
+            }
+            catch (Exception e)
+            {
+                // ignore
+            }
+        }
+        return tmp;
     }
 }

@@ -24,6 +24,7 @@
 package org.dishevelled.midi.cytoscape3.internal;
 
 import static org.dishevelled.midi.cytoscape3.internal.MidiNetworksUtils.selectedNode;
+import static org.dishevelled.midi.cytoscape3.internal.MidiNetworksUtils.writeVizmapToTempFile;
 
 import static javax.swing.SwingUtilities.windowForComponent;
 
@@ -32,6 +33,8 @@ import java.awt.Component;
 import java.awt.GridLayout;
 
 import java.awt.event.ActionEvent;
+
+import java.io.File;
 
 import java.util.Arrays;
 import java.util.Random;
@@ -59,6 +62,9 @@ import ca.odell.glazedlists.swing.EventSelectionModel;
 import org.cytoscape.application.CyApplicationManager;
 import org.cytoscape.model.CyNetwork;
 import org.cytoscape.model.CyNode;
+import org.cytoscape.task.read.LoadVizmapFileTaskFactory;
+import org.cytoscape.view.model.CyNetworkView;
+import org.cytoscape.view.vizmap.VisualStyle;
 import org.cytoscape.work.swing.DialogTaskManager;
 
 import org.dishevelled.iconbundle.tango.TangoProject;
@@ -88,6 +94,9 @@ final class DeviceView extends JPanel
 
     /** Dialog task manager. */
     private final DialogTaskManager dialogTaskManager;
+
+    /** Load vizmap file task factory. */
+    private final LoadVizmapFileTaskFactory loadVizmapFileTaskFactory;
 
     /** List of MIDI input devices. */
     private final EventList<String> inputDevices;
@@ -127,6 +136,16 @@ final class DeviceView extends JPanel
             }
         };
 
+    /** Load default vizmap styles. */
+    private final Action loadDefaultVizmapStyles = new AbstractAction("Load Vizmap Styles") // i18n
+        {
+            @Override
+            public void actionPerformed(final ActionEvent event)
+            {
+                loadDefaultVizmapStyles();
+            }
+        };
+
     /** Done action. */
     private final Action done = new AbstractAction("Done") // i18n
         {
@@ -141,7 +160,9 @@ final class DeviceView extends JPanel
     /**
      * Create a new device view.
      */
-    DeviceView(final CyApplicationManager applicationManager, final DialogTaskManager dialogTaskManager)
+    DeviceView(final CyApplicationManager applicationManager,
+               final DialogTaskManager dialogTaskManager,
+               final LoadVizmapFileTaskFactory loadVizmapFileTaskFactory)
     {
         super();
         if (applicationManager == null)
@@ -152,8 +173,13 @@ final class DeviceView extends JPanel
         {
             throw new IllegalArgumentException("dialogTaskManager must not be null");
         }
+        if (loadVizmapFileTaskFactory == null)
+        {
+            throw new IllegalArgumentException("loadVizmapFileTaskFactory must not be null");
+        }
         this.applicationManager = applicationManager;
         this.dialogTaskManager = dialogTaskManager;
+        this.loadVizmapFileTaskFactory = loadVizmapFileTaskFactory;
 
         inputDevices = GlazedLists.eventList(Arrays.asList(RWMidi.getInputDeviceNames()));
         EventListModel<String> inputDeviceModel = new EventListModel<String>(inputDevices);
@@ -234,6 +260,7 @@ final class DeviceView extends JPanel
         IdButton playButton = toolBar.add(play);
         playButton.setBorderPainted(false);
         playButton.setFocusPainted(false);
+        toolBar.add(loadDefaultVizmapStyles);
 
         JPopupMenu toolBarContextMenu = new JPopupMenu();
         for (Object menuItem : toolBar.getDisplayMenuItems())
@@ -296,5 +323,20 @@ final class DeviceView extends JPanel
     private void done()
     {
         windowForComponent(this).setVisible(false);
+    }
+
+    /**
+     * Load default vizmap styles.
+     */
+    private void loadDefaultVizmapStyles()
+    {
+        File tmp = writeVizmapToTempFile();
+        CyNetworkView networkView = applicationManager.getCurrentNetworkView();
+        for (VisualStyle visualStyle : loadVizmapFileTaskFactory.loadStyles(tmp))
+        {
+            visualStyle.apply(networkView);
+        }
+        networkView.updateView();
+        loadDefaultVizmapStyles.setEnabled(false);
     }
 }
