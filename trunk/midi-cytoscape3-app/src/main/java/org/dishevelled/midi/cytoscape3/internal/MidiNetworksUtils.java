@@ -210,6 +210,10 @@ final class MidiNetworksUtils
      */
     static CyNode selectedNode(final CyNetwork network)
     {
+        if (network == null)
+        {
+            return null;
+        }
         List<CyNode> selectedNodes = CyTableUtil.getNodesInState(network, "selected", true);
         return (selectedNodes.size() == 1) ? selectedNodes.get(0) : null;
     }

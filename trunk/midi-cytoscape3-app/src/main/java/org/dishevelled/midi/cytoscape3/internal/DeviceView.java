@@ -37,6 +37,7 @@ import java.awt.event.ActionEvent;
 import java.io.File;
 
 import java.util.Arrays;
+import java.util.Properties;
 import java.util.Random;
 
 import javax.swing.AbstractAction;
@@ -60,11 +61,19 @@ import ca.odell.glazedlists.swing.EventListModel;
 import ca.odell.glazedlists.swing.EventSelectionModel;
 
 import org.cytoscape.application.CyApplicationManager;
+import org.cytoscape.application.events.SetCurrentNetworkEvent;
+import org.cytoscape.application.events.SetCurrentNetworkListener;
+import org.cytoscape.application.events.SetCurrentNetworkViewEvent;
+import org.cytoscape.application.events.SetCurrentNetworkViewListener;
 import org.cytoscape.model.CyNetwork;
 import org.cytoscape.model.CyNode;
+import org.cytoscape.model.events.RowSetRecord;
+import org.cytoscape.model.events.RowsSetEvent;
+import org.cytoscape.model.events.RowsSetListener;
 import org.cytoscape.task.read.LoadVizmapFileTaskFactory;
 import org.cytoscape.view.model.CyNetworkView;
 import org.cytoscape.view.vizmap.VisualStyle;
+import org.cytoscape.service.util.CyServiceRegistrar;
 import org.cytoscape.work.swing.DialogTaskManager;
 
 import org.dishevelled.iconbundle.tango.TangoProject;
@@ -87,7 +96,7 @@ import rwmidi.RWMidi;
  *
  * @author  Michael Heuer
  */
-final class DeviceView extends JPanel
+final class DeviceView extends JPanel implements RowsSetListener, SetCurrentNetworkListener, SetCurrentNetworkViewListener
 {
     /** Application manager. */
     private final CyApplicationManager applicationManager;
@@ -161,6 +170,7 @@ final class DeviceView extends JPanel
      * Create a new device view.
      */
     DeviceView(final CyApplicationManager applicationManager,
+               final CyServiceRegistrar serviceRegistrar,
                final DialogTaskManager dialogTaskManager,
                final LoadVizmapFileTaskFactory loadVizmapFileTaskFactory)
     {
@@ -168,6 +178,10 @@ final class DeviceView extends JPanel
         if (applicationManager == null)
         {
             throw new IllegalArgumentException("applicationManager must not be null");
+        }
+        if (serviceRegistrar == null)
+        {
+            throw new IllegalArgumentException("serviceRegistrar must not be null");
         }
         if (dialogTaskManager == null)
         {
@@ -193,12 +207,12 @@ final class DeviceView extends JPanel
                 @Override
                 public void valueChanged(final ListSelectionEvent event)
                 {
-                    int size = selectedInputDevices.size();
-                    record.setEnabled((size == 1) && (applicationManager.getCurrentNetwork() != null));
+                    updateRecord();
                 }
             });
-        // todo:  need to listen for changes to current network
         record.setEnabled(false);
+
+        loadDefaultVizmapStyles.setEnabled(false);
 
         IdMenuItem recordMenuItem = new IdMenuItem(record);
         JPopupMenu inputDeviceContextMenu = new JPopupMenu();
@@ -217,11 +231,9 @@ final class DeviceView extends JPanel
                 @Override
                 public void valueChanged(final ListSelectionEvent event)
                 {
-                    int size = selectedInputDevices.size();
-                    play.setEnabled((size == 1) && (applicationManager.getCurrentNetwork() != null));
+                    updatePlay();
                 }
             });
-        // todo:  need to listen for changes in node selection
         play.setEnabled(false);
 
         IdMenuItem playMenuItem = new IdMenuItem(play);
@@ -230,6 +242,12 @@ final class DeviceView extends JPanel
         outputDeviceList.addMouseListener(new ContextMenuListener(outputDeviceContextMenu));
 
         layoutComponents();
+
+        Properties properties = new Properties();
+        serviceRegistrar.registerService(this, RowsSetListener.class, properties);
+        serviceRegistrar.registerService(this, SetCurrentNetworkListener.class, properties);
+        serviceRegistrar.registerService(this, SetCurrentNetworkViewListener.class, properties);
+        // todo: serviceRegistrar.unregisterAllServices(this); when closing
     }
 
 
@@ -260,6 +278,7 @@ final class DeviceView extends JPanel
         IdButton playButton = toolBar.add(play);
         playButton.setBorderPainted(false);
         playButton.setFocusPainted(false);
+        toolBar.addSeparator();
         toolBar.add(loadDefaultVizmapStyles);
 
         JPopupMenu toolBarContextMenu = new JPopupMenu();
@@ -318,14 +337,6 @@ final class DeviceView extends JPanel
     }
 
     /**
-     * Done.
-     */
-    private void done()
-    {
-        windowForComponent(this).setVisible(false);
-    }
-
-    /**
      * Load default vizmap styles.
      */
     private void loadDefaultVizmapStyles()
@@ -338,5 +349,77 @@ final class DeviceView extends JPanel
         }
         networkView.updateView();
         loadDefaultVizmapStyles.setEnabled(false);
+    }
+
+    /**
+     * Done.
+     */
+    private void done()
+    {
+        windowForComponent(this).setVisible(false);
+    }
+
+    /**
+     * Update play.
+     */
+    private void updatePlay()
+    {
+        int size = selectedOutputDevices.size();
+        CyNetwork network = applicationManager.getCurrentNetwork();
+        CyNode start = selectedNode(network);
+
+        play.setEnabled((size == 1) && (network != null) && (start != null));
+    }
+
+    /**
+     * Update record.
+     */
+    private void updateRecord()
+    {
+        int size = selectedInputDevices.size();
+        CyNetwork network = applicationManager.getCurrentNetwork();
+
+        record.setEnabled((size == 1) && (network != null));
+    }
+
+    /**
+     * Update load default vizmap styles.
+     */
+    private void updateLoadDefaultVizmapStyles()
+    {
+        CyNetworkView networkView = applicationManager.getCurrentNetworkView();
+
+        loadDefaultVizmapStyles.setEnabled(networkView != null);
+    }
+
+    @Override
+    public void handleEvent(final SetCurrentNetworkEvent event)
+    {
+        updatePlay();
+        updateRecord();
+    }
+
+    @Override
+    public void handleEvent(final SetCurrentNetworkViewEvent event)
+    {
+        updateLoadDefaultVizmapStyles();
+    }
+
+    @Override
+    public void handleEvent(final RowsSetEvent event)
+    {
+        boolean updatePlay = false;
+        for (RowSetRecord record : event.getPayloadCollection())
+        {
+            if (CyNetwork.SELECTED.equals(record.getColumn()))
+            {
+                updatePlay = true;
+                break;
+            }
+        }
+        if (updatePlay)
+        {
+            updatePlay();
+        }
     }
 }
