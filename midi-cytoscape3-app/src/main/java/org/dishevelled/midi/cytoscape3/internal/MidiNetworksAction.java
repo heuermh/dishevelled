@@ -36,6 +36,7 @@ import org.cytoscape.application.CyApplicationManager;
 import org.cytoscape.application.swing.AbstractCyAction;
 import org.cytoscape.service.util.CyServiceRegistrar;
 import org.cytoscape.task.read.LoadVizmapFileTaskFactory;
+import org.cytoscape.service.util.CyServiceRegistrar;
 import org.cytoscape.work.swing.DialogTaskManager;
 
 /**
@@ -106,7 +107,7 @@ final class MidiNetworksAction extends AbstractCyAction
         }
         JFrame frame = (JFrame) windowForComponent((Component) event.getSource());
         JDialog dialog = new JDialog(frame, "Midi Networks"); // i18n
-        dialog.setContentPane(new DeviceView(applicationManager, dialogTaskManager, loadVizmapFileTaskFactory));
+        dialog.setContentPane(new DeviceView(applicationManager, serviceRegistrar, dialogTaskManager, loadVizmapFileTaskFactory));
         dialog.setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
         installCloseKeyBinding(dialog);
         dialog.setBounds(200, 200, 600, 400);
