@@ -210,9 +210,6 @@ final class DeviceView extends JPanel implements RowsSetListener, SetCurrentNetw
                     updateRecord();
                 }
             });
-        record.setEnabled(false);
-
-        loadDefaultVizmapStyles.setEnabled(false);
 
         IdMenuItem recordMenuItem = new IdMenuItem(record);
         JPopupMenu inputDeviceContextMenu = new JPopupMenu();
@@ -234,7 +231,6 @@ final class DeviceView extends JPanel implements RowsSetListener, SetCurrentNetw
                     updatePlay();
                 }
             });
-        play.setEnabled(false);
 
         IdMenuItem playMenuItem = new IdMenuItem(play);
         JPopupMenu outputDeviceContextMenu = new JPopupMenu();
@@ -248,6 +244,10 @@ final class DeviceView extends JPanel implements RowsSetListener, SetCurrentNetw
         serviceRegistrar.registerService(this, SetCurrentNetworkListener.class, properties);
         serviceRegistrar.registerService(this, SetCurrentNetworkViewListener.class, properties);
         // todo: serviceRegistrar.unregisterAllServices(this); when closing
+
+        updatePlay();
+        updateRecord();
+        updateLoadDefaultVizmapStyles();
     }
 
 
