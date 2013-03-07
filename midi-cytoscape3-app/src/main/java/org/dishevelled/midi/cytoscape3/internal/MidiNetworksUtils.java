@@ -78,7 +78,7 @@ final class MidiNetworksUtils
     {
         Action close = new AbstractAction()
             {
-                /** {@inheritDoc} */
+                @Override
                 public void actionPerformed(final ActionEvent event)
                 {
                     dialog.dispatchEvent(new WindowEvent(dialog, WindowEvent.WINDOW_CLOSING));

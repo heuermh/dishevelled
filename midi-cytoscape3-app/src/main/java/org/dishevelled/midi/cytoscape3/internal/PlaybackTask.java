@@ -118,16 +118,17 @@ final class PlaybackTask extends AbstractTask
             String nodeType = typeOf(current, network);
             int note = noteOf(current, network);
             int velocity = velocityOf(current, network);
-            taskMonitor.setStatusMessage(nodeType + " " + note + " " + velocity);
-            System.out.println(nodeType + " " + note + " " + velocity);
+            taskMonitor.setStatusMessage("Sending MIDI message " + nodeType + " " + note + " " + velocity);
 
             if ("noteOn".equals(nodeType))
             {
                 // send note on midi
+                output.sendNoteOn(1, note, velocity);
             }
             else if ("noteOff".equals(nodeType))
             {
                 // send note off midi
+                output.sendNoteOff(1, note, velocity);
             }
 
             WeightedMap<CyEdge> outEdges = WeightedMaps.createWeightedMap();
@@ -139,20 +140,14 @@ final class PlaybackTask extends AbstractTask
             // break if no outgoing edges
             if (outEdges.isEmpty())
             {
-                System.out.println("outEdges is empty, breaking...");
                 break;
-            }
-            else
-            {
-                System.out.println("outEdges size " + outEdges.size());
             }
 
             // wait on sampled edge
             CyEdge edge = outEdges.sample();
             String edgeType = typeOf(edge, network);
             long duration = durationOf(edge, network);
-            taskMonitor.setStatusMessage(edgeType + " "  + duration + " ms");
-            System.out.println(edgeType + " " + duration + " ms");
+            taskMonitor.setStatusMessage("Waiting for " + edgeType + " "  + duration + " ms");
 
             try
             {
@@ -163,9 +158,6 @@ final class PlaybackTask extends AbstractTask
                 // ok
             }
             current = edge.getTarget();
-
-            System.out.println("done sleeping");
         }
-        System.out.println("break or cancelled");
     }
 }
