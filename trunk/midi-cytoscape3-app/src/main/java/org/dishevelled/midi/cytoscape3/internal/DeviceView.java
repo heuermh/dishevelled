@@ -23,10 +23,10 @@
 */
 package org.dishevelled.midi.cytoscape3.internal;
 
+import static javax.swing.SwingUtilities.windowForComponent;
+
 import static org.dishevelled.midi.cytoscape3.internal.MidiNetworksUtils.selectedNode;
 import static org.dishevelled.midi.cytoscape3.internal.MidiNetworksUtils.writeVizmapToTempFile;
-
-import static javax.swing.SwingUtilities.windowForComponent;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -61,19 +61,27 @@ import ca.odell.glazedlists.swing.EventListModel;
 import ca.odell.glazedlists.swing.EventSelectionModel;
 
 import org.cytoscape.application.CyApplicationManager;
+
 import org.cytoscape.application.events.SetCurrentNetworkEvent;
 import org.cytoscape.application.events.SetCurrentNetworkListener;
 import org.cytoscape.application.events.SetCurrentNetworkViewEvent;
 import org.cytoscape.application.events.SetCurrentNetworkViewListener;
+
 import org.cytoscape.model.CyNetwork;
 import org.cytoscape.model.CyNode;
+
 import org.cytoscape.model.events.RowSetRecord;
 import org.cytoscape.model.events.RowsSetEvent;
 import org.cytoscape.model.events.RowsSetListener;
+
 import org.cytoscape.task.read.LoadVizmapFileTaskFactory;
+
 import org.cytoscape.view.model.CyNetworkView;
+
 import org.cytoscape.view.vizmap.VisualStyle;
+
 import org.cytoscape.service.util.CyServiceRegistrar;
+
 import org.cytoscape.work.swing.DialogTaskManager;
 
 import org.dishevelled.iconbundle.tango.TangoProject;

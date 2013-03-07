@@ -208,6 +208,7 @@ public final class RecordTask extends AbstractTask // needs to be public for ref
         CyNode node = network.addNode();
         CyTable table = network.getDefaultNodeTable();
         CyRow row = table.getRow(node.getSUID());
+        long timestamp = System.currentTimeMillis();
 
         if (table.getColumn("type") == null)
         {
@@ -221,9 +222,14 @@ public final class RecordTask extends AbstractTask // needs to be public for ref
         {
             table.createColumn("velocity", Integer.class, false);
         }
+        if (table.getColumn("timestamp") == null)
+        {
+            table.createColumn("timestamp", Long.class, false);
+        }
         row.set("type", type);
         row.set("note", note);
         row.set("velocity", velocity);
+        row.set("timestamp", timestamp);
 
         return node;
     }
@@ -242,10 +248,11 @@ public final class RecordTask extends AbstractTask // needs to be public for ref
         CyEdge edge = network.addEdge(source, target, true);
         CyTable table = network.getDefaultEdgeTable();
         CyRow row = table.getRow(edge.getSUID());
+        String type = edgeType(source, target);
 
-        if (table.getColumn("type") == null) // or use interaction?
+        if (table.getColumn("type") == null)
         {
-            table.createColumn("type", String.class, false, "wait");
+            table.createColumn("type", String.class, false);
         }
         if (table.getColumn("duration") == null)
         {
@@ -256,20 +263,34 @@ public final class RecordTask extends AbstractTask // needs to be public for ref
             table.createColumn("weight", Double.class, false);
         }
 
+        row.set(CyEdge.INTERACTION, type);
+        row.set("type", type);
+        row.set("duration", duration);
+        row.set("weight", weight);
+
+        return edge;
+    }
+
+    /**
+     * Return the edge type given the specified source and target nodes.
+     *
+     * @param source source node
+     * @param target target node
+     * @return the edge type given the specified source and target nodes
+     */
+    private String edgeType(final CyNode source, final CyNode target)
+    {
         String sourceType = typeOf(source, network);
         String targetType = typeOf(target, network);
 
         if ("noteOn".equals(sourceType) && "noteOff".equals(targetType))
         {
-            row.set("type", "note");
+            return "note";
         }
         else if ("noteOff".equals(sourceType) && "noteOn".equals(targetType))
         {
-            row.set("type", "rest");
+            return "rest";
         }
-        row.set("duration", duration);
-        row.set("weight", weight);
-
-        return edge;
+        return "wait";
     }
 }

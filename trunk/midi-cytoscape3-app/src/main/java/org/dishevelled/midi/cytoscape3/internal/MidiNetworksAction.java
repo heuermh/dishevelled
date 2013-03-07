@@ -24,19 +24,24 @@
 package org.dishevelled.midi.cytoscape3.internal;
 
 import static javax.swing.SwingUtilities.windowForComponent;
+
 import static org.dishevelled.midi.cytoscape3.internal.MidiNetworksUtils.installCloseKeyBinding;
 
 import java.awt.Component;
+
 import java.awt.event.ActionEvent;
 
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 
 import org.cytoscape.application.CyApplicationManager;
+
 import org.cytoscape.application.swing.AbstractCyAction;
+
 import org.cytoscape.service.util.CyServiceRegistrar;
+
 import org.cytoscape.task.read.LoadVizmapFileTaskFactory;
-import org.cytoscape.service.util.CyServiceRegistrar;
+
 import org.cytoscape.work.swing.DialogTaskManager;
 
 /**
