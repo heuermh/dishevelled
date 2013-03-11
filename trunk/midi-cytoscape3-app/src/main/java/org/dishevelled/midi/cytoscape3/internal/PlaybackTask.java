@@ -147,7 +147,7 @@ final class PlaybackTask extends AbstractTask
 
             try
             {
-                Thread.currentThread().sleep(duration);
+                Thread.sleep(duration);
             }
             catch (InterruptedException e)
             {

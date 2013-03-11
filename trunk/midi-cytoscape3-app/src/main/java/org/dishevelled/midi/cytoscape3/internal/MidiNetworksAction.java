@@ -33,6 +33,7 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.WindowConstants;
 
 import org.cytoscape.application.CyApplicationManager;
 
@@ -113,7 +114,7 @@ final class MidiNetworksAction extends AbstractCyAction
         JFrame frame = (JFrame) windowForComponent((Component) event.getSource());
         JDialog dialog = new JDialog(frame, "Midi Networks"); // i18n
         dialog.setContentPane(new DeviceView(applicationManager, serviceRegistrar, dialogTaskManager, loadVizmapFileTaskFactory));
-        dialog.setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
+        dialog.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
         installCloseKeyBinding(dialog);
         dialog.setBounds(200, 200, 600, 400);
         dialog.setVisible(true);
