@@ -23,6 +23,7 @@
 */
 package org.dishevelled.identify;
 
+import java.awt.ComponentOrientation;
 import java.beans.BeanInfo;
 import java.beans.BeanDescriptor;
 import java.beans.Introspector;
@@ -34,10 +35,12 @@ import java.lang.reflect.InvocationTargetException;
 
 import java.net.URL;
 
+import javax.swing.JLabel;
 import javax.swing.LookAndFeel;
 import javax.swing.UIManager;
 
 import org.dishevelled.iconbundle.IconBundle;
+import org.dishevelled.iconbundle.IconTextDirection;
 
 import org.dishevelled.iconbundle.impl.PNGIconBundle;
 
@@ -412,5 +415,19 @@ public final class IdentifyUtils
 
             return defaultIconBundle;
         }
+    }
+
+    /**
+     * Determine a text direction from the component orientation of
+     * the specified label.
+     *
+     * @param label label
+     * @return a text direction for the component orientation of
+     *    the specified label
+     */
+    static IconTextDirection determineTextDirection(final JLabel label)
+    {
+        ComponentOrientation componentOrientation = label.getComponentOrientation();
+        return componentOrientation.isLeftToRight() ? IconTextDirection.LEFT_TO_RIGHT : IconTextDirection.RIGHT_TO_LEFT;
     }
 }

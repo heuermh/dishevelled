@@ -25,7 +25,6 @@ package org.dishevelled.identify;
 
 import java.awt.Image;
 import java.awt.Component;
-import java.awt.ComponentOrientation;
 
 import javax.swing.JTable;
 import javax.swing.JLabel;
@@ -126,7 +125,7 @@ public class IdTableCellRenderer
         }
         else
         {
-            IconTextDirection textDirection = determineTextDirection(label);
+            IconTextDirection textDirection = IdentifyUtils.determineTextDirection(label);
             Image image = iconBundle.getImage(label, textDirection, IconState.NORMAL, iconSize);
 
             if (imageIcon == null)
@@ -142,19 +141,5 @@ public class IdTableCellRenderer
         }
 
         return label;
-    }
-
-    /**
-     * Determine a text direction from the component orientation of
-     * the specified label.
-     *
-     * @param label label
-     * @return a text direction for the component orientation of
-     *    the specified label
-     */
-    private IconTextDirection determineTextDirection(final JLabel label)
-    {
-        ComponentOrientation componentOrientation = label.getComponentOrientation();
-        return componentOrientation.isLeftToRight() ? IconTextDirection.LEFT_TO_RIGHT : IconTextDirection.RIGHT_TO_LEFT;
     }
 }
