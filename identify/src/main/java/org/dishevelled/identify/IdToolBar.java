@@ -40,6 +40,7 @@ import javax.swing.ButtonGroup;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JToolBar;
+import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 
 import org.dishevelled.iconbundle.IconSize;
@@ -255,16 +256,16 @@ public final class IdToolBar
 
         if (IdentifyUtils.isGTKLookAndFeel())
         {
-            idButton.setHorizontalAlignment(IdButton.LEFT);
-            idButton.setHorizontalTextPosition(IdButton.TRAILING);
-            idButton.setVerticalTextPosition(IdButton.CENTER);
+            idButton.setHorizontalAlignment(SwingConstants.LEFT);
+            idButton.setHorizontalTextPosition(SwingConstants.TRAILING);
+            idButton.setVerticalTextPosition(SwingConstants.CENTER);
         }
         else
         {
             // default to icon over centered text layout
-            idButton.setHorizontalAlignment(IdButton.CENTER);
-            idButton.setHorizontalTextPosition(IdButton.CENTER);
-            idButton.setVerticalTextPosition(IdButton.BOTTOM);
+            idButton.setHorizontalAlignment(SwingConstants.CENTER);
+            idButton.setHorizontalTextPosition(SwingConstants.CENTER);
+            idButton.setVerticalTextPosition(SwingConstants.BOTTOM);
         }
 
         // tweak visual settings; might be L&F dependent
