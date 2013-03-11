@@ -58,7 +58,7 @@ final class PlaybackTaskFactory extends AbstractTaskFactory
     /**
      * Create a new playback task factory with the specified MIDI output device.
      *
-     * @param output MIDI output device, must not be null
+     * @param outputDevice MIDI output device, must not be null
      * @param random source of randomness, must not be null
      * @param start node to start from, must not be null
      * @param network network, must not be null

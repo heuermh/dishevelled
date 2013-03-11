@@ -43,12 +43,8 @@ import org.cytoscape.work.TaskMonitor;
 import org.dishevelled.weighted.WeightedMap;
 import org.dishevelled.weighted.WeightedMaps;
 
-import rwmidi.Controller;
 import rwmidi.MidiOutput;
 import rwmidi.MidiOutputDevice;
-import rwmidi.Note;
-import rwmidi.ProgramChange;
-import rwmidi.SysexMessage;
 
 /**
  * Playback task.
@@ -75,7 +71,7 @@ final class PlaybackTask extends AbstractTask
     /**
      * Create a new playback task with the specified MIDI output device.
      *
-     * @param output MIDI output device, must not be null
+     * @param outputDevice MIDI output device, must not be null
      * @param random source of randomness, must not be null
      * @param start node to start from, must not be null
      * @param network network, must not be null
@@ -109,6 +105,7 @@ final class PlaybackTask extends AbstractTask
     @Override
     public void run(final TaskMonitor taskMonitor)
     {
+        // todo:  use type note velocity instead of name?
         taskMonitor.setTitle("Playback from " + nameOf(start, network));
         taskMonitor.setProgress(0.0d);
 
@@ -118,7 +115,6 @@ final class PlaybackTask extends AbstractTask
             String nodeType = typeOf(current, network);
             int note = noteOf(current, network);
             int velocity = velocityOf(current, network);
-            taskMonitor.setStatusMessage("Sending MIDI message " + nodeType + " " + note + " " + velocity);
 
             if ("noteOn".equals(nodeType))
             {
@@ -147,7 +143,7 @@ final class PlaybackTask extends AbstractTask
             CyEdge edge = outEdges.sample();
             String edgeType = typeOf(edge, network);
             long duration = durationOf(edge, network);
-            taskMonitor.setStatusMessage("Waiting for " + edgeType + " "  + duration + " ms");
+            taskMonitor.setStatusMessage("Sending MIDI message " + nodeType + " " + note + " " + velocity + "; waiting for " + edgeType + " "  + duration + " ms");
 
             try
             {

@@ -31,9 +31,6 @@ package org.dishevelled.midi.cytoscape3;
 
   todo:
 
-  add rescan/refresh action to input and output devices
-  play action needs to listen to node selection changes
-  play and record actions need to listen to current network changes (null --> non-null)
   play action context menu item on CyNode
   record action context menu item on CyNetworkView (?)
   visual indicator for playback position (change style, or recenter camera, or both)
@@ -41,6 +38,6 @@ package org.dishevelled.midi.cytoscape3;
   record and playback other midi message types
   document how to create attributes necessary to play arbitrary graph
   add channel, bpm, humanize, etc. to playback task
-  timeline graph layout
+  timeline graph layout (left to right or top to bottom based on timestamp)
 
  */

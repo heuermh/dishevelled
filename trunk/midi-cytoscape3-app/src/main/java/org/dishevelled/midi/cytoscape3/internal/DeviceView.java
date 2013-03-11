@@ -29,7 +29,6 @@ import static org.dishevelled.midi.cytoscape3.internal.MidiNetworksUtils.selecte
 import static org.dishevelled.midi.cytoscape3.internal.MidiNetworksUtils.writeVizmapToTempFile;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.GridLayout;
 
 import java.awt.event.ActionEvent;
@@ -43,7 +42,6 @@ import java.util.Random;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JDialog;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
@@ -153,6 +151,16 @@ final class DeviceView extends JPanel implements RowsSetListener, SetCurrentNetw
             }
         };
 
+    /** Refresh action. */
+    private final Action refresh = new AbstractAction("Refresh MIDI Devices") // i18n
+        {
+            @Override
+            public void actionPerformed(final ActionEvent event)
+            {
+                refresh();
+            }
+        };
+
     /** Load default vizmap styles. */
     private final Action loadDefaultVizmapStyles = new AbstractAction("Load Vizmap Styles") // i18n
         {
@@ -176,6 +184,11 @@ final class DeviceView extends JPanel implements RowsSetListener, SetCurrentNetw
 
     /**
      * Create a new device view.
+     *
+     * @param applicationManager application manager, must not be null
+     * @param serviceRegistrar service registrar, must not be null
+     * @param dialogTaskManager dialog task manager, must not be null
+     * @param loadVizmapFileTaskFactory load vizmap file task factory, must not be null
      */
     DeviceView(final CyApplicationManager applicationManager,
                final CyServiceRegistrar serviceRegistrar,
@@ -287,6 +300,7 @@ final class DeviceView extends JPanel implements RowsSetListener, SetCurrentNetw
         playButton.setBorderPainted(false);
         playButton.setFocusPainted(false);
         toolBar.addSeparator();
+        toolBar.add(refresh);
         toolBar.add(loadDefaultVizmapStyles);
 
         JPopupMenu toolBarContextMenu = new JPopupMenu();
@@ -391,6 +405,23 @@ final class DeviceView extends JPanel implements RowsSetListener, SetCurrentNetw
     }
 
     /**
+     * Refresh MIDI devices.
+     */
+    private void refresh()
+    {
+        inputDevices.clear();
+        for (String inputDeviceName : RWMidi.getInputDeviceNames())
+        {
+            inputDevices.add(inputDeviceName);
+        }
+        outputDevices.clear();
+        for (String outputDeviceName : RWMidi.getOutputDeviceNames())
+        {
+            outputDevices.add(outputDeviceName);
+        }
+    }
+
+    /**
      * Update load default vizmap styles.
      */
     private void updateLoadDefaultVizmapStyles()
@@ -417,9 +448,9 @@ final class DeviceView extends JPanel implements RowsSetListener, SetCurrentNetw
     public void handleEvent(final RowsSetEvent event)
     {
         boolean updatePlay = false;
-        for (RowSetRecord record : event.getPayloadCollection())
+        for (RowSetRecord rowSetRecord : event.getPayloadCollection())
         {
-            if (CyNetwork.SELECTED.equals(record.getColumn()))
+            if (CyNetwork.SELECTED.equals(rowSetRecord.getColumn()))
             {
                 updatePlay = true;
                 break;
