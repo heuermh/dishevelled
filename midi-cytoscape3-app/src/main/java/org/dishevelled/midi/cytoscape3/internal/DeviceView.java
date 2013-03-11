@@ -46,6 +46,7 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
+import javax.swing.ListSelectionModel;
 
 import javax.swing.border.EmptyBorder;
 
@@ -222,7 +223,7 @@ final class DeviceView extends JPanel implements RowsSetListener, SetCurrentNetw
         selectedInputDevices = inputDeviceSelectionModel.getSelected();
         inputDeviceList = new JList(inputDeviceModel);
         inputDeviceList.setSelectionModel(inputDeviceSelectionModel);
-        inputDeviceSelectionModel.setSelectionMode(EventSelectionModel.SINGLE_SELECTION);
+        inputDeviceSelectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         inputDeviceSelectionModel.addListSelectionListener(new ListSelectionListener()
             {
                 @Override
@@ -243,7 +244,7 @@ final class DeviceView extends JPanel implements RowsSetListener, SetCurrentNetw
         selectedOutputDevices = outputDeviceSelectionModel.getSelected();
         outputDeviceList = new JList(outputDeviceModel);
         outputDeviceList.setSelectionModel(outputDeviceSelectionModel);
-        outputDeviceSelectionModel.setSelectionMode(EventSelectionModel.SINGLE_SELECTION);
+        outputDeviceSelectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         outputDeviceSelectionModel.addListSelectionListener(new ListSelectionListener()
             {
                 @Override

@@ -243,7 +243,6 @@ final class MidiNetworksUtils
                 }
                 writer.write(line);
             }
-            return tmp;
         }
         catch (IOException e)
         {

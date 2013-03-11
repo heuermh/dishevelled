@@ -91,7 +91,7 @@ public final class RecordTask extends AbstractTask // needs to be public for ref
         {
             try
             {
-                Thread.currentThread().sleep(250L);
+                Thread.sleep(250L);
             }
             catch (InterruptedException e)
             {
