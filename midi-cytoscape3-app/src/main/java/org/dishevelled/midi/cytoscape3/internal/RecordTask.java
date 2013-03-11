@@ -23,7 +23,6 @@
 */
 package org.dishevelled.midi.cytoscape3.internal;
 
-import static org.dishevelled.midi.cytoscape3.internal.MidiNetworksUtils.nameOf;
 import static org.dishevelled.midi.cytoscape3.internal.MidiNetworksUtils.typeOf;
 
 import org.cytoscape.model.CyEdge;
