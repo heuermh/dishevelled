@@ -31,6 +31,7 @@ package org.dishevelled.midi.cytoscape3;
 
   todo:
 
+  record action should play through to output device
   play action context menu item on CyNode
   record action context menu item on CyNetworkView (?)
   visual indicator for playback position (change style, or recenter camera, or both)
