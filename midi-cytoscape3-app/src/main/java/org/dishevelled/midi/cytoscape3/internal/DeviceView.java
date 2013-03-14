@@ -251,6 +251,7 @@ final class DeviceView extends JPanel implements RowsSetListener, SetCurrentNetw
                 public void valueChanged(final ListSelectionEvent event)
                 {
                     updatePlay();
+                    updateRecord();
                 }
             });
 
