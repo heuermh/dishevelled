@@ -32,7 +32,6 @@ package org.dishevelled.midi.cytoscape3;
   todo:
 
   refresh midi devices might not work, check rwmidi
-  add midi note names to nodes for mapping to label, update vizmapping
   play action context menu item on CyNode
   record action context menu item on CyNetworkView (?)
   visual indicator for playback position (change style, or recenter camera, or both)
