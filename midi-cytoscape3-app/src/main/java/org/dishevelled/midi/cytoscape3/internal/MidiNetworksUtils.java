@@ -59,6 +59,10 @@ import org.cytoscape.model.CyTableUtil;
  */
 final class MidiNetworksUtils
 {
+    /** Array of MIDI note names. */
+    private static final String[] MIDI_NAMES = new String[] { "C", "C#", "D", "Eb", "E", "F", "F#", "G", "G#", "A", "Bb", "B" };
+
+
     /**
      * Private no-arg constructor.
      */
@@ -277,6 +281,6 @@ final class MidiNetworksUtils
      */
     static String midiNameOf(final int note)
     {
-        return "C5";
+        return MIDI_NAMES[note % 12] + note / 12;
     }
 }
