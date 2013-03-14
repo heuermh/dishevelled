@@ -352,10 +352,12 @@ final class DeviceView extends JPanel implements RowsSetListener, SetCurrentNetw
     {
         String inputDeviceName = selectedInputDevices.get(0);
         MidiInputDevice inputDevice = RWMidi.getInputDevice(inputDeviceName);
+        String outputDeviceName = selectedOutputDevices.get(0);
+        MidiOutputDevice outputDevice = RWMidi.getOutputDevice(outputDeviceName);
         CyNetwork network = applicationManager.getCurrentNetwork();
 
         // start record task
-        RecordTaskFactory recordTaskFactory = new RecordTaskFactory(inputDevice, network);
+        RecordTaskFactory recordTaskFactory = new RecordTaskFactory(inputDevice, outputDevice, network);
         dialogTaskManager.execute(recordTaskFactory.createTaskIterator());
     }
 
@@ -399,10 +401,11 @@ final class DeviceView extends JPanel implements RowsSetListener, SetCurrentNetw
      */
     private void updateRecord()
     {
-        int size = selectedInputDevices.size();
+        int inputSize = selectedInputDevices.size();
+        int outputSize = selectedOutputDevices.size();
         CyNetwork network = applicationManager.getCurrentNetwork();
 
-        record.setEnabled((size == 1) && (network != null));
+        record.setEnabled((inputSize == 1) && (outputSize == 1) && (network != null));
     }
 
     /**

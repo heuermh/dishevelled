@@ -23,6 +23,7 @@
 */
 package org.dishevelled.midi.cytoscape3.internal;
 
+import static org.dishevelled.midi.cytoscape3.internal.MidiNetworksUtils.midiNameOf;
 import static org.dishevelled.midi.cytoscape3.internal.MidiNetworksUtils.typeOf;
 
 import org.cytoscape.model.CyEdge;
@@ -37,6 +38,8 @@ import org.cytoscape.work.TaskMonitor;
 import rwmidi.Controller;
 import rwmidi.MidiInput;
 import rwmidi.MidiInputDevice;
+import rwmidi.MidiOutput;
+import rwmidi.MidiOutputDevice;
 import rwmidi.Note;
 import rwmidi.ProgramChange;
 import rwmidi.SysexMessage;
@@ -48,6 +51,9 @@ import rwmidi.SysexMessage;
  */
 public final class RecordTask extends AbstractTask // needs to be public for reflection to work
 {
+    /** MIDI output. */
+    private final MidiOutput output;
+
     /** Network. */
     private final CyNetwork network;
 
@@ -59,17 +65,22 @@ public final class RecordTask extends AbstractTask // needs to be public for ref
 
 
     /**
-     * Create a new record task with the specified MIDI input device.
+     * Create a new record task with the specified MIDI input and output devices.
      *
      * @param inputDevice MIDI input device, must not be null
+     * @param outputDevice MIDI output device, must not be null
      * @param network network, must not be null
      */
-    RecordTask(final MidiInputDevice inputDevice, final CyNetwork network)
+    RecordTask(final MidiInputDevice inputDevice, final MidiOutputDevice outputDevice, final CyNetwork network)
     {
         super();
         if (inputDevice == null)
         {
             throw new IllegalArgumentException("inputDevice must not be null");
+        }
+        if (outputDevice == null)
+        {
+            throw new IllegalArgumentException("outputDevice must not be null");
         }
         if (network == null)
         {
@@ -77,6 +88,7 @@ public final class RecordTask extends AbstractTask // needs to be public for ref
         }
         MidiInput input = inputDevice.createInput(this);
         input.plug(this, 1); // pass channel in?
+        this.output = outputDevice.createOutput();
         this.network = network;
     }
 
@@ -117,6 +129,9 @@ public final class RecordTask extends AbstractTask // needs to be public for ref
             }
             last = current;
             lastNode = currentNode;
+
+            // forward note on midi message
+            output.sendNoteOn(1, note.getPitch(), note.getVelocity());
         }
     }
 
@@ -137,6 +152,9 @@ public final class RecordTask extends AbstractTask // needs to be public for ref
             }
             last = current;
             lastNode = currentNode;
+
+            // forward note off midi message
+            output.sendNoteOff(1, note.getPitch(), note.getVelocity());
         }
     }
 
@@ -209,6 +227,10 @@ public final class RecordTask extends AbstractTask // needs to be public for ref
         CyRow row = table.getRow(node.getSUID());
         long timestamp = System.currentTimeMillis();
 
+        if (table.getColumn(CyNetwork.NAME) == null)
+        {
+            table.createColumn(CyNetwork.NAME, String.class, false);
+        }
         if (table.getColumn("type") == null)
         {
             table.createColumn("type", String.class, false);
@@ -225,6 +247,7 @@ public final class RecordTask extends AbstractTask // needs to be public for ref
         {
             table.createColumn("timestamp", Long.class, false);
         }
+        row.set(CyNetwork.NAME, midiNameOf(note));
         row.set("type", type);
         row.set("note", note);
         row.set("velocity", velocity);

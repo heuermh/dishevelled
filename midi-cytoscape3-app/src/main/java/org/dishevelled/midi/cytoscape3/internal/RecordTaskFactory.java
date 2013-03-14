@@ -29,6 +29,7 @@ import org.cytoscape.work.AbstractTaskFactory;
 import org.cytoscape.work.TaskIterator;
 
 import rwmidi.MidiInputDevice;
+import rwmidi.MidiOutputDevice;
 
 /**
  * Record task factory.
@@ -40,27 +41,36 @@ final class RecordTaskFactory extends AbstractTaskFactory
     /** MIDI input device. */
     private final MidiInputDevice inputDevice;
 
+    /** MIDI output device. */
+    private final MidiOutputDevice outputDevice;
+
     /** Network. */
     private final CyNetwork network;
 
 
     /**
-     * Create a new record task factory with the specified MIDI input device.
+     * Create a new record task factory with the specified MIDI input and output devices.
      *
      * @param inputDevice MIDI input device, must not be null
+     * @param outputDevice MIDI output device, must not be null
      * @param network network, must not be null
      */
-    RecordTaskFactory(final MidiInputDevice inputDevice, final CyNetwork network)
+    RecordTaskFactory(final MidiInputDevice inputDevice, final MidiOutputDevice outputDevice, final CyNetwork network)
     {
         if (inputDevice == null)
         {
             throw new IllegalArgumentException("inputDevice must not be null");
+        }
+        if (outputDevice == null)
+        {
+            throw new IllegalArgumentException("outputDevice must not be null");
         }
         if (network == null)
         {
             throw new IllegalArgumentException("network must not be null");
         }
         this.inputDevice = inputDevice;
+        this.outputDevice = outputDevice;
         this.network = network;
     }
 
@@ -68,7 +78,7 @@ final class RecordTaskFactory extends AbstractTaskFactory
     @Override
     public TaskIterator createTaskIterator()
     {
-        RecordTask recordTask = new RecordTask(inputDevice, network);
+        RecordTask recordTask = new RecordTask(inputDevice, outputDevice, network);
         return new TaskIterator(recordTask);
     }
 }
