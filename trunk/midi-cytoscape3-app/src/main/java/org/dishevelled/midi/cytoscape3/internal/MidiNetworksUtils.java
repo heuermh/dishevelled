@@ -59,7 +59,6 @@ import org.cytoscape.model.CyTableUtil;
  */
 final class MidiNetworksUtils
 {
-
     /**
      * Private no-arg constructor.
      */
@@ -268,5 +267,16 @@ final class MidiNetworksUtils
             }
         }
         return tmp;
+    }
+
+    /**
+     * Return the MIDI note name for the specified note.
+     *
+     * @param note note
+     * @return the MIDI note name for the specified note
+     */
+    static String midiNameOf(final int note)
+    {
+        return "C5";
     }
 }
