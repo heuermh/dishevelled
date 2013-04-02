@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!--
+
+    dsh-color-scheme  Color schemes.
+    Copyright (c) 2009-2013 held jointly by the individual authors.
+
+    This library is free software; you can redistribute it and/or modify it
+    under the terms of the GNU Lesser General Public License as published
+    by the Free Software Foundation; either version 3 of the License, or (at
+    your option) any later version.
+
+    This library is distributed in the hope that it will be useful, but WITHOUT
+    ANY WARRANTY; with out even the implied warranty of MERCHANTABILITY or
+    FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
+    License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with this library;  if not, write to the Free Software Foundation,
+    Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307  USA.
+
+    > http://www.fsf.org/licensing/licenses/lgpl.html
+    > http://www.opensource.org/licenses/lgpl-license.php
+
+-->
+<color-scheme name="GnGy" type="qualitative">
+  <colors>
+    <color red="100" blue="65" green="196" alpha="0.25"/>
+    <color red="182" blue="175" green="177" alpha="1.0"/>
+  </colors>
+</color-scheme>
