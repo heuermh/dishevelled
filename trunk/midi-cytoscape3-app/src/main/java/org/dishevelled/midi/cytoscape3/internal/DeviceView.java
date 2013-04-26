@@ -76,7 +76,7 @@ import org.cytoscape.model.events.RowsSetListener;
 import org.cytoscape.task.read.LoadVizmapFileTaskFactory;
 
 import org.cytoscape.view.model.CyNetworkView;
-
+import org.cytoscape.view.vizmap.VisualMappingManager;
 import org.cytoscape.view.vizmap.VisualStyle;
 
 import org.cytoscape.service.util.CyServiceRegistrar;
@@ -110,6 +110,9 @@ final class DeviceView extends JPanel implements RowsSetListener, SetCurrentNetw
 
     /** Dialog task manager. */
     private final DialogTaskManager dialogTaskManager;
+
+    /** Visual mapping manager. */
+    private final VisualMappingManager visualMappingManager;
 
     /** Load vizmap file task factory. */
     private final LoadVizmapFileTaskFactory loadVizmapFileTaskFactory;
@@ -189,11 +192,13 @@ final class DeviceView extends JPanel implements RowsSetListener, SetCurrentNetw
      * @param applicationManager application manager, must not be null
      * @param serviceRegistrar service registrar, must not be null
      * @param dialogTaskManager dialog task manager, must not be null
+     * @param visualMappingManager visual mapping manager, must not be null
      * @param loadVizmapFileTaskFactory load vizmap file task factory, must not be null
      */
     DeviceView(final CyApplicationManager applicationManager,
                final CyServiceRegistrar serviceRegistrar,
                final DialogTaskManager dialogTaskManager,
+               final VisualMappingManager visualMappingManager,
                final LoadVizmapFileTaskFactory loadVizmapFileTaskFactory)
     {
         super();
@@ -209,12 +214,17 @@ final class DeviceView extends JPanel implements RowsSetListener, SetCurrentNetw
         {
             throw new IllegalArgumentException("dialogTaskManager must not be null");
         }
+        if (visualMappingManager == null)
+        {
+            throw new IllegalArgumentException("visualMappingManager must not be null");
+        }
         if (loadVizmapFileTaskFactory == null)
         {
             throw new IllegalArgumentException("loadVizmapFileTaskFactory must not be null");
         }
         this.applicationManager = applicationManager;
         this.dialogTaskManager = dialogTaskManager;
+        this.visualMappingManager = visualMappingManager;
         this.loadVizmapFileTaskFactory = loadVizmapFileTaskFactory;
 
         inputDevices = GlazedLists.eventList(Arrays.asList(RWMidi.getInputDeviceNames()));
@@ -340,9 +350,11 @@ final class DeviceView extends JPanel implements RowsSetListener, SetCurrentNetw
         Random random = new Random();
         CyNetwork network = applicationManager.getCurrentNetwork();
         CyNode start = selectedNode(network);
+        CyNetworkView networkView = applicationManager.getCurrentNetworkView();
+        VisualStyle style = visualMappingManager.getCurrentVisualStyle();
 
         // start playback task
-        PlaybackTaskFactory playbackTaskFactory = new PlaybackTaskFactory(outputDevice, random, start, network);
+        PlaybackTaskFactory playbackTaskFactory = new PlaybackTaskFactory(outputDevice, random, start, network, networkView, style);
         dialogTaskManager.execute(playbackTaskFactory.createTaskIterator());
     }
 

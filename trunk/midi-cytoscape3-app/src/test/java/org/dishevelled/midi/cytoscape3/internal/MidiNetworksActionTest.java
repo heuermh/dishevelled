@@ -28,6 +28,7 @@ import static org.junit.Assert.assertNotNull;
 import org.cytoscape.application.CyApplicationManager;
 import org.cytoscape.service.util.CyServiceRegistrar;
 import org.cytoscape.task.read.LoadVizmapFileTaskFactory;
+import org.cytoscape.view.vizmap.VisualMappingManager;
 import org.cytoscape.work.swing.DialogTaskManager;
 
 import org.junit.Before;
@@ -51,14 +52,19 @@ public final class MidiNetworksActionTest
     @Mock
     private DialogTaskManager dialogTaskManager;
     @Mock
+    private VisualMappingManager visualMappingManager;
+    @Mock
     private LoadVizmapFileTaskFactory loadVizmapFileTaskFactory;
 
     @Before
     public void setUp()
     {
         MockitoAnnotations.initMocks(this);
-        midiNetworksAction = new MidiNetworksAction(applicationManager, serviceRegistrar,
-                                                    dialogTaskManager, loadVizmapFileTaskFactory);
+        midiNetworksAction = new MidiNetworksAction(applicationManager,
+                                                    serviceRegistrar,
+                                                    dialogTaskManager,
+                                                    visualMappingManager,
+                                                    loadVizmapFileTaskFactory);
     }
 
     @Test

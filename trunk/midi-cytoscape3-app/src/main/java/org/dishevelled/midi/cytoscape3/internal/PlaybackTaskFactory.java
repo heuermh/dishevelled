@@ -28,6 +28,9 @@ import java.util.Random;
 import org.cytoscape.model.CyNetwork;
 import org.cytoscape.model.CyNode;
 
+import org.cytoscape.view.model.CyNetworkView;
+import org.cytoscape.view.vizmap.VisualStyle;
+
 import org.cytoscape.work.AbstractTaskFactory;
 import org.cytoscape.work.TaskIterator;
 
@@ -46,6 +49,12 @@ final class PlaybackTaskFactory extends AbstractTaskFactory
     /** Network. */
     private final CyNetwork network;
 
+    /** Network view. */
+    private final CyNetworkView networkView;
+
+    /** Visual style. */
+    private final VisualStyle style;
+
     /** MIDI output device. */
     private final MidiOutputDevice outputDevice;
 
@@ -62,8 +71,10 @@ final class PlaybackTaskFactory extends AbstractTaskFactory
      * @param random source of randomness, must not be null
      * @param start node to start from, must not be null
      * @param network network, must not be null
+     * @param networkView network view, must not be null
+     * @param style visual style, must not be null
      */
-    PlaybackTaskFactory(final MidiOutputDevice outputDevice, final Random random, final CyNode start, final CyNetwork network)
+    PlaybackTaskFactory(final MidiOutputDevice outputDevice, final Random random, final CyNode start, final CyNetwork network, final CyNetworkView networkView, final VisualStyle style)
     {
         super();
         if (outputDevice == null)
@@ -82,17 +93,27 @@ final class PlaybackTaskFactory extends AbstractTaskFactory
         {
             throw new IllegalArgumentException("network must not be null");
         }
+        if (networkView == null)
+        {
+            throw new IllegalArgumentException("networkView must not be null");
+        }
+        if (style == null)
+        {
+            throw new IllegalArgumentException("style must not be null");
+        }
         this.outputDevice = outputDevice;
         this.random = random;
         this.start = start;
         this.network = network;
+        this.networkView = networkView;
+        this.style = style;
     }
 
 
     @Override
     public TaskIterator createTaskIterator()
     {
-        PlaybackTask playbackTask = new PlaybackTask(outputDevice, random, start, network);
+        PlaybackTask playbackTask = new PlaybackTask(outputDevice, random, start, network, networkView, style);
         return new TaskIterator(playbackTask);
     }
 }

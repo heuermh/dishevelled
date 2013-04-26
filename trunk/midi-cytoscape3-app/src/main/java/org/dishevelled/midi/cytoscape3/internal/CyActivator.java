@@ -30,6 +30,7 @@ import org.cytoscape.application.swing.CyAction;
 import org.cytoscape.service.util.AbstractCyActivator;
 import org.cytoscape.service.util.CyServiceRegistrar;
 import org.cytoscape.task.read.LoadVizmapFileTaskFactory;
+import org.cytoscape.view.vizmap.VisualMappingManager;
 import org.cytoscape.work.swing.DialogTaskManager;
 
 import org.osgi.framework.BundleContext;
@@ -51,9 +52,10 @@ public final class CyActivator extends AbstractCyActivator
         CyApplicationManager applicationManager = getService(bundleContext, CyApplicationManager.class);
         CyServiceRegistrar serviceRegistrar = getService(bundleContext, CyServiceRegistrar.class);
         DialogTaskManager dialogTaskManager = getService(bundleContext, DialogTaskManager.class);
+        VisualMappingManager visualMappingManager = getService(bundleContext, VisualMappingManager.class);
         LoadVizmapFileTaskFactory loadVizmapFileTaskFactory = getService(bundleContext, LoadVizmapFileTaskFactory.class);
 
-        MidiNetworksAction midiNetworksAction = new MidiNetworksAction(applicationManager, serviceRegistrar, dialogTaskManager, loadVizmapFileTaskFactory);
+        MidiNetworksAction midiNetworksAction = new MidiNetworksAction(applicationManager, serviceRegistrar, dialogTaskManager, visualMappingManager, loadVizmapFileTaskFactory);
         Properties properties = new Properties();
         registerService(bundleContext, midiNetworksAction, CyAction.class, properties);
     }
