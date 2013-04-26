@@ -43,6 +43,8 @@ import org.cytoscape.service.util.CyServiceRegistrar;
 
 import org.cytoscape.task.read.LoadVizmapFileTaskFactory;
 
+import org.cytoscape.view.vizmap.VisualMappingManager;
+
 import org.cytoscape.work.swing.DialogTaskManager;
 
 /**
@@ -61,6 +63,9 @@ final class MidiNetworksAction extends AbstractCyAction
     /** Dialog task manager. */
     private final DialogTaskManager dialogTaskManager;
 
+    /** Visual mapping manager. */
+    private final VisualMappingManager visualMappingManager;
+
     /** Load vizmap file task factory. */
     private final LoadVizmapFileTaskFactory loadVizmapFileTaskFactory;
 
@@ -71,11 +76,13 @@ final class MidiNetworksAction extends AbstractCyAction
      * @param applicationManager application manager, must not be null
      * @param serviceRegistrar service registrar, must not be null
      * @param dialogTaskManager dialog task manager, must not be null
+     * @param visualMappingManager visual mapping manager, must not be null
      * @param loadVizmapFileTaskFactory load vizmap file task factory, must not be null
      */
     MidiNetworksAction(final CyApplicationManager applicationManager,
                        final CyServiceRegistrar serviceRegistrar,
                        final DialogTaskManager dialogTaskManager,
+                       final VisualMappingManager visualMappingManager,
                        final LoadVizmapFileTaskFactory loadVizmapFileTaskFactory)
     {
         super("Midi Networks");
@@ -91,6 +98,10 @@ final class MidiNetworksAction extends AbstractCyAction
         {
             throw new IllegalArgumentException("dialogTaskManager must not be null");
         }
+        if (visualMappingManager == null)
+        {
+            throw new IllegalArgumentException("visualMappingManager must not be null");
+        }
         if (loadVizmapFileTaskFactory == null)
         {
             throw new IllegalArgumentException("loadVizmapFileTaskFactory must not be null");
@@ -98,6 +109,7 @@ final class MidiNetworksAction extends AbstractCyAction
         this.applicationManager = applicationManager;
         this.serviceRegistrar = serviceRegistrar;
         this.dialogTaskManager = dialogTaskManager;
+        this.visualMappingManager = visualMappingManager;
         this.loadVizmapFileTaskFactory = loadVizmapFileTaskFactory;
 
         setPreferredMenu("Apps");
@@ -113,7 +125,7 @@ final class MidiNetworksAction extends AbstractCyAction
         }
         JFrame frame = (JFrame) windowForComponent((Component) event.getSource());
         JDialog dialog = new JDialog(frame, "Midi Networks"); // i18n
-        dialog.setContentPane(new DeviceView(applicationManager, serviceRegistrar, dialogTaskManager, loadVizmapFileTaskFactory));
+        dialog.setContentPane(new DeviceView(applicationManager, serviceRegistrar, dialogTaskManager, visualMappingManager, loadVizmapFileTaskFactory));
         dialog.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
         installCloseKeyBinding(dialog);
         dialog.setBounds(200, 200, 600, 400);
