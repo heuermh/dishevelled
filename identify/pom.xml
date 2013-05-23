@@ -15,9 +15,9 @@
   <url>http://www.dishevelled.org/identify</url>
   <inceptionYear>2003</inceptionYear>
   <scm>
-    <connection>scm:svn|http://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/identify</connection>
-    <developerConnection>scm:svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/identify</developerConnection>
-    <url>http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/trunk/identify</url>
+    <connection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/identify</connection>
+    <developerConnection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/identify</developerConnection>
+    <url>https://svn.code.sf.net/p/dishevelled/code/trunk/identify</url>
   </scm>
   <distributionManagement>
     <site>

@@ -39,7 +39,7 @@ expand/collapse control.
 <section name="Examples">
 <p>
 <img src="images/gtk-laf.png"/><br/>
-Screenshot of <a href="http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/trunk/disclosure-triangle-examples/src/main/java/org/dishevelled/disclosuretriangle/examples/DisclosureTriangleExample.java?view=markup">DisclosureTriangleExample.java</a> with the GTK Look and Feel.
+Screenshot of <a href="https://svn.code.sf.net/p/dishevelled/code/trunk/disclosure-triangle-examples/src/main/java/org/dishevelled/disclosuretriangle/examples/DisclosureTriangleExample.java?view=markup">DisclosureTriangleExample.java</a> with the GTK Look and Feel.
 </p>
 <!--
 <p>

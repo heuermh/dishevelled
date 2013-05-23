@@ -15,9 +15,9 @@
   <url>http://www.dishevelled.org/disclosure-triangle</url>
   <inceptionYear>2007</inceptionYear>
   <scm>
-    <connection>scm:svn|http://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/disclosure-triangle</connection>
-    <developerConnection>scm:svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/disclosure-triangle</developerConnection>
-    <url>http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/trunk/disclosure-triangle</url>
+    <connection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/disclosure-triangle</connection>
+    <developerConnection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/disclosure-triangle</developerConnection>
+    <url>https://svn.code.sf.net/p/dishevelled/code/trunk/disclosure-triangle</url>
   </scm>
   <distributionManagement>
     <site>

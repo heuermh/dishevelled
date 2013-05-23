@@ -15,9 +15,9 @@
   <url>http://www.dishevelled.org/curate-examples</url>
   <inceptionYear>2007</inceptionYear>
   <scm>
-    <connection>scm:svn|http://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/curate-examples</connection>
-    <developerConnection>scm:svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/curate-examples</developerConnection>
-    <url>http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/trunk/curate-examples</url>
+    <connection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/curate-examples</connection>
+    <developerConnection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/curate-examples</developerConnection>
+    <url>https://svn.code.sf.net/p/dishevelled/code/trunk/curate-examples</url>
   </scm>
   <distributionManagement>
     <site>

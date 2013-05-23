@@ -15,9 +15,9 @@
   <url>http://www.dishevelled.org/swarm</url>
   <inceptionYear>2006</inceptionYear>
   <scm>
-    <connection>scm:svn|http://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/swarm</connection>
-    <developerConnection>scm:svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/swarm</developerConnection>
-    <url>http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/trunk/swarm</url>
+    <connection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/swarm</connection>
+    <developerConnection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/swarm</developerConnection>
+    <url>https://svn.code.sf.net/p/dishevelled/code/trunk/swarm</url>
   </scm>
   <distributionManagement>
     <site>

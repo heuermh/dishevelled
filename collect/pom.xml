@@ -15,9 +15,9 @@
   <url>http://www.dishevelled.org/collect</url>
   <inceptionYear>2008</inceptionYear>
   <scm>
-    <connection>scm:svn|http://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/collect</connection>
-    <developerConnection>scm:svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/collect</developerConnection>
-    <url>http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/trunk/collect</url>
+    <connection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/collect</connection>
+    <developerConnection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/collect</developerConnection>
+    <url>https://svn.code.sf.net/p/dishevelled/code/trunk/collect</url>
   </scm>
   <distributionManagement>
     <site>

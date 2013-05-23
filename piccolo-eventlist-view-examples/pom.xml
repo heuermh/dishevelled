@@ -15,9 +15,9 @@
   <url>http://www.dishevelled.org/piccolo-eventlist-view-examples</url>
   <inceptionYear>2010</inceptionYear>
   <scm>
-    <connection>scm:svn|http://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/piccolo-eventlist-view-examples</connection>
-    <developerConnection>scm:svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/piccolo-eventlist-view-examples</developerConnection>
-    <url>http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/trunk/piccolo-eventlist-view-examples</url>
+    <connection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/piccolo-eventlist-view-examples</connection>
+    <developerConnection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/piccolo-eventlist-view-examples</developerConnection>
+    <url>https://svn.code.sf.net/p/dishevelled/code/trunk/piccolo-eventlist-view-examples</url>
   </scm>
   <distributionManagement>
     <site>

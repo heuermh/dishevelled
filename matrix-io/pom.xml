@@ -15,9 +15,9 @@
   <url>http://www.dishevelled.org/matrix-io</url>
   <inceptionYear>2008</inceptionYear>
   <scm>
-    <connection>scm:svn|http://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/matrix-io</connection>
-    <developerConnection>scm:svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/matrix-io</developerConnection>
-    <url>http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/trunk/matrix-io</url>
+    <connection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/matrix-io</connection>
+    <developerConnection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/matrix-io</developerConnection>
+    <url>https://svn.code.sf.net/p/dishevelled/code/trunk/matrix-io</url>
   </scm>
   <distributionManagement>
     <site>

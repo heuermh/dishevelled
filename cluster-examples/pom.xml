@@ -15,9 +15,9 @@
   <url>http://www.dishevelled.org/cluster-examples</url>
   <inceptionYear>2008</inceptionYear>
   <scm>
-    <connection>scm:svn|http://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/cluster-examples</connection>
-    <developerConnection>scm:svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/cluster-examples</developerConnection>
-    <url>http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/trunk/cluster-examples</url>
+    <connection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/cluster-examples</connection>
+    <developerConnection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/cluster-examples</developerConnection>
+    <url>https://svn.code.sf.net/p/dishevelled/code/trunk/cluster-examples</url>
   </scm>
   <distributionManagement>
     <site>

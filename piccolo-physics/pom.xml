@@ -15,9 +15,9 @@
   <url>http://www.dishevelled.org/piccolo-physics</url>
   <inceptionYear>2009</inceptionYear>
   <scm>
-    <connection>scm:svn|http://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/piccolo-physics</connection>
-    <developerConnection>scm:svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/piccolo-physics</developerConnection>
-    <url>http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/trunk/piccolo-physics</url>
+    <connection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/piccolo-physics</connection>
+    <developerConnection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/piccolo-physics</developerConnection>
+    <url>https://svn.code.sf.net/p/dishevelled/code/trunk/piccolo-physics</url>
   </scm>
   <distributionManagement>
     <site>

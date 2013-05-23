@@ -15,9 +15,9 @@
   <url>http://www.dishevelled.org/bitset</url>
   <inceptionYear>2011</inceptionYear>
   <scm>
-    <connection>scm:svn|http://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/bitset</connection>
-    <developerConnection>scm:svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/bitset</developerConnection>
-    <url>http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/trunk/bitset</url>
+    <connection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/bitset</connection>
+    <developerConnection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/bitset</developerConnection>
+    <url>https://svn.code.sf.net/p/dishevelled/code/trunk/bitset</url>
   </scm>
   <distributionManagement>
     <site>

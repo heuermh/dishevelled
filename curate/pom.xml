@@ -15,9 +15,9 @@
   <url>http://www.dishevelled.org/curate</url>
   <inceptionYear>2007</inceptionYear>
   <scm>
-    <connection>scm:svn|http://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/curate</connection>
-    <developerConnection>scm:svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/curate</developerConnection>
-    <url>http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/trunk/curate</url>
+    <connection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/curate</connection>
+    <developerConnection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/curate</developerConnection>
+    <url>https://svn.code.sf.net/p/dishevelled/code/trunk/curate</url>
   </scm>
   <distributionManagement>
     <site>

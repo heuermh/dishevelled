@@ -15,9 +15,9 @@
   <url>http://www.dishevelled.org/piccolo-identify-examples</url>
   <inceptionYear>2007</inceptionYear>
   <scm>
-    <connection>scm:svn|http://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/piccolo-identify-examples</connection>
-    <developerConnection>scm:svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/piccolo-identify-examples</developerConnection>
-    <url>http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/trunk/piccolo-identify-examples</url>
+    <connection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/piccolo-identify-examples</connection>
+    <developerConnection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/piccolo-identify-examples</developerConnection>
+    <url>https://svn.code.sf.net/p/dishevelled/code/trunk/piccolo-identify-examples</url>
   </scm>
   <distributionManagement>
     <site>

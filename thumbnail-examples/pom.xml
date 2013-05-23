@@ -15,9 +15,9 @@
   <url>http://www.dishevelled.org/thumbnail-examples</url>
   <inceptionYear>2013</inceptionYear>
   <scm>
-    <connection>scm:svn|http://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/thumbnail-examples</connection>
-    <developerConnection>scm:svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/thumbnail-examples</developerConnection>
-    <url>http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/trunk/thumbnail-examples</url>
+    <connection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/thumbnail-examples</connection>
+    <developerConnection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/thumbnail-examples</developerConnection>
+    <url>https://svn.code.sf.net/p/dishevelled/code/trunk/thumbnail-examples</url>
   </scm>
   <distributionManagement>
     <site>

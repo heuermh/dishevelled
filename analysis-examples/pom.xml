@@ -15,9 +15,9 @@
   <url>http://www.dishevelled.org/analysis-examples</url>
   <inceptionYear>2012-2013</inceptionYear>
   <scm>
-    <connection>scm:svn|http://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/analysis-examples</connection>
-    <developerConnection>scm:svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/analysis-examples</developerConnection>
-    <url>http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/trunk/analysis-examples</url>
+    <connection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/analysis-examples</connection>
+    <developerConnection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/analysis-examples</developerConnection>
+    <url>https://svn.code.sf.net/p/dishevelled/code/trunk/analysis-examples</url>
   </scm>
   <distributionManagement>
     <site>

@@ -15,9 +15,9 @@
   <url>http://www.dishevelled.org/color-scheme</url>
   <inceptionYear>2009</inceptionYear>
   <scm>
-    <connection>scm:svn|http://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/color-scheme</connection>
-    <developerConnection>scm:svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/color-scheme</developerConnection>
-    <url>http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/trunk/color-scheme</url>
+    <connection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/color-scheme</connection>
+    <developerConnection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/color-scheme</developerConnection>
+    <url>https://svn.code.sf.net/p/dishevelled/code/trunk/color-scheme</url>
   </scm>
   <distributionManagement>
     <site>

@@ -49,9 +49,9 @@
     </license>
   </licenses>
   <scm>
-    <connection>scm:svn|http://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/parent</connection>
-    <developerConnection>scm:svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/parent</developerConnection>
-    <url>http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/trunk/parent</url>
+    <connection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/parent</connection>
+    <developerConnection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/parent</developerConnection>
+    <url>https://svn.code.sf.net/p/dishevelled/code/trunk/parent</url>
   </scm>
   <organization>
     <name>dishevelled.org</name>

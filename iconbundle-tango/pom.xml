@@ -15,9 +15,9 @@
   <url>http://www.dishevelled.org/iconbundle-tango</url>
   <inceptionYear>2005</inceptionYear>
   <scm>
-    <connection>scm:svn|http://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/iconbundle-tango</connection>
-    <developerConnection>scm:svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/iconbundle-tango</developerConnection>
-    <url>http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/trunk/iconbundle-tango</url>
+    <connection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/iconbundle-tango</connection>
+    <developerConnection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/iconbundle-tango</developerConnection>
+    <url>https://svn.code.sf.net/p/dishevelled/code/trunk/iconbundle-tango</url>
   </scm>
   <distributionManagement>
     <site>
