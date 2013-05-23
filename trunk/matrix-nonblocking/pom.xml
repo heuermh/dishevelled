@@ -15,9 +15,9 @@
   <url>http://www.dishevelled.org/matrix-nonblocking</url>
   <inceptionYear>2010</inceptionYear>
   <scm>
-    <connection>scm:svn|http://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/matrix-nonblocking</connection>
-    <developerConnection>scm:svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/matrix-nonblocking</developerConnection>
-    <url>http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/trunk/matrix-nonblocking</url>
+    <connection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/matrix-nonblocking</connection>
+    <developerConnection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/matrix-nonblocking</developerConnection>
+    <url>https://svn.code.sf.net/p/dishevelled/code/trunk/matrix-nonblocking</url>
   </scm>
   <distributionManagement>
     <site>

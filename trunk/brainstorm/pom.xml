@@ -15,9 +15,9 @@
   <url>http://www.dishevelled.org/brainstorm</url>
   <inceptionYear>2008</inceptionYear>
   <scm>
-    <connection>scm|svn|http://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/brainstorm</connection>
-    <developerConnection>scm|svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/brainstorm</developerConnection>
-    <url>http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/trunk/brainstorm</url>
+    <connection>scm|svn|https://svn.code.sf.net/p/dishevelled/code/trunk/brainstorm</connection>
+    <developerConnection>scm|svn|https://svn.code.sf.net/p/dishevelled/code/trunk/brainstorm</developerConnection>
+    <url>https://svn.code.sf.net/p/dishevelled/code/trunk/brainstorm</url>
   </scm>
   <distributionManagement>
     <site>

@@ -15,9 +15,9 @@
   <url>http://www.dishevelled.org/codegen</url>
   <inceptionYear>2004</inceptionYear>
   <scm>
-    <connection>scm:svn|http://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/codegen</connection>
-    <developerConnection>scm:svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/codegen</developerConnection>
-    <url>http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/trunk/codegen</url>
+    <connection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/codegen</connection>
+    <developerConnection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/codegen</developerConnection>
+    <url>https://svn.code.sf.net/p/dishevelled/code/trunk/codegen</url>
   </scm>
   <distributionManagement>
     <site>

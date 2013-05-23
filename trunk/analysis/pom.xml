@@ -15,9 +15,9 @@
   <url>http://www.dishevelled.org/analysis</url>
   <inceptionYear>2011</inceptionYear>
   <scm>
-    <connection>scm:svn|http://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/analysis</connection>
-    <developerConnection>scm:svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/analysis</developerConnection>
-    <url>http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/trunk/analysis</url>
+    <connection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/analysis</connection>
+    <developerConnection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/analysis</developerConnection>
+    <url>https://svn.code.sf.net/p/dishevelled/code/trunk/analysis</url>
   </scm>
   <distributionManagement>
     <site>

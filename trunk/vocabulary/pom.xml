@@ -15,9 +15,9 @@
   <url>http://www.dishevelled.org/vocabulary</url>
   <inceptionYear>2002</inceptionYear>
   <scm>
-    <connection>scm:svn|http://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/vocabulary</connection>
-    <developerConnection>scm:svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/vocabulary</developerConnection>
-    <url>http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/trunk/vocabulary</url>
+    <connection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/vocabulary</connection>
+    <developerConnection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/vocabulary</developerConnection>
+    <url>https://svn.code.sf.net/p/dishevelled/code/trunk/vocabulary</url>
   </scm>
   <distributionManagement>
     <site>

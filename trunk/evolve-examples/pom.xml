@@ -15,9 +15,9 @@
   <url>http://www.dishevelled.org/evolve-examples</url>
   <inceptionYear>2007</inceptionYear>
   <scm>
-    <connection>scm:svn|http://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/evolve-examples</connection>
-    <developerConnection>scm:svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/evolve-examples</developerConnection>
-    <url>http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/trunk/evolve-examples</url>
+    <connection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/evolve-examples</connection>
+    <developerConnection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/evolve-examples</developerConnection>
+    <url>https://svn.code.sf.net/p/dishevelled/code/trunk/evolve-examples</url>
   </scm>
   <distributionManagement>
     <site>

@@ -15,9 +15,9 @@
   <url>http://www.dishevelled.org/piccolo-identify</url>
   <inceptionYear>2007</inceptionYear>
   <scm>
-    <connection>scm:svn|http://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/piccolo-identify</connection>
-    <developerConnection>scm:svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/piccolo-identify</developerConnection>
-    <url>http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/trunk/piccolo-identify</url>
+    <connection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/piccolo-identify</connection>
+    <developerConnection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/piccolo-identify</developerConnection>
+    <url>https://svn.code.sf.net/p/dishevelled/code/trunk/piccolo-identify</url>
   </scm>
   <distributionManagement>
     <site>

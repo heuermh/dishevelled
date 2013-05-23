@@ -49,9 +49,9 @@
     </license>
   </licenses>
   <scm>
-    <connection>scm:svn|http://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/text-rendering-benchmark</connection>
-    <developerConnection>scm:svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/text-rendering-benchmark</developerConnection>
-    <url>http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/trunk/text-rendering-benchmark</url>
+    <connection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/text-rendering-benchmark</connection>
+    <developerConnection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/text-rendering-benchmark</developerConnection>
+    <url>https://svn.code.sf.net/p/dishevelled/code/trunk/text-rendering-benchmark</url>
   </scm>
   <distributionManagement>
     <site>

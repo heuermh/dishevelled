@@ -15,9 +15,9 @@
   <url>http://www.dishevelled.org/functor</url>
   <inceptionYear>2004</inceptionYear>
   <scm>
-    <connection>scm:svn|http://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/functor</connection>
-    <developerConnection>scm:svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/functor</developerConnection>
-    <url>http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/trunk/functor</url>
+    <connection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/functor</connection>
+    <developerConnection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/functor</developerConnection>
+    <url>https://svn.code.sf.net/p/dishevelled/code/trunk/functor</url>
   </scm>
   <distributionManagement>
     <site>

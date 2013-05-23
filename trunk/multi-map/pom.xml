@@ -15,9 +15,9 @@
   <url>http://www.dishevelled.org/multi-map</url>
   <inceptionYear>2007</inceptionYear>
   <scm>
-    <connection>scm:svn|http://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/multi-map</connection>
-    <developerConnection>scm:svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/multi-map</developerConnection>
-    <url>http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/trunk/multi-map</url>
+    <connection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/multi-map</connection>
+    <developerConnection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/multi-map</developerConnection>
+    <url>https://svn.code.sf.net/p/dishevelled/code/trunk/multi-map</url>
   </scm>
   <distributionManagement>
     <site>

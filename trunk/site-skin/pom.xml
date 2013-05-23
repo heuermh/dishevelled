@@ -15,9 +15,9 @@
   <url>http://www.dishevelled.org/site-skin</url>
   <inceptionYear>2006</inceptionYear>
   <scm>
-    <connection>scm:svn|http://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/site-skin</connection>
-    <developerConnection>scm:svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/site-skin</developerConnection>
-    <url>http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/trunk/site-skin</url>
+    <connection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/site-skin</connection>
+    <developerConnection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/site-skin</developerConnection>
+    <url>https://svn.code.sf.net/p/dishevelled/code/trunk/site-skin</url>
   </scm>
   <distributionManagement>
     <site>

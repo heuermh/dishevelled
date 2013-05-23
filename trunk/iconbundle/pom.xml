@@ -15,9 +15,9 @@
   <url>http://www.dishevelled.org/iconbundle</url>
   <inceptionYear>2003</inceptionYear>
   <scm>
-    <connection>scm:svn|http://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/iconbundle</connection>
-    <developerConnection>scm:svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/iconbundle</developerConnection>
-    <url>http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/trunk/iconbundle</url>
+    <connection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/iconbundle</connection>
+    <developerConnection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/iconbundle</developerConnection>
+    <url>https://svn.code.sf.net/p/dishevelled/code/trunk/iconbundle</url>
   </scm>
   <distributionManagement>
     <site>

@@ -15,8 +15,8 @@
   <url>http://www.dishevelled.org/commandline</url>
   <inceptionYear>2004</inceptionYear>
   <scm>
-    <connection>scm:svn|http://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/commandline</connection>
-    <developerConnection>scm:svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/commandline</developerConnection>
+    <connection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/commandline</connection>
+    <developerConnection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/commandline</developerConnection>
     <url>http://svn.sourceforge.net/viewvc/dishevelled/trunk/commandline</url>
   </scm>
   <distributionManagement>

@@ -15,9 +15,9 @@
   <url>http://www.dishevelled.org/venn-cytoscape3-app</url>
   <inceptionYear>2012</inceptionYear>
   <scm>
-    <connection>scm:svn|http://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/venn-cytoscape3-app</connection>
-    <developerConnection>scm:svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/venn-cytoscape3-app</developerConnection>
-    <url>http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/trunk/venn-cytoscape3-app</url>
+    <connection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/venn-cytoscape3-app</connection>
+    <developerConnection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/venn-cytoscape3-app</developerConnection>
+    <url>https://svn.code.sf.net/p/dishevelled/code/trunk/venn-cytoscape3-app</url>
   </scm>
   <distributionManagement>
     <site>

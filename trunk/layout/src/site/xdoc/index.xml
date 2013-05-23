@@ -88,7 +88,7 @@ such as a <code>JList</code> in a <code>JScrollPane</code>:
 </p>
 
 <p>
-See <a href="http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/trunk/layout-examples/src/main/java/org/dishevelled/layout/examples/LabelFieldLayoutExample.java?view=markup">LabelFieldLayoutExample.java</a> for a complete example.
+See <a href="https://svn.code.sf.net/p/dishevelled/code/trunk/layout-examples/src/main/java/org/dishevelled/layout/examples/LabelFieldLayoutExample.java?view=markup">LabelFieldLayoutExample.java</a> for a complete example.
 </p>
 </section>
 
@@ -118,7 +118,7 @@ panel.addFinalField(new JScrollPane(list));
 </p>
 
 <p>
-See <a href="http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/trunk/layout-examples/src/main/java/org/dishevelled/layout/examples/LabelFieldPanelExample.java?view=markup">LabelFieldPanelExample.java</a> for a complete example.
+See <a href="https://svn.code.sf.net/p/dishevelled/code/trunk/layout-examples/src/main/java/org/dishevelled/layout/examples/LabelFieldPanelExample.java?view=markup">LabelFieldPanelExample.java</a> for a complete example.
 </p>
 </section>
 
@@ -145,7 +145,7 @@ buttonPanel.add(new AbstractAction("Right") { ... });
 </p>
 
 <p>
-See <a href="http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/trunk/layout-examples/src/main/java/org/dishevelled/layout/examples/ButtonPanelExample.java?view=markup">ButtonPanelExample.java</a> for a complete example.
+See <a href="https://svn.code.sf.net/p/dishevelled/code/trunk/layout-examples/src/main/java/org/dishevelled/layout/examples/ButtonPanelExample.java?view=markup">ButtonPanelExample.java</a> for a complete example.
 </p>
 </section>
 

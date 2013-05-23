@@ -15,9 +15,9 @@
   <url>http://www.dishevelled.org/graph</url>
   <inceptionYear>2004</inceptionYear>
   <scm>
-    <connection>scm:svn|http://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/graph</connection>
-    <developerConnection>scm:svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/graph</developerConnection>
-    <url>http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/trunk/graph</url>
+    <connection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/graph</connection>
+    <developerConnection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/graph</developerConnection>
+    <url>https://svn.code.sf.net/p/dishevelled/code/trunk/graph</url>
   </scm>
   <distributionManagement>
     <site>

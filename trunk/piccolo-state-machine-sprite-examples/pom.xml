@@ -15,9 +15,9 @@
   <url>http://www.dishevelled.org/piccolo-state-machine-sprite-examples</url>
   <inceptionYear>2009</inceptionYear>
   <scm>
-    <connection>scm:svn|http://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/piccolo-state-machine-sprite-examples</connection>
-    <developerConnection>scm:svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/piccolo-state-machine-sprite-examples</developerConnection>
-    <url>http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/trunk/piccolo-state-machine-sprite-examples</url>
+    <connection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/piccolo-state-machine-sprite-examples</connection>
+    <developerConnection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/piccolo-state-machine-sprite-examples</developerConnection>
+    <url>https://svn.code.sf.net/p/dishevelled/code/trunk/piccolo-state-machine-sprite-examples</url>
   </scm>
   <distributionManagement>
     <site>

@@ -15,9 +15,9 @@
   <url>http://www.dishevelled.org/timer</url>
   <inceptionYear>2004</inceptionYear>
   <scm>
-    <connection>scm:svn|http://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/timer</connection>
-    <developerConnection>scm:svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/timer</developerConnection>
-    <url>http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/trunk/timer</url>
+    <connection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/timer</connection>
+    <developerConnection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/timer</developerConnection>
+    <url>https://svn.code.sf.net/p/dishevelled/code/trunk/timer</url>
   </scm>
   <distributionManagement>
     <site>

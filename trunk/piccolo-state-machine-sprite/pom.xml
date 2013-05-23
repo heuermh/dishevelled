@@ -15,9 +15,9 @@
   <url>http://www.dishevelled.org/piccolo-state-machine-sprite</url>
   <inceptionYear>2007</inceptionYear>
   <scm>
-    <connection>scm:svn|http://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/piccolo-state-machine-sprite</connection>
-    <developerConnection>scm:svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/piccolo-state-machine-sprite</developerConnection>
-    <url>http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/trunk/piccolo-state-machine-sprite</url>
+    <connection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/piccolo-state-machine-sprite</connection>
+    <developerConnection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/piccolo-state-machine-sprite</developerConnection>
+    <url>https://svn.code.sf.net/p/dishevelled/code/trunk/piccolo-state-machine-sprite</url>
   </scm>
   <distributionManagement>
     <site>

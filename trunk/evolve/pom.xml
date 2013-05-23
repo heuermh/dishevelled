@@ -15,9 +15,9 @@
   <url>http://www.dishevelled.org/evolve</url>
   <inceptionYear>2005</inceptionYear>
   <scm>
-    <connection>scm:svn|http://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/evolve</connection>
-    <developerConnection>scm:svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/evolve</developerConnection>
-    <url>http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/trunk/evolve</url>
+    <connection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/evolve</connection>
+    <developerConnection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/evolve</developerConnection>
+    <url>https://svn.code.sf.net/p/dishevelled/code/trunk/evolve</url>
   </scm>
   <distributionManagement>
     <site>

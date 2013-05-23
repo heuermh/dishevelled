@@ -15,9 +15,9 @@
   <url>http://www.dishevelled.org/cluster</url>
   <inceptionYear>2007</inceptionYear>
   <scm>
-    <connection>scm:svn|http://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/cluster</connection>
-    <developerConnection>scm:svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/cluster</developerConnection>
-    <url>http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/trunk/cluster</url>
+    <connection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/cluster</connection>
+    <developerConnection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/cluster</developerConnection>
+    <url>https://svn.code.sf.net/p/dishevelled/code/trunk/cluster</url>
   </scm>
   <distributionManagement>
     <site>

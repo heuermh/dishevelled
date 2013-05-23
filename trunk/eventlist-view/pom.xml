@@ -15,9 +15,9 @@
   <url>http://www.dishevelled.org/eventlist-view</url>
   <inceptionYear>2010</inceptionYear>
   <scm>
-    <connection>scm:svn|http://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/eventlist-view</connection>
-    <developerConnection>scm:svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/eventlist-view</developerConnection>
-    <url>http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/trunk/eventlist-view</url>
+    <connection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/eventlist-view</connection>
+    <developerConnection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/eventlist-view</developerConnection>
+    <url>https://svn.code.sf.net/p/dishevelled/code/trunk/eventlist-view</url>
   </scm>
   <distributionManagement>
     <site>

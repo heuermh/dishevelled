@@ -15,9 +15,9 @@
   <url>http://www.dishevelled.org/piccolo-tilemap</url>
   <inceptionYear>2006</inceptionYear>
   <scm>
-    <connection>scm:svn|http://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/piccolo-tilemap</connection>
-    <developerConnection>scm:svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/piccolo-tilemap</developerConnection>
-    <url>http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/trunk/piccolo-tilemap</url>
+    <connection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/piccolo-tilemap</connection>
+    <developerConnection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/piccolo-tilemap</developerConnection>
+    <url>https://svn.code.sf.net/p/dishevelled/code/trunk/piccolo-tilemap</url>
   </scm>
   <distributionManagement>
     <site>

@@ -15,9 +15,9 @@
   <url>http://www.dishevelled.org/matrix-io-nonblocking</url>
   <inceptionYear>2010</inceptionYear>
   <scm>
-    <connection>scm:svn|http://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/matrix-io-nonblocking</connection>
-    <developerConnection>scm:svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/matrix-io-nonblocking</developerConnection>
-    <url>http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/trunk/matrix-io-nonblocking</url>
+    <connection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/matrix-io-nonblocking</connection>
+    <developerConnection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/matrix-io-nonblocking</developerConnection>
+    <url>https://svn.code.sf.net/p/dishevelled/code/trunk/matrix-io-nonblocking</url>
   </scm>
   <distributionManagement>
     <site>

@@ -15,9 +15,9 @@
   <url>http://www.dishevelled.org/swarm-examples</url>
   <inceptionYear>2007</inceptionYear>
   <scm>
-    <connection>scm:svn|http://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/swarm-examples</connection>
-    <developerConnection>scm:svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/swarm-examples</developerConnection>
-    <url>http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/trunk/swarm-examples</url>
+    <connection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/swarm-examples</connection>
+    <developerConnection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/swarm-examples</developerConnection>
+    <url>https://svn.code.sf.net/p/dishevelled/code/trunk/swarm-examples</url>
   </scm>
   <distributionManagement>
     <site>

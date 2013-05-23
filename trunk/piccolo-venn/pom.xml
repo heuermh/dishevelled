@@ -15,9 +15,9 @@
   <url>http://www.dishevelled.org/piccolo-venn</url>
   <inceptionYear>2009</inceptionYear>
   <scm>
-    <connection>scm:svn|http://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/piccolo-venn</connection>
-    <developerConnection>scm:svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk/piccolo-venn</developerConnection>
-    <url>http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/trunk/piccolo-venn</url>
+    <connection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/piccolo-venn</connection>
+    <developerConnection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/piccolo-venn</developerConnection>
+    <url>https://svn.code.sf.net/p/dishevelled/code/trunk/piccolo-venn</url>
   </scm>
   <distributionManagement>
     <site>
