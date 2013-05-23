@@ -16,6 +16,11 @@
     <connection>scm:svn|http://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk</connection>
     <developerConnection>scm:svn|https://dishevelled.svn.sourceforge.net/svnroot/dishevelled/trunk</developerConnection>
     <url>http://dishevelled.svn.sourceforge.net/viewvc/dishevelled/trunk</url>
+    <!--
+    <connection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk</connection>
+    <developerConnection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk</developerConnection>
+    <url>https://svn.code.sf.net/p/dishevelled/code/</url>
+    -->
   </scm>
   <build/>
   <reporting/>
