@@ -627,7 +627,6 @@ public final class ExportColorSchemes
         export(getContinuousColorScheme("syn", 4, Interpolations.LINEAR), "continuous-syn-4");
         export(getContinuousColorScheme("syn", 5, Interpolations.LINEAR), "continuous-syn-5");
         export(getContinuousColorScheme("syn", 6, Interpolations.LINEAR), "continuous-syn-6");
-        */
 
         export(getContinuousColorScheme("pi-gy", 2, Interpolations.LINEAR), "continuous-pi-gy-2");
         export(getContinuousColorScheme("gn-gy", 2, Interpolations.LINEAR), "continuous-gn-gy-2");
@@ -637,7 +636,10 @@ public final class ExportColorSchemes
         export(getContinuousColorScheme("steel", 3, Interpolations.LINEAR), "continuous-steel-3");
         export(getDiscreteColorScheme("bu-rd", 2, Interpolations.LINEAR), "discrete-bu-rd-2");
         export(getDiscreteColorScheme("steel", 3, Interpolations.LINEAR), "discrete-steel-3");
+        */
 
+        export(getContinuousColorScheme("rubus", 9, Interpolations.LINEAR), "continuous-rubus-9");
+        export(getDiscreteColorScheme("rubus", 9, Interpolations.LINEAR), "discrete-rubus-9");
     }
 
     private static final void export(final ColorScheme colorScheme, final String fileName)

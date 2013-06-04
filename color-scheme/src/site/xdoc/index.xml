@@ -54,9 +54,9 @@ for a range of input values, <code>0.0d</code> to <code>1.0d</code>.
 <p>A discrete color scheme provides only those colors defined in the color scheme.</p>
 <source>
 // discrete blues color scheme, with seven colors, values interpolated linearly
-<a href="apidocs/org/dishevelled/colorscheme/ColorScheme.html">ColorScheme</a> discreteBlues4 = <a href="apidocs/org/dishevelled/colorscheme/impl/ColorSchemes.html">ColorSchemes</a>.getDiscreteColorScheme("blues", 4, Interpolations.LINEAR);
+<a href="apidocs/org/dishevelled/colorscheme/ColorScheme.html">ColorScheme</a> discreteBlues7 = <a href="apidocs/org/dishevelled/colorscheme/impl/ColorSchemes.html">ColorSchemes</a>.getDiscreteColorScheme("blues", 7, Interpolations.LINEAR);
 </source>
-<p><object data="images/discrete-blues-4.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-blues-7.svg" type="image/svg+xml" width="810" height="80"></object></p>
 
 <p>A complete <a href="reference.html">color scheme reference</a> is available.  Color scheme
 names must be converted to lowercase-with-dashes form before lookup, e.g. "RdYlBu" to "rd-yl-bu".</p>
