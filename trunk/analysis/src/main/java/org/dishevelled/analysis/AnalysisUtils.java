@@ -23,18 +23,24 @@
 */
 package org.dishevelled.analysis;
 
+import static org.dishevelled.collect.Maps.createMap;
+import static org.dishevelled.collect.Sets.createSet;
+import static org.dishevelled.graph.impl.GraphUtils.createGraph;
+import static org.dishevelled.matrix.impl.SparseMatrixUtils.createSparseMatrix2D;
+import static org.dishevelled.multimap.impl.BinaryKeyMaps.createBinaryKeyMap;
+
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import static org.dishevelled.collect.Maps.createMap;
-import static org.dishevelled.collect.Sets.createSet;
+import com.google.common.collect.ArrayTable;
+import com.google.common.collect.HashBasedTable;
+import com.google.common.collect.ImmutableTable;
+import com.google.common.collect.Table;
 
 import org.dishevelled.graph.Edge;
 import org.dishevelled.graph.Graph;
 import org.dishevelled.graph.Node;
-
-import static org.dishevelled.graph.impl.GraphUtils.createGraph;
 
 import org.dishevelled.functor.BinaryFunction;
 import org.dishevelled.functor.BinaryProcedure;
@@ -46,12 +52,8 @@ import org.dishevelled.functor.TernaryProcedure;
 import org.dishevelled.matrix.BitMatrix2D;
 import org.dishevelled.matrix.Matrix2D;
 
-import static org.dishevelled.matrix.impl.SparseMatrixUtils.createSparseMatrix2D;
-
 import org.dishevelled.multimap.BinaryKey;
 import org.dishevelled.multimap.BinaryKeyMap;
-
-import static org.dishevelled.multimap.impl.BinaryKeyMaps.createBinaryKeyMap;
 
 /**
  * Static utility methods for data analysis.
@@ -103,6 +105,29 @@ public final class AnalysisUtils
     }
 
     /**
+     * Convert the specified table to a binary key map.
+     *
+     * @param <N> table row and column key type
+     * @param <E> table value type and binary key map value type
+     * @param table table to convert, must not be null
+     * @return the specified table converted to a binary key map
+     */
+    public static <N, E> BinaryKeyMap<N, N, E> toBinaryKeyMap(final Table<N, N, E> table)
+    {
+        if (table == null)
+        {
+            throw new IllegalArgumentException("table must not be null");
+        }
+        int e = Math.max(16, table.size());
+        final BinaryKeyMap<N, N, E> binaryKeyMap = createBinaryKeyMap(e);
+        for (Table.Cell<N, N, E> cell : table.cellSet())
+        {
+            binaryKeyMap.put(cell.getRowKey(), cell.getColumnKey(), cell.getValue());
+        }
+        return binaryKeyMap;
+    }
+
+    /**
      * Convert the specified matrix to a binary key map with long indices as keys.
      *
      * @param <E> matrix type and binary key map value type
@@ -123,7 +148,8 @@ public final class AnalysisUtils
      * @param keys mapping of keys by long indices, must not be null
      * @return the specified matrix converted to a binary key map
      */
-    public static <N, E> BinaryKeyMap<N, N, E> toBinaryKeyMap(final Matrix2D<E> matrix, final UnaryFunction<Long, N> keys)
+    public static <N, E> BinaryKeyMap<N, N, E> toBinaryKeyMap(final Matrix2D<E> matrix,
+                                                              final UnaryFunction<Long, N> keys)
     {
         if (matrix == null)
         {
@@ -131,7 +157,8 @@ public final class AnalysisUtils
         }
         if (matrix.rows() != matrix.columns())
         {
-            throw new IllegalArgumentException("matrix must be balanced, rows=" + matrix.rows() + ", columns=" + matrix.columns());
+            throw new IllegalArgumentException("matrix must be balanced, rows="
+                                               + matrix.rows() + ", columns=" + matrix.columns());
         }
         if (matrix.cardinality() > Integer.MAX_VALUE)
         {
@@ -169,7 +196,8 @@ public final class AnalysisUtils
      * @param values mapping of values by keys, must not be null
      * @return the specified bit matrix converted to a binary key map with long indices as keys
      */
-    public static <E> BinaryKeyMap<Long, Long, E> toBinaryKeyMap(final BitMatrix2D bitMatrix, final BinaryFunction<Long, Long, E> values)
+    public static <E> BinaryKeyMap<Long, Long, E> toBinaryKeyMap(final BitMatrix2D bitMatrix,
+                                                                 final BinaryFunction<Long, Long, E> values)
     {
         return toBinaryKeyMap(bitMatrix, IDENTITY, values);
     }
@@ -184,7 +212,9 @@ public final class AnalysisUtils
      * @param values mapping of values by keys, must not be null
      * @return the specified bit matrix converted to a binary key map
      */
-    public static <N, E> BinaryKeyMap<N, N, E> toBinaryKeyMap(final BitMatrix2D bitMatrix, final UnaryFunction<Long, N> keys, final BinaryFunction<N, N, E> values)
+    public static <N, E> BinaryKeyMap<N, N, E> toBinaryKeyMap(final BitMatrix2D bitMatrix,
+                                                              final UnaryFunction<Long, N> keys,
+                                                              final BinaryFunction<N, N, E> values)
     {
         if (bitMatrix == null)
         {
@@ -192,7 +222,8 @@ public final class AnalysisUtils
         }
         if (bitMatrix.rows() != bitMatrix.columns())
         {
-            throw new IllegalArgumentException("bitMatrix must be balanced, rows=" + bitMatrix.rows() + ", columns=" + bitMatrix.columns());
+            throw new IllegalArgumentException("bitMatrix must be balanced, rows="
+                                               + bitMatrix.rows() + ", columns=" + bitMatrix.columns());
         }
         if (bitMatrix.cardinality() > Integer.MAX_VALUE)
         {
@@ -242,7 +273,9 @@ public final class AnalysisUtils
      * @param predicate binary key map value predicate, must not be null
      * @return the specified binary key map converted to a bit matrix
      */
-    public static <N, E> BitMatrix2D toBitMatrix(final BinaryKeyMap<N, N, E> binaryKeyMap, final List<N> keys, final UnaryPredicate<E> predicate)
+    public static <N, E> BitMatrix2D toBitMatrix(final BinaryKeyMap<N, N, E> binaryKeyMap,
+                                                 final List<N> keys,
+                                                 final UnaryPredicate<E> predicate)
     {
         return toBitMatrix(binaryKeyMap, new IndexOfKey<N>(keys), predicate);
     }
@@ -258,7 +291,9 @@ public final class AnalysisUtils
      * @param predicate binary key map value predicate, must not be null
      * @return the specified binary key map converted to a bit matrix
      */
-    public static <N, E> BitMatrix2D toBitMatrix(final BinaryKeyMap<N, N, E> binaryKeyMap, final Map<N, Long> keyIndices, final UnaryPredicate<E> predicate)
+    public static <N, E> BitMatrix2D toBitMatrix(final BinaryKeyMap<N, N, E> binaryKeyMap,
+                                                 final Map<N, Long> keyIndices,
+                                                 final UnaryPredicate<E> predicate)
     {
         return toBitMatrix(binaryKeyMap, new KeyIndices<N>(keyIndices), predicate);
     }
@@ -274,7 +309,9 @@ public final class AnalysisUtils
      * @param predicate binary key map value predicate, must not be null
      * @return the specified binary key map converted to a bit matrix
      */
-    public static <N, E> BitMatrix2D toBitMatrix(final BinaryKeyMap<N, N, E> binaryKeyMap, final UnaryFunction<N, Long> keyIndices, final UnaryPredicate<E> predicate)
+    public static <N, E> BitMatrix2D toBitMatrix(final BinaryKeyMap<N, N, E> binaryKeyMap,
+                                                 final UnaryFunction<N, Long> keyIndices,
+                                                 final UnaryPredicate<E> predicate)
     {
         if (binaryKeyMap == null)
         {
@@ -315,6 +352,142 @@ public final class AnalysisUtils
     }
 
     /**
+     * Convert the specified array table to a bit matrix.  Values in the returned bit
+     * matrix will be set to true where a non-null value exists in the specified array table.
+     *
+     * @param <N> array table row and column key type
+     * @param <E> array table value type
+     * @param table array table to convert, must not be null
+     * @return the specified array table converted to a bit matrix
+     */
+    public static <N, E> BitMatrix2D toBitMatrix(final ArrayTable<N, N, E> table)
+    {
+        return toBitMatrix(table, new AcceptNonNull<E>());
+    }
+
+    /**
+     * Convert the specified array table to a bit matrix.  Values in the returned bit
+     * matrix will be set to true where a value exists in the specified array table
+     * accepted by the specified predicate.
+     *
+     * @param <N> array table row and column key type
+     * @param <E> array table value type
+     * @param table array table to convert, must not be null
+     * @param predicate array table value predicate, must not be null
+     * @return the specified array table converted to a bit matrix
+     */
+    public static <N, E> BitMatrix2D toBitMatrix(final ArrayTable<N, N, E> table,
+                                                 final UnaryPredicate<E> predicate)
+    {
+        if (table == null)
+        {
+            throw new IllegalArgumentException("table must not be null");
+        }
+        if (predicate == null)
+        {
+            throw new IllegalArgumentException("predicate must not be null");
+        }
+        int rows = table.rowKeyList().size();
+        int columns = table.columnKeyList().size();
+        BitMatrix2D bitMatrix = new BitMatrix2D(rows, columns);
+        for (int row = 0; row < rows; row++)
+        {
+            for (int column = 0; column < columns; column++)
+            {
+                bitMatrix.set(row, column, predicate.test(table.at(row, column)));
+            }
+        }
+        return bitMatrix;
+    }
+
+    /**
+     * Convert the specified table to a bit matrix.  The row key value will be
+     * used to look up the row index and the column key value the column index in the returned bit matrix.
+     *
+     * @param <N> table row and column key type
+     * @param <E> table value type
+     * @param table table to convert, must not be null
+     * @param keys list of keys, must not be null
+     * @param predicate table value predicate, must not be null
+     * @return the specified table converted to a bit matrix
+     */
+    public static <N, E> BitMatrix2D toBitMatrix(final Table<N, N, E> table,
+                                                 final List<N> keys,
+                                                 final UnaryPredicate<E> predicate)
+    {
+        return toBitMatrix(table, new IndexOfKey<N>(keys), predicate);
+    }
+
+    /**
+     * Convert the specified table to a bit matrix.  The row key value will be
+     * used to look up the row index and the column key value the column index in the returned bit matrix.
+     *
+     * @param <N> table row and column key type
+     * @param <E> table value type
+     * @param table table to convert, must not be null
+     * @param keyIndices map of long indices by keys, must not be null
+     * @param predicate table value predicate, must not be null
+     * @return the specified table converted to a bit matrix
+     */
+    public static <N, E> BitMatrix2D toBitMatrix(final Table<N, N, E> table,
+                                                 final Map<N, Long> keyIndices,
+                                                 final UnaryPredicate<E> predicate)
+    {
+        return toBitMatrix(table, new KeyIndices<N>(keyIndices), predicate);
+    }
+
+    /**
+     * Convert the specified table to a bit matrix.  The row key value will be
+     * used to look up the row index and the column key value the column index in the returned bit matrix.
+     *
+     * @param <N> table row and column key type
+     * @param <E> table value type
+     * @param table table to convert, must not be null
+     * @param keyIndices mapping of key indices by key, must not be null
+     * @param predicate table value predicate, must not be null
+     * @return the specified table converted to a bit matrix
+     */
+    public static <N, E> BitMatrix2D toBitMatrix(final Table<N, N, E> table,
+                                                 final UnaryFunction<N, Long> keyIndices,
+                                                 final UnaryPredicate<E> predicate)
+    {
+        if (table == null)
+        {
+            throw new IllegalArgumentException("table must not be null");
+        }
+        if (keyIndices == null)
+        {
+            throw new IllegalArgumentException("keyIndices must not be null");
+        }
+        if (predicate == null)
+        {
+            throw new IllegalArgumentException("predicate must not be null");
+        }
+        // is combining row and column keys necessary?
+        Set<N> uniqueKeys = createSet(table.rowKeySet().size(), table.columnKeySet().size());
+        uniqueKeys.addAll(table.rowKeySet());
+        uniqueKeys.addAll(table.columnKeySet());
+        long n = uniqueKeys.size();
+        BitMatrix2D bitMatrix = new BitMatrix2D(n, n);
+        for (Table.Cell<N, N, E> cell : table.cellSet())
+        {
+            if (predicate.test(cell.getValue()))
+            {
+                N source = cell.getRowKey();
+                N target = cell.getColumnKey();
+                Long sourceIndex = keyIndices.evaluate(source);
+                Long targetIndex = keyIndices.evaluate(target);
+
+                if (sourceIndex != null && targetIndex != null)
+                {
+                    bitMatrix.set(sourceIndex, targetIndex, true);
+                }
+            }
+        }
+        return bitMatrix;
+    }
+
+    /**
      * Convert the specified graph to a bit matrix.
      *
      * @param <N> graph node value type
@@ -324,7 +497,9 @@ public final class AnalysisUtils
      * @param predicate edge value predicate, must not be null
      * @return the specified graph converted to a bit matrix
      */
-    public static <N, E> BitMatrix2D toBitMatrix(final Graph<N, E> graph, final List<Node<N, E>> nodes, final UnaryPredicate<E> predicate)
+    public static <N, E> BitMatrix2D toBitMatrix(final Graph<N, E> graph,
+                                                 final List<Node<N, E>> nodes,
+                                                 final UnaryPredicate<E> predicate)
     {
         return toBitMatrix(graph, new IndexOfKey<Node<N, E>>(nodes), predicate);
     }
@@ -339,7 +514,9 @@ public final class AnalysisUtils
      * @param predicate edge value predicate, must not be null
      * @return the specified graph converted to a bit matrix
      */
-    public static <N, E> BitMatrix2D toBitMatrix(final Graph<N, E> graph, final Map<Node<N, E>, Long> nodeIndices, final UnaryPredicate<E> predicate)
+    public static <N, E> BitMatrix2D toBitMatrix(final Graph<N, E> graph,
+                                                 final Map<Node<N, E>, Long> nodeIndices,
+                                                 final UnaryPredicate<E> predicate)
     {
         return toBitMatrix(graph, new KeyIndices<Node<N, E>>(nodeIndices), predicate);
     }
@@ -354,7 +531,9 @@ public final class AnalysisUtils
      * @param predicate edge value predicate, must not be null
      * @return the specified graph converted to a bit matrix
      */
-    public static <N, E> BitMatrix2D toBitMatrix(final Graph<N, E> graph, final UnaryFunction<Node<N, E>, Long> nodeIndices, final UnaryPredicate<E> predicate)
+    public static <N, E> BitMatrix2D toBitMatrix(final Graph<N, E> graph,
+                                                 final UnaryFunction<Node<N, E>, Long> nodeIndices,
+                                                 final UnaryPredicate<E> predicate)
     {
         if (graph == null)
         {
@@ -423,6 +602,186 @@ public final class AnalysisUtils
     // --> table
 
 
+    /**
+     * Convert the specified binary key map to a dense table.
+     *
+     * @param <N> binary key map key type and table row and column key type
+     * @param <E> binary key map value type and table value type
+     * @param binaryKeyMap binary key map to convert, must be not null
+     * @param keys list of keys, must not be null
+     * @return the specified binary key map converted to a dense table
+     */
+    public static <N, E> ArrayTable<N, N, E> toDenseTable(final BinaryKeyMap<N, N, E> binaryKeyMap,
+                                                          final List<N> keys)
+    {
+        return toDenseTable(binaryKeyMap, new IntIndexOfKey<N>(keys));
+    }
+
+    /**
+     * Convert the specified binary key map to a dense table.
+     *
+     * @param <N> binary key map key type and table row and column key type
+     * @param <E> binary key map value type and table value type
+     * @param binaryKeyMap binary key map to convert, must be not null
+     * @param keyIndices map of integer indices by keys, must not be null
+     * @return the specified binary key map converted to a dense table
+     */
+    public static <N, E> ArrayTable<N, N, E> toDenseTable(final BinaryKeyMap<N, N, E> binaryKeyMap,
+                                                          final Map<N, Integer> keyIndices)
+    {
+        return toDenseTable(binaryKeyMap, new IntKeyIndices<N>(keyIndices));
+    }
+
+    /**
+     * Convert the specified binary key map to a dense table.
+     *
+     * @param <N> binary key map key type and table row and column key type
+     * @param <E> binary key map value type and table value type
+     * @param binaryKeyMap binary key map to convert, must be not null
+     * @param keyIndices map of integer indices by keys, must not be null
+     * @return the specified binary key map converted to a dense table
+     */
+    public static <N, E> ArrayTable<N, N, E> toDenseTable(final BinaryKeyMap<N, N, E> binaryKeyMap,
+                                                          final UnaryFunction<N, Integer> keyIndices)
+    {
+        if (binaryKeyMap == null)
+        {
+            throw new IllegalArgumentException("binaryKeyMap must not be null");
+        }
+        if (keyIndices == null)
+        {
+            throw new IllegalArgumentException("keyIndices must not be null");
+        }
+        Set<N> uniqueKeys = createSet(binaryKeyMap.size() * 2);
+        for (BinaryKey<N, N> key : binaryKeyMap.keySet())
+        {
+            uniqueKeys.add(key.getFirstKey());
+            uniqueKeys.add(key.getSecondKey());
+        }
+        ArrayTable<N, N, E> table = ArrayTable.create(uniqueKeys, uniqueKeys);
+        for (Map.Entry<BinaryKey<N, N>, E> entry : binaryKeyMap.entrySet())
+        {
+            N source = entry.getKey().getFirstKey();
+            N target = entry.getKey().getSecondKey();
+            Integer sourceIndex = keyIndices.evaluate(source);
+            Integer targetIndex = keyIndices.evaluate(target);
+
+            if (sourceIndex != null && targetIndex != null)
+            {
+                // todo:  provide "merge strategy" for multiple "edges"
+                table.set(sourceIndex, targetIndex, entry.getValue());
+            }
+        }
+        return table;
+    }
+
+    /**
+     * Convert the specified binary key map to an immutable table.
+     *
+     * @param <N> binary key map key type and table row and column key type
+     * @param <E> binary key map value type and table value type
+     * @param binaryKeyMap binary key map to convert, must be not null
+     * @return the specified binary key map converted to an immutable table
+     */
+    public static <N, E> ImmutableTable<N, N, E> toImmutableTable(final BinaryKeyMap<N, N, E> binaryKeyMap)
+    {
+        if (binaryKeyMap == null)
+        {
+            throw new IllegalArgumentException("binaryKeyMap must not be null");
+        }
+        ImmutableTable.Builder<N, N, E> builder = ImmutableTable.builder();
+        for (Map.Entry<BinaryKey<N, N>, E> entry : binaryKeyMap.entrySet())
+        {
+            N row = entry.getKey().getFirstKey();
+            N column = entry.getKey().getSecondKey();
+            E value = entry.getValue();
+            builder.put(row, column, value);
+        }
+        return builder.build();
+    }
+
+    /**
+     * Convert the specified graph to an immutable table.  Note that only nodes with degree
+     * of at least one will be present in the returned immutable table.
+     *
+     * @param <N> graph node type and immutable table row and column key type
+     * @param <E> graph edge type and immutable table value type
+     * @param graph graph to convert, must not be null
+     * @return the specified graph converted to an immutable table
+     */
+    public static <N, E> ImmutableTable<N, N, E> toImmutableTable(final Graph<N, E> graph)
+    {
+        if (graph == null)
+        {
+            throw new IllegalArgumentException("graph must not be null");
+        }
+        final ImmutableTable.Builder<N, N, E> builder = ImmutableTable.builder();
+        graph.forEachEdge(new UnaryProcedure<Edge<N, E>>()
+                          {
+                              @Override
+                              public void run(final Edge<N, E> edge)
+                              {
+                                  // todo:  provide "merge strategy" for multiple edges
+                                  builder.put(edge.source().getValue(), edge.target().getValue(), edge.getValue());
+                              }
+                          });
+        return builder.build();
+    }
+
+    /**
+     * Convert the specified binary key map to a sparse table.
+     *
+     * @param <N> binary key map key type and table row and column key type
+     * @param <E> binary key map value type and table value type
+     * @param binaryKeyMap binary key map to convert, must be not null
+     * @return the specified binary key map converted to a sparse table
+     */
+    public static <N, E> HashBasedTable<N, N, E> toSparseTable(final BinaryKeyMap<N, N, E> binaryKeyMap)
+    {
+        if (binaryKeyMap == null)
+        {
+            throw new IllegalArgumentException("binaryKeyMap must not be null");
+        }
+        HashBasedTable<N, N, E> table = HashBasedTable.create();
+        for (Map.Entry<BinaryKey<N, N>, E> entry : binaryKeyMap.entrySet())
+        {
+            N row = entry.getKey().getFirstKey();
+            N column = entry.getKey().getSecondKey();
+            E value = entry.getValue();
+            table.put(row, column, value);
+        }
+        return table;
+    }
+
+    /**
+     * Convert the specified graph to a sparse table.  Note that only nodes with degree
+     * of at least one will be present in the returned sparse table.
+     *
+     * @param <N> graph node type and sparse table row and column key type
+     * @param <E> graph edge type and sparse table value type
+     * @param graph graph to convert, must not be null
+     * @return the specified graph converted to a spare table
+     */
+    public static <N, E> HashBasedTable<N, N, E> toSparseTable(final Graph<N, E> graph)
+    {
+        if (graph == null)
+        {
+            throw new IllegalArgumentException("graph must not be null");
+        }
+        final HashBasedTable<N, N, E> table = HashBasedTable.create();
+        graph.forEachEdge(new UnaryProcedure<Edge<N, E>>()
+                          {
+                              @Override
+                              public void run(final Edge<N, E> edge)
+                              {
+                                  // todo:  provide "merge strategy" for multiple edges
+                                  table.put(edge.source().getValue(), edge.target().getValue(), edge.getValue());
+                              }
+                          });
+        return table;
+    }
+
+
     // --> graph
 
 
@@ -451,7 +810,8 @@ public final class AnalysisUtils
      * @param predicate binary key map value predicate, must not be null
      * @return the specified binary key map converted to a graph
      */
-    public static <N, E> Graph<N, E> toGraph(final BinaryKeyMap<N, N, E> binaryKeyMap, final UnaryPredicate<E> predicate)
+    public static <N, E> Graph<N, E> toGraph(final BinaryKeyMap<N, N, E> binaryKeyMap,
+                                             final UnaryPredicate<E> predicate)
     {
         if (binaryKeyMap == null)
         {
@@ -470,6 +830,66 @@ public final class AnalysisUtils
             N sourceValue = entry.getKey().getFirstKey();
             N targetValue = entry.getKey().getSecondKey();
             E value = entry.getValue();
+            if (!nodes.containsKey(sourceValue))
+            {
+                nodes.put(sourceValue, graph.createNode(sourceValue));
+            }
+            if (!nodes.containsKey(targetValue))
+            {
+                nodes.put(targetValue, graph.createNode(targetValue));
+            }
+            if (value != null && predicate.test(value))
+            {
+                graph.createEdge(nodes.get(sourceValue), nodes.get(targetValue), value);
+            }
+        }
+        return graph;
+    }
+
+    /**
+     * Convert the specified table to a graph.  The row key value will be the source node and
+     * the column key value the target node in edges in the returned graph.
+     *
+     * @param <N> table row and column key type and graph node type
+     * @param <E> table value type and graph edge type
+     * @param table table to convert, must not be null
+     * @return the specified table converted to a graph
+     */
+    public static <N, E> Graph<N, E> toGraph(final Table<N, N, E> table)
+    {
+        return toGraph(table, new AcceptAll<E>());
+    }
+
+    /**
+     * Convert the specified table to a graph, adding edges for values accepted
+     * by the specified predicate.  The row key value will be the source node and the column
+     * key value the target node in edges in the returned graph.
+     *
+     * @param <N> table row and column key type and graph node type
+     * @param <E> table value type and graph edge type
+     * @param table table to convert, must not be null
+     * @param predicate table value predicate, must not be null
+     * @return the specified table converted to a graph
+     */
+    public static <N, E> Graph<N, E> toGraph(final Table<N, N, E> table, final UnaryPredicate<E> predicate)
+    {
+        if (table == null)
+        {
+            throw new IllegalArgumentException("table must not be null");
+        }
+        if (predicate == null)
+        {
+            throw new IllegalArgumentException("predicate must not be null");
+        }
+        int n = Math.max(16, Math.max(table.columnKeySet().size(), table.rowKeySet().size()));
+        int e = Math.max(16, table.size());
+        Map<N, Node<N, E>> nodes = createMap(n);
+        Graph<N, E> graph = createGraph(n, e);
+        for (Table.Cell<N, N, E> cell : table.cellSet())
+        {
+            N sourceValue = cell.getRowKey();
+            N targetValue = cell.getColumnKey();
+            E value = cell.getValue();
             if (!nodes.containsKey(sourceValue))
             {
                 nodes.put(sourceValue, graph.createNode(sourceValue));
@@ -546,7 +966,8 @@ public final class AnalysisUtils
         }
         if (matrix.rows() != matrix.columns())
         {
-            throw new IllegalArgumentException("matrix must be balanced, rows=" + matrix.rows() + ", columns=" + matrix.columns());
+            throw new IllegalArgumentException("matrix must be balanced, rows="
+                                               + matrix.rows() + ", columns=" + matrix.columns());
         }
         if (matrix.rows() > Integer.MAX_VALUE)
         {
@@ -599,7 +1020,8 @@ public final class AnalysisUtils
      * @param edgeValues mapping of edge values by node values, must not be null
      * @return the specified bit matrix converted to a graph with long indices as node values
      */
-    public static <E> Graph<Long, E> toGraph(final BitMatrix2D bitMatrix, final BinaryFunction<Long, Long, E> edgeValues)
+    public static <E> Graph<Long, E> toGraph(final BitMatrix2D bitMatrix,
+                                             final BinaryFunction<Long, Long, E> edgeValues)
     {
         return toGraph(bitMatrix, IDENTITY, edgeValues);
     }
@@ -614,7 +1036,9 @@ public final class AnalysisUtils
      * @param edgeValues mapping of edge values by node values, must not be null
      * @return the specified bit matrix converted to a graph
      */
-    public static <N, E> Graph<N, E> toGraph(final BitMatrix2D bitMatrix, final UnaryFunction<Long, N> nodeValues, final BinaryFunction<N, N, E> edgeValues)
+    public static <N, E> Graph<N, E> toGraph(final BitMatrix2D bitMatrix,
+                                             final UnaryFunction<Long, N> nodeValues,
+                                             final BinaryFunction<N, N, E> edgeValues)
     {
         if (bitMatrix == null)
         {
@@ -622,7 +1046,8 @@ public final class AnalysisUtils
         }
         if (bitMatrix.rows() != bitMatrix.columns())
         {
-            throw new IllegalArgumentException("bitMatrix must be balanced, rows=" + bitMatrix.rows() + ", columns=" + bitMatrix.columns());
+            throw new IllegalArgumentException("bitMatrix must be balanced, rows="
+                                               + bitMatrix.rows() + ", columns=" + bitMatrix.columns());
         }
         if (bitMatrix.rows() > Integer.MAX_VALUE)
         {
@@ -647,7 +1072,7 @@ public final class AnalysisUtils
         final Graph<N, E> graph = createGraph(n, e);
         bitMatrix.forEach(true, new BinaryProcedure<Long, Long>()
                           {
-                              //@Override
+                              @Override
                               public void run(final Long row, final Long column)
                               {
                                   N rowValue = nodeValues.evaluate(row);
@@ -698,7 +1123,8 @@ public final class AnalysisUtils
      * @param keyIndices map of long indices by keys, must not be null
      * @return the specified binary key map converted to a sparse matrix
      */
-    public static <N, E> Matrix2D<E> toSparseMatrix(final BinaryKeyMap<N, N, E> binaryKeyMap, final Map<N, Long> keyIndices)
+    public static <N, E> Matrix2D<E> toSparseMatrix(final BinaryKeyMap<N, N, E> binaryKeyMap,
+                                                    final Map<N, Long> keyIndices)
     {
         return toSparseMatrix(binaryKeyMap, new KeyIndices<N>(keyIndices));
     }
@@ -712,7 +1138,8 @@ public final class AnalysisUtils
      * @param keyIndices mapping of long indices by keys, must not be null
      * @return the specified binary key map converted to a sparse matrix
      */
-    public static <N, E> Matrix2D<E> toSparseMatrix(final BinaryKeyMap<N, N, E> binaryKeyMap, final UnaryFunction<N, Long> keyIndices)
+    public static <N, E> Matrix2D<E> toSparseMatrix(final BinaryKeyMap<N, N, E> binaryKeyMap,
+                                                    final UnaryFunction<N, Long> keyIndices)
     {
         if (binaryKeyMap == null)
         {
@@ -742,6 +1169,37 @@ public final class AnalysisUtils
             {
                 // todo:  provide "merge strategy" for multiple "edges"
                 matrix.set(sourceIndex, targetIndex, entry.getValue());
+            }
+        }
+        return matrix;
+    }
+
+    /**
+     * Convert the specified array table to a sparse matrix.
+     *
+     * @param <N> array table row and column type
+     * @param <E> table value type and sparse matrix type
+     * @param table array table to convert, must not be null
+     * @return the specified array table converted to a sparse matrix
+     */
+    public static <N, E> Matrix2D<E> toSparseMatrix(final ArrayTable<N, N, E> table)
+    {
+        if (table == null)
+        {
+            throw new IllegalArgumentException("table must not be null");
+        }
+        int rows = table.rowKeyList().size();
+        int columns = table.columnKeyList().size();
+        Matrix2D<E> matrix = createSparseMatrix2D(rows, columns);
+        for (int row = 0; row < rows; row++)
+        {
+            for (int column = 0; column < columns; column++)
+            {
+                E value = table.at(row, column);
+                if (value != null)
+                {
+                    matrix.set(row, column, value);
+                }
             }
         }
         return matrix;
@@ -784,7 +1242,8 @@ public final class AnalysisUtils
      * @param nodeIndices mapping of long indices by nodes, must not be null
      * @return the specified graph converted to a sparse matrix
      */
-    public static <N, E> Matrix2D<E> toSparseMatrix(final Graph<N, E> graph, final UnaryFunction<Node<N, E>, Long> nodeIndices)
+    public static <N, E> Matrix2D<E> toSparseMatrix(final Graph<N, E> graph,
+                                                    final UnaryFunction<Node<N, E>, Long> nodeIndices)
     {
         if (graph == null)
         {
@@ -823,7 +1282,8 @@ public final class AnalysisUtils
      * @param values mapping of values by long indices, must not be null
      * @return the specified bit matrix converted to a sparse matrix
      */
-    public static <E> Matrix2D<E> toSparseMatrix(final BitMatrix2D bitMatrix, final BinaryFunction<Long, Long, E> values)
+    public static <E> Matrix2D<E> toSparseMatrix(final BitMatrix2D bitMatrix,
+                                                 final BinaryFunction<Long, Long, E> values)
     {
         if (bitMatrix == null)
         {
@@ -883,6 +1343,20 @@ public final class AnalysisUtils
     }
 
     /**
+     * Accept all non-null values predicate.
+     *
+     * @param <E> value type
+     */
+    private static class AcceptNonNull<E> implements UnaryPredicate<E>
+    {
+        @Override
+        public boolean test(final E value)
+        {
+            return value != null;
+        }
+    }
+
+    /**
      * Index of key mapping function.
      *
      * @param <N> key type
@@ -913,6 +1387,40 @@ public final class AnalysisUtils
         {
             int index = keys.indexOf(key);
             return (index < 0) ? null : Long.valueOf(index);
+        }
+    }
+
+    /**
+     * Integer index of key mapping function.
+     *
+     * @param <N> key type
+     */
+    private static class IntIndexOfKey<N> implements UnaryFunction<N, Integer>
+    {
+        /** List of keys. */
+        private final List<N> keys;
+
+
+        /**
+         * Create a new integer index of key mapping function with the specified list of keys.
+         *
+         * @param keys list of keys, must not be null
+         */
+        IntIndexOfKey(final List<N> keys)
+        {
+            if (keys == null)
+            {
+                throw new IllegalArgumentException("keys must not be null");
+            }
+            this.keys = keys;
+        }
+
+
+        @Override
+        public Integer evaluate(final N key)
+        {
+            int index = keys.indexOf(key);
+            return (index < 0) ? null : Integer.valueOf(index);
         }
     }
 
@@ -979,6 +1487,39 @@ public final class AnalysisUtils
 
         @Override
         public Long evaluate(final N key)
+        {
+            return keyIndices.get(key);
+        }
+    }
+
+    /**
+     * Integer key indices mapping function.
+     *
+     * @param <N> key type
+     */
+    private static class IntKeyIndices<N> implements UnaryFunction<N, Integer>
+    {
+        /** Map of keys to integer indices. */
+        private final Map<N, Integer> keyIndices;
+
+
+        /**
+         * Create a new integer key indicies mapping function with the specified map of keys to integer indices.
+         *
+         * @param keyIndices map of keys to long indices, must not be null
+         */
+        IntKeyIndices(final Map<N, Integer> keyIndices)
+        {
+            if (keyIndices == null)
+            {
+                throw new IllegalArgumentException("keyIndices must not be null");
+            }
+            this.keyIndices = keyIndices;
+        }
+
+
+        @Override
+        public Integer evaluate(final N key)
         {
             return keyIndices.get(key);
         }
