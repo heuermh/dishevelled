@@ -53,14 +53,49 @@ import org.dishevelled.weighted.WeightedMaps;
 public final class GraphGenerators
 {
 
+    /**
+     * Private no-arg constructor.
+     */
+    private GraphGenerators()
+    {
+        // empty
+    }
 
+
+    /**
+     * Connect the specified graph completely with the specified value on all added edges.
+     *
+     * @param <N> graph node type
+     * @param <E> graph edge type
+     * @param graph graph to connect, must not be null
+     * @param edgeValue edge value
+     * @return the specified graph connected completely with the specified value on all added edges
+     */
     public static <N, E> Graph<N, E> connectCompletely(final Graph<N, E> graph, final E edgeValue)
     {
         return connectCompletely(graph, new Scalar<N, E>(edgeValue));
     }
 
-    public static <N, E> Graph<N, E> connectCompletely(final Graph<N, E> graph, final BinaryFunction<N, N, E> edgeValues)
+    /**
+     * Connect the specified graph completely with values provided by the specified function on edges.
+     *
+     * @param <N> graph node type
+     * @param <E> graph edge type
+     * @param graph graph to connect, must not be null
+     * @param edgeValues edge values, must not be null
+     * @return the specified graph connected completely with values provided by the specified function on edges
+     */
+    public static <N, E> Graph<N, E> connectCompletely(final Graph<N, E> graph,
+                                                       final BinaryFunction<N, N, E> edgeValues)
     {
+        if (graph == null)
+        {
+            throw new IllegalArgumentException("graph must not be null");
+        }
+        if (edgeValues == null)
+        {
+            throw new IllegalArgumentException("edgeValues must not be null");
+        }
         int n = graph.nodeCount();
         List<Node<N, E>> nodes = Lists.asImmutableList(graph.nodes());
         BinaryKeyMap<Node<N, E>, Node<N, E>, Edge<N, E>> edges = BinaryKeyMaps.createBinaryKeyMap(n * n);
@@ -85,14 +120,45 @@ public final class GraphGenerators
     }
 
 
-
-    public static <N, E> Graph<N, E> connectCompletely(final List<N> nodeValues, final E edgeValue)
+    /**
+     * Create and return a new completely connected graph with the specified nodes values
+     * on nodes and the specified edge value on all added edges.
+     *
+     * @param <N> graph node type
+     * @param <E> graph edge type
+     * @param nodeValues list of node values, must not be null
+     * @param edgeValue edge value
+     * @return a new completely connected graph with the specified nodes values
+     *    on nodes and the specified edge value on all added edges
+     */
+    public static <N, E> Graph<N, E> connectCompletely(final List<N> nodeValues,
+                                                       final E edgeValue)
     {
         return connectCompletely(nodeValues, new Scalar<N, E>(edgeValue));
     }
 
-    public static <N, E> Graph<N, E> connectCompletely(final List<N> nodeValues, final BinaryFunction<N, N, E> edgeValues)
+    /**
+     * Create and return a new completely connected graph with the specified nodes values
+     * on nodes and values provided by the specified function on edges.
+     *
+     * @param <N> graph node type
+     * @param <E> graph edge type
+     * @param nodeValues list of node values, must not be null
+     * @param edgeValues edge values, must not be null
+     * @return a new completely connected graph with the specified nodes values
+     *    on nodes and the specified edge value on all added edges
+     */
+    public static <N, E> Graph<N, E> connectCompletely(final List<N> nodeValues,
+                                                       final BinaryFunction<N, N, E> edgeValues)
     {
+        if (nodeValues == null)
+        {
+            throw new IllegalArgumentException("nodeValues must not be null");
+        }
+        if (edgeValues == null)
+        {
+            throw new IllegalArgumentException("edgeValues must not be null");
+        }
         int n = nodeValues.size();
         Graph<N, E> graph = GraphUtils.createGraph(n, n * n);
         List<Node<N, E>> nodes = Lists.createList(n);
@@ -117,24 +183,87 @@ public final class GraphGenerators
     }
 
 
-
-    public static <N, E> Graph<N, E> connectRandomly(final Graph<N, E> graph, final int edgeCount, final E edgeValue)
+    /**
+     * Connect the specified graph randomly with the specified value on all added edges.
+     *
+     * @param <N> graph node type
+     * @param <E> graph edge type
+     * @param graph graph to connect, must not be null
+     * @param edgeCount edge count
+     * @param edgeValue edge value
+     * @return the specified graph connected randomly with the specified value on all added edges
+     */
+    public static <N, E> Graph<N, E> connectRandomly(final Graph<N, E> graph,
+                                                     final int edgeCount,
+                                                     final E edgeValue)
     {
         return connectRandomly(graph, edgeCount, new Scalar<N, E>(edgeValue));
     }
 
-    public static <N, E> Graph<N, E> connectRandomly(final Graph<N, E> graph, final int edgeCount, final E edgeValue, final RandomGenerator random)
+    /**
+     * Connect the specified graph randomly with the specified value on all added edges.
+     *
+     * @param <N> graph node type
+     * @param <E> graph edge type
+     * @param graph graph to connect, must not be null
+     * @param edgeCount edge count
+     * @param edgeValue edge value
+     * @param random source of randomness, must not be null
+     * @return the specified graph connected randomly with the specified value on all added edges
+     */
+    public static <N, E> Graph<N, E> connectRandomly(final Graph<N, E> graph,
+                                                     final int edgeCount,
+                                                     final E edgeValue,
+                                                     final RandomGenerator random)
     {
         return connectRandomly(graph, edgeCount, new Scalar<N, E>(edgeValue), random);
     }
 
-    public static <N, E> Graph<N, E> connectRandomly(final Graph<N, E> graph, final int edgeCount, final BinaryFunction<N, N, E> edgeValues)
+    /**
+     * Connect the specified graph randomly with the specified value on all added edges.
+     *
+     * @param <N> graph node type
+     * @param <E> graph edge type
+     * @param graph graph to connect, must not be null
+     * @param edgeCount edge count
+     * @param edgeValues edge values, must not be null
+     * @return the specified graph connected randomly with the specified value on all added edges
+     */
+    public static <N, E> Graph<N, E> connectRandomly(final Graph<N, E> graph,
+                                                     final int edgeCount,
+                                                     final BinaryFunction<N, N, E> edgeValues)
     {
         return connectRandomly(graph, edgeCount, edgeValues, new JDKRandomGenerator());
     }
 
-    public static <N, E> Graph<N, E> connectRandomly(final Graph<N, E> graph, final int edgeCount, final BinaryFunction<N, N, E> edgeValues, final RandomGenerator random)
+    /**
+     * Connect the specified graph randomly with the specified value on all added edges.
+     *
+     * @param <N> graph node type
+     * @param <E> graph edge type
+     * @param graph graph to connect, must not be null
+     * @param edgeCount edge count
+     * @param edgeValues edge values, must not be null
+     * @param random source of randomness, must not be null
+     * @return the specified graph connected randomly with the specified value on all added edges
+     */
+    public static <N, E> Graph<N, E> connectRandomly(final Graph<N, E> graph,
+                                                     final int edgeCount,
+                                                     final BinaryFunction<N, N, E> edgeValues,
+                                                     final RandomGenerator random)
     {
+        if (graph == null)
+        {
+            throw new IllegalArgumentException("graph must not be null");
+        }
+        if (edgeValues == null)
+        {
+            throw new IllegalArgumentException("edgeValues must not be null");
+        }
+        if (random == null)
+        {
+            throw new IllegalArgumentException("random must not be null");
+        }
         List<Node<N, E>> nodes = Lists.asImmutableList(graph.nodes());
         for (int i = graph.edgeCount(); i < edgeCount; i++)
         {
@@ -147,24 +276,95 @@ public final class GraphGenerators
     }
 
 
-
-    public static <N, E> Graph<N, E> connectRandomly(final List<N> nodeValues, final int edgeCount, final E edgeValue)
+    /**
+     * Create and return a new randomly connected graph with the specified nodes values
+     * on nodes and the specified edge value on all added edges.
+     *
+     * @param <N> graph node type
+     * @param <E> graph edge type
+     * @param nodeValues list of node values, must not be null
+     * @param edgeCount edge count
+     * @param edgeValue edge value
+     * @return a new randomly connected graph with the specified nodes values
+     *    on nodes and the specified edge value on all added edges
+     */
+    public static <N, E> Graph<N, E> connectRandomly(final List<N> nodeValues,
+                                                     final int edgeCount,
+                                                     final E edgeValue)
     {
         return connectRandomly(nodeValues, edgeCount, new Scalar<N, E>(edgeValue));
     }
 
-    public static <N, E> Graph<N, E> connectRandomly(final List<N> nodeValues, final int edgeCount, final E edgeValue, final RandomGenerator random)
+    /**
+     * Create and return a new randomly connected graph with the specified nodes values
+     * on nodes and the specified edge value on all added edges.
+     *
+     * @param <N> graph node type
+     * @param <E> graph edge type
+     * @param nodeValues list of node values, must not be null
+     * @param edgeCount edge count
+     * @param edgeValue edge value
+     * @param random source of randomness, must not be null
+     * @return a new randomly connected graph with the specified nodes values
+     *    on nodes and the specified edge value on all added edges
+     */
+    public static <N, E> Graph<N, E> connectRandomly(final List<N> nodeValues,
+                                                     final int edgeCount,
+                                                     final E edgeValue,
+                                                     final RandomGenerator random)
     {
         return connectRandomly(nodeValues, edgeCount, new Scalar<N, E>(edgeValue), random);
     }
 
-    public static <N, E> Graph<N, E> connectRandomly(final List<N> nodeValues, final int edgeCount, final BinaryFunction<N, N, E> edgeValues)
+    /**
+     * Create and return a new randomly connected graph with the specified nodes values
+     * on nodes and values provided by the specified function on edges.
+     *
+     * @param <N> graph node type
+     * @param <E> graph edge type
+     * @param nodeValues list of node values, must not be null
+     * @param edgeCount edge count
+     * @param edgeValues edge values, must not be null
+     * @return a new randomly connected graph with the specified nodes values
+     *    on nodes and the specified edge value on all added edges
+     */
+    public static <N, E> Graph<N, E> connectRandomly(final List<N> nodeValues,
+                                                     final int edgeCount,
+                                                     final BinaryFunction<N, N, E> edgeValues)
     {
         return connectRandomly(nodeValues, edgeCount, edgeValues, new JDKRandomGenerator());
     }
 
-    public static <N, E> Graph<N, E> connectRandomly(final List<N> nodeValues, final int edgeCount, final BinaryFunction<N, N, E> edgeValues, final RandomGenerator random)
+    /**
+     * Create and return a new randomly connected graph with the specified nodes values
+     * on nodes and values provided by the specified function on edges.
+     *
+     * @param <N> graph node type
+     * @param <E> graph edge type
+     * @param nodeValues list of node values, must not be null
+     * @param edgeCount edge count
+     * @param edgeValues edge values, must not be null
+     * @param random source of randomness, must not be null
+     * @return a new randomly connected graph with the specified nodes values
+     *    on nodes and the specified edge value on all added edges
+     */
+    public static <N, E> Graph<N, E> connectRandomly(final List<N> nodeValues,
+                                                     final int edgeCount,
+                                                     final BinaryFunction<N, N, E> edgeValues,
+                                                     final RandomGenerator random)
     {
+        if (nodeValues == null)
+        {
+            throw new IllegalArgumentException("nodeValues must not be null");
+        }
+        if (edgeValues == null)
+        {
+            throw new IllegalArgumentException("edgeValues must not be null");
+        }
+        if (random == null)
+        {
+            throw new IllegalArgumentException("random must not be null");
+        }
         int n = nodeValues.size();
         Graph<N, E> graph = GraphUtils.createGraph(n, edgeCount);
         List<Node<N, E>> nodes = Lists.createList(n);
@@ -183,14 +383,45 @@ public final class GraphGenerators
     }
 
 
-
-    public static <N, E> Graph<N, E> connectPreferentially(final Graph<N, E> graph, final int edgeCount, final E edgeValue)
+    /**
+     * Connect the specified graph preferentially with the specified value on all added edges.
+     *
+     * @param <N> graph node type
+     * @param <E> graph edge type
+     * @param graph graph to connect, must not be null
+     * @param edgeCount edge count
+     * @param edgeValue edge value
+     * @return the specified graph connected preferentially with the specified value on all added edges
+     */
+    public static <N, E> Graph<N, E> connectPreferentially(final Graph<N, E> graph,
+                                                           final int edgeCount,
+                                                           final E edgeValue)
     {
         return connectPreferentially(graph, edgeCount, new Scalar<N, E>(edgeValue));
     }
 
-    public static <N, E> Graph<N, E> connectPreferentially(final Graph<N, E> graph, final int edgeCount, final BinaryFunction<N, N, E> edgeValues)
+    /**
+     * Connect the specified graph preferentially with the specified value on all added edges.
+     *
+     * @param <N> graph node type
+     * @param <E> graph edge type
+     * @param graph graph to connect, must not be null
+     * @param edgeCount edge count
+     * @param edgeValues edge values, must not be null
+     * @return the specified graph connected preferentially with the specified value on all added edges
+     */
+    public static <N, E> Graph<N, E> connectPreferentially(final Graph<N, E> graph,
+                                                           final int edgeCount,
+                                                           final BinaryFunction<N, N, E> edgeValues)
     {
+        if (graph == null)
+        {
+            throw new IllegalArgumentException("graph must not be null");
+        }
+        if (edgeValues == null)
+        {
+            throw new IllegalArgumentException("edgeValues must not be null");
+        }
         // weight nodes by degree
         WeightedMap<Node<N, E>> weightedNodes = WeightedMaps.createWeightedMap(graph.nodeCount());
         for (Node<N, E> node : graph.nodes())
@@ -223,15 +454,49 @@ public final class GraphGenerators
         return graph;
     }
 
-
-
-    public static <N, E> Graph<N, E> connectPreferentially(final List<N> nodeValues, final int edgeCount, final E edgeValue)
+    /**
+     * Create and return a new preferentially connected graph with the specified nodes values
+     * on nodes and the specified edge value on all added edges.
+     *
+     * @param <N> graph node type
+     * @param <E> graph edge type
+     * @param nodeValues list of node values, must not be null
+     * @param edgeCount edge count
+     * @param edgeValue edge value
+     * @return a new randomly connected graph with the specified nodes values
+     *    on nodes and the specified edge value on all added edges
+     */
+    public static <N, E> Graph<N, E> connectPreferentially(final List<N> nodeValues,
+                                                           final int edgeCount,
+                                                           final E edgeValue)
     {
         return connectPreferentially(nodeValues, edgeCount, new Scalar<N, E>(edgeValue));
     }
 
-    public static <N, E> Graph<N, E> connectPreferentially(final List<N> nodeValues, final int edgeCount, final BinaryFunction<N, N, E> edgeValues)
+    /**
+     * Create and return a new preferentially connected graph with the specified nodes values
+     * on nodes and values provided by the specified function on edges.
+     *
+     * @param <N> graph node type
+     * @param <E> graph edge type
+     * @param nodeValues list of node values, must not be null
+     * @param edgeCount edge count
+     * @param edgeValues edge values, must not be null
+     * @return a new randomly connected graph with the specified nodes values
+     *    on nodes and values provided by the specified function on edges
+     */
+    public static <N, E> Graph<N, E> connectPreferentially(final List<N> nodeValues,
+                                                           final int edgeCount,
+                                                           final BinaryFunction<N, N, E> edgeValues)
     {
+        if (nodeValues == null)
+        {
+            throw new IllegalArgumentException("nodeValues must not be null");
+        }
+        if (edgeValues == null)
+        {
+            throw new IllegalArgumentException("edgeValues must not be null");
+        }
         int n = nodeValues.size();
         Graph<N, E> graph = GraphUtils.createGraph(n, edgeCount);
         List<Node<N, E>> nodes = Lists.createList(n);
@@ -275,7 +540,7 @@ public final class GraphGenerators
 
 
     /** Scalar function. */
-    private static class Scalar<N, E> implements BinaryFunction<N, N, E>
+    private static final class Scalar<N, E> implements BinaryFunction<N, N, E>
     {
         /** Value. */
         private final E value;
