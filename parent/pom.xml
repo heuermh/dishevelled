@@ -90,12 +90,12 @@
           <version>2.7</version>
         </plugin>
         <plugin>
-          <artifactId>maven-install-plugin</artifactId>
-          <version>2.3.1</version>
-        </plugin>
-        <plugin>
           <artifactId>maven-gpg-plugin</artifactId>
           <version>1.4</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-install-plugin</artifactId>
+          <version>2.4</version>
         </plugin>
         <plugin>
           <artifactId>maven-jar-plugin</artifactId>
@@ -103,7 +103,7 @@
         </plugin>
         <plugin>
           <artifactId>maven-release-plugin</artifactId>
-          <version>2.3.2</version>
+          <version>2.4.1</version>
           <configuration>
             <mavenExecutorId>forked-path</mavenExecutorId>
             <useReleaseProfile>false</useReleaseProfile>
@@ -116,7 +116,7 @@
         </plugin>
         <plugin>
           <artifactId>maven-site-plugin</artifactId>
-          <version>3.2</version>
+          <version>3.3</version>
           <!-- not sure this is still necessary, 3.2 pulls in wagon-ssh 1.0-beta-7 -->
           <dependencies>
             <dependency>
@@ -132,7 +132,7 @@
         </plugin>
         <plugin>
           <artifactId>maven-surefire-plugin</artifactId>
-          <version>2.12.4</version>
+          <version>2.15</version>
         </plugin>
       </plugins>
     </pluginManagement>
@@ -310,7 +310,7 @@
       </plugin>
       <plugin>
         <artifactId>maven-project-info-reports-plugin</artifactId>
-        <version>2.4</version>
+        <version>2.7</version>
         <reportSets>
           <reportSet>
             <reports>
