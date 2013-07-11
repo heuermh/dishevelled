@@ -24,7 +24,7 @@
 -->
 <document>
   <properties>
-    <title>venn-cytoscape3-app</title>
+    <title>midi-cytoscape3-app</title>
   </properties>
 <body>
 
@@ -32,7 +32,7 @@
 
 <p>
 dishevelled.org <b>midi-cytoscape3-app</b> provides a Cytoscape 3 [<a href="#1">1</a>] app for
-MIDI networks.  The Midi Networks Cytoscape app requires java version 1.6 or later and Cytoscape version 3.0 or later.
+MIDI networks.  The MIDI networks Cytoscape 3 app requires java version 1.6 or later and Cytoscape version 3.0 or later.
 </p>
 </section>
 
