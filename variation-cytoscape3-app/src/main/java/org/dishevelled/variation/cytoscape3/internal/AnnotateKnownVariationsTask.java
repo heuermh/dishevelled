@@ -23,48 +23,29 @@
 */
 package org.dishevelled.variation.cytoscape3.internal;
 
-import static org.junit.Assert.assertNotNull;
-
-import org.cytoscape.service.util.internal.FakeBundleContext;
-import org.cytoscape.work.swing.DialogTaskManager;
-
-import org.junit.Before;
-import org.junit.Test;
-
-import org.osgi.framework.BundleContext;
+import org.cytoscape.work.AbstractTask;
+import org.cytoscape.work.TaskMonitor;
 
 /**
- * Unit test for CyActivator.
- *
- * @author  Michael Heuer
+ * Annotate known variations task.
  */
-public final class CyActivatorTest
+final class AnnotateKnownVariationsTask
+    extends AbstractTask
 {
-    private CyActivator cyActivator;
-    private BundleContext bundleContext;
 
-    @Before
-    public void setUp()
+    @Override
+    public void run(final TaskMonitor taskMonitor)
     {
-        cyActivator = new CyActivator();
-        bundleContext = new FakeBundleContext(DialogTaskManager.class);
-    }
-
-    @Test
-    public void testConstructor()
-    {
-        assertNotNull(cyActivator);
-    }
-
-    @Test(expected=NullPointerException.class)
-    public void testStartNullBundleContext()
-    {
-        cyActivator.start(null);
-    }
-
-    @Test
-    public void testStart()
-    {
-        cyActivator.start(bundleContext);
+        taskMonitor.setTitle("Annotate known variations");
+        taskMonitor.setProgress(0.0d);
+        try
+        {
+            Thread.sleep(5000);
+        }
+        catch (InterruptedException e)
+        {
+            // ignore
+        }
+        taskMonitor.setProgress(1.0d);
     }
 }

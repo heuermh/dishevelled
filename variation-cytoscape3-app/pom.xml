@@ -52,11 +52,16 @@
     <dependency>
       <groupId>com.github.heuermh.ensemblrestclient</groupId>
       <artifactId>ensembl-rest-client</artifactId>
-      <version>1.1-SNAPSHOT</version>
+      <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>com.google.guava</groupId>
       <artifactId>guava</artifactId>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.google.inject</groupId>
+      <artifactId>guice</artifactId>
       <scope>compile</scope>
     </dependency>
     <!--
@@ -145,7 +150,7 @@
     <jdk.version>1.6</jdk.version>
     <bundle.symbolicName>variation-cytoscape3-app</bundle.symbolicName>
     <bundle.namespace>org.dishevelled.variation.cytoscape3.internal</bundle.namespace>
-    <cytoscape.api.version>3.0.0-beta3</cytoscape.api.version>
+    <cytoscape.api.version>3.0.1</cytoscape.api.version>
   </properties>
   <reporting>
     <plugins>
@@ -185,6 +190,11 @@
   </repositories>
   <dependencyManagement>
     <dependencies>
+      <dependency>
+        <groupId>com.github.heuermh.ensemblrestclient</groupId>
+        <artifactId>ensembl-rest-client</artifactId>
+        <version>1.1-SNAPSHOT</version>
+      </dependency>
       <dependency>
         <groupId>org.cytoscape</groupId>
         <artifactId>core-task-api</artifactId>
