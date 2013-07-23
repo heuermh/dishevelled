@@ -66,7 +66,14 @@ final class EnsemblRestClientVariationConsequencePredictionService
 
 
     @Override
-    public List<VariationConsequence> predictVariationConsequences(String species, String reference, String referenceAllele, String alternateAllele, String name, int start, int end, int strand)
+    public List<VariationConsequence> predictVariationConsequences(final String species,
+                                                                   final String reference,
+                                                                   final String referenceAllele,
+                                                                   final String alternateAllele,
+                                                                   final String name,
+                                                                   final int start,
+                                                                   final int end,
+                                                                   final int strand)
     {
         checkNotNull(species);
         checkNotNull(reference);

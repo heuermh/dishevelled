@@ -25,8 +25,17 @@ package org.dishevelled.variation.cytoscape3.internal;
 
 import static org.junit.Assert.assertNotNull;
 
+import org.cytoscape.work.swing.DialogTaskManager;
+
+import org.dishevelled.variation.cytoscape3.FeatureService;
+import org.dishevelled.variation.cytoscape3.VariationConsequenceService;
+import org.dishevelled.variation.cytoscape3.VariationConsequencePredictionService;
+
 import org.junit.Before;
 import org.junit.Test;
+
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 /**
  * Unit test for VariationAction.
@@ -37,10 +46,23 @@ public final class VariationActionTest
 {
     private VariationAction variationAction;
 
+    @Mock
+    private FeatureService featureService;
+    @Mock
+    private VariationConsequenceService variationConsequenceService;
+    @Mock
+    private VariationConsequencePredictionService variationConsequencePredictionService;
+    @Mock
+    private DialogTaskManager dialogTaskManager;
+
     @Before
     public void setUp()
     {
-        variationAction = new VariationAction();
+        MockitoAnnotations.initMocks(this);
+        variationAction = new VariationAction(featureService,
+                                              variationConsequenceService,
+                                              variationConsequencePredictionService,
+                                              dialogTaskManager);
     }
 
     @Test

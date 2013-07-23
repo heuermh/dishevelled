@@ -21,38 +21,28 @@
     > http://www.opensource.org/licenses/lgpl-license.php
 
 */
-package org.dishevelled.variation.cytoscape3.internal;
+package org.dishevelled.variation.cytoscape3.ensembl;
 
-import java.util.Properties;
+import static org.junit.Assert.assertNotNull;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-
-import org.cytoscape.application.swing.CyAction;
-import org.cytoscape.service.util.AbstractCyActivator;
-import org.cytoscape.work.swing.DialogTaskManager;
 
 import org.dishevelled.variation.cytoscape3.FeatureService;
 import org.dishevelled.variation.cytoscape3.VariationConsequenceService;
 import org.dishevelled.variation.cytoscape3.VariationConsequencePredictionService;
 
-import org.osgi.framework.BundleContext;
+import org.junit.Test;
 
 /**
- * Activator.
- *
- * @author  Michael Heuer
+ * Unit test for EnsemblRestClientModule.
  */
-public final class CyActivator extends AbstractCyActivator
+public final class EnsemblRestClientModuleTest
 {
 
-    @Override
-    public void start(final BundleContext bundleContext)
+    @Test
+    public void testEnsemblRestClientModule()
     {
-        if (bundleContext == null)
-        {
-            throw new NullPointerException("bundleContext must not be null");
-        }
         Injector injector = Guice.createInjector(new com.github.heuermh.ensemblrestclient.EnsemblRestClientModule(),
                                                  new org.dishevelled.variation.cytoscape3.ensembl.EnsemblRestClientModule());
 
@@ -60,10 +50,8 @@ public final class CyActivator extends AbstractCyActivator
         VariationConsequenceService variationConsequenceService = injector.getInstance(VariationConsequenceService.class);
         VariationConsequencePredictionService variationConsequencePredictionService = injector.getInstance(VariationConsequencePredictionService.class);
 
-        DialogTaskManager dialogTaskManager = getService(bundleContext, DialogTaskManager.class);
-
-        VariationAction variationAction = new VariationAction(featureService, variationConsequenceService, variationConsequencePredictionService, dialogTaskManager);
-        Properties properties = new Properties();
-        registerService(bundleContext, variationAction, CyAction.class, properties);
+        assertNotNull(featureService);
+        assertNotNull(variationConsequenceService);
+        assertNotNull(variationConsequencePredictionService);
     }
 }
