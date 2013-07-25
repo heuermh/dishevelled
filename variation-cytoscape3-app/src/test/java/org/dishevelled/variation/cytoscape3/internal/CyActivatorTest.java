@@ -25,6 +25,7 @@ package org.dishevelled.variation.cytoscape3.internal;
 
 import static org.junit.Assert.assertNotNull;
 
+import org.cytoscape.application.CyApplicationManager;
 import org.cytoscape.service.util.internal.FakeBundleContext;
 import org.cytoscape.work.swing.DialogTaskManager;
 
@@ -47,7 +48,7 @@ public final class CyActivatorTest
     public void setUp()
     {
         cyActivator = new CyActivator();
-        bundleContext = new FakeBundleContext(DialogTaskManager.class);
+        bundleContext = new FakeBundleContext(CyApplicationManager.class, DialogTaskManager.class);
     }
 
     @Test
