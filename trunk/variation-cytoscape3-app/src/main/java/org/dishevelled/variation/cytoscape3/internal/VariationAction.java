@@ -30,9 +30,9 @@ import java.awt.event.ActionEvent;
 import org.cytoscape.application.swing.AbstractCyAction;
 import org.cytoscape.work.swing.DialogTaskManager;
 
-import org.dishevelled.variation.cytoscape3.FeatureService;
-import org.dishevelled.variation.cytoscape3.VariationConsequenceService;
-import org.dishevelled.variation.cytoscape3.VariationConsequencePredictionService;
+import org.dishevelled.variation.FeatureService;
+import org.dishevelled.variation.VariationConsequenceService;
+import org.dishevelled.variation.VariationConsequencePredictionService;
 
 /**
  * Variation action.

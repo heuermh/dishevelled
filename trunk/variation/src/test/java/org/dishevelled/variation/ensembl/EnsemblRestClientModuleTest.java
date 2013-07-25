@@ -1,6 +1,6 @@
 /*
 
-    dsh-variation-cytoscape3-app  Variation Cytoscape3 app.
+    dsh-variation  Variation.
     Copyright (c) 2013 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
@@ -21,16 +21,16 @@
     > http://www.opensource.org/licenses/lgpl-license.php
 
 */
-package org.dishevelled.variation.cytoscape3.ensembl;
+package org.dishevelled.variation.ensembl;
 
 import static org.junit.Assert.assertNotNull;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 
-import org.dishevelled.variation.cytoscape3.FeatureService;
-import org.dishevelled.variation.cytoscape3.VariationConsequenceService;
-import org.dishevelled.variation.cytoscape3.VariationConsequencePredictionService;
+import org.dishevelled.variation.FeatureService;
+import org.dishevelled.variation.VariationConsequenceService;
+import org.dishevelled.variation.VariationConsequencePredictionService;
 
 import org.junit.Test;
 
@@ -44,7 +44,7 @@ public final class EnsemblRestClientModuleTest
     public void testEnsemblRestClientModule()
     {
         Injector injector = Guice.createInjector(new com.github.heuermh.ensemblrestclient.EnsemblRestClientModule(),
-                                                 new org.dishevelled.variation.cytoscape3.ensembl.EnsemblRestClientModule());
+                                                 new org.dishevelled.variation.ensembl.EnsemblRestClientModule());
 
         FeatureService featureService = injector.getInstance(FeatureService.class);
         VariationConsequenceService variationConsequenceService = injector.getInstance(VariationConsequenceService.class);

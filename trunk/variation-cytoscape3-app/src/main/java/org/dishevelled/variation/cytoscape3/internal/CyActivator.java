@@ -32,9 +32,9 @@ import org.cytoscape.application.swing.CyAction;
 import org.cytoscape.service.util.AbstractCyActivator;
 import org.cytoscape.work.swing.DialogTaskManager;
 
-import org.dishevelled.variation.cytoscape3.FeatureService;
-import org.dishevelled.variation.cytoscape3.VariationConsequenceService;
-import org.dishevelled.variation.cytoscape3.VariationConsequencePredictionService;
+import org.dishevelled.variation.FeatureService;
+import org.dishevelled.variation.VariationConsequenceService;
+import org.dishevelled.variation.VariationConsequencePredictionService;
 
 import org.osgi.framework.BundleContext;
 
@@ -54,7 +54,7 @@ public final class CyActivator extends AbstractCyActivator
             throw new NullPointerException("bundleContext must not be null");
         }
         Injector injector = Guice.createInjector(new com.github.heuermh.ensemblrestclient.EnsemblRestClientModule(),
-                                                 new org.dishevelled.variation.cytoscape3.ensembl.EnsemblRestClientModule());
+                                                 new org.dishevelled.variation.ensembl.EnsemblRestClientModule());
 
         FeatureService featureService = injector.getInstance(FeatureService.class);
         VariationConsequenceService variationConsequenceService = injector.getInstance(VariationConsequenceService.class);

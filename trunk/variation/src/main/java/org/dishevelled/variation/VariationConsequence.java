@@ -1,6 +1,6 @@
 /*
 
-    dsh-variation-cytoscape3-app  Variation Cytoscape3 app.
+    dsh-variation  Variation.
     Copyright (c) 2013 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
@@ -21,7 +21,7 @@
     > http://www.opensource.org/licenses/lgpl-license.php
 
 */
-package org.dishevelled.variation.cytoscape3;
+package org.dishevelled.variation;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 

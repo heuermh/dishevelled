@@ -27,9 +27,9 @@ import static org.junit.Assert.assertNotNull;
 
 import org.cytoscape.work.swing.DialogTaskManager;
 
-import org.dishevelled.variation.cytoscape3.FeatureService;
-import org.dishevelled.variation.cytoscape3.VariationConsequenceService;
-import org.dishevelled.variation.cytoscape3.VariationConsequencePredictionService;
+import org.dishevelled.variation.FeatureService;
+import org.dishevelled.variation.VariationConsequenceService;
+import org.dishevelled.variation.VariationConsequencePredictionService;
 
 import org.junit.Before;
 import org.junit.Test;

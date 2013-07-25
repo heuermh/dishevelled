@@ -1,6 +1,6 @@
 /*
 
-    dsh-variation-cytoscape3-app  Variation Cytoscape3 app.
+    dsh-variation  Variation.
     Copyright (c) 2013 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
@@ -21,27 +21,22 @@
     > http://www.opensource.org/licenses/lgpl-license.php
 
 */
-package org.dishevelled.variation.cytoscape3;
+package org.dishevelled.variation;
 
 import java.util.List;
 
 /**
- * Variation consequence prediction service.
+ * Variation service.
  */
-public interface VariationConsequencePredictionService
+interface VariationService
 {
 
     /**
-     * Predict variation consequences for specified variation.
+     * Return the variations associated with the specified feature, if any.
      *
-     * @param variation variation, must not be null
-     * @return the variation consequences predicted for the specified variation
-     *    or an empty list if none can be predicted
+     * @param feature feature, must not be null
+     * @return the variations associated with the specified feature or an
+     *    empty list if no such variations exist
      */
-    //List<VariationConsequence> predictVariationConsequences(Variation variation);
-    List<VariationConsequence> predictVariationConsequences(String species,
-                                                            String reference,
-                                                            String referenceAllele,
-                                                            String alternateAllele,
-                                                            String name, int start, int end, int strand);
+    //List<Variation> variations(Feature feature);
 }
