@@ -36,6 +36,7 @@ import com.github.heuermh.ensemblrestclient.Allele;
 import com.github.heuermh.ensemblrestclient.Transcript;
 import com.github.heuermh.ensemblrestclient.VariationService;
 
+import org.dishevelled.variation.Variation;
 import org.dishevelled.variation.VariationConsequence;
 import org.dishevelled.variation.VariationConsequencePredictionService;
 
@@ -66,48 +67,64 @@ final class EnsemblRestClientVariationConsequencePredictionService
 
 
     @Override
-    public List<VariationConsequence> predictVariationConsequences(final String species,
-                                                                   final String reference,
-                                                                   final String referenceAllele,
-                                                                   final String alternateAllele,
-                                                                   final String name,
-                                                                   final int start,
-                                                                   final int end,
-                                                                   final int strand)
+    public List<VariationConsequence> predictConsequences(final Variation variation)
     {
-        checkNotNull(species);
-        checkNotNull(reference);
-        checkNotNull(referenceAllele);
-        checkNotNull(alternateAllele);
-        checkNotNull(name);
+        checkNotNull(variation);
         checkArgument(this.species.equals(species));
         checkArgument(this.reference.equals(reference));
-        String region = name + ":" + start + "-" + end + ":" + strand;
-        String alleleString = referenceAllele + "/" + alternateAllele;
+        String region = variation.getName() + ":" + variation.getStart() + "-" + variation.getEnd() + ":" + variation.getStrand();
 
         List<VariationConsequence> consequences = new ArrayList<VariationConsequence>();
-        for (Transcript transcript : variationService.consequences(species, region, alleleString).getTranscripts())
+        for (String alternateAllele : variation.getAlternateAlleles())
         {
-            // only use canonical transcript
-            if (transcript.isCanonical())
+            String alleleString = variation.getReferenceAllele() + "/" + alternateAllele;
+            for (Transcript transcript : variationService.consequences(species, region, alleleString).getTranscripts())
             {
-                for (Allele allele : transcript.getAlleles())
+                // only use canonical transcript
+                if (transcript.isCanonical())
                 {
-                    // parse allele string
-                    Matcher matcher = ALLELE_STRING.matcher(allele.getAlleleString());
-                    if (matcher.matches())
+                    for (Allele allele : transcript.getAlleles())
                     {
-                        String ref = matcher.group(1);
-                        String alt = matcher.group(2);
-
-                        for (String consequenceTerm : allele.getConsequenceTerms())
+                        // parse allele string
+                        Matcher matcher = ALLELE_STRING.matcher(allele.getAlleleString());
+                        if (matcher.matches())
                         {
-                            consequences.add(new VariationConsequence(ref, alt, consequenceTerm));
+                            String ref = matcher.group(1);
+                            String alt = matcher.group(2);
+
+                            for (String consequenceTerm : allele.getConsequenceTerms())
+                            {
+                                consequences.add(new VariationConsequence(variation.getSpecies(),
+                                                                          variation.getReference(),
+                                                                          variation.getIdentifier(),
+                                                                          ref,
+                                                                          alt,
+                                                                          consequenceTerm,
+                                                                          variation.getName(),
+                                                                          variation.getStart(),
+                                                                          variation.getEnd(),
+                                                                          variation.getStrand()));
+
+                            }
                         }
                     }
                 }
+                slowDown();
             }
         }
         return consequences;
+    }
+
+    private void slowDown()
+    {
+        // slow down calls to prevent rate limit throttling
+        try
+        {
+            Thread.sleep(666L);
+        }
+        catch (InterruptedException e)
+        {
+            // ignore
+        }
     }
 }
