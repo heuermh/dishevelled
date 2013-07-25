@@ -61,7 +61,7 @@ final class EnsemblRestClientFeatureService
         checkNotNull(species);
         checkNotNull(reference);
         checkNotNull(identifier);
-        checkArgument(this.species.equals(reference));
+        checkArgument(this.species.equals(species));
         checkArgument(this.reference.equals(reference));
 
         Lookup lookup = lookupService.lookup(this.species, identifier);
