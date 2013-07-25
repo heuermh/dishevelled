@@ -1,6 +1,6 @@
 /*
 
-    dsh-variation-cytoscape3-app  Variation Cytoscape3 app.
+    dsh-variation  Variation.
     Copyright (c) 2013 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
@@ -21,7 +21,7 @@
     > http://www.opensource.org/licenses/lgpl-license.php
 
 */
-package org.dishevelled.variation.cytoscape3.ensembl;
+package org.dishevelled.variation.ensembl;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -38,9 +38,9 @@ import com.github.heuermh.ensemblrestclient.Transcript;
 import com.github.heuermh.ensemblrestclient.Variation;
 import com.github.heuermh.ensemblrestclient.VariationService;
 
-import org.dishevelled.variation.cytoscape3.Feature;
-import org.dishevelled.variation.cytoscape3.VariationConsequence;
-import org.dishevelled.variation.cytoscape3.VariationConsequenceService;
+import org.dishevelled.variation.Feature;
+import org.dishevelled.variation.VariationConsequence;
+import org.dishevelled.variation.VariationConsequenceService;
 
 /**
  * Ensembl REST client variation consequence service.

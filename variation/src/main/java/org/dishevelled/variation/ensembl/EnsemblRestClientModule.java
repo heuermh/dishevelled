@@ -1,6 +1,6 @@
 /*
 
-    dsh-variation-cytoscape3-app  Variation Cytoscape3 app.
+    dsh-variation  Variation.
     Copyright (c) 2013 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
@@ -21,15 +21,15 @@
     > http://www.opensource.org/licenses/lgpl-license.php
 
 */
-package org.dishevelled.variation.cytoscape3.ensembl;
+package org.dishevelled.variation.ensembl;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
 
-import org.dishevelled.variation.cytoscape3.FeatureService;
-import org.dishevelled.variation.cytoscape3.VariationConsequenceService;
-import org.dishevelled.variation.cytoscape3.VariationConsequencePredictionService;
+import org.dishevelled.variation.FeatureService;
+import org.dishevelled.variation.VariationConsequenceService;
+import org.dishevelled.variation.VariationConsequencePredictionService;
 
 /**
  * Ensembl REST client module.
