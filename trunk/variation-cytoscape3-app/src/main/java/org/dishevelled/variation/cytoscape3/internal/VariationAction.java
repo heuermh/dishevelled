@@ -27,12 +27,15 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.awt.event.ActionEvent;
 
+import org.cytoscape.application.CyApplicationManager;
 import org.cytoscape.application.swing.AbstractCyAction;
+import org.cytoscape.model.CyNetwork;
 import org.cytoscape.work.swing.DialogTaskManager;
 
 import org.dishevelled.variation.FeatureService;
 import org.dishevelled.variation.VariationConsequenceService;
 import org.dishevelled.variation.VariationConsequencePredictionService;
+import org.dishevelled.variation.VariationService;
 
 /**
  * Variation action.
@@ -41,6 +44,12 @@ import org.dishevelled.variation.VariationConsequencePredictionService;
  */
 final class VariationAction extends AbstractCyAction
 {
+    /** Application manager. */
+    private final CyApplicationManager applicationManager;
+
+    /** Dialog task manager. */
+    private final DialogTaskManager dialogTaskManager;
+
     /** Feature service. */
     private final FeatureService featureService;
 
@@ -50,34 +59,43 @@ final class VariationAction extends AbstractCyAction
     /** Variation consequence prediction service. */
     private final VariationConsequencePredictionService variationConsequencePredictionService;
 
-    /** Dialog task manager. */
-    private final DialogTaskManager dialogTaskManager;
+    /** Variation service. */
+    private final VariationService variationService;
 
 
     /**
      * Create a new variation action.
      *
+     * @param applicationManager application manager, must not be null
+     * @param dialogTaskManager dialog task manager, must not be null
      * @param featureService feature service, must not be null
      * @param variationConsequenceService variation consequence service, must not be null
      * @param variationConsequencePredictionService variation consequence prediction service, must not be null
-     * @param dialogTaskManager dialog task manager, must not be null
+     * @param variationService variation service, must not be null
      */
-    VariationAction(final FeatureService featureService,
+    VariationAction(final CyApplicationManager applicationManager,
+                    final DialogTaskManager dialogTaskManager,
+                    final FeatureService featureService,
                     final VariationConsequenceService variationConsequenceService,
                     final VariationConsequencePredictionService variationConsequencePredictionService,
-                    final DialogTaskManager dialogTaskManager)
+                    final VariationService variationService)
     {
         super("Variation");
         setPreferredMenu("Apps");
 
+        checkNotNull(applicationManager);
+        checkNotNull(dialogTaskManager);
         checkNotNull(featureService);
         checkNotNull(variationConsequenceService);
         checkNotNull(variationConsequencePredictionService);
-        checkNotNull(dialogTaskManager);
+        checkNotNull(variationService);
+
+        this.applicationManager = applicationManager;
+        this.dialogTaskManager = dialogTaskManager;
         this.featureService = featureService;
         this.variationConsequenceService = variationConsequenceService;
         this.variationConsequencePredictionService = variationConsequencePredictionService;
-        this.dialogTaskManager = dialogTaskManager;
+        this.variationService = variationService;
     }
 
 
@@ -88,7 +106,13 @@ final class VariationAction extends AbstractCyAction
         {
             throw new NullPointerException("event must not be null");
         }
-        AnnotateKnownVariationsTaskFactory annotateKnownVariationsTaskFactory = new AnnotateKnownVariationsTaskFactory();
+        CyNetwork network = applicationManager.getCurrentNetwork();
+        AnnotateKnownVariationsTaskFactory annotateKnownVariationsTaskFactory = new AnnotateKnownVariationsTaskFactory("human",
+                                                                                                                       "GRCh37",
+                                                                                                                       "ensembl",
+                                                                                                                       network,
+                                                                                                                       featureService,
+                                                                                                                       variationService);
         dialogTaskManager.execute(annotateKnownVariationsTaskFactory.createTaskIterator());
     }
 }

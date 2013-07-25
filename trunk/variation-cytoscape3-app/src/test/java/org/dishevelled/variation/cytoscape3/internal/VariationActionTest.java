@@ -25,11 +25,14 @@ package org.dishevelled.variation.cytoscape3.internal;
 
 import static org.junit.Assert.assertNotNull;
 
+import org.cytoscape.application.CyApplicationManager;
+
 import org.cytoscape.work.swing.DialogTaskManager;
 
 import org.dishevelled.variation.FeatureService;
 import org.dishevelled.variation.VariationConsequenceService;
 import org.dishevelled.variation.VariationConsequencePredictionService;
+import org.dishevelled.variation.VariationService;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -47,22 +50,28 @@ public final class VariationActionTest
     private VariationAction variationAction;
 
     @Mock
+    private CyApplicationManager applicationManager;
+    @Mock
+    private DialogTaskManager dialogTaskManager;
+    @Mock
     private FeatureService featureService;
     @Mock
     private VariationConsequenceService variationConsequenceService;
     @Mock
     private VariationConsequencePredictionService variationConsequencePredictionService;
     @Mock
-    private DialogTaskManager dialogTaskManager;
+    private VariationService variationService;
 
     @Before
     public void setUp()
     {
         MockitoAnnotations.initMocks(this);
-        variationAction = new VariationAction(featureService,
+        variationAction = new VariationAction(applicationManager,
+                                              dialogTaskManager,
+                                              featureService,
                                               variationConsequenceService,
                                               variationConsequencePredictionService,
-                                              dialogTaskManager);
+                                              variationService);
     }
 
     @Test

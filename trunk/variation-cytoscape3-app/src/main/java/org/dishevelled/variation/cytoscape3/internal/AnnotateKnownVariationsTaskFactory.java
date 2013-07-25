@@ -23,19 +23,83 @@
 */
 package org.dishevelled.variation.cytoscape3.internal;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
+import org.cytoscape.model.CyNetwork;
+
 import org.cytoscape.work.AbstractTaskFactory;
 import org.cytoscape.work.TaskIterator;
 
+import org.dishevelled.variation.FeatureService;
+import org.dishevelled.variation.VariationService;
+
 /**
  * Annotate known variations task factory.
+ *
+ * @author  Michael Heuer
  */
 final class AnnotateKnownVariationsTaskFactory
     extends AbstractTaskFactory
 {
+    /** Species. */
+    private final String species;
+
+    /** Reference. */
+    private final String reference;
+
+    /** Ensembl gene id column. */
+    private final String ensemblGeneIdColumn;
+
+    /** Network. */
+    private final CyNetwork network;
+
+    /** Feature service. */
+    private final FeatureService featureService;
+
+    /** Variation service. */
+    private final VariationService variationService;
+
+
+    /**
+     * Create a new annotate known variations task factory.
+     *
+     * @param species species, must not be null
+     * @param reference reference, must not be null
+     * @param ensemblGeneIdColumn ensembl gene id column, must not be null
+     * @param featureService feature service, must not be null
+     * @param variationService variation service, must not be null
+     */
+    AnnotateKnownVariationsTaskFactory(final String species,
+                                       final String reference,
+                                       final String ensemblGeneIdColumn,
+                                       final CyNetwork network,
+                                       final FeatureService featureService,
+                                       final VariationService variationService)
+    {
+        checkNotNull(species);
+        checkNotNull(reference);
+        checkNotNull(ensemblGeneIdColumn);
+        checkNotNull(network);
+        checkNotNull(featureService);
+        checkNotNull(variationService);
+
+        this.species = species;
+        this.reference = reference;
+        this.ensemblGeneIdColumn = ensemblGeneIdColumn;
+        this.network = network;
+        this.featureService = featureService;
+        this.variationService = variationService;
+    }
+
     @Override
     public TaskIterator createTaskIterator()
     {
-        AnnotateKnownVariationsTask annotateKnownVariationsTask = new AnnotateKnownVariationsTask();
+        AnnotateKnownVariationsTask annotateKnownVariationsTask = new AnnotateKnownVariationsTask(species,
+                                                                                                  reference,
+                                                                                                  ensemblGeneIdColumn,
+                                                                                                  network,
+                                                                                                  featureService,
+                                                                                                  variationService);
         return new TaskIterator(annotateKnownVariationsTask);
     }
 }
