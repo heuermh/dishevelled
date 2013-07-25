@@ -39,6 +39,5 @@ public interface VariationConsequenceService
      * @return the variation consequences associated with the specified variation
      *    or an empty list if none exist
      */
-    //List<VariationConsequence> variationConsequences(Variation variation);
-    List<VariationConsequence> variationConsequences(Feature feature);
+    List<VariationConsequence> consequences(Variation variation);
 }

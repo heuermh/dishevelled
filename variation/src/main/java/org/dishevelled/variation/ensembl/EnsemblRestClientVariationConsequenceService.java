@@ -33,12 +33,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.github.heuermh.ensemblrestclient.Allele;
-import com.github.heuermh.ensemblrestclient.FeatureService;
 import com.github.heuermh.ensemblrestclient.Transcript;
-import com.github.heuermh.ensemblrestclient.Variation;
 import com.github.heuermh.ensemblrestclient.VariationService;
 
-import org.dishevelled.variation.Feature;
+import org.dishevelled.variation.Variation;
 import org.dishevelled.variation.VariationConsequence;
 import org.dishevelled.variation.VariationConsequenceService;
 
@@ -50,62 +48,77 @@ final class EnsemblRestClientVariationConsequenceService
 {
     private final String species;
     private final String reference;
-    private final FeatureService featureService;
     private final VariationService variationService;
     private static final Pattern ALLELE_STRING = Pattern.compile("^(.*)/(.*)$");
 
     //@Inject
     EnsemblRestClientVariationConsequenceService(final String species,
                                                  final String reference,
-                                                 final FeatureService featureService,
                                                  final VariationService variationService)
     {
         checkNotNull(species);
         checkNotNull(reference);
-        checkNotNull(featureService);
         checkNotNull(variationService);
 
         this.species = species;
         this.reference = reference;
-        this.featureService = featureService;
         this.variationService = variationService;
     }
 
 
     @Override
-    public List<VariationConsequence> variationConsequences(final Feature feature)
+    public List<VariationConsequence> consequences(final Variation variation)
     {
-        checkNotNull(feature);
-        checkArgument(species.equals(feature.getSpecies()));
-        checkArgument(reference.equals(feature.getReference()));
-        String region = feature.getName() + ":" + feature.getStart() + "-" + feature.getEnd() + ":" + feature.getStrand();
+        checkNotNull(variation);
+        checkArgument(species.equals(variation.getSpecies()));
+        checkArgument(reference.equals(variation.getReference()));
 
         List<VariationConsequence> consequences = new ArrayList<VariationConsequence>();
-        for (Variation variation : featureService.variationFeatures(species, region))
+        for (Transcript transcript : variationService.consequences(species, variation.getIdentifier()).getTranscripts())
         {
-            for (Transcript transcript : variationService.consequences(species, variation.getId()).getTranscripts())
+            // only use canonical transcript
+            if (transcript.isCanonical())
             {
-                // only use canonical transcript
-                if (transcript.isCanonical())
+                for (Allele allele : transcript.getAlleles())
                 {
-                    for (Allele allele : transcript.getAlleles())
+                    // parse allele string
+                    Matcher matcher = ALLELE_STRING.matcher(allele.getAlleleString());
+                    if (matcher.matches())
                     {
-                        // parse allele string
-                        Matcher matcher = ALLELE_STRING.matcher(allele.getAlleleString());
-                        if (matcher.matches())
-                        {
-                            String reference = matcher.group(1);
-                            String alternate = matcher.group(2);
+                        String referenceAllele = matcher.group(1);
+                        String alternateAllele = matcher.group(2);
 
-                            for (String consequenceTerm : allele.getConsequenceTerms())
-                            {
-                                consequences.add(new VariationConsequence(reference, alternate, consequenceTerm));
-                            }
+                        for (String consequenceTerm : allele.getConsequenceTerms())
+                        {
+                            consequences.add(new VariationConsequence(variation.getSpecies(),
+                                                                      variation.getReference(),
+                                                                      variation.getIdentifier(),
+                                                                      referenceAllele,
+                                                                      alternateAllele,
+                                                                      consequenceTerm,
+                                                                      variation.getName(),
+                                                                      variation.getStart(),
+                                                                      variation.getEnd(),
+                                                                      variation.getStrand()));
                         }
                     }
                 }
             }
+            slowDown();
         }
         return consequences;
+    }
+
+    private void slowDown()
+    {
+        // slow down calls to prevent rate limit throttling
+        try
+        {
+            Thread.sleep(666L);
+        }
+        catch (InterruptedException e)
+        {
+            // ignore
+        }
     }
 }

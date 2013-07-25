@@ -30,6 +30,7 @@ import com.google.inject.Singleton;
 import org.dishevelled.variation.FeatureService;
 import org.dishevelled.variation.VariationConsequenceService;
 import org.dishevelled.variation.VariationConsequencePredictionService;
+import org.dishevelled.variation.VariationService;
 
 /**
  * Ensembl REST client module.
@@ -51,10 +52,15 @@ public final class EnsemblRestClientModule
     }
 
     @Provides @Singleton
-    VariationConsequenceService createVariationConsequenceService(final com.github.heuermh.ensemblrestclient.FeatureService featureService,
-                                                                  final com.github.heuermh.ensemblrestclient.VariationService variationService)
+    VariationService createVariationService(final com.github.heuermh.ensemblrestclient.FeatureService featureService)
     {
-        return new EnsemblRestClientVariationConsequenceService("human", "GRCh37", featureService, variationService);
+        return new EnsemblRestClientVariationService("human", "GRCh37", featureService);
+    }
+
+    @Provides @Singleton
+    VariationConsequenceService createVariationConsequenceService(final com.github.heuermh.ensemblrestclient.VariationService variationService)
+    {
+        return new EnsemblRestClientVariationConsequenceService("human", "GRCh37", variationService);
     }
 
     @Provides @Singleton

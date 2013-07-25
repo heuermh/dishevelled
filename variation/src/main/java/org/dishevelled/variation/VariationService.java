@@ -28,7 +28,7 @@ import java.util.List;
 /**
  * Variation service.
  */
-interface VariationService
+public interface VariationService
 {
 
     /**
@@ -38,5 +38,5 @@ interface VariationService
      * @return the variations associated with the specified feature or an
      *    empty list if no such variations exist
      */
-    //List<Variation> variations(Feature feature);
+    List<Variation> variations(Feature feature);
 }

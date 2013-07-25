@@ -38,10 +38,5 @@ public interface VariationConsequencePredictionService
      * @return the variation consequences predicted for the specified variation
      *    or an empty list if none can be predicted
      */
-    //List<VariationConsequence> predictVariationConsequences(Variation variation);
-    List<VariationConsequence> predictVariationConsequences(String species,
-                                                            String reference,
-                                                            String referenceAllele,
-                                                            String alternateAllele,
-                                                            String name, int start, int end, int strand);
+    List<VariationConsequence> predictConsequences(Variation variation);
 }
