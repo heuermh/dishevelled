@@ -96,6 +96,14 @@ See <a href="http://colorbrewer.org">http://colorbrewer.org</a> for further deta
 <p><object data="images/continuous-gn-gy-2.svg" type="image/svg+xml" width="810" height="80"></object></p>
 <p><object data="images/discrete-gn-gy-2.svg" type="image/svg+xml" width="810" height="80"></object></p>
 </subsection>
+<subsection name="Gw" id="gw">
+<p><object data="images/continuous-gw-2.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-gw-2.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/continuous-gw-3.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-gw-3.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/continuous-gw-4.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-gw-4.svg" type="image/svg+xml" width="810" height="80"></object></p>
+</subsection>
 <subsection name="Paired" id="paired">
 <p><object data="images/continuous-paired-3.svg" type="image/svg+xml" width="810" height="80"></object></p>
 <p><object data="images/discrete-paired-3.svg" type="image/svg+xml" width="810" height="80"></object></p>
