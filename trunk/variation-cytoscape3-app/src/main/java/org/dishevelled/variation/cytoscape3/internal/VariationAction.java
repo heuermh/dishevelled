@@ -23,9 +23,24 @@
 */
 package org.dishevelled.variation.cytoscape3.internal;
 
+import static javax.swing.SwingUtilities.windowForComponent;
+
 import static com.google.common.base.Preconditions.checkNotNull;
 
+import java.awt.BorderLayout;
+import java.awt.Component;
+
 import java.awt.event.ActionEvent;
+
+import javax.swing.AbstractAction;
+import javax.swing.Box;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JToolBar;
+import javax.swing.WindowConstants;
+
+import javax.swing.border.EmptyBorder;
 
 import org.cytoscape.application.CyApplicationManager;
 import org.cytoscape.application.swing.AbstractCyAction;
@@ -106,13 +121,63 @@ final class VariationAction extends AbstractCyAction
         {
             throw new NullPointerException("event must not be null");
         }
-        CyNetwork network = applicationManager.getCurrentNetwork();
-        AnnotateKnownVariationsTaskFactory annotateKnownVariationsTaskFactory = new AnnotateKnownVariationsTaskFactory("human",
-                                                                                                                       "GRCh37",
-                                                                                                                       "ensembl",
-                                                                                                                       network,
-                                                                                                                       featureService,
-                                                                                                                       variationService);
-        dialogTaskManager.execute(annotateKnownVariationsTaskFactory.createTaskIterator());
+        showDialog(event);
+    }
+
+
+    // would be nice to have a submenu in Apps --> Variation --> etc.
+    //
+
+    private void showDialog(final ActionEvent event)
+    {
+        JFrame frame = (JFrame) windowForComponent((Component) event.getSource());
+        JDialog dialog = new JDialog(frame, "Variation");
+
+        JPanel contentPane = new JPanel();
+        contentPane.setBorder(new EmptyBorder(12, 12, 12, 12));
+        contentPane.setLayout(new BorderLayout());
+
+        JToolBar toolBar = new JToolBar();
+        toolBar.add(new AbstractAction("Annotate Known Variations...")
+            {
+                @Override
+                public void actionPerformed(final ActionEvent event)
+                {
+                    CyNetwork network = applicationManager.getCurrentNetwork();
+                    AnnotateKnownVariationsTaskFactory annotateKnownVariationsTaskFactory = new AnnotateKnownVariationsTaskFactory("human",
+                                                                                                                                   "GRCh37",
+                                                                                                                                   "ensembl",
+                                                                                                                                   network,
+                                                                                                                                   featureService,
+                                                                                                                                   variationService);
+                    dialogTaskManager.execute(annotateKnownVariationsTaskFactory.createTaskIterator());
+                }
+            });
+
+        toolBar.add(new AbstractAction("Annotate Known Variation Conseqences...")
+            {
+                @Override
+                public void actionPerformed(final ActionEvent event)
+                {
+                    CyNetwork network = applicationManager.getCurrentNetwork();
+                    AnnotateKnownVariationConsequencesTaskFactory annotateKnownVariationConsequencesTaskFactory = new AnnotateKnownVariationConsequencesTaskFactory("human",
+                                                                                                                                                                    "GRCh37",
+                                                                                                                                                                    "ensembl",
+                                                                                                                                                                    network,
+                                                                                                                                                                    featureService,
+                                                                                                                                                                    variationService,
+                                                                                                                                                                    variationConsequenceService);
+                    dialogTaskManager.execute(annotateKnownVariationConsequencesTaskFactory.createTaskIterator());
+                }
+            });
+
+        contentPane.add("North", toolBar);
+        contentPane.add("Center", Box.createGlue());
+        dialog.setContentPane(contentPane);
+
+        dialog.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
+        //installCloseKeyBinding(dialog);
+        dialog.setBounds(200, 200, 600, 400);
+        dialog.setVisible(true);
     }
 }
