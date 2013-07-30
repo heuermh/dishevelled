@@ -62,7 +62,7 @@ final class CyNodeListCellRenderer extends DefaultListCellRenderer //IdListCellR
     }
 
 
-    /** {@inheritDoc} */
+    @Override
     public Component getListCellRendererComponent(final JList list,
                                                   final Object value,
                                                   final int index,

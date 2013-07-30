@@ -84,7 +84,7 @@ final class DetailsView
     /** Update Cytoscape selection. */
     private final SetChangeListener<CyNode> updateCytoscapeSelection = new SetChangeListener<CyNode>()
         {
-            /** {@inheritDoc} */
+            @Override
             public void setChanged(final SetChangeEvent<CyNode> event)
             {
                 CyNetwork currentNetwork = applicationManager.getCurrentNetwork();
@@ -101,7 +101,7 @@ final class DetailsView
     /** Select all action. */
     private final Action selectAll = new AbstractAction("Select all") // i18n
         {
-            /** {@inheritDoc} */
+            @Override
             public void actionPerformed(final ActionEvent event)
             {
                 if (binaryVennList != null)
@@ -122,7 +122,7 @@ final class DetailsView
     /** Clear selection action. */
     private final Action clearSelection = new AbstractAction("Clear selection") // i18n
         {
-            /** {@inheritDoc} */
+            @Override
             public void actionPerformed(final ActionEvent event)
             {
                 if (binaryVennList != null)

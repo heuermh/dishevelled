@@ -110,7 +110,7 @@ final class DiagramView
     /** Export to PNG image action. */
     private final Action exportToPNG = new AbstractAction("Export to PNG...") // i18n
         {
-            /** {@inheritDoc} */
+            @Override
             public void actionPerformed(final ActionEvent event)
             {
                 exportToPNG();
@@ -120,7 +120,7 @@ final class DiagramView
     /** Export to SNG image action. */
     private final Action exportToSVG = new AbstractAction("Export to SVG...") // i18n
         {
-            /** {@inheritDoc} */
+            @Override
             public void actionPerformed(final ActionEvent event)
             {
                 exportToSVG();
@@ -130,7 +130,7 @@ final class DiagramView
     /** Select all action. */
     private final Action selectAll = new AbstractAction("Select all") // i18n
         {
-            /** {@inheritDoc} */
+            @Override
             public void actionPerformed(final ActionEvent event)
             {
                 selectAll();
@@ -140,7 +140,7 @@ final class DiagramView
     /** Clear selection action. */
     private final Action clearSelection = new AbstractAction("Clear selection") // i18n
         {
-            /** {@inheritDoc} */
+            @Override
             public void actionPerformed(final ActionEvent event)
             {
                 clearSelection();
@@ -150,7 +150,7 @@ final class DiagramView
     /** Zoom in action. */
     private final Action zoomIn = new AbstractAction("Zoom in") // i18n
         {
-            /** {@inheritDoc} */
+            @Override
             public void actionPerformed(final ActionEvent event)
             {
                 zoomIn();
@@ -160,7 +160,7 @@ final class DiagramView
     /** Zoom out action. */
     private final Action zoomOut = new AbstractAction("Zoom out") // i18n
         {
-            /** {@inheritDoc} */
+            @Override
             public void actionPerformed(final ActionEvent event)
             {
                 zoomOut();
@@ -170,7 +170,7 @@ final class DiagramView
     /** Toggle display labels. */
     private final Action displayLabels = new AbstractAction("Display set labels") // i18n
         {
-            /** {@inheritDoc} */
+            @Override
             public void actionPerformed(final ActionEvent event)
             {
                 displayLabels(((AbstractButton) event.getSource()).isSelected());
@@ -180,7 +180,7 @@ final class DiagramView
     /** Toggle display size labels. */
     private final Action displaySizeLabels = new AbstractAction("Display size labels") // i18n
         {
-            /** {@inheritDoc} */
+            @Override
             public void actionPerformed(final ActionEvent event)
             {
                 displaySizeLabels(((AbstractButton) event.getSource()).isSelected());
@@ -190,7 +190,7 @@ final class DiagramView
     /** Toggle display sizes in set labels. */
     private final Action displaySizes = new AbstractAction("Display sizes in set labels") // i18n
         {
-            /** {@inheritDoc} */
+            @Override
             public void actionPerformed(final ActionEvent event)
             {
                 displaySizes(((AbstractButton) event.getSource()).isSelected());
@@ -200,7 +200,7 @@ final class DiagramView
     /** Toggle display sizes for empty areas. */
     private final Action displaySizesForEmptyAreas = new AbstractAction("Display sizes for empty areas") // i18n
         {
-            /** {@inheritDoc} */
+            @Override
             public void actionPerformed(final ActionEvent event)
             {
                 displaySizesForEmptyAreas(((AbstractButton) event.getSource()).isSelected());
@@ -691,14 +691,14 @@ final class DiagramView
             setEventFilter(eventFilter);
         }
 
-        /** {@inheritDoc} */
+        @Override
         public void mouseEntered(final PInputEvent event)
         {
             PCanvas canvas = (PCanvas) event.getComponent();
             canvas.setToolTipText(getLabelTextForPickedNode(event.getPath()));
         }
 
-        /** {@inheritDoc} */
+        @Override
         public void mouseExited(final PInputEvent event)
         {
             PCanvas canvas = (PCanvas) event.getComponent();
@@ -728,7 +728,7 @@ final class DiagramView
         }
 
 
-        /** {@inheritDoc} */
+        @Override
         public void mousePressed(final PInputEvent event)
         {
             if (Mode.PAN == mode)
@@ -750,7 +750,7 @@ final class DiagramView
             }
         }
 
-        /** {@inheritDoc} */
+        @Override
         public void mouseReleased(final PInputEvent event)
         {
             if (Mode.PAN == mode)
@@ -769,7 +769,7 @@ final class DiagramView
         extends KeyAdapter
     {
 
-        /** {@inheritDoc} */
+        @Override
         public void keyPressed(final KeyEvent event)
         {
             if (KeyEvent.VK_SPACE == event.getKeyCode())
@@ -779,7 +779,7 @@ final class DiagramView
             }
         }
 
-        /** {@inheritDoc} */
+        @Override
         public void keyReleased(final KeyEvent event)
         {
             if (KeyEvent.VK_SPACE == event.getKeyCode())
@@ -807,7 +807,7 @@ final class DiagramView
             //    adding BUTTON2_MASK didn't seem to help, may need to fully subclass PPanEventHandler
             setEventFilter(new PInputEventFilter(InputEvent.BUTTON1_MASK)
                 {
-                    /** {@inheritDoc} */
+                    @Override
                     public boolean acceptsEvent(final PInputEvent event, final int type)
                     {
                         return super.acceptsEvent(event, type) && (Mode.PAN == mode);
