@@ -144,7 +144,7 @@ final class GroupsView
     /** Euler diagram action. */
     private final IdentifiableAction eulerDiagram = new IdentifiableAction("Euler Diagram...", eulerDiagramIconBundle) // i18n
         {
-            /** {@inheritDoc} */
+            @Override
             public void actionPerformed(final ActionEvent event)
             {
                 if (selected.size() > 1)
@@ -160,7 +160,7 @@ final class GroupsView
     /** Venn diagram action. */
     private final IdentifiableAction vennDiagram = new IdentifiableAction("Venn Diagram...", vennDiagramIconBundle) // i18n
         {
-            /** {@inheritDoc} */
+            @Override
             public void actionPerformed(final ActionEvent event)
             {
                 switch (selected.size())
@@ -186,7 +186,7 @@ final class GroupsView
     /** Details action. */
     private final IdentifiableAction details = new IdentifiableAction("Details...", detailsIconBundle) // i18n
         {
-            /** {@inheritDoc} */
+            @Override
             public void actionPerformed(final ActionEvent event)
             {
                 switch (selected.size())
@@ -209,7 +209,7 @@ final class GroupsView
     /** Done action. */
     private final Action done = new AbstractAction("Done") // i18n
         {
-            /** {@inheritDoc} */
+            @Override
             public void actionPerformed(final ActionEvent event)
             {
                 done();
@@ -219,7 +219,7 @@ final class GroupsView
     /** Rename group action. */
     private final Action renameGroup = new AbstractAction("Rename group...")
         {
-            /** {@inheritDoc} */
+            @Override
             public void actionPerformed(final ActionEvent event)
             {
                 renameGroup();
@@ -229,7 +229,7 @@ final class GroupsView
     /** List selection listener. */
     private final ListSelectionListener listSelectionListener = new ListSelectionListener()
         {
-            /** {@inheritDoc} */
+            @Override
             public void valueChanged(final ListSelectionEvent event)
             {
                 int size = selected.size();
@@ -415,7 +415,7 @@ final class GroupsView
         // run in a cytoscape task?
         SwingUtilities.invokeLater(new Runnable()
             {
-                /** {@inheritDoc} */
+                @Override
                 public void run()
                 {
                     Rectangle2D.Double boundingRectangle = new Rectangle2D.Double(0.0d, 0.0d, 400.0d, 400.0d);
