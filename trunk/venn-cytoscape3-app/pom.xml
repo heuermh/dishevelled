@@ -121,7 +121,7 @@
     <jdk.version>1.6</jdk.version>
     <bundle.symbolicName>venn-cytoscape3-app</bundle.symbolicName>
     <bundle.namespace>org.dishevelled.venn.cytoscape3.internal</bundle.namespace>
-    <cytoscape.api.version>3.0.0-beta3</cytoscape.api.version>
+    <cytoscape.api.version>3.0.1</cytoscape.api.version>
   </properties>
   <reporting>
     <plugins>
