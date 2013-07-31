@@ -28,8 +28,17 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.swing.AbstractAction;
 import javax.swing.Action;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -69,7 +78,51 @@ public final class VennApp
 
     private void open()
     {
-        // groupsView.addGroup(readFile(fileDialog()));
+        JFileChooser fileChooser = new JFileChooser();
+        int returnVal = fileChooser.showOpenDialog(groupsView);
+
+        if (returnVal == JFileChooser.APPROVE_OPTION)
+        {
+            File file = fileChooser.getSelectedFile();
+            Group group = readFile(file);
+            groupsView.addGroup(group);
+        }
+    }
+
+    private Group readFile(final File file)
+    {
+        BufferedReader reader = null;
+        String name = file.toString();
+        List<String> values = new ArrayList<String>();
+        try
+        {
+            reader = new BufferedReader(new FileReader(file));
+            while (reader.ready())
+            {
+                String line = reader.readLine();
+                if (line == null)
+                {
+                    break;
+                }
+                values.add(line);
+            }
+        }
+        catch (IOException e)
+        {
+            // ignore
+        }
+        finally
+        {
+            try
+            {
+                reader.close();
+            }
+            catch (Exception e)
+            {
+                // ignore
+            }
+        }
+        return new Group(name, values);
     }
 
     private JMenuBar createMenuBar()
