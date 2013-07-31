@@ -25,6 +25,61 @@
       <url>scp://shell.sourceforge.net/home/project-web/dishevelled/htdocs/venn-tools-${project.version}</url>
     </site>
   </distributionManagement>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>appassembler-maven-plugin</artifactId>
+        <configuration>
+          <repositoryLayout>flat</repositoryLayout>
+          <repositoryName>lib</repositoryName>
+          <installArtifacts>false</installArtifacts>
+          <programs>
+            <program>
+              <mainClass>org.dishevelled.venn.tools.Venn</mainClass>
+              <name>venn</name>
+            </program>
+            <program>
+              <mainClass>org.dishevelled.venn.tools.Venn2</mainClass>
+              <name>venn2</name>
+            </program>
+            <program>
+              <mainClass>org.dishevelled.venn.tools.Venn3</mainClass>
+              <name>venn3</name>
+            </program>
+            <program>
+              <mainClass>org.dishevelled.venn.tools.Venn4</mainClass>
+              <name>venn4</name>
+            </program>
+          </programs>
+        </configuration>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>assemble</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <configuration>
+          <descriptors>
+            <descriptor>src/main/assembly/assembly.xml</descriptor>
+          </descriptors>
+        </configuration>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>assembly</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
   <dependencies>
     <dependency>
       <groupId>org.dishevelled</groupId>
