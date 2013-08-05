@@ -51,6 +51,6 @@ public final class SyntheticModule
     @Provides @Singleton
     SyntheticGenome createSyntheticGenome()
     {
-        return new SyntheticGenome("human", "GRCh37", 23, 300000000); // 3b is too large for int
+        return new SyntheticGenome("human", "GRCh37", 22, 3000000000L);
     }
 }

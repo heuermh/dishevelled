@@ -32,6 +32,8 @@ import java.util.Random;
 
 import com.google.common.collect.ImmutableList;
 
+import com.google.inject.Inject;
+
 import org.dishevelled.variation.Feature;
 import org.dishevelled.variation.Variation;
 import org.dishevelled.variation.VariationService;
@@ -45,6 +47,7 @@ final class SyntheticVariationService
     private final SyntheticGenome genome;
     private final Random random = new Random();
 
+    @Inject
     SyntheticVariationService(final SyntheticGenome genome)
     {
         checkNotNull(genome);
