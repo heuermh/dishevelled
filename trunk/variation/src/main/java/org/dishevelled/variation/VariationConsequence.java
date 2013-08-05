@@ -55,7 +55,6 @@ public final class VariationConsequence
     {
         checkNotNull(species);
         checkNotNull(reference);
-        checkNotNull(identifier);
         checkNotNull(referenceAllele);
         checkNotNull(alternateAllele);
         checkNotNull(sequenceOntologyTerm);

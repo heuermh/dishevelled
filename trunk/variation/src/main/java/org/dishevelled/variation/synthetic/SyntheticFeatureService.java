@@ -64,6 +64,6 @@ final class SyntheticFeatureService
         int start = random.nextInt(length);
         int end = start + featureLength;
 
-        return new Feature(genome.getSpecies(), genome.getReference(), null, name, start, end, 1);
+        return new Feature(genome.getSpecies(), genome.getReference(), identifier, name, start, end, 1);
     }
 }

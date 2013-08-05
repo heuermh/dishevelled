@@ -190,9 +190,7 @@ final class SequenceOntology
         sv.createRelation("is_a", internal_feature_elongation, feature_elongation);
         sv.createRelation("is_a", feature_elongation, feature_variant);
         sv.createRelation("is_a", inframe_deletion, inframe_indel);
-        sv.createRelation("is_a", inframe_indel, inframe_variant);
         sv.createRelation("is_a", inframe_deletion, feature_truncation);
-        sv.createRelation("is_a", feature_truncation, feature_variant);
         sv.createRelation("is_a", missense_variant, inframe_variant);
         sv.createRelation("is_a", transcript_amplification, feature_amplification);
         sv.createRelation("is_a", splice_region_variant, splicing_variant);
@@ -200,7 +198,6 @@ final class SequenceOntology
         sv.createRelation("is_a", incomplete_terminal_codon_variant, inframe_variant);
         sv.createRelation("is_a", inframe_variant, protein_altering_variant);
         sv.createRelation("is_a", protein_altering_variant, coding_sequence_variant);
-        sv.createRelation("is_a", terminator_codon_variant, coding_sequence_variant);
         sv.createRelation("is_a", stop_retained_variant, synonymous_variant);
         sv.createRelation("is_a", synonymous_variant, coding_sequence_variant);
         sv.createRelation("is_a", coding_sequence_variant, exon_variant);
@@ -212,7 +209,6 @@ final class SequenceOntology
         sv.createRelation("is_a", _NMD_transcript_variant, transcript_variant);
         sv.createRelation("is_a", non_coding_exon_variant, exon_variant);
         sv.createRelation("is_a", exon_variant, transcript_variant);
-        sv.createRelation("is_a", transcript_variant, gene_variant);
         sv.createRelation("is_a", gene_variant, feature_variant);
         sv.createRelation("is_a", upstream_gene_variant, feature_variant);
         sv.createRelation("is_a", downstream_gene_variant, feature_variant);
