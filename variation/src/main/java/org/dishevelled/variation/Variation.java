@@ -56,7 +56,6 @@ public final class Variation
     {
         checkNotNull(species);
         checkNotNull(reference);
-        checkNotNull(identifier);
         checkNotNull(referenceAllele);
         checkNotNull(alternateAlleles);
         checkNotNull(name);
