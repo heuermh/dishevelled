@@ -38,7 +38,7 @@ final class SyntheticGenome
     private final List<String> names;
     private final Map<String, Integer> lengths;
 
-    SyntheticGenome(final String species, final String reference, final int chromosomes, final int bp)
+    SyntheticGenome(final String species, final String reference, final int chromosomes, final long bp)
     {
         this.species = species;
         this.reference = reference;
@@ -50,10 +50,10 @@ final class SyntheticGenome
         {
             names.add(String.valueOf(i));
         }
-        int left = bp;
-        for (int i = chromosomes; i > 0; i--)
+        long left = bp;
+        for (int i = chromosomes - 1; i > 0; i--)
         {
-            int length = bp/i;
+            int length = (int) (left/i);
             lengths.put(names.get(i), length);
             left -= length;
         }

@@ -21,7 +21,7 @@
     > http://www.opensource.org/licenses/lgpl-license.php
 
 */
-package org.dishevelled.variation.ensembl;
+package org.dishevelled.variation.synthetic;
 
 import static org.junit.Assert.assertNotNull;
 
@@ -36,16 +36,15 @@ import org.dishevelled.variation.VariationConsequencePredictionService;
 import org.junit.Test;
 
 /**
- * Unit test for EnsemblRestClientModule.
+ * Unit test for SyntheticModule.
  */
-public final class EnsemblRestClientModuleTest
+public final class SyntheticModuleTest
 {
 
     @Test
-    public void testEnsemblRestClientModule()
+    public void testSyntheticModule()
     {
-        Injector injector = Guice.createInjector(new com.github.heuermh.ensemblrestclient.EnsemblRestClientModule(),
-                                                 new org.dishevelled.variation.ensembl.EnsemblRestClientModule());
+        Injector injector = Guice.createInjector(new SyntheticModule());
 
         FeatureService featureService = injector.getInstance(FeatureService.class);
         VariationService variationService = injector.getInstance(VariationService.class);

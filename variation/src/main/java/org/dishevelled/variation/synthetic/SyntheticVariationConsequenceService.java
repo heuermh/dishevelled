@@ -30,6 +30,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import com.google.inject.Inject;
+
 import org.dishevelled.variation.Variation;
 import org.dishevelled.variation.VariationConsequence;
 import org.dishevelled.variation.VariationConsequenceService;
@@ -43,6 +45,7 @@ final class SyntheticVariationConsequenceService
     private final SyntheticGenome genome;
     private final Random random = new Random();
 
+    @Inject
     SyntheticVariationConsequenceService(final SyntheticGenome genome)
     {
         checkNotNull(genome);

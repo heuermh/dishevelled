@@ -28,6 +28,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.util.Random;
 
+import com.google.inject.Inject;
+
 import org.dishevelled.variation.Feature;
 import org.dishevelled.variation.FeatureService;
 
@@ -40,6 +42,7 @@ final class SyntheticFeatureService
     private final SyntheticGenome genome;
     private final Random random = new Random();
 
+    @Inject
     SyntheticFeatureService(final SyntheticGenome genome)
     {
         checkNotNull(genome);
