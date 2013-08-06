@@ -228,10 +228,9 @@ final class GroupsView
         EventListModel<Group> listModel = new EventListModel<Group>(groups);
         EventSelectionModel<Group> selectionModel = new EventSelectionModel<Group>(groups);
         selected = selectionModel.getSelected();
-        selectionModel.addListSelectionListener(listSelectionListener); // or use event list listener
+        selectionModel.addListSelectionListener(listSelectionListener);
         groupList = new JList(listModel);
         groupList.setSelectionModel(selectionModel);
-        //groupList.setCellRenderer(new GroupListCellRenderer());
 
         InputMap inputMap = getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
         int menuKeyMask = Toolkit.getDefaultToolkit().getMenuShortcutKeyMask();
