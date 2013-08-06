@@ -55,6 +55,16 @@ public final class VennApp
     /** Groups view. */
     private final GroupsView groupsView;
 
+    /** Exit action. */
+    private final Action exit = new AbstractAction("Exit")
+        {
+            @Override
+            public void actionPerformed(final ActionEvent event)
+            {
+                exit();
+            }
+        };
+
     /** Open action. */
     private final Action open = new AbstractAction("Open...")
         {
@@ -75,6 +85,11 @@ public final class VennApp
         this.groupsView = new GroupsView();
     }
 
+
+    private void exit()
+    {
+        System.exit(0);
+    }
 
     private void open()
     {
@@ -136,11 +151,9 @@ public final class VennApp
 
         // osx doesn't need an exit menu item, Quit VennApp [Q] is present in VennApp application menu
         fileMenu.addSeparator();
-        JMenuItem exitMenuItem = new JMenuItem("Exit");
+        fileMenu.add(exit);
 
-        fileMenu.add(exitMenuItem);
         menuBar.add(fileMenu);
-
         return menuBar;
     }
 
