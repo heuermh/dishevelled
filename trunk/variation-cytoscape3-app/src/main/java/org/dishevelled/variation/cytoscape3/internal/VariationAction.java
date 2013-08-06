@@ -189,7 +189,7 @@ final class VariationAction extends AbstractCyAction
                                                                                                                                                      network,
                                                                                                                                                      featureService,
                                                                                                                                                      variations,
-                                                                                                                                                     variationConsequenceService);
+                                                                                                                                                     variationConsequencePredictionService);
                     dialogTaskManager.execute(annotateVariationConsequencesTaskFactory.createTaskIterator());
                 }
             });

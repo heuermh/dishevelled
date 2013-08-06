@@ -49,7 +49,7 @@ import org.dishevelled.variation.FeatureService;
 import org.dishevelled.variation.Variation;
 import org.dishevelled.variation.VariationService;
 import org.dishevelled.variation.VariationConsequence;
-import org.dishevelled.variation.VariationConsequenceService;
+import org.dishevelled.variation.VariationConsequencePredictionService;
 
 import org.dishevelled.vocabulary.AbstractAssignable;
 import org.dishevelled.vocabulary.Assignable;
@@ -86,8 +86,8 @@ final class AnnotateVariationConsequencesTask
     /** Feature service. */
     private final FeatureService featureService;
 
-    /** Variation consequence service. */
-    private final VariationConsequenceService variationConsequenceService;
+    /** Variation consequence prediction service. */
+    private final VariationConsequencePredictionService variationConsequencePredictionService;
 
 
     /**
@@ -98,7 +98,7 @@ final class AnnotateVariationConsequencesTask
      * @param ensemblGeneIdColumn ensembl gene id column, must not be null
      * @param featureService feature service, must not be null
      * @param variations zero or more variations, must not be null
-     * @param variationConsequenceService variation consequence service, must not be null
+     * @param variationConsequencePredictionService variation consequence prediction service, must not be null
      */
     AnnotateVariationConsequencesTask(final String species,
                                       final String reference,
@@ -106,7 +106,7 @@ final class AnnotateVariationConsequencesTask
                                       final CyNetwork network,
                                       final FeatureService featureService,
                                       final List<Variation> variations,
-                                      final VariationConsequenceService variationConsequenceService)
+                                      final VariationConsequencePredictionService variationConsequencePredictionService)
     {
         checkNotNull(species);
         checkNotNull(reference);
@@ -114,7 +114,7 @@ final class AnnotateVariationConsequencesTask
         checkNotNull(network);
         checkNotNull(featureService);
         checkNotNull(variations);
-        checkNotNull(variationConsequenceService);
+        checkNotNull(variationConsequencePredictionService);
 
         this.species = species;
         this.reference = reference;
@@ -122,7 +122,7 @@ final class AnnotateVariationConsequencesTask
         this.network = network;
         this.featureService = featureService;
         this.variations = variations;
-        this.variationConsequenceService = variationConsequenceService;
+        this.variationConsequencePredictionService = variationConsequencePredictionService;
     }
 
 
@@ -160,7 +160,7 @@ final class AnnotateVariationConsequencesTask
             if (hit != null)
             {
                 taskMonitor.setStatusMessage("Predicting variation consequences for variation " + variation.getName() + ":" + variation.getStart() + "-" + variation.getEnd() + ":" + variation.getStrand() + " " + variation.getAlternateAlleles() + "...");
-                List<VariationConsequence> variationConsequences = variationConsequenceService.consequences(variation);            
+                List<VariationConsequence> variationConsequences = variationConsequencePredictionService.predictConsequences(variation);
                 featureIndex.add(hit, variationConsequences);
                 taskMonitor.setStatusMessage("Predicted " + variationConsequences.size() + " variation consequences for variation " + variation.getName() + ":" + variation.getStart() + "-" + variation.getEnd() + ":" + variation.getStrand() + " " + variation.getAlternateAlleles() + "...");
             }
