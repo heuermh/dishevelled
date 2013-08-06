@@ -25,21 +25,24 @@ package org.dishevelled.variation.cytoscape3.internal;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
+import java.util.List;
+
 import org.cytoscape.model.CyNetwork;
 
 import org.cytoscape.work.AbstractTaskFactory;
 import org.cytoscape.work.TaskIterator;
 
 import org.dishevelled.variation.FeatureService;
+import org.dishevelled.variation.Variation;
 import org.dishevelled.variation.VariationService;
 import org.dishevelled.variation.VariationConsequenceService;
 
 /**
- * Annotate known variation consequences task factory.
+ * Annotate variation consequences task factory.
  *
  * @author  Michael Heuer
  */
-final class AnnotateKnownVariationConsequencesTaskFactory
+final class AnnotateVariationConsequencesTaskFactory
     extends AbstractTaskFactory
 {
     /** Species. */
@@ -57,37 +60,37 @@ final class AnnotateKnownVariationConsequencesTaskFactory
     /** Feature service. */
     private final FeatureService featureService;
 
-    /** Variation service. */
-    private final VariationService variationService;
+    /** Zero or more variations. */
+    private final List<Variation> variations;
 
     /** Variation consequence service. */
     private final VariationConsequenceService variationConsequenceService;
 
 
     /**
-     * Create a new annotate known variation consequences task factory.
+     * Create a new annotate variation consequences task factory.
      *
      * @param species species, must not be null
      * @param reference reference, must not be null
      * @param ensemblGeneIdColumn ensembl gene id column, must not be null
      * @param featureService feature service, must not be null
-     * @param variationService variation service, must not be null
+     * @param variations zero or more variations, must not be null
      * @param variationConsequenceService variation consequence service, must not be null
      */
-    AnnotateKnownVariationConsequencesTaskFactory(final String species,
-                                                  final String reference,
-                                                  final String ensemblGeneIdColumn,
-                                                  final CyNetwork network,
-                                                  final FeatureService featureService,
-                                                  final VariationService variationService,
-                                                  final VariationConsequenceService variationConsequenceService)
+    AnnotateVariationConsequencesTaskFactory(final String species,
+                                             final String reference,
+                                             final String ensemblGeneIdColumn,
+                                             final CyNetwork network,
+                                             final FeatureService featureService,
+                                             final List<Variation> variations,
+                                             final VariationConsequenceService variationConsequenceService)
     {
         checkNotNull(species);
         checkNotNull(reference);
         checkNotNull(ensemblGeneIdColumn);
         checkNotNull(network);
         checkNotNull(featureService);
-        checkNotNull(variationService);
+        checkNotNull(variations);
         checkNotNull(variationConsequenceService);
 
         this.species = species;
@@ -95,20 +98,20 @@ final class AnnotateKnownVariationConsequencesTaskFactory
         this.ensemblGeneIdColumn = ensemblGeneIdColumn;
         this.network = network;
         this.featureService = featureService;
-        this.variationService = variationService;
+        this.variations = variations;
         this.variationConsequenceService = variationConsequenceService;
     }
 
     @Override
     public TaskIterator createTaskIterator()
     {
-        AnnotateKnownVariationConsequencesTask annotateKnownVariationConsequencesTask = new AnnotateKnownVariationConsequencesTask(species,
-                                                                                                                                   reference,
-                                                                                                                                   ensemblGeneIdColumn,
-                                                                                                                                   network,
-                                                                                                                                   featureService,
-                                                                                                                                   variationService,
-                                                                                                                                   variationConsequenceService);
-        return new TaskIterator(annotateKnownVariationConsequencesTask);
+        AnnotateVariationConsequencesTask annotateVariationConsequencesTask = new AnnotateVariationConsequencesTask(species,
+                                                                                                                    reference,
+                                                                                                                    ensemblGeneIdColumn,
+                                                                                                                    network,
+                                                                                                                    featureService,
+                                                                                                                    variations,
+                                                                                                                    variationConsequenceService);
+        return new TaskIterator(annotateVariationConsequencesTask);
     }
 }

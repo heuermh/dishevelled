@@ -59,6 +59,11 @@
       <artifactId>guice</artifactId>
       <scope>compile</scope>
     </dependency>
+    <dependency>
+      <groupId>commons-lang</groupId>
+      <artifactId>commons-lang</artifactId>
+      <scope>compile</scope>
+    </dependency>
     <!--
     <dependency>
       <groupId>net.java.dev.glazedlists</groupId>

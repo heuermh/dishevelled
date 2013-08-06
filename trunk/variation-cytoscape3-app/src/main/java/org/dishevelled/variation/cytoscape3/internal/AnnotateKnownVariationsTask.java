@@ -27,6 +27,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
+
 import org.cytoscape.model.CyNetwork;
 import org.cytoscape.model.CyNode;
 import org.cytoscape.model.CyRow;
@@ -110,7 +112,7 @@ final class AnnotateKnownVariationsTask
         {
             CyNode node = nodes.get(i);
             String ensemblGeneId = ensemblGeneId(node, network);
-            if (ensemblGeneId != null)
+            if (StringUtils.isNotBlank(ensemblGeneId))
             {
                 taskMonitor.setStatusMessage("Retrieving genome feature for Ensembl Gene " + ensemblGeneId + "...");
                 Feature feature = featureService.feature(species, reference, ensemblGeneId);
@@ -120,9 +122,7 @@ final class AnnotateKnownVariationsTask
                     List<Variation> variations = variationService.variations(feature);
                     addCount(node, network, variations.size());
                     taskMonitor.setStatusMessage("Found " + variations.size() + " variations associated with Ensembl Gene " + ensemblGeneId);
-                    slowDown();
                 }
-                slowDown();
             }
             taskMonitor.setProgress(i / (double) size);
         }
@@ -179,17 +179,4 @@ final class AnnotateKnownVariationsTask
         }
     }
     */
-
-    private void slowDown()
-    {
-        // slow down calls to prevent rate limit throttling
-        try
-        {
-            Thread.sleep(666L);
-        }
-        catch (InterruptedException e)
-        {
-            // ignore
-        }
-    }
 }

@@ -36,8 +36,6 @@ import java.util.Set;
 
 import com.google.common.collect.ImmutableSet;
 
-import org.apache.commons.lang.StringUtils;
-
 import org.cytoscape.model.CyNetwork;
 import org.cytoscape.model.CyNode;
 import org.cytoscape.model.CyRow;
@@ -63,11 +61,11 @@ import org.dishevelled.vocabulary.Evidence;
 import org.dishevelled.vocabulary.Relation;
 
 /**
- * Annotate known variation consequences task.
+ * Annotate variation consequences task.
  *
  * @author  Michael Heuer
  */
-final class AnnotateKnownVariationConsequencesTask
+final class AnnotateVariationConsequencesTask
     extends AbstractTask
 {
     /** Species. */
@@ -82,40 +80,40 @@ final class AnnotateKnownVariationConsequencesTask
     /** Network. */
     private final CyNetwork network;
 
+    /** Zero or more variations. */
+    private final List<Variation> variations;
+
     /** Feature service. */
     private final FeatureService featureService;
-
-    /** Variation service. */
-    private final VariationService variationService;
 
     /** Variation consequence service. */
     private final VariationConsequenceService variationConsequenceService;
 
 
     /**
-     * Create a new annotate known variation consequences task.
+     * Create a new annotate variation consequences task.
      *
      * @param species species, must not be null
      * @param reference reference, must not be null
      * @param ensemblGeneIdColumn ensembl gene id column, must not be null
      * @param featureService feature service, must not be null
-     * @param variationService variation service, must not be null
+     * @param variations zero or more variations, must not be null
      * @param variationConsequenceService variation consequence service, must not be null
      */
-    AnnotateKnownVariationConsequencesTask(final String species,
-                                           final String reference,
-                                           final String ensemblGeneIdColumn,
-                                           final CyNetwork network,
-                                           final FeatureService featureService,
-                                           final VariationService variationService,
-                                           final VariationConsequenceService variationConsequenceService)
+    AnnotateVariationConsequencesTask(final String species,
+                                      final String reference,
+                                      final String ensemblGeneIdColumn,
+                                      final CyNetwork network,
+                                      final FeatureService featureService,
+                                      final List<Variation> variations,
+                                      final VariationConsequenceService variationConsequenceService)
     {
         checkNotNull(species);
         checkNotNull(reference);
         checkNotNull(ensemblGeneIdColumn);
         checkNotNull(network);
         checkNotNull(featureService);
-        checkNotNull(variationService);
+        checkNotNull(variations);
         checkNotNull(variationConsequenceService);
 
         this.species = species;
@@ -123,7 +121,7 @@ final class AnnotateKnownVariationConsequencesTask
         this.ensemblGeneIdColumn = ensemblGeneIdColumn;
         this.network = network;
         this.featureService = featureService;
-        this.variationService = variationService;
+        this.variations = variations;
         this.variationConsequenceService = variationConsequenceService;
     }
 
@@ -131,38 +129,55 @@ final class AnnotateKnownVariationConsequencesTask
     @Override
     public void run(final TaskMonitor taskMonitor)
     {
-        taskMonitor.setTitle("Annotate known variation consequences");
+        taskMonitor.setTitle("Annotate variation consequences");
         taskMonitor.setProgress(0.0d);
 
+        FeatureIndex featureIndex = new FeatureIndex();
+
+        // allocate 10% of progress to feature fetching
         List<CyNode> nodes = network.getNodeList();
         for (int i = 0, size = nodes.size(); i < size; i++)
         {
             CyNode node = nodes.get(i);
             String ensemblGeneId = ensemblGeneId(node, network);
-            if (StringUtils.isNotBlank(ensemblGeneId))
+            if (ensemblGeneId != null)
             {
                 taskMonitor.setStatusMessage("Retrieving genome feature for Ensembl Gene " + ensemblGeneId + "...");
                 Feature feature = featureService.feature(species, reference, ensemblGeneId);
                 if (feature != null)
                 {
-                    taskMonitor.setStatusMessage("Retrieving variations associated with Ensembl Gene " + ensemblGeneId + " in the region " + feature.getName() + ":" + feature.getStart() + "-" + feature.getEnd() + ":" + feature.getStrand() + "...");
-                    List<Variation> variations = variationService.variations(feature);
-                    taskMonitor.setStatusMessage("Found " + variations.size() + " variations associated with Ensembl Gene " + ensemblGeneId);
-
-                    List<VariationConsequence> allVariationConsequences = new ArrayList<VariationConsequence>(variations.size());
-                    for (Variation variation : variations)
-                    {
-                        taskMonitor.setStatusMessage("Retrieving variation consequences associated with variation " + variation.getIdentifier() + "...");
-                        List<VariationConsequence> variationConsequences = variationConsequenceService.consequences(variation);
-                        allVariationConsequences.addAll(variationConsequences);
-                        taskMonitor.setStatusMessage("Found " + variationConsequences.size() + " variation consequences associated with variation " + variation.getIdentifier());
-                    }
-                    addCount(node, network, allVariationConsequences.size());
-                    addConsequenceCounts(node, network, allVariationConsequences);
+                    featureIndex.add(node, feature);
                 }
             }
-            taskMonitor.setProgress(i / (double) size);
+            taskMonitor.setProgress(0.1d * i/(double) size);
         }
+
+        // allocate 90% of progress to variation filtering and consequence prediction
+        for (int i = 0, size = variations.size(); i < size; i++)
+        {
+            Variation variation = variations.get(i);
+            Feature hit = featureIndex.hit(variation);
+            if (hit != null)
+            {
+                taskMonitor.setStatusMessage("Predicting variation consequences for variation " + variation.getName() + ":" + variation.getStart() + "-" + variation.getEnd() + ":" + variation.getStrand() + " " + variation.getAlternateAlleles() + "...");
+                List<VariationConsequence> variationConsequences = variationConsequenceService.consequences(variation);            
+                featureIndex.add(hit, variationConsequences);
+                taskMonitor.setStatusMessage("Predicted " + variationConsequences.size() + " variation consequences for variation " + variation.getName() + ":" + variation.getStart() + "-" + variation.getEnd() + ":" + variation.getStrand() + " " + variation.getAlternateAlleles() + "...");
+            }
+            taskMonitor.setProgress(0.1d + 0.9d * i/(double) size);
+        }
+
+        // allocate 10% of progress to counts
+        for (int i = 0, size = featureIndex.size(); i < size; i++)
+        {
+            CyNode node = featureIndex.nodeAt(i);
+            List<VariationConsequence> variationConsequences = featureIndex.consequencesAt(i);
+            addCount(node, network, variationConsequences.size());
+            addConsequenceCounts(node, network, variationConsequences);
+
+            taskMonitor.setProgress(0.9d + 0.1d * i/(double) size);
+        }
+
         taskMonitor.setProgress(1.0d);
     }
 
@@ -209,6 +224,39 @@ final class AnnotateKnownVariationConsequencesTask
                 table.createColumn(concept.getName(), Integer.class, false);
             }
             row.set(concept.getName(), count);
+        }
+    }
+
+    class FeatureIndex
+    {
+        void add(CyNode node, Feature feature)
+        {
+            // empty
+        }
+
+        void add(Feature feature, List<VariationConsequence> variationConsequences)
+        {
+            // empty
+        }
+
+        Feature hit(Variation variation)
+        {
+            return null;
+        }
+
+        int size()
+        {
+            return 0;
+        }
+
+        CyNode nodeAt(int index)
+        {
+            return null;
+        }
+
+        List<VariationConsequence> consequencesAt(int index)
+        {
+            return null;
         }
     }
 

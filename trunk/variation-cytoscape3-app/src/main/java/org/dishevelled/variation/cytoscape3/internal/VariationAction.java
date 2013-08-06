@@ -32,6 +32,9 @@ import java.awt.Component;
 
 import java.awt.event.ActionEvent;
 
+import java.util.Collections;
+import java.util.List;
+
 import javax.swing.AbstractAction;
 import javax.swing.Box;
 import javax.swing.JDialog;
@@ -48,6 +51,8 @@ import org.cytoscape.model.CyNetwork;
 import org.cytoscape.work.swing.DialogTaskManager;
 
 import org.dishevelled.variation.FeatureService;
+import org.dishevelled.variation.Variation;
+import org.dishevelled.variation.VariationConsequence;
 import org.dishevelled.variation.VariationConsequenceService;
 import org.dishevelled.variation.VariationConsequencePredictionService;
 import org.dishevelled.variation.VariationService;
@@ -154,7 +159,7 @@ final class VariationAction extends AbstractCyAction
                 }
             });
 
-        toolBar.add(new AbstractAction("Annotate Known Variation Conseqences...")
+        toolBar.add(new AbstractAction("Annotate Known Variation Consequences...")
             {
                 @Override
                 public void actionPerformed(final ActionEvent event)
@@ -168,6 +173,24 @@ final class VariationAction extends AbstractCyAction
                                                                                                                                                                     variationService,
                                                                                                                                                                     variationConsequenceService);
                     dialogTaskManager.execute(annotateKnownVariationConsequencesTaskFactory.createTaskIterator());
+                }
+            });
+
+        toolBar.add(new AbstractAction("Annotate Variation Consequences...")
+            {
+                @Override
+                public void actionPerformed(final ActionEvent event)
+                {
+                    CyNetwork network = applicationManager.getCurrentNetwork();
+                    List<Variation> variations = Collections.emptyList(); // these need to come from VCF file or similar
+                    AnnotateVariationConsequencesTaskFactory annotateVariationConsequencesTaskFactory = new AnnotateVariationConsequencesTaskFactory("human",
+                                                                                                                                                     "GRCh37",
+                                                                                                                                                     "ensembl",
+                                                                                                                                                     network,
+                                                                                                                                                     featureService,
+                                                                                                                                                     variations,
+                                                                                                                                                     variationConsequenceService);
+                    dialogTaskManager.execute(annotateVariationConsequencesTaskFactory.createTaskIterator());
                 }
             });
 
