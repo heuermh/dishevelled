@@ -34,8 +34,7 @@ import org.cytoscape.work.TaskIterator;
 
 import org.dishevelled.variation.FeatureService;
 import org.dishevelled.variation.Variation;
-import org.dishevelled.variation.VariationService;
-import org.dishevelled.variation.VariationConsequenceService;
+import org.dishevelled.variation.VariationConsequencePredictionService;
 
 /**
  * Annotate variation consequences task factory.
@@ -63,8 +62,8 @@ final class AnnotateVariationConsequencesTaskFactory
     /** Zero or more variations. */
     private final List<Variation> variations;
 
-    /** Variation consequence service. */
-    private final VariationConsequenceService variationConsequenceService;
+    /** Variation consequence prediction service. */
+    private final VariationConsequencePredictionService variationConsequencePredictionService;
 
 
     /**
@@ -75,7 +74,7 @@ final class AnnotateVariationConsequencesTaskFactory
      * @param ensemblGeneIdColumn ensembl gene id column, must not be null
      * @param featureService feature service, must not be null
      * @param variations zero or more variations, must not be null
-     * @param variationConsequenceService variation consequence service, must not be null
+     * @param variationConsequencePredictionService variation consequence prediction service, must not be null
      */
     AnnotateVariationConsequencesTaskFactory(final String species,
                                              final String reference,
@@ -83,7 +82,7 @@ final class AnnotateVariationConsequencesTaskFactory
                                              final CyNetwork network,
                                              final FeatureService featureService,
                                              final List<Variation> variations,
-                                             final VariationConsequenceService variationConsequenceService)
+                                             final VariationConsequencePredictionService variationConsequencePredictionService)
     {
         checkNotNull(species);
         checkNotNull(reference);
@@ -91,7 +90,7 @@ final class AnnotateVariationConsequencesTaskFactory
         checkNotNull(network);
         checkNotNull(featureService);
         checkNotNull(variations);
-        checkNotNull(variationConsequenceService);
+        checkNotNull(variationConsequencePredictionService);
 
         this.species = species;
         this.reference = reference;
@@ -99,7 +98,7 @@ final class AnnotateVariationConsequencesTaskFactory
         this.network = network;
         this.featureService = featureService;
         this.variations = variations;
-        this.variationConsequenceService = variationConsequenceService;
+        this.variationConsequencePredictionService = variationConsequencePredictionService;
     }
 
     @Override
@@ -111,7 +110,7 @@ final class AnnotateVariationConsequencesTaskFactory
                                                                                                                     network,
                                                                                                                     featureService,
                                                                                                                     variations,
-                                                                                                                    variationConsequenceService);
+                                                                                                                    variationConsequencePredictionService);
         return new TaskIterator(annotateVariationConsequencesTask);
     }
 }
