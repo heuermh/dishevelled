@@ -23,9 +23,9 @@
 */
 package org.dishevelled.variation.cytoscape3.internal;
 
-import static org.dishevelled.variation.cytoscape3.internal.SequenceOntology.countAssignments;
-import static org.dishevelled.variation.cytoscape3.internal.SequenceOntology.indexByName;
-import static org.dishevelled.variation.cytoscape3.internal.SequenceOntology.sequenceVariants;
+import static org.dishevelled.variation.so.SequenceOntology.countAssignments;
+import static org.dishevelled.variation.so.SequenceOntology.indexByName;
+import static org.dishevelled.variation.so.SequenceOntology.sequenceVariants;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -34,7 +34,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.BiMap;
+import com.google.common.collect.HashBiMap;
 import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.ListMultimap;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 
 import org.cytoscape.model.CyNetwork;
 import org.cytoscape.model.CyNode;
@@ -50,6 +56,10 @@ import org.dishevelled.variation.Variation;
 import org.dishevelled.variation.VariationService;
 import org.dishevelled.variation.VariationConsequence;
 import org.dishevelled.variation.VariationConsequencePredictionService;
+
+import org.dishevelled.variation.interval.Interval;
+
+import org.dishevelled.variation.interval.tree.CenteredIntervalTree;
 
 import org.dishevelled.vocabulary.AbstractAssignable;
 import org.dishevelled.vocabulary.Assignable;
@@ -131,7 +141,6 @@ final class AnnotateVariationConsequencesTask
     {
         taskMonitor.setTitle("Annotate variation consequences");
         taskMonitor.setProgress(0.0d);
-
         FeatureIndex featureIndex = new FeatureIndex();
 
         // allocate 10% of progress to feature fetching
@@ -151,13 +160,13 @@ final class AnnotateVariationConsequencesTask
             }
             taskMonitor.setProgress(0.1d * i/(double) size);
         }
+        featureIndex.buildTrees();
 
         // allocate 90% of progress to variation filtering and consequence prediction
         for (int i = 0, size = variations.size(); i < size; i++)
         {
             Variation variation = variations.get(i);
-            Feature hit = featureIndex.hit(variation);
-            if (hit != null)
+            for (Feature hit : featureIndex.hit(variation))
             {
                 taskMonitor.setStatusMessage("Predicting variation consequences for variation " + variation.getName() + ":" + variation.getStart() + "-" + variation.getEnd() + ":" + variation.getStrand() + " " + variation.getAlternateAlleles() + "...");
                 List<VariationConsequence> variationConsequences = variationConsequencePredictionService.predictConsequences(variation);
@@ -178,6 +187,7 @@ final class AnnotateVariationConsequencesTask
             taskMonitor.setProgress(0.9d + 0.1d * i/(double) size);
         }
 
+        featureIndex.clear();
         taskMonitor.setProgress(1.0d);
     }
 
@@ -227,36 +237,82 @@ final class AnnotateVariationConsequencesTask
         }
     }
 
-    class FeatureIndex
+    private static final class FeatureIndex
     {
+        private final List<CyNode> nodes = Lists.newArrayList();
+        private final List<Feature> features = Lists.newArrayList();
+        private final BiMap<CyNode, Feature> nodesToFeatures = HashBiMap.create();
+        private final BiMap<Feature, Interval> featuresToIntervals = HashBiMap.create();
+        private final Map<String, CenteredIntervalTree> intervalTrees = Maps.newHashMap();
+        private final ListMultimap<Feature, VariationConsequence> consequences = ArrayListMultimap.create();
+
+        void buildTrees()
+        {
+            ListMultimap<String, Feature> featuresByName = ArrayListMultimap.create();
+            for (Feature feature : features)
+            {
+                featuresByName.put(feature.getName(), feature);
+            }
+            for (String chr : featuresByName.keySet())
+            {
+                List<Interval> intervals = Lists.newArrayList(); // with expected size...
+                for (Feature feature : featuresByName.get(chr))
+                {
+                    Interval interval = Interval.closed(feature.getStart(), feature.getEnd());
+                    intervals.add(interval);
+                    featuresToIntervals.put(feature, interval);
+                }
+                intervalTrees.put(chr, new CenteredIntervalTree(intervals));
+            }
+        }
+
         void add(CyNode node, Feature feature)
         {
-            // empty
+            nodes.add(node);
+            features.add(feature);
+            nodesToFeatures.put(node, feature);
         }
 
         void add(Feature feature, List<VariationConsequence> variationConsequences)
         {
-            // empty
+            consequences.putAll(feature, variationConsequences);
         }
 
-        Feature hit(Variation variation)
+        Iterable<Feature> hit(Variation variation)
         {
-            return null;
+            List<Feature> hits = Lists.newArrayList();
+            CenteredIntervalTree intervalTree = intervalTrees.get(variation.getName());
+            for (Interval interval : intervalTree.intersect(Interval.closed(variation.getStart(), variation.getEnd())))
+            {
+                hits.add(featuresToIntervals.inverse().get(interval));
+            }
+            return hits;
         }
 
         int size()
         {
-            return 0;
+            return nodes.size();
         }
 
         CyNode nodeAt(int index)
         {
-            return null;
+            return nodes.get(index);
         }
 
         List<VariationConsequence> consequencesAt(int index)
         {
-            return null;
+            Feature feature = features.get(index);
+            return consequences.get(feature);
+        }
+
+        void clear()
+        {
+            nodes.clear();
+            features.clear();
+            nodesToFeatures.clear();
+            featuresToIntervals.clear();
+            intervalTrees.clear();
+            consequences.clear();
         }
     }
 

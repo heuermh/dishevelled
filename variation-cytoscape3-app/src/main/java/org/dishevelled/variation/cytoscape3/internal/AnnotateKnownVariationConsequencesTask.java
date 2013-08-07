@@ -23,9 +23,9 @@
 */
 package org.dishevelled.variation.cytoscape3.internal;
 
-import static org.dishevelled.variation.cytoscape3.internal.SequenceOntology.countAssignments;
-import static org.dishevelled.variation.cytoscape3.internal.SequenceOntology.indexByName;
-import static org.dishevelled.variation.cytoscape3.internal.SequenceOntology.sequenceVariants;
+import static org.dishevelled.variation.so.SequenceOntology.countAssignments;
+import static org.dishevelled.variation.so.SequenceOntology.indexByName;
+import static org.dishevelled.variation.so.SequenceOntology.sequenceVariants;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
