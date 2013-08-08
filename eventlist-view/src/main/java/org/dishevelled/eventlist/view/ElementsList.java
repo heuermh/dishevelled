@@ -141,25 +141,25 @@ public class ElementsList<E>
     }
 
 
-    /** {@inheritDoc} */
+    @Override
     protected void cut(final List<E> toCut)
     {
         // empty
     }
 
-    /** {@inheritDoc} */
+    @Override
     protected void copy(final List<E> toCopy)
     {
         // empty
     }
 
-    /** {@inheritDoc} */
+    @Override
     public void add()
     {
         // empty
     }
 
-    /** {@inheritDoc} */
+    @Override
     public void paste()
     {
         // empty
@@ -271,7 +271,7 @@ public class ElementsList<E>
             // todo:  will need to dispose this listener at some point
             getSelectionModel().addSelectionListener(new ListSelection.Listener()
                 {
-                    /** {@inheritDoc} */
+                    @Override
                     public void selectionChanged(final int index0, final int index1)
                     {
                         fireSelectionChanged(index0, index1);
@@ -280,91 +280,91 @@ public class ElementsList<E>
         }
 
 
-        /** {@inheritDoc} */
+        @Override
         public void setSelectionInterval(final int index0, final int index1)
         {
             getSelectionModel().setSelection(index0, index1);
         }
 
-        /** {@inheritDoc} */
+        @Override
         public void addSelectionInterval(final int index0, final int index1)
         {
             getSelectionModel().select(index0, index1);
         }
 
-        /** {@inheritDoc} */
+        @Override
         public void removeSelectionInterval(final int index0, final int index1)
         {
             getSelectionModel().deselect(index0, index1);
         }
 
-        /** {@inheritDoc} */
+        @Override
         public int getMinSelectionIndex()
         {
             return getSelectionModel().getMinSelectionIndex();
         }
 
-        /** {@inheritDoc} */
+        @Override
         public int getMaxSelectionIndex()
         {
             return getSelectionModel().getMaxSelectionIndex();
         }
 
-        /** {@inheritDoc} */
+        @Override
         public boolean isSelectedIndex(final int index)
         {
             return getSelectionModel().isSelected(index);
         }
 
-        /** {@inheritDoc} */
+        @Override
         public int getAnchorSelectionIndex()
         {
             return getSelectionModel().getAnchorSelectionIndex();
         }
 
-        /** {@inheritDoc} */
+        @Override
         public void setAnchorSelectionIndex(final int index)
         {
             getSelectionModel().setAnchorSelectionIndex(index);
         }
 
-        /** {@inheritDoc} */
+        @Override
         public int getLeadSelectionIndex()
         {
             return getSelectionModel().getLeadSelectionIndex();
         }
 
-        /** {@inheritDoc} */
+        @Override
         public void setLeadSelectionIndex(final int index)
         {
             getSelectionModel().setLeadSelectionIndex(index);
         }
 
-        /** {@inheritDoc} */
+        @Override
         public void clearSelection()
         {
             getSelectionModel().deselectAll();
         }
 
-        /** {@inheritDoc} */
+        @Override
         public boolean isSelectionEmpty()
         {
             return getSelectionModel().getSelected().isEmpty();
         }
 
-        /** {@inheritDoc} */
+        @Override
         public void insertIndexInterval(final int index, final int length, final boolean before)
         {
             // empty
         }
 
-        /** {@inheritDoc} */
+        @Override
         public void removeIndexInterval(final int index0, final int index1)
         {
             // empty
         }
 
-        /** {@inheritDoc} */
+        @Override
         public void setValueIsAdjusting(final boolean valueIsAdjusting)
         {
             if (!valueIsAdjusting)
@@ -379,31 +379,31 @@ public class ElementsList<E>
             this.valueIsAdjusting = valueIsAdjusting;
         }
 
-        /** {@inheritDoc} */
+        @Override
         public boolean getValueIsAdjusting()
         {
             return valueIsAdjusting;
         }
 
-        /** {@inheritDoc} */
+        @Override
         public void setSelectionMode(final int selectionMode)
         {
             getSelectionModel().setSelectionMode(selectionMode);
         }
 
-        /** {@inheritDoc} */
+        @Override
         public int getSelectionMode()
         {
             return getSelectionModel().getSelectionMode();
         }
 
-        /** {@inheritDoc} */
+        @Override
         public void addListSelectionListener(final ListSelectionListener listener)
         {
             listenerList.add(ListSelectionListener.class, listener);
         }
 
-        /** {@inheritDoc} */
+        @Override
         public void removeListSelectionListener(final ListSelectionListener listener)
         {
             listenerList.remove(ListSelectionListener.class, listener);

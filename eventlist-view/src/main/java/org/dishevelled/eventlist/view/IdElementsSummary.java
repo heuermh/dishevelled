@@ -58,7 +58,7 @@ public final class IdElementsSummary<E>
     /** Model to view mapping. */
     private final UnaryFunction<E, IdLabel> modelToView = new UnaryFunction<E, IdLabel>()
         {
-            /** {@inheritDoc} */
+            @Override
             public IdLabel evaluate(final E element)
             {
                 if (!labels.containsKey(element))
