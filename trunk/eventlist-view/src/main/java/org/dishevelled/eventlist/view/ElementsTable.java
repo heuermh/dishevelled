@@ -27,8 +27,16 @@ import java.awt.BorderLayout;
 
 import java.util.List;
 
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+
+import javax.swing.border.EmptyBorder;
 
 import ca.odell.glazedlists.EventList;
 import ca.odell.glazedlists.SortedList;
@@ -37,6 +45,15 @@ import ca.odell.glazedlists.gui.TableFormat;
 
 import ca.odell.glazedlists.swing.EventTableModel;
 import ca.odell.glazedlists.swing.TableComparatorChooser;
+
+import org.dishevelled.iconbundle.IconSize;
+
+import org.dishevelled.iconbundle.tango.TangoProject;
+
+import org.dishevelled.identify.ContextMenuButton;
+import org.dishevelled.identify.ContextMenuListener;
+import org.dishevelled.identify.IdPopupMenu;
+import org.dishevelled.identify.IdToolBar;
 
 /**
  * Elements table.
@@ -49,6 +66,21 @@ public class ElementsTable<E>
 {
     /** Table. */
     private final JTable table;
+
+    /** Label. */
+    private final JLabel label;
+
+    /** Tool bar. */
+    private final IdToolBar toolBar;
+
+    /** Context menu. */
+    private final IdPopupMenu contextMenu;
+
+    /** Tool bar context menu. */
+    private final JPopupMenu toolBarContextMenu;
+
+    /** Tool bar context menu button. */
+    private final ContextMenuButton contextMenuButton;
 
 
     /**
@@ -65,38 +97,68 @@ public class ElementsTable<E>
         table = new JTable(tableModel);
         TableComparatorChooser.install(table, sortedModel, TableComparatorChooser.MULTIPLE_COLUMN_MOUSE);
 
-        layoutComponents();
-    }
+        label = new JLabel();
+        label.setAlignmentY(-1.0f);
+        label.setBorder(new EmptyBorder(0, 2, 2, 0));
 
+        contextMenu = new IdPopupMenu();
+        contextMenu.add(getCutAction(), TangoProject.EXTRA_SMALL);
+        contextMenu.add(getCopyAction(), TangoProject.EXTRA_SMALL);
+        contextMenu.add(getPasteAction(), TangoProject.EXTRA_SMALL);
+        contextMenu.addSeparator();
+        contextMenu.add(getSelectAllAction(), TangoProject.EXTRA_SMALL);
+        contextMenu.add(getClearSelectionAction());
+        contextMenu.add(getInvertSelectionAction());
+        contextMenu.addSeparator();
+        contextMenu.add(getAddAction(), TangoProject.EXTRA_SMALL);
+        contextMenu.add(getRemoveAction(), TangoProject.EXTRA_SMALL);
+        contextMenu.add(getRemoveAllAction());
+        table.addMouseListener(new ContextMenuListener(contextMenu));
 
-    /**
-     * Layout components.
-     */
-    private void layoutComponents()
-    {
+        toolBar = new IdToolBar();
+        toolBar.setBorder(new EmptyBorder(0, 0, 0, 0));
+        toolBar.add(getAddAction());
+        toolBar.add(getRemoveAction());
+        contextMenuButton = toolBar.add(contextMenu);
+
+        toolBarContextMenu = new JPopupMenu();
+        for (Object menuItem : toolBar.getDisplayMenuItems())
+        {
+            toolBarContextMenu.add((JCheckBoxMenuItem) menuItem);
+        }
+        toolBarContextMenu.addSeparator();
+        for (Object iconSize : TangoProject.SIZES)
+        {
+            toolBarContextMenu.add(toolBar.createIconSizeMenuItem((IconSize) iconSize));
+        }
+        toolBar.setIconSize(TangoProject.EXTRA_SMALL);
+        toolBar.addMouseListener(new ContextMenuListener(toolBarContextMenu));
+
         setLayout(new BorderLayout());
-        add("Center", new JScrollPane(table));
+        add("North", createToolBarPanel());
+        add("Center", createTablePanel());
     }
 
-    /** {@inheritDoc} */
+
+    @Override
     protected void cut(final List<E> toCut)
     {
         // empty
     }
 
-    /** {@inheritDoc} */
+    @Override
     protected void copy(final List<E> toCopy)
     {
         // empty
     }
 
-    /** {@inheritDoc} */
+    @Override
     public void add()
     {
         // empty
     }
 
-    /** {@inheritDoc} */
+    @Override
     public void paste()
     {
         // empty
@@ -110,5 +172,85 @@ public class ElementsTable<E>
     protected final JTable getTable()
     {
         return table;
+    }
+
+    /**
+     * Return the label for this elements table.
+     *
+     * @return the label for this elements table
+     */
+    protected final JLabel getLabel()
+    {
+        return label;
+    }
+
+    /**
+     * Return the tool bar for this elements table.
+     *
+     * @return the tool bar for this elements table
+     */
+    protected final IdToolBar getToolBar()
+    {
+        return toolBar;
+    }
+
+    /**
+     * Return the context menu for this elements table.
+     *
+     * @return the context menu for this elements table
+     */
+    protected final IdPopupMenu getContextMenu()
+    {
+        return contextMenu;
+    }
+
+    /**
+     * Return the tool bar context menu for this elements table.
+     *
+     * @return the tool bar context menu for this elements table
+     */
+    protected final JPopupMenu getToolBarContextMenu()
+    {
+        return toolBarContextMenu;
+    }
+
+    /**
+     * Return the tool bar context menu button for this elements table.
+     *
+     * @return the tool bar context menu button for this elements table
+     */
+    protected final ContextMenuButton getToolBarContextMenuButton()
+    {
+        return contextMenuButton;
+    }
+
+    /**
+     * Create and return a new tool bar panel.
+     *
+     * @return a new tool bar panel
+     */
+    private JPanel createToolBarPanel()
+    {
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+        panel.add(label);
+        panel.add(Box.createGlue());
+        panel.add(Box.createGlue());
+        panel.add(toolBar);
+        panel.addMouseListener(new ContextMenuListener(toolBarContextMenu));
+        return panel;
+    }
+
+    /**
+     * Create and return a new table panel.
+     *
+     * @return a new table panel
+     */
+    private JPanel createTablePanel()
+    {
+        JPanel panel = new JPanel();
+        panel.setLayout(new BorderLayout());
+        panel.add("Center", new JScrollPane(table));
+        return panel;
     }
 }

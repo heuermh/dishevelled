@@ -218,25 +218,25 @@ public class ElementsSummary<E>
         updateComponents();
     }
 
-    /** {@inheritDoc} */
+    @Override
     protected void cut(final List<E> toCut)
     {
         // empty
     }
 
-    /** {@inheritDoc} */
+    @Override
     protected void copy(final List<E> toCopy)
     {
         // empty
     }
 
-    /** {@inheritDoc} */
+    @Override
     public void add()
     {
         // empty
     }
 
-    /** {@inheritDoc} */
+    @Override
     public void paste()
     {
         // empty
@@ -275,7 +275,7 @@ public class ElementsSummary<E>
         getModel().removeListEventListener(listener);
     }
 
-    /** {@inheritDoc} */
+    @Override
     public void dispose()
     {
         super.dispose();

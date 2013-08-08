@@ -58,7 +58,7 @@ public abstract class AbstractEventListView<E>
     /** Select all action. */
     private final IdentifiableAction selectAllAction = new IdentifiableAction("Select all", EDIT_SELECT_ALL)
         {
-                /** {@inheritDoc} */
+                @Override
                 public void actionPerformed(final ActionEvent event)
                 {
                     selectAll();
@@ -68,7 +68,7 @@ public abstract class AbstractEventListView<E>
     /** Clear selection action. */
     private final AbstractAction clearSelectionAction = new AbstractAction("Clear selection")
         {
-                /** {@inheritDoc} */
+                @Override
                 public void actionPerformed(final ActionEvent event)
                 {
                     clearSelection();
@@ -78,7 +78,7 @@ public abstract class AbstractEventListView<E>
     /** Invert selection action. */
     private final AbstractAction invertSelectionAction = new AbstractAction("Invert selection")
         {
-                /** {@inheritDoc} */
+                @Override
                 public void actionPerformed(final ActionEvent event)
                 {
                     invertSelection();
@@ -88,7 +88,7 @@ public abstract class AbstractEventListView<E>
     /** Cut action. */
     private final IdentifiableAction cutAction = new IdentifiableAction("Cut", EDIT_CUT)
         {
-                /** {@inheritDoc} */
+                @Override
                 public void actionPerformed(final ActionEvent event)
                 {
                     cut();
@@ -98,7 +98,7 @@ public abstract class AbstractEventListView<E>
     /** Copy action. */
     private final IdentifiableAction copyAction = new IdentifiableAction("Copy", EDIT_COPY)
         {
-                /** {@inheritDoc} */
+                @Override
                 public void actionPerformed(final ActionEvent event)
                 {
                     copy();
@@ -108,7 +108,7 @@ public abstract class AbstractEventListView<E>
     /** Paste action. */
     private final IdentifiableAction pasteAction = new IdentifiableAction("Paste", EDIT_PASTE)
         {
-                /** {@inheritDoc} */
+                @Override
                 public void actionPerformed(final ActionEvent event)
                 {
                     paste();
@@ -118,7 +118,7 @@ public abstract class AbstractEventListView<E>
     /** Add action. */
     private final IdentifiableAction addAction = new IdentifiableAction("Add", LIST_ADD)
         {
-                /** {@inheritDoc} */
+                @Override
                 public void actionPerformed(final ActionEvent event)
                 {
                     add();
@@ -128,7 +128,7 @@ public abstract class AbstractEventListView<E>
     /** Remove action. */
     private final IdentifiableAction removeAction = new IdentifiableAction("Remove", LIST_REMOVE)
         {
-                /** {@inheritDoc} */
+                @Override
                 public void actionPerformed(final ActionEvent event)
                 {
                     remove();
@@ -138,7 +138,7 @@ public abstract class AbstractEventListView<E>
     /** Remove all action. */
     private final AbstractAction removeAllAction = new AbstractAction("Remove all")
         {
-                /** {@inheritDoc} */
+                @Override
                 public void actionPerformed(final ActionEvent event)
                 {
                     clear();
@@ -148,7 +148,7 @@ public abstract class AbstractEventListView<E>
     /** Listener. */
     private ListEventListener<E> listener = new ListEventListener<E>()
         {
-            /** {@inheritDoc} */
+            @Override
             public void listChanged(final ListEvent<E> event)
             {
                 updateListActions();
@@ -158,7 +158,7 @@ public abstract class AbstractEventListView<E>
     /** Selection listener. */
     private ListSelection.Listener selectionListener = new ListSelection.Listener()
         {
-            /** {@inheritDoc} */
+            @Override
             public void selectionChanged(final int index0, final int index1)
             {
                 updateSelectionActions();
@@ -399,13 +399,13 @@ public abstract class AbstractEventListView<E>
         return removeAllAction;
     }
 
-    /** {@inheritDoc} */
+    @Override
     public final EventList<E> getModel()
     {
         return eventListViewSupport.getModel();
     }
 
-    /** {@inheritDoc} */
+    @Override
     public final ListSelection<E> getSelectionModel()
     {
         return eventListViewSupport.getSelectionModel();
