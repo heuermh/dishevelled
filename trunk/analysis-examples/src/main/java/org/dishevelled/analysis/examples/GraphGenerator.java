@@ -28,9 +28,6 @@ import java.io.IOException;
 
 import java.util.List;
 
-import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.XMLStreamWriter;
-
 import org.dishevelled.analysis.GraphGenerators;
 
 import org.dishevelled.collect.Lists;
