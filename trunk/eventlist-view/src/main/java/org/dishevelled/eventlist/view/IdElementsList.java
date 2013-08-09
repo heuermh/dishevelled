@@ -57,6 +57,18 @@ public class IdElementsList<E>
         getList().setCellRenderer(listCellRenderer);
     }
 
+    /**
+     * Create a new elements view with the specified model.
+     *
+     * @param labelText label text
+     * @param model model, must not be null
+     */
+    public IdElementsList(final String labelText, final EventList<E> model)
+    {
+        this(model);
+        getLabel().setText(labelText);
+    }
+
     // todo:  add actions to contextMenu, etc.
 
 
