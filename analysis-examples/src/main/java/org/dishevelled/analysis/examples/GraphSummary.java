@@ -36,8 +36,6 @@ import net.sf.stax.LongElementHandler;
 
 import org.apache.commons.math.stat.descriptive.SummaryStatistics;
 
-import org.dishevelled.analysis.AnalysisUtils;
-
 import org.dishevelled.commandline.ArgumentList;
 import org.dishevelled.commandline.CommandLine;
 import org.dishevelled.commandline.CommandLineParseException;
