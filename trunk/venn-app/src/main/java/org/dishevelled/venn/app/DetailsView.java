@@ -27,7 +27,6 @@ import java.awt.BorderLayout;
 import java.awt.Toolkit;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 
 import javax.swing.AbstractAction;
@@ -47,13 +46,6 @@ import org.dishevelled.venn.swing.QuaternaryVennList;
 
 import org.dishevelled.identify.ContextMenuListener;
 import org.dishevelled.identify.IdToolBar;
-
-import org.dishevelled.observable.event.SetChangeEvent;
-import org.dishevelled.observable.event.SetChangeListener;
-
-import org.dishevelled.venn.swing.BinaryVennList;
-import org.dishevelled.venn.swing.TernaryVennList;
-import org.dishevelled.venn.swing.QuaternaryVennList;
 
 /**
  * Details view.

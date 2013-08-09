@@ -75,10 +75,6 @@ import org.dishevelled.piccolo.venn.VennNode;
 import org.dishevelled.identify.ContextMenuListener;
 
 import org.dishevelled.piccolo.venn.AbstractVennNode;
-import org.dishevelled.piccolo.venn.BinaryVennNode;
-import org.dishevelled.piccolo.venn.TernaryVennNode;
-import org.dishevelled.piccolo.venn.QuaternaryVennNode;
-import org.dishevelled.piccolo.venn.VennNode;
 
 import org.piccolo2d.PCamera;
 import org.piccolo2d.PCanvas;
