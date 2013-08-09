@@ -30,7 +30,6 @@ import java.awt.Toolkit;
 
 import java.awt.event.WindowEvent;
 import java.awt.event.ActionEvent;
-import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 
 import java.awt.geom.Rectangle2D;
@@ -38,7 +37,6 @@ import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Properties;
 import java.util.Set;
 
 import javax.swing.AbstractAction;
