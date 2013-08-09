@@ -35,10 +35,16 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 
 import javax.swing.border.EmptyBorder;
 
+import javax.swing.event.EventListenerList;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+
 import ca.odell.glazedlists.EventList;
+import ca.odell.glazedlists.ListSelection;
 import ca.odell.glazedlists.SortedList;
 
 import ca.odell.glazedlists.gui.TableFormat;
@@ -95,6 +101,7 @@ public class ElementsTable<E>
         SortedList<E> sortedModel = new SortedList<E>(model, null);
         EventTableModel<E> tableModel = new EventTableModel<E>(sortedModel, tableFormat);
         table = new JTable(tableModel);
+        table.setSelectionModel(new ListSelectionModelAdapter());
         TableComparatorChooser.install(table, sortedModel, TableComparatorChooser.MULTIPLE_COLUMN_MOUSE);
 
         label = new JLabel();
@@ -137,6 +144,19 @@ public class ElementsTable<E>
         setLayout(new BorderLayout());
         add("North", createToolBarPanel());
         add("Center", createTablePanel());
+    }
+
+    /**
+     * Create a new elements table view with the specified model and table format.
+     *
+     * @param labelText label text
+     * @param model model, must not be null
+     * @param tableFormat table format, must not be null
+     */
+    public ElementsTable(final String labelText, final EventList<E> model, final TableFormat<E> tableFormat)
+    {
+        this(model, tableFormat);
+        label.setText(labelText);
     }
 
 
@@ -252,5 +272,209 @@ public class ElementsTable<E>
         panel.setLayout(new BorderLayout());
         panel.add("Center", new JScrollPane(table));
         return panel;
+    }
+
+    /**
+     * List selection model that delegates to {@link #getSelectionModel}.
+     *
+     * @param <E> model element type
+     */
+    private final class ListSelectionModelAdapter implements ListSelectionModel
+    {
+        /** Event listener list. */
+        private final EventListenerList listenerList;
+
+        /** True if the selection is undergoing a series of changes. */
+        private boolean valueIsAdjusting = false;
+
+        /** Full start index. */
+        private int fullIndex0 = -1;
+
+        /** Full end index. */
+        private int fullIndex1 = -1;
+
+
+        /**
+         * Create a new list selection model adapter.
+         */
+        private ListSelectionModelAdapter()
+        {
+            listenerList = new EventListenerList();
+            // todo:  will need to dispose this listener at some point
+            getSelectionModel().addSelectionListener(new ListSelection.Listener()
+                {
+                    @Override
+                    public void selectionChanged(final int index0, final int index1)
+                    {
+                        fireSelectionChanged(index0, index1);
+                    }
+                });
+        }
+
+
+        @Override
+        public void setSelectionInterval(final int index0, final int index1)
+        {
+            getSelectionModel().setSelection(index0, index1);
+        }
+
+        @Override
+        public void addSelectionInterval(final int index0, final int index1)
+        {
+            getSelectionModel().select(index0, index1);
+        }
+
+        @Override
+        public void removeSelectionInterval(final int index0, final int index1)
+        {
+            getSelectionModel().deselect(index0, index1);
+        }
+
+        @Override
+        public int getMinSelectionIndex()
+        {
+            return getSelectionModel().getMinSelectionIndex();
+        }
+
+        @Override
+        public int getMaxSelectionIndex()
+        {
+            return getSelectionModel().getMaxSelectionIndex();
+        }
+
+        @Override
+        public boolean isSelectedIndex(final int index)
+        {
+            return getSelectionModel().isSelected(index);
+        }
+
+        @Override
+        public int getAnchorSelectionIndex()
+        {
+            return getSelectionModel().getAnchorSelectionIndex();
+        }
+
+        @Override
+        public void setAnchorSelectionIndex(final int index)
+        {
+            getSelectionModel().setAnchorSelectionIndex(index);
+        }
+
+        @Override
+        public int getLeadSelectionIndex()
+        {
+            return getSelectionModel().getLeadSelectionIndex();
+        }
+
+        @Override
+        public void setLeadSelectionIndex(final int index)
+        {
+            getSelectionModel().setLeadSelectionIndex(index);
+        }
+
+        @Override
+        public void clearSelection()
+        {
+            getSelectionModel().deselectAll();
+        }
+
+        @Override
+        public boolean isSelectionEmpty()
+        {
+            return getSelectionModel().getSelected().isEmpty();
+        }
+
+        @Override
+        public void insertIndexInterval(final int index, final int length, final boolean before)
+        {
+            // empty
+        }
+
+        @Override
+        public void removeIndexInterval(final int index0, final int index1)
+        {
+            // empty
+        }
+
+        @Override
+        public void setValueIsAdjusting(final boolean valueIsAdjusting)
+        {
+            if (!valueIsAdjusting)
+            {
+                if ((fullIndex0 != -1) && (fullIndex1 != -1))
+                {
+                    fireSelectionChanged(fullIndex0, fullIndex1);
+                    fullIndex0 = -1;
+                    fullIndex1 = -1;
+                }
+            }
+            this.valueIsAdjusting = valueIsAdjusting;
+        }
+
+        @Override
+        public boolean getValueIsAdjusting()
+        {
+            return valueIsAdjusting;
+        }
+
+        @Override
+        public void setSelectionMode(final int selectionMode)
+        {
+            getSelectionModel().setSelectionMode(selectionMode);
+        }
+
+        @Override
+        public int getSelectionMode()
+        {
+            return getSelectionModel().getSelectionMode();
+        }
+
+        @Override
+        public void addListSelectionListener(final ListSelectionListener listener)
+        {
+            listenerList.add(ListSelectionListener.class, listener);
+        }
+
+        @Override
+        public void removeListSelectionListener(final ListSelectionListener listener)
+        {
+            listenerList.remove(ListSelectionListener.class, listener);
+        }
+
+        /**
+         * Fire a selection changed event to all registered list selection listeners.
+         *
+         * @param index0 first index
+         * @param index1 second index
+         */
+        private void fireSelectionChanged(final int index0, final int index1)
+        {
+            if (valueIsAdjusting)
+            {
+                if ((fullIndex0 == -1) || (index0 < fullIndex0))
+                {
+                    fullIndex0 = index0;
+                }
+                if ((fullIndex1 == -1) || (index1 > fullIndex1))
+                {
+                    fullIndex1 = index1;
+                }
+            }
+            Object[] listeners = listenerList.getListenerList();
+            ListSelectionEvent e = null;
+
+            for (int i = listeners.length - 2; i >= 0; i -= 2)
+            {
+                if (listeners[i] == ListSelectionListener.class)
+                {
+                    // lazily create the event
+                    if (e == null)
+                    {
+                        e = new ListSelectionEvent(this, index0, index1, valueIsAdjusting);
+                    }
+                    ((ListSelectionListener) listeners[i + 1]).valueChanged(e);
+                }
+            }
+        }
     }
 }

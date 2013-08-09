@@ -140,6 +140,18 @@ public class ElementsList<E>
         add("Center", new JScrollPane(list));
     }
 
+    /**
+     * Create a new elements view with the specified model.
+     *
+     * @param labelText label text
+     * @param model model, must not be null
+     */
+    public ElementsList(final String labelText, final EventList<E> model)
+    {
+        this(model);
+        label.setText(labelText);
+    }
+
 
     @Override
     protected void cut(final List<E> toCut)
