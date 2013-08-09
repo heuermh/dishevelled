@@ -52,7 +52,6 @@ import org.cytoscape.work.swing.DialogTaskManager;
 
 import org.dishevelled.variation.FeatureService;
 import org.dishevelled.variation.Variation;
-import org.dishevelled.variation.VariationConsequence;
 import org.dishevelled.variation.VariationConsequenceService;
 import org.dishevelled.variation.VariationConsequencePredictionService;
 import org.dishevelled.variation.VariationService;

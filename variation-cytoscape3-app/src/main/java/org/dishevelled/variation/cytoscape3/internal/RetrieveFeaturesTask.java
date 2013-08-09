@@ -27,46 +27,16 @@ import static org.dishevelled.variation.cytoscape3.internal.VariationUtils.ensem
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import com.google.common.collect.ArrayListMultimap;
-import com.google.common.collect.BiMap;
-import com.google.common.collect.HashBiMap;
-import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.ListMultimap;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 
 import org.cytoscape.model.CyNetwork;
 import org.cytoscape.model.CyNode;
-import org.cytoscape.model.CyRow;
-import org.cytoscape.model.CyTable;
 
 import org.cytoscape.work.AbstractTask;
 import org.cytoscape.work.TaskMonitor;
 
 import org.dishevelled.variation.Feature;
 import org.dishevelled.variation.FeatureService;
-import org.dishevelled.variation.Variation;
-import org.dishevelled.variation.VariationService;
-import org.dishevelled.variation.VariationConsequence;
-import org.dishevelled.variation.VariationConsequencePredictionService;
-
-import org.dishevelled.variation.interval.Interval;
-
-import org.dishevelled.variation.interval.tree.CenteredIntervalTree;
-
-import org.dishevelled.vocabulary.AbstractAssignable;
-import org.dishevelled.vocabulary.Assignable;
-import org.dishevelled.vocabulary.Authority;
-import org.dishevelled.vocabulary.Assignment;
-import org.dishevelled.vocabulary.Concept;
-import org.dishevelled.vocabulary.Domain;
-import org.dishevelled.vocabulary.Evidence;
-import org.dishevelled.vocabulary.Relation;
 
 /**
  * Retrieve features task.

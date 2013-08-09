@@ -43,11 +43,9 @@ import org.dishevelled.variation.VariationConsequence;
 import org.dishevelled.vocabulary.AbstractAssignable;
 import org.dishevelled.vocabulary.Assignable;
 import org.dishevelled.vocabulary.Authority;
-import org.dishevelled.vocabulary.Assignment;
 import org.dishevelled.vocabulary.Concept;
 import org.dishevelled.vocabulary.Domain;
 import org.dishevelled.vocabulary.Evidence;
-import org.dishevelled.vocabulary.Relation;
 
 /**
  * Variation utils.
