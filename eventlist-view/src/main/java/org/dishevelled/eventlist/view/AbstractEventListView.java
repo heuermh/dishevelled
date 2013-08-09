@@ -87,7 +87,7 @@ public abstract class AbstractEventListView<E>
     private final ContextMenuButton contextMenuButton;
 
     /** List selection model adapter. */
-    private final ListSelectionModelAdapter listSelectionModelAdapter = new ListSelectionModelAdapter();
+    private final ListSelectionModelAdapter listSelectionModelAdapter;
 
     /** Select all action. */
     private final IdentifiableAction selectAllAction = new IdentifiableAction("Select all", EDIT_SELECT_ALL)
@@ -249,6 +249,8 @@ public abstract class AbstractEventListView<E>
         }
         toolBar.setIconSize(TangoProject.EXTRA_SMALL);
         toolBar.addMouseListener(new ContextMenuListener(toolBarContextMenu));
+
+        listSelectionModelAdapter = new ListSelectionModelAdapter();
     }
 
 
