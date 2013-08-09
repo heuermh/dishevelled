@@ -103,7 +103,7 @@ public final class ElementsLabel<E>
      *
      * @return the label for this elements label
      */
-    public JLabel getLabel()
+    public JLabel getElementsLabel()
     {
         return elements;
     }

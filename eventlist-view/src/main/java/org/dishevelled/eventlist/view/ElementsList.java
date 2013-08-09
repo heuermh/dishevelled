@@ -32,30 +32,15 @@ import java.awt.BorderLayout;
 
 import java.util.List;
 
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JLabel;
 import javax.swing.JList;
-import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
-
-import javax.swing.border.EmptyBorder;
 
 import javax.swing.event.EventListenerList;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import org.dishevelled.iconbundle.IconSize;
-
-import org.dishevelled.iconbundle.tango.TangoProject;
-
-import org.dishevelled.identify.ContextMenuButton;
 import org.dishevelled.identify.ContextMenuListener;
-import org.dishevelled.identify.IdPopupMenu;
-import org.dishevelled.identify.IdToolBar;
 
 /**
  * Elements list.
@@ -70,21 +55,6 @@ public class ElementsList<E>
     /** List. */
     private final JList list;
 
-    /** Label. */
-    private final JLabel label;
-
-    /** Tool bar. */
-    private final IdToolBar toolBar;
-
-    /** Context menu. */
-    private final IdPopupMenu contextMenu;
-
-    /** Tool bar context menu. */
-    private final JPopupMenu toolBarContextMenu;
-
-    /** Tool bar context menu button. */
-    private final ContextMenuButton contextMenuButton;
-
 
     /**
      * Create a new elements view with the specified model.
@@ -96,44 +66,8 @@ public class ElementsList<E>
         super(model);
 
         list = new JList(new EventListModel<E>(getModel()));
-        list.setSelectionModel(new ListSelectionModelAdapter());
-
-        label = new JLabel();
-        label.setAlignmentY(-1.0f);
-        label.setBorder(new EmptyBorder(0, 2, 2, 0));
-
-        contextMenu = new IdPopupMenu();
-        contextMenu.add(getCutAction(), TangoProject.EXTRA_SMALL);
-        contextMenu.add(getCopyAction(), TangoProject.EXTRA_SMALL);
-        contextMenu.add(getPasteAction(), TangoProject.EXTRA_SMALL);
-        contextMenu.addSeparator();
-        contextMenu.add(getSelectAllAction(), TangoProject.EXTRA_SMALL);
-        contextMenu.add(getClearSelectionAction());
-        contextMenu.add(getInvertSelectionAction());
-        contextMenu.addSeparator();
-        contextMenu.add(getAddAction(), TangoProject.EXTRA_SMALL);
-        contextMenu.add(getRemoveAction(), TangoProject.EXTRA_SMALL);
-        contextMenu.add(getRemoveAllAction());
-        list.addMouseListener(new ContextMenuListener(contextMenu));
-
-        toolBar = new IdToolBar();
-        toolBar.setBorder(new EmptyBorder(0, 0, 0, 0));
-        toolBar.add(getAddAction());
-        toolBar.add(getRemoveAction());
-        contextMenuButton = toolBar.add(contextMenu);
-
-        toolBarContextMenu = new JPopupMenu();
-        for (Object menuItem : toolBar.getDisplayMenuItems())
-        {
-            toolBarContextMenu.add((JCheckBoxMenuItem) menuItem);
-        }
-        toolBarContextMenu.addSeparator();
-        for (Object iconSize : TangoProject.SIZES)
-        {
-            toolBarContextMenu.add(toolBar.createIconSizeMenuItem((IconSize) iconSize));
-        }
-        toolBar.setIconSize(TangoProject.EXTRA_SMALL);
-        toolBar.addMouseListener(new ContextMenuListener(toolBarContextMenu));
+        list.setSelectionModel(getListSelectionModelAdapter());
+        list.addMouseListener(new ContextMenuListener(getContextMenu()));
 
         setLayout(new BorderLayout());
         add("North", createToolBarPanel());
@@ -141,7 +75,7 @@ public class ElementsList<E>
     }
 
     /**
-     * Create a new elements view with the specified model.
+     * Create a new elements view with the specified label text and model.
      *
      * @param labelText label text
      * @param model model, must not be null
@@ -149,7 +83,7 @@ public class ElementsList<E>
     public ElementsList(final String labelText, final EventList<E> model)
     {
         this(model);
-        label.setText(labelText);
+        getLabel().setText(labelText);
     }
 
 
@@ -185,73 +119,6 @@ public class ElementsList<E>
     public final JList getList()
     {
         return list;
-    }
-
-    /**
-     * Return the label for this elements list.
-     *
-     * @return the label for this elements list
-     */
-    protected final JLabel getLabel()
-    {
-        return label;
-    }
-
-    /**
-     * Return the tool bar for this elements list.
-     *
-     * @return the tool bar for this elements list
-     */
-    protected final IdToolBar getToolBar()
-    {
-        return toolBar;
-    }
-
-    /**
-     * Return the context menu for this elements list.
-     *
-     * @return the context menu for this elements list
-     */
-    protected final IdPopupMenu getContextMenu()
-    {
-        return contextMenu;
-    }
-
-    /**
-     * Return the tool bar context menu for this elements list.
-     *
-     * @return the tool bar context menu for this elements list
-     */
-    protected final JPopupMenu getToolBarContextMenu()
-    {
-        return toolBarContextMenu;
-    }
-
-    /**
-     * Return the tool bar context menu button for this elements list.
-     *
-     * @return the tool bar context menu button for this elements list
-     */
-    protected final ContextMenuButton getToolBarContextMenuButton()
-    {
-        return contextMenuButton;
-    }
-
-    /**
-     * Create and return a new tool bar panel.
-     *
-     * @return a new tool bar panel
-     */
-    private JPanel createToolBarPanel()
-    {
-        JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
-        panel.add(label);
-        panel.add(Box.createGlue());
-        panel.add(Box.createGlue());
-        panel.add(toolBar);
-        panel.addMouseListener(new ContextMenuListener(toolBarContextMenu));
-        return panel;
     }
 
     /**
