@@ -81,7 +81,7 @@ public final class CountLabel<E>
      *
      * @return the label for this count label
      */
-    public JLabel getLabel()
+    public JLabel getCountLabel()
     {
         return count;
     }

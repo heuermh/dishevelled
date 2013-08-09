@@ -35,8 +35,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.AbstractAction;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
+import javax.swing.ListSelectionModel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.event.EventListenerList;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
+import org.dishevelled.iconbundle.IconSize;
+import org.dishevelled.iconbundle.tango.TangoProject;
+import org.dishevelled.identify.ContextMenuButton;
+import org.dishevelled.identify.ContextMenuListener;
+import org.dishevelled.identify.IdPopupMenu;
+import org.dishevelled.identify.IdToolBar;
 import org.dishevelled.identify.IdentifiableAction;
 
 import static org.dishevelled.iconbundle.tango.TangoProject.*;
@@ -54,6 +70,24 @@ public abstract class AbstractEventListView<E>
 {
     /** Event list view support. */
     private final EventListViewSupport<E> eventListViewSupport;
+
+    /** Label. */
+    private final JLabel label;
+
+    /** Tool bar. */
+    private final IdToolBar toolBar;
+
+    /** Context menu. */
+    private final IdPopupMenu contextMenu;
+
+    /** Tool bar context menu. */
+    private final JPopupMenu toolBarContextMenu;
+
+    /** Tool bar context menu button. */
+    private final ContextMenuButton contextMenuButton;
+
+    /** List selection model adapter. */
+    private final ListSelectionModelAdapter listSelectionModelAdapter = new ListSelectionModelAdapter();
 
     /** Select all action. */
     private final IdentifiableAction selectAllAction = new IdentifiableAction("Select all", EDIT_SELECT_ALL)
@@ -179,6 +213,42 @@ public abstract class AbstractEventListView<E>
         getSelectionModel().addSelectionListener(selectionListener);
         updateListActions();
         updateSelectionActions();
+
+        label = new JLabel();
+        label.setAlignmentY(-1.0f);
+        label.setBorder(new EmptyBorder(0, 2, 2, 0));
+
+        contextMenu = new IdPopupMenu();
+        contextMenu.add(getCutAction(), TangoProject.EXTRA_SMALL);
+        contextMenu.add(getCopyAction(), TangoProject.EXTRA_SMALL);
+        contextMenu.add(getPasteAction(), TangoProject.EXTRA_SMALL);
+        contextMenu.addSeparator();
+        contextMenu.add(getSelectAllAction(), TangoProject.EXTRA_SMALL);
+        contextMenu.add(getClearSelectionAction());
+        contextMenu.add(getInvertSelectionAction());
+        contextMenu.addSeparator();
+        contextMenu.add(getAddAction(), TangoProject.EXTRA_SMALL);
+        contextMenu.add(getRemoveAction(), TangoProject.EXTRA_SMALL);
+        contextMenu.add(getRemoveAllAction());
+
+        toolBar = new IdToolBar();
+        toolBar.setBorder(new EmptyBorder(0, 0, 0, 0));
+        toolBar.add(getAddAction());
+        toolBar.add(getRemoveAction());
+        contextMenuButton = toolBar.add(contextMenu);
+
+        toolBarContextMenu = new JPopupMenu();
+        for (Object menuItem : toolBar.getDisplayMenuItems())
+        {
+            toolBarContextMenu.add((JCheckBoxMenuItem) menuItem);
+        }
+        toolBarContextMenu.addSeparator();
+        for (Object iconSize : TangoProject.SIZES)
+        {
+            toolBarContextMenu.add(toolBar.createIconSizeMenuItem((IconSize) iconSize));
+        }
+        toolBar.setIconSize(TangoProject.EXTRA_SMALL);
+        toolBar.addMouseListener(new ContextMenuListener(toolBarContextMenu));
     }
 
 
@@ -399,6 +469,83 @@ public abstract class AbstractEventListView<E>
         return removeAllAction;
     }
 
+    /**
+     * Return the label.
+     *
+     * @return the label
+     */
+    protected final JLabel getLabel()
+    {
+        return label;
+    }
+
+    /**
+     * Return the tool bar.
+     *
+     * @return the tool bar
+     */
+    protected final IdToolBar getToolBar()
+    {
+        return toolBar;
+    }
+
+    /**
+     * Return the context menu.
+     *
+     * @return the context menu
+     */
+    protected final IdPopupMenu getContextMenu()
+    {
+        return contextMenu;
+    }
+
+    /**
+     * Return the tool bar context menu.
+     *
+     * @return the tool bar context menu
+     */
+    protected final JPopupMenu getToolBarContextMenu()
+    {
+        return toolBarContextMenu;
+    }
+
+    /**
+     * Return the context menu button.
+     *
+     * @return the context menu button
+     */
+    protected final ContextMenuButton getContextMenuButton()
+    {
+        return contextMenuButton;
+    }
+
+    /**
+     * Create and return a new tool bar panel.
+     *
+     * @return a new tool bar panel
+     */
+    protected final JPanel createToolBarPanel()
+    {
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+        panel.add(getLabel());
+        panel.add(Box.createGlue());
+        panel.add(Box.createGlue());
+        panel.add(getToolBar());
+        panel.addMouseListener(new ContextMenuListener(getToolBarContextMenu()));
+        return panel;
+    }
+
+    /**
+     * Return the list selection model adapter.
+     *
+     * @return the list selection model adapter
+     */
+    protected ListSelectionModelAdapter getListSelectionModelAdapter()
+    {
+        return listSelectionModelAdapter;
+    }
+
     @Override
     public final EventList<E> getModel()
     {
@@ -420,5 +567,217 @@ public abstract class AbstractEventListView<E>
     {
         getModel().removeListEventListener(listener);
         getSelectionModel().removeSelectionListener(selectionListener);
+        getSelectionModel().removeSelectionListener(listSelectionModelAdapter.getSelectionListener());
+    }
+
+    /**
+     * List selection model that delegates to {@link #getSelectionModel}.
+     *
+     * @param <E> model element type
+     */
+    protected final class ListSelectionModelAdapter implements ListSelectionModel
+    {
+        /** Event listener list. */
+        private final EventListenerList listenerList;
+
+        /** True if the selection is undergoing a series of changes. */
+        private boolean valueIsAdjusting = false;
+
+        /** Full start index. */
+        private int fullIndex0 = -1;
+
+        /** Full end index. */
+        private int fullIndex1 = -1;
+
+        /** List selection listener. */
+        private final ListSelection.Listener listSelectionListener = new ListSelection.Listener()
+            {
+                @Override
+                public void selectionChanged(final int index0, final int index1)
+                {
+                    fireSelectionChanged(index0, index1);
+                }
+            };
+
+
+        /**
+         * Create a new list selection model adapter.
+         */
+        private ListSelectionModelAdapter()
+        {
+            listenerList = new EventListenerList();
+            getSelectionModel().addSelectionListener(listSelectionListener);
+        }
+
+
+        @Override
+        public void setSelectionInterval(final int index0, final int index1)
+        {
+            getSelectionModel().setSelection(index0, index1);
+        }
+
+        @Override
+        public void addSelectionInterval(final int index0, final int index1)
+        {
+            getSelectionModel().select(index0, index1);
+        }
+
+        @Override
+        public void removeSelectionInterval(final int index0, final int index1)
+        {
+            getSelectionModel().deselect(index0, index1);
+        }
+
+        @Override
+        public int getMinSelectionIndex()
+        {
+            return getSelectionModel().getMinSelectionIndex();
+        }
+
+        @Override
+        public int getMaxSelectionIndex()
+        {
+            return getSelectionModel().getMaxSelectionIndex();
+        }
+
+        @Override
+        public boolean isSelectedIndex(final int index)
+        {
+            return getSelectionModel().isSelected(index);
+        }
+
+        @Override
+        public int getAnchorSelectionIndex()
+        {
+            return getSelectionModel().getAnchorSelectionIndex();
+        }
+
+        @Override
+        public void setAnchorSelectionIndex(final int index)
+        {
+            getSelectionModel().setAnchorSelectionIndex(index);
+        }
+
+        @Override
+        public int getLeadSelectionIndex()
+        {
+            return getSelectionModel().getLeadSelectionIndex();
+        }
+
+        @Override
+        public void setLeadSelectionIndex(final int index)
+        {
+            getSelectionModel().setLeadSelectionIndex(index);
+        }
+
+        @Override
+        public void clearSelection()
+        {
+            getSelectionModel().deselectAll();
+        }
+
+        @Override
+        public boolean isSelectionEmpty()
+        {
+            return getSelectionModel().getSelected().isEmpty();
+        }
+
+        @Override
+        public void insertIndexInterval(final int index, final int length, final boolean before)
+        {
+            // empty
+        }
+
+        @Override
+        public void removeIndexInterval(final int index0, final int index1)
+        {
+            // empty
+        }
+
+        @Override
+        public void setValueIsAdjusting(final boolean valueIsAdjusting)
+        {
+            if (!valueIsAdjusting)
+            {
+                if ((fullIndex0 != -1) && (fullIndex1 != -1))
+                {
+                    fireSelectionChanged(fullIndex0, fullIndex1);
+                    fullIndex0 = -1;
+                    fullIndex1 = -1;
+                }
+            }
+            this.valueIsAdjusting = valueIsAdjusting;
+        }
+
+        @Override
+        public boolean getValueIsAdjusting()
+        {
+            return valueIsAdjusting;
+        }
+
+        @Override
+        public void setSelectionMode(final int selectionMode)
+        {
+            getSelectionModel().setSelectionMode(selectionMode);
+        }
+
+        @Override
+        public int getSelectionMode()
+        {
+            return getSelectionModel().getSelectionMode();
+        }
+
+        @Override
+        public void addListSelectionListener(final ListSelectionListener listener)
+        {
+            listenerList.add(ListSelectionListener.class, listener);
+        }
+
+        @Override
+        public void removeListSelectionListener(final ListSelectionListener listener)
+        {
+            listenerList.remove(ListSelectionListener.class, listener);
+        }
+
+        /**
+         * Fire a selection changed event to all registered list selection listeners.
+         *
+         * @param index0 first index
+         * @param index1 second index
+         */
+        private void fireSelectionChanged(final int index0, final int index1)
+        {
+            if (valueIsAdjusting)
+            {
+                if ((fullIndex0 == -1) || (index0 < fullIndex0))
+                {
+                    fullIndex0 = index0;
+                }
+                if ((fullIndex1 == -1) || (index1 > fullIndex1))
+                {
+                    fullIndex1 = index1;
+                }
+            }
+            Object[] listeners = listenerList.getListenerList();
+            ListSelectionEvent e = null;
+
+            for (int i = listeners.length - 2; i >= 0; i -= 2)
+            {
+                if (listeners[i] == ListSelectionListener.class)
+                {
+                    // lazily create the event
+                    if (e == null)
+                    {
+                        e = new ListSelectionEvent(this, index0, index1, valueIsAdjusting);
+                    }
+                    ((ListSelectionListener) listeners[i + 1]).valueChanged(e);
+                }
+            }
+        }
+
+        private ListSelection.Listener getSelectionListener()
+        {
+            return listSelectionListener;
+        }
     }
 }
