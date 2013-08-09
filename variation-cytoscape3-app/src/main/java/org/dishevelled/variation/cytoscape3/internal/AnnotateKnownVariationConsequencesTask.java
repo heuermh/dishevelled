@@ -23,6 +23,10 @@
 */
 package org.dishevelled.variation.cytoscape3.internal;
 
+import static org.dishevelled.variation.cytoscape3.internal.VariationUtils.addConsequenceCounts;
+import static org.dishevelled.variation.cytoscape3.internal.VariationUtils.addCount;
+import static org.dishevelled.variation.cytoscape3.internal.VariationUtils.ensemblGeneId;
+
 import static org.dishevelled.variation.so.SequenceOntology.countAssignments;
 import static org.dishevelled.variation.so.SequenceOntology.indexByName;
 import static org.dishevelled.variation.so.SequenceOntology.sequenceVariants;
@@ -98,6 +102,7 @@ final class AnnotateKnownVariationConsequencesTask
      * @param species species, must not be null
      * @param reference reference, must not be null
      * @param ensemblGeneIdColumn ensembl gene id column, must not be null
+     * @param network network, must not be null
      * @param featureService feature service, must not be null
      * @param variationService variation service, must not be null
      * @param variationConsequenceService variation consequence service, must not be null
@@ -138,7 +143,7 @@ final class AnnotateKnownVariationConsequencesTask
         for (int i = 0, size = nodes.size(); i < size; i++)
         {
             CyNode node = nodes.get(i);
-            String ensemblGeneId = ensemblGeneId(node, network);
+            String ensemblGeneId = ensemblGeneId(node, network, ensemblGeneIdColumn);
             if (StringUtils.isNotBlank(ensemblGeneId))
             {
                 taskMonitor.setStatusMessage("Retrieving genome feature for Ensembl Gene " + ensemblGeneId + "...");
@@ -157,69 +162,12 @@ final class AnnotateKnownVariationConsequencesTask
                         allVariationConsequences.addAll(variationConsequences);
                         taskMonitor.setStatusMessage("Found " + variationConsequences.size() + " variation consequences associated with variation " + variation.getIdentifier());
                     }
-                    addCount(node, network, allVariationConsequences.size());
+                    addCount(node, network, "variation_consequence_count", allVariationConsequences.size());
                     addConsequenceCounts(node, network, allVariationConsequences);
                 }
             }
             taskMonitor.setProgress(i / (double) size);
         }
         taskMonitor.setProgress(1.0d);
-    }
-
-    private String ensemblGeneId(final CyNode node, final CyNetwork network)
-    {
-        CyTable table = network.getDefaultNodeTable();
-        CyRow row = table.getRow(node.getSUID());
-        return row.get(ensemblGeneIdColumn, String.class);
-    }
-
-    private void addCount(final CyNode node, final CyNetwork network, final int count)
-    {
-        CyTable table = network.getDefaultNodeTable();
-        CyRow row = table.getRow(node.getSUID());
-        if (table.getColumn("variation_consequence_count") == null)
-        {
-            table.createColumn("variation_consequence_count", Integer.class, false);
-        }
-        row.set("variation_consequence_count", count);
-    }
-
-    private void addConsequenceCounts(final CyNode node, final CyNetwork network, final List<VariationConsequence> variationConsequences)
-    {
-        Domain sv = sequenceVariants();
-        Map<String, Concept> indexByName = indexByName(sv);
-
-        Authority so = sv.getAuthority();
-        Assignable assignableNode = new AssignableNode(node);
-        Set<Evidence> evidence = ImmutableSet.of(new Evidence("IEA", 1.0d, 1.0d));
-        for (VariationConsequence variationConsequence : variationConsequences)
-        {
-            so.createAssignment(indexByName.get(variationConsequence.getSequenceOntologyTerm()), assignableNode, evidence);
-        }
-
-        CyTable table = network.getDefaultNodeTable();
-        CyRow row = table.getRow(node.getSUID());
-        for (Map.Entry<Concept, Integer> entry : countAssignments(sv).entrySet())
-        {
-            Concept concept = entry.getKey();
-            Integer count = entry.getValue();
-
-            if (table.getColumn(concept.getName()) == null)
-            {
-                table.createColumn(concept.getName(), Integer.class, false);
-            }
-            row.set(concept.getName(), count);
-        }
-    }
-
-    private static final class AssignableNode extends AbstractAssignable
-    {
-        private final CyNode node;
-
-        AssignableNode(final CyNode node)
-        {
-            super();
-            this.node = node;
-        }
     }
 }

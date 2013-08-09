@@ -103,15 +103,15 @@
     </dependency>
     <dependency>
       <groupId>org.dishevelled</groupId>
-      <artifactId>dsh-layout</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.dishevelled</groupId>
       <artifactId>dsh-weighted</artifactId>
       <scope>compile</scope>
     </dependency>
     -->
+    <dependency>
+      <groupId>org.dishevelled</groupId>
+      <artifactId>dsh-layout</artifactId>
+      <scope>compile</scope>
+    </dependency>
     <dependency>
       <groupId>org.dishevelled</groupId>
       <artifactId>dsh-variation</artifactId>
@@ -244,15 +244,15 @@
       </dependency>
       <dependency>
         <groupId>org.dishevelled</groupId>
-        <artifactId>dsh-layout</artifactId>
-        <version>1.0</version>
-      </dependency>
-      <dependency>
-        <groupId>org.dishevelled</groupId>
         <artifactId>dsh-weighted</artifactId>
         <version>1.0</version>
       </dependency>
       -->
+      <dependency>
+        <groupId>org.dishevelled</groupId>
+        <artifactId>dsh-layout</artifactId>
+        <version>1.0</version>
+      </dependency>
       <dependency>
         <groupId>org.dishevelled</groupId>
         <artifactId>dsh-variation</artifactId>
