@@ -26,6 +26,8 @@ package org.dishevelled.eventlist.view.examples;
 import ca.odell.glazedlists.EventList;
 import ca.odell.glazedlists.GlazedLists;
 
+import java.awt.GridLayout;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -37,16 +39,20 @@ import java.util.Map;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.Timer;
 import javax.swing.SwingUtilities;
 
 import javax.swing.border.EmptyBorder;
+
+import ca.odell.glazedlists.gui.TableFormat;
 
 import org.dishevelled.functor.UnaryFunction;
 
 import org.dishevelled.eventlist.view.CountLabel;
 import org.dishevelled.eventlist.view.ElementsLabel;
 import org.dishevelled.eventlist.view.ElementsList;
+import org.dishevelled.eventlist.view.ElementsTable;
 import org.dishevelled.eventlist.view.ElementsSummary;
 import org.dishevelled.eventlist.view.IdElementsList;
 import org.dishevelled.eventlist.view.IdElementsSummary;
@@ -63,6 +69,9 @@ public final class EventListViewExample
     extends LabelFieldPanel
     implements Runnable
 {
+    /** Values. */
+    private final EventList<String> eventList;
+
 
     /**
      * Create a new event list view example.
@@ -77,7 +86,7 @@ public final class EventListViewExample
         {
             strings.add("Value " + i);
         }
-        final EventList<String> eventList = GlazedLists.eventList(strings);
+        eventList = GlazedLists.eventList(strings);
         addField("Count label:", new CountLabel<String>(eventList));
         addField("Elements label:", new ElementsLabel<String>(eventList));
         addLabel("Elements summary:");
@@ -103,11 +112,7 @@ public final class EventListViewExample
         addLabel("Identifiable elements summary:");
         addField(new IdElementsSummary<String>(eventList));
         addSpacing(12);
-        addLabel("Elements list:");
-        addField(new ElementsList<String>(eventList));
-        addSpacing(12);
-        addLabel("Identifiable elements list:");
-        addFinalField(new IdElementsList<String>(eventList));
+        addFinalField(createLowerPanel());
 
         Timer t = new Timer(5000, new ActionListener()
             {
@@ -124,6 +129,63 @@ public final class EventListViewExample
         t.start();
     }
 
+    private JPanel createLowerPanel()
+    {
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridLayout(1, 3, 12, 12));
+
+        LabelFieldPanel left = new LabelFieldPanel();
+        left.addLabel("Elements list:");
+        left.addFinalField(new ElementsList<String>("Elements:", eventList));
+
+        LabelFieldPanel center = new LabelFieldPanel();
+        center.addLabel("Identifiable elements list:");
+        center.addFinalField(new IdElementsList<String>("Identifiable elements:", eventList));
+
+        LabelFieldPanel right = new LabelFieldPanel();
+        right.addLabel("Elements table:");
+        TableFormat<String> tableFormat = new TableFormat<String>()
+            {
+                @Override
+                public int getColumnCount()
+                {
+                    return 2;
+                }
+
+                @Override
+                public String getColumnName(final int column)
+                {
+                    if (column == 0)
+                    {
+                        return "Value";
+                    }
+                    else
+                    {
+                        return "Length";
+                    }
+                }
+
+                @Override
+                public Object getColumnValue(final String value, final int column)
+                {
+                    if (column == 0)
+                    {
+                        return value;
+                    }
+                    else
+                    {
+                        return value.length();
+                    }
+                }
+            };
+        right.addFinalField(new ElementsTable<String>("Elements:", eventList, tableFormat));
+
+        panel.add(left);
+        panel.add(center);
+        panel.add(right);
+        return panel;
+    }
+
 
     /** {@inheritDoc} */
     public void run()
@@ -131,7 +193,7 @@ public final class EventListViewExample
         JFrame f = new JFrame("Event list view example");
         f.setContentPane(this);
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        f.setBounds(100, 100, 450, 650);
+        f.setBounds(100, 100, 1080, 606);
         f.setVisible(true);
     }
 
