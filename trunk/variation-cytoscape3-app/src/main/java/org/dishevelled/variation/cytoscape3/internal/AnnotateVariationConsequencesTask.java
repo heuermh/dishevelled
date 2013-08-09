@@ -23,11 +23,11 @@
 */
 package org.dishevelled.variation.cytoscape3.internal;
 
-import static org.dishevelled.variation.so.SequenceOntology.countAssignments;
-import static org.dishevelled.variation.so.SequenceOntology.indexByName;
-import static org.dishevelled.variation.so.SequenceOntology.sequenceVariants;
-
 import static com.google.common.base.Preconditions.checkNotNull;
+
+import static org.dishevelled.variation.cytoscape3.internal.VariationUtils.addConsequenceCounts;
+import static org.dishevelled.variation.cytoscape3.internal.VariationUtils.addCount;
+import static org.dishevelled.variation.cytoscape3.internal.VariationUtils.ensemblGeneId;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,15 +60,6 @@ import org.dishevelled.variation.VariationConsequencePredictionService;
 import org.dishevelled.variation.interval.Interval;
 
 import org.dishevelled.variation.interval.tree.CenteredIntervalTree;
-
-import org.dishevelled.vocabulary.AbstractAssignable;
-import org.dishevelled.vocabulary.Assignable;
-import org.dishevelled.vocabulary.Authority;
-import org.dishevelled.vocabulary.Assignment;
-import org.dishevelled.vocabulary.Concept;
-import org.dishevelled.vocabulary.Domain;
-import org.dishevelled.vocabulary.Evidence;
-import org.dishevelled.vocabulary.Relation;
 
 /**
  * Annotate variation consequences task.
@@ -106,6 +97,7 @@ final class AnnotateVariationConsequencesTask
      * @param species species, must not be null
      * @param reference reference, must not be null
      * @param ensemblGeneIdColumn ensembl gene id column, must not be null
+     * @param network network, must not be null
      * @param featureService feature service, must not be null
      * @param variations zero or more variations, must not be null
      * @param variationConsequencePredictionService variation consequence prediction service, must not be null
@@ -148,7 +140,7 @@ final class AnnotateVariationConsequencesTask
         for (int i = 0, size = nodes.size(); i < size; i++)
         {
             CyNode node = nodes.get(i);
-            String ensemblGeneId = ensemblGeneId(node, network);
+            String ensemblGeneId = ensemblGeneId(node, network, ensemblGeneIdColumn);
             if (ensemblGeneId != null)
             {
                 taskMonitor.setStatusMessage("Retrieving genome feature for Ensembl Gene " + ensemblGeneId + "...");
@@ -181,7 +173,7 @@ final class AnnotateVariationConsequencesTask
         {
             CyNode node = featureIndex.nodeAt(i);
             List<VariationConsequence> variationConsequences = featureIndex.consequencesAt(i);
-            addCount(node, network, variationConsequences.size());
+            addCount(node, network, "variation_consequence_count", variationConsequences.size());
             addConsequenceCounts(node, network, variationConsequences);
 
             taskMonitor.setProgress(0.9d + 0.1d * i/(double) size);
@@ -189,141 +181,5 @@ final class AnnotateVariationConsequencesTask
 
         featureIndex.clear();
         taskMonitor.setProgress(1.0d);
-    }
-
-    private String ensemblGeneId(final CyNode node, final CyNetwork network)
-    {
-        CyTable table = network.getDefaultNodeTable();
-        CyRow row = table.getRow(node.getSUID());
-        return row.get(ensemblGeneIdColumn, String.class);
-    }
-
-    private void addCount(final CyNode node, final CyNetwork network, final int count)
-    {
-        CyTable table = network.getDefaultNodeTable();
-        CyRow row = table.getRow(node.getSUID());
-        if (table.getColumn("variation_consequence_count") == null)
-        {
-            table.createColumn("variation_consequence_count", Integer.class, false);
-        }
-        row.set("variation_consequence_count", count);
-    }
-
-    private void addConsequenceCounts(final CyNode node, final CyNetwork network, final List<VariationConsequence> variationConsequences)
-    {
-        Domain sv = sequenceVariants();
-        Map<String, Concept> indexByName = indexByName(sv);
-
-        Authority so = sv.getAuthority();
-        Assignable assignableNode = new AssignableNode(node);
-        Set<Evidence> evidence = ImmutableSet.of(new Evidence("IEA", 1.0d, 1.0d));
-        for (VariationConsequence variationConsequence : variationConsequences)
-        {
-            so.createAssignment(indexByName.get(variationConsequence.getSequenceOntologyTerm()), assignableNode, evidence);
-        }
-
-        CyTable table = network.getDefaultNodeTable();
-        CyRow row = table.getRow(node.getSUID());
-        for (Map.Entry<Concept, Integer> entry : countAssignments(sv).entrySet())
-        {
-            Concept concept = entry.getKey();
-            Integer count = entry.getValue();
-
-            if (table.getColumn(concept.getName()) == null)
-            {
-                table.createColumn(concept.getName(), Integer.class, false);
-            }
-            row.set(concept.getName(), count);
-        }
-    }
-
-    private static final class FeatureIndex
-    {
-        private final List<CyNode> nodes = Lists.newArrayList();
-        private final List<Feature> features = Lists.newArrayList();
-        private final BiMap<CyNode, Feature> nodesToFeatures = HashBiMap.create();
-        private final BiMap<Feature, Interval> featuresToIntervals = HashBiMap.create();
-        private final Map<String, CenteredIntervalTree> intervalTrees = Maps.newHashMap();
-        private final ListMultimap<Feature, VariationConsequence> consequences = ArrayListMultimap.create();
-
-        void buildTrees()
-        {
-            ListMultimap<String, Feature> featuresByName = ArrayListMultimap.create();
-            for (Feature feature : features)
-            {
-                featuresByName.put(feature.getName(), feature);
-            }
-            for (String chr : featuresByName.keySet())
-            {
-                List<Interval> intervals = Lists.newArrayList(); // with expected size...
-                for (Feature feature : featuresByName.get(chr))
-                {
-                    Interval interval = Interval.closed(feature.getStart(), feature.getEnd());
-                    intervals.add(interval);
-                    featuresToIntervals.put(feature, interval);
-                }
-                intervalTrees.put(chr, new CenteredIntervalTree(intervals));
-            }
-        }
-
-        void add(CyNode node, Feature feature)
-        {
-            nodes.add(node);
-            features.add(feature);
-            nodesToFeatures.put(node, feature);
-        }
-
-        void add(Feature feature, List<VariationConsequence> variationConsequences)
-        {
-            consequences.putAll(feature, variationConsequences);
-        }
-
-        Iterable<Feature> hit(Variation variation)
-        {
-            List<Feature> hits = Lists.newArrayList();
-            CenteredIntervalTree intervalTree = intervalTrees.get(variation.getName());
-            for (Interval interval : intervalTree.intersect(Interval.closed(variation.getStart(), variation.getEnd())))
-            {
-                hits.add(featuresToIntervals.inverse().get(interval));
-            }
-            return hits;
-        }
-
-        int size()
-        {
-            return nodes.size();
-        }
-
-        CyNode nodeAt(int index)
-        {
-            return nodes.get(index);
-        }
-
-        List<VariationConsequence> consequencesAt(int index)
-        {
-            Feature feature = features.get(index);
-            return consequences.get(feature);
-        }
-
-        void clear()
-        {
-            nodes.clear();
-            features.clear();
-            nodesToFeatures.clear();
-            featuresToIntervals.clear();
-            intervalTrees.clear();
-            consequences.clear();
-        }
-    }
-
-    private static final class AssignableNode extends AbstractAssignable
-    {
-        private final CyNode node;
-
-        AssignableNode(final CyNode node)
-        {
-            super();
-            this.node = node;
-        }
     }
 }
