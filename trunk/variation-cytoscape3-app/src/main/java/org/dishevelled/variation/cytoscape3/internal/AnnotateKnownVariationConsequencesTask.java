@@ -27,25 +27,14 @@ import static org.dishevelled.variation.cytoscape3.internal.VariationUtils.addCo
 import static org.dishevelled.variation.cytoscape3.internal.VariationUtils.addCount;
 import static org.dishevelled.variation.cytoscape3.internal.VariationUtils.ensemblGeneId;
 
-import static org.dishevelled.variation.so.SequenceOntology.countAssignments;
-import static org.dishevelled.variation.so.SequenceOntology.indexByName;
-import static org.dishevelled.variation.so.SequenceOntology.sequenceVariants;
-
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import com.google.common.collect.ImmutableSet;
-
 import org.apache.commons.lang.StringUtils;
 
 import org.cytoscape.model.CyNetwork;
 import org.cytoscape.model.CyNode;
-import org.cytoscape.model.CyRow;
-import org.cytoscape.model.CyTable;
 
 import org.cytoscape.work.AbstractTask;
 import org.cytoscape.work.TaskMonitor;
@@ -56,15 +45,6 @@ import org.dishevelled.variation.Variation;
 import org.dishevelled.variation.VariationService;
 import org.dishevelled.variation.VariationConsequence;
 import org.dishevelled.variation.VariationConsequenceService;
-
-import org.dishevelled.vocabulary.AbstractAssignable;
-import org.dishevelled.vocabulary.Assignable;
-import org.dishevelled.vocabulary.Authority;
-import org.dishevelled.vocabulary.Assignment;
-import org.dishevelled.vocabulary.Concept;
-import org.dishevelled.vocabulary.Domain;
-import org.dishevelled.vocabulary.Evidence;
-import org.dishevelled.vocabulary.Relation;
 
 /**
  * Annotate known variation consequences task.

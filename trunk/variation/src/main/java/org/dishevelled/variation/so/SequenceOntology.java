@@ -100,6 +100,7 @@ public final class SequenceOntology
         sf.createRelation("is_a", copy_number_gain, copy_number_variation);
         sf.createRelation("is_a", copy_number_loss, copy_number_variation);
         sf.createRelation("is_a", copy_number_variation, sequence_alteration);
+        sf.createRelation("is_a", deletion, sequence_alteration);
         sf.createRelation("is_a", duplication, insertion);
         sf.createRelation("is_a", insertion, sequence_alteration);
         sf.createRelation("is_a", interchromosomal_breakpoint, rearrangement_breakpoint);

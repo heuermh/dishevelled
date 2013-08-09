@@ -28,7 +28,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import com.google.inject.Inject;
 
@@ -43,7 +42,6 @@ final class SyntheticVariationConsequencePredictionService
     implements VariationConsequencePredictionService
 {
     private final SyntheticGenome genome;
-    private final Random random = new Random();
 
     @Inject
     SyntheticVariationConsequencePredictionService(final SyntheticGenome genome)
