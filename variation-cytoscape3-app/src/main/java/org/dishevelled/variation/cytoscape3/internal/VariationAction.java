@@ -53,6 +53,8 @@ import org.cytoscape.application.swing.AbstractCyAction;
 import org.cytoscape.model.CyNetwork;
 import org.cytoscape.work.swing.DialogTaskManager;
 
+import org.dishevelled.identify.IdToolBar;
+
 /**
  * Variation action.
  *
@@ -97,9 +99,9 @@ final class VariationAction extends AbstractCyAction
     }
 
 
-    // would be nice to have a submenu in Apps --> Variation --> etc.
-    //
-
+    /**
+     * Show dialog.
+     */
     private void showDialog(final ActionEvent event)
     {
         JFrame frame = (JFrame) windowForComponent((Component) event.getSource());
@@ -109,68 +111,24 @@ final class VariationAction extends AbstractCyAction
         contentPane.setBorder(new EmptyBorder(12, 12, 12, 12));
         contentPane.setLayout(new BorderLayout());
 
-        /*
-        JToolBar toolBar = new JToolBar();
-        toolBar.add(new AbstractAction("Annotate Known Variations...")
-            {
-                @Override
-                public void actionPerformed(final ActionEvent event)
-                {
-                    CyNetwork network = applicationManager.getCurrentNetwork();
-                    AnnotateKnownVariationsTaskFactory annotateKnownVariationsTaskFactory = new AnnotateKnownVariationsTaskFactory("human",
-                                                                                                                                   "GRCh37",
-                                                                                                                                   "ensembl",
-                                                                                                                                   network,
-                                                                                                                                   featureService,
-                                                                                                                                   variationService);
-                    dialogTaskManager.execute(annotateKnownVariationsTaskFactory.createTaskIterator());
-3                }
-            });
+        VariationApp app = new VariationApp(applicationManager, dialogTaskManager);
 
-        toolBar.add(new AbstractAction("Annotate Known Variation Consequences...")
-            {
-                @Override
-                public void actionPerformed(final ActionEvent event)
-                {
-                    CyNetwork network = applicationManager.getCurrentNetwork();
-                    AnnotateKnownVariationConsequencesTaskFactory annotateKnownVariationConsequencesTaskFactory = new AnnotateKnownVariationConsequencesTaskFactory("human",
-                                                                                                                                                                    "GRCh37",
-                                                                                                                                                                    "ensembl",
-                                                                                                                                                                    network,
-                                                                                                                                                                    featureService,
-                                                                                                                                                                    variationService,
-                                                                                                                                                                    variationConsequenceService);
-                    dialogTaskManager.execute(annotateKnownVariationConsequencesTaskFactory.createTaskIterator());
-                }
-            });
+        IdToolBar toolBar = new IdToolBar();
+        for (AbstractAction action : app.getToolBarActions())
+        {
+            toolBar.add(action);
+        }
+        toolBar.displayText(); // switch to displayIconsAndText once actions have icons
 
-        toolBar.add(new AbstractAction("Predict Variation Consequences...")
-            {
-                @Override
-                public void actionPerformed(final ActionEvent event)
-                {
-                    CyNetwork network = applicationManager.getCurrentNetwork();
-                    List<Variation> variations = Collections.emptyList(); // these need to come from VCF file or similar
-                    AnnotateVariationConsequencesTaskFactory annotateVariationConsequencesTaskFactory = new AnnotateVariationConsequencesTaskFactory("human",
-                                                                                                                                                     "GRCh37",
-                                                                                                                                                     "ensembl",
-                                                                                                                                                     network,
-                                                                                                                                                     featureService,
-                                                                                                                                                     variations,
-                                                                                                                                                     variationConsequencePredictionService);
-                    dialogTaskManager.execute(annotateVariationConsequencesTaskFactory.createTaskIterator());
-                }
-            });
-        */
-        VariationApp app = new VariationApp(dialogTaskManager);
-        
+        // todo:  would be nice to have a submenu in Apps --> Variation --> Retrieve Features... etc.
+
         JTabbedPane tabbedPane = new JTabbedPane();
         tabbedPane.add("Config", app.configView());
         tabbedPane.add("Features", app.featureView());
         tabbedPane.add("Variations", app.variationView());
         tabbedPane.add("Consequences", app.variationConsequenceView());
 
-        //contentPane.add("North", toolBar);
+        contentPane.add("North", toolBar);
         contentPane.add("Center", tabbedPane);
         dialog.setContentPane(contentPane);
 
