@@ -208,6 +208,7 @@ public abstract class AbstractEventListView<E>
     protected AbstractEventListView(final EventList<E> model)
     {
         super();
+        setOpaque(false);
         eventListViewSupport = new EventListViewSupport<E>(model);
         getModel().addListEventListener(listener);
         getSelectionModel().addSelectionListener(selectionListener);
@@ -232,6 +233,7 @@ public abstract class AbstractEventListView<E>
         contextMenu.add(getRemoveAllAction());
 
         toolBar = new IdToolBar();
+        toolBar.setOpaque(false);
         toolBar.setBorder(new EmptyBorder(0, 0, 0, 0));
         toolBar.add(getAddAction());
         toolBar.add(getRemoveAction());
@@ -529,6 +531,7 @@ public abstract class AbstractEventListView<E>
     protected final JPanel createToolBarPanel()
     {
         JPanel panel = new JPanel();
+        panel.setOpaque(false);
         panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
         panel.add(getLabel());
         panel.add(Box.createGlue());

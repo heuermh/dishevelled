@@ -132,6 +132,7 @@ public class ElementsTable<E>
     private JPanel createTablePanel()
     {
         JPanel panel = new JPanel();
+        panel.setOpaque(false);
         panel.setLayout(new BorderLayout());
         panel.add("Center", new JScrollPane(table));
         return panel;
