@@ -40,6 +40,7 @@ import javax.swing.Box;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 import javax.swing.JToolBar;
 import javax.swing.WindowConstants;
 
@@ -175,7 +176,7 @@ final class VariationAction extends AbstractCyAction
                 }
             });
 
-        toolBar.add(new AbstractAction("Annotate Variation Consequences...")
+        toolBar.add(new AbstractAction("Predict Variation Consequences...")
             {
                 @Override
                 public void actionPerformed(final ActionEvent event)
@@ -193,8 +194,18 @@ final class VariationAction extends AbstractCyAction
                 }
             });
 
+        VariationModel model = new VariationModel();
+        FeatureView featureView = new FeatureView(model);
+        VariationView variationView = new VariationView(model);
+        VariationConsequenceView variationConsequenceView = new VariationConsequenceView(model);
+        
+        JTabbedPane tabbedPane = new JTabbedPane();
+        tabbedPane.add("Features", featureView);
+        tabbedPane.add("Variations", variationView);
+        tabbedPane.add("Consequences", variationConsequenceView);
+
         contentPane.add("North", toolBar);
-        contentPane.add("Center", Box.createGlue());
+        contentPane.add("Center", tabbedPane);
         dialog.setContentPane(contentPane);
 
         dialog.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);

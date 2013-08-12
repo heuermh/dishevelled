@@ -25,13 +25,30 @@ package org.dishevelled.variation.cytoscape3.internal;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-import java.util.Map;
+import java.awt.Component;
+
+import java.awt.event.ActionEvent;
+
+import java.util.ArrayList;
+
+import javax.swing.AbstractAction;
+import javax.swing.JFileChooser;
+import javax.swing.JPopupMenu;
+
+import ca.odell.glazedlists.EventList;
+import ca.odell.glazedlists.GlazedLists;
+import ca.odell.glazedlists.gui.TableFormat;
+
+import org.dishevelled.eventlist.view.CountLabel;
+import org.dishevelled.eventlist.view.ElementsTable;
+
+import org.dishevelled.iconbundle.tango.TangoProject;
+
+import org.dishevelled.identify.IdentifiableAction;
 
 import org.dishevelled.layout.LabelFieldPanel;
 
-import org.dishevelled.variation.interval.Interval;
-
-import org.dishevelled.variation.interval.tree.CenteredIntervalTree;
+import org.dishevelled.variation.Feature;
 
 /**
  * Feature view.
@@ -39,18 +56,99 @@ import org.dishevelled.variation.interval.tree.CenteredIntervalTree;
 final class FeatureView
     extends LabelFieldPanel
 {
-    FeatureView(final FeatureIndex featureIndex)
+    /** Model. */
+    private final VariationModel model;
+
+    /** Feature table. */
+    private final FeatureTable featureTable;
+
+    /** Refresh action. */
+    private final IdentifiableAction refresh = new IdentifiableAction("Refresh...", TangoProject.VIEW_REFRESH)
+        {
+            @Override
+            public void actionPerformed(final ActionEvent event)
+            {
+                refresh();
+            }
+        };
+
+    // todo:  need to add node column
+    /** Table property names. */
+    private static final String[] PROPERTY_NAMES = { "species", "reference", "identifier", "name", "start", "end", "strand" };
+
+    /** Table column labels. */
+    private static final String[] COLUMN_LABELS = { "Species", "Reference", "Identifier", "Region", "Start", "End", "Strand" };
+
+    /** Table format. */
+    private static final TableFormat<Feature> TABLE_FORMAT = GlazedLists.tableFormat(Feature.class, PROPERTY_NAMES, COLUMN_LABELS);
+
+
+    /**
+     * Create a new feature view with the specified model.
+     *
+     * @param model model, must not be null
+     */
+    FeatureView(final VariationModel model)
     {
         super();
-        checkNotNull(featureIndex);
+        setOpaque(false);
+        this.model = model;
+        featureTable = new FeatureTable(this.model.features());
 
-        addField("Nodes with features:", String.valueOf(featureIndex.size()));
+        layoutComponents();
+    }
+
+
+    /**
+     * Layout components.
+     */
+    private void layoutComponents()
+    {
+        addField("Nodes:", "32");
+        addField("Nodes with features:", new CountLabel<Feature>(model.features()));
         addSpacing(12);
-        addLabel("Intervals:");
-        for (Map.Entry<String, CenteredIntervalTree> entry : featureIndex.intervalTrees().entrySet())
+        addField("Feature service:", "Ensembl REST client");
+        addField("Endpoint:", "http:///beta.rest.ensembl.org/");
+        addField("Species:", "human");
+        addField("Reference:", "GRCh37");
+        addSpacing(12);
+        addFinalField(featureTable);
+    }
+
+    /**
+     * Refresh.
+     */
+    private void refresh()
+    {
+        // empty
+    }
+
+    /**
+     * Feature table.
+     */
+    private class FeatureTable extends ElementsTable<Feature>
+    {
+
+        /**
+         * Create a new feature table with the specified list of features.
+         *
+         * @param features list of features, must not be null
+         */
+        FeatureTable(final EventList<Feature> features)
         {
-            addField(entry.getKey(), String.valueOf(entry.getValue().count(Interval.atLeast(0)))); // will open interval searches work?
+            super("Features:", features, TABLE_FORMAT);
+            getAddAction().setEnabled(false);
+            getPasteAction().setEnabled(false);
+
+            Component refreshContextMenuComponent = getContextMenu().add(refresh);
+            // place at index 8 before add action
+            getContextMenu().remove(refreshContextMenuComponent);
+            getContextMenu().add(refreshContextMenuComponent, 8);
+
+            Component refreshToolBarComponent = getToolBar().add(refresh);
+            // place at index 0 before add action
+            getToolBar().remove(refreshToolBarComponent);
+            getToolBar().add(refreshToolBarComponent, 0);
         }
-        addFinalSpacing();
     }
 }
