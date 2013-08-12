@@ -23,14 +23,13 @@
 */
 package org.dishevelled.variation.cytoscape3.internal;
 
-import static org.dishevelled.variation.cytoscape3.internal.VariationUtils.addConsequenceCounts;
 import static org.dishevelled.variation.cytoscape3.internal.VariationUtils.addCount;
 import static org.dishevelled.variation.cytoscape3.internal.VariationUtils.ensemblGeneId;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-import java.util.ArrayList;
 import java.util.List;
+
 import org.apache.commons.lang.StringUtils;
 
 import org.cytoscape.model.CyNetwork;
@@ -43,15 +42,13 @@ import org.dishevelled.variation.Feature;
 import org.dishevelled.variation.FeatureService;
 import org.dishevelled.variation.Variation;
 import org.dishevelled.variation.VariationService;
-import org.dishevelled.variation.VariationConsequence;
-import org.dishevelled.variation.VariationConsequenceService;
 
 /**
- * Annotate variation consequences task.
+ * Add variations task.
  *
  * @author  Michael Heuer
  */
-final class AnnotateVariationConsequencesTask
+final class AddVariationsTask
     extends AbstractTask
 {
     /** Variation model. */
@@ -63,39 +60,32 @@ final class AnnotateVariationConsequencesTask
     /** Variation service. */
     private final VariationService variationService;
 
-    /** Variation consequence service. */
-    private final VariationConsequenceService variationConsequenceService;
-
 
     /**
-     * Create a new annotate variation consequences task.
+     * Create a new add variations task.
      *
      * @param model model, must not be null
      * @param featureService feature service, must not be null
      * @param variationService variation service, must not be null
-     * @param variationConsequenceService variation consequence service, must not be null
      */
-    AnnotateVariationConsequencesTask(final VariationModel model,
-                                      final FeatureService featureService,
-                                      final VariationService variationService,
-                                      final VariationConsequenceService variationConsequenceService)
+    AddVariationsTask(final VariationModel model,
+                      final FeatureService featureService,
+                      final VariationService variationService)
     {
         checkNotNull(model);
         checkNotNull(featureService);
         checkNotNull(variationService);
-        checkNotNull(variationConsequenceService);
 
         this.model = model;
         this.featureService = featureService;
         this.variationService = variationService;
-        this.variationConsequenceService = variationConsequenceService;
     }
 
 
     @Override
     public void run(final TaskMonitor taskMonitor)
     {
-        taskMonitor.setTitle("Annotate variation consequences");
+        taskMonitor.setTitle("Add variations");
         taskMonitor.setProgress(0.0d);
 
         List<CyNode> nodes = model.getNetwork().getNodeList();
@@ -111,22 +101,45 @@ final class AnnotateVariationConsequencesTask
                 {
                     taskMonitor.setStatusMessage("Retrieving variations associated with Ensembl Gene " + ensemblGeneId + " in the region " + feature.getName() + ":" + feature.getStart() + "-" + feature.getEnd() + ":" + feature.getStrand() + "...");
                     List<Variation> variations = variationService.variations(feature);
+                    addCount(node, model.getNetwork(), "variation_count", variations.size());
                     taskMonitor.setStatusMessage("Found " + variations.size() + " variations associated with Ensembl Gene " + ensemblGeneId);
-
-                    List<VariationConsequence> allVariationConsequences = new ArrayList<VariationConsequence>(variations.size());
-                    for (Variation variation : variations)
-                    {
-                        taskMonitor.setStatusMessage("Retrieving variation consequences associated with variation " + variation.getIdentifier() + "...");
-                        List<VariationConsequence> variationConsequences = variationConsequenceService.consequences(variation);
-                        allVariationConsequences.addAll(variationConsequences);
-                        taskMonitor.setStatusMessage("Found " + variationConsequences.size() + " variation consequences associated with variation " + variation.getIdentifier());
-                    }
-                    addCount(node, model.getNetwork(), "variation_consequence_count", allVariationConsequences.size());
-                    addConsequenceCounts(node, model.getNetwork(), allVariationConsequences);
                 }
             }
             taskMonitor.setProgress(i / (double) size);
         }
         taskMonitor.setProgress(1.0d);
     }
+
+    /*
+
+      Ensembl REST feature endpoint doesn't provide proper variation feature type , all feature_type are 'variant'
+
+    private void addFeatureCounts(final CyNode node, final CyNetwork network, final List<Variation> variations)
+    {
+        Domain sf = sequenceFeatures();
+        Map<String, Concept> indexByName = indexByName(sf);
+
+        Authority so = sf.getAuthority();
+        Assignable assignableNode = new AssignableNode(node);
+        Set<Evidence> evidence = ImmutableSet.of(new Evidence("IEA", 1.0d, 1.0d));
+        for (Variation variation : variations)
+        {
+            so.createAssignment(indexByName.get(variation.getFeatureType()), assignableNode, evidence);
+        }
+
+        CyTable table = network.getDefaultNodeTable();
+        CyRow row = table.getRow(node.getSUID());
+        for (Map.Entry<Concept, Integer> entry : countAssignments(domain))
+        {
+            Concept concept = entry.getKey();
+            Integer count = entry.getValue();
+
+            if (table.getColumn(concept.getName()) == null)
+            {
+                table.createColumn(concept.getName(), Integer.class, false);
+            }
+            row.set(concept.getName(), count);
+        }
+    }
+    */
 }

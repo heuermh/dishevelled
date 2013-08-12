@@ -31,15 +31,13 @@ import org.cytoscape.work.AbstractTaskFactory;
 import org.cytoscape.work.TaskIterator;
 
 import org.dishevelled.variation.FeatureService;
-import org.dishevelled.variation.VariationService;
-import org.dishevelled.variation.VariationConsequenceService;
 
 /**
- * Annotate variation consequences task factory.
+ * Retrieve features task factory.
  *
  * @author  Michael Heuer
  */
-final class AnnotateVariationConsequencesTaskFactory
+final class RetrieveFeaturesTaskFactory
     extends AbstractTaskFactory
 {
     /** Variation model. */
@@ -47,25 +45,24 @@ final class AnnotateVariationConsequencesTaskFactory
 
 
     /**
-     * Create a new annotate variation consequences task factory.
+     * Create a new retrieve features task factory.
      *
      * @param model model, must not be null
      */
-    AnnotateVariationConsequencesTaskFactory(final VariationModel model)
+    RetrieveFeaturesTaskFactory(final VariationModel model)
     {
         checkNotNull(model);
         this.model = model;
     }
+
 
     @Override
     public TaskIterator createTaskIterator()
     {
         // hmm...
         FeatureService featureService = null;
-        VariationService variationService = null;
-        VariationConsequenceService variationConsequenceService = null;
 
-        AnnotateVariationConsequencesTask annotateVariationConsequencesTask = new AnnotateVariationConsequencesTask(model, featureService, variationService, variationConsequenceService);
-        return new TaskIterator(annotateVariationConsequencesTask);
+        RetrieveFeaturesTask retrieveFeaturesTask = new RetrieveFeaturesTask(model, featureService);
+        return new TaskIterator(retrieveFeaturesTask);
     }
 }

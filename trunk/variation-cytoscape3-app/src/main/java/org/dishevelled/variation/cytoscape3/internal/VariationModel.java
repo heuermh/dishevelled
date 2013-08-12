@@ -23,10 +23,15 @@
 */
 package org.dishevelled.variation.cytoscape3.internal;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
+
 import java.util.ArrayList;
 
 import ca.odell.glazedlists.EventList;
 import ca.odell.glazedlists.GlazedLists;
+
+import org.cytoscape.model.CyNetwork;
 
 import org.dishevelled.variation.Feature;
 import org.dishevelled.variation.Variation;
@@ -37,6 +42,24 @@ import org.dishevelled.variation.VariationConsequence;
  */
 final class VariationModel
 {
+    /** Species. */
+    private String species;
+
+    /** Reference. */
+    private String reference;
+
+    /** Ensembl gene id column. */
+    private String ensemblGeneIdColumn;
+
+    /** True if variations from only canonical transcripts should be included. */
+    private boolean canonical;
+
+    /** True if somatic variations should be included. */
+    private boolean somatic;
+
+    /** Current network. */
+    private CyNetwork network;
+
     /** List of features. */
     private final EventList<Feature> features;
 
@@ -46,17 +69,107 @@ final class VariationModel
     /** List of variation consequences. */
     private final EventList<VariationConsequence> variationConsequences;
 
+    /** Property change support. */
+    private final PropertyChangeSupport propertyChangeSupport;
+
+    private static final String DEFAULT_SPECIES = "human";
+    private static final String DEFAULT_REFERENCE = "GRCh37";
+    private static final String DEFAULT_ENSEMBL_GENE_ID_COLUMN = "ensembl";
+    private static final boolean DEFAULT_CANONICAL = true;
+    private static final boolean DEFAULT_SOMATIC = false;
 
     /**
      * Create a new variation model.
      */
     VariationModel()
     {
+        this.species = DEFAULT_SPECIES;
+        this.reference = DEFAULT_REFERENCE;
+        this.ensemblGeneIdColumn = DEFAULT_ENSEMBL_GENE_ID_COLUMN;
+        this.canonical = DEFAULT_CANONICAL;
+        this.somatic = DEFAULT_SOMATIC;
+        this.network = null;
         features = GlazedLists.eventList(new ArrayList<Feature>());
         variations = GlazedLists.eventList(new ArrayList<Variation>());
         variationConsequences = GlazedLists.eventList(new ArrayList<VariationConsequence>());
+
+        propertyChangeSupport = new PropertyChangeSupport(this);
     }
 
+
+    // bound properties
+
+    public String getSpecies()
+    {
+        return species;
+    }
+
+    public void setSpecies(final String species)
+    {
+        String oldSpecies = this.species;
+        this.species = species;
+        propertyChangeSupport.firePropertyChange("species", this.species, oldSpecies);
+    }
+
+    public String getReference()
+    {
+        return reference;
+    }
+
+    public void setReference(final String reference)
+    {
+        String oldReference = this.reference;
+        this.reference = reference;
+        propertyChangeSupport.firePropertyChange("reference", this.reference, oldReference);
+    }
+
+    public String getEnsemblGeneIdColumn()
+    {
+        return ensemblGeneIdColumn;
+    }
+
+    public void setEnsemblGeneIdColumn(final String ensemblGeneIdColumn)
+    {
+        String oldEnsemblGeneIdColumn = this.ensemblGeneIdColumn;
+        this.ensemblGeneIdColumn = ensemblGeneIdColumn;
+        propertyChangeSupport.firePropertyChange("ensemblGeneIdColumn", this.ensemblGeneIdColumn, oldEnsemblGeneIdColumn);
+    }
+
+    public boolean isCanonical()
+    {
+        return canonical;
+    }
+
+    public void setCanonical(final boolean canonical)
+    {
+        boolean oldCanonical = this.canonical;
+        this.canonical = canonical;
+        propertyChangeSupport.firePropertyChange("canonical", this.canonical, oldCanonical);
+    }
+
+    public boolean isSomatic()
+    {
+        return somatic;
+    }
+
+    public void setSomatic(final boolean somatic)
+    {
+        boolean oldSomatic = this.somatic;
+        this.somatic = somatic;
+        propertyChangeSupport.firePropertyChange("somatic", this.somatic, oldSomatic);
+    }
+
+    public CyNetwork getNetwork()
+    {
+        return network;
+    }
+
+    public void setNetwork(final CyNetwork network)
+    {
+        CyNetwork oldNetwork = this.network;
+        this.network = network;
+        propertyChangeSupport.firePropertyChange("network", this.network, oldNetwork);
+    }
 
     /**
      * Return the list of features for this variation model.
@@ -86,5 +199,25 @@ final class VariationModel
     EventList<VariationConsequence> variationConsequences()
     {
         return variationConsequences;
+    }
+
+    public void addPropertyChangeListener(final PropertyChangeListener propertyChangeListener)
+    {
+        propertyChangeSupport.addPropertyChangeListener(propertyChangeListener);
+    }
+
+    public void addPropertyChangeListener(final String propertyName, final PropertyChangeListener propertyChangeListener)
+    {
+        propertyChangeSupport.addPropertyChangeListener(propertyName, propertyChangeListener);
+    }
+
+    public void removePropertyChangeListener(final PropertyChangeListener propertyChangeListener)
+    {
+        propertyChangeSupport.removePropertyChangeListener(propertyChangeListener);
+    }
+
+    public void removePropertyChangeListener(final String propertyName, final PropertyChangeListener propertyChangeListener)
+    {
+        propertyChangeSupport.removePropertyChangeListener(propertyName, propertyChangeListener);
     }
 }

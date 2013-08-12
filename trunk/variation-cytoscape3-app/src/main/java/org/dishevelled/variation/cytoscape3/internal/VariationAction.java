@@ -27,6 +27,8 @@ import static javax.swing.SwingUtilities.windowForComponent;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
+import static org.dishevelled.variation.cytoscape3.internal.VariationUtils.installCloseKeyBinding;
+
 import java.awt.BorderLayout;
 import java.awt.Component;
 
@@ -51,12 +53,6 @@ import org.cytoscape.application.swing.AbstractCyAction;
 import org.cytoscape.model.CyNetwork;
 import org.cytoscape.work.swing.DialogTaskManager;
 
-import org.dishevelled.variation.FeatureService;
-import org.dishevelled.variation.Variation;
-import org.dishevelled.variation.VariationConsequenceService;
-import org.dishevelled.variation.VariationConsequencePredictionService;
-import org.dishevelled.variation.VariationService;
-
 /**
  * Variation action.
  *
@@ -70,52 +66,23 @@ final class VariationAction extends AbstractCyAction
     /** Dialog task manager. */
     private final DialogTaskManager dialogTaskManager;
 
-    /** Feature service. */
-    private final FeatureService featureService;
-
-    /** Variation consequence service. */
-    private final VariationConsequenceService variationConsequenceService;
-
-    /** Variation consequence prediction service. */
-    private final VariationConsequencePredictionService variationConsequencePredictionService;
-
-    /** Variation service. */
-    private final VariationService variationService;
-
 
     /**
      * Create a new variation action.
      *
      * @param applicationManager application manager, must not be null
      * @param dialogTaskManager dialog task manager, must not be null
-     * @param featureService feature service, must not be null
-     * @param variationConsequenceService variation consequence service, must not be null
-     * @param variationConsequencePredictionService variation consequence prediction service, must not be null
-     * @param variationService variation service, must not be null
      */
     VariationAction(final CyApplicationManager applicationManager,
-                    final DialogTaskManager dialogTaskManager,
-                    final FeatureService featureService,
-                    final VariationConsequenceService variationConsequenceService,
-                    final VariationConsequencePredictionService variationConsequencePredictionService,
-                    final VariationService variationService)
+                    final DialogTaskManager dialogTaskManager)
     {
         super("Variation");
         setPreferredMenu("Apps");
 
         checkNotNull(applicationManager);
         checkNotNull(dialogTaskManager);
-        checkNotNull(featureService);
-        checkNotNull(variationConsequenceService);
-        checkNotNull(variationConsequencePredictionService);
-        checkNotNull(variationService);
-
         this.applicationManager = applicationManager;
         this.dialogTaskManager = dialogTaskManager;
-        this.featureService = featureService;
-        this.variationConsequenceService = variationConsequenceService;
-        this.variationConsequencePredictionService = variationConsequencePredictionService;
-        this.variationService = variationService;
     }
 
 
@@ -142,6 +109,7 @@ final class VariationAction extends AbstractCyAction
         contentPane.setBorder(new EmptyBorder(12, 12, 12, 12));
         contentPane.setLayout(new BorderLayout());
 
+        /*
         JToolBar toolBar = new JToolBar();
         toolBar.add(new AbstractAction("Annotate Known Variations...")
             {
@@ -156,7 +124,7 @@ final class VariationAction extends AbstractCyAction
                                                                                                                                    featureService,
                                                                                                                                    variationService);
                     dialogTaskManager.execute(annotateKnownVariationsTaskFactory.createTaskIterator());
-                }
+3                }
             });
 
         toolBar.add(new AbstractAction("Annotate Known Variation Consequences...")
@@ -193,24 +161,22 @@ final class VariationAction extends AbstractCyAction
                     dialogTaskManager.execute(annotateVariationConsequencesTaskFactory.createTaskIterator());
                 }
             });
-
-        VariationModel model = new VariationModel();
-        FeatureView featureView = new FeatureView(model);
-        VariationView variationView = new VariationView(model);
-        VariationConsequenceView variationConsequenceView = new VariationConsequenceView(model);
+        */
+        VariationApp app = new VariationApp(dialogTaskManager);
         
         JTabbedPane tabbedPane = new JTabbedPane();
-        tabbedPane.add("Features", featureView);
-        tabbedPane.add("Variations", variationView);
-        tabbedPane.add("Consequences", variationConsequenceView);
+        tabbedPane.add("Config", app.configView());
+        tabbedPane.add("Features", app.featureView());
+        tabbedPane.add("Variations", app.variationView());
+        tabbedPane.add("Consequences", app.variationConsequenceView());
 
-        contentPane.add("North", toolBar);
+        //contentPane.add("North", toolBar);
         contentPane.add("Center", tabbedPane);
         dialog.setContentPane(contentPane);
 
         dialog.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
-        //installCloseKeyBinding(dialog);
-        dialog.setBounds(200, 200, 600, 400);
+        installCloseKeyBinding(dialog);
+        dialog.setBounds(200, 200, 888, 500);
         dialog.setVisible(true);
     }
 }

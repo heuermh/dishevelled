@@ -31,6 +31,19 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import java.awt.Toolkit;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.WindowEvent;
+
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.KeyStroke;
+import javax.swing.JComponent;
+import javax.swing.JDialog;
+import javax.swing.JRootPane;
+
 import com.google.common.collect.ImmutableSet;
 
 import org.cytoscape.model.CyNetwork;
@@ -90,6 +103,28 @@ final class VariationUtils
         {
             addCount(node, network, entry.getKey().getName(), entry.getValue());
         }
+    }
+
+    /**
+     * Install a close action binding to <code>Ctrl-C</code>/<code>Command-C</code> for the specified dialog.
+     *
+     * @param dialog dialog, must not be null
+     */
+    static void installCloseKeyBinding(final JDialog dialog)
+    {
+        Action close = new AbstractAction()
+            {
+                @Override
+                public void actionPerformed(final ActionEvent event)
+                {
+                    dialog.dispatchEvent(new WindowEvent(dialog, WindowEvent.WINDOW_CLOSING));
+                }
+            };
+        int menuKeyMask = Toolkit.getDefaultToolkit().getMenuShortcutKeyMask();
+        KeyStroke closeStroke = KeyStroke.getKeyStroke(KeyEvent.VK_W, menuKeyMask);
+        JRootPane rootPane = dialog.getRootPane();
+        rootPane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(closeStroke, "close");
+        rootPane.getActionMap().put("close", close);
     }
 
     private static final class AssignableNode extends AbstractAssignable

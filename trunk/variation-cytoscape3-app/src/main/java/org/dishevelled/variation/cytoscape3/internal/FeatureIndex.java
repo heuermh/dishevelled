@@ -45,8 +45,6 @@ import org.dishevelled.variation.interval.tree.CenteredIntervalTree;
 
 /*
 
-  Add list of variations to support VariationView
-  Rename to VariationModel or similar and tie into current CyNetwork via event listeners
   CenteredIntervalTree is immutable, might need to use mutable interval tree from SnpEff to keep up with changes
 
  */

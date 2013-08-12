@@ -46,17 +46,8 @@ import org.dishevelled.variation.FeatureService;
 final class RetrieveFeaturesTask
     extends AbstractTask
 {
-    /** Species. */
-    private final String species;
-
-    /** Reference. */
-    private final String reference;
-
-    /** Ensembl gene id column. */
-    private final String ensemblGeneIdColumn;
-
-    /** Network. */
-    private final CyNetwork network;
+    /** Variation model. */
+    private final VariationModel model;
 
     /** Feature service. */
     private final FeatureService featureService;
@@ -65,28 +56,16 @@ final class RetrieveFeaturesTask
     /**
      * Create a new retrieve features task.
      *
-     * @param species species, must not be null
-     * @param reference reference, must not be null
-     * @param ensemblGeneIdColumn ensembl gene id column, must not be null
+     * @param model model, must not be null
      * @param network network, must not be null
      * @param featureService feature service, must not be null
      */
-    RetrieveFeaturesTask(final String species,
-                         final String reference,
-                         final String ensemblGeneIdColumn,
-                         final CyNetwork network,
+    RetrieveFeaturesTask(final VariationModel model,
                          final FeatureService featureService)
     {
-        checkNotNull(species);
-        checkNotNull(reference);
-        checkNotNull(ensemblGeneIdColumn);
-        checkNotNull(network);
+        checkNotNull(model);
         checkNotNull(featureService);
-
-        this.species = species;
-        this.reference = reference;
-        this.ensemblGeneIdColumn = ensemblGeneIdColumn;
-        this.network = network;
+        this.model = model;
         this.featureService = featureService;
     }
 
@@ -98,15 +77,15 @@ final class RetrieveFeaturesTask
         taskMonitor.setProgress(0.0d);
         FeatureIndex featureIndex = new FeatureIndex();
 
-        List<CyNode> nodes = network.getNodeList();
+        List<CyNode> nodes = model.getNetwork().getNodeList();
         for (int i = 0, size = nodes.size(); i < size; i++)
         {
             CyNode node = nodes.get(i);
-            String ensemblGeneId = ensemblGeneId(node, network, ensemblGeneIdColumn);
+            String ensemblGeneId = ensemblGeneId(node, model.getNetwork(), model.getEnsemblGeneIdColumn());
             if (ensemblGeneId != null)
             {
                 taskMonitor.setStatusMessage("Retrieving genome feature for Ensembl Gene " + ensemblGeneId + "...");
-                Feature feature = featureService.feature(species, reference, ensemblGeneId);
+                Feature feature = featureService.feature(model.getSpecies(), model.getReference(), ensemblGeneId);
                 if (feature != null)
                 {
                     featureIndex.add(node, feature);
