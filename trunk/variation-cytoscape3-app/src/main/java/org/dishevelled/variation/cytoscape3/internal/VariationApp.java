@@ -29,6 +29,9 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
 
+import com.google.common.collect.ImmutableList;
+
+import org.cytoscape.application.CyApplicationManager;
 import org.cytoscape.work.swing.DialogTaskManager;
 
 /**
@@ -36,14 +39,29 @@ import org.cytoscape.work.swing.DialogTaskManager;
  */
 final class VariationApp
 {
+    /** Variation model. */
     private final VariationModel model;
+
+    /** Config view. */
     private final ConfigView configView;
+
+    /** Feature view. */
     private final FeatureView featureView;
+
+    /** Variation view. */
     private final VariationView variationView;
+
+    /** Variation consequences view. */
     private final VariationConsequenceView variationConsequenceView;
+
+    /** Application manager. */
+    private final CyApplicationManager applicationManager;
+
+    /** Dialog task manager. */
     private final DialogTaskManager dialogTaskManager;
 
-    private final AbstractAction retrieveFeatures = new AbstractAction()
+    /** Retrieve features action. */
+    private final AbstractAction retrieveFeatures = new AbstractAction("Retrieve features...")
         {
             @Override
             public void actionPerformed(final ActionEvent event)
@@ -52,7 +70,8 @@ final class VariationApp
             }
         };
 
-    private final AbstractAction addVariations = new AbstractAction()
+    /** Add variations action. */
+    private final AbstractAction addVariations = new AbstractAction("Add variations...")
         {
             @Override
             public void actionPerformed(final ActionEvent event)
@@ -61,7 +80,8 @@ final class VariationApp
             }
         };
 
-    private final AbstractAction annotateVariationConsequences = new AbstractAction()
+    /** Annotate variation consequences action. */
+    private final AbstractAction annotateVariationConsequences = new AbstractAction("Annotate variation consequences...")
         {
             @Override
             public void actionPerformed(final ActionEvent event)
@@ -70,7 +90,8 @@ final class VariationApp
             }
         };
 
-    private final AbstractAction predictVariationConsequences = new AbstractAction()
+    /** Predict variation consequences action. */
+    private final AbstractAction predictVariationConsequences = new AbstractAction("Predict variation consequences...")
         {
             @Override
             public void actionPerformed(final ActionEvent event)
@@ -79,10 +100,19 @@ final class VariationApp
             }
         };
 
-    VariationApp(final DialogTaskManager dialogTaskManager)
+
+    /**
+     * Create a new variation app.
+     *
+     * @param applicationManager application manager, must not be null
+     * @param dialogTaskManager dialog task manager
+     */
+    VariationApp(final CyApplicationManager applicationManager, final DialogTaskManager dialogTaskManager)
     {
+        checkNotNull(applicationManager);
         checkNotNull(dialogTaskManager);
 
+        this.applicationManager = applicationManager;
         this.dialogTaskManager = dialogTaskManager;
 
         model = new VariationModel();
@@ -90,59 +120,111 @@ final class VariationApp
         featureView = new FeatureView(model);
         variationView = new VariationView(model);
         variationConsequenceView = new VariationConsequenceView(model);
+
+        System.out.println("setting current network to " + applicationManager.getCurrentNetwork() + "...");
+        model.setNetwork(applicationManager.getCurrentNetwork());
     }
 
+
+    /***
+     * Return the variation model.
+     *
+     * @return the variation model
+     */
     VariationModel model()
     {
         return model;
     }
 
+    /**
+     * Return the config view.
+     *
+     * @return the config view
+     */
     ConfigView configView()
     {
         return configView;
     }
 
+    /**
+     * Return the feature view.
+     *
+     * @return the feature view
+     */
     FeatureView featureView()
     {
         return featureView;
     }
 
+    /**
+     * Return the variation view.
+     *
+     * @return the variation view
+     */
     VariationView variationView()
     {
         return variationView;
     }
 
+    /**
+     * Return the variation consequences view.
+     *
+     * @return the variation consequences view
+     */
     VariationConsequenceView variationConsequenceView()
     {
         return variationConsequenceView;
     }
 
+    /**
+     * Retrieve features.
+     */
     void retrieveFeatures()
     {
         //
         // Task factories should be singletons and should be provided by OSGi
         // Task factories should instantiate all the task's dependencies before calling createTaskIterator
         // Tunable parameters on Task seem better suited for primitives
+        // Some implementations might need parameters; e.g. VCF file for VCF reader variation service
         //
         RetrieveFeaturesTaskFactory taskFactory = new RetrieveFeaturesTaskFactory(model);
         dialogTaskManager.execute(taskFactory.createTaskIterator());
     }
 
+    /**
+     * Add variations.
+     */
     void addVariations()
     {
         AddVariationsTaskFactory taskFactory = new AddVariationsTaskFactory(model);
         dialogTaskManager.execute(taskFactory.createTaskIterator());
     }
 
+    /**
+     * Annotate variation consequences.
+     */
     void annotateVariationConsequences()
     {
         AnnotateVariationConsequencesTaskFactory taskFactory = new AnnotateVariationConsequencesTaskFactory(model);
         dialogTaskManager.execute(taskFactory.createTaskIterator());
     }
 
+    /**
+     * Predict variation consequences.
+     */
     void predictVariationConsequences()
     {
         PredictVariationConsequencesTaskFactory taskFactory = new PredictVariationConsequencesTaskFactory(model);
         dialogTaskManager.execute(taskFactory.createTaskIterator());
+    }
+
+    /**
+     * Return the tool bar actions.
+     *
+     * @return the tool bar actions
+     */
+    Iterable<AbstractAction> getToolBarActions()
+    {
+        return ImmutableList.of(retrieveFeatures, addVariations, annotateVariationConsequences, predictVariationConsequences);
     }
 }

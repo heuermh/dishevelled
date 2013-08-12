@@ -108,7 +108,7 @@ final class VariationModel
     {
         String oldSpecies = this.species;
         this.species = species;
-        propertyChangeSupport.firePropertyChange("species", this.species, oldSpecies);
+        propertyChangeSupport.firePropertyChange("species", oldSpecies, this.species);
     }
 
     public String getReference()
@@ -120,7 +120,7 @@ final class VariationModel
     {
         String oldReference = this.reference;
         this.reference = reference;
-        propertyChangeSupport.firePropertyChange("reference", this.reference, oldReference);
+        propertyChangeSupport.firePropertyChange("reference", oldReference, this.reference);
     }
 
     public String getEnsemblGeneIdColumn()
@@ -132,7 +132,7 @@ final class VariationModel
     {
         String oldEnsemblGeneIdColumn = this.ensemblGeneIdColumn;
         this.ensemblGeneIdColumn = ensemblGeneIdColumn;
-        propertyChangeSupport.firePropertyChange("ensemblGeneIdColumn", this.ensemblGeneIdColumn, oldEnsemblGeneIdColumn);
+        propertyChangeSupport.firePropertyChange("ensemblGeneIdColumn", oldEnsemblGeneIdColumn, this.ensemblGeneIdColumn);
     }
 
     public boolean isCanonical()
@@ -144,7 +144,7 @@ final class VariationModel
     {
         boolean oldCanonical = this.canonical;
         this.canonical = canonical;
-        propertyChangeSupport.firePropertyChange("canonical", this.canonical, oldCanonical);
+        propertyChangeSupport.firePropertyChange("canonical", oldCanonical, this.canonical);
     }
 
     public boolean isSomatic()
@@ -156,7 +156,7 @@ final class VariationModel
     {
         boolean oldSomatic = this.somatic;
         this.somatic = somatic;
-        propertyChangeSupport.firePropertyChange("somatic", this.somatic, oldSomatic);
+        propertyChangeSupport.firePropertyChange("somatic", oldSomatic, this.somatic);
     }
 
     public CyNetwork getNetwork()
@@ -168,7 +168,7 @@ final class VariationModel
     {
         CyNetwork oldNetwork = this.network;
         this.network = network;
-        propertyChangeSupport.firePropertyChange("network", this.network, oldNetwork);
+        propertyChangeSupport.firePropertyChange("network", oldNetwork, this.network);
     }
 
     /**

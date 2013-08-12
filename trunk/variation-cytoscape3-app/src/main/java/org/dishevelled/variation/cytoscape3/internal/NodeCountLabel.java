@@ -44,6 +44,7 @@ final class NodeCountLabel
             @Override
             public void propertyChange(final PropertyChangeEvent event)
             {
+                System.out.println("heard propertyChange " + event);
                 if (event.getNewValue() instanceof CyNetwork)
                 {
                     CyNetwork network = (CyNetwork) event.getNewValue();
@@ -60,7 +61,7 @@ final class NodeCountLabel
 
     NodeCountLabel(final VariationModel model)
     {
-        super("-", 12);
+        super("-");
         checkNotNull(model);
         model.addPropertyChangeListener("network", propertyChangeListener);
     }
