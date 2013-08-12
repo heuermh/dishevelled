@@ -31,15 +31,14 @@ import org.cytoscape.work.AbstractTaskFactory;
 import org.cytoscape.work.TaskIterator;
 
 import org.dishevelled.variation.FeatureService;
-import org.dishevelled.variation.VariationService;
-import org.dishevelled.variation.VariationConsequenceService;
+import org.dishevelled.variation.VariationConsequencePredictionService;
 
 /**
- * Annotate variation consequences task factory.
+ * Predict variation consequences task factory.
  *
  * @author  Michael Heuer
  */
-final class AnnotateVariationConsequencesTaskFactory
+final class PredictVariationConsequencesTaskFactory
     extends AbstractTaskFactory
 {
     /** Variation model. */
@@ -47,11 +46,11 @@ final class AnnotateVariationConsequencesTaskFactory
 
 
     /**
-     * Create a new annotate variation consequences task factory.
+     * Create a new predict variation consequences task factory.
      *
      * @param model model, must not be null
      */
-    AnnotateVariationConsequencesTaskFactory(final VariationModel model)
+    PredictVariationConsequencesTaskFactory(final VariationModel model)
     {
         checkNotNull(model);
         this.model = model;
@@ -62,10 +61,9 @@ final class AnnotateVariationConsequencesTaskFactory
     {
         // hmm...
         FeatureService featureService = null;
-        VariationService variationService = null;
-        VariationConsequenceService variationConsequenceService = null;
+        VariationConsequencePredictionService variationConsequencePredictionService = null;
 
-        AnnotateVariationConsequencesTask annotateVariationConsequencesTask = new AnnotateVariationConsequencesTask(model, featureService, variationService, variationConsequenceService);
-        return new TaskIterator(annotateVariationConsequencesTask);
+        PredictVariationConsequencesTask predictVariationConsequencesTask = new PredictVariationConsequencesTask(model, featureService, variationConsequencePredictionService);
+        return new TaskIterator(predictVariationConsequencesTask);
     }
 }

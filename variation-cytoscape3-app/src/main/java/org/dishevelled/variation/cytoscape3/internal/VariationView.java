@@ -103,7 +103,8 @@ final class VariationView
      */
     private void layoutComponents()
     {
-        addField("Nodes:", "32");
+        addSpacing(12);
+        addField("Nodes:", new NodeCountLabel(model));
         addField("Nodes with features:", new CountLabel<Feature>(model.features()));
         addField("Variations associated with features:", new CountLabel<Variation>(model.variations()));
         addSpacing(12);
