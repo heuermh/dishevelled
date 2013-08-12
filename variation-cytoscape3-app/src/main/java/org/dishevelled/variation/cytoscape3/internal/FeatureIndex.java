@@ -131,10 +131,4 @@ final class FeatureIndex
         intervalTrees.clear();
         consequences.clear();
     }
-
-    // only for feature view
-    Map<String, CenteredIntervalTree> intervalTrees()
-    {
-        return intervalTrees;
-    }
 }
