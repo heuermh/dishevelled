@@ -30,6 +30,8 @@ import java.util.Random;
 
 import com.google.inject.Inject;
 
+import org.apache.commons.lang.StringUtils;
+
 import org.dishevelled.variation.Feature;
 import org.dishevelled.variation.FeatureService;
 
@@ -42,12 +44,14 @@ final class SyntheticFeatureService
     private final SyntheticGenome genome;
     private final Random random = new Random();
 
+
     @Inject
     SyntheticFeatureService(final SyntheticGenome genome)
     {
         checkNotNull(genome);
         this.genome = genome;
     }
+
 
     @Override
     public Feature feature(final String species, final String reference, final String identifier)
@@ -58,11 +62,14 @@ final class SyntheticFeatureService
         checkArgument(genome.getSpecies().equals(species));
         checkArgument(genome.getReference().equals(reference));
 
+        if (StringUtils.isBlank(identifier))
+        {
+            return null;
+        }
         String name = genome.getNames().get(random.nextInt(genome.getNames().size()));
         int length = genome.getLengths().get(name);
-        int featureLength = 300 + random.nextInt(length/1000 - 300);
         int start = random.nextInt(length);
-        int end = start + featureLength;
+        int end = start + random.nextInt(Math.min(length - start, 100000));
 
         return new Feature(genome.getSpecies(), genome.getReference(), identifier, name, start, end, 1);
     }

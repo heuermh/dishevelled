@@ -26,14 +26,19 @@ package org.dishevelled.variation.synthetic;
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
+import static org.dishevelled.variation.so.SequenceOntology.sequenceVariants;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import com.google.inject.Inject;
 
 import org.dishevelled.variation.Variation;
 import org.dishevelled.variation.VariationConsequence;
 import org.dishevelled.variation.VariationConsequencePredictionService;
+
+import org.dishevelled.vocabulary.Concept;
 
 /**
  * Synthetic variation consequence prediction service.
@@ -42,12 +47,18 @@ final class SyntheticVariationConsequencePredictionService
     implements VariationConsequencePredictionService
 {
     private final SyntheticGenome genome;
+    private final Random random = new Random();
+    private final List<Concept> consequenceTerms;
+
 
     @Inject
     SyntheticVariationConsequencePredictionService(final SyntheticGenome genome)
     {
         checkNotNull(genome);
         this.genome = genome;
+
+        consequenceTerms = new ArrayList<Concept>();
+        consequenceTerms.addAll(sequenceVariants().getConcepts());
     }
 
 
@@ -59,7 +70,7 @@ final class SyntheticVariationConsequencePredictionService
         checkArgument(genome.getReference().equals(variation.getReference()));
 
         List<VariationConsequence> consequences = new ArrayList<VariationConsequence>();
-        String consequenceTerm = "sequence_variant";
+        String consequenceTerm = sample();
         for (String alternateAllele : variation.getAlternateAlleles())
         {
             consequences.add(new VariationConsequence(variation.getSpecies(), variation.getReference(), variation.getIdentifier(),
@@ -69,6 +80,10 @@ final class SyntheticVariationConsequencePredictionService
         return consequences;
     }
 
+    String sample()
+    {
+        return consequenceTerms.get(random.nextInt(consequenceTerms.size())).getName();
+    }
 
     @Override
     public String toString()

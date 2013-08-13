@@ -46,6 +46,7 @@ final class SyntheticVariationService
 {
     private final SyntheticGenome genome;
     private final Random random = new Random();
+    private static final List<String> ALPHABET = ImmutableList.of("A", "T", "C", "G");
 
     @Inject
     SyntheticVariationService(final SyntheticGenome genome)
@@ -64,14 +65,29 @@ final class SyntheticVariationService
         List<Variation> variations = new ArrayList<Variation>();
         for (int i = 0, size = (feature.getEnd() - feature.getStart())/1000; i < size; i++)
         {
-            String referenceAllele = "A";
-            List<String> alternateAlleles = ImmutableList.of("T");
+            String referenceAllele = sample();
+            List<String> alternateAlleles = ImmutableList.of(sample(referenceAllele));
             int start = feature.getStart() + random.nextInt(feature.getEnd() - feature.getStart());
             variations.add(new Variation(genome.getSpecies(), genome.getReference(), null, referenceAllele, alternateAlleles, feature.getName(), start, start, 1));
         }
         return variations;
     }
 
+
+    private String sample()
+    {
+        return ALPHABET.get(random.nextInt(ALPHABET.size()));
+    }
+
+    private String sample(final String ref)
+    {
+        String alt = sample();
+        while (ref.equals(alt))
+        {
+            alt = sample();
+        }
+        return alt;
+    }
 
     @Override
     public String toString()
