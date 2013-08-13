@@ -66,4 +66,10 @@ final class SyntheticFeatureService
 
         return new Feature(genome.getSpecies(), genome.getReference(), identifier, name, start, end, 1);
     }
+
+    @Override
+    public String toString()
+    {
+        return "Synthetic features (" + genome.getSpecies() + " " + genome.getReference() + ")";
+    }
 }

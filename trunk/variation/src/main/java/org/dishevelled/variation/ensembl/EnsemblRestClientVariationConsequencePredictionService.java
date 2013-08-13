@@ -127,4 +127,10 @@ final class EnsemblRestClientVariationConsequencePredictionService
             // ignore
         }
     }
+
+    @Override
+    public String toString()
+    {
+        return "Ensembl REST client VEP (" + species + " " + reference + ")";
+    }
 }

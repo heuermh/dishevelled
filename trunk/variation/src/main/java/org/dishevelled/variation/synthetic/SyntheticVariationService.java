@@ -71,4 +71,11 @@ final class SyntheticVariationService
         }
         return variations;
     }
+
+
+    @Override
+    public String toString()
+    {
+        return "Synthetic variations (" + genome.getSpecies() + " " + genome.getReference() + ")";
+    }
 }
