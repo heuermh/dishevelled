@@ -34,6 +34,13 @@ import com.google.common.collect.ImmutableList;
 import org.cytoscape.application.CyApplicationManager;
 import org.cytoscape.work.swing.DialogTaskManager;
 
+import org.dishevelled.iconbundle.IconBundle;
+
+import org.dishevelled.iconbundle.impl.CachingIconBundle;
+import org.dishevelled.iconbundle.impl.PNGIconBundle;
+
+import org.dishevelled.identify.IdentifiableAction;
+
 import org.dishevelled.variation.FeatureService;
 import org.dishevelled.variation.VariationService;
 import org.dishevelled.variation.VariationConsequenceService;
@@ -65,8 +72,13 @@ final class VariationApp
     /** Dialog task manager. */
     private final DialogTaskManager dialogTaskManager;
 
+    private final IconBundle retrieveIconBundle = new CachingIconBundle(new PNGIconBundle("/org/dishevelled/variation/cytoscape3/internal/retrieve"));
+    private final IconBundle addIconBundle = new CachingIconBundle(new PNGIconBundle("/org/dishevelled/variation/cytoscape3/internal/add"));
+    private final IconBundle annotateIconBundle = new CachingIconBundle(new PNGIconBundle("/org/dishevelled/variation/cytoscape3/internal/annotate"));
+    private final IconBundle predictIconBundle = new CachingIconBundle(new PNGIconBundle("/org/dishevelled/variation/cytoscape3/internal/predict"));
+
     /** Retrieve features action. */
-    private final AbstractAction retrieveFeatures = new AbstractAction("Retrieve features...")
+    private final IdentifiableAction retrieveFeatures = new IdentifiableAction("Retrieve features...", retrieveIconBundle)
         {
             @Override
             public void actionPerformed(final ActionEvent event)
@@ -76,7 +88,7 @@ final class VariationApp
         };
 
     /** Add variations action. */
-    private final AbstractAction addVariations = new AbstractAction("Add variations...")
+    private final IdentifiableAction addVariations = new IdentifiableAction("Add variations...", addIconBundle)
         {
             @Override
             public void actionPerformed(final ActionEvent event)
@@ -86,7 +98,7 @@ final class VariationApp
         };
 
     /** Annotate variation consequences action. */
-    private final AbstractAction annotateVariationConsequences = new AbstractAction("Annotate variation consequences...")
+    private final IdentifiableAction annotateVariationConsequences = new IdentifiableAction("Annotate variation consequences...", annotateIconBundle)
         {
             @Override
             public void actionPerformed(final ActionEvent event)
@@ -96,7 +108,7 @@ final class VariationApp
         };
 
     /** Predict variation consequences action. */
-    private final AbstractAction predictVariationConsequences = new AbstractAction("Predict variation consequences...")
+    private final IdentifiableAction predictVariationConsequences = new IdentifiableAction("Predict variation consequences...", predictIconBundle)
         {
             @Override
             public void actionPerformed(final ActionEvent event)
@@ -234,7 +246,7 @@ final class VariationApp
      *
      * @return the tool bar actions
      */
-    Iterable<AbstractAction> getToolBarActions()
+    Iterable<IdentifiableAction> getToolBarActions()
     {
         return ImmutableList.of(retrieveFeatures, addVariations, annotateVariationConsequences, predictVariationConsequences);
     }

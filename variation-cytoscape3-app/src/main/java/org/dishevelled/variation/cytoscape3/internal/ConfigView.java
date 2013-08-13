@@ -26,6 +26,8 @@ package org.dishevelled.variation.cytoscape3.internal;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JTextField;
 import javax.swing.JPanel;
 
@@ -88,23 +90,23 @@ final class ConfigView
         addField("Reference:", wrap(reference));
         addField("Ensembl gene id column:", wrap(ensemblGeneIdColumn));
         addSpacing(12);
-        addField("Feature service:", model.getFeatureService().toString());
-        addField("Variation service:", model.getVariationService().toString());
-        addField("Consequence service:", model.getVariationConsequenceService().toString());
-        addField("Consequence prediction service:", model.getVariationConsequencePredictionService().toString());
+        addField("Feature service:", wrap(new JComboBox(new String[] { model.getFeatureService().toString() })));
+        addField("Variation service:", wrap(new JComboBox(new String[] { model.getVariationService().toString() })));
+        addField("Consequence service:", wrap(new JComboBox(new String[] { model.getVariationConsequenceService().toString() })));
+        addField("Consequence prediction service:", wrap(new JComboBox(new String[] { model.getVariationConsequencePredictionService().toString() })));
         addSpacing(12);
         addField(" ", canonical);
         addField(" ", somatic);
         addFinalSpacing();
     }
 
-    private JPanel wrap(final JTextField textField)
+    private JPanel wrap(final JComponent component)
     {
         JPanel panel = new JPanel();
         panel.setOpaque(false);
         panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
-        panel.add(textField);
-        panel.add(Box.createHorizontalStrut(20));
+        panel.add(component);
+        panel.add(Box.createHorizontalStrut(48));
         panel.add(Box.createGlue());
         panel.add(Box.createGlue());
         return panel;

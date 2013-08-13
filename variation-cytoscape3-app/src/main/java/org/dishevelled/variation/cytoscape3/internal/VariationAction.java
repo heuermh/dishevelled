@@ -53,6 +53,9 @@ import org.cytoscape.application.swing.AbstractCyAction;
 import org.cytoscape.model.CyNetwork;
 import org.cytoscape.work.swing.DialogTaskManager;
 
+import org.dishevelled.iconbundle.tango.TangoProject;
+
+import org.dishevelled.identify.IdentifiableAction;
 import org.dishevelled.identify.IdToolBar;
 
 import org.dishevelled.variation.FeatureService;
@@ -132,11 +135,12 @@ final class VariationAction extends AbstractCyAction
                                             featureService, variationService, variationConsequenceService, variationConsequencePredictionService);
 
         IdToolBar toolBar = new IdToolBar();
-        for (AbstractAction action : app.getToolBarActions())
+        toolBar.displayIconsAndText();
+        toolBar.setIconSize(TangoProject.MEDIUM);
+        for (IdentifiableAction action : app.getToolBarActions())
         {
             toolBar.add(action);
         }
-        toolBar.displayText(); // switch to displayIconsAndText once actions have icons
 
         // todo:  would be nice to have a submenu in Apps --> Variation --> Retrieve Features... etc.
 
