@@ -145,13 +145,11 @@ final class PredictVariationConsequencesTask
 
                 taskMonitor.setProgress(0.9d + 0.1d * i/(double) size);
             }
-
         }
         finally
         {
-            model.variationConsequences().getReadWriteLock().writeLock().lock();
+            model.variationConsequences().getReadWriteLock().writeLock().unlock();
         }
-
         featureIndex.clear();
         taskMonitor.setProgress(1.0d);
     }
