@@ -66,13 +66,21 @@ final class SyntheticVariationService
         for (int i = 0, size = (feature.getEnd() - feature.getStart())/1000; i < size; i++)
         {
             String referenceAllele = sample();
-            List<String> alternateAlleles = ImmutableList.of(sample(referenceAllele));
+            List<String> alternateAlleles = new ArrayList<String>();
+            alternateAlleles.add(sample(referenceAllele));
+            if (random.nextDouble() < 0.3)
+            {
+                alternateAlleles.add(sample(referenceAllele, alternateAlleles));
+            }
+            if (random.nextDouble() < 0.1)
+            {
+                alternateAlleles.add(sample(referenceAllele, alternateAlleles));
+            }
             int start = feature.getStart() + random.nextInt(feature.getEnd() - feature.getStart());
             variations.add(new Variation(genome.getSpecies(), genome.getReference(), null, referenceAllele, alternateAlleles, feature.getName(), start, start, 1));
         }
         return variations;
     }
-
 
     private String sample()
     {
@@ -85,6 +93,16 @@ final class SyntheticVariationService
         while (ref.equals(alt))
         {
             alt = sample();
+        }
+        return alt;
+    }
+
+    private String sample(final String ref, final List<String> existing)
+    {
+        String alt = sample(ref);
+        while (ref.equals(alt) || existing.contains(alt))
+        {
+            alt = sample(ref);
         }
         return alt;
     }
