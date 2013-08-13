@@ -58,7 +58,6 @@ public final class CyActivator extends AbstractCyActivator
         CyApplicationManager applicationManager = getService(bundleContext, CyApplicationManager.class);
         DialogTaskManager dialogTaskManager = getService(bundleContext, DialogTaskManager.class);
 
-        /*
         Injector injector = Guice.createInjector(new org.dishevelled.variation.synthetic.SyntheticModule());
         //Injector injector = Guice.createInjector(new com.github.heuermh.ensemblrestclient.EnsemblRestClientModule(),
         //                                         new org.dishevelled.variation.ensembl.EnsemblRestClientModule());
@@ -71,11 +70,11 @@ public final class CyActivator extends AbstractCyActivator
         VariationAction variationAction = new VariationAction(applicationManager,
                                                               dialogTaskManager,
                                                               featureService,
+                                                              variationService,
                                                               variationConsequenceService,
-                                                              variationConsequencePredictionService,
-                                                              variationService);
-        */
-        VariationAction variationAction = new VariationAction(applicationManager, dialogTaskManager);
+                                                              variationConsequencePredictionService);
+
+        //VariationAction variationAction = new VariationAction(applicationManager, dialogTaskManager);
 
         Properties properties = new Properties();
         registerService(bundleContext, variationAction, CyAction.class, properties);

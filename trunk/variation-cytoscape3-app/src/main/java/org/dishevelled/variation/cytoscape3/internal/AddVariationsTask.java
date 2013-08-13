@@ -88,24 +88,43 @@ final class AddVariationsTask
         taskMonitor.setTitle("Add variations");
         taskMonitor.setProgress(0.0d);
 
-        List<CyNode> nodes = model.getNetwork().getNodeList();
-        for (int i = 0, size = nodes.size(); i < size; i++)
+        List<CyNode> nodes = model.nodes();
+        model.variations().getReadWriteLock().writeLock().lock();
+        try
         {
-            CyNode node = nodes.get(i);
-            String ensemblGeneId = ensemblGeneId(node, model.getNetwork(), model.getEnsemblGeneIdColumn());
-            if (StringUtils.isNotBlank(ensemblGeneId))
+            for (int i = 0, size = nodes.size(); i < size; i++)
             {
-                taskMonitor.setStatusMessage("Retrieving genome feature for Ensembl Gene " + ensemblGeneId + "...");
-                Feature feature = featureService.feature(model.getSpecies(), model.getReference(), ensemblGeneId);
-                if (feature != null)
+                CyNode node = nodes.get(i);
+                String ensemblGeneId = ensemblGeneId(node, model.getNetwork(), model.getEnsemblGeneIdColumn());
+                if (StringUtils.isNotBlank(ensemblGeneId))
                 {
-                    taskMonitor.setStatusMessage("Retrieving variations associated with Ensembl Gene " + ensemblGeneId + " in the region " + feature.getName() + ":" + feature.getStart() + "-" + feature.getEnd() + ":" + feature.getStrand() + "...");
-                    List<Variation> variations = variationService.variations(feature);
-                    addCount(node, model.getNetwork(), "variation_count", variations.size());
-                    taskMonitor.setStatusMessage("Found " + variations.size() + " variations associated with Ensembl Gene " + ensemblGeneId);
+                    taskMonitor.setStatusMessage("Retrieving genome feature for Ensembl Gene " + ensemblGeneId + "...");
+                    Feature feature = featureService.feature(model.getSpecies(), model.getReference(), ensemblGeneId);
+                    if (feature != null)
+                    {
+                        taskMonitor.setStatusMessage("Retrieving variations associated with Ensembl Gene " + ensemblGeneId + " in the region " + feature.getName() + ":" + feature.getStart() + "-" + feature.getEnd() + ":" + feature.getStrand() + "...");
+                        List<Variation> variations = variationService.variations(feature);
+
+                        // todo:  count doesn't consider existing variations
+                        addCount(node, model.getNetwork(), "variation_count", variations.size());
+                        taskMonitor.setStatusMessage("Found " + variations.size() + " variations associated with Ensembl Gene " + ensemblGeneId);
+
+                        for (Variation variation : variations)
+                        {
+                            // O(n)
+                            if (!model.variations().contains(variation))
+                            {
+                                model.variations().add(variation);
+                            }
+                        }
+                    }
                 }
+                taskMonitor.setProgress(i/(double) size);
             }
-            taskMonitor.setProgress(i / (double) size);
+        }
+        finally
+        {
+            model.variations().getReadWriteLock().writeLock().unlock();
         }
         taskMonitor.setProgress(1.0d);
     }

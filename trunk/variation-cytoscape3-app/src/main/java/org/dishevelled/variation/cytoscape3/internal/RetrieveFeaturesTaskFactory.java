@@ -60,9 +60,9 @@ final class RetrieveFeaturesTaskFactory
     public TaskIterator createTaskIterator()
     {
         // hmm...
-        FeatureService featureService = null;
+        //FeatureService featureService = null;
 
-        RetrieveFeaturesTask retrieveFeaturesTask = new RetrieveFeaturesTask(model, featureService);
+        RetrieveFeaturesTask retrieveFeaturesTask = new RetrieveFeaturesTask(model, model.getFeatureService());
         return new TaskIterator(retrieveFeaturesTask);
     }
 }

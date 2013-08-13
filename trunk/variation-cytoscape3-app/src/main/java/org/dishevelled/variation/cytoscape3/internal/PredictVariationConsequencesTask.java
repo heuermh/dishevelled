@@ -86,51 +86,70 @@ final class PredictVariationConsequencesTask
     {
         taskMonitor.setTitle("Predict variation consequences");
         taskMonitor.setProgress(0.0d);
+
         FeatureIndex featureIndex = new FeatureIndex();
 
-        // allocate 10% of progress to feature fetching
-        List<CyNode> nodes = model.getNetwork().getNodeList();
-        for (int i = 0, size = nodes.size(); i < size; i++)
+        List<CyNode> nodes = model.nodes();
+        model.variationConsequences().getReadWriteLock().writeLock().lock();
+        try
         {
-            CyNode node = nodes.get(i);
-            String ensemblGeneId = ensemblGeneId(node, model.getNetwork(), model.getEnsemblGeneIdColumn());
-            if (ensemblGeneId != null)
+            for (int i = 0, size = nodes.size(); i < size; i++)
             {
-                taskMonitor.setStatusMessage("Retrieving genome feature for Ensembl Gene " + ensemblGeneId + "...");
-                Feature feature = featureService.feature(model.getSpecies(), model.getReference(), ensemblGeneId);
-                if (feature != null)
+                CyNode node = nodes.get(i);
+                String ensemblGeneId = ensemblGeneId(node, model.getNetwork(), model.getEnsemblGeneIdColumn());
+                if (ensemblGeneId != null)
                 {
-                    featureIndex.add(node, feature);
+                    taskMonitor.setStatusMessage("Retrieving genome feature for Ensembl Gene " + ensemblGeneId + "...");
+                    Feature feature = featureService.feature(model.getSpecies(), model.getReference(), ensemblGeneId);
+                    if (feature != null)
+                    {
+                        featureIndex.add(node, feature);
+                    }
                 }
+                taskMonitor.setProgress(0.1d * i/(double) size);            
             }
-            taskMonitor.setProgress(0.1d * i/(double) size);
-        }
-        featureIndex.buildTrees();
+            // todo: need to determine the node <--> feature mapping from model
+            featureIndex.buildTrees();
 
-        // allocate 90% of progress to variation filtering and consequence prediction
-        // todo:  add read lock on variations
-        for (int i = 0, size = model.variations().size(); i < size; i++)
-        {
-            Variation variation = model.variations().get(i);
-            for (Feature hit : featureIndex.hit(variation))
+            // allocate 90% of progress to variation filtering and consequence prediction
+            for (int i = 0, size = model.variations().size(); i < size; i++)
             {
-                taskMonitor.setStatusMessage("Predicting variation consequences for variation " + variation.getName() + ":" + variation.getStart() + "-" + variation.getEnd() + ":" + variation.getStrand() + " " + variation.getAlternateAlleles() + "...");
-                List<VariationConsequence> variationConsequences = variationConsequencePredictionService.predictConsequences(variation);
-                featureIndex.add(hit, variationConsequences);
-                taskMonitor.setStatusMessage("Predicted " + variationConsequences.size() + " variation consequences for variation " + variation.getName() + ":" + variation.getStart() + "-" + variation.getEnd() + ":" + variation.getStrand() + " " + variation.getAlternateAlleles() + "...");
+                Variation variation = model.variations().get(i);
+                for (Feature hit : featureIndex.hit(variation))
+                {
+                    taskMonitor.setStatusMessage("Predicting variation consequences for variation " + variation.getName() + ":" + variation.getStart() + "-" + variation.getEnd() + ":" + variation.getStrand() + " " + variation.getAlternateAlleles() + "...");
+                    List<VariationConsequence> variationConsequences = variationConsequencePredictionService.predictConsequences(variation);
+                    featureIndex.add(hit, variationConsequences);
+                    taskMonitor.setStatusMessage("Predicted " + variationConsequences.size() + " variation consequences for variation " + variation.getName() + ":" + variation.getStart() + "-" + variation.getEnd() + ":" + variation.getStrand() + " " + variation.getAlternateAlleles() + "...");
+
+                    for (VariationConsequence variationConsequence : variationConsequences)
+                    {
+                        // O(n)
+                        if (!model.variationConsequences().contains(variationConsequence))
+                        {
+                            model.variationConsequences().add(variationConsequence);
+                        }
+                    }
+                }
+                taskMonitor.setProgress(0.1d + 0.9d * i/(double) size);
             }
-            taskMonitor.setProgress(0.1d + 0.9d * i/(double) size);
+
+            // allocate 10% of progress to counts
+            for (int i = 0, size = featureIndex.size(); i < size; i++)
+            {
+                CyNode node = featureIndex.nodeAt(i);
+                List<VariationConsequence> variationConsequences = featureIndex.consequencesAt(i);
+                // todo:  counts don't consider existing variations or variationConsequences
+                addCount(node, model.getNetwork(), "variation_consequence_count", variationConsequences.size());
+                addConsequenceCounts(node, model.getNetwork(), variationConsequences);
+
+                taskMonitor.setProgress(0.9d + 0.1d * i/(double) size);
+            }
+
         }
-
-        // allocate 10% of progress to counts
-        for (int i = 0, size = featureIndex.size(); i < size; i++)
+        finally
         {
-            CyNode node = featureIndex.nodeAt(i);
-            List<VariationConsequence> variationConsequences = featureIndex.consequencesAt(i);
-            addCount(node, model.getNetwork(), "variation_consequence_count", variationConsequences.size());
-            addConsequenceCounts(node, model.getNetwork(), variationConsequences);
-
-            taskMonitor.setProgress(0.9d + 0.1d * i/(double) size);
+            model.variationConsequences().getReadWriteLock().writeLock().lock();
         }
 
         featureIndex.clear();

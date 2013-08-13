@@ -61,11 +61,11 @@ final class AnnotateVariationConsequencesTaskFactory
     public TaskIterator createTaskIterator()
     {
         // hmm...
-        FeatureService featureService = null;
-        VariationService variationService = null;
-        VariationConsequenceService variationConsequenceService = null;
+        //FeatureService featureService = null;
+        //VariationService variationService = null;
+        //VariationConsequenceService variationConsequenceService = null;
 
-        AnnotateVariationConsequencesTask annotateVariationConsequencesTask = new AnnotateVariationConsequencesTask(model, featureService, variationService, variationConsequenceService);
+        AnnotateVariationConsequencesTask annotateVariationConsequencesTask = new AnnotateVariationConsequencesTask(model, model.getFeatureService(), model.getVariationService(), model.getVariationConsequenceService());
         return new TaskIterator(annotateVariationConsequencesTask);
     }
 }
