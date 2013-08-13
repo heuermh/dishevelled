@@ -37,6 +37,8 @@ import ca.odell.glazedlists.EventList;
 import ca.odell.glazedlists.GlazedLists;
 import ca.odell.glazedlists.gui.TableFormat;
 
+import org.cytoscape.model.CyNode;
+
 import org.dishevelled.eventlist.view.CountLabel;
 import org.dishevelled.eventlist.view.ElementsTable;
 
@@ -104,14 +106,9 @@ final class VariationView
     private void layoutComponents()
     {
         addSpacing(12);
-        addField("Nodes:", new NodeCountLabel(model));
+        addField("Nodes:", new CountLabel<CyNode>(model.nodes()));
         addField("Nodes with features:", new CountLabel<Feature>(model.features()));
         addField("Variations associated with features:", new CountLabel<Variation>(model.variations()));
-        addSpacing(12);
-        addField("Variation service:", "Ensembl REST client");
-        addField("Endpoint:", "http:///beta.rest.ensembl.org/");
-        addField("Species:", "human");
-        addField("Reference:", "GRCh37");
         addSpacing(12);
         addFinalField(variationTable);
     }
@@ -148,6 +145,9 @@ final class VariationView
             // place at index 0 before add action
             getToolBar().remove(refreshToolBarComponent);
             getToolBar().add(refreshToolBarComponent, 0);
+
+            getToolBar().displayIcons();
+            getToolBar().setIconSize(TangoProject.EXTRA_SMALL);
         }
 
 

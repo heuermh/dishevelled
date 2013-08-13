@@ -67,13 +67,11 @@ public final class VariationActionTest
     {
         MockitoAnnotations.initMocks(this);
         variationAction = new VariationAction(applicationManager,
-                                              dialogTaskManager);
-        /*,
+                                              dialogTaskManager,
                                               featureService,
+                                              variationService,
                                               variationConsequenceService,
-                                              variationConsequencePredictionService,
-                                              variationService);
-        */
+                                              variationConsequencePredictionService);
     }
 
     @Test

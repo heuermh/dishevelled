@@ -60,10 +60,10 @@ final class AddVariationsTaskFactory
     public TaskIterator createTaskIterator()
     {
         // hmm...
-        FeatureService featureService = null;
-        VariationService variationService = null;
+        //FeatureService featureService = null;
+        //VariationService variationService = null;
 
-        AddVariationsTask addVariationsTask = new AddVariationsTask(model, featureService, variationService);
+        AddVariationsTask addVariationsTask = new AddVariationsTask(model, model.getFeatureService(), model.getVariationService());
         return new TaskIterator(addVariationsTask);
     }
 }

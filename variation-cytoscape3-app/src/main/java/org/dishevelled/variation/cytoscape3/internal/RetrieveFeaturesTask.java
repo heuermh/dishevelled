@@ -73,27 +73,37 @@ final class RetrieveFeaturesTask
     @Override
     public void run(final TaskMonitor taskMonitor)
     {
-        taskMonitor.setTitle("Retreive features");
+        taskMonitor.setTitle("Retrieve features");
         taskMonitor.setProgress(0.0d);
-        FeatureIndex featureIndex = new FeatureIndex();
 
-        List<CyNode> nodes = model.getNetwork().getNodeList();
-        for (int i = 0, size = nodes.size(); i < size; i++)
+        List<CyNode> nodes = model.nodes();
+        model.features().getReadWriteLock().writeLock().lock();
+        try
         {
-            CyNode node = nodes.get(i);
-            String ensemblGeneId = ensemblGeneId(node, model.getNetwork(), model.getEnsemblGeneIdColumn());
-            if (ensemblGeneId != null)
+            for (int i = 0, size = nodes.size(); i < size; i++)
             {
-                taskMonitor.setStatusMessage("Retrieving genome feature for Ensembl Gene " + ensemblGeneId + "...");
-                Feature feature = featureService.feature(model.getSpecies(), model.getReference(), ensemblGeneId);
-                if (feature != null)
+                CyNode node = nodes.get(i);
+                String ensemblGeneId = ensemblGeneId(node, model.getNetwork(), model.getEnsemblGeneIdColumn());
+                if (ensemblGeneId != null)
                 {
-                    featureIndex.add(node, feature);
+                    taskMonitor.setStatusMessage("Retrieving genome feature for Ensembl Gene " + ensemblGeneId + "...");
+                    Feature feature = featureService.feature(model.getSpecies(), model.getReference(), ensemblGeneId);
+                    if (feature != null)
+                    {
+                        // O(n)
+                        if (!model.features().contains(feature))
+                        {
+                            model.features().add(feature);
+                        }
+                    }
                 }
+                taskMonitor.setProgress(i/(double) size);
             }
-            taskMonitor.setProgress(i/(double) size);
         }
-        featureIndex.buildTrees();
+        finally
+        {
+            model.features().getReadWriteLock().writeLock().unlock();
+        }
         taskMonitor.setProgress(1.0d);
     }
 }

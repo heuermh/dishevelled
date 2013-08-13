@@ -60,10 +60,10 @@ final class PredictVariationConsequencesTaskFactory
     public TaskIterator createTaskIterator()
     {
         // hmm...
-        FeatureService featureService = null;
-        VariationConsequencePredictionService variationConsequencePredictionService = null;
+        //FeatureService featureService = null;
+        //VariationConsequencePredictionService variationConsequencePredictionService = null;
 
-        PredictVariationConsequencesTask predictVariationConsequencesTask = new PredictVariationConsequencesTask(model, featureService, variationConsequencePredictionService);
+        PredictVariationConsequencesTask predictVariationConsequencesTask = new PredictVariationConsequencesTask(model, model.getFeatureService(), model.getVariationConsequencePredictionService());
         return new TaskIterator(predictVariationConsequencesTask);
     }
 }

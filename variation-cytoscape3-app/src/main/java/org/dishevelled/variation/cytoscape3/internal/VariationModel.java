@@ -32,10 +32,15 @@ import ca.odell.glazedlists.EventList;
 import ca.odell.glazedlists.GlazedLists;
 
 import org.cytoscape.model.CyNetwork;
+import org.cytoscape.model.CyNode;
 
 import org.dishevelled.variation.Feature;
+import org.dishevelled.variation.FeatureService;
 import org.dishevelled.variation.Variation;
+import org.dishevelled.variation.VariationService;
 import org.dishevelled.variation.VariationConsequence;
+import org.dishevelled.variation.VariationConsequenceService;
+import org.dishevelled.variation.VariationConsequencePredictionService;
 
 /**
  * Variation model.
@@ -51,14 +56,29 @@ final class VariationModel
     /** Ensembl gene id column. */
     private String ensemblGeneIdColumn;
 
-    /** True if variations from only canonical transcripts should be included. */
+    /** True if this variation model should use canonical transcripts only. */
     private boolean canonical;
 
-    /** True if somatic variations should be included. */
+    /** True if this variation model should include somatic variations. */
     private boolean somatic;
 
     /** Current network. */
     private CyNetwork network;
+
+    /** Feature service. */
+    private FeatureService featureService;
+
+    /** Variation service. */
+    private VariationService variationService;
+
+    /** Variation consequence service. */
+    private VariationConsequenceService variationConsequenceService;
+
+    /** Variation consequence prediction service. */
+    private VariationConsequencePredictionService variationConsequencePredictionService;
+
+    /** List of nodes. */
+    private final EventList<CyNode> nodes;
 
     /** List of features. */
     private final EventList<Feature> features;
@@ -72,11 +92,21 @@ final class VariationModel
     /** Property change support. */
     private final PropertyChangeSupport propertyChangeSupport;
 
+    /** Default species, <code>human</code>. */
     private static final String DEFAULT_SPECIES = "human";
+
+    /** Default reference, <code>GRCh37</code>. */
     private static final String DEFAULT_REFERENCE = "GRCh37";
+
+    /** Default Ensembl gene id column, <code>ensembl</code>. */
     private static final String DEFAULT_ENSEMBL_GENE_ID_COLUMN = "ensembl";
+
+    /** Use canonical transcripts only by default. */
     private static final boolean DEFAULT_CANONICAL = true;
+
+    /** Do not include somatic variations by default. */
     private static final boolean DEFAULT_SOMATIC = false;
+
 
     /**
      * Create a new variation model.
@@ -88,7 +118,7 @@ final class VariationModel
         this.ensemblGeneIdColumn = DEFAULT_ENSEMBL_GENE_ID_COLUMN;
         this.canonical = DEFAULT_CANONICAL;
         this.somatic = DEFAULT_SOMATIC;
-        this.network = null;
+        nodes = GlazedLists.eventList(new ArrayList<CyNode>());
         features = GlazedLists.eventList(new ArrayList<Feature>());
         variations = GlazedLists.eventList(new ArrayList<Variation>());
         variationConsequences = GlazedLists.eventList(new ArrayList<VariationConsequence>());
@@ -99,11 +129,23 @@ final class VariationModel
 
     // bound properties
 
+    /**
+     * Return the species for this variation model.
+     *
+     * @return the species for this variation model
+     */
     public String getSpecies()
     {
         return species;
     }
 
+    /**
+     * Set the species for this variation model to <code>species</code>.
+     *
+     * <p>This is a bound property.</p>
+     *
+     * @param species species for this variation model
+     */
     public void setSpecies(final String species)
     {
         String oldSpecies = this.species;
@@ -111,11 +153,23 @@ final class VariationModel
         propertyChangeSupport.firePropertyChange("species", oldSpecies, this.species);
     }
 
+    /**
+     * Return the reference for this variation model.
+     *
+     * @return the reference for this variation model
+     */
     public String getReference()
     {
         return reference;
     }
 
+    /**
+     * Set the reference for this variation model to <code>reference</code>.
+     *
+     * <p>This is a bound property.</p>
+     *
+     * @param reference reference for this variation model
+     */
     public void setReference(final String reference)
     {
         String oldReference = this.reference;
@@ -123,11 +177,23 @@ final class VariationModel
         propertyChangeSupport.firePropertyChange("reference", oldReference, this.reference);
     }
 
+    /**
+     * Return the Ensembl gene id column for this variation model.
+     *
+     * @return the Ensembl gene id column for this variation model
+     */
     public String getEnsemblGeneIdColumn()
     {
         return ensemblGeneIdColumn;
     }
 
+    /**
+     * Set the Ensembl gene id column for this variation model to <code>ensemblGeneIdColumn</code>.
+     *
+     * <p>This is a bound property.</p>
+     *
+     * @param ensemblGeneIdColumn Ensembl gene id column for this variation model
+     */
     public void setEnsemblGeneIdColumn(final String ensemblGeneIdColumn)
     {
         String oldEnsemblGeneIdColumn = this.ensemblGeneIdColumn;
@@ -135,11 +201,23 @@ final class VariationModel
         propertyChangeSupport.firePropertyChange("ensemblGeneIdColumn", oldEnsemblGeneIdColumn, this.ensemblGeneIdColumn);
     }
 
+    /**
+     * Return true if this variation model should use canonical transcripts only.
+     *
+     * @return true if this variation model should use canonical transcripts only
+     */
     public boolean isCanonical()
     {
         return canonical;
     }
 
+    /**
+     * Set to true if this variation model should use canonical transcripts only.
+     *
+     * <p>This is a bound property.</p>
+     *
+     * @param canonical true if this variation model should use canonical transcripts only
+     */
     public void setCanonical(final boolean canonical)
     {
         boolean oldCanonical = this.canonical;
@@ -147,11 +225,23 @@ final class VariationModel
         propertyChangeSupport.firePropertyChange("canonical", oldCanonical, this.canonical);
     }
 
+    /**
+     * Return true if this variation model should include somatic variations.
+     *
+     * @return true if this variation model should include somatic variations
+     */
     public boolean isSomatic()
     {
         return somatic;
     }
 
+    /**
+     * Set to true if this variation model should include somatic variations.
+     *
+     * <p>This is a bound property.</p>
+     *
+     * @param somatic true if this variation model should include somatic variations
+     */
     public void setSomatic(final boolean somatic)
     {
         boolean oldSomatic = this.somatic;
@@ -159,16 +249,144 @@ final class VariationModel
         propertyChangeSupport.firePropertyChange("somatic", oldSomatic, this.somatic);
     }
 
+    /**
+     * Return the network for this variation model.
+     *
+     * @return the network for this variation model
+     */
     public CyNetwork getNetwork()
     {
         return network;
     }
 
+    /**
+     * Set the network for this variation model to <code>network</code>.
+     *
+     * <p>This is a bound property.</p>
+     *
+     * @param network network for this variation model
+     */
     public void setNetwork(final CyNetwork network)
     {
         CyNetwork oldNetwork = this.network;
         this.network = network;
         propertyChangeSupport.firePropertyChange("network", oldNetwork, this.network);
+
+        // or move this to property change listener
+        nodes.clear();
+        if (this.network != null)
+        {
+            nodes.addAll(this.network.getNodeList());
+        }
+        // also need to remove/add network node change listener or similar
+    }
+
+    /**
+     * Return the feature service for this variation model.
+     *
+     * @return the feature service for this variation model
+     */
+    public FeatureService getFeatureService()
+    {
+        return featureService;
+    }
+
+    /**
+     * Set the feature service for this variation model to <code>featureService</code>.
+     *
+     * <p>This is a bound property.</p>
+     *
+     * @param featureService feature service for this variation model
+     */
+    public void setFeatureService(final FeatureService featureService)
+    {
+        FeatureService oldFeatureService = this.featureService;
+        this.featureService = featureService;
+        propertyChangeSupport.firePropertyChange("featureService", oldFeatureService, this.featureService);
+    }
+
+    /**
+     * Return the variation service for this variation model.
+     *
+     * @return the variation service for this variation model
+     */
+    public VariationService getVariationService()
+    {
+        return variationService;
+    }
+
+    /**
+     * Set the variation service for this variation model to <code>variationService</code>.
+     *
+     * <p>This is a bound property.</p>
+     *
+     * @param variationService variation service for this variation model
+     */
+    public void setVariationService(final VariationService variationService)
+    {
+        VariationService oldVariationService = this.variationService;
+        this.variationService = variationService;
+        propertyChangeSupport.firePropertyChange("variationService", oldVariationService, this.variationService);
+    }
+
+    /**
+     * Return the variation consequence service for this variation model.
+     *
+     * @return the variation consequence service for this variation model
+     */
+    public VariationConsequenceService getVariationConsequenceService()
+    {
+        return variationConsequenceService;
+    }
+
+    /**
+     * Set the variation consequence service for this variation model to <code>variationConsequenceService</code>.
+     *
+     * <p>This is a bound property.</p>
+     *
+     * @param variationConsequenceService variation consequence service for this variation model
+     */
+    public void setVariationConsequenceService(final VariationConsequenceService variationConsequenceService)
+    {
+        VariationConsequenceService oldVariationConsequenceService = this.variationConsequenceService;
+        this.variationConsequenceService = variationConsequenceService;
+        propertyChangeSupport.firePropertyChange("variationConsequenceService", oldVariationConsequenceService, this.variationConsequenceService);
+    }
+
+    /**
+     * Return the variation consequence prediction service for this variation model.
+     *
+     * @return the variation consequence prediction service for this variation model
+     */
+    public VariationConsequencePredictionService getVariationConsequencePredictionService()
+    {
+        return variationConsequencePredictionService;
+    }
+
+    /**
+     * Set the variation consequence prediction service for this variation model to <code>variationConsequencePredictionService</code>.
+     *
+     * <p>This is a bound property.</p>
+     *
+     * @param variationConsequencePredictionService variation consequence prediction service for this variation model
+     */
+    public void setVariationConsequencePredictionService(final VariationConsequencePredictionService variationConsequencePredictionService)
+    {
+        VariationConsequencePredictionService oldVariationConsequencePredictionService = this.variationConsequencePredictionService;
+        this.variationConsequencePredictionService = variationConsequencePredictionService;
+        propertyChangeSupport.firePropertyChange("variationConsequencePredictionService", oldVariationConsequencePredictionService, this.variationConsequencePredictionService);
+    }
+
+    // event lists
+
+    /**
+     * Return the list of nodes for this variation model.
+     *
+     * @return the list of nodes for this variation model
+     */
+    EventList<CyNode> nodes()
+    {
+        return nodes;
     }
 
     /**
@@ -201,21 +419,45 @@ final class VariationModel
         return variationConsequences;
     }
 
+    // property change support
+
+    /**
+     * Add the specified property change listener.
+     *
+     * @param propertyChangeListener property change listener to add
+     */
     public void addPropertyChangeListener(final PropertyChangeListener propertyChangeListener)
     {
         propertyChangeSupport.addPropertyChangeListener(propertyChangeListener);
     }
 
+    /**
+     * Add the specified property change listener.
+     *
+     * @param propertyName property name
+     * @param propertyChangeListener property change listener to add
+     */
     public void addPropertyChangeListener(final String propertyName, final PropertyChangeListener propertyChangeListener)
     {
         propertyChangeSupport.addPropertyChangeListener(propertyName, propertyChangeListener);
     }
 
+    /**
+     * Remove the specified property change listener.
+     *
+     * @param propertyChangeListener property change listener to remove
+     */
     public void removePropertyChangeListener(final PropertyChangeListener propertyChangeListener)
     {
         propertyChangeSupport.removePropertyChangeListener(propertyChangeListener);
     }
 
+    /**
+     * Remove the specified property change listener.
+     *
+     * @param propertyName property name
+     * @param propertyChangeListener property change listener to remove
+     */
     public void removePropertyChangeListener(final String propertyName, final PropertyChangeListener propertyChangeListener)
     {
         propertyChangeSupport.removePropertyChangeListener(propertyName, propertyChangeListener);

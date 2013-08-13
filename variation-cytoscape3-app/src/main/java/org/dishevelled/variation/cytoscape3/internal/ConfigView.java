@@ -88,6 +88,11 @@ final class ConfigView
         addField("Reference:", wrap(reference));
         addField("Ensembl gene id column:", wrap(ensemblGeneIdColumn));
         addSpacing(12);
+        addField("Feature service:", model.getFeatureService().toString());
+        addField("Variation service:", model.getVariationService().toString());
+        addField("Consequence service:", model.getVariationConsequenceService().toString());
+        addField("Consequence prediction service:", model.getVariationConsequencePredictionService().toString());
+        addSpacing(12);
         addField(" ", canonical);
         addField(" ", somatic);
         addFinalSpacing();

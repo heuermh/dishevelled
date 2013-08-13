@@ -55,6 +55,11 @@ import org.cytoscape.work.swing.DialogTaskManager;
 
 import org.dishevelled.identify.IdToolBar;
 
+import org.dishevelled.variation.FeatureService;
+import org.dishevelled.variation.VariationService;
+import org.dishevelled.variation.VariationConsequenceService;
+import org.dishevelled.variation.VariationConsequencePredictionService;
+
 /**
  * Variation action.
  *
@@ -68,6 +73,12 @@ final class VariationAction extends AbstractCyAction
     /** Dialog task manager. */
     private final DialogTaskManager dialogTaskManager;
 
+    // hey, they're back
+    private final FeatureService featureService;
+    private final VariationService variationService;
+    private final VariationConsequenceService variationConsequenceService;
+    private final VariationConsequencePredictionService variationConsequencePredictionService;
+
 
     /**
      * Create a new variation action.
@@ -76,7 +87,8 @@ final class VariationAction extends AbstractCyAction
      * @param dialogTaskManager dialog task manager, must not be null
      */
     VariationAction(final CyApplicationManager applicationManager,
-                    final DialogTaskManager dialogTaskManager)
+                    final DialogTaskManager dialogTaskManager,
+                    final FeatureService featureService, final VariationService variationService, final VariationConsequenceService variationConsequenceService, final VariationConsequencePredictionService variationConsequencePredictionService)
     {
         super("Variation");
         setPreferredMenu("Apps");
@@ -85,6 +97,11 @@ final class VariationAction extends AbstractCyAction
         checkNotNull(dialogTaskManager);
         this.applicationManager = applicationManager;
         this.dialogTaskManager = dialogTaskManager;
+
+        this.featureService = featureService;
+        this.variationService = variationService;
+        this.variationConsequenceService = variationConsequenceService;
+        this.variationConsequencePredictionService = variationConsequencePredictionService;
     }
 
 
@@ -111,7 +128,8 @@ final class VariationAction extends AbstractCyAction
         contentPane.setBorder(new EmptyBorder(12, 12, 12, 12));
         contentPane.setLayout(new BorderLayout());
 
-        VariationApp app = new VariationApp(applicationManager, dialogTaskManager);
+        VariationApp app = new VariationApp(applicationManager, dialogTaskManager,
+                                            featureService, variationService, variationConsequenceService, variationConsequencePredictionService);
 
         IdToolBar toolBar = new IdToolBar();
         for (AbstractAction action : app.getToolBarActions())

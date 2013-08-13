@@ -34,6 +34,11 @@ import com.google.common.collect.ImmutableList;
 import org.cytoscape.application.CyApplicationManager;
 import org.cytoscape.work.swing.DialogTaskManager;
 
+import org.dishevelled.variation.FeatureService;
+import org.dishevelled.variation.VariationService;
+import org.dishevelled.variation.VariationConsequenceService;
+import org.dishevelled.variation.VariationConsequencePredictionService;
+
 /**
  * Variation app.
  */
@@ -107,7 +112,8 @@ final class VariationApp
      * @param applicationManager application manager, must not be null
      * @param dialogTaskManager dialog task manager
      */
-    VariationApp(final CyApplicationManager applicationManager, final DialogTaskManager dialogTaskManager)
+    VariationApp(final CyApplicationManager applicationManager, final DialogTaskManager dialogTaskManager,
+                 final FeatureService featureService, final VariationService variationService, final VariationConsequenceService variationConsequenceService, final VariationConsequencePredictionService variationConsequencePredictionService)
     {
         checkNotNull(applicationManager);
         checkNotNull(dialogTaskManager);
@@ -116,12 +122,17 @@ final class VariationApp
         this.dialogTaskManager = dialogTaskManager;
 
         model = new VariationModel();
+
+        // hmm...
+        model.setFeatureService(featureService);
+        model.setVariationService(variationService);
+        model.setVariationConsequenceService(variationConsequenceService);
+        model.setVariationConsequencePredictionService(variationConsequencePredictionService);
+
         configView = new ConfigView(model);
         featureView = new FeatureView(model);
         variationView = new VariationView(model);
         variationConsequenceView = new VariationConsequenceView(model);
-
-        System.out.println("setting current network to " + applicationManager.getCurrentNetwork() + "...");
         model.setNetwork(applicationManager.getCurrentNetwork());
     }
 
