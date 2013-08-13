@@ -70,12 +70,19 @@ final class SyntheticVariationConsequenceService
         checkArgument(genome.getReference().equals(variation.getReference()));
 
         List<VariationConsequence> consequences = new ArrayList<VariationConsequence>();
-        String consequenceTerm = sample();
         for (String alternateAllele : variation.getAlternateAlleles())
         {
+            String consequenceTerm = sample();
             consequences.add(new VariationConsequence(variation.getSpecies(), variation.getReference(), variation.getIdentifier(),
                                                       variation.getReferenceAllele(), alternateAllele, consequenceTerm,
                                                       variation.getName(), variation.getStart(), variation.getEnd(), variation.getStrand()));
+
+            if (random.nextDouble() < 0.25)
+            {
+                consequences.add(new VariationConsequence(variation.getSpecies(), variation.getReference(), variation.getIdentifier(),
+                                                          variation.getReferenceAllele(), alternateAllele, sample(consequenceTerm),
+                                                          variation.getName(), variation.getStart(), variation.getEnd(), variation.getStrand()));
+            }
         }
         return consequences;
     }
@@ -83,6 +90,16 @@ final class SyntheticVariationConsequenceService
     String sample()
     {
         return consequenceTerms.get(random.nextInt(consequenceTerms.size())).getName();
+    }
+
+    String sample(final String existing)
+    {
+        String consequenceTerm = sample();
+        while (existing.equals(consequenceTerm))
+        {
+            consequenceTerm = sample();
+        }
+        return consequenceTerm;
     }
 
     @Override
