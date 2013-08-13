@@ -81,4 +81,10 @@ final class EnsemblRestClientVariationService
         }
         return variations;
     }
+
+    @Override
+    public String toString()
+    {
+        return "Ensembl REST client variations (" + species + " " + reference + ")";
+    }
 }

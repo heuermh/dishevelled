@@ -68,4 +68,11 @@ final class SyntheticVariationConsequencePredictionService
         }
         return consequences;
     }
+
+
+    @Override
+    public String toString()
+    {
+        return "Synthetic consequence predictions (" + genome.getSpecies() + " " + genome.getReference() + ")";
+    }
 }

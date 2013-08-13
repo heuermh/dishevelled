@@ -121,4 +121,10 @@ final class EnsemblRestClientVariationConsequenceService
             // ignore
         }
     }
+
+    @Override
+    public String toString()
+    {
+        return "Ensembl REST client consequences (" + species + " " + reference + ")";
+    }
 }

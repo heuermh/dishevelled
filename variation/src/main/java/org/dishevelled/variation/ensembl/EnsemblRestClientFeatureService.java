@@ -77,4 +77,10 @@ final class EnsemblRestClientFeatureService
                            lookup.getLocation().getEnd(),
                            lookup.getLocation().getStrand());
     }
+
+    @Override
+    public String toString()
+    {
+        return "Ensembl REST client features (" + species + " " + reference + ")";
+    }
 }
