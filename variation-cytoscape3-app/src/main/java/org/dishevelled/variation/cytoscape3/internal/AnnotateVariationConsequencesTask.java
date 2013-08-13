@@ -143,7 +143,7 @@ final class AnnotateVariationConsequencesTask
         }
         finally
         {
-            model.variationConsequences().getReadWriteLock().writeLock().lock();
+            model.variationConsequences().getReadWriteLock().writeLock().unlock();
         }
         taskMonitor.setProgress(1.0d);
     }
