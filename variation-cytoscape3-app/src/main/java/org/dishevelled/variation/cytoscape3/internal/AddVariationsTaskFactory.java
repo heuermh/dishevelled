@@ -56,6 +56,7 @@ final class AddVariationsTaskFactory
         this.model = model;
     }
 
+
     @Override
     public TaskIterator createTaskIterator()
     {

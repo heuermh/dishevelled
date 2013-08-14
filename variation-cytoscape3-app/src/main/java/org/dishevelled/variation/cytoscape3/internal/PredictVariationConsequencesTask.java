@@ -27,7 +27,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import static org.dishevelled.variation.cytoscape3.internal.VariationUtils.addConsequenceCounts;
 import static org.dishevelled.variation.cytoscape3.internal.VariationUtils.addCount;
-import static org.dishevelled.variation.cytoscape3.internal.VariationUtils.ensemblGeneId;
+import static org.dishevelled.variation.cytoscape3.internal.VariationUtils.ensemblGeneIds;
 
 import java.util.List;
 
@@ -65,6 +65,7 @@ final class PredictVariationConsequencesTask
      * Create a new predict variation consequences task.
      *
      * @param model model, must not be null
+     * @param featureService feature service, must not be null
      * @param variationConsequencePredictionService variation consequence prediction service, must not be null
      */
     PredictVariationConsequencesTask(final VariationModel model,
@@ -96,14 +97,17 @@ final class PredictVariationConsequencesTask
             for (int i = 0, size = nodes.size(); i < size; i++)
             {
                 CyNode node = nodes.get(i);
-                String ensemblGeneId = ensemblGeneId(node, model.getNetwork(), model.getEnsemblGeneIdColumn());
-                if (ensemblGeneId != null)
+                for (String ensemblGeneId : ensemblGeneIds(node, model.getNetwork(), model.getEnsemblGeneIdColumn()))
                 {
-                    taskMonitor.setStatusMessage("Retrieving genome feature for Ensembl Gene " + ensemblGeneId + "...");
-                    Feature feature = featureService.feature(model.getSpecies(), model.getReference(), ensemblGeneId);
-                    if (feature != null)
+                    if (ensemblGeneId != null)
                     {
-                        featureIndex.add(node, feature);
+                        taskMonitor.setStatusMessage("Retrieving genome feature for Ensembl Gene " + ensemblGeneId + "...");
+                        Feature feature = featureService.feature(model.getSpecies(), model.getReference(), ensemblGeneId);
+                        if (feature != null)
+                        {
+                            // todo:  there might be more than one geneId associated with a node
+                            featureIndex.add(node, feature);
+                        }
                     }
                 }
                 taskMonitor.setProgress(0.1d * i/(double) size);            

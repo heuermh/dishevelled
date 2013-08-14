@@ -66,8 +66,13 @@ final class SyntheticFeatureService
         {
             return null;
         }
+        if (!identifier.startsWith("ENS")) // todo: add regex ENSG, ENSMUSG, etc.
+        {
+            return null;
+        }
         String name = genome.getNames().get(random.nextInt(genome.getNames().size()));
-        int length = genome.getLengths().get(name);
+        // todo: why is this null sometimes?
+        int length = genome.getLengths().get(name) == null ? 100000 : genome.getLengths().get(name);
         int start = random.nextInt(length);
         int end = start + random.nextInt(Math.min(length - start, 100000));
 

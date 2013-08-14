@@ -23,7 +23,7 @@
 */
 package org.dishevelled.variation.cytoscape3.internal;
 
-import static org.dishevelled.variation.cytoscape3.internal.VariationUtils.ensemblGeneId;
+import static org.dishevelled.variation.cytoscape3.internal.VariationUtils.ensemblGeneIds;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -57,7 +57,6 @@ final class RetrieveFeaturesTask
      * Create a new retrieve features task.
      *
      * @param model model, must not be null
-     * @param network network, must not be null
      * @param featureService feature service, must not be null
      */
     RetrieveFeaturesTask(final VariationModel model,
@@ -83,17 +82,19 @@ final class RetrieveFeaturesTask
             for (int i = 0, size = nodes.size(); i < size; i++)
             {
                 CyNode node = nodes.get(i);
-                String ensemblGeneId = ensemblGeneId(node, model.getNetwork(), model.getEnsemblGeneIdColumn());
-                if (ensemblGeneId != null)
+                for (String ensemblGeneId : ensemblGeneIds(node, model.getNetwork(), model.getEnsemblGeneIdColumn()))
                 {
-                    taskMonitor.setStatusMessage("Retrieving genome feature for Ensembl Gene " + ensemblGeneId + "...");
-                    Feature feature = featureService.feature(model.getSpecies(), model.getReference(), ensemblGeneId);
-                    if (feature != null)
+                    if (ensemblGeneId != null)
                     {
-                        // O(n)
-                        if (!model.features().contains(feature))
+                        taskMonitor.setStatusMessage("Retrieving genome feature for Ensembl Gene " + ensemblGeneId + "...");
+                        Feature feature = featureService.feature(model.getSpecies(), model.getReference(), ensemblGeneId);
+                        if (feature != null)
                         {
-                            model.features().add(feature);
+                            // O(n)
+                            if (!model.features().contains(feature))
+                            {
+                                model.features().add(feature);
+                            }
                         }
                     }
                 }

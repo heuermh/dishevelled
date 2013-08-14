@@ -27,6 +27,7 @@ import static org.dishevelled.variation.so.SequenceOntology.countAssignments;
 import static org.dishevelled.variation.so.SequenceOntology.indexByName;
 import static org.dishevelled.variation.so.SequenceOntology.sequenceVariants;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -44,8 +45,10 @@ import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JRootPane;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 
+import org.cytoscape.model.CyColumn;
 import org.cytoscape.model.CyNetwork;
 import org.cytoscape.model.CyNode;
 import org.cytoscape.model.CyRow;
@@ -66,13 +69,48 @@ import org.dishevelled.vocabulary.Evidence;
 final class VariationUtils
 {
 
-    static String ensemblGeneId(final CyNode node, final CyNetwork network, final String ensemblGeneIdColumn)
+    /**
+     * Return zero or more Ensembl gene ids from the specified Ensembl gene id column for the specified node.
+     *
+     * @param node node
+     * @param network network
+     * @param ensemblGeneIdColumn Ensembl gene id column
+     * @return zero or more Ensembl gene ids from the specified Ensembl gene id column for the specified node
+     */
+    static Iterable<String> ensemblGeneIds(final CyNode node, final CyNetwork network, final String ensemblGeneIdColumn)
     {
         CyTable table = network.getDefaultNodeTable();
         CyRow row = table.getRow(node.getSUID());
-        return row.get(ensemblGeneIdColumn, String.class);
+        CyColumn column = table.getColumn(ensemblGeneIdColumn);
+
+        if (column != null)
+        {
+            Class<?> columnClass = column.getType();
+            if (String.class.equals(columnClass))
+            {
+                String ensemblGeneId = row.get(ensemblGeneIdColumn, String.class);
+                return ImmutableList.of(ensemblGeneId);
+            }
+            else if (columnClass.equals(List.class))
+            {
+                Class<?> listClass = column.getListType();
+                if (String.class.equals(listClass))
+                {
+                    return row.getList(ensemblGeneIdColumn, String.class);
+                }
+            }
+        }
+        return Collections.<String>emptyList();
     }
 
+    /**
+     * Add the specified count in the specified column name to the specified node.
+     *
+     * @param node node
+     * @param network network
+     * @param columnName column name
+     * @param count count
+     */
     static void addCount(final CyNode node, final CyNetwork network, final String columnName, final int count)
     {
         CyTable table = network.getDefaultNodeTable();
@@ -81,9 +119,17 @@ final class VariationUtils
         {
             table.createColumn(columnName, Integer.class, false);
         }
+        // todo:  or add to current value
         row.set(columnName, count);
     }
 
+    /**
+     * Add counts for all consequence terms for the specified list of variation consequences for the specified node.
+     *
+     * @param node node
+     * @param network network
+     * @param variationConsequences list of variation consequences
+     */
     static void addConsequenceCounts(final CyNode node, final CyNetwork network, final List<VariationConsequence> variationConsequences)
     {
         Domain sv = sequenceVariants();
@@ -127,10 +173,19 @@ final class VariationUtils
         rootPane.getActionMap().put("close", close);
     }
 
+    /**
+     * Assignable node.
+     */
     private static final class AssignableNode extends AbstractAssignable
     {
+        /** Node. */
         private final CyNode node;
 
+        /**
+         * Create a new assignable node for the specified node.
+         *
+         * @param node node
+         */
         AssignableNode(final CyNode node)
         {
             super();

@@ -39,9 +39,11 @@ import java.util.List;
 
 import javax.swing.AbstractAction;
 import javax.swing.Box;
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JTabbedPane;
 import javax.swing.JToolBar;
 import javax.swing.WindowConstants;
@@ -57,6 +59,7 @@ import org.dishevelled.iconbundle.tango.TangoProject;
 
 import org.dishevelled.identify.IdentifiableAction;
 import org.dishevelled.identify.IdToolBar;
+import org.dishevelled.identify.ContextMenuListener;
 
 import org.dishevelled.variation.FeatureService;
 import org.dishevelled.variation.VariationService;
@@ -141,6 +144,24 @@ final class VariationAction extends AbstractCyAction
         {
             toolBar.add(action);
         }
+
+        JPopupMenu toolBarContextMenu = new JPopupMenu();
+        for (Object menuItem : toolBar.getDisplayMenuItems())
+        {
+            toolBarContextMenu.add((JCheckBoxMenuItem) menuItem);
+        }
+        /*
+
+          wait for other size icons to be complete
+
+        toolBarContextMenu.addSeparator();
+        for (Object iconSize : TangoProject.SIZES)
+        {
+            toolBarContextMenu.add(toolBar.createIconSizeMenuItem((IconSize) iconSize));
+        }
+        */
+        toolBar.addMouseListener(new ContextMenuListener(toolBarContextMenu));
+
 
         // todo:  would be nice to have a submenu in Apps --> Variation --> Retrieve Features... etc.
 

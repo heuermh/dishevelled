@@ -25,12 +25,13 @@ package org.dishevelled.variation.cytoscape3.internal;
 
 import static org.dishevelled.variation.cytoscape3.internal.VariationUtils.addConsequenceCounts;
 import static org.dishevelled.variation.cytoscape3.internal.VariationUtils.addCount;
-import static org.dishevelled.variation.cytoscape3.internal.VariationUtils.ensemblGeneId;
+import static org.dishevelled.variation.cytoscape3.internal.VariationUtils.ensemblGeneIds;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import org.apache.commons.lang.StringUtils;
 
 import org.cytoscape.model.CyNetwork;
@@ -105,37 +106,39 @@ final class AnnotateVariationConsequencesTask
             for (int i = 0, size = nodes.size(); i < size; i++)
             {
                 CyNode node = nodes.get(i);
-                String ensemblGeneId = ensemblGeneId(node, model.getNetwork(), model.getEnsemblGeneIdColumn());
-                if (StringUtils.isNotBlank(ensemblGeneId))
+                for (String ensemblGeneId : ensemblGeneIds(node, model.getNetwork(), model.getEnsemblGeneIdColumn()))
                 {
-                    taskMonitor.setStatusMessage("Retrieving genome feature for Ensembl Gene " + ensemblGeneId + "...");
-                    Feature feature = featureService.feature(model.getSpecies(), model.getReference(), ensemblGeneId);
-                    if (feature != null)
+                    if (StringUtils.isNotBlank(ensemblGeneId))
                     {
-                        taskMonitor.setStatusMessage("Retrieving variations associated with Ensembl Gene " + ensemblGeneId + " in the region " + feature.getName() + ":" + feature.getStart() + "-" + feature.getEnd() + ":" + feature.getStrand() + "...");
-                        List<Variation> variations = variationService.variations(feature);
-                        taskMonitor.setStatusMessage("Found " + variations.size() + " variations associated with Ensembl Gene " + ensemblGeneId);
-
-                        List<VariationConsequence> allVariationConsequences = new ArrayList<VariationConsequence>(variations.size());
-                        for (Variation variation : variations)
+                        taskMonitor.setStatusMessage("Retrieving genome feature for Ensembl Gene " + ensemblGeneId + "...");
+                        Feature feature = featureService.feature(model.getSpecies(), model.getReference(), ensemblGeneId);
+                        if (feature != null)
                         {
-                            taskMonitor.setStatusMessage("Retrieving variation consequences associated with variation " + variation.getIdentifier() + "...");
-                            List<VariationConsequence> variationConsequences = variationConsequenceService.consequences(variation);
-                            allVariationConsequences.addAll(variationConsequences);
-                            taskMonitor.setStatusMessage("Found " + variationConsequences.size() + " variation consequences associated with variation " + variation.getIdentifier());
+                            taskMonitor.setStatusMessage("Retrieving variations associated with Ensembl Gene " + ensemblGeneId + " in the region " + feature.getName() + ":" + feature.getStart() + "-" + feature.getEnd() + ":" + feature.getStrand() + "...");
+                            List<Variation> variations = variationService.variations(feature);
+                            taskMonitor.setStatusMessage("Found " + variations.size() + " variations associated with Ensembl Gene " + ensemblGeneId);
 
-                            for (VariationConsequence variationConsequence : variationConsequences)
+                            List<VariationConsequence> allVariationConsequences = new ArrayList<VariationConsequence>(variations.size());
+                            for (Variation variation : variations)
                             {
-                                // O(n)
-                                if (!model.variationConsequences().contains(variationConsequence))
+                                taskMonitor.setStatusMessage("Retrieving variation consequences associated with variation " + variation.getIdentifier() + "...");
+                                List<VariationConsequence> variationConsequences = variationConsequenceService.consequences(variation);
+                                allVariationConsequences.addAll(variationConsequences);
+                                taskMonitor.setStatusMessage("Found " + variationConsequences.size() + " variation consequences associated with variation " + variation.getIdentifier());
+
+                                for (VariationConsequence variationConsequence : variationConsequences)
                                 {
-                                    model.variationConsequences().add(variationConsequence);
+                                    // O(n)
+                                    if (!model.variationConsequences().contains(variationConsequence))
+                                    {
+                                        model.variationConsequences().add(variationConsequence);
+                                    }
                                 }
                             }
+                            // todo:  counts don't consider existing variations or variationConsequences
+                            addCount(node, model.getNetwork(), "variation_consequence_count", allVariationConsequences.size());
+                            addConsequenceCounts(node, model.getNetwork(), allVariationConsequences);
                         }
-                        // todo:  counts don't consider existing variations or variationConsequences
-                        addCount(node, model.getNetwork(), "variation_consequence_count", allVariationConsequences.size());
-                        addConsequenceCounts(node, model.getNetwork(), allVariationConsequences);
                     }
                 }
                 taskMonitor.setProgress(i/(double) size);
