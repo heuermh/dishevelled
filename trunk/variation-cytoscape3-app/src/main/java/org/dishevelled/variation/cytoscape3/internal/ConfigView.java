@@ -23,6 +23,17 @@
 */
 package org.dishevelled.variation.cytoscape3.internal;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
@@ -57,24 +68,151 @@ final class ConfigView
     /** Include somatic variations. */
     private final JCheckBox somatic;
 
+    /** Property change listener. */
+    private final PropertyChangeListener propertyChangeListener = new PropertyChangeListener()
+        {
+            @Override
+            public void propertyChange(final PropertyChangeEvent event)
+            {
+                if ("species".equals(event.getPropertyName()))
+                {
+                    species.setText((String) event.getNewValue());
+                }
+                else if ("reference".equals(event.getPropertyName()))
+                {
+                    reference.setText((String) event.getNewValue());
+                }
+                else if ("ensemblGeneIdColumn".equals(event.getPropertyName()))
+                {
+                    ensemblGeneIdColumn.setText((String) event.getNewValue());
+                }
+                else if ("canonical".equals(event.getPropertyName()))
+                {
+                    canonical.setSelected((Boolean) event.getNewValue());
+                }
+                else if ("somatic".equals(event.getPropertyName()))
+                {
+                    somatic.setSelected((Boolean) event.getNewValue());
+                }
+            }
+        };
 
+    /** Species action listener. */
+    private final ActionListener speciesActionListener = new ActionListener()
+        {
+            @Override
+            public void actionPerformed(final ActionEvent event)
+            {
+                model.setSpecies(species.getText());
+            }
+        };
+
+    /** Species focus listener. */
+    private final FocusListener speciesFocusListener = new FocusAdapter()
+        {
+            @Override
+            public void focusLost(final FocusEvent event)
+            {
+                model.setSpecies(species.getText());
+            }
+        };
+
+    /** Reference action listener */
+    private final ActionListener referenceActionListener = new ActionListener()
+        {
+            @Override
+            public void actionPerformed(final ActionEvent event)
+            {
+                model.setReference(reference.getText());
+            }
+        };
+
+    /** Reference focus listener. */
+    private final FocusListener referenceFocusListener = new FocusAdapter()
+        {
+            @Override
+            public void focusLost(final FocusEvent event)
+            {
+                model.setReference(reference.getText());
+            }
+        };
+
+    /** Ensembl gene id column action listener. */
+    private final ActionListener ensemblGeneIdColumnActionListener = new ActionListener()
+        {
+            @Override
+            public void actionPerformed(final ActionEvent event)
+            {
+                model.setEnsemblGeneIdColumn(ensemblGeneIdColumn.getText());
+            }
+        };
+
+    /** Ensembl gene id column focus listener. */
+    private final FocusListener ensemblGeneIdColumnFocusListener = new FocusAdapter()
+        {
+            @Override
+            public void focusLost(final FocusEvent event)
+            {
+                model.setEnsemblGeneIdColumn(ensemblGeneIdColumn.getText());
+            }
+        };
+
+    /** Canonical action listener. */
+    private final ActionListener canonicalActionListener = new ActionListener()
+        {
+            @Override
+            public void actionPerformed(final ActionEvent event)
+            {
+                model.setCanonical(canonical.isSelected());
+            }
+        };
+
+    /** Somatic action listener. */
+    private final ActionListener somaticActionListener = new ActionListener()
+        {
+            @Override
+            public void actionPerformed(final ActionEvent event)
+            {
+                model.setSomatic(somatic.isSelected());
+            }
+        };
+
+
+    /**
+     * Create a new config view with the specified variation model.
+     *
+     * @model model variation model, must not be null
+     */
     ConfigView(final VariationModel model)
     {
         super();
         setOpaque(false);
 
+        checkNotNull(model);
         this.model = model;
+        model.addPropertyChangeListener(propertyChangeListener);
 
-        // todo:  bind these
-        //    and text field width is not working
+        // todo:  text field width is not working
         species = new JTextField(20);
         species.setText(model.getSpecies());
+        species.addActionListener(speciesActionListener);
+        species.addFocusListener(speciesFocusListener);
+
         reference = new JTextField(20);
         reference.setText(model.getReference());
+        reference.addActionListener(referenceActionListener);
+        reference.addFocusListener(referenceFocusListener);
+
         ensemblGeneIdColumn = new JTextField(32);
         ensemblGeneIdColumn.setText(model.getEnsemblGeneIdColumn());
+        ensemblGeneIdColumn.addActionListener(ensemblGeneIdColumnActionListener);
+        ensemblGeneIdColumn.addFocusListener(ensemblGeneIdColumnFocusListener);
+
         canonical = new JCheckBox("Use canonical transcripts only", model.isCanonical());
+        canonical.addActionListener(canonicalActionListener);
+
         somatic = new JCheckBox("Include somatic variations", model.isSomatic());
+        somatic.addActionListener(somaticActionListener);
 
         layoutComponents();
     }
@@ -100,6 +238,12 @@ final class ConfigView
         addFinalSpacing();
     }
 
+    /**
+     * Wrap the specified component.
+     *
+     * @return component component to wrap
+     * @return the specified component wrapped in a panel with additional spacing right
+     */
     private JPanel wrap(final JComponent component)
     {
         JPanel panel = new JPanel();

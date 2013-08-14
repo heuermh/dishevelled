@@ -72,9 +72,16 @@ final class VariationApp
     /** Dialog task manager. */
     private final DialogTaskManager dialogTaskManager;
 
+    /** Retrieve icon bundle. */
     private final IconBundle retrieveIconBundle = new CachingIconBundle(new PNGIconBundle("/org/dishevelled/variation/cytoscape3/internal/retrieve"));
+
+    /** Add icon bundle. */
     private final IconBundle addIconBundle = new CachingIconBundle(new PNGIconBundle("/org/dishevelled/variation/cytoscape3/internal/add"));
+
+    /** Annotate icon bundle. */
     private final IconBundle annotateIconBundle = new CachingIconBundle(new PNGIconBundle("/org/dishevelled/variation/cytoscape3/internal/annotate"));
+
+    /** Predict icon bundle. */
     private final IconBundle predictIconBundle = new CachingIconBundle(new PNGIconBundle("/org/dishevelled/variation/cytoscape3/internal/predict"));
 
     /** Retrieve features action. */

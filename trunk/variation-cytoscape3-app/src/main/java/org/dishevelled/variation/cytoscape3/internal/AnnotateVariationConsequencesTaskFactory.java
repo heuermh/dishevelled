@@ -57,6 +57,7 @@ final class AnnotateVariationConsequencesTaskFactory
         this.model = model;
     }
 
+
     @Override
     public TaskIterator createTaskIterator()
     {
