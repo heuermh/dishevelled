@@ -84,8 +84,12 @@
     <module>thumbnail</module>
     <module>thumbnail-examples</module>
     <module>timer</module>
+    <module>variation</module>
+    <!--<module>variation-cytoscape3-app</module>-->
     <module>venn</module>
-    <module>venn-app</module>
+    <!--<module>venn-app</module>-->
+    <!--<module>venn-cytoscape-plugin</module>-->
+    <!--<module>venn-cytoscape3-app</module>-->
     <module>venn-examples</module>
     <module>venn-tools</module>
     <module>vocabulary</module>
