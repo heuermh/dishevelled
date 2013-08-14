@@ -93,7 +93,7 @@ final class VariationUtils
             }
             else if (columnClass.equals(List.class))
             {
-                Class<?> listClass = column.getListType();
+                Class<?> listClass = column.getListElementType();
                 if (String.class.equals(listClass))
                 {
                     return row.getList(ensemblGeneIdColumn, String.class);
