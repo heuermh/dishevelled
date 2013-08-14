@@ -25,13 +25,20 @@ package org.dishevelled.variation.cytoscape3.internal;
 
 import java.util.ArrayList;
 
+import java.awt.Color;
 import java.awt.Component;
 
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
+import javax.swing.JLabel;
 import javax.swing.JPopupMenu;
+import javax.swing.JTable;
+
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableModel;
 
 import ca.odell.glazedlists.EventList;
 import ca.odell.glazedlists.GlazedLists;
@@ -137,6 +144,27 @@ final class VariationConsequenceView
         VariationConsequenceTable(final EventList<VariationConsequence> variationConsequences)
         {
             super("Variation consequences:", variationConsequences, TABLE_FORMAT);
+
+            final TableRowColorMapping tableRowColorMapping = new TableRowColorMapping();
+            final TableCellRenderer tableCellRenderer = new DefaultTableCellRenderer()
+                {
+                    @Override
+                    public Component getTableCellRendererComponent(final JTable table, final Object value, final boolean isSelected, final boolean hasFocus, final int row, final int column)
+                    {
+                        JLabel label = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                        TableModel tableModel = table.getModel();
+                        int tableModelRow = table.convertRowIndexToModel(row);
+                        String consequenceTerm = (String) tableModel.getValueAt(row, 9); // hard coded column index
+                        Color rowColor = tableRowColorMapping.getColor(consequenceTerm);
+                        if (rowColor != null && !isSelected)
+                        {
+                            label.setBackground(rowColor);
+                        }
+                        return label;
+                    }
+                };
+            getTable().setDefaultRenderer(Integer.class, tableCellRenderer);
+            getTable().setDefaultRenderer(String.class, tableCellRenderer);
 
             Component refreshContextMenuComponent = getContextMenu().add(refresh);
             // place at index 8 before add action
