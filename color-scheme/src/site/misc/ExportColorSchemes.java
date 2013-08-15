@@ -639,7 +639,6 @@ public final class ExportColorSchemes
 
         export(getContinuousColorScheme("rubus", 9, Interpolations.LINEAR), "continuous-rubus-9");
         export(getDiscreteColorScheme("rubus", 9, Interpolations.LINEAR), "discrete-rubus-9");
-        */
 
         export(getContinuousColorScheme("gw", 2, Interpolations.LINEAR), "continuous-gw-2");
         export(getDiscreteColorScheme("gw", 2, Interpolations.LINEAR), "discrete-gw-2");
@@ -647,6 +646,24 @@ public final class ExportColorSchemes
         export(getDiscreteColorScheme("gw", 3, Interpolations.LINEAR), "discrete-gw-3");
         export(getContinuousColorScheme("gw", 4, Interpolations.LINEAR), "continuous-gw-4");
         export(getDiscreteColorScheme("gw", 4, Interpolations.LINEAR), "discrete-gw-4");
+        */
+
+        export(getContinuousColorScheme("gut", 3, Interpolations.LINEAR), "continuous-gut-3");
+        export(getDiscreteColorScheme("gut", 3, Interpolations.LINEAR), "discrete-gut-3");
+        export(getContinuousColorScheme("gut", 4, Interpolations.LINEAR), "continuous-gut-4");
+        export(getDiscreteColorScheme("gut", 4, Interpolations.LINEAR), "discrete-gut-4");
+        export(getContinuousColorScheme("gut", 5, Interpolations.LINEAR), "continuous-gut-5");
+        export(getDiscreteColorScheme("gut", 5, Interpolations.LINEAR), "discrete-gut-5");
+        export(getContinuousColorScheme("gut", 6, Interpolations.LINEAR), "continuous-gut-6");
+        export(getDiscreteColorScheme("gut", 6, Interpolations.LINEAR), "discrete-gut-6");
+        export(getContinuousColorScheme("gut", 7, Interpolations.LINEAR), "continuous-gut-7");
+        export(getDiscreteColorScheme("gut", 7, Interpolations.LINEAR), "discrete-gut-7");
+        export(getContinuousColorScheme("gut", 8, Interpolations.LINEAR), "continuous-gut-8");
+        export(getDiscreteColorScheme("gut", 8, Interpolations.LINEAR), "discrete-gut-8");
+        export(getContinuousColorScheme("gut", 9, Interpolations.LINEAR), "continuous-gut-9");
+        export(getDiscreteColorScheme("gut", 9, Interpolations.LINEAR), "discrete-gut-9");
+        export(getContinuousColorScheme("gut", 10, Interpolations.LINEAR), "continuous-gut-10");
+        export(getDiscreteColorScheme("gut", 10, Interpolations.LINEAR), "discrete-gut-10");
     }
 
     private static final void export(final ColorScheme colorScheme, final String fileName)
