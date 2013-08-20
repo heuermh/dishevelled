@@ -145,7 +145,7 @@ public abstract class AbstractEventListNode<E>
                 /** {@inheritDoc} */
                 public void actionPerformed(final ActionEvent event)
                 {
-                    clear();
+                    removeAll();
                 }
         };
 
@@ -306,9 +306,9 @@ public abstract class AbstractEventListNode<E>
     }
 
     /**
-     * Clear (or remove all).
+     * Remove all.
      */
-    public final void clear() // removeAll
+    public final void removeAll()
     {
         getModel().clear();
     }
