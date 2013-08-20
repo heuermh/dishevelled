@@ -49,7 +49,7 @@ public final class SyntheticModule
     }
 
     @Provides @Singleton
-    SyntheticGenome createSyntheticGenome()
+    static SyntheticGenome createSyntheticGenome()
     {
         return new SyntheticGenome("human", "GRCh37", 22, 3000000000L);
     }

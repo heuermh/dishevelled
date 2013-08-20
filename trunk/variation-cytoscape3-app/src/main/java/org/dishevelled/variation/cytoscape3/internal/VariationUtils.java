@@ -23,6 +23,8 @@
 */
 package org.dishevelled.variation.cytoscape3.internal;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import static org.dishevelled.variation.so.SequenceOntology.countAssignments;
 import static org.dishevelled.variation.so.SequenceOntology.indexByName;
 import static org.dishevelled.variation.so.SequenceOntology.sequenceVariants;
@@ -195,12 +197,35 @@ final class VariationUtils
         /**
          * Create a new assignable node for the specified node.
          *
-         * @param node node
+         * @param node node, must not be null
          */
         AssignableNode(final CyNode node)
         {
             super();
+            checkNotNull(node);
             this.node = node;
+        }
+
+
+        @Override
+        public boolean equals(final Object o)
+        {
+            if (o == this)
+            {
+                return true;
+            }
+            if (!(o instanceof AssignableNode))
+            {
+                return false;
+            }
+            AssignableNode assignableNode = (AssignableNode) o;
+            return node.equals(assignableNode.node);
+        }
+
+        @Override
+        public int hashCode()
+        {
+            return node.hashCode();
         }
     }
 }

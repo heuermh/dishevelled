@@ -152,7 +152,7 @@ final class VariationConsequenceView
                         JLabel label = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
                         TableModel tableModel = table.getModel();
                         int tableModelRow = table.convertRowIndexToModel(row);
-                        String consequenceTerm = (String) tableModel.getValueAt(row, 9); // hard coded column index
+                        String consequenceTerm = (String) tableModel.getValueAt(tableModelRow, 9); // hard coded column index
                         Color rowColor = tableRowColorMapping.getColor(consequenceTerm);
                         if (rowColor != null && !isSelected)
                         {

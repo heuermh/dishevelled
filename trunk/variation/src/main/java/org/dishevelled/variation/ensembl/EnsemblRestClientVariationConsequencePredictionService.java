@@ -115,9 +115,11 @@ final class EnsemblRestClientVariationConsequencePredictionService
         return consequences;
     }
 
-    private void slowDown()
+    /**
+     * Slow down calls to prevent rate limit throttling.
+     */
+    private static void slowDown()
     {
-        // slow down calls to prevent rate limit throttling
         try
         {
             Thread.sleep(666L);

@@ -46,25 +46,25 @@ public final class EnsemblRestClientModule
     }
 
     @Provides @Singleton
-    FeatureService createFeatureService(final com.github.heuermh.ensemblrestclient.LookupService lookupService)
+    static FeatureService createFeatureService(final com.github.heuermh.ensemblrestclient.LookupService lookupService)
     {
         return new EnsemblRestClientFeatureService("human", "GRCh37", lookupService);
     }
 
     @Provides @Singleton
-    VariationService createVariationService(final com.github.heuermh.ensemblrestclient.FeatureService featureService)
+    static VariationService createVariationService(final com.github.heuermh.ensemblrestclient.FeatureService featureService)
     {
         return new EnsemblRestClientVariationService("human", "GRCh37", featureService);
     }
 
     @Provides @Singleton
-    VariationConsequenceService createVariationConsequenceService(final com.github.heuermh.ensemblrestclient.VariationService variationService)
+    static VariationConsequenceService createVariationConsequenceService(final com.github.heuermh.ensemblrestclient.VariationService variationService)
     {
         return new EnsemblRestClientVariationConsequenceService("human", "GRCh37", variationService);
     }
 
     @Provides @Singleton
-    VariationConsequencePredictionService createVariationConsequencePredictionService(final com.github.heuermh.ensemblrestclient.VariationService variationService)
+    static VariationConsequencePredictionService createVariationConsequencePredictionService(final com.github.heuermh.ensemblrestclient.VariationService variationService)
     {
         return new EnsemblRestClientVariationConsequencePredictionService("human", "GRCh37", variationService);
     }
