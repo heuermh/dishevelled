@@ -34,6 +34,7 @@ import javax.swing.JTable;
 import ca.odell.glazedlists.EventList;
 import ca.odell.glazedlists.SortedList;
 
+import ca.odell.glazedlists.gui.AbstractTableComparatorChooser;
 import ca.odell.glazedlists.gui.TableFormat;
 
 import ca.odell.glazedlists.swing.EventTableModel;
@@ -66,7 +67,7 @@ public class ElementsTable<E>
         SortedList<E> sortedModel = new SortedList<E>(model, null);
         EventTableModel<E> tableModel = new EventTableModel<E>(sortedModel, tableFormat);
         table = new JTable(tableModel);
-        TableComparatorChooser.install(table, sortedModel, TableComparatorChooser.MULTIPLE_COLUMN_MOUSE);
+        TableComparatorChooser.install(table, sortedModel, AbstractTableComparatorChooser.MULTIPLE_COLUMN_MOUSE);
 
         table.setSelectionModel(getListSelectionModelAdapter());
         table.addMouseListener(new ContextMenuListener(getContextMenu()));

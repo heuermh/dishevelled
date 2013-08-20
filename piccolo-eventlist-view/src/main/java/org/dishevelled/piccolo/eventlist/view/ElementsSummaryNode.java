@@ -101,7 +101,7 @@ public class ElementsSummaryNode<E>
     protected ElementsSummaryNode(final EventList<E> model)
     {
         super(model);
-        getModel().addListEventListener(listener);
+        addListeners();
     }
 
     /**
@@ -113,7 +113,6 @@ public class ElementsSummaryNode<E>
     public ElementsSummaryNode(final EventList<E> model, final UnaryFunction<E, ? extends PNode> modelToView)
     {
         this(model);
-        getModel().addListEventListener(listener);
         setModelToView(modelToView);
     }
 

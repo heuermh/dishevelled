@@ -175,7 +175,7 @@ public abstract class AbstractEventListView<E>
                 @Override
                 public void actionPerformed(final ActionEvent event)
                 {
-                    clear();
+                    removeAll();
                 }
         };
 
@@ -376,9 +376,9 @@ public abstract class AbstractEventListView<E>
     }
 
     /**
-     * Clear (or remove all).
+     * Remove all.
      */
-    public final void clear() // removeAll
+    public final void removeAll()
     {
         getModel().clear();
     }
@@ -780,6 +780,11 @@ public abstract class AbstractEventListView<E>
             }
         }
 
+        /**
+         * Return the selection listener.
+         *
+         * @return the selection listener
+         */
         private ListSelection.Listener getSelectionListener()
         {
             return listSelectionListener;

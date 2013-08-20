@@ -35,6 +35,7 @@ import javax.swing.BoxLayout;
 import javax.swing.Icon;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.SwingConstants;
 
 import org.dishevelled.functor.UnaryFunction;
 
@@ -255,13 +256,13 @@ public class ElementsSummary<E>
             {
                 if (separatorText != null || separatorIcon != null)
                 {
-                    add(new JLabel(separatorText, separatorIcon, JLabel.CENTER));
+                    add(new JLabel(separatorText, separatorIcon, SwingConstants.CENTER));
                 }
                 add(modelToView.evaluate(getModel().get(i)));
             }
             if ((elementsToDisplay < getModel().size()) && ((indicatorText != null) || (indicatorIcon != null)))
             {
-                add(new JLabel(indicatorText, indicatorIcon, JLabel.CENTER));
+                add(new JLabel(indicatorText, indicatorIcon, SwingConstants.CENTER));
             }
         }
         add(Box.createGlue());

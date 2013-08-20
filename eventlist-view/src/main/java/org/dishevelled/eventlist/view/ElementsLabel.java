@@ -230,6 +230,7 @@ public final class ElementsLabel<E>
      */
     public void dispose()
     {
+        super.dispose();
         removeListeners();
     }
 }
