@@ -31,7 +31,6 @@ import static org.dishevelled.variation.cytoscape3.internal.VariationUtils.ensem
 
 import java.util.List;
 
-import org.cytoscape.model.CyNetwork;
 import org.cytoscape.model.CyNode;
 
 import org.cytoscape.work.AbstractTask;
@@ -110,7 +109,7 @@ final class PredictVariationConsequencesTask
                         }
                     }
                 }
-                taskMonitor.setProgress(0.1d * i/(double) size);            
+                taskMonitor.setProgress(0.1d * (i / (double) size));
             }
             // todo: need to determine the node <--> feature mapping from model
             featureIndex.buildTrees();
@@ -135,7 +134,7 @@ final class PredictVariationConsequencesTask
                         }
                     }
                 }
-                taskMonitor.setProgress(0.1d + 0.9d * i/(double) size);
+                taskMonitor.setProgress(0.1d + 0.9d * (i / (double) size));
             }
 
             // allocate 10% of progress to counts
@@ -147,7 +146,7 @@ final class PredictVariationConsequencesTask
                 addCount(node, model.getNetwork(), "variation_consequence_count", variationConsequences.size());
                 addConsequenceCounts(node, model.getNetwork(), variationConsequences);
 
-                taskMonitor.setProgress(0.9d + 0.1d * i/(double) size);
+                taskMonitor.setProgress(0.9d + 0.1d * (i / (double) size));
             }
         }
         finally

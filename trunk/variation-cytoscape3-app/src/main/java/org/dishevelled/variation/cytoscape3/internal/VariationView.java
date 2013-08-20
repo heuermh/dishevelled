@@ -23,15 +23,11 @@
 */
 package org.dishevelled.variation.cytoscape3.internal;
 
-import java.util.ArrayList;
-
 import java.awt.Component;
 
 import java.awt.event.ActionEvent;
 
-import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
-import javax.swing.JPopupMenu;
 
 import ca.odell.glazedlists.EventList;
 import ca.odell.glazedlists.GlazedLists;
@@ -53,6 +49,8 @@ import org.dishevelled.variation.Variation;
 
 /**
  * Variation view.
+ *
+ * @author  Michael Heuer
  */
 final class VariationView
     extends LabelFieldPanel

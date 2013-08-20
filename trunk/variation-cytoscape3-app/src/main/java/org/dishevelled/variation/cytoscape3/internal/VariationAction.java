@@ -34,25 +34,18 @@ import java.awt.Component;
 
 import java.awt.event.ActionEvent;
 
-import java.util.Collections;
-import java.util.List;
-
-import javax.swing.AbstractAction;
-import javax.swing.Box;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JTabbedPane;
-import javax.swing.JToolBar;
 import javax.swing.WindowConstants;
 
 import javax.swing.border.EmptyBorder;
 
 import org.cytoscape.application.CyApplicationManager;
 import org.cytoscape.application.swing.AbstractCyAction;
-import org.cytoscape.model.CyNetwork;
 import org.cytoscape.work.swing.DialogTaskManager;
 
 import org.dishevelled.iconbundle.tango.TangoProject;
@@ -80,9 +73,16 @@ final class VariationAction extends AbstractCyAction
     private final DialogTaskManager dialogTaskManager;
 
     // hey, they're back
+    /** Feature service. */
     private final FeatureService featureService;
+
+    /** Variation service. */
     private final VariationService variationService;
+
+    /** Variation consequence service. */
     private final VariationConsequenceService variationConsequenceService;
+
+    /** Variation consequence prediction service. */
     private final VariationConsequencePredictionService variationConsequencePredictionService;
 
 
@@ -91,10 +91,17 @@ final class VariationAction extends AbstractCyAction
      *
      * @param applicationManager application manager, must not be null
      * @param dialogTaskManager dialog task manager, must not be null
+     * @param featureService feature service, must not be null
+     * @param variationService variation service, must not be null
+     * @param variationConsequenceService variation consequence service, must not be null
+     * @param variationConsequencePredictionService variation consequence prediction service, must not be null
      */
     VariationAction(final CyApplicationManager applicationManager,
                     final DialogTaskManager dialogTaskManager,
-                    final FeatureService featureService, final VariationService variationService, final VariationConsequenceService variationConsequenceService, final VariationConsequencePredictionService variationConsequencePredictionService)
+                    final FeatureService featureService,
+                    final VariationService variationService,
+                    final VariationConsequenceService variationConsequenceService,
+                    final VariationConsequencePredictionService variationConsequencePredictionService)
     {
         super("Variation");
         setPreferredMenu("Apps");
@@ -124,6 +131,8 @@ final class VariationAction extends AbstractCyAction
 
     /**
      * Show dialog.
+     *
+     * @param event event
      */
     private void showDialog(final ActionEvent event)
     {

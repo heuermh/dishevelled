@@ -46,6 +46,8 @@ import org.dishevelled.layout.LabelFieldPanel;
 
 /**
  * Config view.
+ *
+ * @author  Michael Heuer
  */
 final class ConfigView
     extends LabelFieldPanel
@@ -181,7 +183,7 @@ final class ConfigView
     /**
      * Create a new config view with the specified variation model.
      *
-     * @model model variation model, must not be null
+     * @param model variation model, must not be null
      */
     ConfigView(final VariationModel model)
     {
@@ -241,7 +243,7 @@ final class ConfigView
     /**
      * Wrap the specified component.
      *
-     * @return component component to wrap
+     * @param component component to wrap
      * @return the specified component wrapped in a panel with additional spacing right
      */
     private JPanel wrap(final JComponent component)

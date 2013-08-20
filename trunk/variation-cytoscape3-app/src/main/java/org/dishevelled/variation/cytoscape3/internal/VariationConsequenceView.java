@@ -23,17 +23,13 @@
 */
 package org.dishevelled.variation.cytoscape3.internal;
 
-import java.util.ArrayList;
-
 import java.awt.Color;
 import java.awt.Component;
 
 import java.awt.event.ActionEvent;
 
-import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
-import javax.swing.JPopupMenu;
 import javax.swing.JTable;
 
 import javax.swing.table.DefaultTableCellRenderer;
@@ -61,6 +57,8 @@ import org.dishevelled.variation.VariationConsequence;
 
 /**
  * Variation consequence view.
+ *
+ * @author  Michael Heuer
  */
 final class VariationConsequenceView
     extends LabelFieldPanel

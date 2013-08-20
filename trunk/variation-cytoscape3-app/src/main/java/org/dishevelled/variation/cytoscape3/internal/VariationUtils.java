@@ -65,9 +65,20 @@ import org.dishevelled.vocabulary.Evidence;
 
 /**
  * Variation utils.
+ *
+ * @author  Michael Heuer
  */
 final class VariationUtils
 {
+
+    /**
+     * Private no-arg constructor.
+     */
+    private VariationUtils()
+    {
+        // empty
+    }
+
 
     /**
      * Return zero or more Ensembl gene ids from the specified Ensembl gene id column for the specified node.

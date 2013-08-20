@@ -36,6 +36,8 @@ import org.dishevelled.vocabulary.Domain;
 
 /**
  * Mapping of Sequence Ontology (SO) consequence term to background color for table rows.
+ *
+ * @author  Michael Heuer
  */
 final class TableRowColorMapping
 {

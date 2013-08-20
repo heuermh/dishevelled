@@ -51,6 +51,8 @@ import org.dishevelled.variation.interval.tree.CenteredIntervalTree;
 
 /**
  * Feature index.
+ *
+ * @author  Michael Heuer
  */
 final class FeatureIndex
 {
@@ -60,7 +62,7 @@ final class FeatureIndex
     private final BiMap<Feature, Interval> featuresToIntervals = HashBiMap.create();
     private final Map<String, CenteredIntervalTree> intervalTrees = Maps.newHashMap();
     private final ListMultimap<Feature, VariationConsequence> consequences = ArrayListMultimap.create();
-    
+
     void buildTrees()
     {
         ListMultimap<String, Feature> featuresByName = ArrayListMultimap.create();
