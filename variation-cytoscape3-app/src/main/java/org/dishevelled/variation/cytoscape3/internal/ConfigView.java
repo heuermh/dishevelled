@@ -246,7 +246,7 @@ final class ConfigView
      * @param component component to wrap
      * @return the specified component wrapped in a panel with additional spacing right
      */
-    private JPanel wrap(final JComponent component)
+    private static JPanel wrap(final JComponent component)
     {
         JPanel panel = new JPanel();
         panel.setOpaque(false);
