@@ -25,13 +25,8 @@ package org.dishevelled.variation.cytoscape3.internal;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-import org.cytoscape.model.CyNetwork;
-
 import org.cytoscape.work.AbstractTaskFactory;
 import org.cytoscape.work.TaskIterator;
-
-import org.dishevelled.variation.FeatureService;
-import org.dishevelled.variation.VariationService;
 
 /**
  * Add variations task factory.

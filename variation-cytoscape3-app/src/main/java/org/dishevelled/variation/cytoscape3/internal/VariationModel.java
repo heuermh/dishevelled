@@ -44,6 +44,8 @@ import org.dishevelled.variation.VariationConsequencePredictionService;
 
 /**
  * Variation model.
+ *
+ * @author  Michael Heuer
  */
 final class VariationModel
 {

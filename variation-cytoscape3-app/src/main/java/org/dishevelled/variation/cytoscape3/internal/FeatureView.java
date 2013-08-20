@@ -29,12 +29,6 @@ import java.awt.Component;
 
 import java.awt.event.ActionEvent;
 
-import java.util.ArrayList;
-
-import javax.swing.AbstractAction;
-import javax.swing.JFileChooser;
-import javax.swing.JPopupMenu;
-
 import ca.odell.glazedlists.EventList;
 import ca.odell.glazedlists.GlazedLists;
 import ca.odell.glazedlists.gui.TableFormat;
@@ -54,6 +48,8 @@ import org.dishevelled.variation.Feature;
 
 /**
  * Feature view.
+ *
+ * @author  Michael Heuer
  */
 final class FeatureView
     extends LabelFieldPanel
@@ -93,10 +89,11 @@ final class FeatureView
     FeatureView(final VariationModel model)
     {
         super();
-        setOpaque(false);
+        checkNotNull(model);
         this.model = model;
         featureTable = new FeatureTable(this.model.features());
 
+        setOpaque(false);
         layoutComponents();
     }
 

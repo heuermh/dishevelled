@@ -34,7 +34,6 @@ import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 
-import org.cytoscape.model.CyNetwork;
 import org.cytoscape.model.CyNode;
 
 import org.cytoscape.work.AbstractTask;
@@ -141,7 +140,7 @@ final class AnnotateVariationConsequencesTask
                         }
                     }
                 }
-                taskMonitor.setProgress(i/(double) size);
+                taskMonitor.setProgress(i / (double) size);
             }
         }
         finally

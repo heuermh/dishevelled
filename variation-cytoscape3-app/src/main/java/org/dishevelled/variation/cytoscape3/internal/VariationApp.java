@@ -27,8 +27,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.awt.event.ActionEvent;
 
-import javax.swing.AbstractAction;
-
 import com.google.common.collect.ImmutableList;
 
 import org.cytoscape.application.CyApplicationManager;
@@ -48,6 +46,8 @@ import org.dishevelled.variation.VariationConsequencePredictionService;
 
 /**
  * Variation app.
+ *
+ * @author  Michael Heuer
  */
 final class VariationApp
 {
@@ -130,9 +130,17 @@ final class VariationApp
      *
      * @param applicationManager application manager, must not be null
      * @param dialogTaskManager dialog task manager
+     * @param featureService feature service, must not be null
+     * @param variationService variation service, must not be null
+     * @param variationConsequenceService variation consequence service, must not be null
+     * @param variationConsequencePredictionService variation consequence prediction service, must not be null
      */
-    VariationApp(final CyApplicationManager applicationManager, final DialogTaskManager dialogTaskManager,
-                 final FeatureService featureService, final VariationService variationService, final VariationConsequenceService variationConsequenceService, final VariationConsequencePredictionService variationConsequencePredictionService)
+    VariationApp(final CyApplicationManager applicationManager,
+                 final DialogTaskManager dialogTaskManager,
+                 final FeatureService featureService,
+                 final VariationService variationService,
+                 final VariationConsequenceService variationConsequenceService,
+                 final VariationConsequencePredictionService variationConsequencePredictionService)
     {
         checkNotNull(applicationManager);
         checkNotNull(dialogTaskManager);

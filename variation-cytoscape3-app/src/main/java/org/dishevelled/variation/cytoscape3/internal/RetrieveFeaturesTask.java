@@ -29,7 +29,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.util.List;
 
-import org.cytoscape.model.CyNetwork;
 import org.cytoscape.model.CyNode;
 
 import org.cytoscape.work.AbstractTask;
@@ -98,7 +97,7 @@ final class RetrieveFeaturesTask
                         }
                     }
                 }
-                taskMonitor.setProgress(i/(double) size);
+                taskMonitor.setProgress(i / (double) size);
             }
         }
         finally
