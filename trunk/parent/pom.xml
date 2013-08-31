@@ -296,7 +296,7 @@
         <version>2.9.1</version>
         <configuration>
           <configLocation>${basedir}/src/build/conf/checkstyle.xml</configLocation>
-          <enableRulesSumary>false</enableRulesSummary>
+          <enableRulesSummary>false</enableRulesSummary>
           <propertyExpansion>header.file=${basedir}/HEADER.txt</propertyExpansion>
         </configuration>
       </plugin>
