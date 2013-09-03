@@ -44,7 +44,6 @@ import org.dishevelled.functor.UnaryFunction;
  *
  * @param <E> model element type
  * @author  Michael Heuer
- * @version $Revision$ $Date$
  */
 public class ElementsSummary<E>
     extends AbstractEventListView<E>
@@ -85,7 +84,7 @@ public class ElementsSummary<E>
     /** Listener. */
     private final ListEventListener<E> listener = new ListEventListener<E>()
         {
-            /** @{inheritDoc} */
+            @Override
             public void listChanged(final ListEvent<E> event)
             {
                 updateComponents();

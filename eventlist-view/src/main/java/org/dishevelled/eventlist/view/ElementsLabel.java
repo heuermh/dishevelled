@@ -37,9 +37,8 @@ import javax.swing.JLabel;
 /**
  * Elements label.
  *
- * @param <E> event list type
+ * @param <E> model element type
  * @author  Michael Heuer
- * @version $Revision$ $Date$
  */
 public final class ElementsLabel<E>
     extends AbstractEventListView<E>
@@ -68,7 +67,7 @@ public final class ElementsLabel<E>
     /** Listener. */
     private final ListEventListener<E> listener = new ListEventListener<E>()
         {
-            /** @{inheritDoc} */
+            @Override
             public void listChanged(final ListEvent<E> event)
             {
                 updateLabelText();

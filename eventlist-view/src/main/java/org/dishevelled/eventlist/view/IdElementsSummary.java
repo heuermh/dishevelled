@@ -41,7 +41,6 @@ import org.dishevelled.identify.IdLabel;
  *
  * @param <E> model element type
  * @author  Michael Heuer
- * @version $Revision$ $Date$
  */
 public final class IdElementsSummary<E>
     extends ElementsSummary<E>

@@ -45,8 +45,8 @@ import org.dishevelled.identify.ContextMenuListener;
 /**
  * Elements table.
  *
+ * @param <E> model element type
  * @author  Michael Heuer
- * @version $Revision$ $Date$
  */
 public class ElementsTable<E>
     extends AbstractEventListView<E>
