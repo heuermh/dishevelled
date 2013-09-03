@@ -37,7 +37,7 @@ import ca.odell.glazedlists.SortedList;
 import ca.odell.glazedlists.gui.AbstractTableComparatorChooser;
 import ca.odell.glazedlists.gui.TableFormat;
 
-import ca.odell.glazedlists.swing.EventTableModel;
+import ca.odell.glazedlists.swing.GlazedListsSwing;
 import ca.odell.glazedlists.swing.TableComparatorChooser;
 
 import org.dishevelled.identify.ContextMenuListener;
@@ -64,9 +64,8 @@ public class ElementsTable<E>
     public ElementsTable(final EventList<E> model, final TableFormat<E> tableFormat)
     {
         super(model);
-        SortedList<E> sortedModel = new SortedList<E>(model, null);
-        EventTableModel<E> tableModel = new EventTableModel<E>(sortedModel, tableFormat);
-        table = new JTable(tableModel);
+        SortedList<E> sortedModel = new SortedList<E>(getModel(), null);
+        table = new JTable(GlazedListsSwing.eventTableModelWithThreadProxyList(sortedModel, tableFormat));
         TableComparatorChooser.install(table, sortedModel, AbstractTableComparatorChooser.MULTIPLE_COLUMN_MOUSE);
 
         table.setSelectionModel(getListSelectionModelAdapter());

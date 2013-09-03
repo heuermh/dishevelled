@@ -23,11 +23,14 @@
 */
 package org.dishevelled.eventlist.view;
 
-import ca.odell.glazedlists.EventList;
-import ca.odell.glazedlists.ListSelection;
-
-import ca.odell.glazedlists.event.ListEvent;
-import ca.odell.glazedlists.event.ListEventListener;
+import static org.dishevelled.iconbundle.tango.TangoProject.EDIT_COPY;
+import static org.dishevelled.iconbundle.tango.TangoProject.EDIT_CUT;
+import static org.dishevelled.iconbundle.tango.TangoProject.EDIT_PASTE;
+import static org.dishevelled.iconbundle.tango.TangoProject.EDIT_SELECT_ALL;
+import static org.dishevelled.iconbundle.tango.TangoProject.EXTRA_SMALL;
+import static org.dishevelled.iconbundle.tango.TangoProject.LIST_ADD;
+import static org.dishevelled.iconbundle.tango.TangoProject.LIST_REMOVE;
+import static org.dishevelled.iconbundle.tango.TangoProject.SIZES;
 
 import java.awt.event.ActionEvent;
 
@@ -42,20 +45,26 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.ListSelectionModel;
+
 import javax.swing.border.EmptyBorder;
+
 import javax.swing.event.EventListenerList;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import ca.odell.glazedlists.EventList;
+import ca.odell.glazedlists.ListSelection;
+
+import ca.odell.glazedlists.event.ListEvent;
+import ca.odell.glazedlists.event.ListEventListener;
+
 import org.dishevelled.iconbundle.IconSize;
-import org.dishevelled.iconbundle.tango.TangoProject;
+
 import org.dishevelled.identify.ContextMenuButton;
 import org.dishevelled.identify.ContextMenuListener;
 import org.dishevelled.identify.IdPopupMenu;
 import org.dishevelled.identify.IdToolBar;
 import org.dishevelled.identify.IdentifiableAction;
-
-import static org.dishevelled.iconbundle.tango.TangoProject.*;
 
 /**
  * Abstract event list view.
@@ -219,16 +228,16 @@ public abstract class AbstractEventListView<E>
         label.setBorder(new EmptyBorder(0, 2, 2, 0));
 
         contextMenu = new IdPopupMenu();
-        contextMenu.add(getCutAction(), TangoProject.EXTRA_SMALL);
-        contextMenu.add(getCopyAction(), TangoProject.EXTRA_SMALL);
-        contextMenu.add(getPasteAction(), TangoProject.EXTRA_SMALL);
+        contextMenu.add(getCutAction(), EXTRA_SMALL);
+        contextMenu.add(getCopyAction(), EXTRA_SMALL);
+        contextMenu.add(getPasteAction(), EXTRA_SMALL);
         contextMenu.addSeparator();
-        contextMenu.add(getSelectAllAction(), TangoProject.EXTRA_SMALL);
+        contextMenu.add(getSelectAllAction(), EXTRA_SMALL);
         contextMenu.add(getClearSelectionAction());
         contextMenu.add(getInvertSelectionAction());
         contextMenu.addSeparator();
-        contextMenu.add(getAddAction(), TangoProject.EXTRA_SMALL);
-        contextMenu.add(getRemoveAction(), TangoProject.EXTRA_SMALL);
+        contextMenu.add(getAddAction(), EXTRA_SMALL);
+        contextMenu.add(getRemoveAction(), EXTRA_SMALL);
         contextMenu.add(getRemoveAllAction());
 
         toolBar = new IdToolBar();
@@ -244,11 +253,11 @@ public abstract class AbstractEventListView<E>
             toolBarContextMenu.add((JCheckBoxMenuItem) menuItem);
         }
         toolBarContextMenu.addSeparator();
-        for (Object iconSize : TangoProject.SIZES)
+        for (Object iconSize : SIZES)
         {
             toolBarContextMenu.add(toolBar.createIconSizeMenuItem((IconSize) iconSize));
         }
-        toolBar.setIconSize(TangoProject.EXTRA_SMALL);
+        toolBar.setIconSize(EXTRA_SMALL);
         toolBar.addMouseListener(new ContextMenuListener(toolBarContextMenu));
 
         listSelectionModelAdapter = new ListSelectionModelAdapter();
@@ -576,8 +585,6 @@ public abstract class AbstractEventListView<E>
 
     /**
      * List selection model that delegates to {@link #getSelectionModel}.
-     *
-     * @param <E> model element type
      */
     protected final class ListSelectionModelAdapter implements ListSelectionModel
     {

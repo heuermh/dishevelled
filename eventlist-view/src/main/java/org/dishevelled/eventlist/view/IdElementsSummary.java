@@ -23,10 +23,10 @@
 */
 package org.dishevelled.eventlist.view;
 
-import ca.odell.glazedlists.EventList;
-
 import java.util.HashMap;
 import java.util.Map;
+
+import ca.odell.glazedlists.EventList;
 
 import org.dishevelled.functor.UnaryFunction;
 
