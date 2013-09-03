@@ -63,10 +63,9 @@ public class ElementsTable<E>
      */
     public ElementsTable(final EventList<E> model, final TableFormat<E> tableFormat)
     {
-        super(model);
-        SortedList<E> sortedModel = new SortedList<E>(getModel(), null);
-        table = new JTable(GlazedListsSwing.eventTableModelWithThreadProxyList(sortedModel, tableFormat));
-        TableComparatorChooser.install(table, sortedModel, AbstractTableComparatorChooser.MULTIPLE_COLUMN_MOUSE);
+        super(new SortedList<E>(model, null));
+        table = new JTable(GlazedListsSwing.eventTableModelWithThreadProxyList(getModel(), tableFormat));
+        TableComparatorChooser.install(table, (SortedList<E>) getModel(), AbstractTableComparatorChooser.MULTIPLE_COLUMN_MOUSE);
 
         table.setSelectionModel(getListSelectionModelAdapter());
         table.addMouseListener(new ContextMenuListener(getContextMenu()));
