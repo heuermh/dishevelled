@@ -175,7 +175,7 @@ public abstract class AbstractEventListView<E>
                 @Override
                 public void actionPerformed(final ActionEvent event)
                 {
-                    removeAll();
+                    clear();
                 }
         };
 
@@ -376,9 +376,9 @@ public abstract class AbstractEventListView<E>
     }
 
     /**
-     * Remove all.
+     * Remove all/clear.
      */
-    public final void removeAll()
+    public final void clear()
     {
         getModel().clear();
     }
