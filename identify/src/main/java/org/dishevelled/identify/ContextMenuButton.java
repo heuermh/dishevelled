@@ -35,7 +35,6 @@ import javax.swing.JPopupMenu;
  * Context menu button.
  *
  * @author  Michael Heuer
- * @version $Revision$ $Date$
  */
 public final class ContextMenuButton
     extends JButton
@@ -46,7 +45,7 @@ public final class ContextMenuButton
     /** Mouse listener. */
     private final MouseListener listener = new MouseAdapter()
         {
-            /** {@inheritDoc} */
+            @Override
             public void mousePressed(final MouseEvent event)
             {
                 contextMenu.show(event.getComponent(), 0, event.getComponent().getHeight());

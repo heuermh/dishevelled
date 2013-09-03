@@ -81,7 +81,7 @@ public final class IdLabel
     /** Mouseover mouse listener. */
     private MouseListener mouseoverListener = new MouseAdapter()
         {
-            /** {@inheritDoc} */
+            @Override
             public void mouseEntered(final MouseEvent e)
             {
                 if (getIconState().equals(IconState.NORMAL))
@@ -91,7 +91,7 @@ public final class IdLabel
                 }
             }
 
-            /** {@inheritDoc} */
+            @Override
             public void mouseExited(final MouseEvent e)
             {
                 if (getIconState().equals(IconState.MOUSEOVER))
@@ -259,7 +259,7 @@ public final class IdLabel
         return iconTextDirection;
     }
 
-    /** {@inheritDoc} */
+    @Override
     public void setComponentOrientation(final ComponentOrientation orientation)
     {
         ComponentOrientation oldOrientation = getComponentOrientation();
@@ -278,7 +278,7 @@ public final class IdLabel
         super.setComponentOrientation(orientation);
     }
 
-    /** {@inheritDoc} */
+    @Override
     public void applyComponentOrientation(final ComponentOrientation orientation)
     {
         ComponentOrientation oldOrientation = getComponentOrientation();
@@ -297,7 +297,7 @@ public final class IdLabel
         super.applyComponentOrientation(orientation);
     }
 
-    /** {@inheritDoc} */
+    @Override
     public void setEnabled(final boolean enabled)
     {
         boolean previousEnabled = isEnabled();
@@ -376,7 +376,7 @@ public final class IdLabel
         dirty = false;
     }
 
-    /** {@inheritDoc} */
+    @Override
     public String getText()
     {
         if (isDirty())
@@ -386,7 +386,7 @@ public final class IdLabel
         return super.getText();
     }
 
-    /** {@inheritDoc} */
+    @Override
     public Icon getIcon()
     {
         if (isDirty())
@@ -396,7 +396,7 @@ public final class IdLabel
         return imageIcon;
     }
 
-    /** {@inheritDoc} */
+    @Override
     public Icon getDisabledIcon()
     {
         if (isDirty())
@@ -406,7 +406,7 @@ public final class IdLabel
         return imageIcon;
     }
 
-    /** {@inheritDoc} */
+    @Override
     public Rectangle getBounds()
     {
         if (isDirty())
@@ -416,7 +416,7 @@ public final class IdLabel
         return super.getBounds();
     }
 
-    /** {@inheritDoc} */
+    @Override
     public Rectangle getBounds(final Rectangle rv)
     {
         if (isDirty())
@@ -426,7 +426,7 @@ public final class IdLabel
         return super.getBounds(rv);
     }
 
-    /** {@inheritDoc} */
+    @Override
     public Dimension getMaximumSize()
     {
         if (isDirty())
@@ -436,7 +436,7 @@ public final class IdLabel
         return super.getMaximumSize();
     }
 
-    /** {@inheritDoc} */
+    @Override
     public Dimension getMinimumSize()
     {
         if (isDirty())
@@ -446,7 +446,7 @@ public final class IdLabel
         return super.getMinimumSize();
     }
 
-    /** {@inheritDoc} */
+    @Override
     public Dimension getPreferredSize()
     {
         if (isDirty())
@@ -456,7 +456,7 @@ public final class IdLabel
         return super.getPreferredSize();
     }
 
-    /** {@inheritDoc} */
+    @Override
     public Dimension getSize()
     {
         if (isDirty())
@@ -466,7 +466,7 @@ public final class IdLabel
         return super.getSize();
     }
 
-    /** {@inheritDoc} */
+    @Override
     public Rectangle getVisibleRect()
     {
         if (isDirty())
@@ -476,7 +476,7 @@ public final class IdLabel
         return super.getVisibleRect();
     }
 
-    /** {@inheritDoc} */
+    @Override
     public int getHeight()
     {
         if (isDirty())
@@ -486,7 +486,7 @@ public final class IdLabel
         return super.getHeight();
     }
 
-    /** {@inheritDoc} */
+    @Override
     public int getWidth()
     {
         if (isDirty())
@@ -496,7 +496,7 @@ public final class IdLabel
         return super.getWidth();
     }
 
-    /** {@inheritDoc} */
+    @Override
     public void paintComponent(final Graphics g)
     {
         if (isDirty())

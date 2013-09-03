@@ -33,7 +33,6 @@ import org.dishevelled.iconbundle.tango.TangoProject;
  * Unit test for IdMenu.
  *
  * @author  Michael Heuer
- * @version $Revision$ $Date$
  */
 public final class IdMenuTest
     extends TestCase

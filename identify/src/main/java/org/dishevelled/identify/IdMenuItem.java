@@ -42,7 +42,6 @@ import org.dishevelled.iconbundle.IconTextDirection;
  * @see IdentifiableAction
  *
  * @author  Michael Heuer
- * @version $Revision$ $Date$
  */
 public final class IdMenuItem
     extends JMenuItem
@@ -161,7 +160,7 @@ public final class IdMenuItem
         super.setComponentOrientation(orientation);
     }
 
-    /** {@inheritDoc} */
+    @Override
     public void applyComponentOrientation(final ComponentOrientation orientation)
     {
         ComponentOrientation oldOrientation = getComponentOrientation();
@@ -180,7 +179,7 @@ public final class IdMenuItem
         super.applyComponentOrientation(orientation);
     }
 
-    /** {@inheritDoc} */
+    @Override
     protected void configurePropertiesFromAction(final Action action)
     {
         super.configurePropertiesFromAction(action);
@@ -228,7 +227,7 @@ public final class IdMenuItem
             setSelectedIcon(new ImageIcon(bndl.getImage(this, iconTextDirection, IconState.SELECTED, iconSize)));
             setRolloverIcon(new ImageIcon(bndl.getImage(this, iconTextDirection, IconState.MOUSEOVER, iconSize)));
             setRolloverSelectedIcon(new ImageIcon(bndl.getImage(this, iconTextDirection, IconState.SELECTED, iconSize)));
-            setDisabledIcon(new ImageIcon(bndl.getImage(this, iconTextDirection, IconState.DISABLED, iconSize)));
+            //setDisabledIcon(new ImageIcon(bndl.getImage(this, iconTextDirection, IconState.DISABLED, iconSize)));
         }
         dirty = false;
     }

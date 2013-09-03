@@ -41,7 +41,7 @@ public final class IdentifiableActionTest
     {
         IdentifiableAction action = new IdentifiableAction("name", TangoProject.TEXT_X_GENERIC)
             {
-                /** @see IdentifiableAction */
+                @Override
                 public void actionPerformed(final ActionEvent e)
                 {
                     // empty
@@ -56,7 +56,7 @@ public final class IdentifiableActionTest
 
         IdentifiableAction nullName = new IdentifiableAction(null, TangoProject.TEXT_X_GENERIC)
             {
-                /** @see IdentifiableAction */
+                @Override
                 public void actionPerformed(final ActionEvent e)
                 {
                     // empty
@@ -72,7 +72,7 @@ public final class IdentifiableActionTest
         {
             IdentifiableAction nullIconBundle = new IdentifiableAction("name", null)
                 {
-                    /** @see IdentifiableAction */
+                    @Override
                     public void actionPerformed(final ActionEvent e)
                     {
                         // empty

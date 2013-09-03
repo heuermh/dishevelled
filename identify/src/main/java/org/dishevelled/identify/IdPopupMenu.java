@@ -33,7 +33,6 @@ import org.dishevelled.iconbundle.IconSize;
  * An extension of JPopupMenu that supports identifiable actions.
  *
  * @author  Michael Heuer
- * @version $Revision$ $Date$
  */
 public class IdPopupMenu
     extends JPopupMenu

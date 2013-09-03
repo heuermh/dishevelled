@@ -42,7 +42,6 @@ import org.dishevelled.iconbundle.IconTextDirection;
  * @see IdentifiableAction
  *
  * @author  Michael Heuer
- * @version $Revision$ $Date$
  */
 public final class IdCheckBoxMenuItem
     extends JCheckBoxMenuItem
@@ -181,7 +180,7 @@ public final class IdCheckBoxMenuItem
         return iconTextDirection;
     }
 
-    /** {@inheritDoc} */
+    @Override
     public void setComponentOrientation(final ComponentOrientation orientation)
     {
         ComponentOrientation oldOrientation = getComponentOrientation();
@@ -200,7 +199,7 @@ public final class IdCheckBoxMenuItem
         super.setComponentOrientation(orientation);
     }
 
-    /** {@inheritDoc} */
+    @Override
     public void applyComponentOrientation(final ComponentOrientation orientation)
     {
         ComponentOrientation oldOrientation = getComponentOrientation();
@@ -219,7 +218,7 @@ public final class IdCheckBoxMenuItem
         super.applyComponentOrientation(orientation);
     }
 
-    /** {@inheritDoc} */
+    @Override
     protected void configurePropertiesFromAction(final Action action)
     {
         super.configurePropertiesFromAction(action);
@@ -267,7 +266,7 @@ public final class IdCheckBoxMenuItem
             setSelectedIcon(new ImageIcon(bndl.getImage(this, iconTextDirection, IconState.SELECTED, iconSize)));
             setRolloverIcon(new ImageIcon(bndl.getImage(this, iconTextDirection, IconState.MOUSEOVER, iconSize)));
             setRolloverSelectedIcon(new ImageIcon(bndl.getImage(this, iconTextDirection, IconState.SELECTED, iconSize)));
-            setDisabledIcon(new ImageIcon(bndl.getImage(this, iconTextDirection, IconState.DISABLED, iconSize)));
+            //setDisabledIcon(new ImageIcon(bndl.getImage(this, iconTextDirection, IconState.DISABLED, iconSize)));
         }
         dirty = false;
     }

@@ -32,7 +32,6 @@ import javax.swing.JPopupMenu;
  * Context menu listener.
  *
  * @author  Michael Heuer
- * @version $Revision$ $Date$
  */
 public final class ContextMenuListener
     extends MouseAdapter
@@ -56,7 +55,7 @@ public final class ContextMenuListener
     }
 
 
-    /** {@inheritDoc} */
+    @Override
     public void mousePressed(final MouseEvent event)
     {
         if (event.isPopupTrigger())
@@ -65,7 +64,7 @@ public final class ContextMenuListener
         }
     }
 
-    /** {@inheritDoc} */
+    @Override
     public void mouseReleased(final MouseEvent event)
     {
         if (event.isPopupTrigger())

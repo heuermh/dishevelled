@@ -40,7 +40,6 @@ import org.dishevelled.iconbundle.tango.TangoProject;
  * Unit test for IdMenuItem.
  *
  * @author  Michael Heuer
- * @version $Revision: 95 $ $Date: 2006-09-26 15:08:21 -0500 (Tue, 26 Sep 2006) $
  */
 public final class IdMenuItemTest
     extends TestCase
@@ -49,12 +48,12 @@ public final class IdMenuItemTest
     private IdentifiableAction action;
 
 
-    /** @see TestCase */
+    @Override
     protected void setUp()
     {
         action = new IdentifiableAction("name", TangoProject.TEXT_X_GENERIC)
             {
-                /** @see IdentifiableAction */
+                @Override
                 public void actionPerformed(final ActionEvent e)
                 {
                     // empty

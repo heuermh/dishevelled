@@ -52,13 +52,13 @@ public final class IdRenderer
     private final IdLabel delegate = new IdLabel();
 
 
-    /** {@inheritDoc} */
+    @Override
     public Component getComponent()
     {
         return delegate;
     }
 
-    /** {@inheritDoc} */
+    @Override
     public void setValue(final Object value, final boolean selected)
     {
         delegate.setValue(value);

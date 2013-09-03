@@ -101,7 +101,7 @@ public final class IdentifyUtilsTest
 
         IdentifyUtils.NameStrategy nameStrategy = new IdentifyUtils.NameStrategy()
             {
-                /** @see IdentifyUtils.NameStrategy */
+                @Override
                 public String getNameFor(final Object bean)
                 {
                     return (bean == null) ? null : "foo";
@@ -144,7 +144,7 @@ public final class IdentifyUtilsTest
 
         IdentifyUtils.IconBundleStrategy iconBundleStrategy = new IdentifyUtils.IconBundleStrategy()
             {
-                /** @see IdentifyUtils.IconBundleStrategy */
+                @Override
                 public IconBundle getIconBundleFor(final Object bean)
                 {
                     // ignore what might be set for bean
