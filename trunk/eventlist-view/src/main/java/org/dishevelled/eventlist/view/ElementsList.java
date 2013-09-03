@@ -47,7 +47,6 @@ import org.dishevelled.identify.ContextMenuListener;
  *
  * @param <E> model element type
  * @author  Michael Heuer
- * @version $Revision$ $Date$
  */
 public class ElementsList<E>
     extends AbstractEventListView<E>

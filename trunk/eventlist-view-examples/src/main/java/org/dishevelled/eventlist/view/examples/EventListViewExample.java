@@ -63,7 +63,6 @@ import org.dishevelled.layout.LabelFieldPanel;
  * Event list view example.
  *
  * @author  Michael Heuer
- * @version $Revision$ $Date$
  */
 public final class EventListViewExample
     extends LabelFieldPanel
@@ -87,6 +86,7 @@ public final class EventListViewExample
             strings.add("Value " + i);
         }
         eventList = GlazedLists.eventList(strings);
+
         addField("Count label:", new CountLabel<String>(eventList));
         addField("Elements label:", new ElementsLabel<String>(eventList));
         addLabel("Elements summary:");
@@ -96,7 +96,7 @@ public final class EventListViewExample
             // todo:  this really aught to be a list synchronized with the event list
             private final Map<String, JComponent> cache = new HashMap<String, JComponent>();
 
-            /** {@inheritDoc} */
+            @Override
             public JComponent evaluate(final String element)
             {
                 if (!cache.containsKey(element))
@@ -116,7 +116,7 @@ public final class EventListViewExample
 
         Timer t = new Timer(5000, new ActionListener()
             {
-                /** {@inheritDoc} */
+                @Override
                 public void actionPerformed(final ActionEvent e)
                 {
                     if (!eventList.isEmpty())
@@ -129,6 +129,12 @@ public final class EventListViewExample
         t.start();
     }
 
+
+    /**
+     * Create and return a new lower panel.
+     *
+     * @return a new lower panel
+     */
     private JPanel createLowerPanel()
     {
         JPanel panel = new JPanel();
@@ -187,7 +193,7 @@ public final class EventListViewExample
     }
 
 
-    /** {@inheritDoc} */
+    @Override
     public void run()
     {
         JFrame f = new JFrame("Event list view example");

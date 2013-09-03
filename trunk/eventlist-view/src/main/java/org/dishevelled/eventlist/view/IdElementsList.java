@@ -36,7 +36,6 @@ import org.dishevelled.identify.IdListCellRenderer;
  *
  * @param <E> model element type
  * @author  Michael Heuer
- * @version $Revision$ $Date$
  */
 public class IdElementsList<E>
     extends ElementsList<E>

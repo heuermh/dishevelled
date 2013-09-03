@@ -62,7 +62,6 @@ import static org.dishevelled.iconbundle.tango.TangoProject.*;
  *
  * @param <E> model element type
  * @author  Michael Heuer
- * @version $Revision$ $Date$
  */
 public abstract class AbstractEventListView<E>
     extends JPanel

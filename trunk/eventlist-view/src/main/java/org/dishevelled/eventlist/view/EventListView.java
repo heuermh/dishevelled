@@ -31,7 +31,6 @@ import ca.odell.glazedlists.ListSelection;
  *
  * @param <E> model element type
  * @author  Michael Heuer
- * @version $Revision$ $Date$
  */
 public interface EventListView<E>
 {
