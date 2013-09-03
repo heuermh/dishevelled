@@ -65,7 +65,9 @@ public class ElementsTable<E>
     {
         super(new SortedList<E>(model, null));
         table = new JTable(GlazedListsSwing.eventTableModelWithThreadProxyList(getModel(), tableFormat));
-        TableComparatorChooser.install(table, (SortedList<E>) getModel(), AbstractTableComparatorChooser.MULTIPLE_COLUMN_MOUSE);
+        TableComparatorChooser.install(table,
+                                       (SortedList<E>) getModel(),
+                                       AbstractTableComparatorChooser.MULTIPLE_COLUMN_MOUSE);
 
         table.setSelectionModel(getListSelectionModelAdapter());
         table.addMouseListener(new ContextMenuListener(getContextMenu()));
