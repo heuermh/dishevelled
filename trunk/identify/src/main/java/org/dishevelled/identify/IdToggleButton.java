@@ -192,7 +192,7 @@ public final class IdToggleButton
         rebuild();
     }
 
-    /** {@inheritDoc} */
+    @Override
     public void setComponentOrientation(final ComponentOrientation orientation)
     {
         ComponentOrientation oldOrientation = getComponentOrientation();
@@ -211,7 +211,7 @@ public final class IdToggleButton
         super.setComponentOrientation(orientation);
     }
 
-    /** {@inheritDoc} */
+    @Override
     public void applyComponentOrientation(final ComponentOrientation orientation)
     {
         ComponentOrientation oldOrientation = getComponentOrientation();
@@ -230,7 +230,7 @@ public final class IdToggleButton
         super.applyComponentOrientation(orientation);
     }
 
-    /** {@inheritDoc} */
+    @Override
     protected void configurePropertiesFromAction(final Action action)
     {
         super.configurePropertiesFromAction(action);

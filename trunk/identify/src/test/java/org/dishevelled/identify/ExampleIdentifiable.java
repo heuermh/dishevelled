@@ -62,13 +62,13 @@ public final class ExampleIdentifiable
     }
 
 
-    /** {@inheritDoc} */
+    @Override
     public String getName()
     {
         return name;
     }
 
-    /** {@inheritDoc} */
+    @Override
     public IconBundle getIconBundle()
     {
         return iconBundle;

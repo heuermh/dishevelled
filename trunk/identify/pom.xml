@@ -61,7 +61,7 @@
     </dependency>
   </dependencies>
   <properties>
-    <jdk.version>1.4</jdk.version>
+    <jdk.version>1.6</jdk.version>
   </properties>
   <reporting>
     <plugins>

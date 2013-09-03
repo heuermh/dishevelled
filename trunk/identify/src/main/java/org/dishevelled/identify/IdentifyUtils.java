@@ -209,7 +209,6 @@ public final class IdentifyUtils
         {
             throw new IllegalArgumentException("nameStrategy must not be null");
         }
-
         this.nameStrategy = nameStrategy;
     }
 
@@ -237,7 +236,6 @@ public final class IdentifyUtils
         {
             throw new IllegalArgumentException("iconBundleStrategy must not be null");
         }
-
         this.iconBundleStrategy = iconBundleStrategy;
     }
 
@@ -323,14 +321,13 @@ public final class IdentifyUtils
         implements NameStrategy
     {
 
-        /** {@inheritDoc} */
+        @Override
         public String getNameFor(final Object bean)
         {
             if (bean == null)
             {
                 return "null";
             }
-
             if (bean instanceof Identifiable)
             {
                 return ((Identifiable) bean).getName();
@@ -365,7 +362,6 @@ public final class IdentifyUtils
             {
                 // empty
             }
-
             return bean.toString();
         }
     }
@@ -385,14 +381,13 @@ public final class IdentifyUtils
         implements IconBundleStrategy
     {
 
-        /** {@inheritDoc} */
+        @Override
         public IconBundle getIconBundleFor(final Object bean)
         {
             if (bean == null)
             {
                 return null;
             }
-
             if (bean instanceof Identifiable)
             {
                 return ((Identifiable) bean).getIconBundle();
@@ -412,7 +407,6 @@ public final class IdentifyUtils
             {
                 // empty
             }
-
             return defaultIconBundle;
         }
     }

@@ -48,12 +48,12 @@ public final class IdToggleButtonTest
     private IdentifiableAction action;
 
 
-    /** @see TestCase */
+    @Override
     protected void setUp()
     {
         action = new IdentifiableAction("name", TangoProject.TEXT_X_GENERIC)
             {
-                /** @see IdentifiableAction */
+                @Override
                 public void actionPerformed(final ActionEvent e)
                 {
                     // empty

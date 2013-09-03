@@ -107,7 +107,7 @@ public class IdListCellRenderer
         firePropertyChange("iconSize", oldIconSize, this.iconSize);
     }
 
-    /** {@inheritDoc} */
+    @Override
     public Component getListCellRendererComponent(final JList list,
                                                   final Object value,
                                                   final int index,

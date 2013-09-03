@@ -58,13 +58,13 @@ public final class ExampleWithNamePropertyBeanInfo
 
         this.beanDescriptor = new IdentifiableBeanDescriptor(ExampleWithNameProperty.class)
             {
-                /** @see IdentifiableBeanDescriptor */
+                @Override
                 public int getNamePropertyIndex()
                 {
                     return NAME_PROPERTY_INDEX;
                 }
 
-                /** @see IdentifiableBeanDescriptor */
+                @Override
                 public IconBundle getIconBundle()
                 {
                     return ICON_BUNDLE;
@@ -73,7 +73,7 @@ public final class ExampleWithNamePropertyBeanInfo
     }
 
 
-    /** @see BeanInfo */
+    @Override
     public BeanDescriptor getBeanDescriptor()
     {
         return beanDescriptor;

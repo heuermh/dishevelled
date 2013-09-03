@@ -38,7 +38,6 @@ import org.dishevelled.iconbundle.IconTextDirection;
  * and appropriate icon from an icon bundle for a given bean.
  *
  * @author  Michael Heuer
- * @version $Revision$ $Date$
  */
 public final class IdMenu
     extends JMenu
@@ -161,7 +160,7 @@ public final class IdMenu
         return iconTextDirection;
     }
 
-    /** {@inheritDoc} */
+    @Override
     public void setComponentOrientation(final ComponentOrientation orientation)
     {
         ComponentOrientation oldOrientation = getComponentOrientation();
@@ -180,7 +179,7 @@ public final class IdMenu
         super.setComponentOrientation(orientation);
     }
 
-    /** {@inheritDoc} */
+    @Override
     public void applyComponentOrientation(final ComponentOrientation orientation)
     {
         ComponentOrientation oldOrientation = getComponentOrientation();
@@ -221,7 +220,7 @@ public final class IdMenu
             setSelectedIcon(new ImageIcon(bndl.getImage(this, iconTextDirection, IconState.SELECTED, iconSize)));
             setRolloverIcon(new ImageIcon(bndl.getImage(this, iconTextDirection, IconState.MOUSEOVER, iconSize)));
             setRolloverSelectedIcon(new ImageIcon(bndl.getImage(this, iconTextDirection, IconState.SELECTED, iconSize)));
-            setDisabledIcon(new ImageIcon(bndl.getImage(this, iconTextDirection, IconState.DISABLED, iconSize)));
+            //setDisabledIcon(new ImageIcon(bndl.getImage(this, iconTextDirection, IconState.DISABLED, iconSize)));
         }
     }
 }

@@ -33,7 +33,6 @@ import org.dishevelled.iconbundle.IconSize;
  * Unit test for IdToolBar.
  *
  * @author  Michael Heuer
- * @version $Revision$ $Date$
  */
 public final class IdToolBarTest
     extends TestCase

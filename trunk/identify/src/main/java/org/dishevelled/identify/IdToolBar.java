@@ -52,18 +52,14 @@ import org.dishevelled.iconbundle.IconTextDirection;
  * icon sizes.
  *
  * @author  Michael Heuer
- * @version $Revision$ $Date$
  */
 public final class IdToolBar
     extends JToolBar
 {
-    /** Action selected key, Action.SELECTED_KEY only available in JDK 1.6+. */
-    private static final String SELECTED_KEY = "SwingSelectedKey";
-
     /** Display icons action. */
     private final AbstractAction displayIcons = new AbstractAction("Display icons")
         {
-            /** {@inheritDoc} */
+            @Override
             public void actionPerformed(final ActionEvent event)
             {
                 displayIcons();
@@ -73,7 +69,7 @@ public final class IdToolBar
     /** Display text action. */
     private final AbstractAction displayText = new AbstractAction("Display text")
         {
-            /** {@inheritDoc} */
+            @Override
             public void actionPerformed(final ActionEvent event)
             {
                 displayText();
@@ -83,7 +79,7 @@ public final class IdToolBar
     /** Display icons and text action. */
     private final AbstractAction displayIconsAndText = new AbstractAction("Display icons and text")
         {
-            /** {@inheritDoc} */
+            @Override
             public void actionPerformed(final ActionEvent event)
             {
                 displayIconsAndText();
@@ -115,16 +111,16 @@ public final class IdToolBar
     public static final IconTextDirection DEFAULT_ICON_TEXT_DIRECTION = IconTextDirection.LEFT_TO_RIGHT;
 
     /** List of display actions. */
-    private final List/*<AbstractAction>*/ displayActions = Arrays.asList(new AbstractAction[] { displayIcons, displayText, displayIconsAndText });
+    private final List<AbstractAction> displayActions = Arrays.asList(new AbstractAction[] { displayIcons, displayText, displayIconsAndText });
 
     /** List of display menu items. */
-    private final List/*<JCheckBoxMenuItem>*/ displayMenuItems = new ArrayList/*<JCheckBoxMenuItem>*/(displayActions.size());
+    private final List<JCheckBoxMenuItem> displayMenuItems = new ArrayList<JCheckBoxMenuItem>(displayActions.size());
 
     /** Map of icon size actions keyed by icon size. */
-    private final Map/*<IconSize, Action>*/ iconSizeActions = new HashMap/*<IconSize, Action>*/();
+    private final Map<IconSize, AbstractAction> iconSizeActions = new HashMap<IconSize, AbstractAction>();
 
     /** Map of icon size menu items keyed by icon size. */
-    private final Map/*<IconSize, JCheckBoxMenuItem>*/ iconSizeMenuItems = new HashMap/*<IconSize, JCheckBoxMenuItem>*/();
+    private final Map<IconSize, JCheckBoxMenuItem> iconSizeMenuItems = new HashMap<IconSize, JCheckBoxMenuItem>();
 
     /** Icon size menu item button group. */
     private final ButtonGroup iconSizeButtonGroup = new ButtonGroup();
@@ -140,6 +136,7 @@ public final class IdToolBar
         UIManager.put("MenuBar.gradient", null);
         UIManager.getDefaults().put("MenuBar.gradient", null);
         UIManager.getLookAndFeelDefaults().put("MenuBar.gradient", null);
+        // todo: remove style in GTK L&F
 
         createDisplayMenuItems();
         displayIcons();
@@ -199,10 +196,8 @@ public final class IdToolBar
      */
     private void createDisplayMenuItems() {
         ButtonGroup buttonGroup = new ButtonGroup();
-        //for (AbstractAction displayAction : displayActions)
-        for (int i = 0, size = displayActions.size(); i < size; i++)
+        for (AbstractAction displayAction : displayActions)
         {
-            AbstractAction displayAction = (AbstractAction) displayActions.get(i);
             JCheckBoxMenuItem menuItem = new JCheckBoxMenuItem(displayAction);
             displayMenuItems.add(menuItem);
             buttonGroup.add(menuItem);
@@ -308,7 +303,7 @@ public final class IdToolBar
     public void displayIcons()
     {
         display = DISPLAY_ICONS;
-        displayIcons.putValue(SELECTED_KEY, Boolean.TRUE);
+        displayIcons.putValue(Action.SELECTED_KEY, Boolean.TRUE);
 
         for (int i = 0, size = getComponentCount(); i < size; i++)
         {
@@ -327,7 +322,7 @@ public final class IdToolBar
     public void displayText()
     {
         display = DISPLAY_TEXT;
-        displayText.putValue(SELECTED_KEY, Boolean.TRUE);
+        displayText.putValue(Action.SELECTED_KEY, Boolean.TRUE);
 
         for (int i = 0, size = getComponentCount(); i < size; i++)
         {
@@ -346,7 +341,7 @@ public final class IdToolBar
     public void displayIconsAndText()
     {
         display = DISPLAY_ICONS_AND_TEXT;
-        displayIconsAndText.putValue(SELECTED_KEY, Boolean.TRUE);
+        displayIconsAndText.putValue(Action.SELECTED_KEY, Boolean.TRUE);
 
         for (int i = 0, size = getComponentCount(); i < size; i++)
         {
@@ -381,7 +376,7 @@ public final class IdToolBar
             throw new IllegalArgumentException("iconSize must not be null");
         }
         Action iconSizeAction = createIconSizeAction(iconSize);
-        iconSizeAction.putValue(SELECTED_KEY, Boolean.TRUE);
+        iconSizeAction.putValue(Action.SELECTED_KEY, Boolean.TRUE);
 
         for (int i = 0, size = getComponentCount(); i < size; i++)
         {
@@ -409,7 +404,7 @@ public final class IdToolBar
      *
      * @return an unmodifiable list of display actions
      */
-    public List/*<Action>*/ getDisplayActions()
+    public List<AbstractAction> getDisplayActions()
     {
         return displayActions;
     }
@@ -420,7 +415,7 @@ public final class IdToolBar
      *
      * @return an unmodifiable list of check box menu items for the display actions
      */
-    public List/*<JCheckBoxMenuItem>*/ getDisplayMenuItems()
+    public List<JCheckBoxMenuItem> getDisplayMenuItems()
     {
         return Collections.unmodifiableList(displayMenuItems);
     }
@@ -442,7 +437,7 @@ public final class IdToolBar
         {
             iconSizeActions.put(iconSize, new IconSizeAction(iconSize));
         }
-        return (Action) iconSizeActions.get(iconSize);
+        return iconSizeActions.get(iconSize);
     }
 
     /**
@@ -460,12 +455,12 @@ public final class IdToolBar
         }
         if (!iconSizeMenuItems.containsKey(iconSize))
         {
-            Action iconSizeAction = createIconSizeAction(iconSize);
+            AbstractAction iconSizeAction = (AbstractAction) createIconSizeAction(iconSize);
             JCheckBoxMenuItem menuItem = new JCheckBoxMenuItem(iconSizeAction);
             iconSizeButtonGroup.add(menuItem);
             iconSizeMenuItems.put(iconSize, menuItem);
         }
-        return (JCheckBoxMenuItem) iconSizeMenuItems.get(iconSize);
+        return iconSizeMenuItems.get(iconSize);
     }
 
     /**
@@ -473,13 +468,12 @@ public final class IdToolBar
      *
      * @return an unmodifiable list of the default icon size actions
      */
-    public List/*<Action>*/ getDefaultIconSizeActions()
+    public List<AbstractAction> getDefaultIconSizeActions()
     {
-        List/*<Action>*/ actions = new ArrayList/*<Action>*/(IconSize.VALUES.size());
-        //for (IconSize iconSize : IconSize.VALUES)
+        List<AbstractAction> actions = new ArrayList<AbstractAction>(IconSize.VALUES.size());
         for (int i = 0, size = IconSize.VALUES.size(); i < size; i++)
         {
-            Action iconSizeAction = createIconSizeAction((IconSize) IconSize.VALUES.get(i));
+            AbstractAction iconSizeAction = (AbstractAction) createIconSizeAction((IconSize) IconSize.VALUES.get(i));
             actions.add(iconSizeAction);
         }
         return Collections.unmodifiableList(actions);
@@ -491,10 +485,9 @@ public final class IdToolBar
      *
      * @return an unmodifiable list of check box menu items for the default icon size actions
      */
-    public List/*<JCheckBoxMenuItem>*/ getDefaultIconSizeMenuItems()
+    public List<JCheckBoxMenuItem> getDefaultIconSizeMenuItems()
     {
-        List/*<Action>*/ menuItems = new ArrayList/*<Action>*/(IconSize.VALUES.size());
-        //for (IconSize iconSize : IconSize.VALUES)
+        List<JCheckBoxMenuItem> menuItems = new ArrayList<JCheckBoxMenuItem>(IconSize.VALUES.size());
         for (int i = 0, size = IconSize.VALUES.size(); i < size; i++)
         {
             JCheckBoxMenuItem iconSizeMenuItem = createIconSizeMenuItem((IconSize) IconSize.VALUES.get(i));
@@ -529,7 +522,7 @@ public final class IdToolBar
         }
 
 
-        /** {@inheritDoc} */
+        @Override
         public void actionPerformed(final ActionEvent event)
         {
             setIconSize(iconSize);

@@ -104,7 +104,7 @@ public class IdTableCellRenderer
         this.iconSize = iconSize;
     }
 
-    /** {@inheritDoc} */
+    @Override
     public Component getTableCellRendererComponent(final JTable table,
                                                    final Object value,
                                                    final boolean isSelected,
