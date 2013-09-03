@@ -23,11 +23,6 @@
 */
 package org.dishevelled.eventlist.view;
 
-import ca.odell.glazedlists.EventList;
-
-import ca.odell.glazedlists.event.ListEvent;
-import ca.odell.glazedlists.event.ListEventListener;
-
 import java.util.List;
 
 import javax.swing.Box;
@@ -36,6 +31,11 @@ import javax.swing.Icon;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
+
+import ca.odell.glazedlists.EventList;
+
+import ca.odell.glazedlists.event.ListEvent;
+import ca.odell.glazedlists.event.ListEventListener;
 
 import org.dishevelled.functor.UnaryFunction;
 

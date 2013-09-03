@@ -27,12 +27,12 @@ import java.awt.BorderLayout;
 
 import java.util.List;
 
+import javax.swing.JLabel;
+
 import ca.odell.glazedlists.EventList;
 
 import ca.odell.glazedlists.event.ListEvent;
 import ca.odell.glazedlists.event.ListEventListener;
-
-import javax.swing.JLabel;
 
 /**
  * Count label.
