@@ -91,6 +91,8 @@ public final class VcfVariationService implements VariationService
                             int end = record.getPos();
                             int strand = 1;
 
+                            // only add variation if sample matches some query and any genotype is not reference; modify alt alleles if so
+
                             variations.add(new Variation(species, reference, identifier, ref, alt, region, start, end, strand));
                         }
                     }

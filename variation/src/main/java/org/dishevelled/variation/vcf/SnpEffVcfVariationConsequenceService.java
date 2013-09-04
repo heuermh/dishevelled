@@ -72,7 +72,7 @@ public final class SnpEffVcfVariationConsequenceService implements VariationCons
         checkArgument(reference.equals(variation.getReference()));
 
         // ick.  re-streams file every time
-        List<VariationConsequence> consequences = new ArrayList<VariationConsequence>();
+        final List<VariationConsequence> consequences = new ArrayList<VariationConsequence>();
         try
         {
             VcfReader.stream(Files.newReaderSupplier(file, Charset.forName("US-ASCII")), new VcfStreamListener()
@@ -92,10 +92,41 @@ public final class SnpEffVcfVariationConsequenceService implements VariationCons
                             int strand = 1;
 
                             // pull SnpEff from info, then for each alt/SnpEff effect pair, add a new variation consequence
+                            if (record.getInfo().containsKey("EFF"))
+                            {
+                                String[] effTokens = record.getInfo().get("EFF").split(",");
+                                for (String effToken : effTokens)
+                                {
+                                    try
+                                    {
+                                        SnpEffEffect effect = SnpEffEffect.parse(effToken);
+
+                                        String altAllele = alt.get(effect.getGenotype());
+                                        // requires SnpEff to have been run with -sequenceOntology command line option
+                                        String sequenceOntologyTerm = effect.getEffect();
+                                        // todo: double-check ref, altAllele, transcript, geneName matches
+
+                                        consequences.add(new VariationConsequence(variation.getSpecies(),
+                                                                                  variation.getReference(),
+                                                                                  variation.getIdentifier(),
+                                                                                  variation.getReferenceAllele(),
+                                                                                  altAllele,
+                                                                                  sequenceOntologyTerm,
+                                                                                  variation.getName(),
+                                                                                  variation.getStart(),
+                                                                                  variation.getEnd(),
+                                                                                  variation.getStrand()));
+                                    }
+                                    catch (IOException e)
+                                    {
+                                        // todo
+                                    }
+                                }
+                            }
                         }
                     }
 
-                    // not sure this is a valid comparison
+                    // todo: not sure this is a valid comparison
                     private boolean sameVariation(final Variation variation, final VcfRecord record)
                     {
                         String region = record.getChrom();
