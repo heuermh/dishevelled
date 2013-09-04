@@ -69,7 +69,7 @@ final class GeminiVariationService implements VariationService
         checkArgument(reference.equals(feature.getReference()));
 
         String region = feature.getName() + ":" + feature.getStart() + "-" + feature.getEnd();
-        ProcessBuilder processBuilder = new ProcessBuilder("gemini", "region", "--reg", region, "--columns", "rs_ids, ref, alt, chrom, start, end", databaseName);
+        ProcessBuilder processBuilder = new ProcessBuilder("gemini", "region", "--reg", region, "--columns", "variant_id, rs_ids, ref, alt, chrom, start, end", databaseName);
 
         BufferedReader reader = null;
         List<Variation> variations = new ArrayList<Variation>();
@@ -86,15 +86,16 @@ final class GeminiVariationService implements VariationService
                     break;
                 }
                 String[] tokens = line.split("\t");
+                String variantId = tokens[0];
                 // todo: rs_ids is a comma-separated list of dbSNP ids
-                String identifier = tokens[0] == "null" ? null : tokens[0];
-                String ref = tokens[1];
+                String identifier = tokens[1] == "null" ? null : tokens[1];
+                String ref = tokens[2];
                 // todo: might have to collapse multiple rows with same ref?
-                List<String> alt = ImmutableList.of(tokens[2]);
-                String name = tokens[3];
-                int start = Integer.parseInt(tokens[4]);
-                int end = Integer.parseInt(tokens[5]);
-                //int strand = Integer.parseInt(tokens[6]);
+                List<String> alt = ImmutableList.of(tokens[3]);
+                String name = tokens[4];
+                int start = Integer.parseInt(tokens[5]);
+                int end = Integer.parseInt(tokens[6]);
+                //int strand = Integer.parseInt(tokens[7]);
                 int strand = 1;
 
                 variations.add(new Variation(species, reference, identifier, ref, alt, name, start, end, strand));
