@@ -47,34 +47,40 @@ public final class SnpEffOntology
 {
     private static final AtomicInteger id = new AtomicInteger(0);
 
+    public static Map<String, Concept> indexByName(final Domain domain)
+    {
+        return SequenceOntology.indexByName(domain);
+    }
+
     public static Domain effects()
     {
         Authority snpEff = new Authority("snpEff");
         Domain effects = snpEff.createDomain("effects" + id.incrementAndGet());
 
-        effects.createConcept("NONE", null, null);
-        effects.createConcept("UTR_3_DELETED", null, null);
-        effects.createConcept("UTR_5_DELETED", null, null);
-        effects.createConcept("START_GAINED", null, null);
-        effects.createConcept("SPLICE_SITE_ACCEPTOR", null, null);
-        effects.createConcept("SPLICE_SITE_DONOR", null, null);
-        effects.createConcept("SYNONYMOUS_START", null, null);
-        effects.createConcept("EXON_DELETED", null, null);
-        effects.createConcept("NON_SYNONYMOUS_CODING", null, null);
-        effects.createConcept("SYNONYMOUS_CODING", null, null);
-        effects.createConcept("FRAME_SHIFT", null, null);
-        effects.createConcept("CODON_CHANGE", null, null);
-        effects.createConcept("CODON_INSERTION", null, null);
-        effects.createConcept("CODON_CHANGE_PLUS_CODON_INSERTION", null, null);
-        effects.createConcept("CODON_DELETION", null, null);
-        effects.createConcept("CODON_CHANGE_PLUS_CODON_DELETION", null, null);
-        effects.createConcept("STOP_GAINED", null, null);
-        effects.createConcept("SYNONYMOUS_STOP", null, null);
-        effects.createConcept("STOP_LOST", null, null);
-        effects.createConcept("INTRON_CONSERVED", null, null);
-        effects.createConcept("INTERGENIC_CONSERVED", null, null);
-        effects.createConcept("RARE_AMINO_ACID", null, null);
-        effects.createConcept("NON_SYNONYMOUS_START", null, null);
+        int accession = -1;
+        effects.createConcept("NONE", "e" + accession++, null);
+        effects.createConcept("UTR_3_DELETED", "e" + accession++, null);
+        effects.createConcept("UTR_5_DELETED", "e" + accession++, null);
+        effects.createConcept("START_GAINED", "e" + accession++, null);
+        effects.createConcept("SPLICE_SITE_ACCEPTOR", "e" + accession++, null);
+        effects.createConcept("SPLICE_SITE_DONOR", "e" + accession++, null);
+        effects.createConcept("SYNONYMOUS_START", "e" + accession++, null);
+        effects.createConcept("EXON_DELETED", "e" + accession++, null);
+        effects.createConcept("NON_SYNONYMOUS_CODING", "e" + accession++, null);
+        effects.createConcept("SYNONYMOUS_CODING", "e" + accession++, null);
+        effects.createConcept("FRAME_SHIFT", "e" + accession++, null);
+        effects.createConcept("CODON_CHANGE", "e" + accession++, null);
+        effects.createConcept("CODON_INSERTION", "e" + accession++, null);
+        effects.createConcept("CODON_CHANGE_PLUS_CODON_INSERTION", "e" + accession++, null);
+        effects.createConcept("CODON_DELETION", "e" + accession++, null);
+        effects.createConcept("CODON_CHANGE_PLUS_CODON_DELETION", "e" + accession++, null);
+        effects.createConcept("STOP_GAINED", "e" + accession++, null);
+        effects.createConcept("SYNONYMOUS_STOP", "e" + accession++, null);
+        effects.createConcept("STOP_LOST", "e" + accession++, null);
+        effects.createConcept("INTRON_CONSERVED", "e" + accession++, null);
+        effects.createConcept("INTERGENIC_CONSERVED", "e" + accession++, null);
+        effects.createConcept("RARE_AMINO_ACID", "e" + accession++, null);
+        effects.createConcept("NON_SYNONYMOUS_START", "e" + accession++, null);
 
         return effects;
     }
@@ -84,18 +90,19 @@ public final class SnpEffOntology
         Authority snpEff = new Authority("snpEff");
         Domain regions = snpEff.createDomain("regions" + id.incrementAndGet());
 
-        regions.createConcept("NONE", null, null);
-        regions.createConcept("CDS", null, null);
-        regions.createConcept("GENE", null, null);
-        regions.createConcept("TRANSCRIPT", null, null);
-        regions.createConcept("EXON", null, null);
-        regions.createConcept("INTRON", null, null);
-        regions.createConcept("DOWNSTREAM", null, null);
-        regions.createConcept("INTRAGENIC", null, null);
-        regions.createConcept("INTERGENIC", null, null);
-        regions.createConcept("UPSTREAM", null, null);
-        regions.createConcept("UTR_3_PRIME", null, null);
-        regions.createConcept("UTR_5_PRIME", null, null);
+        int accession = -1;
+        regions.createConcept("NONE", "r" + accession++, null);
+        regions.createConcept("CDS", "r" + accession++, null);
+        regions.createConcept("GENE", "r" + accession++, null);
+        regions.createConcept("TRANSCRIPT", "r" + accession++, null);
+        regions.createConcept("EXON", "r" + accession++, null);
+        regions.createConcept("INTRON", "r" + accession++, null);
+        regions.createConcept("DOWNSTREAM", "r" + accession++, null);
+        regions.createConcept("INTRAGENIC", "r" + accession++, null);
+        regions.createConcept("INTERGENIC", "r" + accession++, null);
+        regions.createConcept("UPSTREAM", "r" + accession++, null);
+        regions.createConcept("UTR_3_PRIME", "r" + accession++, null);
+        regions.createConcept("UTR_5_PRIME", "r" + accession++, null);
 
         return regions;
     }
@@ -105,11 +112,12 @@ public final class SnpEffOntology
         Authority snpEff = new Authority("snpEff");
         Domain impacts = snpEff.createDomain("impacts" + id.incrementAndGet());
 
+        int accession = -1;
         // are these actually mixed case in output?
-        impacts.createConcept("High", null, null);
-        impacts.createConcept("Moderate", null, null);
-        impacts.createConcept("Low", null, null);
-        impacts.createConcept("Modifier", null, null);
+        impacts.createConcept("High", "i" + accession++, null);
+        impacts.createConcept("Moderate", "i" + accession++, null);
+        impacts.createConcept("Low", "i" + accession++, null);
+        impacts.createConcept("Modifier", "i" + accession++, null);
 
         return impacts;
     }
@@ -193,10 +201,5 @@ public final class SnpEffOntology
         // ...
 
         return mapping;
-    }
-
-    private static Map<String, Concept> indexByName(final Domain domain)
-    {
-        return SequenceOntology.indexByName(domain);
     }
 }

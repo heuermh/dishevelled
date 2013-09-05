@@ -23,6 +23,8 @@
 */
 package org.dishevelled.variation.so;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -43,6 +45,7 @@ public final class SequenceOntology
 
     public static Map<String, Concept> indexByName(final Domain domain)
     {
+        checkNotNull(domain);
         Map<String, Concept> indexByName = new HashMap<String, Concept>(domain.getConcepts().size());
         for (Concept concept : domain.getConcepts())
         {
@@ -53,6 +56,7 @@ public final class SequenceOntology
 
     public static Map<Concept, Integer> countAssignments(final Domain domain)
     {
+        checkNotNull(domain);
         Map<Concept, Integer> count = new HashMap<Concept, Integer>(domain.getConcepts().size());
         for (Concept concept : domain.getConcepts())
         {

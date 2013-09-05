@@ -33,9 +33,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.IOException;
 
-import java.nio.charset.Charset;
-
 import java.util.List;
+
+import com.google.common.base.Charsets;
 
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
@@ -64,7 +64,7 @@ public final class VcfReader
     {
         checkNotNull(file);
         Collect collect = new Collect();
-        stream(Files.newReaderSupplier(file, Charset.forName("US-ASCII")), collect);
+        stream(Files.newReaderSupplier(file, Charsets.UTF_8), collect);
         return collect.getResult();
     }
 
@@ -72,7 +72,7 @@ public final class VcfReader
     {
         checkNotNull(url);
         Collect collect = new Collect();
-        stream(Resources.newReaderSupplier(url, Charset.forName("US-ASCII")), collect);
+        stream(Resources.newReaderSupplier(url, Charsets.UTF_8), collect);
         return collect.getResult();
     }
 
