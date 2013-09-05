@@ -44,6 +44,11 @@ import com.google.common.io.LineProcessor;
 final class VcfParser
 {
 
+    private VcfParser()
+    {
+        // empty
+    }
+
     static <R extends Readable & Closeable> void parse(final InputSupplier<R> supplier, final VcfParseListener listener)
         throws IOException
     {
@@ -52,7 +57,7 @@ final class VcfParser
         CharStreams.readLines(supplier, lineProcessor);
     }
 
-    private static class VcfLineProcessor implements LineProcessor<Object>
+    private final static class VcfLineProcessor implements LineProcessor<Object>
     {
         private long lineNumber = 0;
         private final VcfParseListener listener;
@@ -86,7 +91,7 @@ final class VcfParser
                 // header line
                 if (tokens.length > 8)
                 {
-                    for (int column = 8, columns = tokens.length - 8; column < columns; column++)
+                    for (int column = 8, columns = tokens.length; column < columns; column++)
                     {
                         samples.put(column, tokens[column]);
                     }
@@ -105,20 +110,23 @@ final class VcfParser
                 listener.alt(tokens[4].split(","));
 
                 listener.qual(Double.parseDouble(tokens[5]));
-                listener.filter(tokens[5]);
+                listener.filter(tokens[6]);
 
-                String[] infoTokens = tokens[6].split(";");
+                String[] infoTokens = tokens[7].split(";");
                 ImmutableMap.Builder<String, String> builder = ImmutableMap.builder();
                 for (String infoToken : infoTokens)
                 {
                     String[] entryTokens = infoToken.split("=");
-                    builder.put(entryTokens[0], entryTokens[1]);
+                    if (entryTokens.length == 2)
+                    {
+                        builder.put(entryTokens[0], entryTokens[1]);
+                    }
                 }
                 listener.info(builder.build());
 
                 if (tokens.length > 8)
                 {
-                    for (int column = 8, columns = tokens.length - 8; column < columns; column++)
+                    for (int column = 8, columns = tokens.length; column < columns; column++)
                     {
                         String[] sampleTokens = tokens[column].split(":");
                         // todo:  assumes GT exists and is first field

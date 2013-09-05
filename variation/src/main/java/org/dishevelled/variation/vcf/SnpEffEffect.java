@@ -145,13 +145,13 @@ final class SnpEffEffect
         String functionalClass = effectTokens[1];
         String codonChange = effectTokens[2];
         String aminoAcidChange = effectTokens[3];
-        int aminoAcidLength = Integer.parseInt(effectTokens[4]);
+        int aminoAcidLength = safeParseInt(effectTokens[4], -1);
         String geneName = effectTokens[5];
         String geneBioType = effectTokens[6];
         boolean coding = "CODING".equals(effectTokens[7]);
         String transcript = effectTokens[8];
-        int rank = Integer.parseInt(effectTokens[9]);
-        int genotype = Integer.parseInt(effectTokens[10]);
+        int rank = safeParseInt(effectTokens[9], -1);
+        int genotype = safeParseInt(effectTokens[10], 0);
 
         return new SnpEffEffect(effect,
                                 effectImpact,
@@ -165,5 +165,18 @@ final class SnpEffEffect
                                 transcript,
                                 rank,
                                 genotype);
+    }
+
+    static int safeParseInt(final String value, final int defaultValue)
+    {
+        try
+        {
+            return Integer.parseInt(value);
+        }
+        catch (NumberFormatException e)
+        {
+            // ignore
+        }
+        return defaultValue;
     }
 }

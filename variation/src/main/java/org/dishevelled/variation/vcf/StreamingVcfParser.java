@@ -37,6 +37,11 @@ import com.google.common.io.InputSupplier;
 final class StreamingVcfParser
 {
 
+    private StreamingVcfParser()
+    {
+        // empty
+    }
+
     static <R extends Readable & Closeable> void stream(final InputSupplier<R> supplier, final VcfStreamListener listener)
         throws IOException
     {
@@ -54,7 +59,7 @@ final class StreamingVcfParser
                 private double qual;
                 private String filter;
                 private Map<String, String> info;
-                private ImmutableMap.Builder<String, String> builder;
+                private ImmutableMap.Builder<String, String> builder = ImmutableMap.builder();
 
                 @Override
                 public void lineNumber(final long lineNumber) throws IOException

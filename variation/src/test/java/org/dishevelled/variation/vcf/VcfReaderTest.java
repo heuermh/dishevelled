@@ -28,7 +28,9 @@ import static org.dishevelled.variation.vcf.VcfReader.read;
 import static org.dishevelled.variation.vcf.VcfReader.stream;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.net.URL;
 
@@ -119,9 +121,45 @@ public final class VcfReaderTest
         for (VcfRecord record : read(inputStream))
         {
             assertNotNull(record);
+
+            if (16140370 == record.getPos())
+            {
+                assertEquals("22", record.getChrom());
+                assertEquals(1, record.getId().length);
+                assertEquals("rs2096606", record.getId()[0]);
+                assertEquals("A", record.getRef());
+                assertEquals(1, record.getAlt().length);
+                assertEquals("G", record.getAlt()[0]);
+                assertEquals(100.0d, record.getQual(), 0.1d);
+                assertEquals("PASS", record.getFilter());
+                assertNotNull(record.getInfo());
+                assertTrue(record.getInfo().isEmpty());
+                assertNotNull(record.getGt());
+                assertFalse(record.getGt().isEmpty());
+                assertEquals("1|1", record.getGt().get("NA19131"));
+                assertEquals("1|1", record.getGt().get("NA19223"));
+            }
+            else if (17512091 == record.getPos())
+            {
+                assertEquals("22", record.getChrom());
+                assertEquals(1, record.getId().length);
+                assertEquals("rs5992615", record.getId()[0]);
+                assertEquals("G", record.getRef());
+                assertEquals(1, record.getAlt().length);
+                assertEquals("A", record.getAlt()[0]);
+                assertEquals(100.0d, record.getQual(), 0.1d);
+                assertEquals("PASS", record.getFilter());
+                assertNotNull(record.getInfo());
+                assertTrue(record.getInfo().isEmpty());
+                assertNotNull(record.getGt());
+                assertFalse(record.getGt().isEmpty());
+                assertEquals("1|0", record.getGt().get("NA19131"));
+                assertEquals("0|0", record.getGt().get("NA19223"));
+            }
+
             count++;
         }
-        assertEquals(1, count);
+        assertEquals(70, count);
     }
 
     @Test
@@ -134,8 +172,44 @@ public final class VcfReaderTest
         for (VcfRecord record : read(gzInputStream))
         {
             assertNotNull(record);
+
+            if (16140370 == record.getPos())
+            {
+                assertEquals("22", record.getChrom());
+                assertEquals(1, record.getId().length);
+                assertEquals("rs2096606", record.getId()[0]);
+                assertEquals("A", record.getRef());
+                assertEquals(1, record.getAlt().length);
+                assertEquals("G", record.getAlt()[0]);
+                assertEquals(100.0d, record.getQual(), 0.1d);
+                assertEquals("PASS", record.getFilter());
+                assertNotNull(record.getInfo());
+                assertTrue(record.getInfo().isEmpty());
+                assertNotNull(record.getGt());
+                assertFalse(record.getGt().isEmpty());
+                assertEquals("1|1", record.getGt().get("NA19131"));
+                assertEquals("1|1", record.getGt().get("NA19223"));
+            }
+            else if (17512091 == record.getPos())
+            {
+                assertEquals("22", record.getChrom());
+                assertEquals(1, record.getId().length);
+                assertEquals("rs5992615", record.getId()[0]);
+                assertEquals("G", record.getRef());
+                assertEquals(1, record.getAlt().length);
+                assertEquals("A", record.getAlt()[0]);
+                assertEquals(100.0d, record.getQual(), 0.1d);
+                assertEquals("PASS", record.getFilter());
+                assertNotNull(record.getInfo());
+                assertTrue(record.getInfo().isEmpty());
+                assertNotNull(record.getGt());
+                assertFalse(record.getGt().isEmpty());
+                assertEquals("1|0", record.getGt().get("NA19131"));
+                assertEquals("0|0", record.getGt().get("NA19223"));
+            }
+
             count++;
         }
-        assertEquals(1, count);
+        assertEquals(1729, count);
     }
 }

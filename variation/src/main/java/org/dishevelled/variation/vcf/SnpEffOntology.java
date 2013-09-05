@@ -47,6 +47,11 @@ public final class SnpEffOntology
 {
     private static final AtomicInteger id = new AtomicInteger(0);
 
+    private SnpEffOntology()
+    {
+        // empty
+    }
+
     public static Map<String, Concept> indexByName(final Domain domain)
     {
         return SequenceOntology.indexByName(domain);

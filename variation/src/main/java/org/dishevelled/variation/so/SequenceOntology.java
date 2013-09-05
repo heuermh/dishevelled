@@ -43,6 +43,11 @@ public final class SequenceOntology
 {
     private static final AtomicInteger id = new AtomicInteger(0);
 
+    private SequenceOntology()
+    {
+        // empty
+    }
+
     public static Map<String, Concept> indexByName(final Domain domain)
     {
         checkNotNull(domain);

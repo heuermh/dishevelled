@@ -87,7 +87,8 @@ public final class SnpEffVcfVariationConsequenceService implements VariationCons
                             String ref = record.getRef();
                             List<String> alt = ImmutableList.copyOf(record.getAlt());
                             String region = record.getChrom();
-                            int start = Math.max(1, record.getPos() - 1);
+                            //int start = Math.max(1, record.getPos() - 1);  check VCF docs
+                            int start = record.getPos();
                             int end = record.getPos();
                             int strand = 1;
 
@@ -121,7 +122,8 @@ public final class SnpEffVcfVariationConsequenceService implements VariationCons
                                     }
                                     catch (IOException e)
                                     {
-                                        // todo
+                                        //System.out.println("error parsing record at line number " + record.getLineNumber());
+                                        //e.printStackTrace();
                                     }
                                 }
                             }
@@ -132,7 +134,8 @@ public final class SnpEffVcfVariationConsequenceService implements VariationCons
                     private boolean sameVariation(final Variation variation, final VcfRecord record)
                     {
                         String region = record.getChrom();
-                        int start = Math.max(1, record.getPos() - 1);
+                        //int start = Math.max(1, record.getPos() - 1);  check VCF docs
+                        int start = record.getPos();
                         int end = record.getPos();
                         int strand = 1;
 
