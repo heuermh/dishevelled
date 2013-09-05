@@ -64,11 +64,15 @@ public final class SnpEffOntology
 
         int accession = -1;
         effects.createConcept("NONE", "e" + accession++, null);
+        effects.createConcept("CUSTOM", "e" + accession++, null); // not listed in SnpEff doc effects table
         effects.createConcept("UTR_3_DELETED", "e" + accession++, null);
         effects.createConcept("UTR_5_DELETED", "e" + accession++, null);
         effects.createConcept("START_GAINED", "e" + accession++, null);
         effects.createConcept("SPLICE_SITE_ACCEPTOR", "e" + accession++, null);
+        effects.createConcept("SPLICE_SITE_BRANCH", "e" + accession++, null); // not listed in SnpEff doc effects table
+        effects.createConcept("SPLICE_SITE_BRANCH_U12", "e" + accession++, null); // not listed in SnpEff doc effects table
         effects.createConcept("SPLICE_SITE_DONOR", "e" + accession++, null);
+        effects.createConcept("START_LOST", "e" + accession++, null);
         effects.createConcept("SYNONYMOUS_START", "e" + accession++, null);
         effects.createConcept("EXON_DELETED", "e" + accession++, null);
         effects.createConcept("NON_SYNONYMOUS_CODING", "e" + accession++, null);
@@ -86,6 +90,7 @@ public final class SnpEffOntology
         effects.createConcept("INTERGENIC_CONSERVED", "e" + accession++, null);
         effects.createConcept("RARE_AMINO_ACID", "e" + accession++, null);
         effects.createConcept("NON_SYNONYMOUS_START", "e" + accession++, null);
+        effects.createConcept("NON_SYNONYMOUS_STOP", "e" + accession++, null);  // not listed in SnpEff doc effects table
 
         return effects;
     }
@@ -108,6 +113,7 @@ public final class SnpEffOntology
         regions.createConcept("UPSTREAM", "r" + accession++, null);
         regions.createConcept("UTR_3_PRIME", "r" + accession++, null);
         regions.createConcept("UTR_5_PRIME", "r" + accession++, null);
+        regions.createConcept("REGULATION", "r" + accession++, null); // not listed in SnpEff doc effects table
 
         return regions;
     }
@@ -118,11 +124,10 @@ public final class SnpEffOntology
         Domain impacts = snpEff.createDomain("impacts" + id.incrementAndGet());
 
         int accession = -1;
-        // are these actually mixed case in output?
-        impacts.createConcept("High", "i" + accession++, null);
-        impacts.createConcept("Moderate", "i" + accession++, null);
-        impacts.createConcept("Low", "i" + accession++, null);
-        impacts.createConcept("Modifier", "i" + accession++, null);
+        impacts.createConcept("HIGH", "i" + accession++, null);
+        impacts.createConcept("MODERATE", "i" + accession++, null);
+        impacts.createConcept("LOW", "i" + accession++, null);
+        impacts.createConcept("MODIFIER", "i" + accession++, null);
 
         return impacts;
     }
@@ -153,8 +158,34 @@ public final class SnpEffOntology
         Authority authority = effects.getAuthority();
         Mapping mapping = authority.createMapping(effects, impacts);
         Set<Evidence> evidence = ImmutableSet.of(new Evidence("EV-AS-NAS", 1.0d, 1.0d));
-        mapping.createProjection("is_a", effectsByName.get("NONE"), impactsByName.get("Modifier"), evidence);
-        // ...
+        mapping.createProjection("is_a", effectsByName.get("SPLICE_SITE_ACCEPTOR"), impactsByName.get("HIGH"), evidence);
+        mapping.createProjection("is_a", effectsByName.get("SPLICE_SITE_DONOR"), impactsByName.get("HIGH"), evidence);
+        mapping.createProjection("is_a", effectsByName.get("START_LOST"), impactsByName.get("HIGH"), evidence);
+        mapping.createProjection("is_a", effectsByName.get("EXON_DELETED"), impactsByName.get("HIGH"), evidence);
+        mapping.createProjection("is_a", effectsByName.get("FRAME_SHIFT"), impactsByName.get("HIGH"), evidence);
+        mapping.createProjection("is_a", effectsByName.get("STOP_GAINED"), impactsByName.get("HIGH"), evidence);
+        mapping.createProjection("is_a", effectsByName.get("STOP_LOST"), impactsByName.get("HIGH"), evidence);
+        mapping.createProjection("is_a", effectsByName.get("RARE_AMINO_ACID"), impactsByName.get("HIGH"), evidence);
+
+        mapping.createProjection("is_a", effectsByName.get("NON_SYNONYMOUS_CODING"), impactsByName.get("MODERATE"), evidence);
+        mapping.createProjection("is_a", effectsByName.get("CODON_CHANGE"), impactsByName.get("MODERATE"), evidence);
+        mapping.createProjection("is_a", effectsByName.get("CODON_INSERTION"), impactsByName.get("MODERATE"), evidence);
+        mapping.createProjection("is_a", effectsByName.get("CODON_CHANGE_PLUS_CODON_INSERTION"), impactsByName.get("MODERATE"), evidence);
+        mapping.createProjection("is_a", effectsByName.get("CODON_DELETION"), impactsByName.get("MODERATE"), evidence);
+        mapping.createProjection("is_a", effectsByName.get("CODON_CHANGE_PLUS_CODON_DELETION"), impactsByName.get("MODERATE"), evidence);
+        mapping.createProjection("is_a", effectsByName.get("UTR_5_DELETED"), impactsByName.get("MODERATE"), evidence);
+        mapping.createProjection("is_a", effectsByName.get("UTR_3_DELETED"), impactsByName.get("MODERATE"), evidence);
+
+        mapping.createProjection("is_a", effectsByName.get("SYNONYMOUS_START"), impactsByName.get("LOW"), evidence);
+        mapping.createProjection("is_a", effectsByName.get("NON_SYNONYMOUS_START"), impactsByName.get("LOW"), evidence);
+        mapping.createProjection("is_a", effectsByName.get("START_GAINED"), impactsByName.get("LOW"), evidence);
+        mapping.createProjection("is_a", effectsByName.get("SYNONYMOUS_CODING"), impactsByName.get("LOW"), evidence);
+        mapping.createProjection("is_a", effectsByName.get("SYNONYMOUS_STOP"), impactsByName.get("LOW"), evidence);
+
+        mapping.createProjection("is_a", effectsByName.get("INTRON_CONSERVED"), impactsByName.get("MODIFIER"), evidence);
+        mapping.createProjection("is_a", effectsByName.get("INTERGENIC_CONSERVED"), impactsByName.get("MODIFIER"), evidence);
+        mapping.createProjection("is_a", effectsByName.get("NONE"), impactsByName.get("MODIFIER"), evidence);
+        mapping.createProjection("is_a", effectsByName.get("CUSTOM"), impactsByName.get("MODIFIER"), evidence);
 
         return mapping;
     }
@@ -185,8 +216,19 @@ public final class SnpEffOntology
         Authority authority = regions.getAuthority();
         Mapping mapping = authority.createMapping(regions, impacts);
         Set<Evidence> evidence = ImmutableSet.of(new Evidence("EV-AS-NAS", 1.0d, 1.0d));
-        mapping.createProjection("is_a", regionsByName.get("NONE"), impactsByName.get("Modifier"), evidence);
-        // ...
+        mapping.createProjection("is_a", regionsByName.get("UTR_5_PRIME"), impactsByName.get("MODIFIER"), evidence);
+        mapping.createProjection("is_a", regionsByName.get("UTR_3_PRIME"), impactsByName.get("MODIFIER"), evidence);
+        mapping.createProjection("is_a", regionsByName.get("REGULATION"), impactsByName.get("MODIFIER"), evidence);
+        mapping.createProjection("is_a", regionsByName.get("UPSTREAM"), impactsByName.get("MODIFIER"), evidence);
+        mapping.createProjection("is_a", regionsByName.get("DOWNSTREAM"), impactsByName.get("MODIFIER"), evidence);
+        mapping.createProjection("is_a", regionsByName.get("GENE"), impactsByName.get("MODIFIER"), evidence);
+        mapping.createProjection("is_a", regionsByName.get("TRANSCRIPT"), impactsByName.get("MODIFIER"), evidence);
+        mapping.createProjection("is_a", regionsByName.get("EXON"), impactsByName.get("MODIFIER"), evidence);
+        mapping.createProjection("is_a", regionsByName.get("INTRON"), impactsByName.get("MODIFIER"), evidence);
+        mapping.createProjection("is_a", regionsByName.get("INTRAGENIC"), impactsByName.get("MODIFIER"), evidence);
+        mapping.createProjection("is_a", regionsByName.get("INTERGENIC"), impactsByName.get("MODIFIER"), evidence);
+        mapping.createProjection("is_a", regionsByName.get("NONE"), impactsByName.get("MODIFIER"), evidence);
+        mapping.createProjection("is_a", regionsByName.get("CDS"), impactsByName.get("MODIFIER"), evidence);
 
         return mapping;
     }
@@ -203,7 +245,59 @@ public final class SnpEffOntology
         Mapping mapping = authority.createMapping(effects, sv);
         Set<Evidence> evidence = ImmutableSet.of(new Evidence("EV-AS-NAS", 1.0d, 1.0d));
         mapping.createProjection("is_a", effectsByName.get("CODON_CHANGE"), svByName.get("coding_sequence_variant"), evidence);
-        // ...
+        mapping.createProjection("is_a", effectsByName.get("CODON_CHANGE_PLUS_CODON_DELETION"), svByName.get("inframe_deletion"), evidence);
+        mapping.createProjection("is_a", effectsByName.get("CODON_CHANGE_PLUS_CODON_INSERTION"), svByName.get("inframe_insertion"), evidence);
+        mapping.createProjection("is_a", effectsByName.get("CODON_DELETION"), svByName.get("inframe_deletion"), evidence);
+        mapping.createProjection("is_a", effectsByName.get("CODON_INSERTION"), svByName.get("inframe_insertion"), evidence);
+        //mapping.createProjection("is_a", effectsByName.get("EXON_DELETED"), svByName.get("exon_lost"), evidence);  no such thing
+        mapping.createProjection("is_a", effectsByName.get("FRAME_SHIFT"), svByName.get("frameshift_variant"), evidence);
+        mapping.createProjection("is_a", effectsByName.get("INTERGENIC_CONSERVED"), svByName.get("intergenic_variant"), evidence); // SnpEff docs incorrectly --> intergenic_region
+        mapping.createProjection("is_a", effectsByName.get("INTRON_CONSERVED"), svByName.get("intron_variant"), evidence);
+        mapping.createProjection("is_a", effectsByName.get("NON_SYNONYMOUS_CODING"), svByName.get("missense_variant"), evidence); // SnpEff docs incorrectly --> missense
+        mapping.createProjection("is_a", effectsByName.get("NON_SYNONYMOUS_START"), svByName.get("initiator_codon_variant"), evidence);
+        mapping.createProjection("is_a", effectsByName.get("NON_SYNONYMOUS_STOP"), svByName.get("stop_retained_variant"), evidence);
+        //mapping.createProjection("is_a", effectsByName.get("RARE_AMINO_ACID"), svByName.get("non_conservative_missense_variant"), evidence);  no such thing
+        //mapping.createProjection("is_a", effectsByName.get("REGULATION"), svByName.get("regulatory_region_variant"), evidence);  in region domain
+        mapping.createProjection("is_a", effectsByName.get("SPLICE_SITE_ACCEPTOR"), svByName.get("splice_region_variant"), evidence);
+        mapping.createProjection("is_a", effectsByName.get("SPLICE_SITE_BRANCH"), svByName.get("splice_region_variant"), evidence);
+        mapping.createProjection("is_a", effectsByName.get("SPLICE_SITE_BRANCH_U12"), svByName.get("splice_region_variant"), evidence);
+        mapping.createProjection("is_a", effectsByName.get("SPLICE_SITE_DONOR"), svByName.get("splice_region_variant"), evidence);
+        //mapping.createProjection("is_a", effectsByName.get("START_GAINED"), svByName.get("start_gained"), evidence);  no such thing
+        mapping.createProjection("is_a", effectsByName.get("START_LOST"), svByName.get("initiator_codon_variant"), evidence);
+        mapping.createProjection("is_a", effectsByName.get("STOP_LOST"), svByName.get("stop_lost"), evidence);
+        mapping.createProjection("is_a", effectsByName.get("STOP_GAINED"), svByName.get("stop_gained"), evidence);
+        mapping.createProjection("is_a", effectsByName.get("SYNONYMOUS_CODING"), svByName.get("synonymous_variant"), evidence);
+        mapping.createProjection("is_a", effectsByName.get("SYNONYMOUS_START"), svByName.get("initiator_codon_variant"), evidence);
+        mapping.createProjection("is_a", effectsByName.get("SYNONYMOUS_STOP"), svByName.get("stop_retained_variant"), evidence);
+        mapping.createProjection("is_a", effectsByName.get("UTR_5_DELETED"), svByName.get("5_prime_UTR_variant"), evidence); // SnpEff docs incorrectly --> five_prime_UTR; this should be feature_truncation perhaps?
+
+        return mapping;
+    }
+
+    public static Mapping regionToSequenceOntologyMapping()
+    {
+        Domain regions = regions();
+        Map<String, Concept> regionsByName = indexByName(regions);
+
+        Domain sv = SequenceOntology.sequenceVariants();
+        Map<String, Concept> svByName = indexByName(sv);
+
+        Authority authority = regions.getAuthority();
+        Mapping mapping = authority.createMapping(regions, sv);
+        Set<Evidence> evidence = ImmutableSet.of(new Evidence("EV-AS-NAS", 1.0d, 1.0d));
+        mapping.createProjection("is_a", regionsByName.get("CDS"), svByName.get("coding_sequence_variant"), evidence); // SnpEff docs incorrectly --> cds
+        mapping.createProjection("is_a", regionsByName.get("DOWNSTREAM"), svByName.get("downstream_gene_variant"), evidence);
+        mapping.createProjection("is_a", regionsByName.get("EXON"), svByName.get("non_coding_exon_variant"), evidence);
+        mapping.createProjection("is_a", regionsByName.get("GENE"), svByName.get("gene_variant"), evidence); // SnpEff docs incorrectly --> gene
+        mapping.createProjection("is_a", regionsByName.get("INTERGENIC"), svByName.get("intergenic_variant"), evidence); // SnpEff docs incorrectly --> intergenic_region
+        //mapping.createProjection("is_a", regionsByName.get("INTRAGENIC"), svByName.get("intragenic_variant"), evidence);  does not exist
+        mapping.createProjection("is_a", regionsByName.get("INTRON"), svByName.get("intron_variant"), evidence);
+        //mapping.createProjection("is_a", regionsByName.get("MICRO_RNA"), svByName.get("micro_rna"), evidence);  does not exist, mature_miRNA_variant perhaps?
+        mapping.createProjection("is_a", regionsByName.get("REGULATION"), svByName.get("regulatory_region_variant"), evidence);
+        mapping.createProjection("is_a", regionsByName.get("TRANSCRIPT"), svByName.get("nc_transcript_variant"), evidence);
+        mapping.createProjection("is_a", regionsByName.get("UPSTREAM"), svByName.get("upstream_gene_variant"), evidence);
+        mapping.createProjection("is_a", regionsByName.get("UTR_3_PRIME"), svByName.get("3_prime_UTR_variant"), evidence);
+        mapping.createProjection("is_a", regionsByName.get("UTR_5_PRIME"), svByName.get("5_prime_UTR_variant"), evidence);
 
         return mapping;
     }
