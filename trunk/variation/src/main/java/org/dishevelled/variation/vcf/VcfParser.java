@@ -74,6 +74,7 @@ final class VcfParser
         public boolean processLine(final String line) throws IOException
         {
             lineNumber++;
+            // consider using guava Splitter
             String[] tokens = line.split("\t");
 
             if (tokens[0].startsWith("##"))
