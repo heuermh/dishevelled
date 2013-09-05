@@ -88,7 +88,8 @@ public final class VcfVariationService implements VariationService
                             String ref = record.getRef();
                             List<String> alt = ImmutableList.copyOf(record.getAlt());
                             String region = record.getChrom();
-                            int start = Math.max(1, record.getPos() - 1);
+                            //int start = Math.max(1, record.getPos() - 1);  check VCF docs
+                            int start = record.getPos();
                             int end = record.getPos();
                             int strand = 1;
 
