@@ -32,6 +32,7 @@ import static org.dishevelled.variation.vcf.SnpEffOntology.indexByName;
 import static org.dishevelled.variation.vcf.SnpEffOntology.regions;
 import static org.dishevelled.variation.vcf.SnpEffOntology.regionToEffectMapping;
 import static org.dishevelled.variation.vcf.SnpEffOntology.regionToImpactMapping;
+import static org.dishevelled.variation.vcf.SnpEffOntology.regionToSequenceOntologyMapping;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -107,7 +108,7 @@ public final class SnpEffOntologyTest
         boolean found = false;
         for (Concept concept : impacts.getConcepts())
         {
-            if ("Low".equals(concept.getName()))
+            if ("LOW".equals(concept.getName()))
             {
                 found = true;
             }
@@ -142,7 +143,7 @@ public final class SnpEffOntologyTest
         {
             Concept source = projection.getSource();
             Concept target = projection.getTarget();
-            if ("NONE".equals(source.getName()) && "Modifier".equals(target.getName()))
+            if ("STOP_GAINED".equals(source.getName()) && "HIGH".equals(target.getName()))
             {
                 found = true;
             }
@@ -176,7 +177,7 @@ public final class SnpEffOntologyTest
         {
             Concept source = projection.getSource();
             Concept target = projection.getTarget();
-            if ("NONE".equals(source.getName()) && "Modifier".equals(target.getName()))
+            if ("TRANSCRIPT".equals(source.getName()) && "MODIFIER".equals(target.getName()))
             {
                 found = true;
             }
@@ -195,6 +196,24 @@ public final class SnpEffOntologyTest
             Concept source = projection.getSource();
             Concept target = projection.getTarget();
             if ("CODON_CHANGE".equals(source.getName()) && "coding_sequence_variant".equals(target.getName()))
+            {
+                found = true;
+            }
+        }
+        assertTrue(found);
+    }
+
+    @Test
+    public void testRegionToSequenceOntologyMapping()
+    {
+        Mapping regionToSequenceOntology = regionToSequenceOntologyMapping();
+        assertNotNull(regionToSequenceOntology);
+        boolean found = false;
+        for (Projection projection : regionToSequenceOntology.getProjections())
+        {
+            Concept source = projection.getSource();
+            Concept target = projection.getTarget();
+            if ("UPSTREAM".equals(source.getName()) && "upstream_gene_variant".equals(target.getName()))
             {
                 found = true;
             }

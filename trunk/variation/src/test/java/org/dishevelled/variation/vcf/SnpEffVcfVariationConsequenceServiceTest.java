@@ -104,6 +104,46 @@ public final class SnpEffVcfVariationConsequenceServiceTest
             //System.out.println(consequence.getIdentifier() + "\t" + consequence.getReferenceAllele() + "\t" + consequence.getAlternateAllele() + "\t" + consequence.getSequenceOntologyTerm());
             if ("rs193189309".equals(consequence.getIdentifier()))
             {
+                assertEquals(species, consequence.getSpecies());
+                assertEquals(reference, consequence.getReference());
+                assertEquals("C", consequence.getReferenceAllele());
+                assertEquals("T", consequence.getAlternateAllele());
+                assertTrue("INTRON".equals(consequence.getSequenceOntologyTerm()) || "UPSTREAM".equals(consequence.getSequenceOntologyTerm()));
+                assertEquals("22", consequence.getName());
+                assertEquals(17452052, consequence.getStart());
+                assertEquals(17452052, consequence.getEnd());
+                assertEquals(1, consequence.getStrand());
+
+                found = true;
+            }
+        }
+        assertTrue(found);
+    }
+
+    @Test
+    public void testConsequencesWithSequenceOntology() throws Exception
+    {
+        Files.write(Resources.toByteArray(getClass().getResource("ALL.chr22.phase1_release_v3.20101123.snps_indels_svs.genotypes-2-indv-thin-20000bp-trim.eff-so.vcf")), file);
+
+        Variation variation = new Variation(species, reference, "rs193189309", "C", ImmutableList.of("T"), "22", 17452052, 17452052, 1);
+        boolean found = false;
+        for (VariationConsequence consequence : consequenceService.consequences(variation))
+        {
+            // SnpEff provides effects for all transcripts, so there are duplicate consequences here
+            //   consider using -canon command line option; although the canonical transcript that SnpEff uses might not match that defined by Ensembl
+            //System.out.println(consequence.getIdentifier() + "\t" + consequence.getReferenceAllele() + "\t" + consequence.getAlternateAllele() + "\t" + consequence.getSequenceOntologyTerm());
+            if ("rs193189309".equals(consequence.getIdentifier()))
+            {
+                assertEquals(species, consequence.getSpecies());
+                assertEquals(reference, consequence.getReference());
+                assertEquals("C", consequence.getReferenceAllele());
+                assertEquals("T", consequence.getAlternateAllele());
+                assertEquals("22", consequence.getName());
+                assertTrue("intron_variant".equals(consequence.getSequenceOntologyTerm()) || "upstream_gene_variant".equals(consequence.getSequenceOntologyTerm()));
+                assertEquals(17452052, consequence.getStart());
+                assertEquals(17452052, consequence.getEnd());
+                assertEquals(1, consequence.getStrand());
+
                 found = true;
             }
         }
