@@ -138,6 +138,7 @@ final class SnpEffEffect
 
     static SnpEffEffect parse(final String token) throws IOException
     {
+        // consider using guava Splitter
         String effect = token.substring(0, token.indexOf("("));
         String[] effectTokens = token.substring(token.indexOf("("), token.indexOf(")")).split("|");
         String effectImpact = effectTokens[0];

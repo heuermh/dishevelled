@@ -29,10 +29,10 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import java.io.File;
 import java.io.IOException;
 
-import java.nio.charset.Charset;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import com.google.common.base.Charsets;
 
 import com.google.common.collect.ImmutableList;
 
@@ -75,7 +75,7 @@ public final class SnpEffVcfVariationConsequenceService implements VariationCons
         final List<VariationConsequence> consequences = new ArrayList<VariationConsequence>();
         try
         {
-            VcfReader.stream(Files.newReaderSupplier(file, Charset.forName("US-ASCII")), new VcfStreamListener()
+            VcfReader.stream(Files.newReaderSupplier(file, Charsets.UTF_8), new VcfStreamListener()
                 {
                     @Override
                     public void record(final VcfRecord record)
@@ -103,8 +103,10 @@ public final class SnpEffVcfVariationConsequenceService implements VariationCons
 
                                         String altAllele = alt.get(effect.getGenotype());
                                         // requires SnpEff to have been run with -sequenceOntology command line option
+                                        //   or use SnpEffOntology.effectToSequenceOntologyMapping()
                                         String sequenceOntologyTerm = effect.getEffect();
                                         // todo: double-check ref, altAllele, transcript, geneName matches
+                                        //   also only include those alt alleles found in samples/individuals of interest
 
                                         consequences.add(new VariationConsequence(variation.getSpecies(),
                                                                                   variation.getReference(),

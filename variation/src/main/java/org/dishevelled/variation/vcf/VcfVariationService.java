@@ -29,10 +29,10 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import java.io.File;
 import java.io.IOException;
 
-import java.nio.charset.Charset;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import com.google.common.base.Charsets;
 
 import com.google.common.collect.ImmutableList;
 
@@ -75,7 +75,8 @@ public final class VcfVariationService implements VariationService
         final List<Variation> variations = new ArrayList<Variation>();
         try
         {
-            VcfReader.stream(Files.newReaderSupplier(file, Charset.forName("US-ASCII")), new VcfStreamListener()
+            // need to transparently handle vcf.gz files
+            VcfReader.stream(Files.newReaderSupplier(file, Charsets.UTF_8), new VcfStreamListener()
                 {
                     @Override
                     public void record(final VcfRecord record)
