@@ -25,6 +25,7 @@ package org.dishevelled.variation.vcf;
 
 import static org.dishevelled.variation.vcf.VcfReader.parse;
 import static org.dishevelled.variation.vcf.VcfReader.read;
+import static org.dishevelled.variation.vcf.VcfReader.samples;
 import static org.dishevelled.variation.vcf.VcfReader.stream;
 
 import static org.junit.Assert.assertEquals;
@@ -42,7 +43,9 @@ import java.io.StringReader;
 
 import java.util.zip.GZIPInputStream;
 
+import com.google.common.io.Files;
 import com.google.common.io.InputSupplier;
+import com.google.common.io.Resources;
 
 import org.junit.Test;
 
@@ -109,6 +112,107 @@ public final class VcfReaderTest
     public void testReadNullInputStream() throws IOException
     {
         read((InputStream) null);
+    }
+
+    @Test
+    public void testReadFile() throws IOException
+    {
+        File file = File.createTempFile("vcfReaderTest", ".vcf");
+        Files.write(Resources.toByteArray(getClass().getResource("ALL.chr22.phase1_release_v3.20101123.snps_indels_svs.genotypes-2-indv-thin-20000bp-trim.vcf")), file);
+
+        int count = 0;
+        for (VcfRecord record : read(file))
+        {
+            assertNotNull(record);
+
+            if (16140370 == record.getPos())
+            {
+                assertEquals("22", record.getChrom());
+                assertEquals(1, record.getId().length);
+                assertEquals("rs2096606", record.getId()[0]);
+                assertEquals("A", record.getRef());
+                assertEquals(1, record.getAlt().length);
+                assertEquals("G", record.getAlt()[0]);
+                assertEquals(100.0d, record.getQual(), 0.1d);
+                assertEquals("PASS", record.getFilter());
+                assertNotNull(record.getInfo());
+                assertTrue(record.getInfo().isEmpty());
+                assertNotNull(record.getGt());
+                assertFalse(record.getGt().isEmpty());
+                assertEquals("1|1", record.getGt().get("NA19131"));
+                assertEquals("1|1", record.getGt().get("NA19223"));
+            }
+            else if (17512091 == record.getPos())
+            {
+                assertEquals("22", record.getChrom());
+                assertEquals(1, record.getId().length);
+                assertEquals("rs5992615", record.getId()[0]);
+                assertEquals("G", record.getRef());
+                assertEquals(1, record.getAlt().length);
+                assertEquals("A", record.getAlt()[0]);
+                assertEquals(100.0d, record.getQual(), 0.1d);
+                assertEquals("PASS", record.getFilter());
+                assertNotNull(record.getInfo());
+                assertTrue(record.getInfo().isEmpty());
+                assertNotNull(record.getGt());
+                assertFalse(record.getGt().isEmpty());
+                assertEquals("1|0", record.getGt().get("NA19131"));
+                assertEquals("0|0", record.getGt().get("NA19223"));
+            }
+
+            count++;
+        }
+        assertEquals(70, count);
+    }
+
+    @Test
+    public void testReadURL() throws IOException
+    {
+        URL url = getClass().getResource("ALL.chr22.phase1_release_v3.20101123.snps_indels_svs.genotypes-2-indv-thin-20000bp-trim.vcf");
+
+        int count = 0;
+        for (VcfRecord record : read(url))
+        {
+            assertNotNull(record);
+
+            if (16140370 == record.getPos())
+            {
+                assertEquals("22", record.getChrom());
+                assertEquals(1, record.getId().length);
+                assertEquals("rs2096606", record.getId()[0]);
+                assertEquals("A", record.getRef());
+                assertEquals(1, record.getAlt().length);
+                assertEquals("G", record.getAlt()[0]);
+                assertEquals(100.0d, record.getQual(), 0.1d);
+                assertEquals("PASS", record.getFilter());
+                assertNotNull(record.getInfo());
+                assertTrue(record.getInfo().isEmpty());
+                assertNotNull(record.getGt());
+                assertFalse(record.getGt().isEmpty());
+                assertEquals("1|1", record.getGt().get("NA19131"));
+                assertEquals("1|1", record.getGt().get("NA19223"));
+            }
+            else if (17512091 == record.getPos())
+            {
+                assertEquals("22", record.getChrom());
+                assertEquals(1, record.getId().length);
+                assertEquals("rs5992615", record.getId()[0]);
+                assertEquals("G", record.getRef());
+                assertEquals(1, record.getAlt().length);
+                assertEquals("A", record.getAlt()[0]);
+                assertEquals(100.0d, record.getQual(), 0.1d);
+                assertEquals("PASS", record.getFilter());
+                assertNotNull(record.getInfo());
+                assertTrue(record.getInfo().isEmpty());
+                assertNotNull(record.getGt());
+                assertFalse(record.getGt().isEmpty());
+                assertEquals("1|0", record.getGt().get("NA19131"));
+                assertEquals("0|0", record.getGt().get("NA19223"));
+            }
+
+            count++;
+        }
+        assertEquals(70, count);
     }
 
     @Test
@@ -211,5 +315,40 @@ public final class VcfReaderTest
             count++;
         }
         assertEquals(1729, count);
+    }
+
+    @Test(expected=NullPointerException.class)
+    public void testSamplesNullSupplier() throws IOException
+    {
+        samples((InputSupplier<StringReader>) null);
+    }
+
+    @Test(expected=NullPointerException.class)
+    public void testSamplesNullFile() throws IOException
+    {
+        samples((File) null);
+    }
+
+    @Test(expected=NullPointerException.class)
+    public void testSamplesNullURL() throws IOException
+    {
+        samples((URL) null);
+    }
+
+    @Test
+    public void testSamplesNoMeta() throws IOException
+    {
+        InputStream inputStream = getClass().getResourceAsStream("ALL.chr22.phase1_release_v3.20101123.snps_indels_svs.genotypes-2-indv-thin-20000bp-trim.vcf");
+        assertNotNull(inputStream);
+
+        int count = 0;
+        for (VcfSample sample : samples(inputStream))
+        {
+            assertNotNull(sample);
+            assertTrue("NA19131".equals(sample.getId()) || "NA19223".equals(sample.getId()));
+
+            count++;
+        }
+        assertEquals(2, count);
     }
 }
