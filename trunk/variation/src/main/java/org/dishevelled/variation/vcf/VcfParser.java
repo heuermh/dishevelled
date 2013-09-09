@@ -85,17 +85,19 @@ final class VcfParser
             if (tokens[0].startsWith("##"))
             {
                 // meta-information lines
+                listener.meta(line);
             }
             else if (tokens[0].startsWith("#CHROM"))
             {
                 // header line
                 if (tokens.length > 8)
                 {
-                    for (int column = 8, columns = tokens.length; column < columns; column++)
+                    for (int column = 9, columns = tokens.length; column < columns; column++)
                     {
                         samples.put(column, tokens[column]);
                     }
                 }
+                listener.samples(samples.values().toArray(new String[0]));
             }
             else
             {
@@ -126,7 +128,7 @@ final class VcfParser
 
                 if (tokens.length > 8)
                 {
-                    for (int column = 8, columns = tokens.length; column < columns; column++)
+                    for (int column = 9, columns = tokens.length; column < columns; column++)
                     {
                         String[] sampleTokens = tokens[column].split(":");
                         // todo:  assumes GT exists and is first field
@@ -134,7 +136,10 @@ final class VcfParser
                     }
                 }
 
-                listener.complete();
+                if (!listener.complete())
+                {
+                    return false;
+                }
             }
             return true;
         }

@@ -91,6 +91,39 @@ public final class VcfReader
         return collect.getResult();
     }
 
+    // do these all need to be here?
+
+    static <R extends Readable & Closeable> Iterable<VcfSample> samples(final InputSupplier<R> supplier)
+        throws IOException
+    {
+        return VcfSampleParser.samples(supplier);
+    }
+
+    public static Iterable<VcfSample> samples(final File file) throws IOException
+    {
+        checkNotNull(file);
+        return samples(Files.newReaderSupplier(file, Charsets.UTF_8));
+    }
+
+    public static Iterable<VcfSample> samples(final URL url) throws IOException
+    {
+        checkNotNull(url);
+        return samples(Resources.newReaderSupplier(url, Charsets.UTF_8));
+    }
+
+    public static Iterable<VcfSample> samples(final InputStream inputStream) throws IOException
+    {
+        checkNotNull(inputStream);
+        return samples(new InputSupplier<InputStreamReader>()
+               {
+                   @Override
+                   public InputStreamReader getInput() throws IOException
+                   {
+                       return new InputStreamReader(inputStream);
+                   }
+               });
+    }
+
     private static final class Collect implements VcfStreamListener
     {
         private final List<VcfRecord> result = Lists.newLinkedList();

@@ -37,6 +37,18 @@ public class VcfParseAdapter implements VcfParseListener
     }
 
     @Override
+    public void meta(final String meta) throws IOException
+    {
+        // empty
+    }
+
+    @Override
+    public void samples(final String... samples) throws IOException
+    {
+        // empty
+    }
+
+    @Override
     public void chrom(final String chrom) throws IOException
     {
         // empty
@@ -91,8 +103,8 @@ public class VcfParseAdapter implements VcfParseListener
     }
 
     @Override
-    public void complete() throws IOException
+    public boolean complete() throws IOException
     {
-        // empty
+        return true;
     }
 }

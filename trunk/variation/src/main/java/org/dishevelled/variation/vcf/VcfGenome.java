@@ -23,23 +23,39 @@
 */
 package org.dishevelled.variation.vcf;
 
-import java.io.IOException;
+import static com.google.common.base.Preconditions.checkNotNull;
 
-import java.util.Map;
-
-public interface VcfParseListener
+/**
+ * VCF genome.
+ */
+public final class VcfGenome
 {
-    void lineNumber(long lineNumber) throws IOException;
-    void meta(String meta) throws IOException;
-    void samples(String... samples) throws IOException;
-    void chrom(String chrom) throws IOException;
-    void pos(int pos) throws IOException;
-    void id(String... id) throws IOException;
-    void ref(String ref) throws IOException;
-    void alt(String... alt) throws IOException;
-    void qual(double qual) throws IOException;
-    void filter(String filter) throws IOException;
-    void info(Map<String, String> info) throws IOException;
-    void gt(String sample, String gt) throws IOException;
-    boolean complete() throws IOException;
+    private final String id;
+    private final double mixture;
+    private final String description;
+
+
+    VcfGenome(final String id, final double mixture, final String description)
+    {
+        checkNotNull(id);
+        this.id = id;
+        this.mixture = mixture;
+        this.description = description;
+    }
+
+
+    public String getId()
+    {
+        return id;
+    }
+
+    public double getMixture()
+    {
+        return mixture;
+    }
+
+    public String getDescription()
+    {
+        return description;
+    }
 }

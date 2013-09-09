@@ -48,7 +48,7 @@ final class StreamingVcfParser
         checkNotNull(supplier);
         checkNotNull(listener);
 
-        VcfParser.parse(supplier, new VcfParseListener()
+        VcfParser.parse(supplier, new VcfParseAdapter()
             {
                 private long lineNumber;
                 private String chrom;
@@ -122,7 +122,7 @@ final class StreamingVcfParser
                 }
 
                 @Override
-                public void complete() throws IOException
+                public boolean complete() throws IOException
                 {
                     listener.record(new VcfRecord(lineNumber, chrom, pos, id, ref, alt, qual, filter, info, builder.build()));
 
@@ -135,6 +135,8 @@ final class StreamingVcfParser
                     filter = null;
                     info = null;
                     builder = ImmutableMap.builder();
+
+                    return true;
                 }
             });
     }

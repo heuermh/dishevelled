@@ -23,23 +23,28 @@
 */
 package org.dishevelled.variation.vcf;
 
-import java.io.IOException;
+import static org.junit.Assert.assertEquals;
 
-import java.util.Map;
+import org.junit.Test;
 
-public interface VcfParseListener
+/**
+ * Unit test for VcfGenome.
+ */
+public final class VcfGenomeTest
 {
-    void lineNumber(long lineNumber) throws IOException;
-    void meta(String meta) throws IOException;
-    void samples(String... samples) throws IOException;
-    void chrom(String chrom) throws IOException;
-    void pos(int pos) throws IOException;
-    void id(String... id) throws IOException;
-    void ref(String ref) throws IOException;
-    void alt(String... alt) throws IOException;
-    void qual(double qual) throws IOException;
-    void filter(String filter) throws IOException;
-    void info(Map<String, String> info) throws IOException;
-    void gt(String sample, String gt) throws IOException;
-    boolean complete() throws IOException;
+
+    @Test(expected=NullPointerException.class)
+    public void testConstructorNullId()
+    {
+        new VcfGenome(null, 1.0d, "Description");
+    }
+
+    @Test
+    public void testConstructor()
+    {
+        VcfGenome genome = new VcfGenome("genomeId", 1.0d, "Description");
+        assertEquals("genomeId", genome.getId());
+        assertEquals(1.0d, genome.getMixture(), 0.1d);
+        assertEquals("Description", genome.getDescription());
+    }
 }
