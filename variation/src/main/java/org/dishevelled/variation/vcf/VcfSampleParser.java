@@ -29,6 +29,7 @@ import java.io.Closeable;
 import java.io.IOException;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -74,7 +75,7 @@ final class VcfSampleParser
             if (meta.startsWith("##SAMPLE="))
             {
                 ListMultimap<String, String> values = ArrayListMultimap.create();
-                String[] tokens = meta.substring(8).split(",");
+                String[] tokens = meta.substring(10).split(",");
                 for (String token : tokens)
                 {
                     String[] metaTokens = token.split("=");
@@ -82,7 +83,7 @@ final class VcfSampleParser
                     String[] valueTokens = metaTokens[1].split(";");
                     for (String valueToken : valueTokens)
                     {
-                        values.put(key, valueToken);
+                        values.put(key, valueToken.replace("\"", "").replace(">", ""));
                     }
                 }
 
@@ -92,7 +93,7 @@ final class VcfSampleParser
                 List<String> descriptions = values.get("Description");
 
                 List<VcfGenome> genomes = new ArrayList<VcfGenome>(genomeIds.size()); 
-                for (int i = 0, size = genomes.size(); i < size; i++)
+                for (int i = 0, size = genomeIds.size(); i < size; i++)
                 {
                     genomes.add(new VcfGenome(genomeIds.get(i), Double.parseDouble(mixtures.get(i)), descriptions.get(i)));
                 }
