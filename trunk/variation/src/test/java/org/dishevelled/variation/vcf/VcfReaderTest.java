@@ -351,4 +351,43 @@ public final class VcfReaderTest
         }
         assertEquals(2, count);
     }
+
+    @Test
+    public void testSamples() throws IOException
+    {
+        InputStream inputStream = getClass().getResourceAsStream("samples.vcf");
+        assertNotNull(inputStream);
+
+        int count = 0;
+        for (VcfSample sample : samples(inputStream))
+        {
+            assertNotNull(sample);
+
+            if ("Blood".equals(sample.getId()))
+            {
+                assertNotNull(sample.getGenomes());
+                assertEquals(1, sample.getGenomes().length);
+                VcfGenome genome = sample.getGenomes()[0];
+                assertEquals("Germline", genome.getId());
+                assertEquals(1.0d, genome.getMixture(), 0.1d);
+                assertEquals("Patient germline genome", genome.getDescription());
+            }
+            else if ("TissueSample".equals(sample.getId()))
+            {
+                assertNotNull(sample.getGenomes());
+                assertEquals(2, sample.getGenomes().length);
+                VcfGenome germline = sample.getGenomes()[0];
+                assertEquals("Germline", germline.getId());
+                assertEquals(0.3d, germline.getMixture(), 0.01d);
+                assertEquals("Patient germline genome", germline.getDescription());
+                VcfGenome tumor = sample.getGenomes()[1];
+                assertEquals("Tumor", tumor.getId());
+                assertEquals(0.7d, tumor.getMixture(), 0.01d);
+                assertEquals("Patient tumor genome", tumor.getDescription());
+            }
+
+            count++;
+        }
+        assertEquals(2, count);
+    }
 }
