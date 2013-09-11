@@ -52,8 +52,8 @@ final class SyntheticGenome
         }
         long left = bp;
         for (int i = chromosomes - 1; i > 0; i--)
-        {
-            int length = (int) (left/i);
+        { 
+            int length = (int) (left / i);
             lengths.put(names.get(i), length);
             left -= length;
         }

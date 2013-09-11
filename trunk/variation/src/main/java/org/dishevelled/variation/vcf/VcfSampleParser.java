@@ -29,13 +29,11 @@ import java.io.Closeable;
 import java.io.IOException;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import com.google.common.collect.ArrayListMultimap;
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ListMultimap;
 
 import com.google.common.io.InputSupplier;
@@ -92,7 +90,7 @@ final class VcfSampleParser
                 List<String> mixtures = values.get("Mixture");
                 List<String> descriptions = values.get("Description");
 
-                List<VcfGenome> genomes = new ArrayList<VcfGenome>(genomeIds.size()); 
+                List<VcfGenome> genomes = new ArrayList<VcfGenome>(genomeIds.size());
                 for (int i = 0, size = genomeIds.size(); i < size; i++)
                 {
                     genomes.add(new VcfGenome(genomeIds.get(i), Double.parseDouble(mixtures.get(i)), descriptions.get(i)));

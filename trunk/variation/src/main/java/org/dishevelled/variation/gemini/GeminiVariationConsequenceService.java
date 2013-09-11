@@ -33,9 +33,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.google.common.collect.ImmutableList;
-
-import org.dishevelled.variation.Feature;
 import org.dishevelled.variation.Variation;
 import org.dishevelled.variation.VariationConsequence;
 import org.dishevelled.variation.VariationConsequenceService;
@@ -104,6 +101,7 @@ final class GeminiVariationConsequenceService implements VariationConsequenceSer
         }
         catch (IOException e)
         {
+            // ignore
         }
         finally
         {

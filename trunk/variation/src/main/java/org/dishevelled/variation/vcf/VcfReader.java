@@ -46,6 +46,13 @@ import com.google.common.io.Resources;
 
 public final class VcfReader
 {
+
+    private VcfReader()
+    {
+        // empty
+    }
+
+
     public static <R extends Readable & Closeable> void parse(final InputSupplier<R> supplier,
                                                               final VcfParseListener listener)
         throws IOException
