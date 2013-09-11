@@ -33,12 +33,10 @@ import com.google.common.collect.ImmutableSet;
 import org.dishevelled.variation.so.SequenceOntology;
 
 import org.dishevelled.vocabulary.Authority;
-import org.dishevelled.vocabulary.Assignment;
 import org.dishevelled.vocabulary.Concept;
 import org.dishevelled.vocabulary.Domain;
 import org.dishevelled.vocabulary.Evidence;
 import org.dishevelled.vocabulary.Mapping;
-import org.dishevelled.vocabulary.Relation;
 
 /**
  * Mappings between SnpEff terminologies and SequenceOntology.

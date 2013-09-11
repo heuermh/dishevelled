@@ -57,7 +57,7 @@ final class VcfParser
         CharStreams.readLines(supplier, lineProcessor);
     }
 
-    private final static class VcfLineProcessor implements LineProcessor<Object>
+    private static final class VcfLineProcessor implements LineProcessor<Object>
     {
         private long lineNumber = 0;
         private final VcfParseListener listener;

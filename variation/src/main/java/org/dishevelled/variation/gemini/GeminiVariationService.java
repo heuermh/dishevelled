@@ -103,6 +103,7 @@ final class GeminiVariationService implements VariationService
         }
         catch (IOException e)
         {
+            // ignore
         }
         finally
         {

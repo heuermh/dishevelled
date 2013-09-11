@@ -63,7 +63,7 @@ final class SyntheticVariationService
         checkArgument(genome.getReference().equals(feature.getReference()));
 
         List<Variation> variations = new ArrayList<Variation>();
-        for (int i = 0, size = (feature.getEnd() - feature.getStart())/1000; i < size; i++)
+        for (int i = 0, size = (feature.getEnd() - feature.getStart()) / 1000; i < size; i++)
         {
             String referenceAllele = sample();
             List<String> alternateAlleles = new ArrayList<String>();
