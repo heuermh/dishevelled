@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.github.heuermh.ensemblrestclient.FeatureService;
+import com.google.common.collect.ImmutableList;
 
 import org.dishevelled.variation.Feature;
 import org.dishevelled.variation.Variation;
@@ -64,21 +65,19 @@ final class EnsemblRestClientVariationService
         checkNotNull(feature);
         checkArgument(species.equals(feature.getSpecies()));
         checkArgument(reference.equals(feature.getReference()));
-        String region = feature.getName() + ":" + feature.getStart() + "-" + feature.getEnd() + ":" + feature.getStrand();
+        String region = feature.getRegion() + ":" + feature.getStart() + "-" + feature.getEnd() + ":" + feature.getStrand();
 
         List<Variation> variations = new ArrayList<Variation>();
         for (com.github.heuermh.ensemblrestclient.Variation variation : featureService.variationFeatures(species, region))
         {
             variations.add(new Variation(species,
                                          reference,
-                                         variation.getIdentifier(),
+                                         ImmutableList.of(variation.getIdentifier()),
                                          variation.getReferenceAllele(),
                                          variation.getAlternateAlleles(),
                                          variation.getLocation().getName(),
-                                         variation.getLocation().getStart(),
-                                         variation.getLocation().getEnd(),
-                                         variation.getLocation().getStrand()));
-        }
+                                         variation.getLocation().getStart()));
+            }
         return variations;
     }
 

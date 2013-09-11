@@ -25,6 +25,10 @@ package org.dishevelled.variation;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
+import java.util.List;
+
+import com.google.common.collect.ImmutableList;
+
 /**
  * Variation consequence.
  */
@@ -33,43 +37,38 @@ public final class VariationConsequence
 {
     private final String species;
     private final String reference;
-    private final String identifier; // id
+    private final List<String> identifiers; // e.g. dbSNP id
     private final String referenceAllele;
     private final String alternateAllele;
     private final String sequenceOntologyTerm;
-    private final String name; // seq_region_name
-    private final int start;
-    private final int end;
-    private final int strand;
+    private final String region; // seq_region_name
+    private final int position;
 
     public VariationConsequence(final String species,
                                 final String reference,
-                                final String identifier,
+                                final List<String> identifiers,
                                 final String referenceAllele,
                                 final String alternateAllele,
                                 final String sequenceOntologyTerm,
-                                final String name,
-                                final int start,
-                                final int end,
-                                final int strand)
+                                final String region,
+                                final int position)
     {
         checkNotNull(species);
         checkNotNull(reference);
+        checkNotNull(identifiers);
         checkNotNull(referenceAllele);
         checkNotNull(alternateAllele);
         checkNotNull(sequenceOntologyTerm);
-        checkNotNull(name);
+        checkNotNull(region);
 
         this.species = species;
         this.reference = reference;
-        this.identifier = identifier;
+        this.identifiers = ImmutableList.copyOf(identifiers);
         this.referenceAllele = referenceAllele;
         this.alternateAllele = alternateAllele;
         this.sequenceOntologyTerm = sequenceOntologyTerm;
-        this.name = name;
-        this.start = start;
-        this.end = end;
-        this.strand = strand;
+        this.region = region;
+        this.position = position;
     }
 
     public String getSpecies()
@@ -82,9 +81,9 @@ public final class VariationConsequence
         return reference;
     }
 
-    public String getIdentifier()
+    public List<String> getIdentifiers()
     {
-        return identifier;
+        return identifiers;
     }
 
     public String getReferenceAllele()
@@ -102,23 +101,13 @@ public final class VariationConsequence
         return sequenceOntologyTerm;
     }
 
-    public String getName()
+    public String getRegion()
     {
-        return name;
+        return region;
     }
 
-    public int getStart()
+    public int getPosition()
     {
-        return start;
-    }
-
-    public int getEnd()
-    {
-        return end;
-    }
-
-    public int getStrand()
-    {
-        return strand;
+        return position;
     }
 }

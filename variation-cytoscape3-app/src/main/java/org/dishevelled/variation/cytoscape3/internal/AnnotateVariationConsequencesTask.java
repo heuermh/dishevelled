@@ -113,17 +113,17 @@ final class AnnotateVariationConsequencesTask
                         Feature feature = featureService.feature(model.getSpecies(), model.getReference(), ensemblGeneId);
                         if (feature != null)
                         {
-                            taskMonitor.setStatusMessage("Retrieving variations associated with Ensembl Gene " + ensemblGeneId + " in the region " + feature.getName() + ":" + feature.getStart() + "-" + feature.getEnd() + ":" + feature.getStrand() + "...");
+                            taskMonitor.setStatusMessage("Retrieving variations associated with Ensembl Gene " + ensemblGeneId + " in the region " + feature.getRegion() + ":" + feature.getStart() + "-" + feature.getEnd() + ":" + feature.getStrand() + "...");
                             List<Variation> variations = variationService.variations(feature);
                             taskMonitor.setStatusMessage("Found " + variations.size() + " variations associated with Ensembl Gene " + ensemblGeneId);
 
                             List<VariationConsequence> allVariationConsequences = new ArrayList<VariationConsequence>(variations.size());
                             for (Variation variation : variations)
                             {
-                                taskMonitor.setStatusMessage("Retrieving variation consequences associated with variation " + variation.getIdentifier() + "...");
+                                taskMonitor.setStatusMessage("Retrieving variation consequences associated with variation " + variation.getIdentifiers() + "...");
                                 List<VariationConsequence> variationConsequences = variationConsequenceService.consequences(variation);
                                 allVariationConsequences.addAll(variationConsequences);
-                                taskMonitor.setStatusMessage("Found " + variationConsequences.size() + " variation consequences associated with variation " + variation.getIdentifier());
+                                taskMonitor.setStatusMessage("Found " + variationConsequences.size() + " variation consequences associated with variation " + variation.getIdentifiers());
 
                                 for (VariationConsequence variationConsequence : variationConsequences)
                                 {

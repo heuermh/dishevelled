@@ -95,7 +95,7 @@ public final class VepVcfVariationConsequenceServiceTest
     {
         Files.write(Resources.toByteArray(getClass().getResource("ALL.chr22.phase1_release_v3.20101123.snps_indels_svs.genotypes-2-indv-thin-20000bp-trim.vep.vcf")), file);
 
-        Variation variation = new Variation(species, reference, "rs193189309", "C", ImmutableList.of("T"), "22", 17452052, 17452052, 1);
+        Variation variation = new Variation(species, reference, ImmutableList.of("rs193189309"), "C", ImmutableList.of("T"), "22", 17452052);
         int count = 0;
         for (VariationConsequence consequence : consequenceService.consequences(variation))
         {
@@ -107,14 +107,13 @@ public final class VepVcfVariationConsequenceServiceTest
              */
             assertEquals(species, consequence.getSpecies());
             assertEquals(reference, consequence.getReference());
-            assertEquals("rs193189309", consequence.getIdentifier());
+            assertNotNull(consequence.getIdentifiers());
+            assertTrue(consequence.getIdentifiers().contains("rs193189309"));
             assertEquals("C", consequence.getReferenceAllele());
             assertEquals("T", consequence.getAlternateAllele());
             assertTrue("intron_variant".equals(consequence.getSequenceOntologyTerm()));
-            assertEquals("22", consequence.getName());
-            assertEquals(17452052, consequence.getStart());
-            assertEquals(17452052, consequence.getEnd());
-            assertEquals(1, consequence.getStrand());
+            assertEquals("22", consequence.getRegion());
+            assertEquals(17452052, consequence.getPosition());
 
             count++;
         }

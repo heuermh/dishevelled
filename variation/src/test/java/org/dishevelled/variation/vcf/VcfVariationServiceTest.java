@@ -99,17 +99,15 @@ public final class VcfVariationServiceTest
         {
             // should this variation be included?
             // the samples in the test file show only ref allele at this position
-            if ("rs139448371".equals(variation.getIdentifier()))
+            if (variation.getIdentifiers().contains("rs139448371"))
             {
                 assertEquals(species, variation.getSpecies());
                 assertEquals(reference, variation.getReference());
                 assertEquals("C", variation.getReferenceAllele());
                 assertEquals(1, variation.getAlternateAlleles().size());
                 assertEquals("A", variation.getAlternateAlleles().get(0));
-                assertEquals("22", variation.getName());
-                assertEquals(16162219, variation.getStart());
-                assertEquals(16162219, variation.getEnd());
-                assertEquals(1, variation.getStrand());
+                assertEquals("22", variation.getRegion());
+                assertEquals(16162219, variation.getPosition());
 
                 found = true;
             }

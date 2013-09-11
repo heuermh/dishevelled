@@ -120,10 +120,10 @@ final class PredictVariationConsequencesTask
                 Variation variation = model.variations().get(i);
                 for (Feature hit : featureIndex.hit(variation))
                 {
-                    taskMonitor.setStatusMessage("Predicting variation consequences for variation " + variation.getName() + ":" + variation.getStart() + "-" + variation.getEnd() + ":" + variation.getStrand() + " " + variation.getAlternateAlleles() + "...");
+                    taskMonitor.setStatusMessage("Predicting variation consequences for variation " + variation.getRegion() + ":" + variation.getPosition() + "-" + variation.getPosition() + " " + variation.getAlternateAlleles() + "...");
                     List<VariationConsequence> variationConsequences = variationConsequencePredictionService.predictConsequences(variation);
                     featureIndex.add(hit, variationConsequences);
-                    taskMonitor.setStatusMessage("Predicted " + variationConsequences.size() + " variation consequences for variation " + variation.getName() + ":" + variation.getStart() + "-" + variation.getEnd() + ":" + variation.getStrand() + " " + variation.getAlternateAlleles() + "...");
+                    taskMonitor.setStatusMessage("Predicted " + variationConsequences.size() + " variation consequences for variation " + variation.getRegion() + ":" + variation.getPosition() + "-" + variation.getPosition() + " " + variation.getAlternateAlleles() + "...");
 
                     for (VariationConsequence variationConsequence : variationConsequences)
                     {
