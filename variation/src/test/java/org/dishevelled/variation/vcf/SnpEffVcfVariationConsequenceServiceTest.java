@@ -149,4 +149,30 @@ public final class SnpEffVcfVariationConsequenceServiceTest
         }
         assertTrue(found);
     }
+
+    @Test
+    public void testConsequences_gatk_2_6_example_eff() throws Exception
+    {
+        Files.write(Resources.toByteArray(getClass().getResource("gatk-2.6-example.eff.vcf")), file);
+
+        Variation variation = new Variation(species, reference, "rs66469215", "C", ImmutableList.of("CA"), "6", 7542148, 7542148, 1);
+        int count = 0;
+        for (VariationConsequence consequence : consequenceService.consequences(variation))
+        {
+            assertNotNull(consequence);
+
+            assertEquals(species, consequence.getSpecies());
+            assertEquals(reference, consequence.getReference());
+            assertEquals("C", consequence.getReferenceAllele());
+            assertEquals("CA", consequence.getAlternateAllele());
+            assertEquals("6", consequence.getName());
+            assertTrue("FRAME_SHIFT".equals(consequence.getSequenceOntologyTerm()) || "UPSTREAM".equals(consequence.getSequenceOntologyTerm()));
+            assertEquals(7542148, consequence.getStart());
+            assertEquals(7542148, consequence.getEnd());
+            assertEquals(1, consequence.getStrand());
+
+            count++;
+        }
+        assertEquals(2, count);
+    }
 }

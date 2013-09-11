@@ -353,6 +353,39 @@ public final class VcfReaderTest
     }
 
     @Test
+    public void testReadInputStream_gatk_2_6_example_eff() throws IOException
+    {
+        InputStream inputStream = getClass().getResourceAsStream("gatk-2.6-example.eff.vcf");
+        assertNotNull(inputStream);
+
+        int count = 0;
+        for (VcfRecord record : read(inputStream))
+        {
+            assertNotNull(record);
+
+            if ("rs66469215".equals(record.getId()[0]))
+            {
+                assertEquals("6", record.getChrom());
+                assertEquals(1, record.getId().length);
+                assertEquals("C", record.getRef());
+                assertEquals(1, record.getAlt().length);
+                assertEquals("CA", record.getAlt()[0]);
+                assertEquals(3817.73d, record.getQual(), 0.01d);
+                assertEquals("PASS", record.getFilter());
+                assertNotNull(record.getInfo());
+                assertFalse(record.getInfo().isEmpty());
+                //assertEquals("true", record.getInfo().get("DB")); // or empty string?
+                assertEquals("250", record.getInfo().get("DP"));
+                assertNotNull(record.getGt());
+                assertFalse(record.getGt().isEmpty());
+                assertEquals("0/1", record.getGt().get("Sample1"));
+            }
+            count++;
+        }
+        assertEquals(7, count);
+    }
+
+    @Test
     public void testSamples() throws IOException
     {
         InputStream inputStream = getClass().getResourceAsStream("samples.vcf");
