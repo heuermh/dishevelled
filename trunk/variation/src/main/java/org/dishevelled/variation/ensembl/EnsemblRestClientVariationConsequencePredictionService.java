@@ -72,7 +72,7 @@ final class EnsemblRestClientVariationConsequencePredictionService
         checkNotNull(variation);
         checkArgument(this.species.equals(species));
         checkArgument(this.reference.equals(reference));
-        String region = variation.getName() + ":" + variation.getStart() + "-" + variation.getEnd() + ":" + variation.getStrand();
+        String region = variation.getRegion() + ":" + variation.getPosition() + "-" + variation.getPosition();
 
         List<VariationConsequence> consequences = new ArrayList<VariationConsequence>();
         for (String alternateAllele : variation.getAlternateAlleles())
@@ -96,14 +96,12 @@ final class EnsemblRestClientVariationConsequencePredictionService
                             {
                                 consequences.add(new VariationConsequence(variation.getSpecies(),
                                                                           variation.getReference(),
-                                                                          variation.getIdentifier(),
+                                                                          variation.getIdentifiers(),
                                                                           ref,
                                                                           alt,
                                                                           consequenceTerm,
-                                                                          variation.getName(),
-                                                                          variation.getStart(),
-                                                                          variation.getEnd(),
-                                                                          variation.getStrand()));
+                                                                          variation.getRegion(),
+                                                                          variation.getPosition()));
 
                             }
                         }

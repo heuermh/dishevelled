@@ -72,7 +72,7 @@ final class FeatureView
 
     // todo:  need to add node column
     /** Table property names. */
-    private static final String[] PROPERTY_NAMES = { "species", "reference", "identifier", "name", "start", "end", "strand" };
+    private static final String[] PROPERTY_NAMES = { "species", "reference", "identifier", "region", "start", "end", "strand" };
 
     /** Table column labels. */
     private static final String[] COLUMN_LABELS = { "Species", "Reference", "Identifier", "Region", "Start", "End", "Strand" };

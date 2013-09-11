@@ -31,11 +31,14 @@ import java.io.InputStreamReader;
 import java.io.IOException;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.dishevelled.variation.Variation;
 import org.dishevelled.variation.VariationConsequence;
 import org.dishevelled.variation.VariationConsequenceService;
+
+import com.google.common.collect.ImmutableList;
 
 /**
  * GEMINI command line variation consequence service.
@@ -67,7 +70,7 @@ final class GeminiVariationConsequenceService implements VariationConsequenceSer
         checkArgument(reference.equals(variation.getReference()));
 
         // todo:  requires GEMINI variant_id primary key as identifier
-        ProcessBuilder processBuilder = new ProcessBuilder("gemini", "query", "-q", "select v.rs_ids, v.ref, v.alt, vi.impact, v.chrom, v.start, v.end from variants v, variant_impacts vi where vi.variant_id = v.variant_id and v.variant_id=" + variation.getIdentifier(), databaseName);
+        ProcessBuilder processBuilder = new ProcessBuilder("gemini", "query", "-q", "select v.rs_ids, v.ref, v.alt, vi.impact, v.chrom, v.start from variants v, variant_impacts vi where vi.variant_id = v.variant_id and v.variant_id=" + variation.getIdentifiers(), databaseName);
 
         BufferedReader reader = null;
         List<VariationConsequence> variationConsequences = new ArrayList<VariationConsequence>();
@@ -84,19 +87,16 @@ final class GeminiVariationConsequenceService implements VariationConsequenceSer
                     break;
                 }
                 String[] tokens = line.split("\t");
-                // todo: rs_ids is a comma-separated list of dbSNP ids
-                String identifier = tokens[0] == "null" ? null : tokens[0];
+                // rs_ids is a comma-separated list of dbSNP ids
+                List<String> identifiers = tokens[0] == "null" ? Collections.<String>emptyList() : ImmutableList.copyOf(tokens[0].split(","));
                 String ref = tokens[1];
                 String alt = tokens[2];
                 // todo: impact may need to be mapped to sequence ontology
                 String sequenceOntologyTerm = tokens[3];
                 String name = tokens[4];
-                int start = Integer.parseInt(tokens[5]);
-                int end = Integer.parseInt(tokens[6]);
-                //int strand = Integer.parseInt(tokens[7]);
-                int strand = 1;
+                int position = Integer.parseInt(tokens[5]);
 
-                variationConsequences.add(new VariationConsequence(species, reference, identifier, ref, alt, sequenceOntologyTerm, name, start, end, strand));
+                variationConsequences.add(new VariationConsequence(species, reference, identifiers, ref, alt, sequenceOntologyTerm, name, position));
             }
         }
         catch (IOException e)

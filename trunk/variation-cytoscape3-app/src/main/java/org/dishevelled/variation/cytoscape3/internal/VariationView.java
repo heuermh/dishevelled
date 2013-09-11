@@ -73,10 +73,10 @@ final class VariationView
 
     // todo:  need to add node, feature columns
     /** Table property names. */
-    private static final String[] PROPERTY_NAMES = { "species", "reference", "identifier", "name", "start", "end", "strand", "referenceAllele", "alternateAlleles" };
+    private static final String[] PROPERTY_NAMES = { "species", "reference", "region", "position", "identifiers", "referenceAllele", "alternateAlleles" };
 
     /** Table column labels. */
-    private static final String[] COLUMN_LABELS = { "Species", "Reference", "Identifier", "Region", "Start", "End", "Strand", "Ref", "Alt" };
+    private static final String[] COLUMN_LABELS = { "Species", "Reference", "Region", "Position", "Identifiers", "Ref", "Alt" };
 
     /** Table format. */
     private static final TableFormat<Variation> TABLE_FORMAT = GlazedLists.tableFormat(Variation.class, PROPERTY_NAMES, COLUMN_LABELS);

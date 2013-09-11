@@ -33,7 +33,7 @@ public final class Feature
     private String species;
     private String reference;
     private String identifier; // gene_id
-    private String name; // seq_region_name
+    private String region;
     private int start;
     private int end;
     private int strand;
@@ -41,7 +41,7 @@ public final class Feature
     public Feature(final String species,
                    final String reference,
                    final String identifier,
-                   final String name,
+                   final String region,
                    final int start,
                    final int end,
                    final int strand)
@@ -49,12 +49,12 @@ public final class Feature
         checkNotNull(species);
         checkNotNull(reference);
         checkNotNull(identifier);
-        checkNotNull(name);
+        checkNotNull(region);
 
         this.species = species;
         this.reference = reference;
         this.identifier = identifier;
-        this.name = name;
+        this.region = region;
         this.start = start;
         this.end = end;
         this.strand = strand;
@@ -76,9 +76,9 @@ public final class Feature
         return identifier;
     }
 
-    public String getName()
+    public String getRegion()
     {
-        return name;
+        return region;
     }
 
     public int getStart()

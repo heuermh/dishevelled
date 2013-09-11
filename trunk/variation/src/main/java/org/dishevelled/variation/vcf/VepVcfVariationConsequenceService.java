@@ -75,6 +75,7 @@ public final class VepVcfVariationConsequenceService implements VariationConsequ
         final List<VariationConsequence> consequences = new ArrayList<VariationConsequence>();
         try
         {
+            // todo: need to transparently handle vcf.gz files
             VcfReader.stream(Files.newReaderSupplier(file, Charsets.UTF_8), new VcfStreamListener()
                 {
                     @Override
@@ -82,15 +83,11 @@ public final class VepVcfVariationConsequenceService implements VariationConsequ
                     {
                         if (sameVariation(variation, record))
                         {
-                            // just use first id
-                            String identifier = record.getId().length == 0 ? null : record.getId()[0];
+                            List<String> identifiers = ImmutableList.copyOf(record.getId());
                             String ref = record.getRef();
                             List<String> alt = ImmutableList.copyOf(record.getAlt());
                             String region = record.getChrom();
-                            //int start = Math.max(1, record.getPos() - 1);  check VCF docs
-                            int start = record.getPos();
-                            int end = record.getPos();
-                            int strand = 1;
+                            int position = record.getPos();
 
                             /*
 
@@ -119,14 +116,12 @@ public final class VepVcfVariationConsequenceService implements VariationConsequ
                                             {
                                                 consequences.add(new VariationConsequence(variation.getSpecies(),
                                                                                           variation.getReference(),
-                                                                                          variation.getIdentifier(),
+                                                                                          variation.getIdentifiers(),
                                                                                           variation.getReferenceAllele(),
                                                                                           altAllele,
                                                                                           sequenceOntologyTerm,
-                                                                                          variation.getName(),
-                                                                                          variation.getStart(),
-                                                                                          variation.getEnd(),
-                                                                                          variation.getStrand()));
+                                                                                          variation.getRegion(),
+                                                                                          variation.getPosition()));
                                             }
                                         }
                                     }
@@ -143,13 +138,7 @@ public final class VepVcfVariationConsequenceService implements VariationConsequ
                     // todo: not sure this is a valid comparison
                     private boolean sameVariation(final Variation variation, final VcfRecord record)
                     {
-                        String region = record.getChrom();
-                        //int start = Math.max(1, record.getPos() - 1);  check VCF docs
-                        int start = record.getPos();
-                        int end = record.getPos();
-                        int strand = 1;
-
-                        return variation.getName().equals(region) && variation.getStart() == start && variation.getEnd() == end && variation.getStrand() == strand;
+                        return variation.getRegion().equals(record.getChrom()) && variation.getPosition() == record.getPos();
                     }
                 });
         }

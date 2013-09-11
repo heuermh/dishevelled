@@ -75,27 +75,22 @@ public final class VcfVariationService implements VariationService
         final List<Variation> variations = new ArrayList<Variation>();
         try
         {
-            // need to transparently handle vcf.gz files
+            // todo: need to transparently handle vcf.gz files
             VcfReader.stream(Files.newReaderSupplier(file, Charsets.UTF_8), new VcfStreamListener()
                 {
                     @Override
                     public void record(final VcfRecord record)
                     {
-                        if (feature.getName().equals(record.getChrom()) && feature.getStart() <= record.getPos() && feature.getEnd() >= record.getPos())
+                        if (feature.getRegion().equals(record.getChrom()) && feature.getStart() <= record.getPos() && feature.getEnd() >= record.getPos())
                         {
-                            // just use first id
-                            String identifier = record.getId().length == 0 ? null : record.getId()[0];
+                            List<String> identifiers = ImmutableList.copyOf(record.getId());
                             String ref = record.getRef();
                             List<String> alt = ImmutableList.copyOf(record.getAlt());
                             String region = record.getChrom();
-                            //int start = Math.max(1, record.getPos() - 1);  check VCF docs
-                            int start = record.getPos();
-                            int end = record.getPos();
-                            int strand = 1;
+                            int position = record.getPos();
 
-                            // only add variation if sample matches some query and any genotype is not reference; modify alt alleles if so
-
-                            variations.add(new Variation(species, reference, identifier, ref, alt, region, start, end, strand));
+                            // todo: only add variation if sample matches some query and any genotype is not reference; modify alt alleles if so
+                            variations.add(new Variation(species, reference, identifiers, ref, alt, region, position));
                         }
                     }
                 });

@@ -73,9 +73,9 @@ final class SyntheticVariationConsequencePredictionService
         String consequenceTerm = sample();
         for (String alternateAllele : variation.getAlternateAlleles())
         {
-            consequences.add(new VariationConsequence(variation.getSpecies(), variation.getReference(), variation.getIdentifier(),
+            consequences.add(new VariationConsequence(variation.getSpecies(), variation.getReference(), variation.getIdentifiers(),
                                                       variation.getReferenceAllele(), alternateAllele, consequenceTerm,
-                                                      variation.getName(), variation.getStart(), variation.getEnd(), variation.getStrand()));
+                                                      variation.getRegion(), variation.getPosition()));
         }
         return consequences;
     }

@@ -74,32 +74,33 @@ final class EnsemblRestClientVariationConsequenceService
         checkArgument(reference.equals(variation.getReference()));
 
         List<VariationConsequence> consequences = new ArrayList<VariationConsequence>();
-        for (Transcript transcript : variationService.consequences(species, variation.getIdentifier()).getTranscripts())
+        for (String identifier : variation.getIdentifiers())
         {
-            // only use canonical transcript
-            if (transcript.isCanonical())
+            for (Transcript transcript : variationService.consequences(species, identifier).getTranscripts())
             {
-                for (Allele allele : transcript.getAlleles())
+                // only use canonical transcript
+                if (transcript.isCanonical())
                 {
-                    // parse allele string
-                    Matcher matcher = ALLELE_STRING.matcher(allele.getAlleleString());
-                    if (matcher.matches())
+                    for (Allele allele : transcript.getAlleles())
                     {
-                        String referenceAllele = matcher.group(1);
-                        String alternateAllele = matcher.group(2);
-
-                        for (String consequenceTerm : allele.getConsequenceTerms())
+                        // parse allele string
+                        Matcher matcher = ALLELE_STRING.matcher(allele.getAlleleString());
+                        if (matcher.matches())
                         {
-                            consequences.add(new VariationConsequence(variation.getSpecies(),
-                                                                      variation.getReference(),
-                                                                      variation.getIdentifier(),
-                                                                      referenceAllele,
-                                                                      alternateAllele,
-                                                                      consequenceTerm,
-                                                                      variation.getName(),
-                                                                      variation.getStart(),
-                                                                      variation.getEnd(),
-                                                                      variation.getStrand()));
+                            String referenceAllele = matcher.group(1);
+                            String alternateAllele = matcher.group(2);
+
+                            for (String consequenceTerm : allele.getConsequenceTerms())
+                            {
+                                consequences.add(new VariationConsequence(variation.getSpecies(),
+                                        variation.getReference(),
+                                        variation.getIdentifiers(),
+                                        referenceAllele,
+                                        alternateAllele,
+                                        consequenceTerm,
+                                        variation.getRegion(),
+                                        variation.getPosition()));
+                            }
                         }
                     }
                 }

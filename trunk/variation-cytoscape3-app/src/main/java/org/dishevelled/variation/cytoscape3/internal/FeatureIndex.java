@@ -68,7 +68,7 @@ final class FeatureIndex
         ListMultimap<String, Feature> featuresByName = ArrayListMultimap.create();
         for (Feature feature : features)
         {
-            featuresByName.put(feature.getName(), feature);
+            featuresByName.put(feature.getRegion(), feature);
         }
         for (String chr : featuresByName.keySet())
         {
@@ -98,8 +98,8 @@ final class FeatureIndex
     Iterable<Feature> hit(final Variation variation)
     {
         List<Feature> hits = Lists.newArrayList();
-        CenteredIntervalTree intervalTree = intervalTrees.get(variation.getName());
-        for (Interval interval : intervalTree.intersect(Interval.closed(variation.getStart(), variation.getEnd())))
+        CenteredIntervalTree intervalTree = intervalTrees.get(variation.getRegion());
+        for (Interval interval : intervalTree.intersect(Interval.singleton(variation.getPosition())))
         {
             hits.add(featuresToIntervals.inverse().get(interval));
         }

@@ -76,8 +76,8 @@ final class SyntheticVariationService
             {
                 alternateAlleles.add(sample(referenceAllele, alternateAlleles));
             }
-            int start = feature.getStart() + random.nextInt(feature.getEnd() - feature.getStart());
-            variations.add(new Variation(genome.getSpecies(), genome.getReference(), null, referenceAllele, alternateAlleles, feature.getName(), start, start, 1));
+            int position = feature.getStart() + random.nextInt(feature.getEnd() - feature.getStart());
+            variations.add(new Variation(genome.getSpecies(), genome.getReference(), null, referenceAllele, alternateAlleles, feature.getRegion(), position));
         }
         return variations;
     }

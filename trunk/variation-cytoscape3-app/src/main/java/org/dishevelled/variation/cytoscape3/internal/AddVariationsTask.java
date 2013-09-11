@@ -102,7 +102,7 @@ final class AddVariationsTask
                         Feature feature = featureService.feature(model.getSpecies(), model.getReference(), ensemblGeneId);
                         if (feature != null)
                         {
-                            taskMonitor.setStatusMessage("Retrieving variations associated with Ensembl Gene " + ensemblGeneId + " in the region " + feature.getName() + ":" + feature.getStart() + "-" + feature.getEnd() + ":" + feature.getStrand() + "...");
+                            taskMonitor.setStatusMessage("Retrieving variations associated with Ensembl Gene " + ensemblGeneId + " in the region " + feature.getRegion() + ":" + feature.getStart() + "-" + feature.getEnd() + ":" + feature.getStrand() + "...");
                             List<Variation> variations = variationService.variations(feature);
 
                             // todo:  count doesn't consider existing variations

@@ -81,10 +81,10 @@ final class VariationConsequenceView
 
     // todo:  need to add node, feature, variation columns
     /** Table property names. */
-    private static final String[] PROPERTY_NAMES = { "species", "reference", "identifier", "name", "start", "end", "strand", "referenceAllele", "alternateAllele", "sequenceOntologyTerm" };
+    private static final String[] PROPERTY_NAMES = { "species", "reference", "region", "position", "identifiers", "referenceAllele", "alternateAllele", "sequenceOntologyTerm" };
 
     /** Table column labels. */
-    private static final String[] COLUMN_LABELS = { "Species", "Reference", "Identifier", "Region", "Start", "End", "Strand", "Ref", "Alt", "Consequence" };
+    private static final String[] COLUMN_LABELS = { "Species", "Reference", "Region", "Position", "Identifiers", "Ref", "Alt", "Consequence" };
 
     /** Table format. */
     private static final TableFormat<VariationConsequence> TABLE_FORMAT = GlazedLists.tableFormat(VariationConsequence.class, PROPERTY_NAMES, COLUMN_LABELS);
@@ -152,7 +152,7 @@ final class VariationConsequenceView
                         JLabel label = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
                         TableModel tableModel = table.getModel();
                         int tableModelRow = table.convertRowIndexToModel(row);
-                        String consequenceTerm = (String) tableModel.getValueAt(tableModelRow, 9); // hard coded column index
+                        String consequenceTerm = (String) tableModel.getValueAt(tableModelRow, 7); // hard coded column index
                         Color rowColor = tableRowColorMapping.getColor(consequenceTerm);
                         if (rowColor != null && !isSelected)
                         {
