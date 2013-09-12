@@ -85,8 +85,8 @@ public final class SequenceOntology
 
     public static Domain sequenceFeatures()
     {
-        Authority so = new Authority("so");
-        Domain sf = so.createDomain("sf" + id.incrementAndGet());
+        Authority so = new Authority("sequenceOntology");
+        Domain sf = so.createDomain("sequenceFeatures" + id.incrementAndGet());
 
         Concept complex_structural_variation = sf.createConcept("complex_structural_variation", "SO:0001784", null);
         Concept copy_number_gain = sf.createConcept("copy_number_gain", "SO:0001742", null);
@@ -126,8 +126,8 @@ public final class SequenceOntology
 
     public static Domain sequenceVariants()
     {
-        Authority so = new Authority("so");
-        Domain sv = so.createDomain("sv" + id.incrementAndGet());
+        Authority so = new Authority("sequenceOntology");
+        Domain sv = so.createDomain("sequenceVariants" + id.incrementAndGet());
 
         Concept _3_prime_UTR_variant = sv.createConcept("3_prime_UTR_variant", "SO:0001624", null);
         Concept _5_prime_UTR_variant = sv.createConcept("5_prime_UTR_variant", "SO:0001623", null);
