@@ -60,7 +60,7 @@ public final class SnpEffOntology
         Authority snpEff = new Authority("snpEff");
         Domain effects = snpEff.createDomain("effects" + id.incrementAndGet());
 
-        int accession = -1;
+        int accession = 0;
         effects.createConcept("NONE", "e" + accession++, null);
         effects.createConcept("CUSTOM", "e" + accession++, null); // not listed in SnpEff doc effects table
         effects.createConcept("UTR_3_DELETED", "e" + accession++, null);
@@ -98,7 +98,7 @@ public final class SnpEffOntology
         Authority snpEff = new Authority("snpEff");
         Domain regions = snpEff.createDomain("regions" + id.incrementAndGet());
 
-        int accession = -1;
+        int accession = 0;
         regions.createConcept("NONE", "r" + accession++, null);
         regions.createConcept("CDS", "r" + accession++, null);
         regions.createConcept("GENE", "r" + accession++, null);
@@ -121,7 +121,7 @@ public final class SnpEffOntology
         Authority snpEff = new Authority("snpEff");
         Domain impacts = snpEff.createDomain("impacts" + id.incrementAndGet());
 
-        int accession = -1;
+        int accession = 0;
         impacts.createConcept("HIGH", "i" + accession++, null);
         impacts.createConcept("MODERATE", "i" + accession++, null);
         impacts.createConcept("LOW", "i" + accession++, null);

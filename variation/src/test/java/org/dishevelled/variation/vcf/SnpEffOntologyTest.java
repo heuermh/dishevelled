@@ -23,6 +23,9 @@
 */
 package org.dishevelled.variation.vcf;
 
+import static org.dishevelled.variation.so.SequenceOntology.sequenceFeatures;
+import static org.dishevelled.variation.so.SequenceOntology.sequenceVariants;
+
 import static org.dishevelled.variation.vcf.SnpEffOntology.effects;
 import static org.dishevelled.variation.vcf.SnpEffOntology.effectToImpactMapping;
 import static org.dishevelled.variation.vcf.SnpEffOntology.effectToRegionMapping;
@@ -38,12 +41,19 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+
 import java.util.Map;
 
 import org.dishevelled.vocabulary.Concept;
 import org.dishevelled.vocabulary.Domain;
 import org.dishevelled.vocabulary.Mapping;
 import org.dishevelled.vocabulary.Projection;
+import org.dishevelled.vocabulary.Relation;
 
 import org.junit.Test;
 
@@ -219,5 +229,114 @@ public final class SnpEffOntologyTest
             }
         }
         assertTrue(found);
+    }
+
+    //@Test
+    // writes out nodes.txt and edges.txt for viz in e.g. Cytoscape
+    public void dumpForVisualization()
+    {
+        PrintWriter nodes = null;
+        PrintWriter edges = null;
+        try
+        {
+            nodes = new PrintWriter(new BufferedWriter(new FileWriter("nodes.txt")), true);
+            edges = new PrintWriter(new BufferedWriter(new FileWriter("edges.txt")), true);
+
+            dumpDomain(sequenceFeatures(), nodes, edges);
+            dumpDomain(sequenceVariants(), nodes, edges);
+            dumpDomain(effects(), nodes, edges);
+            dumpDomain(regions(), nodes, edges);
+            dumpDomain(impacts(), nodes, edges);
+
+            dumpProjections(effectToRegionMapping(), edges);
+            dumpProjections(regionToEffectMapping(), edges);
+            dumpProjections(effectToImpactMapping(), edges);
+            dumpProjections(regionToImpactMapping(), edges);
+            dumpProjections(effectToSequenceOntologyMapping(), edges);
+            dumpProjections(regionToSequenceOntologyMapping(), edges);
+
+        }
+        catch (IOException e)
+        {
+            // ignore
+        }
+        finally
+        {
+            try
+            {
+                nodes.close();
+            }
+            catch (Exception e)
+            {
+                // ignore
+            }
+            try
+            {
+                edges.close();
+            }
+            catch (Exception e)
+            {
+                // ignore
+            }
+        }
+    }
+
+    private static void dumpDomain(final Domain domain, final PrintWriter nodes, final PrintWriter edges)
+    {
+        dumpConcepts(domain, nodes);
+        dumpRelations(domain, edges);
+    }
+
+    private static void dumpConcepts(final Domain domain, final PrintWriter nodes)
+    {
+        for (Concept concept : domain.getConcepts())
+        {
+            nodes.print(concept.getAccession());
+            nodes.print("\t");
+            nodes.print(concept.getName());
+            nodes.print("\t");
+            nodes.print(concept.getDomain().getName());
+            nodes.print("\t");
+            nodes.print(concept.getDomain().getAuthority().getName());
+            nodes.print("\n");
+        }
+    }
+
+    private static void dumpRelations(final Domain domain, final PrintWriter edges)
+    {
+        for (Relation relation : domain.getRelations())
+        {
+            edges.print(relation.getSource().getAccession());
+            edges.print("\t");
+            edges.print(relation.getTarget().getAccession());
+            edges.print("\t");
+            edges.print("relation");
+            edges.print("\t");
+            edges.print(relation.getName());
+            edges.print("\n");
+        }
+    }
+
+    private static void dumpProjections(final Mapping mapping, final PrintWriter edges)
+    {
+        for (Projection projection : mapping.getProjections())
+        {
+            edges.print(projection.getSource().getAccession());
+            edges.print("\t");
+            edges.print(projection.getTarget().getAccession());
+            edges.print("\t");
+            edges.print("projection");
+            edges.print("\t");
+            edges.print(projection.getName());
+            edges.print("\t");
+            edges.print(projection.getEvidence().iterator().next().getName());
+            edges.print("\t");
+            edges.print(mapping.getSource().getName());
+            edges.print("\t");
+            edges.print(mapping.getTarget().getName());
+            edges.print("\t");
+            edges.print(mapping.getAuthority().getName());
+            edges.print("\n");
+        }
     }
 }
