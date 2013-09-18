@@ -31,8 +31,6 @@ import java.util.List;
 
 import com.google.common.base.Splitter;
 
-import com.google.common.collect.ImmutableList;
-
 /**
  * VEP consequence.
  */
@@ -70,8 +68,7 @@ final class VepConsequence
 
     static VepConsequence parse(final String token) throws IOException
     {
-        //List<String> values = Splitter.on("|").splitToList(token);  to be in guava 15.0+
-        List<String> values = ImmutableList.copyOf(Splitter.on("|").split(token));
+        List<String> values = Splitter.on("|").splitToList(token);
         String allele = values.get(0);
         String[] consequenceTerms = values.get(4).split("&");
         boolean canonical = "YES".equals(values.get(12));
