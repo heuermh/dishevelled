@@ -141,7 +141,7 @@ public final class IdMenuItem
         return iconTextDirection;
     }
 
-    /** {@inheritDoc} */
+    @Override
     public void setComponentOrientation(final ComponentOrientation orientation)
     {
         ComponentOrientation oldOrientation = getComponentOrientation();

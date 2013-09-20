@@ -44,6 +44,7 @@ public class IdPopupMenu
      * <p>If the specified action is an instance of {@link IdentifiableAction}, an
      * {@link IdMenuItem} is created and added to this menu.</p>
      */
+    @Override
     public JMenuItem add(final Action action)
     {
         if (action instanceof IdentifiableAction)
