@@ -135,6 +135,16 @@ public class ElementsSummary<E>
     }
 
     /**
+     * Return the number of elements to display.
+     *
+     * @return the number of elements to display
+     */
+    public final int getElementsToDisplay()
+    {
+        return elementsToDisplay;
+    }
+
+    /**
      * Set the number of elements to display to <code>elementsToDisplay</code>.  Defaults
      * to {@link #DEFAULT_ELEMENTS_TO_DISPLAY}.
      *
@@ -155,6 +165,16 @@ public class ElementsSummary<E>
     }
 
     /**
+     * Return the separator text between elements.
+     *
+     * @return the separator text between elements
+     */
+    public final String getSeparator()
+    {
+        return separatorText;
+    }
+
+    /**
      * Set the separator text between elements to <code>separatorText</code>.  Defaults to
      * {@link #DEFAULT_SEPARATOR_TEXT}.
      *
@@ -168,6 +188,16 @@ public class ElementsSummary<E>
         this.separatorText = separatorText;
         firePropertyChange("separatorText", oldSeparatorText, this.separatorText);
         updateComponents();
+    }
+
+    /**
+     * Return the separator icon between elements.
+     *
+     * @return the separator icon between elements
+     */
+    public final Icon getSeparatorIcon()
+    {
+        return separatorIcon;
     }
 
     /**
@@ -187,6 +217,16 @@ public class ElementsSummary<E>
     }
 
     /**
+     * Return the more elements indicator text.
+     *
+     * @return the more elements indicator text
+     */
+    public final String getIndicatorText()
+    {
+        return indicatorText;
+    }
+
+    /**
      * Set the more elements indicator text to <code>indicatorText</code>.  Defaults to
      * {@link #DEFAULT_INDICATOR_TEXT}.
      *
@@ -200,6 +240,16 @@ public class ElementsSummary<E>
         this.indicatorText = indicatorText;
         firePropertyChange("indicatorText", oldIndicatorText, this.indicatorText);
         updateComponents();
+    }
+
+    /**
+     * Return the more elements indicator icon.
+     *
+     * @return the more elements indicator icon
+     */
+    public final Icon getIndicatorIcon()
+    {
+        return indicatorIcon;
     }
 
     /**

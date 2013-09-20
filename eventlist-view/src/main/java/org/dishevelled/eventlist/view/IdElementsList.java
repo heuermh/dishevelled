@@ -43,6 +43,9 @@ public class IdElementsList<E>
     /** Identifiable list cell renderer. */
     private final IdListCellRenderer listCellRenderer;
 
+    /** Default icon size, {@link TangoProject#EXTRA_SMALL}. */
+    public static final IconSize DEFAULT_ICON_SIZE = TangoProject.EXTRA_SMALL;
+
 
     /**
      * Create a new elements view with the specified model.
@@ -52,7 +55,7 @@ public class IdElementsList<E>
     public IdElementsList(final EventList<E> model)
     {
         super(model);
-        listCellRenderer = new IdListCellRenderer(TangoProject.EXTRA_SMALL);
+        listCellRenderer = new IdListCellRenderer(DEFAULT_ICON_SIZE);
         getList().setCellRenderer(listCellRenderer);
     }
 
@@ -68,10 +71,8 @@ public class IdElementsList<E>
         getLabel().setText(labelText);
     }
 
-    // todo:  add actions to contextMenu, etc.
 
 
-    // todo:  bound?
     /**
      * Return the icon size for this identifiable elements list.
      *
@@ -84,11 +85,16 @@ public class IdElementsList<E>
 
     /**
      * Set the icon size for this identifiable elements list to <code>iconSize</code>.
+     * Defaults to {@link #DEFAULT_ICON_SIZE}.
+     *
+     * <p>This is a bound property.</p>
      *
      * @param iconSize icon size for this identifiable elements list, must not be null
      */
     public final void setIconSize(final IconSize iconSize)
     {
+        IconSize oldIconSize = listCellRenderer.getIconSize();
         listCellRenderer.setIconSize(iconSize);
+        firePropertyChange("iconSize", oldIconSize, iconSize);
     }
 }
