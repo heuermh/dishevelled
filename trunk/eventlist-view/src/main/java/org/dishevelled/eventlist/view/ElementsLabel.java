@@ -108,6 +108,16 @@ public final class ElementsLabel<E>
     }
 
     /**
+     * Return the number of elements to display.
+     *
+     * @return the number of elements to display
+     */
+    public int getElementsToDisplay()
+    {
+        return elementsToDisplay;
+    }
+
+    /**
      * Set the number of elements to display to <code>elementsToDisplay</code>.  Defaults
      * to {@link #DEFAULT_ELEMENTS_TO_DISPLAY}.
      *
@@ -128,6 +138,16 @@ public final class ElementsLabel<E>
     }
 
     /**
+     * Return the separator between elements.
+     *
+     * @return the separator between elements
+     */
+    public String getSeparator()
+    {
+        return separator;
+    }
+
+    /**
      * Set the separator between elements to <code>separator</code>.  Defaults
      * to {@link #DEFAULT_SEPARATOR}.
      *
@@ -141,6 +161,16 @@ public final class ElementsLabel<E>
         this.separator = separator;
         firePropertyChange("separator", oldSeparator, this.separator);
         updateLabelText();
+    }
+
+    /**
+     * Return the more elements indicator.
+     *
+     * @return the more elements indicator
+     */
+    public String getIndicator()
+    {
+        return indicator;
     }
 
     /**
