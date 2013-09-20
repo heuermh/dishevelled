@@ -4,20 +4,20 @@
   <parent>
     <groupId>org.dishevelled</groupId>
     <artifactId>dsh-parent</artifactId>
-    <version>4-SNAPSHOT</version>
+    <version>4</version>
     <relativePath>../parent/pom.xml</relativePath>
   </parent>
   <artifactId>dsh-eventlist-view</artifactId>
   <packaging>jar</packaging>
   <name>dishevelled.org eventlist-view</name>
-  <version>2.0-SNAPSHOT</version>
+  <version>2.0</version>
   <description>Views for event lists.</description>
   <url>http://www.dishevelled.org/eventlist-view</url>
   <inceptionYear>2010</inceptionYear>
   <scm>
-    <connection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/eventlist-view</connection>
-    <developerConnection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/eventlist-view</developerConnection>
-    <url>https://svn.code.sf.net/p/dishevelled/code/trunk/eventlist-view</url>
+    <connection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/tags/dsh-eventlist-view-2.0</connection>
+    <developerConnection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/tags/dsh-eventlist-view-2.0</developerConnection>
+    <url>https://svn.code.sf.net/p/dishevelled/code/tags/dsh-eventlist-view-2.0</url>
   </scm>
   <distributionManagement>
     <site>
