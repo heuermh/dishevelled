@@ -55,12 +55,9 @@ final class AnnotateVariationConsequencesTaskFactory
     @Override
     public TaskIterator createTaskIterator()
     {
-        // hmm...
-        //FeatureService featureService = null;
-        //VariationService variationService = null;
-        //VariationConsequenceService variationConsequenceService = null;
-
-        AnnotateVariationConsequencesTask annotateVariationConsequencesTask = new AnnotateVariationConsequencesTask(model, model.getFeatureService(), model.getVariationService(), model.getVariationConsequenceService());
-        return new TaskIterator(annotateVariationConsequencesTask);
+        RetrieveFeaturesTask2 retrieveFeaturesTask = new RetrieveFeaturesTask2(model);
+        AddVariationsTask2 addVariationsTask = new AddVariationsTask2(model);
+        AnnotateVariationConsequencesTask2 annotateVariationConsequencesTask = new AnnotateVariationConsequencesTask2(model);
+        return new TaskIterator(retrieveFeaturesTask, addVariationsTask, annotateVariationConsequencesTask);
     }
 }
