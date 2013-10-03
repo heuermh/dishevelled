@@ -65,6 +65,7 @@ final class AddVariationsTask2
         taskMonitor.setTitle("Add variations");
         taskMonitor.setProgress(0.0d);
 
+        model.features().getReadWriteLock().writeLock().lock();
         model.variations().getReadWriteLock().writeLock().lock();
         try
         {
@@ -83,6 +84,7 @@ final class AddVariationsTask2
         }
         finally
         {
+            model.features().getReadWriteLock().writeLock().unlock();
             model.variations().getReadWriteLock().writeLock().unlock();
         }
         taskMonitor.setProgress(1.0d);

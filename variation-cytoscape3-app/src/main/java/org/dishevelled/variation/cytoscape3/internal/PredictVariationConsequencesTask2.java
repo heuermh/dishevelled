@@ -69,6 +69,8 @@ final class PredictVariationConsequencesTask2
         taskMonitor.setTitle("Predict variation consequences");
         taskMonitor.setProgress(0.0d);
 
+        model.features().getReadWriteLock().writeLock().lock();
+        model.variations().getReadWriteLock().writeLock().lock();
         model.variationConsequences().getReadWriteLock().writeLock().lock();
         try
         {
@@ -108,6 +110,8 @@ final class PredictVariationConsequencesTask2
         }
         finally
         {
+            model.features().getReadWriteLock().writeLock().unlock();
+            model.variations().getReadWriteLock().writeLock().unlock();
             model.variationConsequences().getReadWriteLock().writeLock().unlock();
         }
         taskMonitor.setProgress(1.0d);

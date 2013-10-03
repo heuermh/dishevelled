@@ -27,6 +27,7 @@ import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -77,7 +78,7 @@ final class SyntheticVariationService
                 alternateAlleles.add(sample(referenceAllele, alternateAlleles));
             }
             int position = feature.getStart() + random.nextInt(feature.getEnd() - feature.getStart());
-            variations.add(new Variation(genome.getSpecies(), genome.getReference(), null, referenceAllele, alternateAlleles, feature.getRegion(), position));
+            variations.add(new Variation(genome.getSpecies(), genome.getReference(), Collections.<String>emptyList(), referenceAllele, alternateAlleles, feature.getRegion(), position));
         }
         return variations;
     }
