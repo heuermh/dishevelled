@@ -23,6 +23,8 @@
 */
 package org.dishevelled.variation.cytoscape3.internal;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * Merge strategy.
  */
@@ -32,7 +34,7 @@ enum MergeStrategy
     RETAIN("Retain only existing values"),
 
     /** Replace all existing values with new values. */
-    REPLACE("Replace all existing values with new values")
+    REPLACE("Replace all existing values with new values"),
 
     /** Merge new values with existing values. */
     MERGE("Merge new values with existing values");

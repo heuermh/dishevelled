@@ -23,6 +23,8 @@
 */
 package org.dishevelled.variation.cytoscape3.internal;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
@@ -453,7 +455,7 @@ final class VariationModel
         {
             featuresByRegion.put(feature.getRegion(), feature);
         }
-        for (String region : featuresByName.keySet())
+        for (String region : featuresByRegion.keySet())
         {
             List<Interval> intervals = Lists.newArrayList(); // with expected size...
             for (Feature feature : featuresByRegion.get(region))
@@ -524,7 +526,19 @@ final class VariationModel
     Feature featureFor(final CyNode node)
     {
         checkNotNull(node);
-        nodesToFeatures.get(node);
+        return nodesToFeatures.get(node);
+    }
+
+    /**
+     * Return the node associated with the specified feature, if any.
+     *
+     * @param feature feature, must not be null
+     * @return the node associated with the specified feature, or <code>null</code> if no such node exists
+     */
+    CyNode nodeFor(final Feature feature)
+    {
+        checkNotNull(feature);
+        return nodesToFeatures.inverse().get(feature);
     }
 
     /**
