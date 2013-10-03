@@ -27,7 +27,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import static org.dishevelled.variation.cytoscape3.internal.VariationUtils.addConsequenceCounts;
 import static org.dishevelled.variation.cytoscape3.internal.VariationUtils.addCount;
-import static org.dishevelled.variation.cytoscape3.internal.VariationUtils.ensemblGeneIds;
 
 import java.util.List;
 
@@ -37,10 +36,8 @@ import org.cytoscape.work.AbstractTask;
 import org.cytoscape.work.TaskMonitor;
 
 import org.dishevelled.variation.Feature;
-import org.dishevelled.variation.FeatureService;
 import org.dishevelled.variation.Variation;
 import org.dishevelled.variation.VariationConsequence;
-import org.dishevelled.variation.VariationConsequencePredictionService;
 
 /**
  * Predict variation consequences task.
@@ -72,13 +69,14 @@ final class PredictVariationConsequencesTask2
         taskMonitor.setTitle("Predict variation consequences");
         taskMonitor.setProgress(0.0d);
 
-        List<CyNode> nodes = model.nodes();
         model.variationConsequences().getReadWriteLock().writeLock().lock();
         try
         {
+            // allocate 10% of progress to rebuilding trees
             model.rebuildTrees();
+            taskMonitor.setProgress(0.1d);
 
-            // allocate 90% of progress to variation filtering and consequence prediction
+            // allocate 80% of progress to variation filtering and consequence prediction
             for (int i = 0, size = model.variations().size(); i < size; i++)
             {
                 Variation variation = model.variations().get(i);
@@ -91,7 +89,7 @@ final class PredictVariationConsequencesTask2
                     model.add(hit, variationConsequences);
                     model.variationConsequences().addAll(variationConsequences);
                 }
-                taskMonitor.setProgress(0.1d + 0.9d * (i / (double) size));
+                taskMonitor.setProgress(0.1d + 0.8d * (i / (double) size));
             }
 
             // allocate 10% of progress to counts

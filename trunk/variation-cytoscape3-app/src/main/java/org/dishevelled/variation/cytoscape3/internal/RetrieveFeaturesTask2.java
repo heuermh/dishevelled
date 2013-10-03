@@ -29,6 +29,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.cytoscape.model.CyNode;
 
 import org.cytoscape.work.AbstractTask;
@@ -72,7 +73,7 @@ final class RetrieveFeaturesTask2
         //   foreach ensembl gene id per node
         //     retrieve feature for ensembl gene id
         //       if merge strategy is replace, remove existing node --> feature mappings and features from features and add new ones
-        //       else if merge startegy is merge, remove existing node --> feature mappings and features from features, perform the merge and re-add merged ones
+        //       else if merge strategy is merge, remove existing node --> feature mappings and features from features, perform the merge and re-add merged ones
         //       (note that removing feature mappings should also remove downstream variations and consequences, and should update counts in node table)
 
         List<CyNode> nodes = model.nodes();
@@ -84,7 +85,7 @@ final class RetrieveFeaturesTask2
                 CyNode node = nodes.get(i);
                 for (String ensemblGeneId : ensemblGeneIds(node, model.getNetwork(), model.getEnsemblGeneIdColumn()))
                 {
-                    if (ensemblGeneId != null)
+                    if (StringUtils.isNotBlank(ensemblGeneId))
                     {
                         taskMonitor.setStatusMessage("Retrieving genome feature for Ensembl Gene " + ensemblGeneId + "...");
                         Feature feature = model.getFeatureService().feature(model.getSpecies(), model.getReference(), ensemblGeneId);
@@ -101,7 +102,6 @@ final class RetrieveFeaturesTask2
         {
             model.features().getReadWriteLock().writeLock().unlock();
         }
-
         taskMonitor.setProgress(1.0d);
     }
 }

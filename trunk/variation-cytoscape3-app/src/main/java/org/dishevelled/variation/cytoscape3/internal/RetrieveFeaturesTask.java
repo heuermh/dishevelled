@@ -29,6 +29,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.cytoscape.model.CyNode;
 
 import org.cytoscape.work.AbstractTask;
@@ -83,7 +84,7 @@ final class RetrieveFeaturesTask
                 CyNode node = nodes.get(i);
                 for (String ensemblGeneId : ensemblGeneIds(node, model.getNetwork(), model.getEnsemblGeneIdColumn()))
                 {
-                    if (ensemblGeneId != null)
+                    if (StringUtils.isNotBlank(ensemblGeneId))
                     {
                         taskMonitor.setStatusMessage("Retrieving genome feature for Ensembl Gene " + ensemblGeneId + "...");
                         Feature feature = featureService.feature(model.getSpecies(), model.getReference(), ensemblGeneId);

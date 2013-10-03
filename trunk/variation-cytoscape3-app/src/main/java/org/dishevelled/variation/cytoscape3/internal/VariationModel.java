@@ -106,6 +106,18 @@ final class VariationModel
     /** List of variation consequences. */
     private final EventList<VariationConsequence> variationConsequences;
 
+    /** Bidirectional mapping of nodes to features. */
+    private final BiMap<CyNode, Feature> nodesToFeatures;
+
+    /** Bidirectional mapping of features to intervals. */
+    private final BiMap<Feature, Interval> featuresToIntervals;
+
+    /** Map of interval trees keyed by region name. */
+    private final Map<String, CenteredIntervalTree> intervalTrees;
+
+    /** Map of lists of variation consequences by feature. */
+    private final ListMultimap<Feature, VariationConsequence> featuresToConsequences;
+
     /** Property change support. */
     private final PropertyChangeSupport propertyChangeSupport;
 
@@ -139,6 +151,10 @@ final class VariationModel
         features = GlazedLists.eventList(new ArrayList<Feature>());
         variations = GlazedLists.eventList(new ArrayList<Variation>());
         variationConsequences = GlazedLists.eventList(new ArrayList<VariationConsequence>());
+        nodesToFeatures = HashBiMap.create();
+        featuresToIntervals = HashBiMap.create();
+        intervalTrees = Maps.newHashMap();
+        featuresToConsequences = ArrayListMultimap.create();
 
         propertyChangeSupport = new PropertyChangeSupport(this);
     }
@@ -438,12 +454,6 @@ final class VariationModel
 
     // indexes
 
-    private final BiMap<CyNode, Feature> nodesToFeatures = HashBiMap.create();
-    private final BiMap<Feature, Interval> featuresToIntervals = HashBiMap.create();
-    private final Map<String, CenteredIntervalTree> intervalTrees = Maps.newHashMap();
-    private final ListMultimap<Feature, VariationConsequence> featuresToConsequences = ArrayListMultimap.create();
-
-
     /**
      * Rebuild interval trees.
      */
@@ -482,6 +492,7 @@ final class VariationModel
         nodes.add(node);
         features.add(feature);
         nodesToFeatures.put(node, feature);
+        // or create column in node table for feature, add node back-reference to Feature
     }
 
     /**
@@ -552,7 +563,6 @@ final class VariationModel
         checkNotNull(feature);
         return featuresToConsequences.get(feature);
     }
-
 
     // property change support
 

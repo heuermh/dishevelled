@@ -24,23 +24,16 @@
 package org.dishevelled.variation.cytoscape3.internal;
 
 import static org.dishevelled.variation.cytoscape3.internal.VariationUtils.addCount;
-import static org.dishevelled.variation.cytoscape3.internal.VariationUtils.ensemblGeneIds;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
-
-import org.cytoscape.model.CyNode;
-
 import org.cytoscape.work.AbstractTask;
 import org.cytoscape.work.TaskMonitor;
 
 import org.dishevelled.variation.Feature;
-import org.dishevelled.variation.FeatureService;
 import org.dishevelled.variation.Variation;
-import org.dishevelled.variation.VariationService;
 
 /**
  * Add variations task.

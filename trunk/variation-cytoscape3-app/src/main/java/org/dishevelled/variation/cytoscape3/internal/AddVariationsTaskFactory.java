@@ -55,11 +55,8 @@ final class AddVariationsTaskFactory
     @Override
     public TaskIterator createTaskIterator()
     {
-        // hmm...
-        //FeatureService featureService = null;
-        //VariationService variationService = null;
-
-        AddVariationsTask addVariationsTask = new AddVariationsTask(model, model.getFeatureService(), model.getVariationService());
-        return new TaskIterator(addVariationsTask);
+        RetrieveFeaturesTask2 retrieveFeaturesTask = new RetrieveFeaturesTask2(model);
+        AddVariationsTask2 addVariationsTask = new AddVariationsTask2(model);
+        return new TaskIterator(retrieveFeaturesTask, addVariationsTask);
     }
 }
