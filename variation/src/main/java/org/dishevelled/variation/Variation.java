@@ -101,4 +101,34 @@ public final class Variation
     {
         return position;
     }
+
+    @Override
+    public String toString()
+    {
+        StringBuilder sb = new StringBuilder();
+        if (identifiers.size() == 1)
+        {
+            sb.append(identifiers.get(0));
+        }
+        else
+        {
+            sb.append(identifiers);
+        }
+        sb.append(" ");
+        sb.append(region);
+        sb.append(":");
+        sb.append(position);
+        sb.append(" ");
+        sb.append(referenceAllele);
+        sb.append(">");
+        if (alternateAlleles.size() == 1)
+        {
+            sb.append(alternateAlleles.get(0));
+        }
+        else
+        {
+            sb.append(alternateAlleles);
+        }
+        return sb.toString();
+    }
 }

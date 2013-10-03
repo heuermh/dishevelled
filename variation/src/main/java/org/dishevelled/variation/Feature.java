@@ -95,4 +95,18 @@ public final class Feature
     {
         return strand;
     }
+
+    @Override
+    public String toString()
+    {
+        StringBuilder sb = new StringBuilder();
+        sb.append(region);
+        sb.append(":");
+        sb.append(start);
+        sb.append("-");
+        sb.append(end);
+        sb.append(":");
+        sb.append(strand);
+        return sb.toString();
+    }
 }
