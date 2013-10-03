@@ -72,20 +72,19 @@ final class AddVariationsTask2
         taskMonitor.setTitle("Add variations");
         taskMonitor.setProgress(0.0d);
 
-        List<CyNode> nodes = model.nodes();
         model.variations().getReadWriteLock().writeLock().lock();
         try
         {
             for (int i = 0, size = model.features().size(); i < size; i++)
             {
                 Feature feature = model.features().get(i);
-                taskMonitor.setStatusMessage("Retrieving variations associated with Ensembl Gene " + ensemblGeneId + " feature " + feature);
+                taskMonitor.setStatusMessage("Retrieving variations associated with feature " + feature);
                 List<Variation> variations = model.getVariationService().variations(feature);
-                taskMonitor.setStatusMessage("Found " + variations.size() + " variations associated with Ensembl Gene " + ensemblGeneId);
+                taskMonitor.setStatusMessage("Found " + variations.size() + " variations associated with feature " + feature);
                 model.variations().addAll(variations);
 
                 // todo:  count doesn't consider existing variations
-                addCount(node, model.getNetwork(), "variation_count", variations.size());
+                addCount(model.nodeFor(feature), model.getNetwork(), "variation_count", variations.size());
                 taskMonitor.setProgress(i / (double) size);
             }
         }

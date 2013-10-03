@@ -59,7 +59,7 @@ final class PredictVariationConsequencesTask2
      *
      * @param model model, must not be null
      */
-    PredictVariationConsequencesTask(final VariationModel model)
+    PredictVariationConsequencesTask2(final VariationModel model)
     {
         checkNotNull(model);
         this.model = model;
@@ -86,10 +86,9 @@ final class PredictVariationConsequencesTask2
                 {
                     taskMonitor.setStatusMessage("Predicting variation consequences for variation " + variation + "...");
                     List<VariationConsequence> variationConsequences = model.getVariationConsequencePredictionService().predictConsequences(variation);
-                    featureIndex.add(hit, variationConsequences);
                     taskMonitor.setStatusMessage("Predicted " + variationConsequences.size() + " variation consequences for variation " + variation);
 
-                    model.add(feature, variationConsequences);
+                    model.add(hit, variationConsequences);
                     model.variationConsequences().addAll(variationConsequences);
                 }
                 taskMonitor.setProgress(0.1d + 0.9d * (i / (double) size));

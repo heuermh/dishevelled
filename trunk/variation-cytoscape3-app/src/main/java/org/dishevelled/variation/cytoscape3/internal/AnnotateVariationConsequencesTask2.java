@@ -76,7 +76,6 @@ final class AnnotateVariationConsequencesTask2
         taskMonitor.setTitle("Annotate variation consequences");
         taskMonitor.setProgress(0.0d);
 
-        List<CyNode> nodes = model.nodes();
         model.variationConsequences().getReadWriteLock().writeLock().lock();
         try
         {
@@ -84,19 +83,21 @@ final class AnnotateVariationConsequencesTask2
             {
                 Variation variation = model.variations().get(i);
 
-                taskMonitor.setStatusMessage("Retrieving variation consequences associated with variation " + variation.getIdentifiers() + "...");
+                taskMonitor.setStatusMessage("Retrieving variation consequences associated with variation " + variation + "...");
                 List<VariationConsequence> variationConsequences = model.getVariationConsequenceService().consequences(variation);
-                allVariationConsequences.addAll(variationConsequences);
-                taskMonitor.setStatusMessage("Found " + variationConsequences.size() + " variation consequences associated with variation " + variation.getIdentifiers());
+                // maybe this needs to be split into two loops as in predict task
+                //allVariationConsequences.addAll(variationConsequences);
+                taskMonitor.setStatusMessage("Found " + variationConsequences.size() + " variation consequences associated with variation " + variation);
 
                 //model.add(feature, variationConsequences);
                 model.variationConsequences().addAll(variationConsequences);
 
-                // todo:  counts don't consider existing variations or variationConsequences
-                addCount(node, model.getNetwork(), "variation_consequence_count", allVariationConsequences.size());
-                addConsequenceCounts(node, model.getNetwork(), allVariationConsequences);
+                // todo:  counts don't consider existing variationConsequences
+                //addCount(model.nodeFor(feature), model.getNetwork(), "variation_consequence_count", allVariationConsequences.size());
+                //addConsequenceCounts(model.nodeFor(feature), model.getNetwork(), allVariationConsequences);
+
+                taskMonitor.setProgress(i / (double) size);
             }
-            taskMonitor.setProgress(i / (double) size);
         }
         finally
         {
