@@ -27,9 +27,18 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import ca.odell.glazedlists.EventList;
 import ca.odell.glazedlists.GlazedLists;
+
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.BiMap;
+import com.google.common.collect.HashBiMap;
+import com.google.common.collect.ListMultimap;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 
 import org.cytoscape.model.CyNetwork;
 import org.cytoscape.model.CyNode;
@@ -41,6 +50,10 @@ import org.dishevelled.variation.VariationService;
 import org.dishevelled.variation.VariationConsequence;
 import org.dishevelled.variation.VariationConsequenceService;
 import org.dishevelled.variation.VariationConsequencePredictionService;
+
+import org.dishevelled.variation.interval.Interval;
+
+import org.dishevelled.variation.interval.tree.CenteredIntervalTree;
 
 /**
  * Variation model.
@@ -420,6 +433,112 @@ final class VariationModel
     {
         return variationConsequences;
     }
+
+    // indexes
+
+    private final BiMap<CyNode, Feature> nodesToFeatures = HashBiMap.create();
+    private final BiMap<Feature, Interval> featuresToIntervals = HashBiMap.create();
+    private final Map<String, CenteredIntervalTree> intervalTrees = Maps.newHashMap();
+    private final ListMultimap<Feature, VariationConsequence> featuresToConsequences = ArrayListMultimap.create();
+
+
+    /**
+     * Rebuild interval trees.
+     */
+    void rebuildTrees()
+    {
+        intervalTrees.clear();
+        ListMultimap<String, Feature> featuresByRegion = ArrayListMultimap.create();
+        for (Feature feature : features)
+        {
+            featuresByRegion.put(feature.getRegion(), feature);
+        }
+        for (String region : featuresByName.keySet())
+        {
+            List<Interval> intervals = Lists.newArrayList(); // with expected size...
+            for (Feature feature : featuresByRegion.get(region))
+            {
+                Interval interval = Interval.closed(feature.getStart(), feature.getEnd());
+                intervals.add(interval);
+                featuresToIntervals.put(feature, interval);
+            }
+            intervalTrees.put(region, new CenteredIntervalTree(intervals));
+        }
+    }
+
+    /**
+     * Associate the specified feature with the specified node.
+     *
+     * @param node node, must not be null
+     * @param feature feature, must not be null
+     */
+    void add(final CyNode node, final Feature feature)
+    {
+        checkNotNull(node);
+        checkNotNull(feature);
+
+        nodes.add(node);
+        features.add(feature);
+        nodesToFeatures.put(node, feature);
+    }
+
+    /**
+     * Associate the specified feature with the specified list of variation consequences.
+     *
+     * @param feature feature, must not be null
+     * @param variationConsequences list of variation consequences, must not be null
+     */
+    void add(final Feature feature, final List<VariationConsequence> variationConsequences)
+    {
+        checkNotNull(feature);
+        checkNotNull(variationConsequences);
+
+        featuresToConsequences.putAll(feature, variationConsequences);
+    }
+
+    /**
+     * Return zero or more features that overlap with the specified variation.
+     *
+     * @param variation variation, must not be null
+     * @return zero or more features that overlap with the specified variation
+     */
+    Iterable<Feature> hit(final Variation variation)
+    {
+        checkNotNull(variation);
+
+        List<Feature> hits = Lists.newArrayList();
+        CenteredIntervalTree intervalTree = intervalTrees.get(variation.getRegion());
+        for (Interval interval : intervalTree.intersect(Interval.singleton(variation.getPosition())))
+        {
+            hits.add(featuresToIntervals.inverse().get(interval));
+        }
+        return hits;
+    }
+
+    /**
+     * Return the feature associated with the specified node, if any.
+     *
+     * @param node node, must not be null
+     * @return the feature associated with the specified node, or <code>null</code> if no such feature exists
+     */
+    Feature featureFor(final CyNode node)
+    {
+        checkNotNull(node);
+        nodesToFeatures.get(node);
+    }
+
+    /**
+     * Return the list of variation consequences associated with the specified feature, if any.
+     *
+     * @param feature feature, must not be null
+     * @return the list of variation consequences associated with the specified feature, or <code>null</code> if no such feature exists (or is it an empty list?)
+     */
+    List<VariationConsequence> consequencesFor(final Feature feature)
+    {
+        checkNotNull(feature);
+        return featuresToConsequences.get(feature);
+    }
+
 
     // property change support
 

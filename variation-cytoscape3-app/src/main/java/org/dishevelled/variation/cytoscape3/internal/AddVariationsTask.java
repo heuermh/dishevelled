@@ -132,7 +132,7 @@ final class AddVariationsTask
 
     /*
 
-      Ensembl REST feature endpoint doesn't provide proper variation feature type , all feature_type are 'variant'
+      Ensembl REST feature endpoint doesn't provide proper variation feature type, all feature_type are 'variant'
 
     private void addFeatureCounts(final CyNode node, final CyNetwork network, final List<Variation> variations)
     {
