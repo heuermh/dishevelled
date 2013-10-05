@@ -75,7 +75,7 @@ public final class VcfReaderTest
     @Test(expected=NullPointerException.class)
     public void testParseNullSupplier() throws IOException
     {
-        parse(null, parseListener);
+        parse((InputSupplier<StringReader>) null, parseListener);
     }
 
     @Test(expected=NullPointerException.class)
@@ -87,7 +87,7 @@ public final class VcfReaderTest
     @Test(expected=NullPointerException.class)
     public void testStreamNullSupplier() throws IOException
     {
-        stream(null, streamListener);
+        stream((InputSupplier<StringReader>) null, streamListener);
     }
 
     @Test(expected=NullPointerException.class)
