@@ -81,10 +81,10 @@ final class VariationConsequenceView
 
     // todo:  need to add node, feature, variation columns
     /** Table property names. */
-    private static final String[] PROPERTY_NAMES = { "species", "reference", "region", "position", "identifiers", "referenceAllele", "alternateAllele", "sequenceOntologyTerm" };
+    private static final String[] PROPERTY_NAMES = { "species", "reference", "region", "start", "end", "identifiers", "referenceAllele", "alternateAllele", "sequenceOntologyTerm" };
 
     /** Table column labels. */
-    private static final String[] COLUMN_LABELS = { "Species", "Reference", "Region", "Position", "Identifiers", "Ref", "Alt", "Consequence" };
+    private static final String[] COLUMN_LABELS = { "Species", "Reference", "Region", "Start", "End", "Identifiers", "Ref", "Alt", "Consequence" };
 
     /** Table format. */
     private static final TableFormat<VariationConsequence> TABLE_FORMAT = GlazedLists.tableFormat(VariationConsequence.class, PROPERTY_NAMES, COLUMN_LABELS);
