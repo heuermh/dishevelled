@@ -76,7 +76,8 @@ final class EnsemblRestClientVariationService
                                          variation.getReferenceAllele(),
                                          variation.getAlternateAlleles(),
                                          variation.getLocation().getName(),
-                                         variation.getLocation().getStart()));
+                                         variation.getLocation().getStart(),
+                                         variation.getLocation().getEnd()));
             }
         return variations;
     }

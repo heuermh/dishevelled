@@ -99,7 +99,8 @@ final class EnsemblRestClientVariationConsequenceService
                                         alternateAllele,
                                         consequenceTerm,
                                         variation.getRegion(),
-                                        variation.getPosition()));
+                                        variation.getStart(),
+                                        variation.getEnd()));
                             }
                         }
                     }

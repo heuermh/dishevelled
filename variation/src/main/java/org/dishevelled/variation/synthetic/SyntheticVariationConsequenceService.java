@@ -32,7 +32,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import com.google.common.collect.ImmutableList;
 import com.google.inject.Inject;
 
 import org.dishevelled.variation.Variation;
@@ -76,13 +75,13 @@ final class SyntheticVariationConsequenceService
             String consequenceTerm = sample();
             consequences.add(new VariationConsequence(variation.getSpecies(), variation.getReference(), variation.getIdentifiers(),
                     variation.getReferenceAllele(), alternateAllele, consequenceTerm,
-                    variation.getRegion(), variation.getPosition()));
+                    variation.getRegion(), variation.getStart(), variation.getEnd()));
 
             if (random.nextDouble() < 0.25)
             {
                 consequences.add(new VariationConsequence(variation.getSpecies(), variation.getReference(), variation.getIdentifiers(),
                         variation.getReferenceAllele(), alternateAllele, sample(consequenceTerm),
-                        variation.getRegion(), variation.getPosition()));
+                        variation.getRegion(), variation.getStart(), variation.getEnd()));
             }
         }
         return consequences;

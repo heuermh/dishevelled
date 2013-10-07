@@ -95,7 +95,7 @@ public final class SnpEffVcfVariationConsequenceServiceTest
     {
         Files.write(Resources.toByteArray(getClass().getResource("ALL.chr22.phase1_release_v3.20101123.snps_indels_svs.genotypes-2-indv-thin-20000bp-trim.eff.vcf")), file);
 
-        Variation variation = new Variation(species, reference, ImmutableList.of("rs193189309"), "C", ImmutableList.of("T"), "22", 17452052);
+        Variation variation = new Variation(species, reference, ImmutableList.of("rs193189309"), "C", ImmutableList.of("T"), "22", 17452052 - 1, 17452052);
         boolean found = false;
         for (VariationConsequence consequence : consequenceService.consequences(variation))
         {
@@ -110,7 +110,8 @@ public final class SnpEffVcfVariationConsequenceServiceTest
                 assertEquals("T", consequence.getAlternateAllele());
                 assertTrue("INTRON".equals(consequence.getSequenceOntologyTerm()) || "UPSTREAM".equals(consequence.getSequenceOntologyTerm()));
                 assertEquals("22", consequence.getRegion());
-                assertEquals(17452052, consequence.getPosition());
+                assertEquals(17452052 - 1, consequence.getStart());
+                assertEquals(17452052, consequence.getEnd());
 
                 found = true;
             }
@@ -123,7 +124,7 @@ public final class SnpEffVcfVariationConsequenceServiceTest
     {
         Files.write(Resources.toByteArray(getClass().getResource("ALL.chr22.phase1_release_v3.20101123.snps_indels_svs.genotypes-2-indv-thin-20000bp-trim.eff-so.vcf")), file);
 
-        Variation variation = new Variation(species, reference, ImmutableList.of("rs193189309"), "C", ImmutableList.of("T"), "22", 17452052);
+        Variation variation = new Variation(species, reference, ImmutableList.of("rs193189309"), "C", ImmutableList.of("T"), "22", 17452052 - 1, 17452052);
         boolean found = false;
         for (VariationConsequence consequence : consequenceService.consequences(variation))
         {
@@ -138,7 +139,8 @@ public final class SnpEffVcfVariationConsequenceServiceTest
                 assertEquals("T", consequence.getAlternateAllele());
                 assertEquals("22", consequence.getRegion());
                 assertTrue("intron_variant".equals(consequence.getSequenceOntologyTerm()) || "upstream_gene_variant".equals(consequence.getSequenceOntologyTerm()));
-                assertEquals(17452052, consequence.getPosition());
+                assertEquals(17452052 - 1, consequence.getStart());
+                assertEquals(17452052, consequence.getEnd());
 
                 found = true;
             }
@@ -151,7 +153,7 @@ public final class SnpEffVcfVariationConsequenceServiceTest
     {
         Files.write(Resources.toByteArray(getClass().getResource("gatk-2.6-example.eff.vcf")), file);
 
-        Variation variation = new Variation(species, reference, ImmutableList.of("rs66469215"), "C", ImmutableList.of("CA"), "6", 7542148);
+        Variation variation = new Variation(species, reference, ImmutableList.of("rs66469215"), "C", ImmutableList.of("CA"), "6", 7542148 - 1, 7542148);
         int count = 0;
         for (VariationConsequence consequence : consequenceService.consequences(variation))
         {
@@ -165,7 +167,8 @@ public final class SnpEffVcfVariationConsequenceServiceTest
             assertEquals("CA", consequence.getAlternateAllele());
             assertEquals("6", consequence.getRegion());
             assertTrue("FRAME_SHIFT".equals(consequence.getSequenceOntologyTerm()) || "UPSTREAM".equals(consequence.getSequenceOntologyTerm()));
-            assertEquals(7542148, consequence.getPosition());
+            assertEquals(7542148 - 1, consequence.getStart());
+            assertEquals(7542148, consequence.getEnd());
 
             count++;
         }
