@@ -30,6 +30,8 @@ import static org.dishevelled.variation.cytoscape3.internal.VariationUtils.addCo
 
 import java.util.List;
 
+import ca.odell.glazedlists.util.concurrent.Lock;
+
 import org.cytoscape.model.CyNode;
 
 import org.cytoscape.work.AbstractTask;
@@ -69,9 +71,13 @@ final class PredictVariationConsequencesTask2
         taskMonitor.setTitle("Predict variation consequences");
         taskMonitor.setProgress(0.0d);
 
-        model.features().getReadWriteLock().writeLock().lock();
-        model.variations().getReadWriteLock().writeLock().lock();
-        model.variationConsequences().getReadWriteLock().writeLock().lock();
+        Lock featuresReadLock = model.features().getReadWriteLock().writeLock();
+        Lock variationsReadLock = model.variations().getReadWriteLock().readLock();
+        Lock variationConsequencesWriteLock = model.variationConsequences().getReadWriteLock().writeLock();
+
+        featuresReadLock.lock();
+        variationsReadLock.lock();
+        variationConsequencesWriteLock.lock();
         try
         {
             // allocate 10% of progress to rebuilding trees
@@ -110,9 +116,9 @@ final class PredictVariationConsequencesTask2
         }
         finally
         {
-            model.features().getReadWriteLock().writeLock().unlock();
-            model.variations().getReadWriteLock().writeLock().unlock();
-            model.variationConsequences().getReadWriteLock().writeLock().unlock();
+            featuresReadLock.unlock();
+            variationsReadLock.unlock();
+            variationConsequencesWriteLock.unlock();
         }
         taskMonitor.setProgress(1.0d);
     }
