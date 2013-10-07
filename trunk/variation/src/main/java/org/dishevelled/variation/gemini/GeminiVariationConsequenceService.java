@@ -70,7 +70,7 @@ final class GeminiVariationConsequenceService implements VariationConsequenceSer
         checkArgument(reference.equals(variation.getReference()));
 
         // todo:  requires GEMINI variant_id primary key as identifier
-        ProcessBuilder processBuilder = new ProcessBuilder("gemini", "query", "-q", "select v.rs_ids, v.ref, v.alt, vi.impact, v.chrom, v.start from variants v, variant_impacts vi where vi.variant_id = v.variant_id and v.variant_id=" + variation.getIdentifiers(), databaseName);
+        ProcessBuilder processBuilder = new ProcessBuilder("gemini", "query", "-q", "select v.rs_ids, v.ref, v.alt, vi.impact, v.chrom, v.start, v.end from variants v, variant_impacts vi where vi.variant_id = v.variant_id and v.variant_id=" + variation.getIdentifiers(), databaseName);
 
         BufferedReader reader = null;
         List<VariationConsequence> variationConsequences = new ArrayList<VariationConsequence>();
@@ -94,9 +94,10 @@ final class GeminiVariationConsequenceService implements VariationConsequenceSer
                 // todo: impact may need to be mapped to sequence ontology
                 String sequenceOntologyTerm = tokens[3];
                 String name = tokens[4];
-                int position = Integer.parseInt(tokens[5]);
+                int start = Integer.parseInt(tokens[5]);
+                int end = Integer.parseInt(tokens[6]);
 
-                variationConsequences.add(new VariationConsequence(species, reference, identifiers, ref, alt, sequenceOntologyTerm, name, position));
+                variationConsequences.add(new VariationConsequence(species, reference, identifiers, ref, alt, sequenceOntologyTerm, name, start, end));
             }
         }
         catch (IOException e)

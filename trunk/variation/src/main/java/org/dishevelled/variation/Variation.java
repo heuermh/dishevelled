@@ -40,7 +40,8 @@ public final class Variation
     private final String referenceAllele;
     private final List<String> alternateAlleles;
     private final String region;
-    private final int position;
+    private final int start;
+    private final int end;
 
     public Variation(final String species,
                      final String reference,
@@ -48,7 +49,8 @@ public final class Variation
                      final String referenceAllele,
                      final List<String> alternateAlleles,
                      final String region,
-                     final int position)
+                     final int start,
+                     final int end)
     {
         checkNotNull(species);
         checkNotNull(reference);
@@ -63,7 +65,8 @@ public final class Variation
         this.referenceAllele = referenceAllele;
         this.alternateAlleles = ImmutableList.copyOf(alternateAlleles);
         this.region = region;
-        this.position = position;
+        this.start = start;
+        this.end = end;
     }
 
 
@@ -97,9 +100,14 @@ public final class Variation
         return region;
     }
 
-    public int getPosition()
+    public int getStart()
     {
-        return position;
+        return start;
+    }
+
+    public int getEnd()
+    {
+        return end;
     }
 
     @Override
@@ -117,7 +125,9 @@ public final class Variation
         sb.append(" ");
         sb.append(region);
         sb.append(":");
-        sb.append(position);
+        sb.append(start);
+        sb.append("-");
+        sb.append(end);
         sb.append(" ");
         sb.append(referenceAllele);
         sb.append(">");

@@ -75,7 +75,7 @@ final class SyntheticVariationConsequencePredictionService
         {
             consequences.add(new VariationConsequence(variation.getSpecies(), variation.getReference(), variation.getIdentifiers(),
                                                       variation.getReferenceAllele(), alternateAllele, consequenceTerm,
-                                                      variation.getRegion(), variation.getPosition()));
+                                                      variation.getRegion(), variation.getStart(), variation.getEnd()));
         }
         return consequences;
     }

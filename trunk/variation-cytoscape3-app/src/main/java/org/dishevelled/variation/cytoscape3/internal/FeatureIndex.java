@@ -75,6 +75,7 @@ final class FeatureIndex
             List<Interval> intervals = Lists.newArrayList(); // with expected size...
             for (Feature feature : featuresByName.get(chr))
             {
+                // todo:  confirm that feature intervals in Ensembl are closed
                 Interval interval = Interval.closed(feature.getStart(), feature.getEnd());
                 intervals.add(interval);
                 featuresToIntervals.put(feature, interval);
@@ -99,7 +100,7 @@ final class FeatureIndex
     {
         List<Feature> hits = Lists.newArrayList();
         CenteredIntervalTree intervalTree = intervalTrees.get(variation.getRegion());
-        for (Interval interval : intervalTree.intersect(Interval.singleton(variation.getPosition())))
+        for (Interval interval : intervalTree.intersect(Interval.closedOpen(variation.getStart(), variation.getEnd())))
         {
             hits.add(featuresToIntervals.inverse().get(interval));
         }

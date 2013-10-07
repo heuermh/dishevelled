@@ -42,7 +42,8 @@ public final class VariationConsequence
     private final String alternateAllele;
     private final String sequenceOntologyTerm;
     private final String region; // seq_region_name
-    private final int position;
+    private final int start;
+    private final int end;
 
     public VariationConsequence(final String species,
                                 final String reference,
@@ -51,7 +52,8 @@ public final class VariationConsequence
                                 final String alternateAllele,
                                 final String sequenceOntologyTerm,
                                 final String region,
-                                final int position)
+                                final int start,
+                                final int end)
     {
         checkNotNull(species);
         checkNotNull(reference);
@@ -68,7 +70,8 @@ public final class VariationConsequence
         this.alternateAllele = alternateAllele;
         this.sequenceOntologyTerm = sequenceOntologyTerm;
         this.region = region;
-        this.position = position;
+        this.start = start;
+        this.end = end;
     }
 
     public String getSpecies()
@@ -106,8 +109,13 @@ public final class VariationConsequence
         return region;
     }
 
-    public int getPosition()
+    public int getStart()
     {
-        return position;
+        return start;
+    }
+
+    public int getEnd()
+    {
+        return end;
     }
 }

@@ -70,7 +70,7 @@ final class GeminiVariationService implements VariationService
         checkArgument(reference.equals(feature.getReference()));
 
         String query = feature.getRegion() + ":" + feature.getStart() + "-" + feature.getEnd();
-        ProcessBuilder processBuilder = new ProcessBuilder("gemini", "region", "--reg", query, "--columns", "variant_id, rs_ids, ref, alt, chrom, start", databaseName);
+        ProcessBuilder processBuilder = new ProcessBuilder("gemini", "region", "--reg", query, "--columns", "variant_id, rs_ids, ref, alt, chrom, start, end", databaseName);
 
         BufferedReader reader = null;
         List<Variation> variations = new ArrayList<Variation>();
@@ -95,9 +95,10 @@ final class GeminiVariationService implements VariationService
                 // todo: might have to collapse multiple rows with same ref?
                 List<String> alt = ImmutableList.of(tokens[3]);
                 String region = tokens[4];
-                int position = Integer.parseInt(tokens[5]);
+                int start = Integer.parseInt(tokens[5]);
+                int end = Integer.parseInt(tokens[6]);
 
-                variations.add(new Variation(species, reference, identifiers, ref, alt, region, position));
+                variations.add(new Variation(species, reference, identifiers, ref, alt, region, start, end));
             }
         }
         catch (IOException e)

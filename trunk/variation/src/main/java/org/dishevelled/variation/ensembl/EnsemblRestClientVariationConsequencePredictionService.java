@@ -72,7 +72,7 @@ final class EnsemblRestClientVariationConsequencePredictionService
         checkNotNull(variation);
         checkArgument(this.species.equals(species));
         checkArgument(this.reference.equals(reference));
-        String region = variation.getRegion() + ":" + variation.getPosition() + "-" + variation.getPosition();
+        String region = variation.getRegion() + ":" + variation.getStart() + "-" + variation.getEnd();
 
         List<VariationConsequence> consequences = new ArrayList<VariationConsequence>();
         for (String alternateAllele : variation.getAlternateAlleles())
@@ -101,7 +101,8 @@ final class EnsemblRestClientVariationConsequencePredictionService
                                                                           alt,
                                                                           consequenceTerm,
                                                                           variation.getRegion(),
-                                                                          variation.getPosition()));
+                                                                          variation.getStart(),
+                                                                          variation.getEnd()));
 
                             }
                         }

@@ -107,7 +107,8 @@ public final class VcfVariationServiceTest
                 assertEquals(1, variation.getAlternateAlleles().size());
                 assertEquals("A", variation.getAlternateAlleles().get(0));
                 assertEquals("22", variation.getRegion());
-                assertEquals(16162219, variation.getPosition());
+                assertEquals(16162219 - 1, variation.getStart());
+                assertEquals(16162219, variation.getEnd());
 
                 found = true;
             }

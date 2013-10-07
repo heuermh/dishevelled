@@ -88,9 +88,11 @@ public final class VcfVariationService implements VariationService
                             List<String> alt = ImmutableList.copyOf(record.getAlt());
                             String region = record.getChrom();
                             int position = record.getPos();
+                            int start = position - 1;
+                            int end = start + ref.length();
 
                             // todo: only add variation if sample matches some query and any genotype is not reference; modify alt alleles if so
-                            variations.add(new Variation(species, reference, identifiers, ref, alt, region, position));
+                            variations.add(new Variation(species, reference, identifiers, ref, alt, region, start, end));
                         }
                     }
                 });

@@ -470,6 +470,7 @@ final class VariationModel
             List<Interval> intervals = Lists.newArrayList(); // with expected size...
             for (Feature feature : featuresByRegion.get(region))
             {
+                // todo:  confirm that feature intervals in Ensembl are closed
                 Interval interval = Interval.closed(feature.getStart(), feature.getEnd());
                 intervals.add(interval);
                 featuresToIntervals.put(feature, interval);
@@ -521,7 +522,7 @@ final class VariationModel
 
         List<Feature> hits = Lists.newArrayList();
         CenteredIntervalTree intervalTree = intervalTrees.get(variation.getRegion());
-        for (Interval interval : intervalTree.intersect(Interval.singleton(variation.getPosition())))
+        for (Interval interval : intervalTree.intersect(Interval.closedOpen(variation.getStart(), variation.getEnd())))
         {
             hits.add(featuresToIntervals.inverse().get(interval));
         }
