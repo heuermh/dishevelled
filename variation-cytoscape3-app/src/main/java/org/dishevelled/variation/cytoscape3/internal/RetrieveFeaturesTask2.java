@@ -29,6 +29,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.util.List;
 
+import ca.odell.glazedlists.util.concurrent.Lock;
+
 import org.apache.commons.lang.StringUtils;
 import org.cytoscape.model.CyNode;
 
@@ -76,13 +78,13 @@ final class RetrieveFeaturesTask2
         //       else if merge strategy is merge, remove existing node --> feature mappings and features from features, perform the merge and re-add merged ones
         //       (note that removing feature mappings should also remove downstream variations and consequences, and should update counts in node table)
 
-        List<CyNode> nodes = model.nodes();
-        model.features().getReadWriteLock().writeLock().lock();
+        final Lock featuresWriteLock = model.features().getReadWriteLock().writeLock();
+        featuresWriteLock.lock();
         try
         {
-            for (int i = 0, size = nodes.size(); i < size; i++)
+            for (int i = 0, size = model.nodes().size(); i < size; i++)
             {
-                CyNode node = nodes.get(i);
+                CyNode node = model.nodes().get(i);
                 for (String ensemblGeneId : ensemblGeneIds(node, model.getNetwork(), model.getEnsemblGeneIdColumn()))
                 {
                     if (StringUtils.isNotBlank(ensemblGeneId))
@@ -100,7 +102,7 @@ final class RetrieveFeaturesTask2
         }
         finally
         {
-            model.features().getReadWriteLock().writeLock().unlock();
+            featuresWriteLock.unlock();
         }
         taskMonitor.setProgress(1.0d);
     }
