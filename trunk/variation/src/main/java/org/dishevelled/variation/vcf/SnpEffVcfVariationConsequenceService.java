@@ -130,7 +130,7 @@ public final class SnpEffVcfVariationConsequenceService implements VariationCons
                     // todo: not sure this is a valid comparison
                     private boolean sameVariation(final Variation variation, final VcfRecord record)
                     {
-                        return variation.getRegion().equals(record.getChrom()) && variation.getStart() == record.getPos();
+                        return variation.getRegion().equals(record.getChrom()) && (variation.getStart() == (record.getPos() - 1));
                     }
                 });
         }
