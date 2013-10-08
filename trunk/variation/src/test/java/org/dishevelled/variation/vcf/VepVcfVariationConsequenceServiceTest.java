@@ -38,6 +38,7 @@ import org.dishevelled.variation.Variation;
 import org.dishevelled.variation.VariationConsequence;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -104,6 +105,39 @@ public final class VepVcfVariationConsequenceServiceTest
                 but note that neither sample has the alt allele
 
 22	17452052	rs193189309	C	T	100	PASS	CSQ=T|ENSG00000215568|ENST00000520505|Transcript|upstream_gene_variant|||||||2779|,T|ENSG00000215568|ENST00000465611|Transcript|intron_variant&NMD_transcript_variant||||||||,T|ENSG00000215568|ENST00000400588|Transcript|intron_variant||||||||YES,T|ENSG00000215568|ENST00000523144|Transcript|intron_variant&nc_transcript_variant||||||||	GT:DS:GL	0|0:0.000:-0.11,-0.64,-4.10	0|0:0.000:-0.03,-1.17,-5.00
+             */
+            assertEquals(species, consequence.getSpecies());
+            assertEquals(reference, consequence.getReference());
+            assertNotNull(consequence.getIdentifiers());
+            assertTrue(consequence.getIdentifiers().contains("rs193189309"));
+            assertEquals("C", consequence.getReferenceAllele());
+            assertEquals("T", consequence.getAlternateAllele());
+            assertTrue("intron_variant".equals(consequence.getSequenceOntologyTerm()));
+            assertEquals("22", consequence.getRegion());
+            assertEquals(17452052 - 1, consequence.getStart());
+            assertEquals(17452052, consequence.getEnd());
+
+            count++;
+        }
+        assertEquals(1, count);
+    }
+
+    //@Test
+    @Ignore
+    public void testConsequences_vep_for_gemini() throws Exception
+    {
+        Files.write(Resources.toByteArray(getClass().getResource("ALL.chr22.phase1_release_v3.20101123.snps_indels_svs.genotypes-2-indv-thin-20000bp-trim.vep-for-gemini.vcf")), file);
+
+        Variation variation = new Variation(species, reference, ImmutableList.of("rs193189309"), "C", ImmutableList.of("T"), "22", 17452052 - 1, 17452052);
+        int count = 0;
+        for (VariationConsequence consequence : consequenceService.consequences(variation))
+        {
+            /*
+
+              this is missing the canonical attribute
+
+22	17452052	rs193189309	C	T	100	PASS	CSQ=upstream_gene_variant|||ENSG00000215568||ENST00000520505|||,intron_variant&NMD_transcript_variant|||ENSG00000215568||ENST00000465611|||,intron_variant|||ENSG00000215568||ENST00000400588|||,intron_variant&nc_transcript_variant|||ENSG00000215568||ENST00000523144|||	GT:DS:GL	0|0:0.000:-0.11,-0.64,-4.10	0|0:0.000:-0.03,-1.17,-5.00
+
              */
             assertEquals(species, consequence.getSpecies());
             assertEquals(reference, consequence.getReference());
