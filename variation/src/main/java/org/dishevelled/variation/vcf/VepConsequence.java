@@ -70,6 +70,20 @@ final class VepConsequence
     {
         List<String> values = Splitter.on("|").splitToList(token);
         String allele = values.get(0);
+        /*
+
+          todo:  the format may vary
+
+ALL.chr22.phase1_release_v3.20101123.snps_indels_svs.genotypes-2-indv-thin-20000bp-trim.vep.vcf:
+
+##INFO=<ID=CSQ,Number=.,Type=String,Description="Consequence type as predicted by VEP. Format: Allele|Gene|Feature|Feature_type|Consequence|cDNA_position|CDS_position|Protein_position|Amino_acids|Codons|Existing_variation|DISTANCE|CANONICAL">
+
+
+ALL.chr22.phase1_release_v3.20101123.snps_indels_svs.genotypes-2-indv-thin-20000bp-trim.vep-for-gemini.vcf:
+
+##INFO=<ID=CSQ,Number=.,Type=String,Description="Consequence type as predicted by VEP. Format: Consequence|Codons|Amino_acids|Gene|HGNC|Feature|EXON|PolyPhen|SIFT">
+
+         */
         String[] consequenceTerms = values.get(4).split("&");
         boolean canonical = "YES".equals(values.get(12));
 
