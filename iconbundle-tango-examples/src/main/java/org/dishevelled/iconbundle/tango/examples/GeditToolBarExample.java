@@ -30,6 +30,7 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 
+import javax.swing.AbstractAction;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.Icon;
@@ -226,6 +227,16 @@ public final class GeditToolBarExample
             }
         };
 
+    /** Exit action. */
+    private final AbstractAction exit = new AbstractAction("Exit")
+            {
+                /** {@inheritDoc} */
+                public void actionPerformed(final ActionEvent event)
+                {
+                    System.exit(0);
+                }
+            };
+
 
     /**
      * Create a new gedit tool bar example.
@@ -266,6 +277,8 @@ public final class GeditToolBarExample
         menuBar.add(tools);
         menuBar.add(documents);
         menuBar.add(help);
+
+        file.add(exit);
 
         JMenuItem noItemsFound = new JMenuItem("No items found");
         noItemsFound.setEnabled(false);
