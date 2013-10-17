@@ -48,6 +48,7 @@ import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTree;
+import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 
 import javax.swing.event.TreeSelectionEvent;
@@ -287,8 +288,8 @@ public final class TangoExample
 
         final IdLabel large = new IdLabel(selection);
         large.setIconSize(TangoProject.LARGE);
-        large.setHorizontalTextPosition(IdLabel.CENTER);
-        large.setVerticalTextPosition(IdLabel.BOTTOM);
+        large.setHorizontalTextPosition(SwingConstants.CENTER);
+        large.setVerticalTextPosition(SwingConstants.BOTTOM);
 
         addPropertyChangeListener("selection", new PropertyChangeListener()
             {
@@ -302,8 +303,8 @@ public final class TangoExample
 
         final IdLabel huge = new IdLabel(selection);
         huge.setIconSize(IconSize.DEFAULT_128X128);
-        huge.setHorizontalTextPosition(IdLabel.CENTER);
-        huge.setVerticalTextPosition(IdLabel.BOTTOM);
+        huge.setHorizontalTextPosition(SwingConstants.CENTER);
+        huge.setVerticalTextPosition(SwingConstants.BOTTOM);
 
         addPropertyChangeListener("selection", new PropertyChangeListener()
             {
@@ -364,7 +365,7 @@ public final class TangoExample
         toolBar.displayIconsAndText();
 
         final JPopupMenu toolBarContextMenu = new JPopupMenu();
-        for (Iterator i = toolBar.getDisplayActions().iterator(); i.hasNext(); )
+        for (Iterator<?> i = toolBar.getDisplayActions().iterator(); i.hasNext(); )
         {
             toolBarContextMenu.add((Action) i.next());
         }
