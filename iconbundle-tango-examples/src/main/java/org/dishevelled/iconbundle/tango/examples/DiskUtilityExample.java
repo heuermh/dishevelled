@@ -291,7 +291,7 @@ public final class DiskUtilityExample
      */
     private JSplitPane createVolumePanel()
     {
-        JList volumes = new JList(new Object[] { volume });
+        JList<Object> volumes = new JList<Object>(new Object[] { volume });
         volumes.setCellRenderer(new IdListCellRenderer());
         JScrollPane volumesScrollPane = new JScrollPane(volumes);
         volumesScrollPane.setMinimumSize(new Dimension(200, 400));
@@ -318,7 +318,7 @@ public final class DiskUtilityExample
      *
      * @return the first aid panel
      */
-    private JPanel createFirstAidPanel()
+    private static JPanel createFirstAidPanel()
     {
         LabelFieldPanel firstAidPanel = new LabelFieldPanel();
         firstAidPanel.setBorder(new EmptyBorder(12, 12, 12, 12));
@@ -346,7 +346,7 @@ public final class DiskUtilityExample
         showDetailsPanel.add(clearHistory);
 
         firstAidPanel.addField(showDetailsPanel);
-        JList emptyList = new JList();
+        JList<Object> emptyList = new JList<Object>();
         emptyList.setVisibleRowCount(6);
         JScrollPane emptyListScrollPane = new JScrollPane(emptyList);
         emptyListScrollPane.setMinimumSize(new Dimension(200, 120));
@@ -406,14 +406,14 @@ public final class DiskUtilityExample
         return detailsPanel;
     }
 
-    private JLabel small(final String text)
+    private static JLabel small(final String text)
     {
         JLabel label = new JLabel(text);
         label.setFont(label.getFont().deriveFont(11.0f));
         return label;
     }
 
-    private JLabel bold(final String text)
+    private static JLabel bold(final String text)
     {
         JLabel label = new JLabel(text);
         label.setFont(label.getFont().deriveFont(Font.BOLD, 11.0f));
@@ -425,7 +425,7 @@ public final class DiskUtilityExample
      *
      * @return the two-column details panel
      */
-    private JPanel createDetailsColumns()
+    private static JPanel createDetailsColumns()
     {
         LabelFieldPanel column1 = new LabelFieldPanel();
         column1.addField(bold("Mount Point :"), small("<html><a href=\"\">/</a></html>"));
@@ -456,7 +456,7 @@ public final class DiskUtilityExample
      *
      * @return the button panel
      */
-    private JPanel createButtonPanel()
+    private static JPanel createButtonPanel()
     {
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));

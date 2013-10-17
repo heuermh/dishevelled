@@ -70,10 +70,10 @@ final class TangoTreeModel
     private final Identifiable root;
 
     /** Contexts. */
-    private final List contexts;
+    private final List<Context> contexts;
 
     /** Multimap of contexts to list of icons. */
-    private final Multimap multimap;
+    private final Multimap<String, Icon> multimap;
 
 
     /**
@@ -97,7 +97,7 @@ final class TangoTreeModel
         multimap = ArrayListMultimap.create();
         initializeMultimap();
 
-        contexts = new ArrayList(multimap.size());
+        contexts = new ArrayList<Context>(multimap.size());
         initializeContexts();
     }
 
@@ -414,10 +414,10 @@ final class TangoTreeModel
      */
     private void initializeContexts()
     {
-        SortedSet keys = new TreeSet();
+        SortedSet<String> keys = new TreeSet<String>();
         keys.addAll(multimap.keySet());
 
-        for (Iterator i = keys.iterator(); i.hasNext(); )
+        for (Iterator<?> i = keys.iterator(); i.hasNext(); )
         {
             contexts.add(new Context((String) i.next()));
         }
@@ -551,7 +551,7 @@ final class TangoTreeModel
          */
         public Object get(final int index)
         {
-            List icons = (List) multimap.get(name);
+            List<Icon> icons = (List<Icon>) multimap.get(name);
             return icons.get(index);
         }
 
@@ -562,7 +562,7 @@ final class TangoTreeModel
          */
         public int size()
         {
-            List icons = (List) multimap.get(name);
+            List<Icon> icons = (List<Icon>) multimap.get(name);
             return icons.size();
         }
 
@@ -574,7 +574,7 @@ final class TangoTreeModel
          */
         public int indexOf(final Object object)
         {
-            List icons = (List) multimap.get(name);
+            List<Icon> icons = (List<Icon>) multimap.get(name);
             return icons.indexOf(object);
         }
     }
