@@ -465,6 +465,7 @@ public final class TangoExample
         f.setJMenuBar(createMenuBar());
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.setBounds(100, 100, 750, 650);
+        f.setVisible(true);
     }
 
 

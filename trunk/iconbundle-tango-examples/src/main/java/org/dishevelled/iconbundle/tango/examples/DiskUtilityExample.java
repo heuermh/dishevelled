@@ -29,6 +29,7 @@ import java.awt.Font;
 
 import java.awt.event.ActionEvent;
 
+import javax.swing.AbstractAction;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -207,9 +208,19 @@ public final class DiskUtilityExample
             }
         };
 
+    /** Exit action. */
+    private final AbstractAction exit = new AbstractAction("Exit")
+            {
+                /** {@inheritDoc} */
+                public void actionPerformed(final ActionEvent event)
+                {
+                    System.exit(0);
+                }
+            };
+
 
     /**
-     * Create a new gedit tool bar example.
+     * Create a new disk utility example.
      */
     public DiskUtilityExample()
     {
@@ -235,6 +246,8 @@ public final class DiskUtilityExample
         menuBar.add(images);
         menuBar.add(window);
         menuBar.add(help);
+
+        file.add(exit);
 
         mount.setEnabled(false);
         eject.setEnabled(false);
@@ -298,6 +311,7 @@ public final class DiskUtilityExample
         volumesScrollPane.setPreferredSize(new Dimension(200, 400));
 
         // tabs are too tall, text is not vertically centered
+        // todo:  bottom of the tab is cut off
         JTabbedPane volumeActions = new JTabbedPane();
         volumeActions.addTab("First Aid", createFirstAidPanel());
         volumeActions.addTab("Erase", null);
