@@ -26,6 +26,9 @@ package org.dishevelled.variation.gemini;
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
+import static org.dishevelled.variation.gemini.GeminiUtils.isValidIdentifier;
+import static org.dishevelled.variation.gemini.GeminiUtils.variantId;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.IOException;
@@ -69,8 +72,22 @@ final class GeminiVariationConsequenceService implements VariationConsequenceSer
         checkArgument(species.equals(variation.getSpecies()));
         checkArgument(reference.equals(variation.getReference()));
 
-        // todo:  requires GEMINI variant_id primary key as identifier
-        ProcessBuilder processBuilder = new ProcessBuilder("gemini", "query", "-q", "select v.rs_ids, v.ref, v.alt, vi.impact, v.chrom, v.start, v.end from variants v, variant_impacts vi where vi.variant_id = v.variant_id and v.variant_id=" + variation.getIdentifiers(), databaseName);
+        // requires GEMINI variant_id primary key as identifier
+        int variantId = -1;
+        for (String identifier : variation.getIdentifiers())
+        {
+            if (isValidIdentifier(identifier))
+            {
+                variantId = variantId(identifier);
+                break;
+            }
+        }
+        if (variantId == -1)
+        {
+            throw new IllegalArgumentException("variation must contain a GEMINI variant_id identifier");
+        }
+
+        ProcessBuilder processBuilder = new ProcessBuilder("gemini", "query", "-q", "select v.rs_ids, v.ref, v.alt, vi.impact, v.chrom, v.start, v.end from variants v, variant_impacts vi where vi.variant_id = v.variant_id and v.variant_id=" + variantId, databaseName);
 
         BufferedReader reader = null;
         List<VariationConsequence> variationConsequences = new ArrayList<VariationConsequence>();
@@ -93,11 +110,14 @@ final class GeminiVariationConsequenceService implements VariationConsequenceSer
                 String alt = tokens[2];
                 // todo: impact may need to be mapped to sequence ontology
                 String sequenceOntologyTerm = tokens[3];
-                String name = tokens[4];
+
+                // note: gemini puts chr on the region name
+                String region = tokens[4].replace("chr", "");
+
                 int start = Integer.parseInt(tokens[5]);
                 int end = Integer.parseInt(tokens[6]);
 
-                variationConsequences.add(new VariationConsequence(species, reference, identifiers, ref, alt, sequenceOntologyTerm, name, start, end));
+                variationConsequences.add(new VariationConsequence(species, reference, identifiers, ref, alt, sequenceOntologyTerm, region, start, end));
             }
         }
         catch (IOException e)
