@@ -26,6 +26,8 @@ package org.dishevelled.variation.gemini;
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
+import static org.dishevelled.variation.gemini.GeminiUtils.identifier;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.IOException;
@@ -69,7 +71,8 @@ final class GeminiVariationService implements VariationService
         checkArgument(species.equals(feature.getSpecies()));
         checkArgument(reference.equals(feature.getReference()));
 
-        String query = feature.getRegion() + ":" + feature.getStart() + "-" + feature.getEnd();
+        // note: gemini expects chr in the region name query
+        String query = "chr" + feature.getRegion() + ":" + feature.getStart() + "-" + feature.getEnd();
         ProcessBuilder processBuilder = new ProcessBuilder("gemini", "region", "--reg", query, "--columns", "variant_id, rs_ids, ref, alt, chrom, start, end", databaseName);
 
         BufferedReader reader = null;
@@ -87,14 +90,26 @@ final class GeminiVariationService implements VariationService
                     break;
                 }
                 String[] tokens = line.split("\t");
-                // todo: internal GEMINI variantId, should be added to Variation to help consequence query
-                String variantId = tokens[0];
+
+                List<String> identifiers = new ArrayList<String>();
+
+                // add variantId as new identifier
+                int variantId = Integer.parseInt(tokens[0]);
+                identifiers.add(identifier(variantId, databaseName));
+                
                 // rs_ids is a comma-separated list of dbSNP ids
-                List<String> identifiers = tokens[1] == "null" ? Collections.<String>emptyList() : ImmutableList.copyOf(tokens[1].split(","));
+                if (tokens[1] != "null")
+                {
+                    identifiers.addAll(ImmutableList.copyOf(tokens[1].split(",")));
+                }
+
                 String ref = tokens[2];
                 // todo: might have to collapse multiple rows with same ref?
                 List<String> alt = ImmutableList.of(tokens[3]);
-                String region = tokens[4];
+
+                // note: gemini puts chr on the region name
+                String region = tokens[4].replace("chr", "");
+
                 int start = Integer.parseInt(tokens[5]);
                 int end = Integer.parseInt(tokens[6]);
 
