@@ -29,6 +29,8 @@ import java.awt.Component;
 
 import java.awt.event.ActionEvent;
 
+import javax.swing.border.EmptyBorder;
+
 import ca.odell.glazedlists.EventList;
 import ca.odell.glazedlists.GlazedLists;
 import ca.odell.glazedlists.gui.TableFormat;
@@ -104,10 +106,24 @@ final class FeatureView
     private void layoutComponents()
     {
         addSpacing(12);
-        addField("Nodes:", new CountLabel<CyNode>(model.nodes()));
-        addField("Nodes with features:", new CountLabel<Feature>(model.features()));
+        addField(createLabelPanel());
         addSpacing(12);
         addFinalField(featureTable);
+    }
+
+    /**
+     * Create and return a new label panel.
+     *
+     * @return a new label panel
+     */
+    private LabelFieldPanel createLabelPanel()
+    {
+        LabelFieldPanel panel = new LabelFieldPanel();
+        panel.setOpaque(false);
+        panel.setBorder(new EmptyBorder(0, 12, 0, 0));
+        panel.addField("Nodes:", new CountLabel<CyNode>(model.nodes()));
+        panel.addField("Nodes with features:", new CountLabel<Feature>(model.features()));
+        return panel;
     }
 
     /**

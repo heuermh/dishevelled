@@ -29,6 +29,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.util.List;
 
+import javax.swing.SwingUtilities;
+
 import ca.odell.glazedlists.util.concurrent.Lock;
 
 import org.cytoscape.work.AbstractTask;
@@ -67,8 +69,10 @@ final class AddVariationsTask2
         taskMonitor.setTitle("Add variations");
         taskMonitor.setProgress(0.0d);
 
+        final Lock nodesReadLock = model.nodes().getReadWriteLock().readLock();
         final Lock featuresReadLock = model.features().getReadWriteLock().readLock();
         final Lock variationsWriteLock = model.variations().getReadWriteLock().writeLock();
+        nodesReadLock.lock();
         featuresReadLock.lock();
         variationsWriteLock.lock();
         try
@@ -77,7 +81,7 @@ final class AddVariationsTask2
             {
                 Feature feature = model.features().get(i);
                 taskMonitor.setStatusMessage("Retrieving variations associated with feature " + feature);
-                List<Variation> variations = model.getVariationService().variations(feature);
+                final List<Variation> variations = model.getVariationService().variations(feature);
                 taskMonitor.setStatusMessage("Found " + variations.size() + " variations associated with feature " + feature);
                 model.variations().addAll(variations);
 
@@ -88,6 +92,7 @@ final class AddVariationsTask2
         }
         finally
         {
+            nodesReadLock.unlock();
             featuresReadLock.unlock();
             variationsWriteLock.unlock();
         }

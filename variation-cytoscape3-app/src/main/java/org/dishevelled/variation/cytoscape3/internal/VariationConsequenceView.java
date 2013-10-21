@@ -32,6 +32,8 @@ import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 
+import javax.swing.border.EmptyBorder;
+
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableModel;
@@ -112,12 +114,26 @@ final class VariationConsequenceView
     private void layoutComponents()
     {
         addSpacing(12);
-        addField("Nodes:", new CountLabel<CyNode>(model.nodes()));
-        addField("Nodes with features:", new CountLabel<Feature>(model.features()));
-        addField("Variations associated with features:", new CountLabel<Variation>(model.variations()));
-        addField("Variation consequences:", new CountLabel<VariationConsequence>(model.variationConsequences()));
+        addField(createLabelPanel());
         addSpacing(12);
         addFinalField(variationConsequenceTable);
+    }
+
+    /**
+     * Create and return a new label panel.
+     *
+     * @return a new label panel
+     */
+    private LabelFieldPanel createLabelPanel()
+    {
+        LabelFieldPanel panel = new LabelFieldPanel();
+        panel.setOpaque(false);
+        panel.setBorder(new EmptyBorder(0, 12, 0, 0));
+        panel.addField("Nodes:", new CountLabel<CyNode>(model.nodes()));
+        panel.addField("Nodes with features:", new CountLabel<Feature>(model.features()));
+        panel.addField("Variations associated with features:", new CountLabel<Variation>(model.variations()));
+        panel.addField("Variation consequences:", new CountLabel<VariationConsequence>(model.variationConsequences()));
+        return panel;
     }
 
     /**
@@ -152,7 +168,7 @@ final class VariationConsequenceView
                         JLabel label = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
                         TableModel tableModel = table.getModel();
                         int tableModelRow = table.convertRowIndexToModel(row);
-                        String consequenceTerm = (String) tableModel.getValueAt(tableModelRow, 7); // hard coded column index
+                        String consequenceTerm = (String) tableModel.getValueAt(tableModelRow, 8); // hard coded column index
                         Color rowColor = tableRowColorMapping.getColor(consequenceTerm);
                         if (rowColor != null && !isSelected)
                         {

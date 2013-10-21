@@ -78,7 +78,9 @@ final class RetrieveFeaturesTask2
         //       else if merge strategy is merge, remove existing node --> feature mappings and features from features, perform the merge and re-add merged ones
         //       (note that removing feature mappings should also remove downstream variations and consequences, and should update counts in node table)
 
+        final Lock nodesReadLock = model.nodes().getReadWriteLock().readLock();
         final Lock featuresWriteLock = model.features().getReadWriteLock().writeLock();
+        nodesReadLock.lock();
         featuresWriteLock.lock();
         try
         {
@@ -102,6 +104,7 @@ final class RetrieveFeaturesTask2
         }
         finally
         {
+            nodesReadLock.unlock();
             featuresWriteLock.unlock();
         }
         taskMonitor.setProgress(1.0d);
