@@ -42,6 +42,8 @@ import javax.swing.JComponent;
 import javax.swing.JTextField;
 import javax.swing.JPanel;
 
+import javax.swing.border.EmptyBorder;
+
 import org.dishevelled.layout.LabelFieldPanel;
 
 /**
@@ -225,6 +227,7 @@ final class ConfigView
      */
     private void layoutComponents()
     {
+        setBorder(new EmptyBorder(0, 12, 0, 48));
         addSpacing(12);
         addField("Species:", wrap(species));
         addField("Reference:", wrap(reference));

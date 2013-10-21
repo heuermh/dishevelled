@@ -145,6 +145,8 @@ final class VariationApp
         checkNotNull(applicationManager);
         checkNotNull(dialogTaskManager);
 
+        System.out.println("VariationApp ctr thread " + Thread.currentThread());
+
         this.applicationManager = applicationManager;
         this.dialogTaskManager = dialogTaskManager;
 
