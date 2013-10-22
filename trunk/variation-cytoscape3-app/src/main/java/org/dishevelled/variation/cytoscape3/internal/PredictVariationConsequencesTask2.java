@@ -89,6 +89,7 @@ final class PredictVariationConsequencesTask2
             for (int i = 0, size = model.variations().size(); i < size; i++)
             {
                 Variation variation = model.variations().get(i);
+                System.out.println("hits for variation " + variation + ":" + model.hit(variation));
                 for (Feature hit : model.hit(variation))
                 {
                     taskMonitor.setStatusMessage("Predicting variation consequences for variation " + variation + "...");
@@ -106,12 +107,15 @@ final class PredictVariationConsequencesTask2
             {
                 CyNode node = model.nodes().get(i);
                 Feature feature = model.featureFor(node);
-                List<VariationConsequence> variationConsequences = model.consequencesFor(feature);
+                System.out.println("looking up feature for node " + node + ", found " + feature);
+                if (feature != null)
+                {
+                    List<VariationConsequence> variationConsequences = model.consequencesFor(feature);
 
-                // todo:  counts don't consider existing variations or variationConsequences
-                addCount(node, model.getNetwork(), "variation_consequence_count", variationConsequences.size());
-                addConsequenceCounts(node, model.getNetwork(), variationConsequences);
-
+                    // todo:  counts don't consider existing variations or variationConsequences
+                    addCount(node, model.getNetwork(), "variation_consequence_count", variationConsequences.size());
+                    addConsequenceCounts(node, model.getNetwork(), variationConsequences);
+                }
                 taskMonitor.setProgress(0.9d + 0.1d * (i / (double) size));
             }
         }

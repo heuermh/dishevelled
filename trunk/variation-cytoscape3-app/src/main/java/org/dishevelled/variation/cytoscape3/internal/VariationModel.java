@@ -490,8 +490,15 @@ final class VariationModel
         checkNotNull(node);
         checkNotNull(feature);
 
-        nodes.add(node);
-        features.add(feature);
+        // todo:  merge strategy
+        if (!nodes.contains(node))
+        {
+            nodes.add(node);
+        }
+        if (!features.contains(feature))
+        {
+            features.add(feature);
+        }
         nodesToFeatures.put(node, feature);
         // or create column in node table for feature, add node back-reference to Feature
     }
@@ -522,8 +529,10 @@ final class VariationModel
 
         List<Feature> hits = Lists.newArrayList();
         CenteredIntervalTree intervalTree = intervalTrees.get(variation.getRegion());
+        System.out.println("intervalTree contains " + intervalTree.intersect(Interval.all()) + " for variation " + variation);
         for (Interval interval : intervalTree.intersect(Interval.closedOpen(variation.getStart(), variation.getEnd())))
         {
+            System.out.println("looking up feature for interval " + interval + ", found " + featuresToIntervals.inverse().get(interval));
             hits.add(featuresToIntervals.inverse().get(interval));
         }
         return hits;

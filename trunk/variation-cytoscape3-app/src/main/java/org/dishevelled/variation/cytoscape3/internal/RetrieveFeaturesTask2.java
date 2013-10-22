@@ -95,6 +95,7 @@ final class RetrieveFeaturesTask2
                         Feature feature = model.getFeatureService().feature(model.getSpecies(), model.getReference(), ensemblGeneId);
                         if (feature != null)
                         {
+                            System.out.println("adding node " + node + " <--> " + feature);
                             model.add(node, feature);
                         }
                     }
