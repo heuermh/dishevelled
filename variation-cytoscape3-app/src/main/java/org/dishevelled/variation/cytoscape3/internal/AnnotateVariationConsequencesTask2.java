@@ -105,12 +105,14 @@ final class AnnotateVariationConsequencesTask2
             {
                 CyNode node = model.nodes().get(i);
                 Feature feature = model.featureFor(node);
-                List<VariationConsequence> variationConsequences = model.consequencesFor(feature);
+                if (feature != null)
+                {
+                    List<VariationConsequence> variationConsequences = model.consequencesFor(feature);
 
-                // todo:  counts don't consider existing variationConsequences
-                addCount(node, model.getNetwork(), "variation_consequence_count", variationConsequences.size());
-                addConsequenceCounts(node, model.getNetwork(), variationConsequences);
-
+                    // todo:  counts don't consider existing variationConsequences
+                    addCount(node, model.getNetwork(), "variation_consequence_count", variationConsequences.size());
+                    addConsequenceCounts(node, model.getNetwork(), variationConsequences);
+                }
                 taskMonitor.setProgress(0.9d + (i / (double) size));
             }
         }

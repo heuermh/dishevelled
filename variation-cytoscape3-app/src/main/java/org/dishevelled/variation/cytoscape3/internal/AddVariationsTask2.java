@@ -83,9 +83,18 @@ final class AddVariationsTask2
                 taskMonitor.setStatusMessage("Retrieving variations associated with feature " + feature);
                 final List<Variation> variations = model.getVariationService().variations(feature);
                 taskMonitor.setStatusMessage("Found " + variations.size() + " variations associated with feature " + feature);
-                model.variations().addAll(variations);
+
+                // todo:  merge strategy
+                for (Variation variation : variations)
+                {
+                    if (!model.variations().contains(variation))
+                    {
+                        model.variations().add(variation);
+                    }
+                }
 
                 // todo:  count doesn't consider existing variations
+                System.out.println("looking up node for feature " + feature + ", found " + model.nodeFor(feature));
                 addCount(model.nodeFor(feature), model.getNetwork(), "variation_count", variations.size());
                 taskMonitor.setProgress(i / (double) size);
             }
