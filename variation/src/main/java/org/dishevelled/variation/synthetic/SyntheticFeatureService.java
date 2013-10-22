@@ -28,6 +28,10 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.util.Random;
 
+import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.CacheLoader;
+import com.google.common.cache.LoadingCache;
+
 import com.google.inject.Inject;
 
 import org.apache.commons.lang.StringUtils;
@@ -43,13 +47,26 @@ final class SyntheticFeatureService
 {
     private final SyntheticGenome genome;
     private final Random random = new Random();
-
+    private final LoadingCache<String, Feature> features;
 
     @Inject
     SyntheticFeatureService(final SyntheticGenome genome)
     {
         checkNotNull(genome);
         this.genome = genome;
+        features = CacheBuilder.newBuilder().build(new CacheLoader<String, Feature>()
+            {
+                @Override
+                public Feature load(final String identifier)
+                {
+                    String name = genome.getNames().get(random.nextInt(genome.getNames().size()));
+                    int length = genome.getLengths().get(name) == null ? 100000 : genome.getLengths().get(name);
+                    int start = random.nextInt(length);
+                    int end = start + random.nextInt(Math.min(length - start, 100000));
+
+                    return new Feature(genome.getSpecies(), genome.getReference(), identifier, name, start, end, 1);
+                }
+            });
     }
 
 
@@ -70,13 +87,7 @@ final class SyntheticFeatureService
         {
             return null;
         }
-        String name = genome.getNames().get(random.nextInt(genome.getNames().size()));
-        // todo: why is this null sometimes?
-        int length = genome.getLengths().get(name) == null ? 100000 : genome.getLengths().get(name);
-        int start = random.nextInt(length);
-        int end = start + random.nextInt(Math.min(length - start, 100000));
-
-        return new Feature(genome.getSpecies(), genome.getReference(), identifier, name, start, end, 1);
+        return features.getUnchecked(identifier);
     }
 
     @Override
