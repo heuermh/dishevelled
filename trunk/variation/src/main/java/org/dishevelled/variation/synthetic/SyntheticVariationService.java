@@ -31,6 +31,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.CacheLoader;
+import com.google.common.cache.LoadingCache;
+
 import com.google.common.collect.ImmutableList;
 
 import com.google.inject.Inject;
@@ -47,6 +51,7 @@ final class SyntheticVariationService
 {
     private final SyntheticGenome genome;
     private final Random random = new Random();
+    private final LoadingCache<Feature, List<Variation>> variations;
     private static final List<String> ALPHABET = ImmutableList.of("A", "T", "C", "G");
 
     @Inject
@@ -54,6 +59,32 @@ final class SyntheticVariationService
     {
         checkNotNull(genome);
         this.genome = genome;
+        this.variations = CacheBuilder.newBuilder().build(new CacheLoader<Feature, List<Variation>>()
+            {
+                @Override
+                public List<Variation> load(final Feature feature)
+                {
+                    List<Variation> variations = new ArrayList<Variation>();
+                    for (int i = 0, size = (feature.getEnd() - feature.getStart()) / 1000; i < size; i++)
+                    {
+                        String referenceAllele = sample();
+                        List<String> alternateAlleles = new ArrayList<String>();
+                        alternateAlleles.add(sample(referenceAllele));
+                        if (random.nextDouble() < 0.3)
+                        {
+                            alternateAlleles.add(sample(referenceAllele, alternateAlleles));
+                        }
+                        if (random.nextDouble() < 0.1)
+                        {
+                            alternateAlleles.add(sample(referenceAllele, alternateAlleles));
+                        }
+                        int start = feature.getStart() + random.nextInt(feature.getEnd() - feature.getStart());
+                        int end = start + referenceAllele.length();
+                        variations.add(new Variation(genome.getSpecies(), genome.getReference(), Collections.<String>emptyList(), referenceAllele, alternateAlleles, feature.getRegion(), start, end));
+                    }
+                    return variations;
+                }
+            });
     }
 
     @Override
@@ -62,26 +93,7 @@ final class SyntheticVariationService
         checkNotNull(feature);
         checkArgument(genome.getSpecies().equals(feature.getSpecies()));
         checkArgument(genome.getReference().equals(feature.getReference()));
-
-        List<Variation> variations = new ArrayList<Variation>();
-        for (int i = 0, size = (feature.getEnd() - feature.getStart()) / 1000; i < size; i++)
-        {
-            String referenceAllele = sample();
-            List<String> alternateAlleles = new ArrayList<String>();
-            alternateAlleles.add(sample(referenceAllele));
-            if (random.nextDouble() < 0.3)
-            {
-                alternateAlleles.add(sample(referenceAllele, alternateAlleles));
-            }
-            if (random.nextDouble() < 0.1)
-            {
-                alternateAlleles.add(sample(referenceAllele, alternateAlleles));
-            }
-            int start = feature.getStart() + random.nextInt(feature.getEnd() - feature.getStart());
-            int end = start + referenceAllele.length();
-            variations.add(new Variation(genome.getSpecies(), genome.getReference(), Collections.<String>emptyList(), referenceAllele, alternateAlleles, feature.getRegion(), start, end));
-        }
-        return variations;
+        return variations.getUnchecked(feature);
     }
 
     private String sample()

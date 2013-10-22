@@ -118,11 +118,11 @@ public final class Variation
         {
             sb.append(identifiers.get(0));
         }
-        else
+        else if (identifiers.size() > 1)
         {
             sb.append(identifiers);
+            sb.append(" ");
         }
-        sb.append(" ");
         sb.append(region);
         sb.append(":");
         sb.append(start);
