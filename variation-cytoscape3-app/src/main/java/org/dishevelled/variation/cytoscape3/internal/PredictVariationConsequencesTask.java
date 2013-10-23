@@ -46,7 +46,7 @@ import org.dishevelled.variation.VariationConsequence;
  *
  * @author  Michael Heuer
  */
-final class PredictVariationConsequencesTask2
+final class PredictVariationConsequencesTask
     extends AbstractTask
 {
     /** Variation model. */
@@ -58,7 +58,7 @@ final class PredictVariationConsequencesTask2
      *
      * @param model model, must not be null
      */
-    PredictVariationConsequencesTask2(final VariationModel model)
+    PredictVariationConsequencesTask(final VariationModel model)
     {
         checkNotNull(model);
         this.model = model;

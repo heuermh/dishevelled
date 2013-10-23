@@ -45,7 +45,7 @@ import org.dishevelled.variation.VariationConsequence;
  *
  * @author  Michael Heuer
  */
-final class AnnotateVariationConsequencesTask2
+final class AnnotateVariationConsequencesTask
     extends AbstractTask
 {
     /** Variation model. */
@@ -57,7 +57,7 @@ final class AnnotateVariationConsequencesTask2
      *
      * @param model model, must not be null
      */
-    AnnotateVariationConsequencesTask2(final VariationModel model)
+    AnnotateVariationConsequencesTask(final VariationModel model)
     {
         checkNotNull(model);
         this.model = model;

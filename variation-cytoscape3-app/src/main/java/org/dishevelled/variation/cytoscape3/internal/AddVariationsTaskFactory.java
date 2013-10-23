@@ -55,8 +55,8 @@ final class AddVariationsTaskFactory
     @Override
     public TaskIterator createTaskIterator()
     {
-        RetrieveFeaturesTask2 retrieveFeaturesTask = new RetrieveFeaturesTask2(model);
-        AddVariationsTask2 addVariationsTask = new AddVariationsTask2(model);
+        RetrieveFeaturesTask retrieveFeaturesTask = new RetrieveFeaturesTask(model);
+        AddVariationsTask addVariationsTask = new AddVariationsTask(model);
         return new TaskIterator(retrieveFeaturesTask, addVariationsTask);
     }
 }

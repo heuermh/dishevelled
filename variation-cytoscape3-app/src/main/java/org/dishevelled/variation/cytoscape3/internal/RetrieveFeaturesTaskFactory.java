@@ -55,7 +55,7 @@ final class RetrieveFeaturesTaskFactory
     @Override
     public TaskIterator createTaskIterator()
     {
-        RetrieveFeaturesTask2 retrieveFeaturesTask = new RetrieveFeaturesTask2(model);
+        RetrieveFeaturesTask retrieveFeaturesTask = new RetrieveFeaturesTask(model);
         return new TaskIterator(retrieveFeaturesTask);
     }
 }
