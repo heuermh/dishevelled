@@ -44,7 +44,7 @@ import org.dishevelled.variation.Variation;
  *
  * @author  Michael Heuer
  */
-final class AddVariationsTask2
+final class AddVariationsTask
     extends AbstractTask
 {
     /** Variation model. */
@@ -56,7 +56,7 @@ final class AddVariationsTask2
      *
      * @param model model, must not be null
      */
-    AddVariationsTask2(final VariationModel model)
+    AddVariationsTask(final VariationModel model)
     {
         checkNotNull(model);
         this.model = model;

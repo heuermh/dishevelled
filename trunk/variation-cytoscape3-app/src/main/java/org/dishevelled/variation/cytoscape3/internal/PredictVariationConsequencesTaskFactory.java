@@ -54,9 +54,9 @@ final class PredictVariationConsequencesTaskFactory
     @Override
     public TaskIterator createTaskIterator()
     {
-        RetrieveFeaturesTask2 retrieveFeaturesTask = new RetrieveFeaturesTask2(model);
-        AddVariationsTask2 addVariationsTask = new AddVariationsTask2(model);
-        PredictVariationConsequencesTask2 predictVariationConsequencesTask = new PredictVariationConsequencesTask2(model);
+        RetrieveFeaturesTask retrieveFeaturesTask = new RetrieveFeaturesTask(model);
+        AddVariationsTask addVariationsTask = new AddVariationsTask(model);
+        PredictVariationConsequencesTask predictVariationConsequencesTask = new PredictVariationConsequencesTask(model);
         return new TaskIterator(retrieveFeaturesTask, addVariationsTask, predictVariationConsequencesTask);
     }
 }

@@ -44,7 +44,7 @@ import org.dishevelled.variation.Feature;
  *
  * @author  Michael Heuer
  */
-final class RetrieveFeaturesTask2
+final class RetrieveFeaturesTask
     extends AbstractTask
 {
     /** Variation model. */
@@ -56,7 +56,7 @@ final class RetrieveFeaturesTask2
      *
      * @param model model, must not be null
      */
-    RetrieveFeaturesTask2(final VariationModel model)
+    RetrieveFeaturesTask(final VariationModel model)
     {
         checkNotNull(model);
         this.model = model;

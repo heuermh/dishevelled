@@ -55,9 +55,9 @@ final class AnnotateVariationConsequencesTaskFactory
     @Override
     public TaskIterator createTaskIterator()
     {
-        RetrieveFeaturesTask2 retrieveFeaturesTask = new RetrieveFeaturesTask2(model);
-        AddVariationsTask2 addVariationsTask = new AddVariationsTask2(model);
-        AnnotateVariationConsequencesTask2 annotateVariationConsequencesTask = new AnnotateVariationConsequencesTask2(model);
+        RetrieveFeaturesTask retrieveFeaturesTask = new RetrieveFeaturesTask(model);
+        AddVariationsTask addVariationsTask = new AddVariationsTask(model);
+        AnnotateVariationConsequencesTask annotateVariationConsequencesTask = new AnnotateVariationConsequencesTask(model);
         return new TaskIterator(retrieveFeaturesTask, addVariationsTask, annotateVariationConsequencesTask);
     }
 }
