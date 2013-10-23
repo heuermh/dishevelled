@@ -467,8 +467,9 @@ final class VariationModel
         }
         for (String region : featuresByRegion.keySet())
         {
-            List<Interval> intervals = Lists.newArrayList(); // with expected size...
-            for (Feature feature : featuresByRegion.get(region))
+            List<Feature> regionFeatures = featuresByRegion.get(region);
+            List<Interval> intervals = Lists.newArrayListWithCapacity(regionFeatures.size());
+            for (Feature feature : regionFeatures)
             {
                 // todo:  confirm that feature intervals in Ensembl are closed
                 Interval interval = Interval.closed(feature.getStart(), feature.getEnd());
@@ -526,13 +527,10 @@ final class VariationModel
     Iterable<Feature> hit(final Variation variation)
     {
         checkNotNull(variation);
-
         List<Feature> hits = Lists.newArrayList();
         CenteredIntervalTree intervalTree = intervalTrees.get(variation.getRegion());
-        System.out.println("intervalTree contains " + intervalTree.intersect(Interval.all()) + " for variation " + variation);
         for (Interval interval : intervalTree.intersect(Interval.closedOpen(variation.getStart(), variation.getEnd())))
         {
-            System.out.println("looking up feature for interval " + interval + ", found " + featuresToIntervals.inverse().get(interval));
             hits.add(featuresToIntervals.inverse().get(interval));
         }
         return hits;

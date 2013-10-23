@@ -25,7 +25,12 @@ package org.dishevelled.variation.cytoscape3.internal;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
+import java.awt.BorderLayout;
+
 import java.awt.event.ActionEvent;
+
+import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 
 import com.google.common.collect.ImmutableList;
 
@@ -50,6 +55,7 @@ import org.dishevelled.variation.VariationConsequencePredictionService;
  * @author  Michael Heuer
  */
 final class VariationApp
+    extends JPanel
 {
     /** Variation model. */
     private final VariationModel model;
@@ -71,6 +77,9 @@ final class VariationApp
 
     /** Dialog task manager. */
     private final DialogTaskManager dialogTaskManager;
+
+    /** Tabbed pane. */
+    private final JTabbedPane tabbedPane;
 
     /** Retrieve icon bundle. */
     private final IconBundle retrieveIconBundle = new CachingIconBundle(new PNGIconBundle("/org/dishevelled/variation/cytoscape3/internal/retrieve"));
@@ -159,9 +168,27 @@ final class VariationApp
         featureView = new FeatureView(model);
         variationView = new VariationView(model);
         variationConsequenceView = new VariationConsequenceView(model);
+
+        tabbedPane = new JTabbedPane();
+        tabbedPane.add("Config", configView);
+        tabbedPane.add("Features", featureView);
+        tabbedPane.add("Variations", variationView);
+        tabbedPane.add("Consequences", variationConsequenceView);
+
         model.setNetwork(applicationManager.getCurrentNetwork());
+
+        layoutComponents();
     }
 
+
+    /**
+     * Layout components.
+     */
+    private void layoutComponents()
+    {
+        setLayout(new BorderLayout());
+        add("Center", tabbedPane);
+    }
 
     /***
      * Return the variation model.
@@ -226,6 +253,7 @@ final class VariationApp
         //
         RetrieveFeaturesTaskFactory taskFactory = new RetrieveFeaturesTaskFactory(model);
         dialogTaskManager.execute(taskFactory.createTaskIterator());
+        tabbedPane.setSelectedComponent(featureView);
     }
 
     /**
@@ -235,6 +263,7 @@ final class VariationApp
     {
         AddVariationsTaskFactory taskFactory = new AddVariationsTaskFactory(model);
         dialogTaskManager.execute(taskFactory.createTaskIterator());
+        tabbedPane.setSelectedComponent(variationView);
     }
 
     /**
@@ -244,6 +273,7 @@ final class VariationApp
     {
         AnnotateVariationConsequencesTaskFactory taskFactory = new AnnotateVariationConsequencesTaskFactory(model);
         dialogTaskManager.execute(taskFactory.createTaskIterator());
+        tabbedPane.setSelectedComponent(variationConsequenceView);
     }
 
     /**
@@ -253,6 +283,7 @@ final class VariationApp
     {
         PredictVariationConsequencesTaskFactory taskFactory = new PredictVariationConsequencesTaskFactory(model);
         dialogTaskManager.execute(taskFactory.createTaskIterator());
+        tabbedPane.setSelectedComponent(variationConsequenceView);
     }
 
     /**

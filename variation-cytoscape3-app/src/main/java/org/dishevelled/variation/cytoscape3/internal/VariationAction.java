@@ -39,7 +39,6 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
-import javax.swing.JTabbedPane;
 import javax.swing.WindowConstants;
 
 import javax.swing.border.EmptyBorder;
@@ -72,7 +71,6 @@ final class VariationAction extends AbstractCyAction
     /** Dialog task manager. */
     private final DialogTaskManager dialogTaskManager;
 
-    // hey, they're back
     /** Feature service. */
     private final FeatureService featureService;
 
@@ -171,17 +169,9 @@ final class VariationAction extends AbstractCyAction
         */
         toolBar.addMouseListener(new ContextMenuListener(toolBarContextMenu));
 
-
         // todo:  would be nice to have a submenu in Apps --> Variation --> Retrieve Features... etc.
-
-        JTabbedPane tabbedPane = new JTabbedPane();
-        tabbedPane.add("Config", app.configView());
-        tabbedPane.add("Features", app.featureView());
-        tabbedPane.add("Variations", app.variationView());
-        tabbedPane.add("Consequences", app.variationConsequenceView());
-
         contentPane.add("North", toolBar);
-        contentPane.add("Center", tabbedPane);
+        contentPane.add("Center", app);
         dialog.setContentPane(contentPane);
 
         dialog.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);

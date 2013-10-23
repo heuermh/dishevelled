@@ -94,7 +94,6 @@ final class AddVariationsTask
                 }
 
                 // todo:  count doesn't consider existing variations
-                System.out.println("looking up node for feature " + feature + ", found " + model.nodeFor(feature));
                 addCount(model.nodeFor(feature), model.getNetwork(), "variation_count", variations.size());
                 taskMonitor.setProgress(i / (double) size);
             }
