@@ -89,7 +89,6 @@ final class PredictVariationConsequencesTask
             for (int i = 0, size = model.variations().size(); i < size; i++)
             {
                 Variation variation = model.variations().get(i);
-                System.out.println("hits for variation " + variation + ":" + model.hit(variation));
                 for (Feature hit : model.hit(variation))
                 {
                     taskMonitor.setStatusMessage("Predicting variation consequences for variation " + variation + "...");
