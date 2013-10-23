@@ -28,6 +28,8 @@ import java.awt.Component;
 
 import java.awt.event.ActionEvent;
 
+import java.util.List;
+
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JTable;
@@ -179,6 +181,7 @@ final class VariationConsequenceView
                 };
             getTable().setDefaultRenderer(Integer.class, tableCellRenderer);
             getTable().setDefaultRenderer(String.class, tableCellRenderer);
+            getTable().setDefaultRenderer(List.class, tableCellRenderer);
 
             Component refreshContextMenuComponent = getContextMenu().add(refresh);
             // place at index 8 before add action
