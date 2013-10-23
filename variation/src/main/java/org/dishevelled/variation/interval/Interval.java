@@ -209,7 +209,7 @@ public final class Interval implements Predicate<Integer>, Serializable {
 
   public int center() {
     if (!hasLowerBound() || !hasUpperBound()) {
-      throw new IllegalStateException("cannot calculate the center of an open range");
+      throw new IllegalStateException("cannot calculate the center of an interval without bounds");
     }
     return lowerEndpoint() + (upperEndpoint() - lowerEndpoint()) / 2;
   }
@@ -250,7 +250,7 @@ public final class Interval implements Predicate<Integer>, Serializable {
   }
 
   public boolean intersects(final Interval connectedInterval) {
-      return intersection(connectedInterval).isEmpty();
+      return isConnected(connectedInterval) && !intersection(connectedInterval).isEmpty();
   }
 
   public Interval intersection(final Interval connectedInterval) {
