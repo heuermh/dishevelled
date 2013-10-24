@@ -36,16 +36,16 @@ import org.dishevelled.variation.VariationConsequencePredictionService;
 import org.junit.Test;
 
 /**
- * Unit test for EnsemblRestClientModule.
+ * Unit test for EnsemblRestClientServiceModule.
  */
-public final class EnsemblRestClientModuleTest
+public final class EnsemblRestClientServiceModuleTest
 {
 
     @Test
-    public void testEnsemblRestClientModule()
+    public void testEnsemblRestClientServiceModule()
     {
         Injector injector = Guice.createInjector(new com.github.heuermh.ensemblrestclient.EnsemblRestClientModule(),
-                                                 new org.dishevelled.variation.ensembl.EnsemblRestClientModule());
+                                                 new EnsemblRestClientServiceModule());
 
         FeatureService featureService = injector.getInstance(FeatureService.class);
         VariationService variationService = injector.getInstance(VariationService.class);

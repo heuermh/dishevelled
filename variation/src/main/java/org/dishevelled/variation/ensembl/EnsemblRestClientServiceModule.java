@@ -33,9 +33,9 @@ import org.dishevelled.variation.VariationConsequencePredictionService;
 import org.dishevelled.variation.VariationService;
 
 /**
- * Ensembl REST client module.
+ * Ensembl REST client service module.
  */
-public final class EnsemblRestClientModule
+public final class EnsemblRestClientServiceModule
     extends AbstractModule
 {
 
