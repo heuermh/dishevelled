@@ -43,7 +43,7 @@ import org.dishevelled.variation.VariationConsequenceService;
 /**
  * Ensembl REST client variation consequence service.
  */
-final class EnsemblRestClientVariationConsequenceService
+public final class EnsemblRestClientVariationConsequenceService
     implements VariationConsequenceService
 {
     private final String species;
@@ -51,10 +51,10 @@ final class EnsemblRestClientVariationConsequenceService
     private final VariationService variationService;
     private static final Pattern ALLELE_STRING = Pattern.compile("^(.*)/(.*)$");
 
-    //@Inject
-    EnsemblRestClientVariationConsequenceService(final String species,
-                                                 final String reference,
-                                                 final VariationService variationService)
+
+    public EnsemblRestClientVariationConsequenceService(final String species,
+                                                        final String reference,
+                                                        final VariationService variationService)
     {
         checkNotNull(species);
         checkNotNull(reference);

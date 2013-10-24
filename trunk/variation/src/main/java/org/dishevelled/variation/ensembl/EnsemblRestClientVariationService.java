@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.github.heuermh.ensemblrestclient.FeatureService;
+
 import com.google.common.collect.ImmutableList;
 
 import org.dishevelled.variation.Feature;
@@ -39,15 +40,17 @@ import org.dishevelled.variation.VariationService;
 /**
  * Ensembl REST client variation service.
  */
-final class EnsemblRestClientVariationService
+public final class EnsemblRestClientVariationService
     implements VariationService
 {
     private final String species;
     private final String reference;
     private final FeatureService featureService;
 
-    //@Inject
-    EnsemblRestClientVariationService(final String species, final String reference, final FeatureService featureService)
+
+    public EnsemblRestClientVariationService(final String species,
+                                             final String reference,
+                                             final FeatureService featureService)
     {
         checkNotNull(species);
         checkNotNull(reference);

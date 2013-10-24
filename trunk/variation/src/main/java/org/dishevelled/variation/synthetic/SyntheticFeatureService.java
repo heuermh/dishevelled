@@ -42,7 +42,7 @@ import org.dishevelled.variation.FeatureService;
 /**
  * Synthetic feature service.
  */
-final class SyntheticFeatureService
+public final class SyntheticFeatureService
     implements FeatureService
 {
     private final SyntheticGenome genome;
@@ -50,7 +50,7 @@ final class SyntheticFeatureService
     private final LoadingCache<String, Feature> features;
 
     @Inject
-    SyntheticFeatureService(final SyntheticGenome genome)
+    public SyntheticFeatureService(final SyntheticGenome genome)
     {
         checkNotNull(genome);
         this.genome = genome;

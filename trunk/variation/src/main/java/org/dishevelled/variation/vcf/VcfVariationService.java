@@ -51,7 +51,7 @@ public final class VcfVariationService implements VariationService
     private final String reference;
     private final File file;
 
-    //@Inject
+
     public VcfVariationService(final String species, final String reference, final File file)
     {
         checkNotNull(species);
