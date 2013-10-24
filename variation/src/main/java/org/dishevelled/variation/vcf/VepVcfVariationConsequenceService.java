@@ -51,7 +51,7 @@ public final class VepVcfVariationConsequenceService implements VariationConsequ
     private final String reference;
     private final File file;
 
-    //@Inject
+
     public VepVcfVariationConsequenceService(final String species, final String reference, final File file)
     {
         checkNotNull(species);

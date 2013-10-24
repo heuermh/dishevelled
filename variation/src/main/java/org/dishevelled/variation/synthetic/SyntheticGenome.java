@@ -31,14 +31,14 @@ import java.util.Map;
 /**
  * Synthetic genome.
  */
-final class SyntheticGenome
+public final class SyntheticGenome
 {
     private final String species;
     private final String reference;
     private final List<String> names;
     private final Map<String, Integer> lengths;
 
-    SyntheticGenome(final String species, final String reference, final int chromosomes, final long bp)
+    public SyntheticGenome(final String species, final String reference, final int chromosomes, final long bp)
     {
         this.species = species;
         this.reference = reference;

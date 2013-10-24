@@ -35,15 +35,17 @@ import org.dishevelled.variation.FeatureService;
 /**
  * Ensembl REST client feature service.
  */
-final class EnsemblRestClientFeatureService
+public final class EnsemblRestClientFeatureService
     implements FeatureService
 {
     private final String species;
     private final String reference;
     private final LookupService lookupService;
 
-    //@Inject
-    EnsemblRestClientFeatureService(final String species, final String reference, final LookupService lookupService)
+
+    public EnsemblRestClientFeatureService(final String species,
+                                           final String reference,
+                                           final LookupService lookupService)
     {
         checkNotNull(species);
         checkNotNull(reference);

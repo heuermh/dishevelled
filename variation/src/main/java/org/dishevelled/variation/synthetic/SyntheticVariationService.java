@@ -46,7 +46,7 @@ import org.dishevelled.variation.VariationService;
 /**
  * Synthetic variation service.
  */
-final class SyntheticVariationService
+public final class SyntheticVariationService
     implements VariationService
 {
     private final SyntheticGenome genome;
@@ -55,7 +55,7 @@ final class SyntheticVariationService
     private static final List<String> ALPHABET = ImmutableList.of("A", "T", "C", "G");
 
     @Inject
-    SyntheticVariationService(final SyntheticGenome genome)
+    public SyntheticVariationService(final SyntheticGenome genome)
     {
         checkNotNull(genome);
         this.genome = genome;

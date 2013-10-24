@@ -45,14 +45,14 @@ import org.dishevelled.variation.VariationService;
 /**
  * GEMINI command line variation service.
  */
-final class GeminiVariationService implements VariationService
+public final class GeminiVariationService implements VariationService
 {
     private final String species;
     private final String reference;
     private final String databaseName;
 
-    //@Inject
-    GeminiVariationService(final String species, final String reference, final String databaseName)
+
+    public GeminiVariationService(final String species, final String reference, final String databaseName)
     {
         checkNotNull(species);
         checkNotNull(reference);

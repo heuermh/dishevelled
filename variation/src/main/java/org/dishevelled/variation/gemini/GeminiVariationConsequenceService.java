@@ -46,14 +46,14 @@ import com.google.common.collect.ImmutableList;
 /**
  * GEMINI command line variation consequence service.
  */
-final class GeminiVariationConsequenceService implements VariationConsequenceService
+public final class GeminiVariationConsequenceService implements VariationConsequenceService
 {
     private final String species;
     private final String reference;
     private final String databaseName;
 
-    //@Inject
-    GeminiVariationConsequenceService(final String species, final String reference, final String databaseName)
+
+    public GeminiVariationConsequenceService(final String species, final String reference, final String databaseName)
     {
         checkNotNull(species);
         checkNotNull(reference);

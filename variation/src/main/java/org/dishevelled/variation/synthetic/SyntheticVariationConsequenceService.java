@@ -43,13 +43,12 @@ import org.dishevelled.vocabulary.Concept;
 /**
  * Synthetic variation consequence service.
  */
-final class SyntheticVariationConsequenceService
+public final class SyntheticVariationConsequenceService
     implements VariationConsequenceService
 {
     private final SyntheticGenome genome;
     private final Random random = new Random();
     private final List<Concept> consequenceTerms;
-
 
     @Inject
     SyntheticVariationConsequenceService(final SyntheticGenome genome)
