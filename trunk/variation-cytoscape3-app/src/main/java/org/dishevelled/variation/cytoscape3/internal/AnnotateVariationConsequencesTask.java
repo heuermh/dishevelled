@@ -27,6 +27,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import static org.dishevelled.variation.cytoscape3.internal.VariationUtils.addConsequenceCounts;
 import static org.dishevelled.variation.cytoscape3.internal.VariationUtils.addCount;
+import static org.dishevelled.variation.cytoscape3.internal.VariationUtils.resultStatusMessage;
 
 import java.util.List;
 
@@ -92,7 +93,7 @@ final class AnnotateVariationConsequencesTask
                 {
                     taskMonitor.setStatusMessage("Retrieving variation consequences associated with variation " + variation + "...");
                     List<VariationConsequence> variationConsequences = model.getVariationConsequenceService().consequences(variation);
-                    taskMonitor.setStatusMessage("Found " + variationConsequences.size() + " variation consequences associated with variation " + variation);
+                    taskMonitor.setStatusMessage(resultStatusMessage(variationConsequences.size(), "variation consequence", "variation", variation));
 
                     model.add(hit, variationConsequences);
                     model.variationConsequences().addAll(variationConsequences);

@@ -51,7 +51,7 @@ public final class SyntheticVariationConsequenceService
     private final List<Concept> consequenceTerms;
 
     @Inject
-    SyntheticVariationConsequenceService(final SyntheticGenome genome)
+    public SyntheticVariationConsequenceService(final SyntheticGenome genome)
     {
         checkNotNull(genome);
         this.genome = genome;

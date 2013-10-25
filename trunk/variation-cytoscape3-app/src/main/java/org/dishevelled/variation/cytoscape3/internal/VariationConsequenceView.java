@@ -147,7 +147,7 @@ final class VariationConsequenceView
     }
 
     /**
-     * Variation consequenc table.
+     * Variation consequence table.
      */
     private class VariationConsequenceTable extends ElementsTable<VariationConsequence>
     {

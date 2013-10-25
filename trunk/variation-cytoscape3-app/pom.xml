@@ -60,6 +60,11 @@
       <scope>compile</scope>
     </dependency>
     <dependency>
+      <groupId>com.github.heuermh.ensemblrestclient</groupId>
+      <artifactId>ensembl-rest-client</artifactId>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
       <groupId>commons-lang</groupId>
       <artifactId>commons-lang</artifactId>
       <scope>compile</scope>
@@ -191,6 +196,11 @@
   </repositories>
   <dependencyManagement>
     <dependencies>
+      <dependency>
+        <groupId>com.github.heuermh.ensemblrestclient</groupId>
+        <artifactId>ensembl-rest-client</artifactId>
+        <version>1.2-SNAPSHOT</version>
+      </dependency>
       <dependency>
         <groupId>org.cytoscape</groupId>
         <artifactId>core-task-api</artifactId>

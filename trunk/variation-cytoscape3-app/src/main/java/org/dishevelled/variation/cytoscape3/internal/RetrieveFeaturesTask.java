@@ -23,9 +23,10 @@
 */
 package org.dishevelled.variation.cytoscape3.internal;
 
-import static org.dishevelled.variation.cytoscape3.internal.VariationUtils.ensemblGeneIds;
-
 import static com.google.common.base.Preconditions.checkNotNull;
+
+import static org.dishevelled.variation.cytoscape3.internal.VariationUtils.ensemblGeneIds;
+import static org.dishevelled.variation.cytoscape3.internal.VariationUtils.resultStatusMessage;
 
 import java.util.List;
 
@@ -93,6 +94,7 @@ final class RetrieveFeaturesTask
                     {
                         taskMonitor.setStatusMessage("Retrieving genome feature for Ensembl Gene " + ensemblGeneId + "...");
                         Feature feature = model.getFeatureService().feature(model.getSpecies(), model.getReference(), ensemblGeneId);
+                        taskMonitor.setStatusMessage(resultStatusMessage(feature == null ? 0 : 1, "genome feature", "Ensembl Gene", ensemblGeneId));
                         if (feature != null)
                         {
                             model.add(node, feature);

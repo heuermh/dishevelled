@@ -27,6 +27,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.util.List;
 
+import com.google.common.base.Objects;
+
 import com.google.common.collect.ImmutableList;
 
 /**
@@ -42,6 +44,7 @@ public final class Variation
     private final String region;
     private final int start;
     private final int end;
+    private final int hashCode;
 
     public Variation(final String species,
                      final String reference,
@@ -67,6 +70,8 @@ public final class Variation
         this.region = region;
         this.start = start;
         this.end = end;
+
+        hashCode = Objects.hashCode(this.species, this.reference, this.identifiers, this.referenceAllele, this.alternateAlleles, this.region, this.start, this.end);
     }
 
 
@@ -108,6 +113,35 @@ public final class Variation
     public int getEnd()
     {
         return end;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return hashCode;
+    }
+
+    @Override
+    public boolean equals(final Object o)
+    {
+        if (this == o)
+        {
+            return true;
+        }
+        if (!(o instanceof Variation))
+        {
+            return false;
+        }
+        Variation variation = (Variation) o;
+
+        return Objects.equal(species, variation.species)
+            && Objects.equal(reference, variation.reference)
+            && Objects.equal(identifiers, variation.identifiers)
+            && Objects.equal(referenceAllele, variation.referenceAllele)
+            && Objects.equal(alternateAlleles, variation.alternateAlleles)
+            && Objects.equal(region, variation.region)
+            && Objects.equal(start, variation.start)
+            && Objects.equal(end, variation.end);
     }
 
     @Override

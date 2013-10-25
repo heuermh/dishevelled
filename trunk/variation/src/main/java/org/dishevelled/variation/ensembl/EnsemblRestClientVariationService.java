@@ -81,7 +81,7 @@ public final class EnsemblRestClientVariationService
                                          variation.getLocation().getName(),
                                          variation.getLocation().getStart(),
                                          variation.getLocation().getEnd()));
-            }
+        }
         return variations;
     }
 

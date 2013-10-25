@@ -53,11 +53,6 @@ import org.dishevelled.identify.IdentifiableAction;
 import org.dishevelled.identify.IdToolBar;
 import org.dishevelled.identify.ContextMenuListener;
 
-import org.dishevelled.variation.FeatureService;
-import org.dishevelled.variation.VariationService;
-import org.dishevelled.variation.VariationConsequenceService;
-import org.dishevelled.variation.VariationConsequencePredictionService;
-
 /**
  * Variation action.
  *
@@ -71,35 +66,14 @@ final class VariationAction extends AbstractCyAction
     /** Dialog task manager. */
     private final DialogTaskManager dialogTaskManager;
 
-    /** Feature service. */
-    private final FeatureService featureService;
-
-    /** Variation service. */
-    private final VariationService variationService;
-
-    /** Variation consequence service. */
-    private final VariationConsequenceService variationConsequenceService;
-
-    /** Variation consequence prediction service. */
-    private final VariationConsequencePredictionService variationConsequencePredictionService;
-
 
     /**
      * Create a new variation action.
      *
      * @param applicationManager application manager, must not be null
      * @param dialogTaskManager dialog task manager, must not be null
-     * @param featureService feature service, must not be null
-     * @param variationService variation service, must not be null
-     * @param variationConsequenceService variation consequence service, must not be null
-     * @param variationConsequencePredictionService variation consequence prediction service, must not be null
      */
-    VariationAction(final CyApplicationManager applicationManager,
-                    final DialogTaskManager dialogTaskManager,
-                    final FeatureService featureService,
-                    final VariationService variationService,
-                    final VariationConsequenceService variationConsequenceService,
-                    final VariationConsequencePredictionService variationConsequencePredictionService)
+    VariationAction(final CyApplicationManager applicationManager, final DialogTaskManager dialogTaskManager)
     {
         super("Variation");
         setPreferredMenu("Apps");
@@ -108,11 +82,6 @@ final class VariationAction extends AbstractCyAction
         checkNotNull(dialogTaskManager);
         this.applicationManager = applicationManager;
         this.dialogTaskManager = dialogTaskManager;
-
-        this.featureService = featureService;
-        this.variationService = variationService;
-        this.variationConsequenceService = variationConsequenceService;
-        this.variationConsequencePredictionService = variationConsequencePredictionService;
     }
 
 
@@ -141,8 +110,7 @@ final class VariationAction extends AbstractCyAction
         contentPane.setBorder(new EmptyBorder(12, 12, 12, 12));
         contentPane.setLayout(new BorderLayout());
 
-        VariationApp app = new VariationApp(applicationManager, dialogTaskManager,
-                                            featureService, variationService, variationConsequenceService, variationConsequencePredictionService);
+        VariationApp app = new VariationApp(applicationManager, dialogTaskManager);
 
         IdToolBar toolBar = new IdToolBar();
         toolBar.displayIconsAndText();
@@ -176,7 +144,7 @@ final class VariationAction extends AbstractCyAction
 
         dialog.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
         installCloseKeyBinding(dialog);
-        dialog.setBounds(200, 200, 888, 500);
+        dialog.setBounds(200, 200, 1016, 628);
         dialog.setVisible(true);
     }
 }

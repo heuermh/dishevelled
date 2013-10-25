@@ -44,11 +44,6 @@ import org.dishevelled.iconbundle.impl.PNGIconBundle;
 
 import org.dishevelled.identify.IdentifiableAction;
 
-import org.dishevelled.variation.FeatureService;
-import org.dishevelled.variation.VariationService;
-import org.dishevelled.variation.VariationConsequenceService;
-import org.dishevelled.variation.VariationConsequencePredictionService;
-
 /**
  * Variation app.
  *
@@ -138,18 +133,9 @@ final class VariationApp
      * Create a new variation app.
      *
      * @param applicationManager application manager, must not be null
-     * @param dialogTaskManager dialog task manager
-     * @param featureService feature service, must not be null
-     * @param variationService variation service, must not be null
-     * @param variationConsequenceService variation consequence service, must not be null
-     * @param variationConsequencePredictionService variation consequence prediction service, must not be null
+     * @param dialogTaskManager dialog task manager, must not be null
      */
-    VariationApp(final CyApplicationManager applicationManager,
-                 final DialogTaskManager dialogTaskManager,
-                 final FeatureService featureService,
-                 final VariationService variationService,
-                 final VariationConsequenceService variationConsequenceService,
-                 final VariationConsequencePredictionService variationConsequencePredictionService)
+    VariationApp(final CyApplicationManager applicationManager, final DialogTaskManager dialogTaskManager)
     {
         checkNotNull(applicationManager);
         checkNotNull(dialogTaskManager);
@@ -157,13 +143,6 @@ final class VariationApp
         this.dialogTaskManager = dialogTaskManager;
 
         model = new VariationModel();
-
-        // hmm...
-        model.setFeatureService(featureService);
-        model.setVariationService(variationService);
-        model.setVariationConsequenceService(variationConsequenceService);
-        model.setVariationConsequencePredictionService(variationConsequencePredictionService);
-
         configView = new ConfigView(model);
         featureView = new FeatureView(model);
         variationView = new VariationView(model);
@@ -245,12 +224,6 @@ final class VariationApp
      */
     void retrieveFeatures()
     {
-        //
-        // Task factories should be singletons and should be provided by OSGi
-        // Task factories should instantiate all the task's dependencies before calling createTaskIterator
-        // Tunable parameters on Task seem better suited for primitives
-        // Some implementations might need parameters; e.g. VCF file for VCF reader variation service
-        //
         RetrieveFeaturesTaskFactory taskFactory = new RetrieveFeaturesTaskFactory(model);
         dialogTaskManager.execute(taskFactory.createTaskIterator());
         tabbedPane.setSelectedComponent(featureView);
