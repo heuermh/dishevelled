@@ -27,6 +27,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.util.List;
 
+import com.google.common.base.Objects;
+
 import com.google.common.collect.ImmutableList;
 
 /**
@@ -44,6 +46,7 @@ public final class VariationConsequence
     private final String region; // seq_region_name
     private final int start;
     private final int end;
+    private final int hashCode;
 
     public VariationConsequence(final String species,
                                 final String reference,
@@ -72,6 +75,8 @@ public final class VariationConsequence
         this.region = region;
         this.start = start;
         this.end = end;
+
+        hashCode = Objects.hashCode(this.species, this.reference, this.identifiers, this.referenceAllele, this.alternateAllele, this.sequenceOntologyTerm, this.region, this.start, this.end);
     }
 
     public String getSpecies()
@@ -117,5 +122,35 @@ public final class VariationConsequence
     public int getEnd()
     {
         return end;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return hashCode;
+    }
+
+    @Override
+    public boolean equals(final Object o)
+    {
+        if (this == o)
+        {
+            return true;
+        }
+        if (!(o instanceof VariationConsequence))
+        {
+            return false;
+        }
+        VariationConsequence variationConsequence = (VariationConsequence) o;
+
+        return Objects.equal(species, variationConsequence.species)
+            && Objects.equal(reference, variationConsequence.reference)
+            && Objects.equal(identifiers, variationConsequence.identifiers)
+            && Objects.equal(referenceAllele, variationConsequence.referenceAllele)
+            && Objects.equal(alternateAllele, variationConsequence.alternateAllele)
+            && Objects.equal(sequenceOntologyTerm, variationConsequence.sequenceOntologyTerm)
+            && Objects.equal(region, variationConsequence.region)
+            && Objects.equal(start, variationConsequence.start)
+            && Objects.equal(end, variationConsequence.end);
     }
 }

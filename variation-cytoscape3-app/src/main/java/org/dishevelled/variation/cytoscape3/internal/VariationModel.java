@@ -529,7 +529,23 @@ final class VariationModel
         checkNotNull(variation);
         List<Feature> hits = Lists.newArrayList();
         CenteredIntervalTree intervalTree = intervalTrees.get(variation.getRegion());
-        for (Interval interval : intervalTree.intersect(Interval.closedOpen(variation.getStart(), variation.getEnd())))
+
+        Interval query;
+        if (variation.getStart() == variation.getEnd())
+        {
+            query = Interval.singleton(variation.getStart());
+        }
+        // todo: Ensembl REST client variation query returns end < start for deletions, e.g ref - alt [AAA]
+        else if (variation.getEnd() < variation.getStart())
+        {
+            query = Interval.closedOpen(variation.getEnd(), variation.getStart());
+        }
+        else
+        {
+            query = Interval.closedOpen(variation.getStart(), variation.getEnd());
+        }
+
+        for (Interval interval : intervalTree.intersect(query))
         {
             hits.add(featuresToIntervals.inverse().get(interval));
         }

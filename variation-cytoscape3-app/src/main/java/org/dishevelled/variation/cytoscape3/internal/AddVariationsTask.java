@@ -24,6 +24,7 @@
 package org.dishevelled.variation.cytoscape3.internal;
 
 import static org.dishevelled.variation.cytoscape3.internal.VariationUtils.addCount;
+import static org.dishevelled.variation.cytoscape3.internal.VariationUtils.resultStatusMessage;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -80,9 +81,9 @@ final class AddVariationsTask
             for (int i = 0, size = model.features().size(); i < size; i++)
             {
                 Feature feature = model.features().get(i);
-                taskMonitor.setStatusMessage("Retrieving variations associated with feature " + feature);
+                taskMonitor.setStatusMessage("Retrieving variations associated with feature " + feature + "...");
                 final List<Variation> variations = model.getVariationService().variations(feature);
-                taskMonitor.setStatusMessage("Found " + variations.size() + " variations associated with feature " + feature);
+                taskMonitor.setStatusMessage(resultStatusMessage(variations.size(), "variation", "feature", feature));
 
                 // todo:  merge strategy
                 for (Variation variation : variations)

@@ -25,18 +25,10 @@ package org.dishevelled.variation.cytoscape3.internal;
 
 import java.util.Properties;
 
-import com.google.inject.Guice;
-import com.google.inject.Injector;
-
 import org.cytoscape.application.CyApplicationManager;
 import org.cytoscape.application.swing.CyAction;
 import org.cytoscape.service.util.AbstractCyActivator;
 import org.cytoscape.work.swing.DialogTaskManager;
-
-import org.dishevelled.variation.FeatureService;
-import org.dishevelled.variation.VariationConsequenceService;
-import org.dishevelled.variation.VariationConsequencePredictionService;
-import org.dishevelled.variation.VariationService;
 
 import org.osgi.framework.BundleContext;
 
@@ -57,24 +49,7 @@ public final class CyActivator extends AbstractCyActivator
         }
         CyApplicationManager applicationManager = getService(bundleContext, CyApplicationManager.class);
         DialogTaskManager dialogTaskManager = getService(bundleContext, DialogTaskManager.class);
-
-        Injector injector = Guice.createInjector(new org.dishevelled.variation.synthetic.SyntheticModule());
-        //Injector injector = Guice.createInjector(new com.github.heuermh.ensemblrestclient.EnsemblRestClientModule(),
-        //                                         new org.dishevelled.variation.ensembl.EnsemblRestClientModule());
-
-        FeatureService featureService = injector.getInstance(FeatureService.class);
-        VariationConsequenceService variationConsequenceService = injector.getInstance(VariationConsequenceService.class);
-        VariationConsequencePredictionService variationConsequencePredictionService = injector.getInstance(VariationConsequencePredictionService.class);
-        VariationService variationService = injector.getInstance(VariationService.class);
-
-        VariationAction variationAction = new VariationAction(applicationManager,
-                                                              dialogTaskManager,
-                                                              featureService,
-                                                              variationService,
-                                                              variationConsequenceService,
-                                                              variationConsequencePredictionService);
-
-        //VariationAction variationAction = new VariationAction(applicationManager, dialogTaskManager);
+        VariationAction variationAction = new VariationAction(applicationManager, dialogTaskManager);
 
         Properties properties = new Properties();
         registerService(bundleContext, variationAction, CyAction.class, properties);

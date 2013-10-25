@@ -25,18 +25,21 @@ package org.dishevelled.variation;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
+import com.google.common.base.Objects;
+
 /**
  * Feature.
  */
 public final class Feature
 {
-    private String species;
-    private String reference;
-    private String identifier; // gene_id
-    private String region;
-    private int start;
-    private int end;
-    private int strand;
+    private final String species;
+    private final String reference;
+    private final String identifier; // gene_id
+    private final String region;
+    private final int start;
+    private final int end;
+    private final int strand;
+    private final int hashCode;
 
     public Feature(final String species,
                    final String reference,
@@ -58,6 +61,8 @@ public final class Feature
         this.start = start;
         this.end = end;
         this.strand = strand;
+
+        hashCode = Objects.hashCode(this.species, this.reference, this.identifier, this.region, this.start, this.end, this.strand);
     }
 
 
@@ -94,6 +99,34 @@ public final class Feature
     public int getStrand()
     {
         return strand;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return hashCode;
+    }
+
+    @Override
+    public boolean equals(final Object o)
+    {
+        if (this == o)
+        {
+            return true;
+        }
+        if (!(o instanceof Feature))
+        {
+            return false;
+        }
+        Feature feature = (Feature) o;
+
+        return Objects.equal(species, feature.species)
+            && Objects.equal(reference, feature.reference)
+            && Objects.equal(identifier, feature.identifier)
+            && Objects.equal(region, feature.region)
+            && Objects.equal(start, feature.start)
+            && Objects.equal(end, feature.end)
+            && Objects.equal(strand, feature.strand);
     }
 
     @Override

@@ -27,6 +27,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import static org.dishevelled.variation.cytoscape3.internal.VariationUtils.addConsequenceCounts;
 import static org.dishevelled.variation.cytoscape3.internal.VariationUtils.addCount;
+import static org.dishevelled.variation.cytoscape3.internal.VariationUtils.resultStatusMessage;
 
 import java.util.List;
 
@@ -93,7 +94,7 @@ final class PredictVariationConsequencesTask
                 {
                     taskMonitor.setStatusMessage("Predicting variation consequences for variation " + variation + "...");
                     List<VariationConsequence> variationConsequences = model.getVariationConsequencePredictionService().predictConsequences(variation);
-                    taskMonitor.setStatusMessage("Predicted " + variationConsequences.size() + " variation consequences for variation " + variation);
+                    taskMonitor.setStatusMessage(resultStatusMessage("Predicted", variationConsequences.size(), "variation consequence", "variation", variation));
 
                     model.add(hit, variationConsequences);
                     model.variationConsequences().addAll(variationConsequences);
@@ -106,7 +107,6 @@ final class PredictVariationConsequencesTask
             {
                 CyNode node = model.nodes().get(i);
                 Feature feature = model.featureFor(node);
-                System.out.println("looking up feature for node " + node + ", found " + feature);
                 if (feature != null)
                 {
                     List<VariationConsequence> variationConsequences = model.consequencesFor(feature);

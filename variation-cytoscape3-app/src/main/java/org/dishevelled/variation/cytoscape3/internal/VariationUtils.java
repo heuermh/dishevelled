@@ -83,6 +83,61 @@ final class VariationUtils
 
 
     /**
+     * Return a result status message.
+     *
+     * @param count count
+     * @param childType child type
+     * @param parentType parent type
+     * @param parent parent
+     * @return a result status message
+     */
+    static String resultStatusMessage(final int count, final String childType, final String parentType, final Object parent)
+    {
+        return resultStatusMessage("Found", count, childType, parentType, parent);
+    }
+
+    /**
+     * Return a result status message.
+     *
+     * @param verb verb
+     * @param count count
+     * @param childType child type
+     * @param parentType parent type
+     * @param parent parent
+     * @return a result status message
+     */
+    static String resultStatusMessage(final String verb, final int count, final String childType, final String parentType, final Object parent)
+    {
+        StringBuilder sb = new StringBuilder();
+        sb.append(verb);
+        sb.append(" ");
+        if (count == 0)
+        {
+            sb.append("no ");
+            sb.append(childType);
+            sb.append("s");
+        }
+        else if (count == 1)
+        {
+            sb.append(count);
+            sb.append(" ");
+            sb.append(childType);
+        }
+        else
+        {
+            sb.append(count);
+            sb.append(" ");
+            sb.append(childType);
+            sb.append("s");
+        }
+        sb.append(" for ");
+        sb.append(parentType);
+        sb.append(" ");
+        sb.append(parent.toString());
+        return sb.toString();
+    }
+
+    /**
      * Return zero or more Ensembl gene ids from the specified Ensembl gene id column for the specified node.
      *
      * @param node node
