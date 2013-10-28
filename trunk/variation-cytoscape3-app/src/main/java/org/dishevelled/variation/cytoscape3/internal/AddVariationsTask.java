@@ -30,8 +30,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.util.List;
 
-import javax.swing.SwingUtilities;
-
 import ca.odell.glazedlists.util.concurrent.Lock;
 
 import org.cytoscape.work.AbstractTask;

@@ -28,8 +28,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import static org.dishevelled.variation.cytoscape3.internal.VariationUtils.ensemblGeneIds;
 import static org.dishevelled.variation.cytoscape3.internal.VariationUtils.resultStatusMessage;
 
-import java.util.List;
-
 import ca.odell.glazedlists.util.concurrent.Lock;
 
 import org.apache.commons.lang.StringUtils;
