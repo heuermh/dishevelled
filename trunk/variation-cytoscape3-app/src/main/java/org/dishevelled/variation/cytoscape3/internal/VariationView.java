@@ -27,9 +27,14 @@ import java.awt.Component;
 
 import java.awt.event.ActionEvent;
 
+import java.util.List;
+
 import javax.swing.JFileChooser;
 
 import javax.swing.border.EmptyBorder;
+
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableCellRenderer;
 
 import ca.odell.glazedlists.EventList;
 import ca.odell.glazedlists.GlazedLists;
@@ -149,6 +154,12 @@ final class VariationView
         VariationTable(final EventList<Variation> variations)
         {
             super("Variations:", variations, TABLE_FORMAT);
+
+            // work around NPE in prepareRenderer on JDK 1.6
+            final TableCellRenderer tableCellRenderer = new DefaultTableCellRenderer();
+            getTable().setDefaultRenderer(Integer.class, tableCellRenderer);
+            getTable().setDefaultRenderer(String.class, tableCellRenderer);
+            getTable().setDefaultRenderer(List.class, tableCellRenderer);
 
             Component refreshContextMenuComponent = getContextMenu().add(refresh);
             // place at index 8 before add action
