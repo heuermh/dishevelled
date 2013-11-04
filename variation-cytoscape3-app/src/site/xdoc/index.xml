@@ -32,14 +32,29 @@
 <section name="Summary">
 
 <p>
-dishevelled.org <b>variation-cytoscape3-app</b> provides a variation Cytoscape 3 [<a href="#1">1</a>] app.  The variation Cytoscape 3 app requires java version 1.6 or later and Cytoscape version 3.0 or later.
+dishevelled.org <b>variation-cytoscape3-app</b> provides a Cytoscape 3 [<a href="#1">1</a>] app for integrating variation and variation consequence data on biological networks.  The Variation Cytoscape 3 app requires java version 1.6 or later and Cytoscape version 3.0 or later.
 </p>
 </section>
+
+<p>
+The Variation Cytoscape 3 app was presented in a poster at the 2013 Cold Spring Harbor Laboratory conference on Genome Informatics [<a href="#2">2</a>] titled "Visualizing consequences of genetic variation in biological networks" by L.F. Tang et al.  The presentation and supplementary slides are available in OpenDocument presentation (.odp) and PowerPoint (.pptx) formats.
+</p>
+
+<p>
+&gt; <a href="presentations/GenomeInformatics2013.odp">GenomeInformatics2013.odp</a><br/>
+&gt; <a href="presentations/GenomeInformatics2013.pptx">GenomeInformatics2013.pptx</a><br/>
+&gt; <a href="presentations/variation-cytoscape3-app.odp">variation-cytoscape3-app.odp</a><br/>
+&gt; <a href="presentations/variation-cytoscape3-app.pptx">variation-cytoscape3-app.pptx</a><br/>
+</p>
 
 <section name="References">
 <p id="1">
 [1] Cytoscape<br/>
 &gt; <a href="http://cytoscape.org">http://cytoscape.org</a>
+</p>
+<p id="2">
+[2] 2013 Cold Spring Harbor Laboratory conference on Genome Informatics<br/>
+&gt; <a href="http://meetings.cshl.edu/meetings/2013/info13.shtml">http://meetings.cshl.edu/meetings/2013/info13.shtml</a>
 </p>
 </section>
 
