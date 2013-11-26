@@ -21,7 +21,7 @@
     > http://www.opensource.org/licenses/lgpl-license.php
 
 */
-package org.dishevelled.variation.vcf;
+package org.dishevelled.variation.snpeff;
 
 import java.util.Map;
 import java.util.Set;
