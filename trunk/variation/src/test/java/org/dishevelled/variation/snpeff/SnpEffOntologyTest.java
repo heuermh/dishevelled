@@ -21,21 +21,21 @@
     > http://www.opensource.org/licenses/lgpl-license.php
 
 */
-package org.dishevelled.variation.vcf;
+package org.dishevelled.variation.snpeff;
+
+import static org.dishevelled.variation.snpeff.SnpEffOntology.effects;
+import static org.dishevelled.variation.snpeff.SnpEffOntology.effectToImpactMapping;
+import static org.dishevelled.variation.snpeff.SnpEffOntology.effectToRegionMapping;
+import static org.dishevelled.variation.snpeff.SnpEffOntology.effectToSequenceOntologyMapping;
+import static org.dishevelled.variation.snpeff.SnpEffOntology.impacts;
+import static org.dishevelled.variation.snpeff.SnpEffOntology.indexByName;
+import static org.dishevelled.variation.snpeff.SnpEffOntology.regions;
+import static org.dishevelled.variation.snpeff.SnpEffOntology.regionToEffectMapping;
+import static org.dishevelled.variation.snpeff.SnpEffOntology.regionToImpactMapping;
+import static org.dishevelled.variation.snpeff.SnpEffOntology.regionToSequenceOntologyMapping;
 
 import static org.dishevelled.variation.so.SequenceOntology.sequenceFeatures;
 import static org.dishevelled.variation.so.SequenceOntology.sequenceVariants;
-
-import static org.dishevelled.variation.vcf.SnpEffOntology.effects;
-import static org.dishevelled.variation.vcf.SnpEffOntology.effectToImpactMapping;
-import static org.dishevelled.variation.vcf.SnpEffOntology.effectToRegionMapping;
-import static org.dishevelled.variation.vcf.SnpEffOntology.effectToSequenceOntologyMapping;
-import static org.dishevelled.variation.vcf.SnpEffOntology.impacts;
-import static org.dishevelled.variation.vcf.SnpEffOntology.indexByName;
-import static org.dishevelled.variation.vcf.SnpEffOntology.regions;
-import static org.dishevelled.variation.vcf.SnpEffOntology.regionToEffectMapping;
-import static org.dishevelled.variation.vcf.SnpEffOntology.regionToImpactMapping;
-import static org.dishevelled.variation.vcf.SnpEffOntology.regionToSequenceOntologyMapping;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
