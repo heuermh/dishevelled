@@ -122,7 +122,7 @@ public final class StateMachineSpriteExample
             });
         for (WalkingSprite walkingSprite : toSort)
         {
-            walkingSprite.moveToFront();
+            walkingSprite.raiseToTop();
         }
 
         // animation frame rate timer

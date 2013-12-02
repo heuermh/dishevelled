@@ -43,6 +43,7 @@ import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 
+
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.InputMap;
@@ -271,6 +272,7 @@ final class GroupsView
         }
         this.applicationManager = applicationManager;
 
+        // multi-network:  this will need to find groups from all networks
         Set<CyGroup> groupSet = groupManager.getGroupSet(applicationManager.getCurrentNetwork());
         groups = GlazedLists.eventList(new ArrayList<CyGroup>(groupSet));
         EventListModel<CyGroup> listModel = new EventListModel<CyGroup>(groups);
@@ -388,9 +390,12 @@ final class GroupsView
         List<Set<CyNode>> sets = new ArrayList<Set<CyNode>>(selected.size());
         for (CyGroup selectedGroup : selected)
         {
+            // multi-network:  use selectedGroup, selectedGroup.getGroupNetwork
             labels.add(nameOf(selectedGroup, network));
             sets.add(new HashSet<CyNode>(selectedGroup.getNodeList()));
         }
+        // multi-network:  will need to wrap CyNode with comparable or otherwise introduce a comparator
+        //   for comparing nodes from different networks
         final VennModel<CyNode> model = VennModels.createVennModel(sets);
         final VennNode<CyNode> vennNode = new VennNode<CyNode>(model);
         // add ctr that takes List<String> labels as parameter?
