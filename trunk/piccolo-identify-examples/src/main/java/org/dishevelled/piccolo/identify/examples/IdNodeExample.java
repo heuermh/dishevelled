@@ -312,8 +312,8 @@ public final class IdNodeExample
     private void darkenBackground()
     {
         canvas.setBackground(DARK_BACKGROUND_COLOR);
-        darkBackground.moveToBack();
-        lightBackground.moveToBack();
+        darkBackground.lowerToBottom();
+        lightBackground.lowerToBottom();
 
         for (Iterator iterator = canvas.getLayer().getChildrenIterator(); iterator.hasNext(); )
         {
@@ -338,8 +338,8 @@ public final class IdNodeExample
     private void lightenBackground()
     {
         canvas.setBackground(LIGHT_BACKGROUND_COLOR);
-        lightBackground.moveToBack();
-        darkBackground.moveToBack();
+        lightBackground.lowerToBottom();
+        darkBackground.lowerToBottom();
 
         for (Iterator iterator = canvas.getLayer().getChildrenIterator(); iterator.hasNext(); )
         {

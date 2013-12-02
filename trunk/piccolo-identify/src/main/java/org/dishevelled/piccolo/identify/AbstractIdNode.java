@@ -550,7 +550,7 @@ public abstract class AbstractIdNode
         /** {@inheritDoc} */
         protected void startDrag(final PInputEvent event)
         {
-            AbstractIdNode.this.moveToFront();
+            AbstractIdNode.this.raiseToTop();
             AbstractIdNode.this.startDrag();
             super.startDrag(event);
         }

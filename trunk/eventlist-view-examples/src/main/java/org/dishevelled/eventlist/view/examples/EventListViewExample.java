@@ -23,9 +23,6 @@
 */
 package org.dishevelled.eventlist.view.examples;
 
-import ca.odell.glazedlists.EventList;
-import ca.odell.glazedlists.GlazedLists;
-
 import java.awt.GridLayout;
 
 import java.awt.event.ActionEvent;
@@ -44,6 +41,9 @@ import javax.swing.Timer;
 import javax.swing.SwingUtilities;
 
 import javax.swing.border.EmptyBorder;
+
+import ca.odell.glazedlists.EventList;
+import ca.odell.glazedlists.GlazedLists;
 
 import ca.odell.glazedlists.gui.TableFormat;
 
