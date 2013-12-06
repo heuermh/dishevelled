@@ -27,13 +27,10 @@ import static javax.swing.SwingUtilities.windowForComponent;
 
 import java.awt.BorderLayout;
 import java.awt.Toolkit;
-
 import java.awt.event.WindowEvent;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-
 import java.awt.geom.Rectangle2D;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -54,15 +51,13 @@ import javax.swing.JPopupMenu;
 import javax.swing.JRootPane;
 import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
-
+import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
-
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import ca.odell.glazedlists.EventList;
 import ca.odell.glazedlists.GlazedLists;
-
 import ca.odell.glazedlists.swing.EventListModel;
 import ca.odell.glazedlists.swing.EventSelectionModel;
 
@@ -70,35 +65,26 @@ import com.google.common.base.Joiner;
 
 import org.dishevelled.iconbundle.IconBundle;
 import org.dishevelled.iconbundle.IconSize;
-
 import org.dishevelled.iconbundle.impl.CachingIconBundle;
 import org.dishevelled.iconbundle.impl.PNGIconBundle;
-
 import org.dishevelled.identify.ContextMenuListener;
 import org.dishevelled.identify.IdentifiableAction;
 import org.dishevelled.identify.IdButton;
 import org.dishevelled.identify.IdMenuItem;
 import org.dishevelled.identify.IdToolBar;
-
-import org.dishevelled.layout.ButtonPanel;
 import org.dishevelled.layout.LabelFieldPanel;
-
 import org.dishevelled.piccolo.venn.BinaryVennNode;
 import org.dishevelled.piccolo.venn.TernaryVennNode;
 import org.dishevelled.piccolo.venn.QuaternaryVennNode;
 import org.dishevelled.piccolo.venn.VennNode;
-
 import org.dishevelled.venn.VennModel;
 import org.dishevelled.venn.VennLayout;
 import org.dishevelled.venn.VennLayouter;
 import org.dishevelled.venn.VennLayouter.PerformanceHint;
-
 import org.dishevelled.venn.model.VennModels;
-
 import org.dishevelled.venn.swing.BinaryVennList;
 import org.dishevelled.venn.swing.TernaryVennList;
 import org.dishevelled.venn.swing.QuaternaryVennList;
-
 import org.cytoscape.venneuler.VennEulerLayouter;
 
 /**
@@ -340,7 +326,7 @@ final class GroupsView
 
         JDialog dialog = new JDialog(windowForComponent(this), Joiner.on(", ").join(labels) + " Euler Diagram");
         dialog.setContentPane(new DiagramView(vennNode));
-        dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         installCloseKeyBinding(dialog);
 
         // todo: offset per parent frame
@@ -380,7 +366,7 @@ final class GroupsView
 
         JDialog dialog = new JDialog(windowForComponent(this), firstLabel + ", " + secondLabel + " Venn Diagram");
         dialog.setContentPane(new DiagramView(binaryVennNode));
-        dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         installCloseKeyBinding(dialog);
 
         // todo: offset per parent frame
@@ -403,7 +389,7 @@ final class GroupsView
 
         JDialog dialog = new JDialog(windowForComponent(this), firstLabel + ", " + secondLabel + ", " + thirdLabel + " Venn Diagram");
         dialog.setContentPane(new DiagramView(ternaryVennNode));
-        dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         installCloseKeyBinding(dialog);
 
         // todo: offset per parent frame
@@ -428,7 +414,7 @@ final class GroupsView
 
         JDialog dialog = new JDialog(windowForComponent(this), firstLabel + ", " + secondLabel + ", " + thirdLabel + ", " + fourthLabel + " Venn Diagram");
         dialog.setContentPane(new DiagramView(quaternaryVennNode));
-        dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         installCloseKeyBinding(dialog);
 
         // todo: offset per parent frame
@@ -449,7 +435,7 @@ final class GroupsView
 
         JDialog dialog = new JDialog(windowForComponent(this), firstLabel + ", " + secondLabel + " Details");
         dialog.setContentPane(new DetailsView(binaryVennList));
-        dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         installCloseKeyBinding(dialog);
 
         // todo: offset per parent frame
@@ -472,7 +458,7 @@ final class GroupsView
 
         JDialog dialog = new JDialog(windowForComponent(this), firstLabel + ", " + secondLabel + ", " + thirdLabel + " Details");
         dialog.setContentPane(new DetailsView(ternaryVennList));
-        dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         installCloseKeyBinding(dialog);
 
         // todo: offset per parent frame
@@ -497,7 +483,7 @@ final class GroupsView
 
         JDialog dialog = new JDialog(windowForComponent(this), firstLabel + ", " + secondLabel + ", " + thirdLabel + ", " + fourthLabel + " Details");
         dialog.setContentPane(new DetailsView(quaternaryVennList));
-        dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         installCloseKeyBinding(dialog);
 
         // todo: offset per parent frame
