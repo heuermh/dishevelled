@@ -46,13 +46,6 @@ import javax.swing.border.EmptyBorder;
 
 import org.dishevelled.eventlist.view.IdElementsList;
 
-import org.dishevelled.identify.Identifiable;
-import org.dishevelled.identify.IdListCellRenderer;
-
-import org.dishevelled.iconbundle.IconBundle;
-
-import org.dishevelled.iconbundle.tango.TangoProject;
-
 import org.dishevelled.layout.LabelFieldPanel;
 
 import org.dishevelled.piccolo.eventlist.view.CountLabelNode;
@@ -176,15 +169,6 @@ public final class IdEventListNodeExample
         f.setVisible(true);
     }
 
-    private class IdentifiableString
-        implements Identifiable
-    {
-        private final String value;
-        IdentifiableString(final String value) { this.value = value; }
-        public String getName() { return value; }
-        public String toString() { return getName(); }
-        public IconBundle getIconBundle() { return TangoProject.TEXT_X_GENERIC; }
-    }
 
     /**
      * Main.

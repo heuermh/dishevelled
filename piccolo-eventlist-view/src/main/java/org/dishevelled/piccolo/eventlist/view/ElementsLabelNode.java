@@ -66,7 +66,7 @@ public final class ElementsLabelNode<E>
     /** Listener. */
     private final ListEventListener<E> listener = new ListEventListener<E>()
         {
-            /** @{inheritDoc} */
+            @Override
             public void listChanged(final ListEvent<E> event)
             {
                 updateLabelText();
@@ -87,7 +87,6 @@ public final class ElementsLabelNode<E>
         getModel().addListEventListener(listener);
         addChild(elements);
     }
-
 
 
     /**
@@ -214,10 +213,7 @@ public final class ElementsLabelNode<E>
         getModel().removeListEventListener(listener);
     }
 
-    /**
-     * Release the resources consumed by this elements label node
-     * so that it may eventually be garbage collected.
-     */
+    @Override
     public void dispose()
     {
         super.dispose();
