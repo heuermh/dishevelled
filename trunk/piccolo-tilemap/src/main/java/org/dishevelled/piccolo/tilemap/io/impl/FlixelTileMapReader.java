@@ -191,10 +191,7 @@ public class FlixelTileMapReader
         }
         catch (NumberFormatException e)
         {
-            throw new IOException("caught NumberFormatException at line number " + rows
-                    + "\n" + e.getMessage());
-            // jdk 1.6+
-            //throw new IOException("caught NumberFormatException at line number " + lineNumber, e);
+            throw new IOException("caught NumberFormatException at line number " + rows, e);
         }
 
         SparseTileMap tileMap = new SparseTileMap(tmp.get(0).size(), tmp.size(), tileWidth, tileHeight);

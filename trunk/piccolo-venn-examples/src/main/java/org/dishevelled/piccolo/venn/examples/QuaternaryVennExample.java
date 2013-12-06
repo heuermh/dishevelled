@@ -24,14 +24,11 @@
 package org.dishevelled.piccolo.venn.examples;
 
 import java.awt.BorderLayout;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.IOException;
-
 import java.util.HashSet;
 import java.util.Set;
 
@@ -41,20 +38,14 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 import javax.swing.UIManager;
-
 import javax.swing.border.EmptyBorder;
 
 import org.piccolo2d.PCanvas;
-
 import org.piccolo2d.event.PBasicInputEventHandler;
 import org.piccolo2d.event.PInputEvent;
-
 import org.piccolo2d.nodes.PText;
-
 import org.piccolo2d.util.PPaintContext;
-
 import org.dishevelled.piccolo.venn.QuaternaryVennNode;
-
 import org.dishevelled.venn.swing.QuaternaryVennList;
 
 /**
@@ -110,7 +101,7 @@ public final class QuaternaryVennExample
 
         Timer t = new Timer(35000, new ActionListener()
             {
-                /** {@inheritDoc} */
+                @Override
                 public void actionPerformed(final ActionEvent event)
                 {
                     updateDetails();
@@ -131,7 +122,7 @@ public final class QuaternaryVennExample
         detailsLabel.setText("Left mouse click to pan, right mouse click to zoom, double-click for details");
         canvas.addInputEventListener(new PBasicInputEventHandler()
             {
-                /** {@inheritDoc} */
+                @Override
                 public void mousePressed(final PInputEvent event)
                 {
                     if (event.getClickCount() == 2)
@@ -142,7 +133,7 @@ public final class QuaternaryVennExample
             });
         Timer t = new Timer(25000, new ActionListener()
             {
-                /** {@inheritDoc} */
+                @Override
                 public void actionPerformed(final ActionEvent event)
                 {
                     detailsLabel.animateToTransparency(0.0f, 2000);
@@ -161,7 +152,7 @@ public final class QuaternaryVennExample
         {
             SwingUtilities.invokeLater(new Runnable()
                 {
-                    /** {@inheritDoc} */
+                    @Override
                     public void run()
                     {
                         details = new JDialog((JFrame) SwingUtilities.getRoot(QuaternaryVennExample.this), "Details");
@@ -184,7 +175,7 @@ public final class QuaternaryVennExample
         }
     }
 
-    /** {@inheritDoc} */
+    @Override
     public void run()
     {
         try

@@ -24,11 +24,9 @@
 package org.dishevelled.piccolo.venn.examples;
 
 import java.awt.BorderLayout;
-
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.IOException;
-
 import java.util.HashSet;
 import java.util.Set;
 
@@ -37,9 +35,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import org.piccolo2d.PCanvas;
-
 import org.piccolo2d.util.PPaintContext;
-
 import org.dishevelled.piccolo.venn.TernaryVennNode;
 
 /**
@@ -78,7 +74,7 @@ public final class TernaryVennExample
     }
 
 
-    /** {@inheritDoc} */
+    @Override
     public void run()
     {
         JFrame f = new JFrame("Ternary Venn Example");

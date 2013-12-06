@@ -28,12 +28,9 @@ import java.util.List;
 import java.util.Set;
 
 import org.piccolo2d.nodes.PText;
-
 import org.dishevelled.observable.event.SetChangeEvent;
 import org.dishevelled.observable.event.SetChangeListener;
-
 import org.dishevelled.venn.QuaternaryVennModel;
-
 import org.dishevelled.venn.model.QuaternaryVennModelImpl;
 
 /**
@@ -180,7 +177,7 @@ public abstract class AbstractQuaternaryVennNode<E>
     /** Update labels and contents. */
     private final SetChangeListener<E> update = new SetChangeListener<E>()
         {
-            /** {@inheritDoc} */
+            @Override
             public void setChanged(final SetChangeEvent<E> event)
             {
                 updateLabels();
@@ -344,7 +341,7 @@ public abstract class AbstractQuaternaryVennNode<E>
         model.fourth().removeSetChangeListener(update);
     }
 
-    /** {@inheritDoc} */
+    @Override
     protected void updateLabels()
     {
         firstLabel.setText(buildLabel(firstLabelText, model.first().size()));
@@ -396,7 +393,7 @@ public abstract class AbstractQuaternaryVennNode<E>
     protected abstract void updateContents();
 
 
-    /** {@inheritDoc} */
+    @Override
     public Iterable<PText> labels()
     {
         return labels;

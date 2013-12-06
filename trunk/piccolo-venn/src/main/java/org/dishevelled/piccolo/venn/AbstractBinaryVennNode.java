@@ -28,12 +28,9 @@ import java.util.List;
 import java.util.Set;
 
 import org.piccolo2d.nodes.PText;
-
 import org.dishevelled.observable.event.SetChangeEvent;
 import org.dishevelled.observable.event.SetChangeListener;
-
 import org.dishevelled.venn.BinaryVennModel;
-
 import org.dishevelled.venn.model.BinaryVennModelImpl;
 
 /**
@@ -92,7 +89,7 @@ public abstract class AbstractBinaryVennNode<E>
     /** Update labels and contents. */
     private final SetChangeListener<E> update = new SetChangeListener<E>()
         {
-            /** {@inheritDoc} */
+            @Override
             public void setChanged(final SetChangeEvent<E> event)
             {
                 updateLabels();
@@ -190,7 +187,7 @@ public abstract class AbstractBinaryVennNode<E>
         model.second().removeSetChangeListener(update);
     }
 
-    /** {@inheritDoc} */
+    @Override
     protected void updateLabels()
     {
         firstLabel.setText(buildLabel(firstLabelText, model.first().size()));
@@ -214,7 +211,7 @@ public abstract class AbstractBinaryVennNode<E>
     protected abstract void updateContents();
 
 
-    /** {@inheritDoc} */
+    @Override
     public final Iterable<PText> labels()
     {
         return labels;

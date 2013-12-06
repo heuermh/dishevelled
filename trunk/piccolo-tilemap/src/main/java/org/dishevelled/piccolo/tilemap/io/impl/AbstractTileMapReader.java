@@ -95,7 +95,7 @@ public abstract class AbstractTileMapReader
      *
      * @param inputStream input stream to close
      */
-    protected final void closeQuietly(final InputStream inputStream)
+    protected static final void closeQuietly(final InputStream inputStream)
     {
         try
         {

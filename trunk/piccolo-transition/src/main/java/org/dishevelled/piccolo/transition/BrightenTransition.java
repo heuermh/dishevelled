@@ -88,14 +88,14 @@ public final class BrightenTransition
     }
 
 
-    /** {@inheritDoc} */
+    @Override
     protected void activityStarted()
     {
         source = node.getTransparency();
         super.activityStarted();
     }
 
-    /** {@inheritDoc} */
+    @Override
     public void setRelativeTargetValue(final float zeroToOne)
     {
         float current = source + (zeroToOne * (dest - source));

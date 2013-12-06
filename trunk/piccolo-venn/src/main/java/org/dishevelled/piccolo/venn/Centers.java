@@ -24,11 +24,9 @@
 package org.dishevelled.piccolo.venn;
 
 import java.awt.Shape;
-
 import java.awt.geom.Area;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -40,13 +38,9 @@ import org.dishevelled.evolve.Fitness;
 import org.dishevelled.evolve.Mutation;
 import org.dishevelled.evolve.Recombination;
 import org.dishevelled.evolve.Selection;
-
 import org.dishevelled.evolve.exit.TimeLimitExitStrategy;
-
 import org.dishevelled.evolve.impl.EvolutionaryAlgorithmImpl;
-
 import org.dishevelled.evolve.recombine.SexualRecombination;
-
 import org.dishevelled.evolve.select.FitnessProportionalSelection;
 
 /**
@@ -227,7 +221,7 @@ final class Centers
                 private double x = 0.0d;
                 private double y = 0.0d;
 
-                /** {@inheritDoc} */
+                @Override
                 public Point2D recombine(final Point2D individual0, final Point2D individual1)
                 {
                     x = (individual0.getX() + individual1.getX()) / 2.0d;
@@ -241,7 +235,7 @@ final class Centers
                 private double x = 0.0d;
                 private double y = 0.0d;
 
-                /** {@inheritDoc} */
+                @Override
                 public Collection<Point2D> mutate(final Collection<Point2D> recombined)
                 {
                     for (Point2D point : recombined)
@@ -267,7 +261,7 @@ final class Centers
                 private final Rectangle2D h = new Rectangle2D.Double();
 
 
-                /** {@inheritDoc} */
+                @Override
                 public Double score(final Point2D individual)
                 {
                     if (!area.contains(individual))
