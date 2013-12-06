@@ -106,7 +106,7 @@ public final class EasingActivityExample
                 private int index = 0;
 
 
-                /** {@inheritDoc} */
+                @Override
                 public void actionPerformed(final ActionEvent event)
                 {
                     EasingFunction easingFunction = EasingFunctions.VALUES.get(index);
@@ -128,7 +128,7 @@ public final class EasingActivityExample
         add("Center", canvas);
     }
 
-    /** {@inheritDoc} */
+    @Override
     public void run()
     {
         JFrame f = new JFrame("Easing Activity Example");
@@ -180,14 +180,14 @@ public final class EasingActivityExample
         }
 
 
-        /** {@inheritDoc} */
+        @Override
         protected void activityStarted()
         {
             super.activityStarted();
             ellipse.setOffset(INITIAL_OFFSET_X, INITIAL_OFFSET_Y);
         }
 
-        /** {@inheritDoc} */
+        @Override
         public void setRelativeTargetValue(final float value)
         {
             ellipse.setOffset(INITIAL_OFFSET_X + (value * OFFSET_X), INITIAL_OFFSET_Y + (value * OFFSET_Y));

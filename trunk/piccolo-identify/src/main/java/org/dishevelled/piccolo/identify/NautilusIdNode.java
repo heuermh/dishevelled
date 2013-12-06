@@ -121,7 +121,7 @@ public final class NautilusIdNode
         // update text shadow on text node property changes
         PropertyChangeListener listener = new PropertyChangeListener()
             {
-                /** {@inheritDoc} */
+                @Override
                 public void propertyChange(final PropertyChangeEvent event)
                 {
                     updateTextShadow();
@@ -255,7 +255,7 @@ public final class NautilusIdNode
         addChild(0, textShadow);
     }
 
-    /** {@inheritDoc} */
+    @Override
     protected void layoutChildren()
     {
         PBounds iconBounds = getIconBundleImageNode().getBoundsReference();

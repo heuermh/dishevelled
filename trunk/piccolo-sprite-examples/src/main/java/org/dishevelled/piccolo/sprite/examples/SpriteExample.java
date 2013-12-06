@@ -95,7 +95,7 @@ public class SpriteExample
 
         Timer timer = new Timer((int) (1000 / 3), new ActionListener()
             {
-                /** {@inheritDoc} */
+                @Override
                 public void actionPerformed(final ActionEvent e)
                 {
                     fSprite.advance();
@@ -111,7 +111,7 @@ public class SpriteExample
     }
 
 
-    /** {@inheritDoc} */
+    @Override
     public void run()
     {
         JFrame f = new JFrame("Sprite Example");

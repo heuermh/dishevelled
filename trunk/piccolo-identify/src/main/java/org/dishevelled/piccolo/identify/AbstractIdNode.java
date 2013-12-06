@@ -481,7 +481,7 @@ public abstract class AbstractIdNode
             }
         }
 
-        /** {@inheritDoc} */
+        @Override
         public void propertyChange(final PropertyChangeEvent event)
         {
             update();
@@ -518,7 +518,7 @@ public abstract class AbstractIdNode
             setText(name);
         }
 
-        /** {@inheritDoc} */
+        @Override
         public void propertyChange(final PropertyChangeEvent event)
         {
             update();
@@ -539,7 +539,7 @@ public abstract class AbstractIdNode
             setMinDragStartDistance(4.0d);
         }
 
-        /** {@inheritDoc} */
+        @Override
         protected void drag(final PInputEvent event)
         {
             Dimension2D delta = event.getDeltaRelativeTo(AbstractIdNode.this);
@@ -547,7 +547,7 @@ public abstract class AbstractIdNode
             event.setHandled(true);
         }
 
-        /** {@inheritDoc} */
+        @Override
         protected void startDrag(final PInputEvent event)
         {
             AbstractIdNode.this.raiseToTop();
@@ -555,21 +555,21 @@ public abstract class AbstractIdNode
             super.startDrag(event);
         }
 
-        /** {@inheritDoc} */
+        @Override
         protected void endDrag(final PInputEvent event)
         {
             AbstractIdNode.this.endDrag();
             super.endDrag(event);
         }
 
-        /** {@inheritDoc} */
+        @Override
         public void mousePressed(final PInputEvent event)
         {
             AbstractIdNode.this.mousePressed();
             super.mousePressed(event);
         }
 
-        /** {@inheritDoc} */
+        @Override
         public void mouseReleased(final PInputEvent event)
         {
             AbstractIdNode.this.mouseReleased();
@@ -582,13 +582,13 @@ public abstract class AbstractIdNode
      */
     private final class MouseoverHandler extends PBasicInputEventHandler
     {
-        /** {@inheritDoc} */
+        @Override
         public void mouseEntered(final PInputEvent event)
         {
             AbstractIdNode.this.mouseEntered();
         }
 
-        /** {@inheritDoc} */
+        @Override
         public void mouseExited(final PInputEvent event)
         {
             AbstractIdNode.this.mouseExited();

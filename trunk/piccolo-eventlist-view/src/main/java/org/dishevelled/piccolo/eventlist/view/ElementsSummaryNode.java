@@ -211,31 +211,31 @@ public class ElementsSummaryNode<E>
         updateNodes();
     }
 
-    /** {@inheritDoc} */
+    @Override
     protected void cut(final List<E> toCut)
     {
         // empty
     }
 
-    /** {@inheritDoc} */
+    @Override
     protected void copy(final List<E> toCopy)
     {
         // empty
     }
 
-    /** {@inheritDoc} */
+    @Override
     public void add()
     {
         // empty
     }
 
-    /** {@inheritDoc} */
+    @Override
     public void paste()
     {
         // empty
     }
 
-    /** {@inheritDoc} */
+    @Override
     protected void layoutChildren()
     {
         double x = 0;
@@ -305,7 +305,7 @@ public class ElementsSummaryNode<E>
         getModel().removeListEventListener(listener);
     }
 
-    /** {@inheritDoc} */
+    @Override
     public void dispose()
     {
         super.dispose();

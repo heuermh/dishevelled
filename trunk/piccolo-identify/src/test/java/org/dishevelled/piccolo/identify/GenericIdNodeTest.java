@@ -35,7 +35,7 @@ public final class GenericIdNodeTest
     extends AbstractIdNodeTest
 {
 
-    /** {@inheritDoc} */
+    @Override
     protected AbstractIdNode createIdNode(final Object value)
     {
         return new GenericIdNode(value);

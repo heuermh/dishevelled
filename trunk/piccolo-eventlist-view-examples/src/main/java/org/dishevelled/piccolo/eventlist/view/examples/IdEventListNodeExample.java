@@ -135,7 +135,7 @@ public final class IdEventListNodeExample
 
         Timer t = new Timer(5000, new ActionListener()
             {
-                /** {@inheritDoc} */
+                @Override
                 public void actionPerformed(final ActionEvent e)
                 {
                     if (!eventList.isEmpty())
@@ -166,7 +166,7 @@ public final class IdEventListNodeExample
     }
 
 
-    /** {@inheritDoc} */
+    @Override
     public void run()
     {
         JFrame f = new JFrame("Identifiable Event List Node Example");

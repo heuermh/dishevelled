@@ -103,7 +103,7 @@ public final class IdEventListExample
 
         Timer t = new Timer(5000, new ActionListener()
             {
-                /** {@inheritDoc} */
+                @Override
                 public void actionPerformed(final ActionEvent e)
                 {
                     if (!eventList.isEmpty())
@@ -121,7 +121,7 @@ public final class IdEventListExample
     }
 
 
-    /** {@inheritDoc} */
+    @Override
     public void run()
     {
         JFrame f = new JFrame("Identifiable Event List Example");

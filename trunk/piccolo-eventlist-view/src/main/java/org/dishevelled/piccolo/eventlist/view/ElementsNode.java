@@ -183,25 +183,25 @@ public class ElementsNode<E>
         updateNodes();
     }
 
-    /** {@inheritDoc} */
+    @Override
     protected void cut(final List<E> toCut)
     {
         // empty
     }
 
-    /** {@inheritDoc} */
+    @Override
     protected void copy(final List<E> toCopy)
     {
         // empty
     }
 
-    /** {@inheritDoc} */
+    @Override
     public void add()
     {
         // empty
     }
 
-    /** {@inheritDoc} */
+    @Override
     public void paste()
     {
         // empty
@@ -237,7 +237,7 @@ public class ElementsNode<E>
         return toolBarContextMenu;
     }
 
-    /** {@inheritDoc} */
+    @Override
     protected void layoutChildren()
     {
         double y = 0;
@@ -281,7 +281,7 @@ public class ElementsNode<E>
         getModel().removeListEventListener(listener);
     }
 
-    /** {@inheritDoc} */
+    @Override
     public void dispose()
     {
         super.dispose();

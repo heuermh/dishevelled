@@ -64,7 +64,7 @@ public final class AnimationsTest
     private URL url;
 
 
-    /** {@inheritDoc} */
+    @Override
     protected void setUp() throws Exception
     {
         file = File.createTempFile("animationsTest", ".png");
@@ -72,7 +72,7 @@ public final class AnimationsTest
         url = file.toURL();
     }
 
-    /** {@inheritDoc} */
+    @Override
     protected void tearDown() throws Exception
     {
         file.delete();

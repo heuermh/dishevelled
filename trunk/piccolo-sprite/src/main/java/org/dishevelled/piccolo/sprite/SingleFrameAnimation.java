@@ -54,13 +54,13 @@ public final class SingleFrameAnimation
     }
 
 
-    /** {@inheritDoc} */
+    @Override
     public boolean advance()
     {
         return false;
     }
 
-    /** {@inheritDoc} */
+    @Override
     public Image getCurrentFrame()
     {
         return currentFrame;

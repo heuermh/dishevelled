@@ -82,7 +82,7 @@ public final class ListNodeExample
     }
 
 
-    /** {@inheritDoc} */
+    @Override
     public void run()
     {
         final JFrame f = new JFrame("ListNode Example");

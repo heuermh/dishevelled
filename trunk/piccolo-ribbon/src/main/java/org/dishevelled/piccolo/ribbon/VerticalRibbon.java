@@ -271,7 +271,7 @@ public final class VerticalRibbon
         setPaint(new TexturePaint(image, anchor));
     }
 
-    /** {@inheritDoc} */
+    @Override
     protected void paint(final PPaintContext paintContext)
     {
         Graphics2D g = paintContext.getGraphics();

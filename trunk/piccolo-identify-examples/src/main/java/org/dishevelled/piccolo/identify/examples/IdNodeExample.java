@@ -244,7 +244,7 @@ public final class IdNodeExample
         // add actions to reverse video
         Action reverseVideo = new AbstractAction("Reverse video")
             {
-                /** {@inheritDoc} */
+                @Override
                 public void actionPerformed(final ActionEvent event)
                 {
                     reverseVideo();
@@ -266,7 +266,7 @@ public final class IdNodeExample
         }
         canvas.getCamera().addInputEventListener(new PBasicInputEventHandler()
             {
-                /** {@inheritDoc} */
+                @Override
                 public void mousePressed(final PInputEvent event)
                 {
                     PNode pickedNode = event.getPickedNode();
@@ -358,7 +358,7 @@ public final class IdNodeExample
         reverseVideo = false;
     }
 
-    /** {@inheritDoc} */
+    @Override
     public void run()
     {
         final JFrame f = new JFrame("IdNode Example");
@@ -375,13 +375,13 @@ public final class IdNodeExample
     private static class Mic
         implements Identifiable
     {
-        /** {@inheritDoc} */
+        @Override
         public IconBundle getIconBundle()
         {
             return TangoProject.AUDIO_INPUT_MICROPHONE;
         }
 
-        /** {@inheritDoc} */
+        @Override
         public String getName()
         {
             return "Microphone";
@@ -394,13 +394,13 @@ public final class IdNodeExample
     private static class Doc
         implements Identifiable
     {
-        /** {@inheritDoc} */
+        @Override
         public IconBundle getIconBundle()
         {
             return TangoProject.TEXT_X_GENERIC;
         }
 
-        /** {@inheritDoc} */
+        @Override
         public String getName()
         {
             return "Document";
@@ -413,13 +413,13 @@ public final class IdNodeExample
     private static class Computer
         implements Identifiable
     {
-        /** {@inheritDoc} */
+        @Override
         public IconBundle getIconBundle()
         {
             return TangoProject.COMPUTER;
         }
 
-        /** {@inheritDoc} */
+        @Override
         public String getName()
         {
             return "My Computer";
@@ -441,7 +441,7 @@ public final class IdNodeExample
             this.selection = selection;
         }
 
-        /** {@inheritDoc} */
+        @Override
         public void mousePressed(final PInputEvent event)
         {
             System.out.println("selectionHandler mousePressed");

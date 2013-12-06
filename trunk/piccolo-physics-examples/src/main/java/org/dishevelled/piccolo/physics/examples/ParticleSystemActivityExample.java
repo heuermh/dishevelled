@@ -84,7 +84,7 @@ public final class ParticleSystemActivityExample
     /** Gravity action. */
     private final Action gravity = new AbstractAction("Gravity")
         {
-            /** {@inheritDoc} */
+            @Override
             public void actionPerformed(final ActionEvent event)
             {
                 gravity();
@@ -94,7 +94,7 @@ public final class ParticleSystemActivityExample
     /** Anti-gravity action. */
     private final Action antiGravity = new AbstractAction("Anti-gravity")
         {
-            /** {@inheritDoc} */
+            @Override
             public void actionPerformed(final ActionEvent event)
             {
                 antiGravity();
@@ -104,7 +104,7 @@ public final class ParticleSystemActivityExample
     /** Repulse action. */
     private final Action repulse = new AbstractAction("Repulse")
         {
-            /** {@inheritDoc} */
+            @Override
             public void actionPerformed(final ActionEvent event)
             {
                 repulse();
@@ -114,7 +114,7 @@ public final class ParticleSystemActivityExample
     /** Attract action. */
     private final Action attract = new AbstractAction("Attract")
         {
-            /** {@inheritDoc} */
+            @Override
             public void actionPerformed(final ActionEvent event)
             {
                 attract();
@@ -124,7 +124,7 @@ public final class ParticleSystemActivityExample
     /** Input action. */
     private final Action input = new AbstractAction("Input")
         {
-            /** {@inheritDoc} */
+            @Override
             public void actionPerformed(final ActionEvent event)
             {
                 input();
@@ -134,7 +134,7 @@ public final class ParticleSystemActivityExample
     /** Randomize action. */
     private final Action randomize = new AbstractAction("Randomize")
         {
-            /** {@inheritDoc} */
+            @Override
             public void actionPerformed(final ActionEvent event)
             {
                 randomize();
@@ -230,7 +230,7 @@ public final class ParticleSystemActivityExample
 
         ParticleSystemActivity activity = new ParticleSystemActivity(5000L)
             {
-                /** {@inheritDoc} */
+                @Override
                 protected void activityFinished()
                 {
                     super.activityFinished();
@@ -255,7 +255,7 @@ public final class ParticleSystemActivityExample
 
         ParticleSystemActivity activity = new ParticleSystemActivity(5000L)
             {
-                /** {@inheritDoc} */
+                @Override
                 protected void activityFinished()
                 {
                     super.activityFinished();
@@ -287,7 +287,7 @@ public final class ParticleSystemActivityExample
 
         ParticleSystemActivity activity = new ParticleSystemActivity(5000L)
             {
-                /** {@inheritDoc} */
+                @Override
                 protected void activityFinished()
                 {
                     super.activityFinished();
@@ -334,7 +334,7 @@ public final class ParticleSystemActivityExample
 
         ParticleSystemActivity activity = new ParticleSystemActivity(5000L)
             {
-                /** {@inheritDoc} */
+                @Override
                 protected void activityFinished()
                 {
                     super.activityFinished();
@@ -380,7 +380,7 @@ public final class ParticleSystemActivityExample
         canvas.getLayer().addChild(mouse);
         final PInputEventListener mouseListener = new PBasicInputEventHandler()
             {
-                /** {@inheritDoc} */
+                @Override
                 public void mouseMoved(final PInputEvent event)
                 {
                     Point2D position = event.getPosition();
@@ -398,7 +398,7 @@ public final class ParticleSystemActivityExample
         canvas.getLayer().addChild(keys);
         final PInputEventListener keysListener = new PBasicInputEventHandler()
             {
-                /** {@inheritDoc} */
+                @Override
                 public void keyPressed(final PInputEvent event)
                 {
                     switch (event.getKeyCode())
@@ -425,7 +425,7 @@ public final class ParticleSystemActivityExample
 
         ParticleSystemActivity activity = new ParticleSystemActivity(10000L)
             {
-                /** {@inheritDoc} */
+                @Override
                 protected void activityFinished()
                 {
                     super.activityFinished();
@@ -466,12 +466,12 @@ public final class ParticleSystemActivityExample
 
         PActivity fade = new PInterpolatingActivity(500L, 20L, System.currentTimeMillis() + 4000L, -1, -1)
             {
-                /** {@inheritDoc} */
+                @Override
                 public void setRelativeTargetValue(final float value) {
                     instructions.setTransparency(1.0f - value);
                 }
 
-                /** {@inheritDoc} */
+                @Override
                 protected void activityFinished()
                 {
                     super.activityFinished();
@@ -496,7 +496,7 @@ public final class ParticleSystemActivityExample
         }
     }
 
-    /** {@inheritDoc} */
+    @Override
     public void run()
     {
         JFrame f = new JFrame("Particle System Activity Example");

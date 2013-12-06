@@ -236,7 +236,7 @@ public abstract class AbstractStateMachineSprite
         // update current animation on entry to a new state
         stateMachineSupport.getExecutor().addListener(stateMachine, new AbstractSCXMLListener()
             {
-                /** {@inheritDoc} */
+                @Override
                 public void onEntry(final TransitionTarget state)
                 {
                     Animation animation = animations.get(state.getId());
@@ -329,7 +329,7 @@ public abstract class AbstractStateMachineSprite
         }
     }
 
-    /** {@inheritDoc} */
+    @Override
     public final void paint(final PPaintContext paintContext)
     {
         if (currentAnimation != null)

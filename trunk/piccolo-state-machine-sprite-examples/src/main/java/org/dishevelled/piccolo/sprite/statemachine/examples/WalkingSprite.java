@@ -76,7 +76,7 @@ public final class WalkingSprite
 
         addInputEventListener(new PBasicInputEventHandler()
             {
-                /** {@inheritDoc} */
+                @Override
                 public void mousePressed(final PInputEvent event)
                 {
                     stop();
@@ -85,7 +85,7 @@ public final class WalkingSprite
     }
 
 
-    /** {@inheritDoc} */
+    @Override
     protected Animation createAnimation(final String id)
     {
         if ("normal".equals(id))
@@ -150,7 +150,7 @@ public final class WalkingSprite
         }
 
 
-        /** {@inheritDoc} */
+        @Override
         protected void activityStep(final long elapsedTime)
         {
             offset(2.0d, 0.0d);

@@ -81,25 +81,25 @@ public final class CountLabelNode<E>
         return count;
     }
 
-    /** {@inheritDoc} */
+    @Override
     protected void cut(final List<E> toCut)
     {
         // empty
     }
 
-    /** {@inheritDoc} */
+    @Override
     protected void copy(final List<E> toCopy)
     {
         // empty
     }
 
-    /** {@inheritDoc} */
+    @Override
     public void add()
     {
         // empty
     }
 
-    /** {@inheritDoc} */
+    @Override
     public void paste()
     {
         // empty

@@ -35,7 +35,7 @@ public final class NautilusIdNodeTest
     extends AbstractIdNodeTest
 {
 
-    /** {@inheritDoc} */
+    @Override
     protected AbstractIdNode createIdNode(final Object value)
     {
         return new NautilusIdNode(value);

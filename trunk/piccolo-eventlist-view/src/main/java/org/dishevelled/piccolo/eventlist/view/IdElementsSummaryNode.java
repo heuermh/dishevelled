@@ -52,7 +52,7 @@ public final class IdElementsSummaryNode<E>
     /** Model to view mapping. */
     private final UnaryFunction<E, NautilusIdNode> modelToView = new UnaryFunction<E, NautilusIdNode>()
         {
-            /** {@inheritDoc} */
+            @Override
             public NautilusIdNode evaluate(final E element)
             {
                 NautilusIdNode idNode = new NautilusIdNode(element, iconSize);
