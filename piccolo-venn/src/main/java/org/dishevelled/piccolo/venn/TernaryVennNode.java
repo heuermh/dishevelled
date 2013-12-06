@@ -27,22 +27,18 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Paint;
 import java.awt.Stroke;
-
 import java.awt.geom.Area;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
 import org.piccolo2d.PNode;
-
 import org.piccolo2d.nodes.PArea;
 import org.piccolo2d.nodes.PPath;
 import org.piccolo2d.nodes.PText;
-
 import org.dishevelled.venn.TernaryVennModel;
 
 /**
@@ -252,7 +248,7 @@ public class TernaryVennNode<E>
         addChild(getThirdLabel());
     }
 
-    /** {@inheritDoc} */
+    @Override
     protected void updateLabels()
     {
         super.updateLabels();
@@ -269,7 +265,7 @@ public class TernaryVennNode<E>
         }
     }
 
-    /** {@inheritDoc} */
+    @Override
     protected void updateContents()
     {
         firstOnlySize.setText(String.valueOf(getModel().firstOnly().size()));
@@ -289,7 +285,7 @@ public class TernaryVennNode<E>
         intersectionSize.setVisible(getDisplaySizeLabels() && (getDisplaySizesForEmptyAreas() || !getModel().intersection().isEmpty()));
     }
 
-    /** {@inheritDoc} */
+    @Override
     protected void layoutChildren()
     {
         f = new Area(first.getPathReference());
@@ -518,13 +514,13 @@ public class TernaryVennNode<E>
         return intersection;
     }
 
-    /** {@inheritDoc} */
+    @Override
     public Iterable<PNode> nodes()
     {
         return nodes;
     }
 
-    /** {@inheritDoc} */
+    @Override
     public PText labelForNode(final PNode node)
     {
         if (firstOnly.equals(node))
@@ -558,7 +554,7 @@ public class TernaryVennNode<E>
         return null;
     }
 
-    /** {@inheritDoc} */
+    @Override
     public String labelTextForNode(final PNode node)
     {
         if (firstOnly.equals(node))
@@ -592,13 +588,13 @@ public class TernaryVennNode<E>
         return null;
     }
 
-    /** {@inheritDoc} */
+    @Override
     public Iterable<PText> sizeLabels()
     {
         return sizeLabels;
     }
 
-    /** {@inheritDoc} */
+    @Override
     public Set<E> viewForNode(final PNode node)
     {
         if (firstOnly.equals(node))

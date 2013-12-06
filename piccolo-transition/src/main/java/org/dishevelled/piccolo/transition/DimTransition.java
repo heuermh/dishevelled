@@ -24,9 +24,7 @@
 package org.dishevelled.piccolo.transition;
 
 import org.piccolo2d.PNode;
-
 import org.piccolo2d.activities.PInterpolatingActivity;
-
 import org.piccolo2d.util.PUtil;
 
 /**
@@ -88,14 +86,14 @@ public final class DimTransition
     }
 
 
-    /** {@inheritDoc} */
+    @Override
     protected void activityStarted()
     {
         source = node.getTransparency();
         super.activityStarted();
     }
 
-    /** {@inheritDoc} */
+    @Override
     public void setRelativeTargetValue(final float zeroToOne)
     {
         float current = source + (zeroToOne * (dest - source));

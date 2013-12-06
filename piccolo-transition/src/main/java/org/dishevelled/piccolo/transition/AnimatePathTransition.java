@@ -79,7 +79,7 @@ public final class AnimatePathTransition
     }
 
 
-    /** {@inheritDoc} */
+    @Override
     public void setRelativeTargetValue(final float zeroToOne)
     {
         float totalLength = pathLength.lengthOfPath();

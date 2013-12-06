@@ -98,8 +98,7 @@ public class TmxTileMapReader
         }
         catch (SAXException e)
         {
-            //throw new IOException("could not read input stream", e);  // jdk 1.6+ only
-            throw new IOException("could not read input stream, " + e.getMessage());
+            throw new IOException("could not read input stream", e);
         }
         return mapHandler.getTileMap();
    }

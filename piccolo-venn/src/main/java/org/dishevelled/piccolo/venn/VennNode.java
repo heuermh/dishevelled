@@ -28,17 +28,14 @@ import java.awt.Color;
 import java.awt.Paint;
 import java.awt.Shape;
 import java.awt.Stroke;
-
 import java.awt.geom.Area;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
 import java.util.concurrent.Executors;
 import java.util.concurrent.ExecutorService;
 
@@ -50,16 +47,12 @@ import com.google.common.collect.Sets;
 
 import org.dishevelled.bitset.MutableBitSet;
 import org.dishevelled.bitset.ImmutableBitSet;
-
 import org.dishevelled.venn.VennLayout;
 import org.dishevelled.venn.VennModel;
-
 import org.piccolo2d.PNode;
-
 import org.piccolo2d.nodes.PArea;
 import org.piccolo2d.nodes.PPath;
 import org.piccolo2d.nodes.PText;
-
 import org.piccolo2d.util.PBounds;
 
 /**
@@ -296,7 +289,7 @@ public class VennNode<E>
         }
     }
 
-    /** {@inheritDoc} */
+    @Override
     protected void updateLabels()
     {
         for (int i = 0; i < size(); i++)
@@ -362,7 +355,7 @@ public class VennNode<E>
 
         SwingUtilities.invokeLater(new Runnable()
             {
-                /** {@inheritDoc} */
+                @Override
                 public void run()
                 {
                     layoutNodes();
@@ -480,13 +473,13 @@ public class VennNode<E>
         return sizeLabels.get(toImmutableBitSet(index, additional));
     }
 
-    /** {@inheritDoc} */
+    @Override
     public Iterable<PText> labels()
     {
         return labels;
     }
 
-    /** {@inheritDoc} */
+    @Override
     public Iterable<PNode> nodes()
     {
         List<PNode> nodes = new ArrayList<PNode>(pathNodes.size() + areaNodes.size());
@@ -495,7 +488,7 @@ public class VennNode<E>
         return nodes;
     }
 
-    /** {@inheritDoc} */
+    @Override
     public PText labelForNode(final PNode node)
     {
         if (node instanceof PPath)
@@ -507,7 +500,7 @@ public class VennNode<E>
         return null;
     }
 
-    /** {@inheritDoc} */
+    @Override
     public String labelTextForNode(final PNode node)
     {
         if (node instanceof PPath)
@@ -530,13 +523,13 @@ public class VennNode<E>
         return null;
     }
 
-    /** {@inheritDoc} */
+    @Override
     public Iterable<PText> sizeLabels()
     {
         return sizeLabels.values();
     }
 
-    /** {@inheritDoc} */
+    @Override
     public Set<E> viewForNode(final PNode node)
     {
         if (node instanceof PPath)
@@ -762,13 +755,13 @@ public class VennNode<E>
         private final Rectangle2D empty = new Rectangle2D.Double(-10000.0d, 0.0d, 0.0d, 0.0d);
 
 
-        /** {@inheritDoc} */
+        @Override
         public int size()
         {
             return VennNode.this.size();
         }
 
-        /** {@inheritDoc} */
+        @Override
         public Shape get(final int index)
         {
             if (index < 0 || index >= size())
@@ -778,14 +771,14 @@ public class VennNode<E>
             return empty;
         }
 
-        /** {@inheritDoc} */
+        @Override
         public Point2D luneCenter(final int index, final int... additional)
         {
             checkIndices(index, additional);
             return offscreenLeft;
         }
 
-        /** {@inheritDoc} */
+        @Override
         public Rectangle2D boundingRectangle()
         {
             return empty;
@@ -819,13 +812,13 @@ public class VennNode<E>
         }
 
 
-        /** {@inheritDoc} */
+        @Override
         public Point2D doInBackground()
         {
             return Centers.centroidOf(area);
         }
 
-        /** {@inheritDoc} */
+        @Override
         protected void done()
         {
             try
