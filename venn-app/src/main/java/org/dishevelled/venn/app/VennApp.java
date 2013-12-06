@@ -86,7 +86,7 @@ public final class VennApp
     }
 
 
-    private void exit()
+    private static void exit()
     {
         System.exit(0);
     }
@@ -104,7 +104,7 @@ public final class VennApp
         }
     }
 
-    private Group readFile(final File file)
+    private static Group readFile(final File file)
     {
         BufferedReader reader = null;
         String name = file.toString();
