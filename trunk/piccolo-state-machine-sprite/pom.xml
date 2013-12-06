@@ -25,11 +25,19 @@
       <url>scp://shell.sourceforge.net/home/project-web/dishevelled/htdocs/piccolo-state-machine-sprite-${project.version}</url>
     </site>
   </distributionManagement>
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.dishevelled</groupId>
+        <artifactId>dsh-piccolo-sprite</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
   <dependencies>
     <dependency>
       <groupId>org.dishevelled</groupId>
       <artifactId>dsh-piccolo-sprite</artifactId>
-      <version>${project.version}</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
@@ -54,7 +62,7 @@
     </dependency>
   </dependencies>
   <properties>
-    <jdk.version>1.5</jdk.version>
+    <jdk.version>1.6</jdk.version>
   </properties>
   <reporting>
     <plugins>

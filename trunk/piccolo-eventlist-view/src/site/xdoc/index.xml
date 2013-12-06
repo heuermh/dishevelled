@@ -33,7 +33,7 @@
 <p>
 dishevelled.org <b>piccolo-eventlist-view</b> provides views for event lists
 for the Piccolo2D [<a href="#1">1</a>] structured graphics toolkit.
-The piccolo-eventlist-view library requires java version 1.5 or later.
+The piccolo-eventlist-view library requires java version 1.6 or later.
 </p>
 </section>
 

@@ -25,36 +25,61 @@
       <url>scp://shell.sourceforge.net/home/project-web/dishevelled/htdocs/piccolo-identify-${project.version}</url>
     </site>
   </distributionManagement>
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.dishevelled</groupId>
+        <artifactId>dsh-functor</artifactId>
+        <version>1.0</version>
+      </dependency>
+      <dependency>
+        <groupId>org.dishevelled</groupId>
+        <artifactId>dsh-iconbundle</artifactId>
+        <version>1.0</version>
+      </dependency>
+      <dependency>
+        <groupId>org.dishevelled</groupId>
+        <artifactId>dsh-identify</artifactId>
+        <version>1.1</version>
+      </dependency>
+      <dependency>
+        <groupId>org.dishevelled</groupId>
+        <artifactId>dsh-identify</artifactId>
+        <version>1.1</version>
+        <type>test-jar</type>
+      </dependency>
+      <dependency>
+        <groupId>org.dishevelled</groupId>
+        <artifactId>dsh-iconbundle-tango</artifactId>
+        <version>1.0</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
   <dependencies>
     <dependency>
       <groupId>org.dishevelled</groupId>
       <artifactId>dsh-functor</artifactId>
-      <version>1.0</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>org.dishevelled</groupId>
       <artifactId>dsh-iconbundle</artifactId>
-      <version>1.0</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>org.dishevelled</groupId>
       <artifactId>dsh-identify</artifactId>
-      <version>1.0</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>org.dishevelled</groupId>
       <artifactId>dsh-identify</artifactId>
-      <version>1.0</version>
       <type>test-jar</type>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.dishevelled</groupId>
       <artifactId>dsh-iconbundle-tango</artifactId>
-      <version>1.0</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
@@ -89,7 +114,7 @@
     </dependency>
   </dependencies>
   <properties>
-    <jdk.version>1.5</jdk.version>
+    <jdk.version>1.6</jdk.version>
   </properties>
   <reporting>
     <plugins>

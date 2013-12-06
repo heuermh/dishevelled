@@ -33,7 +33,7 @@
 <p>
 dishevelled.org <b>piccolo-physics</b> provides integration with particle
 system physics for the Piccolo2D [<a href="#1">1</a>] structured graphics toolkit.
-The piccolo-physics library requires java version 1.5 or later.
+The piccolo-physics library requires java version 1.6 or later.
 </p>
 </section>
 
