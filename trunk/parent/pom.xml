@@ -5,13 +5,13 @@
     <groupId>org.sonatype.oss</groupId>
     <artifactId>oss-parent</artifactId>
     <version>7</version>
-    <relativePath/>
+    <relativePath />
   </parent>
   <groupId>org.dishevelled</groupId>
   <artifactId>dsh-parent</artifactId>
   <packaging>pom</packaging>
   <name>dishevelled.org parent</name>
-  <version>5-SNAPSHOT</version>
+  <version>5</version>
   <description>dishevelled.org parent</description>
   <url>http://www.dishevelled.org/parent</url>
   <inceptionYear>2009</inceptionYear>
@@ -55,9 +55,9 @@
     </license>
   </licenses>
   <scm>
-    <connection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/parent</connection>
-    <developerConnection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/parent</developerConnection>
-    <url>https://svn.code.sf.net/p/dishevelled/code/trunk/parent</url>
+    <connection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/tags/dsh-parent-5</connection>
+    <developerConnection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/tags/dsh-parent-5</developerConnection>
+    <url>https://svn.code.sf.net/p/dishevelled/code/tags/dsh-parent-5</url>
   </scm>
   <organization>
     <name>dishevelled.org</name>
