@@ -85,7 +85,7 @@ public class ElementsSummaryNode<E>
     /** Listener. */
     private final ListEventListener<E> listener = new ListEventListener<E>()
         {
-            /** @{inheritDoc} */
+            @Override
             public void listChanged(final ListEvent<E> event)
             {
                 updateNodes();

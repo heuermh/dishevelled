@@ -41,12 +41,8 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
-import org.dishevelled.iconbundle.IconBundle;
-
-import org.dishevelled.iconbundle.tango.TangoProject;
-
 import org.dishevelled.identify.ContextMenuListener;
-import org.dishevelled.identify.Identifiable;
+
 import org.dishevelled.piccolo.eventlist.view.IdEventListNode;
 
 import org.piccolo2d.PCanvas;
@@ -131,15 +127,6 @@ public final class IdEventListExample
         f.setVisible(true);
     }
 
-    private class IdentifiableString
-        implements Identifiable
-    {
-        private final String value;
-        IdentifiableString(final String value) { this.value = value; }
-        public String getName() { return value; }
-        public String toString() { return getName(); }
-        public IconBundle getIconBundle() { return TangoProject.TEXT_X_GENERIC; }
-    }
 
     /**
      * Main.

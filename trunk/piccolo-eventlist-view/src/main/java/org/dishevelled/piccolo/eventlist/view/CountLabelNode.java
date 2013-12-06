@@ -121,10 +121,7 @@ public final class CountLabelNode<E>
         getModel().removeListEventListener(listener);
     }
 
-    /**
-     * Release the resources consumed by this count label node
-     * so that it may eventually be garbage collected.
-     */
+    @Override
     public void dispose()
     {
         super.dispose();

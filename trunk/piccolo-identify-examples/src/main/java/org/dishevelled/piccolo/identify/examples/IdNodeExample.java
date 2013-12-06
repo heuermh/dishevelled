@@ -84,14 +84,11 @@ public final class IdNodeExample
             // empty
         };
 
-    // download these images to src/main/resources/org/dishevelled/piccolo/identify/examples
-    //    as the terms of use do not allow redistribution or hot-linking
+    /** Dark background image url, <code>http://www.flickr.com/photos/pagedooley/7427165626/</code>. */
+    private static final String DARK_BACKGROUND = "7427165626_3b463cf8dd_h.jpg";
 
-    /** Dark background image url, <code>http://www.mandolux.com/desktops/yuck/mandolux-liriope-r-1024.jpg</code>. */
-    private static final String DARK_BACKGROUND = "mandolux-liriope-r-1024.jpg";
-
-    /** Light background image url, <code>http://www.mandolux.com/desktops/flowers/mandolux-serengeti-b-1024.jpg</code>. */
-    private static final String LIGHT_BACKGROUND = "mandolux-serengeti-b-1024.jpg";
+    /** Light background image url, <code>http://www.flickr.com/photos/26782864@N00/5907569709/</code>. */
+    private static final String LIGHT_BACKGROUND = "5907569709_b5a575d06c_b.jpg";
 
     /** Dark background color. */
     private static final Color DARK_BACKGROUND_COLOR = new Color(80, 80, 80);
@@ -274,7 +271,6 @@ public final class IdNodeExample
                         || lightBackground.equals(pickedNode)
                         || darkBackground.equals(pickedNode))
                     {
-                        System.out.println("deselecting all, selection=" + selection);
                         for (Iterator i = selection.iterator(); i.hasNext(); )
                         {
                             ((AbstractIdNode) i.next()).deselect();
@@ -444,12 +440,10 @@ public final class IdNodeExample
         @Override
         public void mousePressed(final PInputEvent event)
         {
-            System.out.println("selectionHandler mousePressed");
             if (selection.contains(idNode))
             {
                 if (!(event.isShiftDown()))
                 {
-                    System.out.println("deselecting " + idNode + ", selection=" + selection);
                     idNode.deselect();
                     selection.remove(idNode);
                 }
@@ -465,12 +459,12 @@ public final class IdNodeExample
                     }
                     selection.clear();
                 }
-                System.out.println("selecting " + idNode + ", selection=" + selection);
                 idNode.select();
                 selection.add(idNode);
             }
         }
     }
+
 
     /**
      * Main.
