@@ -108,7 +108,7 @@ public final class SparseTileMapExample
 
         Timer timer = new Timer(1000 / 3, new ActionListener()
             {
-                /** {@inheritDoc} */
+                @Override
                 public void actionPerformed(final ActionEvent e)
                 {
                     tileMap.advance();
@@ -123,7 +123,7 @@ public final class SparseTileMapExample
     }
 
 
-    /** {@inheritDoc} */
+    @Override
     public void run()
     {
         JFrame f = new JFrame("Sparse Tile Map Example");

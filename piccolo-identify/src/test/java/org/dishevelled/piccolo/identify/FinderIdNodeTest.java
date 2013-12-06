@@ -35,7 +35,7 @@ public final class FinderIdNodeTest
     extends AbstractIdNodeTest
 {
 
-    /** {@inheritDoc} */
+    @Override
     protected AbstractIdNode createIdNode(final Object value)
     {
         return new FinderIdNode(value);

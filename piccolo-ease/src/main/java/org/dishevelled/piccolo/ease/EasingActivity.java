@@ -167,17 +167,18 @@ public class EasingActivity
      * Overridden to evaluate the easing function against the specified value.
      * </p>
      */
-    protected final void setRelativeTargetValueAdjustingForMode(float value)
+    protected final void setRelativeTargetValueAdjustingForMode(final float value)
     {
+        double v = value;
         if (getMode() == DESTINATION_TO_SOURCE)
         {
-            value = 1.0f - value;
+            v = 1.0f - value;
         }
         else if (getMode() == SOURCE_TO_DESTINATION_TO_SOURCE)
         {
-            value = (value <= 0.5f) ? 2.0f * value : 1.0f - ((value - 0.5f) * 2.0f);
+            v = (value <= 0.5f) ? 2.0f * value : 1.0f - ((value - 0.5f) * 2.0f);
         }
-        float easedValue = easingFunction.evaluate(Double.valueOf(value)).floatValue();
+        float easedValue = easingFunction.evaluate(Double.valueOf(v)).floatValue();
         setRelativeTargetValue(easedValue);
     }
 }

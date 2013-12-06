@@ -157,25 +157,25 @@ public final class ElementsLabelNode<E>
         updateLabelText();
     }
 
-    /** {@inheritDoc} */
+    @Override
     protected void cut(final List<E> toCut)
     {
         // empty
     }
 
-    /** {@inheritDoc} */
+    @Override
     protected void copy(final List<E> toCopy)
     {
         // empty
     }
 
-    /** {@inheritDoc} */
+    @Override
     public void add()
     {
         // empty
     }
 
-    /** {@inheritDoc} */
+    @Override
     public void paste()
     {
         // empty

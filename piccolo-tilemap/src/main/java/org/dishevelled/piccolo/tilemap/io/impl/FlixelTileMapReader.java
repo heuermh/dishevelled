@@ -142,7 +142,7 @@ public class FlixelTileMapReader
     }
 
 
-    /** {@inheritDoc} */
+    @Override
     public AbstractTileMap read(final InputStream inputStream) throws IOException
     {
         if (inputStream == null)

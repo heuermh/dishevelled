@@ -82,7 +82,7 @@ public final class TmxTileMapExample
     }
 
 
-    /** {@inheritDoc} */
+    @Override
     public void run()
     {
         JFrame f = new JFrame("TMX Map Format Example");

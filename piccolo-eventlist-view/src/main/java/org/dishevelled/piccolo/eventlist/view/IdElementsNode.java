@@ -58,7 +58,7 @@ public final class IdElementsNode<E>
     /** Model to view mapping. */
     private final UnaryFunction<E, NautilusIdNode> modelToView = new UnaryFunction<E, NautilusIdNode>()
         {
-            /** {@inheritDoc} */
+            @Override
             public NautilusIdNode evaluate(final E element)
             {
                 final NautilusIdNode idNode = new NautilusIdNode(element, iconSize);
@@ -66,7 +66,7 @@ public final class IdElementsNode<E>
                 // todo:  will need to dispose this listener at some point
                 idNode.addInputEventListener(new PBasicInputEventHandler()
                     {
-                        /** {@inheritDoc} */
+                        @Override
                         public void mousePressed(final PInputEvent event) {
                             if (event.isLeftMouseButton()) {
                                 int indexInParent = indexOfChild(idNode);
@@ -95,7 +95,7 @@ public final class IdElementsNode<E>
     /** Selection listener. */
     private final ListSelection.Listener selectionListener = new ListSelection.Listener()
         {
-            /** {@inheritDoc} */
+            @Override
             public void selectionChanged(final int changeStart, final int changeEnd)
             {
                 for (int i = changeStart; i < (changeEnd + 1); i++)
@@ -181,7 +181,7 @@ public final class IdElementsNode<E>
         getSelectionModel().removeSelectionListener(selectionListener);
     }
 
-    /** {@inheritDoc} */
+    @Override
     public void dispose()
     {
         super.dispose();

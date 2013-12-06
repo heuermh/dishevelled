@@ -84,7 +84,7 @@ public final class RibbonExample
 
         Timer moveRightDown = new Timer(12000, new ActionListener()
             {
-                /** {@inheritDoc} */
+                @Override
                 public void actionPerformed(final ActionEvent e)
                 {
                     horizontalRibbon.moveRight();
@@ -96,7 +96,7 @@ public final class RibbonExample
 
         Timer moveLeftUp = new Timer(12000, new ActionListener()
             {
-                /** {@inheritDoc} */
+                @Override
                 public void actionPerformed(final ActionEvent e)
                 {
                     horizontalRibbon.moveLeft();
@@ -110,7 +110,7 @@ public final class RibbonExample
         // schedule one refresh using Timer...
         Timer horizontalRefresh = new Timer((int) (1000 / 12), new ActionListener()
             {
-                /** {@inheritDoc} */
+                @Override
                 public void actionPerformed(final ActionEvent e)
                 {
                     horizontalRibbon.advance();
@@ -123,7 +123,7 @@ public final class RibbonExample
         PRoot root = layer.getRoot();
         PActivity verticalRefresh = new PActivity(-1, (1000L / 12L))
             {
-                /** {@inheritDoc} */
+                @Override
                 protected void activityStep(final long elapsedTime)
                 {
                     verticalRibbon.advance();
@@ -136,7 +136,7 @@ public final class RibbonExample
     }
 
 
-    /** {@inheritDoc} */
+    @Override
     public void run()
     {
         final JFrame f = new JFrame("Ribbon Example");

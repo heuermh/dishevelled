@@ -72,7 +72,7 @@ public final class LoopedFramesAnimation
     }
 
 
-    /** {@inheritDoc} */
+    @Override
     public boolean advance()
     {
         index++;
@@ -83,7 +83,7 @@ public final class LoopedFramesAnimation
         return true;
     }
 
-    /** {@inheritDoc} */
+    @Override
     public Image getCurrentFrame()
     {
         return frames.get(index);

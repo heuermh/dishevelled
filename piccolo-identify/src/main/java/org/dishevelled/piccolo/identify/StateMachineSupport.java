@@ -91,19 +91,19 @@ final class StateMachineSupport
         Context rootContext = new JexlContext();
         SCXMLListener listener = new SCXMLListener()
             {
-                /** {@inheritDoc} */
+                @Override
                 public void onEntry(final TransitionTarget entered)
                 {
                     invoke(entered.getId());
                 }
 
-                /** {@inheritDoc} */
+                @Override
                 public void onExit(final TransitionTarget exited)
                 {
                     // empty
                 }
 
-                /** {@inheritDoc} */
+                @Override
                 public void onTransition(final TransitionTarget to,
                                          final TransitionTarget from,
                                          final Transition transition)
@@ -213,7 +213,7 @@ final class StateMachineSupport
         implements ErrorReporter
     {
 
-        /** {@inheritDoc} */
+        @Override
         public void onError(final String errorCode,
                             final String errorDetail,
                             final Object errorContext)

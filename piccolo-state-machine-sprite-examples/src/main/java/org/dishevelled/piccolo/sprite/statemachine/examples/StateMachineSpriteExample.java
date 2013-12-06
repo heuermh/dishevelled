@@ -110,7 +110,7 @@ public final class StateMachineSpriteExample
         List<WalkingSprite> toSort = new ArrayList<WalkingSprite>(walkingSprites);
         Collections.sort(toSort, new Comparator<WalkingSprite>()
             {
-                /** {@inheritDoc} */
+                @Override
                 public int compare(final WalkingSprite walkingSprite0, final WalkingSprite walkingSprite1)
                 {
                     if (walkingSprite0 == walkingSprite1)
@@ -128,7 +128,7 @@ public final class StateMachineSpriteExample
         // animation frame rate timer
         Timer timer = new Timer((int) (1000 / 3), new ActionListener()
             {
-                /** {@inheritDoc} */
+                @Override
                 public void actionPerformed(final ActionEvent e)
                 {
                     for (WalkingSprite walkingSprite : walkingSprites)
@@ -144,7 +144,7 @@ public final class StateMachineSpriteExample
         // set some sprites walking every five seconds
         Timer timer2 = new Timer(5000, new ActionListener()
             {
-                /** {@inheritDoc} */
+                @Override
                 public void actionPerformed(final ActionEvent e)
                 {
                     for (WalkingSprite walkingSprite : walkingSprites)
@@ -162,7 +162,7 @@ public final class StateMachineSpriteExample
         // stop some walking sprites every five seconds
         Timer timer3 = new Timer(5000, new ActionListener()
             {
-                /** {@inheritDoc} */
+                @Override
                 public void actionPerformed(final ActionEvent e)
                 {
                     for (WalkingSprite walkingSprite : walkingSprites)
@@ -184,7 +184,7 @@ public final class StateMachineSpriteExample
     }
 
 
-    /** {@inheritDoc} */
+    @Override
     public void run()
     {
         JFrame f = new JFrame("State Machine Sprite Example");

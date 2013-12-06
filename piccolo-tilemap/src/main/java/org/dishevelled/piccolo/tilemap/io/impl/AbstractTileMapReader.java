@@ -44,7 +44,7 @@ public abstract class AbstractTileMapReader
     implements TileMapReader
 {
 
-    /** {@inheritDoc} */
+    @Override
     public final AbstractTileMap read(final File file) throws IOException
     {
         if (file == null)
@@ -67,7 +67,7 @@ public abstract class AbstractTileMapReader
         }
     }
 
-    /** {@inheritDoc} */
+    @Override
     public final AbstractTileMap read(final URL url) throws IOException
     {
         if (url == null)

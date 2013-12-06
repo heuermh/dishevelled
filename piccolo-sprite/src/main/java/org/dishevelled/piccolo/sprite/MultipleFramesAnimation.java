@@ -80,14 +80,14 @@ public final class MultipleFramesAnimation
         index = 0;
     }
 
-    /** {@inheritDoc} */
+    @Override
     public boolean advance()
     {
         index = Math.min(index + 1, frames.size() - 1);
         return true;
     }
 
-    /** {@inheritDoc} */
+    @Override
     public Image getCurrentFrame()
     {
         return frames.get(index);

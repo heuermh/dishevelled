@@ -120,25 +120,25 @@ public class IdEventListNode<E>
     }
 
     // todo:  delegate or remove?
-    /** {@inheritDoc} */
+    @Override
     protected void cut(final List<E> toCut)
     {
         // empty
     }
 
-    /** {@inheritDoc} */
+    @Override
     protected void copy(final List<E> toCopy)
     {
         // empty
     }
 
-    /** {@inheritDoc} */
+    @Override
     public void add()
     {
         // empty
     }
 
-    /** {@inheritDoc} */
+    @Override
     public void paste()
     {
         // empty
@@ -171,7 +171,7 @@ public class IdEventListNode<E>
         }
     }
 
-    /** {@inheritDoc} */
+    @Override
     protected final void paint(final PPaintContext context)
     {
         if (context.getScale() < countThreshold)
@@ -226,7 +226,7 @@ public class IdEventListNode<E>
         return elements.getToolBarContextMenu();
     }
 
-    /** {@inheritDoc} */
+    @Override
     public void dispose()
     {
         super.dispose();

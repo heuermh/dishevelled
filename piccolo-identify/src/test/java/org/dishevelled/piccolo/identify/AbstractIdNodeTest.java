@@ -55,7 +55,7 @@ public abstract class AbstractIdNodeTest
     /** Property change listener. */
     protected static final PropertyChangeListener PROPERTY_CHANGE_LISTENER = new PropertyChangeListener()
         {
-            /** {@inheritDoc} */
+            @Override
             public void propertyChange(final PropertyChangeEvent event)
             {
                 // empty
@@ -72,7 +72,7 @@ public abstract class AbstractIdNodeTest
      */
     protected abstract AbstractIdNode createIdNode(Object value);
 
-    /** {@inheritDoc} */
+    @Override
     protected void setUp() throws Exception
     {
         exampleIdentifiable = new ExampleIdentifiable("name", TangoProject.TEXT_X_GENERIC);

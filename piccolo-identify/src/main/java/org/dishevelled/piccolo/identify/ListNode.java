@@ -83,7 +83,7 @@ public final class ListNode<E>
 
         this.model.addListEventListener(new ListEventListener<E>()
             {
-                /** {@inheritDoc} */
+                @Override
                 public void listChanged(final ListEvent<E> event)
                 {
                     while (event.next())
@@ -101,7 +101,7 @@ public final class ListNode<E>
 
 
 
-    /** {@inheritDoc} */
+    @Override
     protected void layoutChildren()
     {
         double y = 0.0d;
@@ -114,65 +114,65 @@ public final class ListNode<E>
         }
     }
 
-    /** {@inheritDoc} */
+    @Override
     public EventList<E> getModel()
     {
         return model;
     }
 
-    /** {@inheritDoc} */
+    @Override
     public void setModel(final EventList<E> model)
     {
         this.model = model;
         // fire property change
     }
 
-    /** {@inheritDoc} */
+    @Override
     public IndexedViewToModel<E, PNode> getViewToModel()
     {
         return viewToModel;
     }
 
-    /** {@inheritDoc} */
+    @Override
     public void setViewToModel(IndexedViewToModel<E, PNode> viewToModel)
     {
         this.viewToModel = viewToModel;
         // fire property change
     }
 
-    /** {@inheritDoc} */
+    @Override
     public IndexedModelToView<E, PNode> getModelToView()
     {
         return modelToView;
     }
 
-    /** {@inheritDoc} */
+    @Override
     public void setModelToView(IndexedModelToView<E, PNode> modelToView)
     {
         this.modelToView = modelToView;
         // fire property change
     }
 
-    /** {@inheritDoc} */
+    @Override
     public ListSelection<E> getSelectionModel()
     {
         return selectionModel;
     }
 
-    /** {@inheritDoc} */
+    @Override
     public void setSelectionModel(ListSelection<E> selectionModel)
     {
         this.selectionModel = selectionModel;
         // fire property change
     }
 
-    /** {@inheritDoc} */
+    @Override
     public ViewDecorator<PNode> getViewDecorator()
     {
         return viewDecorator;
     }
 
-    /** {@inheritDoc} */
+    @Override
     public void setViewDecorator(ViewDecorator<PNode> viewDecorator)
     {
         this.viewDecorator = viewDecorator;
@@ -185,13 +185,13 @@ public final class ListNode<E>
         implements IndexedModelToView<E, PNode>, IndexedViewToModel<E, PNode>
     {
 
-        /** {@inheritDoc} */
+        @Override
         public int get(final PNode view)
         {
             return indexOfChild(view);
         }
 
-        /** {@inheritDoc} */
+        @Override
         public PNode get(final int index)
         {
             E e = model.get(index);
@@ -202,13 +202,13 @@ public final class ListNode<E>
             final PText text = new PText(e.toString());
             text.addInputEventListener(new PBasicInputEventHandler()
                 {
-                    /** {@inheritDoc} */
+                    @Override
                     public void mouseEntered(final PInputEvent event)
                     {
                         viewDecorator.mouseEntered(text);
                     }
 
-                    /** {@inheritDoc} */
+                    @Override
                     public void mouseExited(final PInputEvent event)
                     {
                         viewDecorator.mouseExited(text);
@@ -226,73 +226,73 @@ public final class ListNode<E>
     // todo  can this be <PText>?
     private class PTextViewDecorator implements ViewDecorator<PNode>
     {
-        /** {@inheritDoc} */
+        @Override
         public void enable(final PNode node)
         {
             // empty
         }
 
-        /** {@inheritDoc} */
+        @Override
         public void disable(final PNode node)
         {
             // empty
         }
 
-        /** {@inheritDoc} */
+        @Override
         public void mousePressed(final PNode node)
         {
             // empty
         }
 
-        /** {@inheritDoc} */
+        @Override
         public void mouseReleased(final PNode node)
         {
             // empty
         }
 
-        /** {@inheritDoc} */
+        @Override
         public void mouseEntered(final PNode node)
         {
             ((PText) node).setTextPaint(Color.RED);
         }
 
-        /** {@inheritDoc} */
+        @Override
         public void mouseExited(final PNode node)
         {
             ((PText) node).setTextPaint(Color.BLACK);
         }
 
-        /** {@inheritDoc} */
+        @Override
         public void startDrag(final PNode node)
         {
             // empty
         }
 
-        /** {@inheritDoc} */
+        @Override
         public void endDrag(final PNode node)
         {
             // empty
         }
 
-        /** {@inheritDoc} */
+        @Override
         public void select(final PNode node)
         {
             // empty
         }
 
-        /** {@inheritDoc} */
+        @Override
         public void deselect(final PNode node)
         {
             // empty
         }
 
-        /** {@inheritDoc} */
+        @Override
         public void gainFocus(final PNode node)
         {
             // empty
         }
 
-        /** {@inheritDoc} */
+        @Override
         public void loseFocus(final PNode node)
         {
             // empty

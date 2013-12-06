@@ -81,7 +81,7 @@ public class TmxTileMapReader
     }
 
 
-    /** {@inheritDoc} */
+    @Override
     public AbstractTileMap read(final InputStream inputStream) throws IOException
     {
         if (inputStream == null)
@@ -123,7 +123,7 @@ public class TmxTileMapReader
         private TilesetHandler tilesetHandler = new TilesetHandler();
 
 
-        /** {@inheritDoc} */
+        @Override
         public void startElement(final String nsURI,
                                  final String localName,
                                  final String qName,
@@ -149,7 +149,7 @@ public class TmxTileMapReader
             }
         }
 
-        /** {@inheritDoc} */
+        @Override
         public void endElement(final String nsURI,
                                final String localName,
                                final String qName,
@@ -181,13 +181,13 @@ public class TmxTileMapReader
         {
             private long i;
 
-            /** {@inheritDoc} */
+            @Override
             public void startTree(final StAXContext ctx) throws SAXException
             {
                 i = 0;
             }
 
-            /** {@inheritDoc} */
+            @Override
             public void startElement(final String nsURI,
                                      final String localName,
                                      final String qName,
@@ -223,7 +223,7 @@ public class TmxTileMapReader
         private int tileWidth;
         private int tileHeight;
 
-        /** {@inheritDoc} */
+        @Override
         public void startElement(final String nsURI,
                                  final String localName,
                                  final String qName,
@@ -244,7 +244,7 @@ public class TmxTileMapReader
             }
         }
 
-        /** {@inheritDoc} */
+        @Override
         public Object endTree(final StAXContext context)
             throws SAXException
         {

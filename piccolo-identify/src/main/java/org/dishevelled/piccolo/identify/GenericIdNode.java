@@ -82,7 +82,7 @@ public final class GenericIdNode
     }
 
 
-    /** {@inheritDoc} */
+    @Override
     protected void layoutChildren()
     {
         PBounds iconBounds = getIconBundleImageNode().getBoundsReference();

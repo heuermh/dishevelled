@@ -246,7 +246,7 @@ public class Sprite
         animations.remove(animation);
     }
 
-    /** {@inheritDoc} */
+    @Override
     public final void paint(final PPaintContext paintContext)
     {
         Graphics2D g = paintContext.getGraphics();

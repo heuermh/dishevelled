@@ -214,7 +214,7 @@ public final class FinderIdNode
         dragging();
     }
 
-    /** {@inheritDoc} */
+    @Override
     protected void layoutChildren()
     {
         PBounds iconBounds = getIconBundleImageNode().getBoundsReference();

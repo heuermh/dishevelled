@@ -35,7 +35,7 @@ public final class ExplorerIdNodeTest
     extends AbstractIdNodeTest
 {
 
-    /** {@inheritDoc} */
+    @Override
     protected AbstractIdNode createIdNode(final Object value)
     {
         return new ExplorerIdNode(value);

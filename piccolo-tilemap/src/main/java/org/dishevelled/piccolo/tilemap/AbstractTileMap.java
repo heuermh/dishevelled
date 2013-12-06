@@ -64,7 +64,7 @@ public abstract class AbstractTileMap
     /** Advance procedure. */
     private static final UnaryProcedure<Sprite> ADVANCE = new UnaryProcedure<Sprite>()
         {
-            /** {@inheritDoc} */
+            @Override
             public void run(final Sprite tile)
             {
                 tile.advance();
@@ -75,7 +75,7 @@ public abstract class AbstractTileMap
     private final TernaryProcedure<Long, Long, Sprite> createProxy =
         new TernaryProcedure<Long, Long, Sprite>()
             {
-                /** {@inheritDoc} */
+                @Override
                 public void run(final Long row, final Long column, final Sprite tile)
                 {
                     if (tile != null)
@@ -372,7 +372,7 @@ public abstract class AbstractTileMap
         proxiesInvalid = false;
     }
 
-    /** {@inheritDoc} */
+    @Override
     protected void layoutChildren()
     {
         if (proxiesInvalid)
@@ -381,7 +381,7 @@ public abstract class AbstractTileMap
         }
     }
 
-    /** {@inheritDoc} */
+    @Override
     public void repaint()
     {
         if (proxiesInvalid)
@@ -434,7 +434,7 @@ public abstract class AbstractTileMap
         }
 
 
-        /** {@inheritDoc} */
+        @Override
         protected void paint(final PPaintContext paintContext)
         {
             tile.paint(paintContext);

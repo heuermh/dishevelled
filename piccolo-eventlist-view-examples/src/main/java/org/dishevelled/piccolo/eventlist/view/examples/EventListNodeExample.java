@@ -94,7 +94,7 @@ public final class EventListNodeExample
         final EventList<String> eventList = GlazedLists.eventList(strings);
         UnaryFunction<String, PText> modelToView = new UnaryFunction<String, PText>()
             {
-                /** {@inheritDoc} */
+                @Override
                 public PText evaluate(final String element)
                 {
                     return new PText(element);
@@ -138,7 +138,7 @@ public final class EventListNodeExample
 
         Timer t = new Timer(5000, new ActionListener()
             {
-                /** {@inheritDoc} */
+                @Override
                 public void actionPerformed(final ActionEvent e)
                 {
                     if (!eventList.isEmpty())
@@ -170,7 +170,7 @@ public final class EventListNodeExample
     }
 
 
-    /** {@inheritDoc} */
+    @Override
     public void run()
     {
         JFrame f = new JFrame("Event List Node Example");
