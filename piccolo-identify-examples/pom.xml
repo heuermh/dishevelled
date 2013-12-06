@@ -42,17 +42,29 @@
       </plugin>
     </plugins>
   </build>
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.dishevelled</groupId>
+        <artifactId>dsh-piccolo-identify</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.dishevelled</groupId>
+        <artifactId>dsh-iconbundle-tango</artifactId>
+        <version>1.0</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
   <dependencies>
     <dependency>
       <groupId>org.dishevelled</groupId>
       <artifactId>dsh-piccolo-identify</artifactId>
-      <version>${project.version}</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>org.dishevelled</groupId>
       <artifactId>dsh-iconbundle-tango</artifactId>
-      <version>1.0</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
@@ -67,7 +79,7 @@
     </dependency>
   </dependencies>
   <properties>
-    <jdk.version>1.5</jdk.version>
+    <jdk.version>1.6</jdk.version>
   </properties>
   <reporting>
     <plugins>

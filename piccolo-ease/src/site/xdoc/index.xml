@@ -33,7 +33,7 @@
 <p>
 dishevelled.org <b>piccolo-ease</b> provides easing activities and supporting
 classes for the Piccolo2D [<a href="#1">1</a>] structured graphics toolkit.
-The piccolo-ease library requires java version 1.5 or later.
+The piccolo-ease library requires java version 1.6 or later.
 </p>
 </section>
 

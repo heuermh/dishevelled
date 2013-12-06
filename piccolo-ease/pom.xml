@@ -25,11 +25,19 @@
       <url>scp://shell.sourceforge.net/home/project-web/dishevelled/htdocs/piccolo-ease-${project.version}</url>
     </site>
   </distributionManagement>
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.dishevelled</groupId>
+        <artifactId>dsh-interpolate</artifactId>
+        <version>1.0</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
   <dependencies>
     <dependency>
       <groupId>org.dishevelled</groupId>
       <artifactId>dsh-interpolate</artifactId>
-      <version>1.0</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
@@ -44,7 +52,7 @@
     </dependency>
   </dependencies>
   <properties>
-    <jdk.version>1.5</jdk.version>
+    <jdk.version>1.6</jdk.version>
   </properties>
   <reporting>
     <plugins>

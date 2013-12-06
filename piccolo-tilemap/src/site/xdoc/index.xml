@@ -32,7 +32,7 @@
 <p>
 dishevelled.org <b>piccolo-tilemap</b> provides tile map nodes and supporting
 classes for the Piccolo2D [<a href="#1">1</a>] structured graphics toolkit.
-The piccolo-tilemap project requires java version 1.5 or later.
+The piccolo-tilemap project requires java version 1.6 or later.
 </p>
 </section>
 

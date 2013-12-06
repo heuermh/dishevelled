@@ -502,7 +502,7 @@ public final class ParticleSystemActivityExample
         JFrame f = new JFrame("Particle System Activity Example");
         f.setContentPane(this);
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        f.setBounds(100, 100, 600, 500);
+        f.setBounds(100, 100, 700, 600);
         f.setVisible(true);
     }
 
