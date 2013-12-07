@@ -4,20 +4,20 @@
   <parent>
     <groupId>org.dishevelled</groupId>
     <artifactId>dsh-parent</artifactId>
-    <version>5</version>
+    <version>6-SNAPSHOT</version>
     <relativePath>../parent/pom.xml</relativePath>
   </parent>
   <artifactId>dsh-piccolo-venn-examples</artifactId>
   <packaging>jar</packaging>
   <name>dishevelled.org piccolo-venn-examples</name>
-  <version>1.0</version>
+  <version>1.1-SNAPSHOT</version>
   <description>Piccolo2D venn diagram node examples.</description>
   <url>http://www.dishevelled.org/piccolo-venn-examples</url>
   <inceptionYear>2009</inceptionYear>
   <scm>
-    <connection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/tags/dsh-piccolo-venn-examples-1.0</connection>
-    <developerConnection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/tags/dsh-piccolo-venn-examples-1.0</developerConnection>
-    <url>https://svn.code.sf.net/p/dishevelled/code/tags/dsh-piccolo-venn-examples-1.0</url>
+    <connection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/piccolo-venn-examples</connection>
+    <developerConnection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/piccolo-venn-examples</developerConnection>
+    <url>https://svn.code.sf.net/p/dishevelled/code/trunk/piccolo-venn-examples</url>
   </scm>
   <distributionManagement>
     <site>
@@ -30,7 +30,7 @@
       <dependency>
         <groupId>org.dishevelled</groupId>
         <artifactId>dsh-piccolo-venn</artifactId>
-        <version>1.0</version>
+        <version>1.1-SNAPSHOT</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
