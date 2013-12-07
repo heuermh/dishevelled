@@ -304,7 +304,7 @@ public final class DiskUtilityExample
      */
     private JSplitPane createVolumePanel()
     {
-        JList<Object> volumes = new JList<Object>(new Object[] { volume });
+        JList volumes = new JList(new Object[] { volume });
         volumes.setCellRenderer(new IdListCellRenderer());
         JScrollPane volumesScrollPane = new JScrollPane(volumes);
         volumesScrollPane.setMinimumSize(new Dimension(200, 400));
@@ -360,7 +360,7 @@ public final class DiskUtilityExample
         showDetailsPanel.add(clearHistory);
 
         firstAidPanel.addField(showDetailsPanel);
-        JList<Object> emptyList = new JList<Object>();
+        JList emptyList = new JList();
         emptyList.setVisibleRowCount(6);
         JScrollPane emptyListScrollPane = new JScrollPane(emptyList);
         emptyListScrollPane.setMinimumSize(new Dimension(200, 120));
