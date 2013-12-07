@@ -4,20 +4,20 @@
   <parent>
     <groupId>org.dishevelled</groupId>
     <artifactId>dsh-parent</artifactId>
-    <version>5</version>
+    <version>6-SNAPSHOT</version>
     <relativePath>../parent/pom.xml</relativePath>
   </parent>
   <artifactId>dsh-venn</artifactId>
   <packaging>jar</packaging>
   <name>dishevelled.org venn</name>
-  <version>1.1</version>
+  <version>1.2-SNAPSHOT</version>
   <description>Lightweight components for venn diagrams.</description>
   <url>http://www.dishevelled.org/venn</url>
   <inceptionYear>2009</inceptionYear>
   <scm>
-    <connection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/tags/dsh-venn-1.1</connection>
-    <developerConnection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/tags/dsh-venn-1.1</developerConnection>
-    <url>https://svn.code.sf.net/p/dishevelled/code/tags/dsh-venn-1.1</url>
+    <connection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/venn</connection>
+    <developerConnection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/venn</developerConnection>
+    <url>https://svn.code.sf.net/p/dishevelled/code/trunk/venn</url>
   </scm>
   <distributionManagement>
     <site>
