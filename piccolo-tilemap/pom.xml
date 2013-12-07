@@ -4,20 +4,20 @@
   <parent>
     <groupId>org.dishevelled</groupId>
     <artifactId>dsh-parent</artifactId>
-    <version>5</version>
+    <version>6-SNAPSHOT</version>
     <relativePath>../parent/pom.xml</relativePath>
   </parent>
   <artifactId>dsh-piccolo-tilemap</artifactId>
   <packaging>jar</packaging>
   <name>dishevelled.org piccolo-tilemap</name>
-  <version>1.0</version>
+  <version>1.1-SNAPSHOT</version>
   <description>Piccolo2D tile map nodes and supporting classes.</description>
   <url>http://www.dishevelled.org/piccolo-tilemap</url>
   <inceptionYear>2006</inceptionYear>
   <scm>
-    <connection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/tags/dsh-piccolo-tilemap-1.0</connection>
-    <developerConnection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/tags/dsh-piccolo-tilemap-1.0</developerConnection>
-    <url>https://svn.code.sf.net/p/dishevelled/code/tags/dsh-piccolo-tilemap-1.0</url>
+    <connection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/piccolo-tilemap</connection>
+    <developerConnection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/piccolo-tilemap</developerConnection>
+    <url>https://svn.code.sf.net/p/dishevelled/code/trunk/piccolo-tilemap</url>
   </scm>
   <distributionManagement>
     <site>
@@ -30,7 +30,7 @@
       <dependency>
         <groupId>org.dishevelled</groupId>
         <artifactId>dsh-piccolo-sprite</artifactId>
-        <version>1.0</version>
+        <version>1.1-SNAPSHOT</version>
       </dependency>
       <dependency>
         <groupId>org.dishevelled</groupId>
