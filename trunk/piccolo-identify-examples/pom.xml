@@ -4,20 +4,20 @@
   <parent>
     <groupId>org.dishevelled</groupId>
     <artifactId>dsh-parent</artifactId>
-    <version>5</version>
+    <version>6-SNAPSHOT</version>
     <relativePath>../parent/pom.xml</relativePath>
   </parent>
   <artifactId>dsh-piccolo-identify-examples</artifactId>
   <packaging>jar</packaging>
   <name>dishevelled.org piccolo-identify-examples</name>
-  <version>1.0</version>
+  <version>1.1-SNAPSHOT</version>
   <description>Piccolo2D identifiable bean node examples.</description>
   <url>http://www.dishevelled.org/piccolo-identify-examples</url>
   <inceptionYear>2007</inceptionYear>
   <scm>
-    <connection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/tags/dsh-piccolo-identify-examples-1.0</connection>
-    <developerConnection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/tags/dsh-piccolo-identify-examples-1.0</developerConnection>
-    <url>https://svn.code.sf.net/p/dishevelled/code/tags/dsh-piccolo-identify-examples-1.0</url>
+    <connection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/piccolo-identify-examples</connection>
+    <developerConnection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/piccolo-identify-examples</developerConnection>
+    <url>https://svn.code.sf.net/p/dishevelled/code/trunk/piccolo-identify-examples</url>
   </scm>
   <distributionManagement>
     <site>
@@ -47,7 +47,7 @@
       <dependency>
         <groupId>org.dishevelled</groupId>
         <artifactId>dsh-piccolo-identify</artifactId>
-        <version>1.0</version>
+        <version>1.1-SNAPSHOT</version>
       </dependency>
       <dependency>
         <groupId>org.dishevelled</groupId>
