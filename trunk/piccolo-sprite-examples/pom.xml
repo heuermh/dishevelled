@@ -4,20 +4,20 @@
   <parent>
     <groupId>org.dishevelled</groupId>
     <artifactId>dsh-parent</artifactId>
-    <version>5</version>
+    <version>6-SNAPSHOT</version>
     <relativePath>../parent/pom.xml</relativePath>
   </parent>
   <artifactId>dsh-piccolo-sprite-examples</artifactId>
   <packaging>jar</packaging>
   <name>dishevelled.org piccolo-sprite-examples</name>
-  <version>1.0</version>
+  <version>1.1-SNAPSHOT</version>
   <description>Piccolo2D sprite node examples.</description>
   <url>http://www.dishevelled.org/piccolo-sprite-examples</url>
   <inceptionYear>2006</inceptionYear>
   <scm>
-    <connection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/tags/dsh-piccolo-sprite-examples-1.0</connection>
-    <developerConnection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/tags/dsh-piccolo-sprite-examples-1.0</developerConnection>
-    <url>https://svn.code.sf.net/p/dishevelled/code/tags/dsh-piccolo-sprite-examples-1.0</url>
+    <connection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/piccolo-sprite-examples</connection>
+    <developerConnection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/piccolo-sprite-examples</developerConnection>
+    <url>https://svn.code.sf.net/p/dishevelled/code/trunk/piccolo-sprite-examples</url>
   </scm>
   <distributionManagement>
     <site>
@@ -47,7 +47,7 @@
       <dependency>
         <groupId>org.dishevelled</groupId>
         <artifactId>dsh-piccolo-sprite</artifactId>
-        <version>1.0</version>
+        <version>1.1-SNAPSHOT</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
