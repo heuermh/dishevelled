@@ -77,6 +77,7 @@
     <module>piccolo-tilemap</module>
     <module>piccolo-tilemap-examples</module>
     <module>piccolo-transition</module>
+    <module>piccolo-transition-examples</module>
     <module>piccolo-venn</module>
     <module>piccolo-venn-examples</module>
     <module>site-skin</module>
