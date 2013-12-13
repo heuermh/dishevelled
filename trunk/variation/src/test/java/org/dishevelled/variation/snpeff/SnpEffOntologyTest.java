@@ -29,6 +29,7 @@ import static org.dishevelled.variation.snpeff.SnpEffOntology.effectToRegionMapp
 import static org.dishevelled.variation.snpeff.SnpEffOntology.effectToSequenceOntologyMapping;
 import static org.dishevelled.variation.snpeff.SnpEffOntology.impacts;
 import static org.dishevelled.variation.snpeff.SnpEffOntology.indexByName;
+import static org.dishevelled.variation.snpeff.SnpEffOntology.indexBySourceConcept;
 import static org.dishevelled.variation.snpeff.SnpEffOntology.regions;
 import static org.dishevelled.variation.snpeff.SnpEffOntology.regionToEffectMapping;
 import static org.dishevelled.variation.snpeff.SnpEffOntology.regionToImpactMapping;
@@ -38,6 +39,7 @@ import static org.dishevelled.variation.so.SequenceOntology.sequenceFeatures;
 import static org.dishevelled.variation.so.SequenceOntology.sequenceVariants;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
@@ -76,6 +78,31 @@ public final class SnpEffOntologyTest
         assertNotNull(effectsByName);
         assertNotNull(effectsByName.get("STOP_GAINED"));
         assertEquals("STOP_GAINED", effectsByName.get("STOP_GAINED").getName());
+    }
+
+    @Test(expected=NullPointerException.class)
+    public void testIndexBySourceConceptNullMapping()
+    {
+        indexBySourceConcept(null);
+    }
+
+    @Test
+    public void testIndexBySourceConcept()
+    {
+        Mapping effectToSequenceOntology = effectToSequenceOntologyMapping();
+        Map<String, Concept> effects = indexByName(effectToSequenceOntology.getSource());
+        Map<Concept, Projection> effectProjections = indexBySourceConcept(effectToSequenceOntology);
+        assertNotNull(effectProjections);
+        assertFalse(effectProjections.isEmpty());
+
+        Concept startLost = effects.get("START_LOST");
+        for (Map.Entry<Concept, Projection> entry : effectProjections.entrySet())
+        {
+            if (startLost.equals(entry.getKey()))
+            {
+                assertEquals("initiator_codon_variant", entry.getValue().getTarget().getName());
+            }
+        }
     }
 
     @Test

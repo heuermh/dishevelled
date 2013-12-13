@@ -23,7 +23,10 @@
 */
 package org.dishevelled.variation.snpeff;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import java.util.Map;
+import java.util.HashMap;
 import java.util.Set;
 
 import java.util.concurrent.atomic.AtomicInteger;
@@ -37,6 +40,7 @@ import org.dishevelled.vocabulary.Concept;
 import org.dishevelled.vocabulary.Domain;
 import org.dishevelled.vocabulary.Evidence;
 import org.dishevelled.vocabulary.Mapping;
+import org.dishevelled.vocabulary.Projection;
 
 /**
  * Mappings between SnpEff terminologies and SequenceOntology.
@@ -53,6 +57,17 @@ public final class SnpEffOntology
     public static Map<String, Concept> indexByName(final Domain domain)
     {
         return SequenceOntology.indexByName(domain);
+    }
+
+    public static Map<Concept, Projection> indexBySourceConcept(final Mapping mapping)
+    {
+        checkNotNull(mapping);
+        Map<Concept, Projection> indexBySourceConcept = new HashMap<Concept, Projection>();
+        for (Projection projection : mapping.getProjections())
+        {
+            indexBySourceConcept.put(projection.getSource(), projection);
+        }
+        return indexBySourceConcept;
     }
 
     public static Domain effects()

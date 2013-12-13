@@ -108,7 +108,10 @@ public final class SnpEffVcfVariationConsequenceServiceTest
                 assertEquals(reference, consequence.getReference());
                 assertEquals("C", consequence.getReferenceAllele());
                 assertEquals("T", consequence.getAlternateAllele());
-                assertTrue("INTRON".equals(consequence.getSequenceOntologyTerm()) || "UPSTREAM".equals(consequence.getSequenceOntologyTerm()));
+                // SnpEff ontology terms
+                //assertTrue("INTRON".equals(consequence.getSequenceOntologyTerm()) || "UPSTREAM".equals(consequence.getSequenceOntologyTerm()));
+                // map --> Sequence Ontology terms
+                assertTrue("intron_variant".equals(consequence.getSequenceOntologyTerm()) || "upstream_gene_variant".equals(consequence.getSequenceOntologyTerm()));
                 assertEquals("22", consequence.getRegion());
                 assertEquals(17452052 - 1, consequence.getStart());
                 assertEquals(17452052, consequence.getEnd());
@@ -166,7 +169,10 @@ public final class SnpEffVcfVariationConsequenceServiceTest
             assertEquals("C", consequence.getReferenceAllele());
             assertEquals("CA", consequence.getAlternateAllele());
             assertEquals("6", consequence.getRegion());
-            assertTrue("FRAME_SHIFT".equals(consequence.getSequenceOntologyTerm()) || "UPSTREAM".equals(consequence.getSequenceOntologyTerm()));
+            // SnpEff ontology terms
+            //assertTrue("FRAME_SHIFT".equals(consequence.getSequenceOntologyTerm()) || "UPSTREAM".equals(consequence.getSequenceOntologyTerm()));
+            // map --> Sequence Ontology terms
+            assertTrue("frameshift_variant".equals(consequence.getSequenceOntologyTerm()) || "upstream_gene_variant".equals(consequence.getSequenceOntologyTerm()));
             assertEquals(7542148 - 1, consequence.getStart());
             assertEquals(7542148, consequence.getEnd());
 

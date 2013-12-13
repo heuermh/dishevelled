@@ -31,6 +31,7 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import com.google.common.base.Charsets;
 
@@ -42,6 +43,14 @@ import org.dishevelled.variation.Variation;
 import org.dishevelled.variation.VariationConsequence;
 import org.dishevelled.variation.VariationConsequenceService;
 
+import org.dishevelled.variation.snpeff.SnpEffOntology;
+
+import org.dishevelled.variation.so.SequenceOntology;
+
+import org.dishevelled.vocabulary.Concept;
+import org.dishevelled.vocabulary.Mapping;
+import org.dishevelled.vocabulary.Projection;
+
 /**
  * SnpEff-annotated VCF file variation consequence service.
  */
@@ -50,6 +59,11 @@ public final class SnpEffVcfVariationConsequenceService implements VariationCons
     private final String species;
     private final String reference;
     private final File file;
+    private final Map<String, Concept> sequenceVariants;
+    private final Map<String, Concept> effects;
+    private final Map<Concept, Projection> effectProjections;
+    private final Map<String, Concept> regions;
+    private final Map<Concept, Projection> regionProjections;
 
 
     public SnpEffVcfVariationConsequenceService(final String species, final String reference, final File file)
@@ -61,6 +75,18 @@ public final class SnpEffVcfVariationConsequenceService implements VariationCons
         this.species = species;
         this.reference = reference;
         this.file = file;
+
+        // Sequence Ontology
+        sequenceVariants = SequenceOntology.indexByName(SequenceOntology.sequenceVariants());
+
+        // SnpEff ontologies
+        Mapping effectToSequenceOntology = SnpEffOntology.effectToSequenceOntologyMapping();
+        effects = SnpEffOntology.indexByName(effectToSequenceOntology.getSource());
+        effectProjections = SnpEffOntology.indexBySourceConcept(effectToSequenceOntology);
+
+        Mapping regionToSequenceOntology = SnpEffOntology.regionToSequenceOntologyMapping();
+        regions = SnpEffOntology.indexByName(regionToSequenceOntology.getSource());
+        regionProjections = SnpEffOntology.indexBySourceConcept(regionToSequenceOntology);
     }
 
 
@@ -99,23 +125,35 @@ public final class SnpEffVcfVariationConsequenceService implements VariationCons
                                     try
                                     {
                                         SnpEffEffect effect = SnpEffEffect.parse(effToken);
-
                                         String altAllele = alt.get(effect.getGenotype());
-                                        // requires SnpEff to have been run with -sequenceOntology command line option
-                                        //   or use SnpEffOntology.effectToSequenceOntologyMapping()
-                                        String sequenceOntologyTerm = effect.getEffect();
+
+                                        // map from SnpEff ontology to Sequence Ontology if necessary
+                                        String sequenceOntologyTerm = null;
+                                        if (sequenceVariants.containsKey(effect.getEffect())) {
+                                            sequenceOntologyTerm = effect.getEffect();
+                                        }
+                                        else if (effects.containsKey(effect.getEffect())) {
+                                            // todo:  NPE if no projection exists for a given SnpEff ontology term (e.g. RARE_AMINO_ACID)
+                                            sequenceOntologyTerm = effectProjections.get(effects.get(effect.getEffect())).getTarget().getName();
+                                        }
+                                        else if (regions.containsKey(effect.getEffect())) {
+                                            sequenceOntologyTerm = regionProjections.get(regions.get(effect.getEffect())).getTarget().getName();
+                                        }
+
                                         // todo: double-check ref, altAllele, transcript, geneName matches
                                         //   also only include those alt alleles found in samples/individuals of interest
-
-                                        consequences.add(new VariationConsequence(variation.getSpecies(),
-                                                                                  variation.getReference(),
-                                                                                  variation.getIdentifiers(),
-                                                                                  variation.getReferenceAllele(),
-                                                                                  altAllele,
-                                                                                  sequenceOntologyTerm,
-                                                                                  variation.getRegion(),
-                                                                                  variation.getStart(),
-                                                                                  variation.getEnd()));
+                                        
+                                        if (sequenceOntologyTerm != null) {
+                                            consequences.add(new VariationConsequence(variation.getSpecies(),
+                                                                                      variation.getReference(),
+                                                                                      variation.getIdentifiers(),
+                                                                                      variation.getReferenceAllele(),
+                                                                                      altAllele,
+                                                                                      sequenceOntologyTerm,
+                                                                                      variation.getRegion(),
+                                                                                      variation.getStart(),
+                                                                                      variation.getEnd()));
+                                        }
                                     }
                                     catch (IOException e)
                                     {
