@@ -36,12 +36,21 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+
+import com.google.common.collect.ImmutableList;
 
 import org.dishevelled.variation.Variation;
 import org.dishevelled.variation.VariationConsequence;
 import org.dishevelled.variation.VariationConsequenceService;
 
-import com.google.common.collect.ImmutableList;
+import org.dishevelled.variation.snpeff.SnpEffOntology;
+
+import org.dishevelled.variation.so.SequenceOntology;
+
+import org.dishevelled.vocabulary.Concept;
+import org.dishevelled.vocabulary.Mapping;
+import org.dishevelled.vocabulary.Projection;
 
 /**
  * GEMINI command line variation consequence service.
@@ -51,6 +60,11 @@ public final class GeminiVariationConsequenceService implements VariationConsequ
     private final String species;
     private final String reference;
     private final String databaseName;
+    private final Map<String, Concept> sequenceVariants;
+    private final Map<String, Concept> effects;
+    private final Map<Concept, Projection> effectProjections;
+    private final Map<String, Concept> regions;
+    private final Map<Concept, Projection> regionProjections;
 
 
     public GeminiVariationConsequenceService(final String species, final String reference, final String databaseName)
@@ -62,6 +76,18 @@ public final class GeminiVariationConsequenceService implements VariationConsequ
         this.species = species;
         this.reference = reference;
         this.databaseName = databaseName;
+
+        // Sequence Ontology
+        sequenceVariants = SequenceOntology.indexByName(SequenceOntology.sequenceVariants());
+
+        // SnpEff ontologies
+        Mapping effectToSequenceOntology = SnpEffOntology.effectToSequenceOntologyMapping();
+        effects = SnpEffOntology.indexByName(effectToSequenceOntology.getSource());
+        effectProjections = SnpEffOntology.indexBySourceConcept(effectToSequenceOntology);
+
+        Mapping regionToSequenceOntology = SnpEffOntology.regionToSequenceOntologyMapping();
+        regions = SnpEffOntology.indexByName(regionToSequenceOntology.getSource());
+        regionProjections = SnpEffOntology.indexBySourceConcept(regionToSequenceOntology);
     }
 
 
@@ -108,8 +134,7 @@ public final class GeminiVariationConsequenceService implements VariationConsequ
                 List<String> identifiers = tokens[0] == "null" ? Collections.<String>emptyList() : ImmutableList.copyOf(tokens[0].split(","));
                 String ref = tokens[1];
                 String alt = tokens[2];
-                // todo: impact may need to be mapped to sequence ontology
-                String sequenceOntologyTerm = tokens[3];
+                String effect = tokens[3];
 
                 // note: gemini puts chr on the region name
                 String region = tokens[4].replace("chr", "");
@@ -117,7 +142,22 @@ public final class GeminiVariationConsequenceService implements VariationConsequ
                 int start = Integer.parseInt(tokens[5]);
                 int end = Integer.parseInt(tokens[6]);
 
-                variationConsequences.add(new VariationConsequence(species, reference, identifiers, ref, alt, sequenceOntologyTerm, region, start, end));
+                // map from SnpEff ontology to Sequence Ontology if necessary
+                // todo: consider moving this to SnpEffOntology
+                String sequenceOntologyTerm = null;
+                if (sequenceVariants.containsKey(effect)) {
+                    sequenceOntologyTerm = effect;
+                }
+                else if (effects.containsKey(effect)) {
+                    sequenceOntologyTerm = effectProjections.get(effects.get(effect)).getTarget().getName();
+                }
+                else if (regions.containsKey(effect)) {
+                    sequenceOntologyTerm = regionProjections.get(regions.get(effect)).getTarget().getName();
+                }
+
+                if (sequenceOntologyTerm != null) {
+                    variationConsequences.add(new VariationConsequence(species, reference, identifiers, ref, alt, sequenceOntologyTerm, region, start, end));
+                }
             }
         }
         catch (IOException e)
