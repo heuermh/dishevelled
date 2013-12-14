@@ -67,6 +67,9 @@ final class VariationApp
     /** Variation consequences view. */
     private final VariationConsequenceView variationConsequenceView;
 
+    /** Visual mapping view. */
+    private final VisualMappingView visualMappingView;
+
     /** Application manager. */
     private final CyApplicationManager applicationManager;
 
@@ -147,12 +150,14 @@ final class VariationApp
         featureView = new FeatureView(model);
         variationView = new VariationView(model);
         variationConsequenceView = new VariationConsequenceView(model);
+        visualMappingView = new VisualMappingView(model);
 
         tabbedPane = new JTabbedPane();
         tabbedPane.add("Config", configView);
         tabbedPane.add("Features", featureView);
         tabbedPane.add("Variations", variationView);
         tabbedPane.add("Consequences", variationConsequenceView);
+        tabbedPane.add("Visual Mapping", visualMappingView);
 
         model.setNetwork(applicationManager.getCurrentNetwork());
 
