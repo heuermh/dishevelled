@@ -34,6 +34,7 @@ import javax.swing.AbstractAction;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 
 import javax.swing.JPanel;
 
@@ -51,6 +52,12 @@ final class VisualMappingView
 {
     /** Variation model. */
     private final VariationModel model;
+
+    /** Map variation_count to node size continuously. */
+    private final JCheckBox variationCountToNodeSize;
+
+    /** Map variation_count to node color continuously. */
+    private final JCheckBox variationCountToNodeColor;
 
     /** Apply action. */
     private final AbstractAction apply = new AbstractAction("Apply")
@@ -75,6 +82,12 @@ final class VisualMappingView
 
         checkNotNull(model);
         this.model = model;
+
+        variationCountToNodeSize = new JCheckBox("Map variation_count to node size continuously");
+        variationCountToNodeColor = new JCheckBox("Map variation_count to node color continuously");
+
+        variationCountToNodeSize.setEnabled(false);
+        variationCountToNodeColor.setEnabled(false);
 
         apply.setEnabled(false);
 
@@ -103,6 +116,13 @@ final class VisualMappingView
         LabelFieldPanel panel = new LabelFieldPanel();
         panel.setOpaque(false);
 
+        // panel.addLabel("Simple mappings:");
+        panel.addField(variationCountToNodeSize);
+        panel.addField(variationCountToNodeColor);
+        // panel.addLabel("Compound mappings:");
+        // ...
+        panel.addFinalSpacing();
+
         return panel;
     }
 
@@ -128,6 +148,48 @@ final class VisualMappingView
      */
     private void apply()
     {
+        if (variationCountToNodeSize.isEnabled())
+        {
+            mapVariationCountToNodeSize();
+        }
+        if (variationCountToNodeColor.isEnabled())
+        {
+            mapVariationCountToNodeColor();
+        }
+    }
+
+    // might need to migrate these to tasks, e.g. ApplyVisualStyleTaskFactory
+
+    /**
+     * Map variation_count to node size continuously.
+     */
+    private void mapVariationCountToNodeSize()
+    {
         // empty
+    }
+
+    /**
+     * Map variation_count to node color continuously.
+     */
+    private void mapVariationCountToNodeColor()
+    {
+        // empty
+        /*
+
+        // remove existing node color mapping
+        visualStyle.removeVisualMappingFunction(BasicVisualLexicon.NODE_FILL_COLOR);
+
+        // create new continuous node color mapping
+        int maxVariationCount = maxCount(model.getNetwork(), "variation_count");
+        ContinuousMapping<String, Paint> nodeColorMapping = (ContinuousMapping<String, Paint>) continuousMappingFactory.createVisualMappingFunction("variation_count", Integer.class, BasicVisualLexicon.NODE_FILL_COLOR);
+        nodeColorMapping.addPoint(new Color(255, 255, 255), new BoundaryRangeValues(0, 0, 0));
+        nodeColorMapping.addPoint(new Color(80, 0, 0), new BoundaryRangeValues(maxVariationCount, maxVariationCount, maxVariationCount));
+
+        // install new mapping
+        visualStyle.addVisualMappingFunction(nodeColorMapping);
+
+        // apply, update, etc.
+
+        */
     }
 }
