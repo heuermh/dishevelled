@@ -220,6 +220,28 @@ final class VariationUtils
     }
 
     /**
+     * Return the maximum count value in the specified column in the specified network.
+     *
+     * @param network network
+     * @param columnName column name
+     * @return the maximum count value in the specified column in the specified network
+     */
+    static int maxCount(final CyNetwork network, final String columnName)
+    {
+        CyTable table = network.getDefaultNodeTable();
+        CyColumn column = table.getColumn(columnName);
+        int max = 0;
+        for (Integer value : column.getValues(Integer.class))
+        {
+            if (value != null && value > max)
+            {
+                max = value;
+            }
+        }
+        return max;
+    }
+
+    /**
      * Install a close action binding to <code>Ctrl-C</code>/<code>Command-C</code> for the specified dialog.
      *
      * @param dialog dialog, must not be null
