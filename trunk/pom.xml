@@ -32,6 +32,7 @@
     <module>codegen-shell</module>
     <module>collect</module>
     <module>color-scheme</module>
+    <!--<module>color-scheme-cytoscape3-app</module>-->
     <module>commandline</module>
     <module>curate</module>
     <module>curate-examples</module>
