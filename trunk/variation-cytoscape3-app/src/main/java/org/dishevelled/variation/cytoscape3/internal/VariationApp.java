@@ -36,6 +36,8 @@ import com.google.common.collect.ImmutableList;
 
 import org.cytoscape.application.CyApplicationManager;
 import org.cytoscape.work.swing.DialogTaskManager;
+import org.cytoscape.view.vizmap.VisualMappingFunctionFactory;
+import org.cytoscape.view.vizmap.VisualMappingManager;
 
 import org.dishevelled.iconbundle.IconBundle;
 
@@ -137,11 +139,24 @@ final class VariationApp
      *
      * @param applicationManager application manager, must not be null
      * @param dialogTaskManager dialog task manager, must not be null
+     * @param visualMappingManager visual mapping manager, must not be null
+     * @param continuousMappingFactory continuous mapping factory, must not be null
+     * @param discreteMappingFactory discrete mapping factory, must not be null
+     * @param passthroughMappingFactory passthrough mapping factory, must not be null
      */
-    VariationApp(final CyApplicationManager applicationManager, final DialogTaskManager dialogTaskManager)
+    VariationApp(final CyApplicationManager applicationManager,
+                 final DialogTaskManager dialogTaskManager,
+                 final VisualMappingManager visualMappingManager,
+                 final VisualMappingFunctionFactory continuousMappingFactory,
+                 final VisualMappingFunctionFactory discreteMappingFactory,
+                 final VisualMappingFunctionFactory passthroughMappingFactory)
     {
         checkNotNull(applicationManager);
         checkNotNull(dialogTaskManager);
+        checkNotNull(visualMappingManager);
+        checkNotNull(continuousMappingFactory);
+        checkNotNull(discreteMappingFactory);
+        checkNotNull(passthroughMappingFactory);
         this.applicationManager = applicationManager;
         this.dialogTaskManager = dialogTaskManager;
 
@@ -150,7 +165,7 @@ final class VariationApp
         featureView = new FeatureView(model);
         variationView = new VariationView(model);
         variationConsequenceView = new VariationConsequenceView(model);
-        visualMappingView = new VisualMappingView(model);
+        visualMappingView = new VisualMappingView(model, visualMappingManager, continuousMappingFactory, discreteMappingFactory, passthroughMappingFactory);
 
         tabbedPane = new JTabbedPane();
         tabbedPane.add("Config", configView);

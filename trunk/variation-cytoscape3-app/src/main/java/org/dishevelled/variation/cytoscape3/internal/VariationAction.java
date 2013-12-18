@@ -44,7 +44,12 @@ import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 
 import org.cytoscape.application.CyApplicationManager;
+
 import org.cytoscape.application.swing.AbstractCyAction;
+
+import org.cytoscape.view.vizmap.VisualMappingFunctionFactory;
+import org.cytoscape.view.vizmap.VisualMappingManager;
+
 import org.cytoscape.work.swing.DialogTaskManager;
 
 import org.dishevelled.iconbundle.tango.TangoProject;
@@ -66,22 +71,51 @@ final class VariationAction extends AbstractCyAction
     /** Dialog task manager. */
     private final DialogTaskManager dialogTaskManager;
 
+    /** Visual mapping manager. */
+    private final VisualMappingManager visualMappingManager;
+
+    /** Continuous mapping factory. */
+    private final VisualMappingFunctionFactory continuousMappingFactory;
+
+    /** Discrete mapping factory. */
+    private final VisualMappingFunctionFactory discreteMappingFactory;
+
+    /** Passthrough mapping factory. */
+    private final VisualMappingFunctionFactory passthroughMappingFactory;
+
 
     /**
      * Create a new variation action.
      *
      * @param applicationManager application manager, must not be null
      * @param dialogTaskManager dialog task manager, must not be null
+     * @param visualMappingManager visual mapping manager, must not be null
+     * @param continuousMappingFactory continuous mapping factory, must not be null
+     * @param discreteMappingFactory discrete mapping factory, must not be null
+     * @param passthroughMappingFactory passthrough mapping factory, must not be null
      */
-    VariationAction(final CyApplicationManager applicationManager, final DialogTaskManager dialogTaskManager)
+    VariationAction(final CyApplicationManager applicationManager,
+                    final DialogTaskManager dialogTaskManager,
+                    final VisualMappingManager visualMappingManager,
+                    final VisualMappingFunctionFactory continuousMappingFactory,
+                    final VisualMappingFunctionFactory discreteMappingFactory,
+                    final VisualMappingFunctionFactory passthroughMappingFactory)
     {
         super("Variation");
         setPreferredMenu("Apps");
 
         checkNotNull(applicationManager);
         checkNotNull(dialogTaskManager);
+        checkNotNull(visualMappingManager);
+        checkNotNull(continuousMappingFactory);
+        checkNotNull(discreteMappingFactory);
+        checkNotNull(passthroughMappingFactory);
         this.applicationManager = applicationManager;
         this.dialogTaskManager = dialogTaskManager;
+        this.visualMappingManager = visualMappingManager;
+        this.continuousMappingFactory = continuousMappingFactory;
+        this.discreteMappingFactory = discreteMappingFactory;
+        this.passthroughMappingFactory = passthroughMappingFactory;
     }
 
 
@@ -110,7 +144,12 @@ final class VariationAction extends AbstractCyAction
         contentPane.setBorder(new EmptyBorder(12, 12, 12, 12));
         contentPane.setLayout(new BorderLayout());
 
-        VariationApp app = new VariationApp(applicationManager, dialogTaskManager);
+        VariationApp app = new VariationApp(applicationManager,
+                                            dialogTaskManager,
+                                            visualMappingManager,
+                                            continuousMappingFactory,
+                                            discreteMappingFactory,
+                                            passthroughMappingFactory);
 
         IdToolBar toolBar = new IdToolBar();
         toolBar.displayIconsAndText();

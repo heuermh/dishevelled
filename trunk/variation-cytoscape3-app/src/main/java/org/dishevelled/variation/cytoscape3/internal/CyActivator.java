@@ -28,6 +28,8 @@ import java.util.Properties;
 import org.cytoscape.application.CyApplicationManager;
 import org.cytoscape.application.swing.CyAction;
 import org.cytoscape.service.util.AbstractCyActivator;
+import org.cytoscape.view.vizmap.VisualMappingFunctionFactory;
+import org.cytoscape.view.vizmap.VisualMappingManager;
 import org.cytoscape.work.swing.DialogTaskManager;
 
 import org.osgi.framework.BundleContext;
@@ -49,7 +51,17 @@ public final class CyActivator extends AbstractCyActivator
         }
         CyApplicationManager applicationManager = getService(bundleContext, CyApplicationManager.class);
         DialogTaskManager dialogTaskManager = getService(bundleContext, DialogTaskManager.class);
-        VariationAction variationAction = new VariationAction(applicationManager, dialogTaskManager);
+        VisualMappingManager visualMappingManager = getService(bundleContext, VisualMappingManager.class);
+        VisualMappingFunctionFactory continuousMappingFactory = getService(bundleContext, VisualMappingFunctionFactory.class, "(mapping.type=continuous)");
+        VisualMappingFunctionFactory discreteMappingFactory = getService(bundleContext, VisualMappingFunctionFactory.class, "(mapping.type=discrete)");
+        VisualMappingFunctionFactory passthroughMappingFactory = getService(bundleContext, VisualMappingFunctionFactory.class, "(mapping.type=passthrough)");
+
+        VariationAction variationAction = new VariationAction(applicationManager,
+                                                              dialogTaskManager,
+                                                              visualMappingManager,
+                                                              continuousMappingFactory,
+                                                              discreteMappingFactory,
+                                                              passthroughMappingFactory);
 
         Properties properties = new Properties();
         registerService(bundleContext, variationAction, CyAction.class, properties);
