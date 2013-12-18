@@ -134,7 +134,7 @@
     <jdk.version>1.6</jdk.version>
     <bundle.symbolicName>midi-cytoscape3-app</bundle.symbolicName>
     <bundle.namespace>org.dishevelled.midi.cytoscape3.internal</bundle.namespace>
-    <cytoscape.api.version>3.0.1</cytoscape.api.version>
+    <cytoscape.api.version>3.0.2</cytoscape.api.version>
   </properties>
   <reporting>
     <plugins>
