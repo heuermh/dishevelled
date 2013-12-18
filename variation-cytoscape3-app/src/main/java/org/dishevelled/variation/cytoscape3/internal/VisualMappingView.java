@@ -25,7 +25,11 @@ package org.dishevelled.variation.cytoscape3.internal;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
+import static org.dishevelled.variation.cytoscape3.internal.VariationUtils.maxCount;
+
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Paint;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -40,6 +44,15 @@ import javax.swing.JPanel;
 
 import javax.swing.border.EmptyBorder;
 
+import org.cytoscape.view.presentation.property.BasicVisualLexicon;
+
+import org.cytoscape.view.vizmap.VisualMappingFunctionFactory;
+import org.cytoscape.view.vizmap.VisualMappingManager;
+import org.cytoscape.view.vizmap.VisualStyle;
+
+import org.cytoscape.view.vizmap.mappings.BoundaryRangeValues;
+import org.cytoscape.view.vizmap.mappings.ContinuousMapping;
+
 import org.dishevelled.layout.LabelFieldPanel;
 
 /**
@@ -52,6 +65,18 @@ final class VisualMappingView
 {
     /** Variation model. */
     private final VariationModel model;
+
+    /** Visual mapping manager. */
+    private final VisualMappingManager visualMappingManager;
+
+    /** Continuous mapping factory. */
+    private final VisualMappingFunctionFactory continuousMappingFactory;
+
+    /** Discrete mapping factory. */
+    private final VisualMappingFunctionFactory discreteMappingFactory;
+
+    /** Passthrough mapping factory. */
+    private final VisualMappingFunctionFactory passthroughMappingFactory;
 
     /** Map variation_count to node size continuously. */
     private final JCheckBox variationCountToNodeSize;
@@ -69,25 +94,54 @@ final class VisualMappingView
             }
         };
 
+    /** Check box action listener. */
+    private final ActionListener checkBoxActionListener = new ActionListener()
+        {
+            @Override
+            public void actionPerformed(final ActionEvent event)
+            {
+                apply.setEnabled(true);
+            }
+        };
+
 
     /**
      * Create a new visual mapping view with the specified variation model.
      *
      * @param model variation model, must not be null
+     * @param visualMappingManager visual mapping manager, must not be null
+     * @param continuousMappingFactory continuous mapping factory, must not be null
+     * @param discreteMappingFactory discrete mapping factory, must not be null
+     * @param passthroughMappingFactory passthrough mapping factory, must not be null
      */
-    VisualMappingView(final VariationModel model)
+    VisualMappingView(final VariationModel model,
+                      final VisualMappingManager visualMappingManager,
+                      final VisualMappingFunctionFactory continuousMappingFactory,
+                      final VisualMappingFunctionFactory discreteMappingFactory,
+                      final VisualMappingFunctionFactory passthroughMappingFactory)
     {
         super();
         setOpaque(false);
 
         checkNotNull(model);
+        checkNotNull(visualMappingManager);
+        checkNotNull(continuousMappingFactory);
+        checkNotNull(discreteMappingFactory);
+        checkNotNull(passthroughMappingFactory);
         this.model = model;
+        this.visualMappingManager = visualMappingManager;
+        this.continuousMappingFactory = continuousMappingFactory;
+        this.discreteMappingFactory = discreteMappingFactory;
+        this.passthroughMappingFactory = passthroughMappingFactory;
 
         variationCountToNodeSize = new JCheckBox("Map variation_count to node size continuously");
         variationCountToNodeColor = new JCheckBox("Map variation_count to node color continuously");
 
-        variationCountToNodeSize.setEnabled(false);
-        variationCountToNodeColor.setEnabled(false);
+        variationCountToNodeSize.setSelected(false);
+        variationCountToNodeColor.setSelected(false);
+
+        variationCountToNodeSize.addActionListener(checkBoxActionListener);
+        variationCountToNodeColor.addActionListener(checkBoxActionListener);
 
         apply.setEnabled(false);
 
@@ -148,24 +202,57 @@ final class VisualMappingView
      */
     private void apply()
     {
-        if (variationCountToNodeSize.isEnabled())
+        if (variationCountToNodeSize.isSelected())
         {
             mapVariationCountToNodeSize();
         }
-        if (variationCountToNodeColor.isEnabled())
+        else
+        {
+            removeNodeSizeMapping();
+        }
+
+        if (variationCountToNodeColor.isSelected())
         {
             mapVariationCountToNodeColor();
         }
-    }
+        else
+        {
+            removeNodeColorMapping();
+        }
 
-    // might need to migrate these to tasks, e.g. ApplyVisualStyleTaskFactory
+        apply.setEnabled(false);
+    }
 
     /**
      * Map variation_count to node size continuously.
      */
     private void mapVariationCountToNodeSize()
     {
-        // empty
+        VisualStyle visualStyle = visualMappingManager.getCurrentVisualStyle();
+
+        // remove existing node size mapping
+        visualStyle.removeVisualMappingFunction(BasicVisualLexicon.NODE_SIZE);
+
+        // create new continuous node size mapping
+        ContinuousMapping<Integer, Double> nodeSizeMapping = (ContinuousMapping<Integer, Double>) continuousMappingFactory.createVisualMappingFunction("variation_count", Integer.class, BasicVisualLexicon.NODE_SIZE);
+
+        Double smallest = Double.valueOf(30.0d);
+        Double largest = Double.valueOf(90.0d);
+        int maxVariationCount = maxCount(model.getNetwork(), "variation_count");
+        nodeSizeMapping.addPoint(0, new BoundaryRangeValues(smallest, smallest, smallest));
+        nodeSizeMapping.addPoint(maxVariationCount, new BoundaryRangeValues(largest, largest, largest));
+
+        // install new mapping
+        visualStyle.addVisualMappingFunction(nodeSizeMapping);
+    }
+
+    /**
+     * Remove node size mapping.
+     */
+    private void removeNodeSizeMapping()
+    {
+        VisualStyle visualStyle = visualMappingManager.getCurrentVisualStyle();
+        visualStyle.removeVisualMappingFunction(BasicVisualLexicon.NODE_SIZE);
     }
 
     /**
@@ -173,23 +260,35 @@ final class VisualMappingView
      */
     private void mapVariationCountToNodeColor()
     {
-        // empty
-        /*
+        VisualStyle visualStyle = visualMappingManager.getCurrentVisualStyle();
 
         // remove existing node color mapping
         visualStyle.removeVisualMappingFunction(BasicVisualLexicon.NODE_FILL_COLOR);
 
         // create new continuous node color mapping
+        ContinuousMapping<Integer, Paint> nodeColorMapping = (ContinuousMapping<Integer, Paint>) continuousMappingFactory.createVisualMappingFunction("variation_count", Integer.class, BasicVisualLexicon.NODE_FILL_COLOR);
+
+        // blues-4
+        Paint p0 = new Color(239, 243, 255);
+        Paint p1 = new Color(189, 215, 231);
+        Paint p2 = new Color(107, 174, 214);
+        Paint p3 = new Color(33, 113, 181);
         int maxVariationCount = maxCount(model.getNetwork(), "variation_count");
-        ContinuousMapping<String, Paint> nodeColorMapping = (ContinuousMapping<String, Paint>) continuousMappingFactory.createVisualMappingFunction("variation_count", Integer.class, BasicVisualLexicon.NODE_FILL_COLOR);
-        nodeColorMapping.addPoint(new Color(255, 255, 255), new BoundaryRangeValues(0, 0, 0));
-        nodeColorMapping.addPoint(new Color(80, 0, 0), new BoundaryRangeValues(maxVariationCount, maxVariationCount, maxVariationCount));
+        nodeColorMapping.addPoint(0, new BoundaryRangeValues(p0, p0, p0));
+        nodeColorMapping.addPoint(maxVariationCount / 3, new BoundaryRangeValues(p1, p1, p1));
+        nodeColorMapping.addPoint(2 * maxVariationCount / 3, new BoundaryRangeValues(p2, p2, p2));
+        nodeColorMapping.addPoint(maxVariationCount, new BoundaryRangeValues(p3, p3, p3));
 
         // install new mapping
         visualStyle.addVisualMappingFunction(nodeColorMapping);
+    }
 
-        // apply, update, etc.
-
-        */
+    /**
+     * Remove node color mapping.
+     */
+    private void removeNodeColorMapping()
+    {
+        VisualStyle visualStyle = visualMappingManager.getCurrentVisualStyle();
+        visualStyle.removeVisualMappingFunction(BasicVisualLexicon.NODE_FILL_COLOR);
     }
 }

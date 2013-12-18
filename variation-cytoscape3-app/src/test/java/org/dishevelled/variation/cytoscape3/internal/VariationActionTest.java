@@ -27,6 +27,9 @@ import static org.junit.Assert.assertNotNull;
 
 import org.cytoscape.application.CyApplicationManager;
 
+import org.cytoscape.view.vizmap.VisualMappingFunctionFactory;
+import org.cytoscape.view.vizmap.VisualMappingManager;
+
 import org.cytoscape.work.swing.DialogTaskManager;
 
 import org.junit.Before;
@@ -48,12 +51,25 @@ public final class VariationActionTest
     private CyApplicationManager applicationManager;
     @Mock
     private DialogTaskManager dialogTaskManager;
+    @Mock
+    private VisualMappingManager visualMappingManager;
+    @Mock
+    private VisualMappingFunctionFactory continuousMappingFactory;
+    @Mock
+    private VisualMappingFunctionFactory discreteMappingFactory;
+    @Mock
+    private VisualMappingFunctionFactory passthroughMappingFactory;
 
     @Before
     public void setUp()
     {
         MockitoAnnotations.initMocks(this);
-        variationAction = new VariationAction(applicationManager, dialogTaskManager);
+        variationAction = new VariationAction(applicationManager,
+                                              dialogTaskManager,
+                                              visualMappingManager,
+                                              continuousMappingFactory,
+                                              discreteMappingFactory,
+                                              passthroughMappingFactory);
     }
 
     @Test
