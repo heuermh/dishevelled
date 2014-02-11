@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<!--
+
+    dsh-worm-plot-cytoscape3-app  Worm plot Cytoscape 3 app.
+    Copyright (c) 2014 held jointly by the individual authors.
+
+    This library is free software; you can redistribute it and/or modify it
+    under the terms of the GNU Lesser General Public License as published
+    by the Free Software Foundation; either version 3 of the License, or (at
+    your option) any later version.
+
+    This library is distributed in the hope that it will be useful, but WITHOUT
+    ANY WARRANTY; with out even the implied warranty of MERCHANTABILITY or
+    FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
+    License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with this library;  if not, write to the Free Software Foundation,
+    Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307  USA.
+
+    > http://www.fsf.org/licensing/licenses/lgpl.html
+    > http://www.opensource.org/licenses/lgpl-license.php
+
+-->
+<document>
+  <properties>
+    <title>worm-plot-cytoscape3-app</title>
+  </properties>
+<body>
+
+<section name="Summary">
+
+<p>
+dishevelled.org <b>worm-plot-cytoscape3-app</b> provides a Cytoscape 3 [<a href="#1">1</a>] app
+for creating "worm plot" DNA sequence self-similarity graphs.  The Worm plot Cytoscape 3 app requires
+java version 1.6 or later, Cytoscape version 3.0 or later, and a local installation of NCBI BLAST
+[<a href="#2">2</a>] version 2.2.29 or later.
+</p>
+</section>
+
+<section name="References">
+<p id="1">
+[1] Cytoscape<br/>
+&gt; <a href="http://cytoscape.org">http://cytoscape.org</a>
+</p>
+<p id="2">
+[2] NCBI BLAST: Basic Local Alignment Search Tool<br/>
+&gt; <a href="http://blast.ncbi.nlm.nih.gov">http://blast.ncbi.nlm.nih.gov</a>
+</p>
+</section>
+
+<section name="Acknowledgements">
+  <ul>
+    <li>Powered by Apache <a href="http://maven.apache.org">Maven</a>.</li>
+    <li>Project hosting by <a href="http://sourceforge.net">SourceForge.net</a>.</li>
+  </ul>
+  <p><img src="http://sourceforge.net/sflogo.php?group_id=113165&amp;type=1" width="88" height="31" border="0" alt="SourceForge.net Logo"/></p>
+</section>
+</body>
+</document>
