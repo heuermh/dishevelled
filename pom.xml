@@ -97,5 +97,6 @@
     <module>venn-tools</module>
     <module>vocabulary</module>
     <module>weighted</module>
+    <!--<module>worm-plot-cytoscape3-app</module>-->
   </modules>
 </project>
