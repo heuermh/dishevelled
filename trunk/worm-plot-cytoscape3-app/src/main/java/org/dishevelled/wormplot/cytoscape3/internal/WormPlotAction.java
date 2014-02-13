@@ -27,6 +27,8 @@ import static javax.swing.SwingUtilities.windowForComponent;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
+import static org.dishevelled.wormplot.cytoscape3.internal.WormPlotUtils.installCloseKeyBinding;
+
 import java.awt.BorderLayout;
 import java.awt.Component;
 
@@ -117,13 +119,15 @@ final class WormPlotAction extends AbstractCyAction
         contentPane.setBorder(new EmptyBorder(12, 12, 12, 12));
         contentPane.setLayout(new BorderLayout());
 
-        // create app, set as content pane
+        WormPlotModel model = new WormPlotModel();
+        WormPlotApp app = new WormPlotApp(model);
+
+        contentPane.add("Center", app);
 
         dialog.setContentPane(contentPane);
-
         dialog.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
-        //installCloseKeyBinding(dialog);
-        dialog.setBounds(200, 200, 1016, 628);
+        installCloseKeyBinding(dialog);
+        dialog.setBounds(200, 200, 600, 372);
         dialog.setVisible(true);
     }
 }
