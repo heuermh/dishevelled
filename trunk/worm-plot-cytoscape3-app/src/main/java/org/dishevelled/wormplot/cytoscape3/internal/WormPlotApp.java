@@ -51,6 +51,10 @@ import javax.swing.JPanel;
 
 import javax.swing.border.EmptyBorder;
 
+import org.cytoscape.application.CyApplicationManager;
+
+import org.cytoscape.work.swing.DialogTaskManager;
+
 import org.dishevelled.layout.LabelFieldPanel;
 
 /**
@@ -60,6 +64,12 @@ import org.dishevelled.layout.LabelFieldPanel;
  */
 final class WormPlotApp extends JPanel
 {
+    /** Application manager. */
+    private final CyApplicationManager applicationManager;
+
+    /** Dialog task manager. */
+    private final DialogTaskManager dialogTaskManager;
+
     /** Worm plot model. */
     private final WormPlotModel model;
 
@@ -90,7 +100,7 @@ final class WormPlotApp extends JPanel
             {
                 if ("sequenceFile".equals(event.getPropertyName()))
                 {
-                    sequenceFileName.setText((String) event.getNewValue());
+                    sequenceFileName.setText(event.getNewValue() == null ? "" : event.getNewValue().toString());
                 }
                 else if ("length".equals(event.getPropertyName()))
                 {
@@ -105,16 +115,22 @@ final class WormPlotApp extends JPanel
 
 
     /**
-     * Create a new worm plot app with the specified model.
+     * Create a new worm plot app.
      *
-     * @param model model, must not be null
+     * @param dialogTaskManager dialog task manager, must not be null
      */
-    WormPlotApp(final WormPlotModel model)
+    WormPlotApp(final CyApplicationManager applicationManager, final DialogTaskManager dialogTaskManager)
     {
         super();
 
-        checkNotNull(model);
-        this.model = model;
+        checkNotNull(applicationManager);
+        checkNotNull(dialogTaskManager);
+        this.applicationManager = applicationManager;
+        this.dialogTaskManager = dialogTaskManager;
+
+        model = new WormPlotModel();
+        model.setNetwork(applicationManager.getCurrentNetwork());
+        model.addPropertyChangeListener(propertyChangeListener);
 
         sequenceFileName = new JTextField(48);
         sequenceFileName.setText("example.fa");
@@ -195,7 +211,8 @@ final class WormPlotApp extends JPanel
                     JFileChooser fileChooser = new JFileChooser();
                     if (JFileChooser.APPROVE_OPTION == fileChooser.showOpenDialog(WormPlotApp.this))
                     {
-                        sequenceFileName.setText(fileChooser.getSelectedFile().getName());
+                        model.setSequenceFile(fileChooser.getSelectedFile());
+                        //sequenceFileName.setText(fileChooser.getSelectedFile().getName());
                     }
                 }
             }));
@@ -241,6 +258,10 @@ final class WormPlotApp extends JPanel
      */
     private void apply()
     {
-        // empty
+        model.setLength(Integer.parseInt(length.getText()));
+        model.setOverlap(Integer.parseInt(overlap.getText()));
+
+        WormPlotTaskFactory taskFactory = new WormPlotTaskFactory(model);
+        dialogTaskManager.execute(taskFactory.createTaskIterator());
     }
 }

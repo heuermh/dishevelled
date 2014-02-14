@@ -48,6 +48,8 @@ import org.cytoscape.application.swing.AbstractCyAction;
 import org.cytoscape.view.vizmap.VisualMappingFunctionFactory;
 import org.cytoscape.view.vizmap.VisualMappingManager;
 
+import org.cytoscape.work.swing.DialogTaskManager;
+
 /**
  * Worm plot action.
  *
@@ -57,6 +59,9 @@ final class WormPlotAction extends AbstractCyAction
 {
     /** Application manager. */
     private final CyApplicationManager applicationManager;
+
+    /** Dialog task manager. */
+    private final DialogTaskManager dialogTaskManager;
 
     /** Visual mapping manager. */
     private final VisualMappingManager visualMappingManager;
@@ -72,11 +77,13 @@ final class WormPlotAction extends AbstractCyAction
      * Create a new worm plot action.
      *
      * @param applicationManager application manager, must not be null
+     * @param dialogTaskManager dialog task manager, must not be null
      * @param visualMappingManager visual mapping manager, must not be null
      * @param continuousMappingFactory continuous mapping factory, must not be null
      * @param discreteMappingFactory discrete mapping factory, must not be null
      */
     WormPlotAction(final CyApplicationManager applicationManager,
+                   final DialogTaskManager dialogTaskManager,
                    final VisualMappingManager visualMappingManager,
                    final VisualMappingFunctionFactory continuousMappingFactory,
                    final VisualMappingFunctionFactory discreteMappingFactory)
@@ -85,10 +92,12 @@ final class WormPlotAction extends AbstractCyAction
         setPreferredMenu("Apps");
 
         checkNotNull(applicationManager);
+        checkNotNull(dialogTaskManager);
         checkNotNull(visualMappingManager);
         checkNotNull(continuousMappingFactory);
         checkNotNull(discreteMappingFactory);
         this.applicationManager = applicationManager;
+        this.dialogTaskManager = dialogTaskManager;
         this.visualMappingManager = visualMappingManager;
         this.continuousMappingFactory = continuousMappingFactory;
         this.discreteMappingFactory = discreteMappingFactory;
@@ -119,9 +128,7 @@ final class WormPlotAction extends AbstractCyAction
         contentPane.setBorder(new EmptyBorder(12, 12, 12, 12));
         contentPane.setLayout(new BorderLayout());
 
-        WormPlotModel model = new WormPlotModel();
-        WormPlotApp app = new WormPlotApp(model);
-
+        WormPlotApp app = new WormPlotApp(applicationManager, dialogTaskManager);
         contentPane.add("Center", app);
 
         dialog.setContentPane(contentPane);

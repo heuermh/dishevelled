@@ -37,6 +37,11 @@
       <scope>test</scope>
     </dependency>
     <dependency>
+      <groupId>org.biojava</groupId>
+      <artifactId>core</artifactId>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
       <groupId>org.cytoscape</groupId>
       <artifactId>core-task-api</artifactId>
       <scope>provided</scope>
@@ -126,6 +131,11 @@
   </repositories>
   <dependencyManagement>
     <dependencies>
+      <dependency>
+        <groupId>org.biojava</groupId>
+        <artifactId>core</artifactId>
+        <version>1.8.4</version>
+      </dependency>
       <dependency>
         <groupId>org.cytoscape</groupId>
         <artifactId>core-task-api</artifactId>

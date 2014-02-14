@@ -28,6 +28,8 @@ import java.io.File;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
+import org.cytoscape.model.CyNetwork;
+
 /**
  * Worm plot model.
  *
@@ -43,6 +45,9 @@ final class WormPlotModel
 
     /** Overlap. */
     private int overlap;
+
+    /** Network. */
+    private CyNetwork network;
 
     /** Property change support. */
     private final PropertyChangeSupport propertyChangeSupport;
@@ -147,6 +152,30 @@ final class WormPlotModel
         int oldOverlap = this.overlap;
         this.overlap = overlap;
         propertyChangeSupport.firePropertyChange("overlap", oldOverlap, this.overlap);
+    }
+
+    /**
+     * Return the network for this model.
+     *
+     * @return the network for this model
+     */
+    CyNetwork getNetwork()
+    {
+        return network;
+    }
+
+    /**
+     * Set the network for this model to <code>network</code>.
+     *
+     * <p>This is a bound property.</p>
+     *
+     * @param network network for this model
+     */
+    void setNetwork(final CyNetwork network)
+    {
+        CyNetwork oldNetwork = this.network;
+        this.network = network;
+        propertyChangeSupport.firePropertyChange("network", oldNetwork, this.network);
     }
 
     // property change support

@@ -32,6 +32,8 @@ import org.cytoscape.service.util.internal.FakeBundleContext;
 import org.cytoscape.view.vizmap.VisualMappingFunctionFactory;
 import org.cytoscape.view.vizmap.VisualMappingManager;
 
+import org.cytoscape.work.swing.DialogTaskManager;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -52,6 +54,7 @@ public final class CyActivatorTest
     {
         cyActivator = new CyActivator();
         bundleContext = new FakeBundleContext(CyApplicationManager.class,
+                                              DialogTaskManager.class,
                                               VisualMappingManager.class,
                                               VisualMappingFunctionFactory.class);
     }
