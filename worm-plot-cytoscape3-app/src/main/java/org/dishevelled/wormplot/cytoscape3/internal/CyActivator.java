@@ -34,6 +34,8 @@ import org.cytoscape.service.util.AbstractCyActivator;
 import org.cytoscape.view.vizmap.VisualMappingFunctionFactory;
 import org.cytoscape.view.vizmap.VisualMappingManager;
 
+import org.cytoscape.work.swing.DialogTaskManager;
+
 import org.osgi.framework.BundleContext;
 
 /**
@@ -52,11 +54,13 @@ public final class CyActivator extends AbstractCyActivator
             throw new NullPointerException("bundleContext must not be null");
         }
         CyApplicationManager applicationManager = getService(bundleContext, CyApplicationManager.class);
+        DialogTaskManager dialogTaskManager = getService(bundleContext, DialogTaskManager.class);
         VisualMappingManager visualMappingManager = getService(bundleContext, VisualMappingManager.class);
         VisualMappingFunctionFactory continuousMappingFactory = getService(bundleContext, VisualMappingFunctionFactory.class, "(mapping.type=continuous)");
         VisualMappingFunctionFactory discreteMappingFactory = getService(bundleContext, VisualMappingFunctionFactory.class, "(mapping.type=discrete)");
 
         WormPlotAction wormPlotAction = new WormPlotAction(applicationManager,
+                                                           dialogTaskManager,
                                                            visualMappingManager,
                                                            continuousMappingFactory,
                                                            discreteMappingFactory);

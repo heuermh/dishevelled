@@ -30,6 +30,8 @@ import org.cytoscape.application.CyApplicationManager;
 import org.cytoscape.view.vizmap.VisualMappingFunctionFactory;
 import org.cytoscape.view.vizmap.VisualMappingManager;
 
+import org.cytoscape.work.swing.DialogTaskManager;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -48,6 +50,8 @@ public final class WormPlotActionTest
     @Mock
     private CyApplicationManager applicationManager;
     @Mock
+    private DialogTaskManager dialogTaskManager;
+    @Mock
     private VisualMappingManager visualMappingManager;
     @Mock
     private VisualMappingFunctionFactory continuousMappingFactory;
@@ -59,6 +63,7 @@ public final class WormPlotActionTest
     {
         MockitoAnnotations.initMocks(this);
         wormPlotAction = new WormPlotAction(applicationManager,
+                                            dialogTaskManager,
                                             visualMappingManager,
                                             continuousMappingFactory,
                                             discreteMappingFactory);
