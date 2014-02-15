@@ -94,18 +94,23 @@ final class WormPlotTask
 
             taskMonitor.setTitle("Calculating self-similarity...");
             File allVsAllBlastResult = allVsAllBlast(splitFasta);
-            taskMonitor.setProgress(0.5d);
+            taskMonitor.setProgress(0.3d);
 
             taskMonitor.setTitle("Generating edge file...");
             File allVsAllEdges = createEdgeFile(allVsAllBlastResult);
-            taskMonitor.setProgress(0.6d);
+            taskMonitor.setProgress(0.4d);
 
             taskMonitor.setTitle("Importing network...");
             importNetwork(allVsAllEdges, model.getNetwork());
-            taskMonitor.setProgress(0.7d);
+            taskMonitor.setProgress(0.5d);
 
+            // todo:  split these into separate tasks
             taskMonitor.setTitle("Applying layout...");
             applyLayout(model.getNetwork());
+            taskMonitor.setProgress(0.65d);
+
+            taskMonitor.setTitle("Analyzing network...");
+            analyzeNetwork(model.getNetwork());
             taskMonitor.setProgress(0.8d);
 
             taskMonitor.setTitle("Applying visual mapping...");
@@ -114,6 +119,7 @@ final class WormPlotTask
 
             taskMonitor.setTitle("Done");
         }
+        // todo:  how should failures be handled?
         catch (IOException e)
         {
             e.printStackTrace();
@@ -143,6 +149,7 @@ final class WormPlotTask
             reader = new BufferedReader(new FileReader(sequenceFile));
             output = new BufferedOutputStream(new FileOutputStream(splitFasta));
 
+            // todo:  use logging
             System.out.println("reading from sequenceFile " + sequenceFile);
             System.out.println("writing to splitFasta length=" + length + " overlap=" + overlap + " " + splitFasta);
 
@@ -384,6 +391,16 @@ final class WormPlotTask
         }
     }
 
+    /**
+     * Set the specified value.
+     *
+     * @param <T> value type
+     * @param table table
+     * @param row row
+     * @param columnName column name
+     * @param columnClass column class
+     * @param value value
+     */
     private static <T> void setValue(final CyTable table,
                                      final CyRow row,
                                      final String columnName,
@@ -403,6 +420,16 @@ final class WormPlotTask
      * @param network network
      */
     private static void applyLayout(final CyNetwork network)
+    {
+        // empty
+    }
+
+    /**
+     * Analyze the specific network.
+     *
+     * @param network network
+     */
+    private static void analyzeNetwork(final CyNetwork network)
     {
         // empty
     }
