@@ -48,7 +48,7 @@ final class LayoutNetworkTask
     /** Layout algorithm manager. */
     private final CyLayoutAlgorithmManager layoutAlgorithmManager;
 
-    /** Layout algorithm name, <code></code>. */
+    /** Layout algorithm name, <code>force-directed</code>. */
     static final String LAYOUT_ALGORITHM_NAME = "force-directed";
 
     /** Layout algorithm parameters, <code></code>. */

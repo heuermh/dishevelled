@@ -220,7 +220,6 @@ final class WormPlotApp extends JPanel
                     if (JFileChooser.APPROVE_OPTION == fileChooser.showOpenDialog(WormPlotApp.this))
                     {
                         model.setSequenceFile(fileChooser.getSelectedFile());
-                        //sequenceFileName.setText(fileChooser.getSelectedFile().getName());
                     }
                 }
             }));
