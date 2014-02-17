@@ -136,7 +136,6 @@ final class VisualMappingTask
             }
         }
 
-        // todo:  use color-scheme
         Color grey = new Color(186, 189, 182);
         Color darkGrey = new Color(46, 52, 54);
         BoundaryRangeValues<Paint> minEdgePaint = new BoundaryRangeValues<Paint>(grey, grey, grey);
@@ -169,7 +168,6 @@ final class VisualMappingTask
             }
         }
 
-        // todo:  use color-scheme
         Color white = new Color(218, 238, 255);
         Color blue = new Color(52, 101, 164);
         BoundaryRangeValues<Paint> minNodeFillColor = new BoundaryRangeValues<Paint>(white, white, white);

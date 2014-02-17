@@ -73,7 +73,6 @@ final class AnalyzeNetworkTask
         taskMonitor.setProgress(0.0d);
         taskMonitor.setStatusMessage("Analyzing network...");
 
-        // todo:  will this raise the directed/undirected dialog?  need to know which of degree/outDegree to use
         Collection<CyNetwork> networks = ImmutableList.of(network);
         TaskIterator taskIterator = taskFactory.createTaskIterator(networks);
 
