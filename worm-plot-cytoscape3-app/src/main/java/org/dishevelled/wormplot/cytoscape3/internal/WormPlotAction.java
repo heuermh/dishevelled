@@ -45,9 +45,6 @@ import org.cytoscape.application.CyApplicationManager;
 
 import org.cytoscape.application.swing.AbstractCyAction;
 
-import org.cytoscape.view.vizmap.VisualMappingFunctionFactory;
-import org.cytoscape.view.vizmap.VisualMappingManager;
-
 import org.cytoscape.work.swing.DialogTaskManager;
 
 /**
@@ -63,14 +60,8 @@ final class WormPlotAction extends AbstractCyAction
     /** Dialog task manager. */
     private final DialogTaskManager dialogTaskManager;
 
-    /** Visual mapping manager. */
-    private final VisualMappingManager visualMappingManager;
-
-    /** Continuous mapping factory. */
-    private final VisualMappingFunctionFactory continuousMappingFactory;
-
-    /** Discrete mapping factory. */
-    private final VisualMappingFunctionFactory discreteMappingFactory;
+    /** Worm plot task factory. */
+    private final WormPlotTaskFactory wormPlotTaskFactory;
 
 
     /**
@@ -78,29 +69,21 @@ final class WormPlotAction extends AbstractCyAction
      *
      * @param applicationManager application manager, must not be null
      * @param dialogTaskManager dialog task manager, must not be null
-     * @param visualMappingManager visual mapping manager, must not be null
-     * @param continuousMappingFactory continuous mapping factory, must not be null
-     * @param discreteMappingFactory discrete mapping factory, must not be null
+     * @param wormPlotTaskFactory worm plot task factory, must not be null
      */
     WormPlotAction(final CyApplicationManager applicationManager,
                    final DialogTaskManager dialogTaskManager,
-                   final VisualMappingManager visualMappingManager,
-                   final VisualMappingFunctionFactory continuousMappingFactory,
-                   final VisualMappingFunctionFactory discreteMappingFactory)
+                   final WormPlotTaskFactory wormPlotTaskFactory)
     {
         super("Worm Plot");
         setPreferredMenu("Apps");
 
         checkNotNull(applicationManager);
         checkNotNull(dialogTaskManager);
-        checkNotNull(visualMappingManager);
-        checkNotNull(continuousMappingFactory);
-        checkNotNull(discreteMappingFactory);
+        checkNotNull(wormPlotTaskFactory);
         this.applicationManager = applicationManager;
         this.dialogTaskManager = dialogTaskManager;
-        this.visualMappingManager = visualMappingManager;
-        this.continuousMappingFactory = continuousMappingFactory;
-        this.discreteMappingFactory = discreteMappingFactory;
+        this.wormPlotTaskFactory = wormPlotTaskFactory;
     }
 
 
@@ -128,7 +111,7 @@ final class WormPlotAction extends AbstractCyAction
         contentPane.setBorder(new EmptyBorder(12, 12, 12, 12));
         contentPane.setLayout(new BorderLayout());
 
-        WormPlotApp app = new WormPlotApp(applicationManager, dialogTaskManager);
+        WormPlotApp app = new WormPlotApp(applicationManager, dialogTaskManager, wormPlotTaskFactory);
         contentPane.add("Center", app);
 
         dialog.setContentPane(contentPane);

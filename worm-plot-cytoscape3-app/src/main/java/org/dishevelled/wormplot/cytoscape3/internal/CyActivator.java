@@ -29,7 +29,11 @@ import org.cytoscape.application.CyApplicationManager;
 
 import org.cytoscape.application.swing.CyAction;
 
+import org.cytoscape.task.analyze.AnalyzeNetworkCollectionTaskFactory;
+
 import org.cytoscape.service.util.AbstractCyActivator;
+
+import org.cytoscape.view.layout.CyLayoutAlgorithmManager;
 
 import org.cytoscape.view.vizmap.VisualMappingFunctionFactory;
 import org.cytoscape.view.vizmap.VisualMappingManager;
@@ -55,15 +59,19 @@ public final class CyActivator extends AbstractCyActivator
         }
         CyApplicationManager applicationManager = getService(bundleContext, CyApplicationManager.class);
         DialogTaskManager dialogTaskManager = getService(bundleContext, DialogTaskManager.class);
+        AnalyzeNetworkCollectionTaskFactory analyzeNetworkCollectionTaskFactory = getService(bundleContext, AnalyzeNetworkCollectionTaskFactory.class);
+        CyLayoutAlgorithmManager layoutAlgorithmManager = getService(bundleContext, CyLayoutAlgorithmManager.class);
         VisualMappingManager visualMappingManager = getService(bundleContext, VisualMappingManager.class);
         VisualMappingFunctionFactory continuousMappingFactory = getService(bundleContext, VisualMappingFunctionFactory.class, "(mapping.type=continuous)");
-        VisualMappingFunctionFactory discreteMappingFactory = getService(bundleContext, VisualMappingFunctionFactory.class, "(mapping.type=discrete)");
+
+        WormPlotTaskFactory wormPlotTaskFactory = new WormPlotTaskFactory(analyzeNetworkCollectionTaskFactory,
+                                                                          layoutAlgorithmManager,
+                                                                          visualMappingManager,
+                                                                          continuousMappingFactory);
 
         WormPlotAction wormPlotAction = new WormPlotAction(applicationManager,
                                                            dialogTaskManager,
-                                                           visualMappingManager,
-                                                           continuousMappingFactory,
-                                                           discreteMappingFactory);
+                                                           wormPlotTaskFactory);
 
         Properties properties = new Properties();
         registerService(bundleContext, wormPlotAction, CyAction.class, properties);

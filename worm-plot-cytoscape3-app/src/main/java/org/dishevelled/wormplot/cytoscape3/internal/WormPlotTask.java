@@ -38,6 +38,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.biojava.bio.BioException;
 
 import org.biojava.bio.seq.Sequence;
@@ -67,9 +70,12 @@ final class WormPlotTask
     /** Worm plot model. */
     private final WormPlotModel model;
 
+    /** Split FASTA description line pattern. */
+    private static final Pattern NAME = Pattern.compile("^(.+):([0-9]+)-([0-9]+):([0-9]+)$");
+
 
     /**
-     * Create a new worm plot task with the specified model.
+     * Create a new worm plot task.
      *
      * @param model model, must not be null
      */
@@ -81,7 +87,7 @@ final class WormPlotTask
 
 
     @Override
-    public void run(final TaskMonitor taskMonitor)
+    public void run(final TaskMonitor taskMonitor) throws Exception
     {
         taskMonitor.setTitle("Generating worm plot...");
         taskMonitor.setProgress(0.0d);
@@ -90,43 +96,24 @@ final class WormPlotTask
         {
             taskMonitor.setTitle("Splitting sequence...");
             File splitFasta = createSplitFasta(model.getSequenceFile(), model.getLength(), model.getOverlap());
-            taskMonitor.setProgress(0.1d);
+            taskMonitor.setProgress(0.2d);
 
             taskMonitor.setTitle("Calculating self-similarity...");
             File allVsAllBlastResult = allVsAllBlast(splitFasta);
-            taskMonitor.setProgress(0.3d);
+            taskMonitor.setProgress(0.6d);
 
             taskMonitor.setTitle("Generating edge file...");
             File allVsAllEdges = createEdgeFile(allVsAllBlastResult);
-            taskMonitor.setProgress(0.4d);
+            taskMonitor.setProgress(0.8d);
 
             taskMonitor.setTitle("Importing network...");
             importNetwork(allVsAllEdges, model.getNetwork());
-            taskMonitor.setProgress(0.5d);
-
-            // todo:  split these into separate tasks
-            taskMonitor.setTitle("Applying layout...");
-            applyLayout(model.getNetwork());
-            taskMonitor.setProgress(0.65d);
-
-            taskMonitor.setTitle("Analyzing network...");
-            analyzeNetwork(model.getNetwork());
-            taskMonitor.setProgress(0.8d);
-
-            taskMonitor.setTitle("Applying visual mapping...");
-            applyVisualMapping(model.getNetwork());
-            taskMonitor.setProgress(0.9d);
-
-            taskMonitor.setTitle("Done");
+            taskMonitor.setProgress(1.0d);
         }
-        // todo:  how should failures be handled?
         catch (IOException e)
         {
-            e.printStackTrace();
-            //System.exit(-1);
+            throw new WormPlotException("Unable to generate worm plot due to I/O error", e);
         }
-
-        taskMonitor.setProgress(1.0d);
     }
 
 
@@ -135,7 +122,7 @@ final class WormPlotTask
      *
      * @param splitFasta split fasta file
      * @return the all vs all blast file from the split fasta file
-     * @throws IOException if an IO error occurs
+     * @throws IOException if an I/O error occurs
      */
     private static File createSplitFasta(final File sequenceFile, final int length, final int overlap)
         throws IOException
@@ -157,15 +144,17 @@ final class WormPlotTask
             {
                 Sequence sequence = iter.nextSequence();
                 System.out.println("  read sequence " + sequence);
+                int index = 0;
                 for (int start = 1; start < sequence.length(); start += (length - overlap))
                 {
                     int end = Math.min(sequence.length(), start + length);
-                    String subsequenceName = sequence.getName() + ":" + start + "-" + end;
+                    String subsequenceName = sequence.getName() + ":" + start + "-" + end + ":" + index;
                     Sequence subsequence = new SimpleSequence(sequence.subList(start, end), null, subsequenceName, null);
 
                     //System.out.println("     writing sequence " + subsequence);
                     SeqIOTools.writeFasta(output, subsequence);
                     output.flush();
+                    index++;
                 }
             }
 
@@ -173,8 +162,7 @@ final class WormPlotTask
         }
         catch (BioException e)
         {
-            e.printStackTrace();
-            //System.exit(-1);
+            throw new IOException(e.getMessage());
         }
         finally
         {
@@ -203,7 +191,7 @@ final class WormPlotTask
      *
      * @param splitFasta split fasta file
      * @return the all vs all blast file from the split fasta file
-     * @throws IOException if an IO error occurs
+     * @throws IOException if an I/O error occurs
      */
     private static File allVsAllBlast(final File splitFasta) throws IOException
     {
@@ -215,7 +203,6 @@ final class WormPlotTask
                                                         "-in", splitFasta.getPath(),
                                                         "-dbtype", "nucl");
         Process makeBlastDbProcess = makeBlastDb.start();
-
         try
         {
             makeBlastDbProcess.waitFor();
@@ -237,7 +224,6 @@ final class WormPlotTask
                                                    "-outfmt", "7",
                                                    "-out", blastResult.getPath());
         Process blastnProcess = blastn.start();
-
         try
         {
             blastnProcess.waitFor();
@@ -258,7 +244,7 @@ final class WormPlotTask
      *
      * @param blastResult blast result
      * @return the edge file from the specified blast result
-     * @throws IOException if an IO error occurs
+     * @throws IOException if an I/O error occurs
      */
     private static File createEdgeFile(final File blastResult) throws IOException
     {
@@ -295,8 +281,10 @@ final class WormPlotTask
      *
      * @param edgeFile edge file to import
      * @param network network
+     * @throws IOException if an I/O error occurs
      */
     private static void importNetwork(final File edgeFile, final CyNetwork network)
+        throws IOException
     {
         BufferedReader reader = null;
         Map<String, CyNode> nodes = new HashMap<String, CyNode>(10000);
@@ -331,13 +319,26 @@ final class WormPlotTask
                     double bitScore = Double.parseDouble(tokens[11].trim());
 
                     CyTable nodeTable = network.getDefaultNodeTable();
-                    // todo:  also create columns for sequenceName, start, end, length?
-
                     if (!nodes.containsKey(source))
                     {
                         CyNode node = network.addNode();
                         CyRow nodeRow = nodeTable.getRow(node.getSUID());
                         setValue(nodeTable, nodeRow, "name", String.class, source);
+
+                        Matcher m = NAME.matcher(source);
+                        if (m.matches())
+                        {
+                            String parent = m.group(1);
+                            long start = Long.parseLong(m.group(2));
+                            long end = Long.parseLong(m.group(3));
+                            long length = end - start;
+                            int index = Integer.parseInt(m.group(4));
+                            setValue(nodeTable, nodeRow, "parent", String.class, parent);
+                            setValue(nodeTable, nodeRow, "start", Long.class, start);
+                            setValue(nodeTable, nodeRow, "end", Long.class, end);
+                            setValue(nodeTable, nodeRow, "length", Long.class, length);
+                            setValue(nodeTable, nodeRow, "index", Integer.class, index);
+                        }
                         nodes.put(source, node);
                     }
                     if (!nodes.containsKey(target))
@@ -345,6 +346,21 @@ final class WormPlotTask
                         CyNode node = network.addNode();
                         CyRow nodeRow = nodeTable.getRow(node.getSUID());
                         setValue(nodeTable, nodeRow, "name", String.class, target);
+
+                        Matcher m = NAME.matcher(target);
+                        if (m.matches())
+                        {
+                            String parent = m.group(1);
+                            long start = Long.parseLong(m.group(2));
+                            long end = Long.parseLong(m.group(3));
+                            long length = end - start;
+                            int index = Integer.parseInt(m.group(4));
+                            setValue(nodeTable, nodeRow, "parent", String.class, parent);
+                            setValue(nodeTable, nodeRow, "start", Long.class, start);
+                            setValue(nodeTable, nodeRow, "end", Long.class, end);
+                            setValue(nodeTable, nodeRow, "length", Long.class, length);
+                            setValue(nodeTable, nodeRow, "index", Integer.class, index);
+                        }
                         nodes.put(target, node);
                     }
 
@@ -372,11 +388,6 @@ final class WormPlotTask
                 }
                 lineNumber++;
             }
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-            //System.exit(-1);
         }
         finally
         {
@@ -412,35 +423,5 @@ final class WormPlotTask
             table.createColumn(columnName, columnClass, false);
         }
         row.set(columnName, value);
-    }
-
-    /**
-     * Apply layout to the specified network.
-     *
-     * @param network network
-     */
-    private static void applyLayout(final CyNetwork network)
-    {
-        // empty
-    }
-
-    /**
-     * Analyze the specific network.
-     *
-     * @param network network
-     */
-    private static void analyzeNetwork(final CyNetwork network)
-    {
-        // empty
-    }
-
-    /**
-     * Apply visual mapping to the specified network.
-     *
-     * @param network network
-     */
-    private static void applyVisualMapping(final CyNetwork network)
-    {
-        // empty
     }
 }

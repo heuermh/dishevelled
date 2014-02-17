@@ -30,6 +30,8 @@ import java.beans.PropertyChangeSupport;
 
 import org.cytoscape.model.CyNetwork;
 
+import org.cytoscape.view.model.CyNetworkView;
+
 /**
  * Worm plot model.
  *
@@ -48,6 +50,9 @@ final class WormPlotModel
 
     /** Network. */
     private CyNetwork network;
+
+    /** Network view. */
+    private CyNetworkView networkView;
 
     /** Property change support. */
     private final PropertyChangeSupport propertyChangeSupport;
@@ -176,6 +181,30 @@ final class WormPlotModel
         CyNetwork oldNetwork = this.network;
         this.network = network;
         propertyChangeSupport.firePropertyChange("network", oldNetwork, this.network);
+    }
+
+    /**
+     * Return the network view for this model.
+     *
+     * @return the network view for this model
+     */
+    CyNetworkView getNetworkView()
+    {
+        return networkView;
+    }
+
+    /**
+     * Set the network view for this model to <code>networkView</code>.
+     *
+     * <p>This is a bound property.</p>
+     *
+     * @param networkView network view for this model
+     */
+    void setNetworkView(final CyNetworkView networkView)
+    {
+        CyNetworkView oldNetworkView = this.networkView;
+        this.networkView = networkView;
+        propertyChangeSupport.firePropertyChange("networkView", oldNetworkView, this.networkView);
     }
 
     // property change support

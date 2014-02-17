@@ -32,6 +32,7 @@ import static org.cytoscape.view.presentation.property.BasicVisualLexicon.NODE_B
 import static org.cytoscape.view.presentation.property.BasicVisualLexicon.NODE_BORDER_TRANSPARENCY;
 import static org.cytoscape.view.presentation.property.BasicVisualLexicon.NODE_BORDER_WIDTH;
 import static org.cytoscape.view.presentation.property.BasicVisualLexicon.NODE_FILL_COLOR;
+import static org.cytoscape.view.presentation.property.BasicVisualLexicon.NODE_LABEL_COLOR;
 
 import java.awt.Color;
 import java.awt.Paint;
@@ -109,9 +110,11 @@ final class VisualMappingTask
         visualStyle.setDefaultValue(EDGE_TRANSPARENCY, Integer.valueOf(80));
         visualStyle.setDefaultValue(EDGE_WIDTH, Double.valueOf(0.9d));
         //visualStyle.setDefaultValue(EDGE_TARGET_ARROW_SHAPE, ??);
-        visualStyle.setDefaultValue(NODE_BORDER_PAINT, new Color(80, 80, 80));
+        visualStyle.setDefaultValue(NODE_BORDER_PAINT, new Color(85, 87, 83));
         visualStyle.setDefaultValue(NODE_BORDER_TRANSPARENCY, Integer.valueOf(120));
         visualStyle.setDefaultValue(NODE_BORDER_WIDTH, Double.valueOf(0.9d));
+        visualStyle.setDefaultValue(NODE_LABEL_COLOR, new Color(46, 52, 54));
+        //visualStyle.setDefaultValue(NODE_SHAPE, ??);
 
         // continuous mapping bitScore --> edge paint
         double minBitScore = Double.MAX_VALUE;
@@ -120,19 +123,22 @@ final class VisualMappingTask
         CyColumn bitScoreColumn = edgeTable.getColumn("bitScore");
         for (Double bitScore : bitScoreColumn.getValues(Double.class))
         {
-            if (bitScore != null && bitScore < minBitScore)
+            if (bitScore != null)
             {
-                minBitScore = bitScore;
-            }
-            else if (bitScore != null && bitScore > maxBitScore)
-            {
-                maxBitScore = maxBitScore;
+                if (bitScore < minBitScore)
+                {
+                    minBitScore = bitScore;
+                }
+                if (bitScore > maxBitScore)
+                {
+                    maxBitScore = bitScore;
+                }
             }
         }
 
         // todo:  use color-scheme
-        Color grey = new Color(120, 120, 120);
-        Color darkGrey = new Color(20, 20, 20);
+        Color grey = new Color(186, 189, 182);
+        Color darkGrey = new Color(46, 52, 54);
         BoundaryRangeValues<Paint> minEdgePaint = new BoundaryRangeValues<Paint>(grey, grey, grey);
         BoundaryRangeValues<Paint> maxEdgePaint = new BoundaryRangeValues<Paint>(darkGrey, darkGrey, darkGrey);
 
@@ -143,30 +149,33 @@ final class VisualMappingTask
 
         taskMonitor.setProgress(0.33d);
 
-        // continuous mapping outDegree or degree --> node fill color
+        // continuous mapping Degree --> node fill color
         int minDegree = Integer.MAX_VALUE;
         int maxDegree = 0;
         CyTable nodeTable = network.getDefaultNodeTable();
-        CyColumn degreeColumn = nodeTable.getColumn("degree");
+        CyColumn degreeColumn = nodeTable.getColumn("Degree");
         for (Integer degree : degreeColumn.getValues(Integer.class))
         {
-            if (degree != null && degree < minDegree)
+            if (degree != null)
             {
-                minDegree = degree;
-            }
-            else if (degree != null && degree > maxDegree)
-            {
-                maxDegree = maxDegree;
+                if (degree < minDegree)
+                {
+                    minDegree = degree;
+                }
+                if (degree > maxDegree)
+                {
+                    maxDegree = degree;
+                }
             }
         }
 
         // todo:  use color-scheme
-        Color white = Color.WHITE;
-        Color blue = new Color(0, 0, 120);
+        Color white = new Color(218, 238, 255);
+        Color blue = new Color(52, 101, 164);
         BoundaryRangeValues<Paint> minNodeFillColor = new BoundaryRangeValues<Paint>(white, white, white);
         BoundaryRangeValues<Paint> maxNodeFillColor = new BoundaryRangeValues<Paint>(blue, blue, blue);
 
-        ContinuousMapping nodeFillColorMapping = (ContinuousMapping) continuousMappingFactory.createVisualMappingFunction("degree", Integer.class, NODE_FILL_COLOR);
+        ContinuousMapping nodeFillColorMapping = (ContinuousMapping) continuousMappingFactory.createVisualMappingFunction("Degree", Integer.class, NODE_FILL_COLOR);
         nodeFillColorMapping.addPoint(minDegree, minNodeFillColor);
         nodeFillColorMapping.addPoint(maxDegree, maxNodeFillColor);
         visualStyle.addVisualMappingFunction(nodeFillColorMapping);

@@ -49,7 +49,7 @@ final class LayoutNetworkTask
     private final CyLayoutAlgorithmManager layoutAlgorithmManager;
 
     /** Layout algorithm name, <code></code>. */
-    static final String LAYOUT_ALGORITHM_NAME = ""; // todo:  yFiles Organic would be nice, try others
+    static final String LAYOUT_ALGORITHM_NAME = "force-directed";
 
     /** Layout algorithm parameters, <code></code>. */
     static final String LAYOUT_ALGORITHM_PARAMETERS = "";

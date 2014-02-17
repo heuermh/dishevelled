@@ -25,7 +25,13 @@ package org.dishevelled.wormplot.cytoscape3.internal;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-import org.cytoscape.work.AbstractTaskFactory;
+import org.cytoscape.task.analyze.AnalyzeNetworkCollectionTaskFactory;
+
+import org.cytoscape.view.layout.CyLayoutAlgorithmManager;
+
+import org.cytoscape.view.vizmap.VisualMappingFunctionFactory;
+import org.cytoscape.view.vizmap.VisualMappingManager;
+
 import org.cytoscape.work.TaskIterator;
 
 /**
@@ -34,28 +40,52 @@ import org.cytoscape.work.TaskIterator;
  * @author  Michael Heuer
  */
 final class WormPlotTaskFactory
-    extends AbstractTaskFactory
 {
-    /** Worm plot model. */
-    private final WormPlotModel model;
+    /** Analyze network collection task factory. */
+    private final AnalyzeNetworkCollectionTaskFactory analyzeNetworkCollectionTaskFactory;
+
+    /** Layout algorithm manager. */
+    private final CyLayoutAlgorithmManager layoutAlgorithmManager;
+
+    /** Visual mapping manager. */
+    private final VisualMappingManager visualMappingManager;
+
+    /** Continuous mapping factory. */
+    private final VisualMappingFunctionFactory continuousMappingFactory;
 
 
     /**
-     * Create a new worm plot task factory with the specified model.
-     *
-     * @param model model, must not be null
+     * Create a new worm plot task factory.
      */
-    WormPlotTaskFactory(final WormPlotModel model)
+    WormPlotTaskFactory(final AnalyzeNetworkCollectionTaskFactory analyzeNetworkCollectionTaskFactory,
+                        final CyLayoutAlgorithmManager layoutAlgorithmManager,
+                        final VisualMappingManager visualMappingManager,
+                        final VisualMappingFunctionFactory continuousMappingFactory)
     {
-        checkNotNull(model);
-        this.model = model;
+        checkNotNull(analyzeNetworkCollectionTaskFactory);
+        checkNotNull(layoutAlgorithmManager);
+        checkNotNull(visualMappingManager);
+        checkNotNull(continuousMappingFactory);
+        this.analyzeNetworkCollectionTaskFactory = analyzeNetworkCollectionTaskFactory;
+        this.layoutAlgorithmManager = layoutAlgorithmManager;
+        this.visualMappingManager = visualMappingManager;
+        this.continuousMappingFactory = continuousMappingFactory;
     }
 
 
-    @Override
-    public TaskIterator createTaskIterator()
+    /**
+     * Create and return a new task iterator for the specified model.
+     *
+     * @param model model, must not be null
+     * @return a new task iterator for the specified model
+     */
+    public TaskIterator createTaskIterator(final WormPlotModel model)
     {
+        checkNotNull(model);
         WormPlotTask wormPlotTask = new WormPlotTask(model);
-        return new TaskIterator(wormPlotTask);
+        AnalyzeNetworkTask analyzeNetworkTask = new AnalyzeNetworkTask(model.getNetwork(), analyzeNetworkCollectionTaskFactory);
+        LayoutNetworkTask layoutNetworkTask = new LayoutNetworkTask(model.getNetworkView(), layoutAlgorithmManager);
+        VisualMappingTask visualMappingTask = new VisualMappingTask(model.getNetwork(), model.getNetworkView(), visualMappingManager, continuousMappingFactory);
+        return new TaskIterator(wormPlotTask, analyzeNetworkTask, layoutNetworkTask, visualMappingTask);
     }
 }

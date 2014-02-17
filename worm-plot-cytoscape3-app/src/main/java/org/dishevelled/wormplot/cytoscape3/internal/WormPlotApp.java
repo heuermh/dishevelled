@@ -70,6 +70,9 @@ final class WormPlotApp extends JPanel
     /** Dialog task manager. */
     private final DialogTaskManager dialogTaskManager;
 
+    /** Worm plot task factory. */
+    private final WormPlotTaskFactory wormPlotTaskFactory;
+
     /** Worm plot model. */
     private final WormPlotModel model;
 
@@ -119,17 +122,22 @@ final class WormPlotApp extends JPanel
      *
      * @param dialogTaskManager dialog task manager, must not be null
      */
-    WormPlotApp(final CyApplicationManager applicationManager, final DialogTaskManager dialogTaskManager)
+    WormPlotApp(final CyApplicationManager applicationManager,
+                final DialogTaskManager dialogTaskManager,
+                final WormPlotTaskFactory wormPlotTaskFactory)
     {
         super();
-
         checkNotNull(applicationManager);
         checkNotNull(dialogTaskManager);
+        checkNotNull(wormPlotTaskFactory);
         this.applicationManager = applicationManager;
         this.dialogTaskManager = dialogTaskManager;
+        this.wormPlotTaskFactory = wormPlotTaskFactory;
 
         model = new WormPlotModel();
         model.setNetwork(applicationManager.getCurrentNetwork());
+        model.setNetworkView(applicationManager.getCurrentNetworkView());
+        // todo:  SetCurrentNetworkListener, SetCurrentNetworkViewListener
         model.addPropertyChangeListener(propertyChangeListener);
 
         sequenceFileName = new JTextField(48);
@@ -261,7 +269,9 @@ final class WormPlotApp extends JPanel
         model.setLength(Integer.parseInt(length.getText()));
         model.setOverlap(Integer.parseInt(overlap.getText()));
 
-        WormPlotTaskFactory taskFactory = new WormPlotTaskFactory(model);
-        dialogTaskManager.execute(taskFactory.createTaskIterator());
+        dialogTaskManager.execute(wormPlotTaskFactory.createTaskIterator(model));
+
+        // todo:  or show some summary stats and have a dismiss button?
+        getTopLevelAncestor().setVisible(false);
     }
 }
