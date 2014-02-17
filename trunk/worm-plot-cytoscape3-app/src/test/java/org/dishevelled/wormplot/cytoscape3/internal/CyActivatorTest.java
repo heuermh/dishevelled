@@ -29,6 +29,10 @@ import org.cytoscape.application.CyApplicationManager;
 
 import org.cytoscape.service.util.internal.FakeBundleContext;
 
+import org.cytoscape.task.analyze.AnalyzeNetworkCollectionTaskFactory;
+
+import org.cytoscape.view.layout.CyLayoutAlgorithmManager;
+
 import org.cytoscape.view.vizmap.VisualMappingFunctionFactory;
 import org.cytoscape.view.vizmap.VisualMappingManager;
 
@@ -55,6 +59,8 @@ public final class CyActivatorTest
         cyActivator = new CyActivator();
         bundleContext = new FakeBundleContext(CyApplicationManager.class,
                                               DialogTaskManager.class,
+                                              AnalyzeNetworkCollectionTaskFactory.class,
+                                              CyLayoutAlgorithmManager.class,
                                               VisualMappingManager.class,
                                               VisualMappingFunctionFactory.class);
     }

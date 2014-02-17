@@ -27,6 +27,10 @@ import static org.junit.Assert.assertNotNull;
 
 import org.cytoscape.application.CyApplicationManager;
 
+import org.cytoscape.task.analyze.AnalyzeNetworkCollectionTaskFactory;
+
+import org.cytoscape.view.layout.CyLayoutAlgorithmManager;
+
 import org.cytoscape.view.vizmap.VisualMappingFunctionFactory;
 import org.cytoscape.view.vizmap.VisualMappingManager;
 
@@ -51,22 +55,30 @@ public final class WormPlotActionTest
     private CyApplicationManager applicationManager;
     @Mock
     private DialogTaskManager dialogTaskManager;
+    //@Mock
+    //private WormPlotTaskFactory wormPlotTaskFactory;
+    @Mock
+    private AnalyzeNetworkCollectionTaskFactory analyzeNetworkCollectionTaskFactory;
+    @Mock
+    private CyLayoutAlgorithmManager layoutAlgorithmManager;
     @Mock
     private VisualMappingManager visualMappingManager;
     @Mock
     private VisualMappingFunctionFactory continuousMappingFactory;
-    @Mock
-    private VisualMappingFunctionFactory discreteMappingFactory;
+
 
     @Before
     public void setUp()
     {
         MockitoAnnotations.initMocks(this);
+        WormPlotTaskFactory wormPlotTaskFactory = new WormPlotTaskFactory(analyzeNetworkCollectionTaskFactory,
+                                                                          layoutAlgorithmManager,
+                                                                          visualMappingManager,
+                                                                          continuousMappingFactory);
+
         wormPlotAction = new WormPlotAction(applicationManager,
                                             dialogTaskManager,
-                                            visualMappingManager,
-                                            continuousMappingFactory,
-                                            discreteMappingFactory);
+                                            wormPlotTaskFactory);
     }
 
     @Test
