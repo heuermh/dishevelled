@@ -141,7 +141,7 @@ final class VisualMappingTask
         BoundaryRangeValues<Paint> minEdgePaint = new BoundaryRangeValues<Paint>(grey, grey, grey);
         BoundaryRangeValues<Paint> maxEdgePaint = new BoundaryRangeValues<Paint>(darkGrey, darkGrey, darkGrey);
 
-        ContinuousMapping edgePaintMapping = (ContinuousMapping) continuousMappingFactory.createVisualMappingFunction("bitScore", Double.class, EDGE_PAINT);
+        ContinuousMapping<Double, Paint> edgePaintMapping = (ContinuousMapping<Double, Paint>) continuousMappingFactory.createVisualMappingFunction("bitScore", Double.class, EDGE_PAINT);
         edgePaintMapping.addPoint(minBitScore, minEdgePaint);
         edgePaintMapping.addPoint(maxBitScore, maxEdgePaint);
         visualStyle.addVisualMappingFunction(edgePaintMapping);
@@ -173,7 +173,7 @@ final class VisualMappingTask
         BoundaryRangeValues<Paint> minNodeFillColor = new BoundaryRangeValues<Paint>(white, white, white);
         BoundaryRangeValues<Paint> maxNodeFillColor = new BoundaryRangeValues<Paint>(blue, blue, blue);
 
-        ContinuousMapping nodeFillColorMapping = (ContinuousMapping) continuousMappingFactory.createVisualMappingFunction("Degree", Integer.class, NODE_FILL_COLOR);
+        ContinuousMapping<Integer, Paint> nodeFillColorMapping = (ContinuousMapping<Integer, Paint>) continuousMappingFactory.createVisualMappingFunction("Degree", Integer.class, NODE_FILL_COLOR);
         nodeFillColorMapping.addPoint(minDegree, minNodeFillColor);
         nodeFillColorMapping.addPoint(maxDegree, maxNodeFillColor);
         visualStyle.addVisualMappingFunction(nodeFillColorMapping);

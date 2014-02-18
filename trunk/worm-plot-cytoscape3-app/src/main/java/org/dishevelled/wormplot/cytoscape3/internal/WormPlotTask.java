@@ -64,6 +64,7 @@ import org.cytoscape.work.TaskMonitor;
  *
  * @author  Michael Heuer
  */
+@SuppressWarnings("deprecation")
 final class WormPlotTask
     extends AbstractTask
 {
@@ -259,6 +260,7 @@ final class WormPlotTask
         commands.add("-c");
         commands.add("grep -v \"#\" " + blastResult.getPath());
         ProcessBuilder grep = new ProcessBuilder(commands);
+        // jdk 1.7+ only
         grep.redirectOutput(edgeFile);
         Process grepProcess = grep.start();
 
