@@ -250,7 +250,7 @@ public final class AnalysisUtils
 
                                if (firstKey != null && secondKey != null && value != null)
                                {
-                                  // todo:  provide "merge strategy" for multiple mappings
+                                   // todo:  provide "merge strategy" for multiple mappings
                                    binaryKeyMap.put(firstKey, secondKey, value);
                                }
                            }

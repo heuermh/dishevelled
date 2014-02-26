@@ -189,7 +189,7 @@ public final class GraphGenerators
      * @param <N> graph node type
      * @param <E> graph edge type
      * @param graph graph to connect, must not be null
-     * @param edgeCount edge count
+     * @param edgeCount edge count, must be at least zero
      * @param edgeValue edge value
      * @return the specified graph connected randomly with the specified value on all added edges
      */
@@ -206,7 +206,7 @@ public final class GraphGenerators
      * @param <N> graph node type
      * @param <E> graph edge type
      * @param graph graph to connect, must not be null
-     * @param edgeCount edge count
+     * @param edgeCount edge count, must be at least zero
      * @param edgeValue edge value
      * @param random source of randomness, must not be null
      * @return the specified graph connected randomly with the specified value on all added edges
@@ -225,7 +225,7 @@ public final class GraphGenerators
      * @param <N> graph node type
      * @param <E> graph edge type
      * @param graph graph to connect, must not be null
-     * @param edgeCount edge count
+     * @param edgeCount edge count, must be at least zero
      * @param edgeValues edge values, must not be null
      * @return the specified graph connected randomly with the specified value on all added edges
      */
@@ -242,7 +242,7 @@ public final class GraphGenerators
      * @param <N> graph node type
      * @param <E> graph edge type
      * @param graph graph to connect, must not be null
-     * @param edgeCount edge count
+     * @param edgeCount edge count, must be at least zero
      * @param edgeValues edge values, must not be null
      * @param random source of randomness, must not be null
      * @return the specified graph connected randomly with the specified value on all added edges
@@ -255,6 +255,10 @@ public final class GraphGenerators
         if (graph == null)
         {
             throw new IllegalArgumentException("graph must not be null");
+        }
+        if (edgeCount < 0)
+        {
+            throw new IllegalArgumentException("edgeCount must be at least zero");
         }
         if (edgeValues == null)
         {
@@ -283,7 +287,7 @@ public final class GraphGenerators
      * @param <N> graph node type
      * @param <E> graph edge type
      * @param nodeValues list of node values, must not be null
-     * @param edgeCount edge count
+     * @param edgeCount edge count, must be at least zero
      * @param edgeValue edge value
      * @return a new randomly connected graph with the specified nodes values
      *    on nodes and the specified edge value on all added edges
@@ -302,7 +306,7 @@ public final class GraphGenerators
      * @param <N> graph node type
      * @param <E> graph edge type
      * @param nodeValues list of node values, must not be null
-     * @param edgeCount edge count
+     * @param edgeCount edge count, must be at least zero
      * @param edgeValue edge value
      * @param random source of randomness, must not be null
      * @return a new randomly connected graph with the specified nodes values
@@ -323,7 +327,7 @@ public final class GraphGenerators
      * @param <N> graph node type
      * @param <E> graph edge type
      * @param nodeValues list of node values, must not be null
-     * @param edgeCount edge count
+     * @param edgeCount edge count, must be at least zero
      * @param edgeValues edge values, must not be null
      * @return a new randomly connected graph with the specified nodes values
      *    on nodes and the specified edge value on all added edges
@@ -342,7 +346,7 @@ public final class GraphGenerators
      * @param <N> graph node type
      * @param <E> graph edge type
      * @param nodeValues list of node values, must not be null
-     * @param edgeCount edge count
+     * @param edgeCount edge count, must be at least zero
      * @param edgeValues edge values, must not be null
      * @param random source of randomness, must not be null
      * @return a new randomly connected graph with the specified nodes values
@@ -356,6 +360,10 @@ public final class GraphGenerators
         if (nodeValues == null)
         {
             throw new IllegalArgumentException("nodeValues must not be null");
+        }
+        if (edgeCount < 0)
+        {
+            throw new IllegalArgumentException("edgeCount must be at least zero");
         }
         if (edgeValues == null)
         {
@@ -389,7 +397,7 @@ public final class GraphGenerators
      * @param <N> graph node type
      * @param <E> graph edge type
      * @param graph graph to connect, must not be null
-     * @param edgeCount edge count
+     * @param edgeCount edge count, must be at least zero
      * @param edgeValue edge value
      * @return the specified graph connected preferentially with the specified value on all added edges
      */
@@ -406,7 +414,7 @@ public final class GraphGenerators
      * @param <N> graph node type
      * @param <E> graph edge type
      * @param graph graph to connect, must not be null
-     * @param edgeCount edge count
+     * @param edgeCount edge count, must be at least zero
      * @param edgeValues edge values, must not be null
      * @return the specified graph connected preferentially with the specified value on all added edges
      */
@@ -418,6 +426,10 @@ public final class GraphGenerators
         {
             throw new IllegalArgumentException("graph must not be null");
         }
+        if (edgeCount < 0)
+        {
+            throw new IllegalArgumentException("edgeCount must be at least zero");
+        }
         if (edgeValues == null)
         {
             throw new IllegalArgumentException("edgeValues must not be null");
@@ -426,7 +438,7 @@ public final class GraphGenerators
         WeightedMap<Node<N, E>> weightedNodes = WeightedMaps.createWeightedMap(graph.nodeCount());
         for (Node<N, E> node : graph.nodes())
         {
-            weightedNodes.put(node, Double.valueOf(node.degree()));
+            weightedNodes.put(node, Double.valueOf(node.degree() + 0.1d));
         }
 
         // store existing edges to prevent creating duplicates
@@ -441,6 +453,7 @@ public final class GraphGenerators
         {
             Node<N, E> source = weightedNodes.sample();
             Node<N, E> target = weightedNodes.sample();
+
             // avoid self-edges
             if (!source.equals(target) && !edges.containsKey(source, target))
             {
@@ -461,7 +474,7 @@ public final class GraphGenerators
      * @param <N> graph node type
      * @param <E> graph edge type
      * @param nodeValues list of node values, must not be null
-     * @param edgeCount edge count
+     * @param edgeCount edge count, must be at least zero
      * @param edgeValue edge value
      * @return a new randomly connected graph with the specified nodes values
      *    on nodes and the specified edge value on all added edges
@@ -480,7 +493,7 @@ public final class GraphGenerators
      * @param <N> graph node type
      * @param <E> graph edge type
      * @param nodeValues list of node values, must not be null
-     * @param edgeCount edge count
+     * @param edgeCount edge count, must be at least zero
      * @param edgeValues edge values, must not be null
      * @return a new randomly connected graph with the specified nodes values
      *    on nodes and values provided by the specified function on edges
@@ -492,6 +505,10 @@ public final class GraphGenerators
         if (nodeValues == null)
         {
             throw new IllegalArgumentException("nodeValues must not be null");
+        }
+        if (edgeCount < 0)
+        {
+            throw new IllegalArgumentException("edgeCount must be at least zero");
         }
         if (edgeValues == null)
         {
@@ -505,22 +522,15 @@ public final class GraphGenerators
             nodes.add(graph.createNode(nodeValue));
         }
 
-        // initialize graph to node degree 1
-        BinaryKeyMap<Node<N, E>, Node<N, E>, Edge<N, E>> edges = BinaryKeyMaps.createBinaryKeyMap(edgeCount);
-        for (int i = 0; i < n; i += 2)
-        {
-            Node<N, E> source = nodes.get(i);
-            Node<N, E> target = (i + 1 < n) ? nodes.get(i) : source;
-            E edgeValue = edgeValues.evaluate(source.getValue(), target.getValue());
-            edges.put(source, target, graph.createEdge(source, target, edgeValue));
-        }
-
         // weight nodes by degree
         WeightedMap<Node<N, E>> weightedNodes = WeightedMaps.createWeightedMap(n);
         for (Node<N, E> node : graph.nodes())
         {
-            weightedNodes.put(node, Double.valueOf(node.degree()));
+            weightedNodes.put(node, Double.valueOf(node.degree() + 0.1d));
         }
+
+        // store existing edges to prevent creating duplicates
+        BinaryKeyMap<Node<N, E>, Node<N, E>, Edge<N, E>> edges = BinaryKeyMaps.createBinaryKeyMap(edgeCount);
 
         // connect preferentially until edgeCount is reached
         while (edges.size() < edgeCount)
@@ -539,11 +549,17 @@ public final class GraphGenerators
     }
 
 
-    /** Scalar function. */
+    /**
+     * Scalar function.
+     *
+     * @param <N> graph node type
+     * @param <E> graph edge type
+     */
     private static final class Scalar<N, E> implements BinaryFunction<N, N, E>
     {
         /** Value. */
         private final E value;
+
 
         /**
          * Create a new scalar function with the specified value.
@@ -554,6 +570,7 @@ public final class GraphGenerators
         {
             this.value = value;
         }
+
 
         @Override
         public E evaluate(final N ignore0, final N ignore1)
