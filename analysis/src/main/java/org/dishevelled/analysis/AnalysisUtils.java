@@ -1319,7 +1319,7 @@ public final class AnalysisUtils
 
 
     /** Identity mapping function. */
-    private static final UnaryFunction<Long, Long> IDENTITY = new UnaryFunction<Long, Long>()
+    static final UnaryFunction<Long, Long> IDENTITY = new UnaryFunction<Long, Long>()
     {
         @Override
         public Long evaluate(final Long value)
@@ -1333,7 +1333,7 @@ public final class AnalysisUtils
      *
      * @param <E> value type
      */
-    private static class AcceptAll<E> implements UnaryPredicate<E>
+    static class AcceptAll<E> implements UnaryPredicate<E>
     {
         @Override
         public boolean test(final E value)
@@ -1347,7 +1347,7 @@ public final class AnalysisUtils
      *
      * @param <E> value type
      */
-    private static class AcceptNonNull<E> implements UnaryPredicate<E>
+    static class AcceptNonNull<E> implements UnaryPredicate<E>
     {
         @Override
         public boolean test(final E value)

@@ -23,6 +23,7 @@
 */
 package org.dishevelled.analysis;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -35,6 +36,19 @@ import static org.dishevelled.analysis.AnalysisUtils.*;
 import static org.dishevelled.collect.Lists.*;
 import static org.dishevelled.collect.Maps.*;
 
+import static org.dishevelled.graph.impl.GraphUtils.createGraph;
+
+import static org.dishevelled.matrix.impl.SparseMatrixUtils.createSparseMatrix2D;
+
+import static org.dishevelled.multimap.impl.BinaryKeyMaps.createBinaryKeyMap;
+
+import com.google.common.collect.ArrayTable;
+import com.google.common.collect.HashBasedTable;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableTable;
+import com.google.common.collect.Table;
+
+import org.dishevelled.functor.BinaryFunction;
 import org.dishevelled.functor.UnaryFunction;
 import org.dishevelled.functor.UnaryPredicate;
 
@@ -42,15 +56,12 @@ import org.dishevelled.graph.Edge;
 import org.dishevelled.graph.Graph;
 import org.dishevelled.graph.Node;
 
+import org.dishevelled.matrix.BitMatrix2D;
 import org.dishevelled.matrix.Matrix2D;
 
 import org.dishevelled.multimap.BinaryKeyMap;
 
-import static org.dishevelled.graph.impl.GraphUtils.createGraph;
-
-import static org.dishevelled.matrix.impl.SparseMatrixUtils.createSparseMatrix2D;
-
-import static org.dishevelled.multimap.impl.BinaryKeyMaps.createBinaryKeyMap;
+import org.dishevelled.multimap.impl.BinaryKeyMaps;
 
 /**
  * Unit test for AnalysisUtils.
@@ -58,6 +69,92 @@ import static org.dishevelled.multimap.impl.BinaryKeyMaps.createBinaryKeyMap;
 public final class AnalysisUtilsTest
 {
     private static final double TOLERANCE = 0.001d;
+
+    private final UnaryPredicate<Integer> acceptAll = new AcceptAll<Integer>();
+
+    private final BinaryFunction<Long, Long, String> addExpr = new BinaryFunction<Long, Long, String>()
+        {
+            @Override
+            public String evaluate(final Long source, final Long target)
+            {
+                return source + "+" + target;
+            }
+        };
+
+    private final UnaryFunction<Long, String> incompleteMapping = new UnaryFunction<Long, String>()
+        {
+            @Override
+            public String evaluate(final Long value)
+            {
+                if (value < 2)
+                {
+                    return value.toString();
+                }
+                return null;
+            }
+        };
+
+    private final UnaryFunction<Long, String> mapping = new UnaryFunction<Long, String>()
+        {
+            @Override
+            public String evaluate(final Long value)
+            {
+                return value.toString();
+            }
+        };
+
+    private final BinaryFunction<String, String, Integer> length = new BinaryFunction<String, String, Integer>()
+        {
+            @Override
+            public Integer evaluate(final String source, final String target)
+            {
+                return source.length() + target.length();
+            }
+        };
+
+    private final UnaryFunction<String, Long> indices = new UnaryFunction<String, Long>()
+        {
+            @Override
+            public Long evaluate(final String value)
+            {
+                if ("foo".equals(value))
+                {
+                    return 0L;
+                }
+                else if ("bar".equals(value))
+                {
+                    return 1L;
+                }
+                else if ("baz".equals(value))
+                {
+                    return 2L;
+                }
+                return -1L;
+            }
+        };
+
+    private final UnaryFunction<Node<String, Integer>, Long> nodeIndicesFn = new UnaryFunction<Node<String, Integer>, Long>()
+        {
+            @Override
+            public Long evaluate(final Node<String, Integer> node)
+            {
+                String value = node.getValue();
+                if ("foo".equals(value))
+                {
+                    return 0L;
+                }
+                else if ("bar".equals(value))
+                {
+                    return 1L;
+                }
+                else if ("baz".equals(value))
+                {
+                    return 2L;
+                }
+                return -1L;
+            }
+        };
+
 
     // --> binary key map
 
@@ -155,18 +252,6 @@ public final class AnalysisUtilsTest
         matrix.set(2, 3, 3.0d);
         matrix.set(3, 2, 4.0d);
 
-        UnaryFunction<Long, String> incompleteMapping = new UnaryFunction<Long, String>()
-            {
-                @Override
-                public String evaluate(final Long value)
-                {
-                    if (value < 2)
-                    {
-                        return value.toString();
-                    }
-                    return null;
-                }
-            };
         BinaryKeyMap<String, String, Double> binaryKeyMap = toBinaryKeyMap(matrix, incompleteMapping);
         assertEquals(1.0d, binaryKeyMap.get("0", "1"), TOLERANCE);
         assertEquals(2.0d, binaryKeyMap.get("1", "0"), TOLERANCE);
@@ -183,14 +268,6 @@ public final class AnalysisUtilsTest
         matrix.set(2, 3, 3.0d);
         matrix.set(3, 2, 4.0d);
 
-        UnaryFunction<Long, String> mapping = new UnaryFunction<Long, String>()
-            {
-                @Override
-                public String evaluate(final Long value)
-                {
-                    return value.toString();
-                }
-            };
         BinaryKeyMap<String, String, Double> binaryKeyMap = toBinaryKeyMap(matrix, mapping);
         assertEquals(1.0d, binaryKeyMap.get("0", "1"), TOLERANCE);
         assertEquals(2.0d, binaryKeyMap.get("1", "0"), TOLERANCE);
@@ -199,6 +276,359 @@ public final class AnalysisUtilsTest
         assertFalse(binaryKeyMap.containsKey("0", "0"));
         assertFalse(binaryKeyMap.containsKey("0", "3"));
         assertFalse(binaryKeyMap.containsKey("3", "0"));
+    }
+
+    @Test(expected=IllegalArgumentException.class)
+    public void testToBinaryKeyMapBitMatrixBinaryFunctionNullBitMatrix()
+    {
+        toBinaryKeyMap((BitMatrix2D) null, addExpr);
+    }
+
+    @Test(expected=IllegalArgumentException.class)
+    public void testToBinaryKeyMapBitMatrixBinaryFunctionNullBinaryFunction()
+    {
+        BitMatrix2D bitMatrix = new BitMatrix2D(4, 4);
+        bitMatrix.set(1, 2, true);
+        toBinaryKeyMap(bitMatrix, (BinaryFunction<Long, Long, String>) null);
+    }
+
+    @Test
+    public void testToBinaryKeyMapBitMatrixBinaryFunction()
+    {
+        BitMatrix2D bitMatrix = new BitMatrix2D(4, 4);
+        bitMatrix.set(1, 2, true);
+        BinaryKeyMap<Long, Long, String> binaryKeyMap = toBinaryKeyMap(bitMatrix, addExpr);
+        assertEquals("1+2", binaryKeyMap.get(1L, 2L));
+        assertNull(binaryKeyMap.get(1L, 3L));
+    }
+
+    @Test(expected=IllegalArgumentException.class)
+    public void testToBinaryKeyMapUnbalancedBitMatrix()
+    {
+        BitMatrix2D bitMatrix = new BitMatrix2D(4, 3);
+        bitMatrix.set(1, 2, true);
+        toBinaryKeyMap(bitMatrix, addExpr);
+    }
+
+    @Test
+    public void testToBinaryKeyMapBitMatrixUnaryFunctionBinaryFunction()
+    {
+        BitMatrix2D bitMatrix = new BitMatrix2D(4, 4);
+        bitMatrix.set(1, 2, true);
+
+        BinaryKeyMap<String, String, Integer> binaryKeyMap = toBinaryKeyMap(bitMatrix, mapping, length);
+        assertEquals(Integer.valueOf(2), binaryKeyMap.get("1", "2"));
+        assertNull(binaryKeyMap.get("1", "3"));
+    }
+
+    @Test(expected=IllegalArgumentException.class)
+    public void testToBinaryKeyMapBitMatrixUnaryFunctionBinaryFunctionNullBitMatrix()
+    {
+        toBinaryKeyMap((BitMatrix2D) null, mapping, length);
+    }
+
+    @Test(expected=IllegalArgumentException.class)
+    public void testToBinaryKeyMapBitMatrixUnaryFunctionBinaryFunctionNullUnaryFunction()
+    {
+        BitMatrix2D bitMatrix = new BitMatrix2D(4, 4);
+        bitMatrix.set(1, 2, true);
+        toBinaryKeyMap(bitMatrix, null, length);
+    }
+
+    @Test(expected=IllegalArgumentException.class)
+    public void testToBinaryKeyMapBitMatrixUnaryFunctionBinaryFunctionNullBinaryFunction()
+    {
+        BitMatrix2D bitMatrix = new BitMatrix2D(4, 4);
+        bitMatrix.set(1, 2, true);
+        toBinaryKeyMap(bitMatrix, mapping, null);
+    }
+    
+    @Test(expected=IllegalArgumentException.class)
+    public void testToBinaryKeyMapNullTable()
+    {
+        toBinaryKeyMap((Table<String, String, Integer>) null);
+    }
+
+    @Test
+    public void testToBinaryKeyMapTable()
+    {
+        ImmutableTable<String, String, Integer> table = new ImmutableTable.Builder<String, String, Integer>()
+            .put("foo", "bar", 42)
+            .put("bar", "baz", 42)
+            .put("baz", "foo", 42)
+            .build();
+
+        BinaryKeyMap<String, String, Integer> binaryKeyMap = toBinaryKeyMap(table);
+        assertNotNull(binaryKeyMap);
+        assertEquals(Integer.valueOf(42), binaryKeyMap.get("baz", "foo"));        
+    }
+
+    // --> bitMatrix
+
+    @Test(expected=IllegalArgumentException.class)
+    public void testToBitMatrixNullBinaryKeyMap()
+    {
+        List<String> keys = ImmutableList.of("foo", "bar", "baz");
+        toBitMatrix((BinaryKeyMap<String, String, Integer>) null, keys, acceptAll);
+    }
+    
+    @Test(expected=IllegalArgumentException.class)
+    public void testToBitMatrixNullList()
+    {
+        BinaryKeyMap<String, String, Integer> binaryKeyMap = BinaryKeyMaps.createBinaryKeyMap();
+        toBitMatrix(binaryKeyMap, (List<String>) null, acceptAll);
+    }
+    
+    @Test(expected=IllegalArgumentException.class)
+    public void testToBitMatrixNullUnaryPredicate()
+    {
+        BinaryKeyMap<String, String, Integer> binaryKeyMap = BinaryKeyMaps.createBinaryKeyMap();
+        List<String> keys = ImmutableList.of("foo", "bar", "baz");
+        toBitMatrix(binaryKeyMap, keys, null);
+    }
+
+    @Test
+    public void testToBitMatrix()
+    {
+        BinaryKeyMap<String, String, Integer> binaryKeyMap = BinaryKeyMaps.createBinaryKeyMap();
+        binaryKeyMap.put("foo", "bar", 42);
+        List<String> keys = ImmutableList.of("foo", "bar", "baz");
+        BitMatrix2D bitMatrix = toBitMatrix(binaryKeyMap, keys, acceptAll);
+        assertEquals(1, bitMatrix.cardinality());
+        assertTrue(bitMatrix.getQuick(0, 1));
+        assertFalse(bitMatrix.getQuick(0, 2));
+    }
+
+    
+    @Test(expected=IllegalArgumentException.class)
+    public void testToBitMatrixKeyIndicesNullBinaryKeyMap()
+    {
+        Map<String, Long> keyIndices = new HashMap<String, Long>();
+        keyIndices.put("foo", 0L);
+        keyIndices.put("bar", 1L);
+        keyIndices.put("baz", 2L);
+        toBitMatrix((BinaryKeyMap<String, String, Integer>) null, keyIndices, acceptAll);
+    }
+    
+    @Test(expected=IllegalArgumentException.class)
+    public void testToBitMatrixKeyIndicesNullMap()
+    {
+        BinaryKeyMap<String, String, Integer> binaryKeyMap = BinaryKeyMaps.createBinaryKeyMap();
+        binaryKeyMap.put("foo", "bar", 42);
+        toBitMatrix(binaryKeyMap, (Map<String, Long>) null, acceptAll);
+    }
+    
+    @Test(expected=IllegalArgumentException.class)
+    public void testToBitMatrixKeyIndicesNullUnaryPredicate()
+    {
+        BinaryKeyMap<String, String, Integer> binaryKeyMap = BinaryKeyMaps.createBinaryKeyMap();
+        binaryKeyMap.put("foo", "bar", 42);
+        Map<String, Long> keyIndices = new HashMap<String, Long>();
+        keyIndices.put("foo", 0L);
+        keyIndices.put("bar", 1L);
+        keyIndices.put("baz", 2L);
+        toBitMatrix(binaryKeyMap, keyIndices, null);
+    }
+
+    @Test
+    public void testToBitMatrixKeyIndices()
+    {
+        BinaryKeyMap<String, String, Integer> binaryKeyMap = BinaryKeyMaps.createBinaryKeyMap();
+        binaryKeyMap.put("foo", "bar", 42);
+        Map<String, Long> keyIndices = new HashMap<String, Long>();
+        keyIndices.put("foo", 0L);
+        keyIndices.put("bar", 1L);
+        keyIndices.put("baz", 2L);
+        BitMatrix2D bitMatrix = toBitMatrix(binaryKeyMap, keyIndices, acceptAll);
+        assertEquals(1, bitMatrix.cardinality());
+        assertTrue(bitMatrix.getQuick(0, 1));
+        assertFalse(bitMatrix.getQuick(0, 2));
+    }
+    
+    @Test(expected=IllegalArgumentException.class)
+    public void testToBitMatrixUnaryFunctionNullBinaryKeyMap()
+    {
+        toBitMatrix((BinaryKeyMap<String, String, Integer>) null, indices, acceptAll);
+    }
+    
+    @Test(expected=IllegalArgumentException.class)
+    public void testToBitMatrixUnaryFunctionNullUnaryFunction()
+    {
+        BinaryKeyMap<String, String, Integer> binaryKeyMap = BinaryKeyMaps.createBinaryKeyMap();
+        binaryKeyMap.put("foo", "bar", 42);
+        toBitMatrix(binaryKeyMap, (UnaryFunction<String, Long>) null, acceptAll);
+    }
+    
+    @Test(expected=IllegalArgumentException.class)
+    public void testToBitMatrixUnaryFunctionNullUnaryPredicate()
+    {
+        BinaryKeyMap<String, String, Integer> binaryKeyMap = BinaryKeyMaps.createBinaryKeyMap();
+        binaryKeyMap.put("foo", "bar", 42);
+        toBitMatrix(binaryKeyMap, indices, null);
+    }
+
+    @Test
+    public void testToBitMatrixUnaryFunction()
+    {
+        BinaryKeyMap<String, String, Integer> binaryKeyMap = BinaryKeyMaps.createBinaryKeyMap();
+        binaryKeyMap.put("foo", "bar", 42);
+        BitMatrix2D bitMatrix = toBitMatrix(binaryKeyMap, indices, acceptAll);
+        assertEquals(1, bitMatrix.cardinality());
+        assertTrue(bitMatrix.getQuick(0, 1));
+        assertFalse(bitMatrix.getQuick(0, 2));
+    }
+
+    @Test(expected=IllegalArgumentException.class)
+    public void testToBitMatrixGraphNullGraph()
+    {
+        Graph<String, Integer> graph = createGraph();
+        Node<String, Integer> foo = graph.createNode("foo");
+        Node<String, Integer> bar = graph.createNode("bar");
+        Node<String, Integer> baz = graph.createNode("baz");
+        graph.createEdge(foo, bar, 42);
+        List<Node<String, Integer>> nodes = ImmutableList.of(foo, bar, baz);
+        toBitMatrix((Graph<String, Integer>) null, nodes, acceptAll);
+    }
+
+    @Test(expected=IllegalArgumentException.class)
+    public void testToBitMatrixGraphNullList()
+    {
+        Graph<String, Integer> graph = createGraph();
+        Node<String, Integer> foo = graph.createNode("foo");
+        Node<String, Integer> bar = graph.createNode("bar");
+        Node<String, Integer> baz = graph.createNode("baz");
+        graph.createEdge(foo, bar, 42);
+        toBitMatrix(graph, (List<Node<String, Integer>>) null, acceptAll);
+    }
+
+    @Test(expected=IllegalArgumentException.class)
+    public void testToBitMatrixGraphNullUnaryPredicate()
+    {
+        Graph<String, Integer> graph = createGraph();
+        Node<String, Integer> foo = graph.createNode("foo");
+        Node<String, Integer> bar = graph.createNode("bar");
+        Node<String, Integer> baz = graph.createNode("baz");
+        graph.createEdge(foo, bar, 42);
+        List<Node<String, Integer>> nodes = ImmutableList.of(foo, bar, baz);
+        toBitMatrix(graph, nodes, null);
+    }
+
+    @Test
+    public void testToBitMatrixGraph()
+    {
+        Graph<String, Integer> graph = createGraph();
+        Node<String, Integer> foo = graph.createNode("foo");
+        Node<String, Integer> bar = graph.createNode("bar");
+        Node<String, Integer> baz = graph.createNode("baz");
+        graph.createEdge(foo, bar, 42);
+        List<Node<String, Integer>> nodes = ImmutableList.of(foo, bar, baz);
+        BitMatrix2D bitMatrix = toBitMatrix(graph, nodes, acceptAll);
+        assertEquals(1, bitMatrix.cardinality());
+        assertTrue(bitMatrix.getQuick(0, 1));
+        assertFalse(bitMatrix.getQuick(0, 2));
+    }
+
+
+    @Test(expected=IllegalArgumentException.class)
+    public void testToBitMatrixGraphNodeIndicesNullGraph()
+    {
+        Graph<String, Integer> graph = createGraph();
+        Node<String, Integer> foo = graph.createNode("foo");
+        Node<String, Integer> bar = graph.createNode("bar");
+        Node<String, Integer> baz = graph.createNode("baz");
+        graph.createEdge(foo, bar, 42);
+        Map<Node<String, Integer>, Long> nodeIndices = new HashMap<Node<String, Integer>, Long>();
+        nodeIndices.put(foo, 0L);
+        nodeIndices.put(bar, 1L);
+        nodeIndices.put(baz, 2L);
+        toBitMatrix((Graph<String, Integer>) null, nodeIndices, acceptAll);
+    }
+
+    @Test(expected=IllegalArgumentException.class)
+    public void testToBitMatrixGraphNodeIndicesNullList()
+    {
+        Graph<String, Integer> graph = createGraph();
+        Node<String, Integer> foo = graph.createNode("foo");
+        Node<String, Integer> bar = graph.createNode("bar");
+        Node<String, Integer> baz = graph.createNode("baz");
+        graph.createEdge(foo, bar, 42);
+        toBitMatrix(graph, (Map<Node<String, Integer>, Long>) null, acceptAll);
+    }
+
+    @Test(expected=IllegalArgumentException.class)
+    public void testToBitMatrixGraphNodeIndicesNullUnaryPredicate()
+    {
+        Graph<String, Integer> graph = createGraph();
+        Node<String, Integer> foo = graph.createNode("foo");
+        Node<String, Integer> bar = graph.createNode("bar");
+        Node<String, Integer> baz = graph.createNode("baz");
+        graph.createEdge(foo, bar, 42);
+        Map<Node<String, Integer>, Long> nodeIndices = new HashMap<Node<String, Integer>, Long>();
+        nodeIndices.put(foo, 0L);
+        nodeIndices.put(bar, 1L);
+        nodeIndices.put(baz, 2L);
+        toBitMatrix(graph, nodeIndices, null);
+    }
+
+    @Test
+    public void testToBitMatrixGraphNodeIndices()
+    {
+        Graph<String, Integer> graph = createGraph();
+        Node<String, Integer> foo = graph.createNode("foo");
+        Node<String, Integer> bar = graph.createNode("bar");
+        Node<String, Integer> baz = graph.createNode("baz");
+        graph.createEdge(foo, bar, 42);
+        Map<Node<String, Integer>, Long> nodeIndices = new HashMap<Node<String, Integer>, Long>();
+        nodeIndices.put(foo, 0L);
+        nodeIndices.put(bar, 1L);
+        nodeIndices.put(baz, 2L);
+        BitMatrix2D bitMatrix = toBitMatrix(graph, nodeIndices, acceptAll);
+        assertEquals(1, bitMatrix.cardinality());
+        assertTrue(bitMatrix.getQuick(0, 1));
+        assertFalse(bitMatrix.getQuick(0, 2));
+    }
+
+
+    @Test(expected=IllegalArgumentException.class)
+    public void testToBitMatrixGraphUnaryFunctionNullGraph()
+    {
+        toBitMatrix((Graph<String, Integer>) null, nodeIndicesFn, acceptAll);
+    }
+
+    @Test(expected=IllegalArgumentException.class)
+    public void testToBitMatrixGraphUnaryFunctionNullList()
+    {
+        Graph<String, Integer> graph = createGraph();
+        Node<String, Integer> foo = graph.createNode("foo");
+        Node<String, Integer> bar = graph.createNode("bar");
+        Node<String, Integer> baz = graph.createNode("baz");
+        graph.createEdge(foo, bar, 42);
+        toBitMatrix(graph, (List<Node<String, Integer>>) null, acceptAll);
+    }
+
+    @Test(expected=IllegalArgumentException.class)
+    public void testToBitMatrixGraphUnaryFunctionNullUnaryPredicate()
+    {
+        Graph<String, Integer> graph = createGraph();
+        Node<String, Integer> foo = graph.createNode("foo");
+        Node<String, Integer> bar = graph.createNode("bar");
+        Node<String, Integer> baz = graph.createNode("baz");
+        graph.createEdge(foo, bar, 42);
+        toBitMatrix(graph, nodeIndicesFn, null);
+    }
+
+    @Test
+    public void testToBitMatrixGraphUnaryFunction()
+    {
+        Graph<String, Integer> graph = createGraph();
+        Node<String, Integer> foo = graph.createNode("foo");
+        Node<String, Integer> bar = graph.createNode("bar");
+        Node<String, Integer> baz = graph.createNode("baz");
+        graph.createEdge(foo, bar, 42);
+        BitMatrix2D bitMatrix = toBitMatrix(graph, nodeIndicesFn, acceptAll);
+        assertEquals(1, bitMatrix.cardinality());
+        assertTrue(bitMatrix.getQuick(0, 1));
+        assertFalse(bitMatrix.getQuick(0, 2));
     }
 
     // --> graph
