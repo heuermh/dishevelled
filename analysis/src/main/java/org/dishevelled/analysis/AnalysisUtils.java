@@ -1,7 +1,7 @@
 /*
 
     dsh-analysis  Data analysis.
-    Copyright (c) 2011-2013 held jointly by the individual authors.
+    Copyright (c) 2011-2014 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
@@ -1296,40 +1296,6 @@ public final class AnalysisUtils
     }
 
     /**
-     * Integer index of key mapping function.
-     *
-     * @param <N> key type
-     */
-    private static class IntIndexOfKey<N> implements UnaryFunction<N, Integer>
-    {
-        /** List of keys. */
-        private final List<N> keys;
-
-
-        /**
-         * Create a new integer index of key mapping function with the specified list of keys.
-         *
-         * @param keys list of keys, must not be null
-         */
-        IntIndexOfKey(final List<N> keys)
-        {
-            if (keys == null)
-            {
-                throw new IllegalArgumentException("keys must not be null");
-            }
-            this.keys = keys;
-        }
-
-
-        @Override
-        public Integer evaluate(final N key)
-        {
-            int index = keys.indexOf(key);
-            return (index < 0) ? null : Integer.valueOf(index);
-        }
-    }
-
-    /**
      * Index of node mapping function.
      *
      * @param <N> graph node type
@@ -1392,39 +1358,6 @@ public final class AnalysisUtils
 
         @Override
         public Long evaluate(final N key)
-        {
-            return keyIndices.get(key);
-        }
-    }
-
-    /**
-     * Integer key indices mapping function.
-     *
-     * @param <N> key type
-     */
-    private static class IntKeyIndices<N> implements UnaryFunction<N, Integer>
-    {
-        /** Map of keys to integer indices. */
-        private final Map<N, Integer> keyIndices;
-
-
-        /**
-         * Create a new integer key indicies mapping function with the specified map of keys to integer indices.
-         *
-         * @param keyIndices map of keys to long indices, must not be null
-         */
-        IntKeyIndices(final Map<N, Integer> keyIndices)
-        {
-            if (keyIndices == null)
-            {
-                throw new IllegalArgumentException("keyIndices must not be null");
-            }
-            this.keyIndices = keyIndices;
-        }
-
-
-        @Override
-        public Integer evaluate(final N key)
         {
             return keyIndices.get(key);
         }
