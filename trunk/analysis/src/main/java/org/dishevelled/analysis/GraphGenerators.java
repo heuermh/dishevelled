@@ -52,6 +52,9 @@ import org.dishevelled.weighted.WeightedMaps;
  */
 public final class GraphGenerators
 {
+    /** Default unconnected node weight, <code>0.1d</code>. */
+    private static final double DEFAULT_UNCONNECTED_NODE_WEIGHT = 0.1d;
+
 
     /**
      * Private no-arg constructor.
@@ -438,7 +441,7 @@ public final class GraphGenerators
         WeightedMap<Node<N, E>> weightedNodes = WeightedMaps.createWeightedMap(graph.nodeCount());
         for (Node<N, E> node : graph.nodes())
         {
-            weightedNodes.put(node, Double.valueOf(node.degree() + 0.1d));
+            weightedNodes.put(node, Double.valueOf(node.degree() + DEFAULT_UNCONNECTED_NODE_WEIGHT));
         }
 
         // store existing edges to prevent creating duplicates
@@ -526,7 +529,7 @@ public final class GraphGenerators
         WeightedMap<Node<N, E>> weightedNodes = WeightedMaps.createWeightedMap(n);
         for (Node<N, E> node : graph.nodes())
         {
-            weightedNodes.put(node, Double.valueOf(node.degree() + 0.1d));
+            weightedNodes.put(node, Double.valueOf(node.degree() + DEFAULT_UNCONNECTED_NODE_WEIGHT));
         }
 
         // store existing edges to prevent creating duplicates
