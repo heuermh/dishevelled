@@ -1,7 +1,7 @@
 /*
 
     dsh-analysis  Data analysis.
-    Copyright (c) 2011-2013 held jointly by the individual authors.
+    Copyright (c) 2011-2014 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
@@ -30,7 +30,6 @@ import static org.dishevelled.analysis.GraphGenerators.connectRandomly;
 import static org.dishevelled.graph.impl.GraphUtils.createGraph;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
 import java.util.List;
 
@@ -39,21 +38,19 @@ import com.google.common.collect.ImmutableList;
 import org.apache.commons.math.random.JDKRandomGenerator;
 import org.apache.commons.math.random.RandomGenerator;
 
-import org.junit.Test;
-
 import org.dishevelled.functor.BinaryFunction;
 
 import org.dishevelled.graph.Edge;
 import org.dishevelled.graph.Graph;
 import org.dishevelled.graph.Node;
 
+import org.junit.Test;
+
 /**
  * Unit test for GraphGenerators.
  */
 public final class GraphGeneratorsTest
 {
-    private static final double TOLERANCE = 0.001d;
-
     private RandomGenerator randomGenerator = new JDKRandomGenerator();
 
     private BinaryFunction<String, String, Integer> length = new BinaryFunction<String, String, Integer>()

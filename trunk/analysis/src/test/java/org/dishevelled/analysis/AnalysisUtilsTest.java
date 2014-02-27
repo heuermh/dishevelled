@@ -1,7 +1,7 @@
 /*
 
     dsh-analysis  Data analysis.
-    Copyright (c) 2011-2013 held jointly by the individual authors.
+    Copyright (c) 2011-2014 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
@@ -23,18 +23,16 @@
 */
 package org.dishevelled.analysis;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import static org.dishevelled.analysis.AnalysisUtils.toBinaryKeyMap;
+import static org.dishevelled.analysis.AnalysisUtils.toBitMatrix;
+import static org.dishevelled.analysis.AnalysisUtils.toGraph;
+import static org.dishevelled.analysis.AnalysisUtils.toHashBasedTable;
+import static org.dishevelled.analysis.AnalysisUtils.toImmutableTable;
+import static org.dishevelled.analysis.AnalysisUtils.toSparseMatrix2D;
 
-import static org.junit.Assert.*;
-
-import org.junit.Test;
-
-import static org.dishevelled.analysis.AnalysisUtils.*;
-
-import static org.dishevelled.collect.Lists.*;
-import static org.dishevelled.collect.Maps.*;
+import static org.dishevelled.collect.Lists.asList;
+import static org.dishevelled.collect.Lists.emptyList;
+import static org.dishevelled.collect.Maps.createMap;
 
 import static org.dishevelled.graph.impl.GraphUtils.createGraph;
 
@@ -42,11 +40,25 @@ import static org.dishevelled.matrix.impl.SparseMatrixUtils.createSparseMatrix2D
 
 import static org.dishevelled.multimap.impl.BinaryKeyMaps.createBinaryKeyMap;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import com.google.common.collect.ArrayTable;
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableTable;
 import com.google.common.collect.Table;
+
+import org.dishevelled.analysis.AnalysisUtils.AcceptAll;
+import org.dishevelled.analysis.AnalysisUtils.AcceptNonNull;
 
 import org.dishevelled.functor.BinaryFunction;
 import org.dishevelled.functor.UnaryFunction;
@@ -62,6 +74,8 @@ import org.dishevelled.matrix.Matrix2D;
 import org.dishevelled.multimap.BinaryKeyMap;
 
 import org.dishevelled.multimap.impl.BinaryKeyMaps;
+
+import org.junit.Test;
 
 /**
  * Unit test for AnalysisUtils.
@@ -131,27 +145,6 @@ public final class AnalysisUtilsTest
                     return 2L;
                 }
                 return -1L;
-            }
-        };
-
-    private final UnaryFunction<String, Integer> intIndices = new UnaryFunction<String, Integer>()
-        {
-            @Override
-            public Integer evaluate(final String value)
-            {
-                if ("foo".equals(value))
-                {
-                    return 0;
-                }
-                else if ("bar".equals(value))
-                {
-                    return 1;
-                }
-                else if ("baz".equals(value))
-                {
-                    return 2;
-                }
-                return -1;
             }
         };
 
