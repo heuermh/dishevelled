@@ -26,6 +26,7 @@ package org.dishevelled.variation.interval.tree;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -65,7 +66,7 @@ public final class CenteredIntervalTree
     public CenteredIntervalTree(final Iterable<Interval> intervals)
     {
         checkNotNull(intervals);
-        root = createNode(ImmutableList.copyOf(intervals));
+        root = createNode(intervals);
     }
 
 
@@ -118,16 +119,14 @@ public final class CenteredIntervalTree
         return result;
     }
 
-    private Node createNode(final List<Interval> intervals)
+    private Node createNode(final Iterable<Interval> intervals)
     {
-        // todo:  reduce extra copy in ctr by removing this check and List --> Iterable
-        if (intervals.isEmpty())
-        {
+        Interval span = first(intervals);
+        if (span == null) {
             return null;
         }
-        Interval span = intervals.get(0);
-        for (Interval interval : intervals)
-        {
+        for (Interval interval : intervals) {
+            checkNotNull(interval, "ranges must not contain null intervals");
             span = interval.span(span);
         }
         if (span.isEmpty())
@@ -203,6 +202,11 @@ public final class CenteredIntervalTree
             result.addAll(node.overlapByLowerEndpoint());
         }
         visited.add(node);
+    }
+
+    private static Interval first(final Iterable<Interval> intervals) {
+        Iterator<Interval> iterator = intervals.iterator();
+        return iterator.hasNext() ? iterator.next() : null;
     }
 
     private static class Node
