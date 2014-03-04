@@ -31,8 +31,9 @@
 <section name="Summary">
 
 <p>
-dishevelled.org <b>variation</b> provides variation.
-The variation library requires java version 1.5 or later.
+dishevelled.org <b>variation</b> provides feature, variation, variation consequence, and
+variation consequence prediction service interfaces and implementations.
+The variation library requires java version 1.6 or later.
 </p>
 </section>
 
