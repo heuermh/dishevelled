@@ -27,6 +27,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.google.common.collect.Iterables;
@@ -64,6 +65,25 @@ public final class CenteredIntervalTreeTest
     @Test(expected=NullPointerException.class)
     public void testConstructorNullRanges() {
         new CenteredIntervalTree((Interval) null);
+    }
+
+    @Test(expected=NullPointerException.class)
+    public void testConstructorNullIterableRanges() {
+        new CenteredIntervalTree((Iterable<Interval>) null);
+    }
+
+    @Test(expected=NullPointerException.class)
+    public void testConstructorNullRangeInRanges() {
+        new CenteredIntervalTree(empty, null, singleton);
+    }
+
+    @Test(expected=NullPointerException.class)
+    public void testConstructorNullRangeInIterableRanges() {
+        List<Interval> ranges = new ArrayList<Interval>();
+        ranges.add(empty);
+        ranges.add(null);
+        ranges.add(singleton);
+        new CenteredIntervalTree(ranges);
     }
 
     @Test
