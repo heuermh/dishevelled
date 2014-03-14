@@ -26,6 +26,7 @@ package org.dishevelled.wormplot.cytoscape3.internal;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.awt.BorderLayout;
+import java.awt.FileDialog;
 
 import java.awt.event.ActionEvent;
 
@@ -36,6 +37,7 @@ import javax.swing.AbstractAction;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -43,11 +45,20 @@ import javax.swing.JTextField;
 
 import javax.swing.border.EmptyBorder;
 
+import com.google.common.collect.ImmutableList;
+
 import org.cytoscape.application.CyApplicationManager;
 
 import org.cytoscape.work.swing.DialogTaskManager;
 
 import org.dishevelled.layout.LabelFieldPanel;
+
+import org.dishevelled.iconbundle.IconBundle;
+
+import org.dishevelled.iconbundle.impl.CachingIconBundle;
+import org.dishevelled.iconbundle.impl.PNGIconBundle;
+
+import org.dishevelled.identify.IdentifiableAction;
 
 /**
  * Worm plot app.
@@ -77,13 +88,29 @@ final class WormPlotApp extends JPanel
     /** Overlap. */
     private final JTextField overlap;
 
-    /** Apply action. */
-    private final AbstractAction apply = new AbstractAction("Apply")
+    /** Plot button. */
+    private final JButton plotButton;
+
+    /** Cancel action. */
+    private final AbstractAction cancel = new AbstractAction("Cancel")
         {
             @Override
             public void actionPerformed(final ActionEvent event)
             {
-                apply();
+                cancel();
+            }
+        };
+
+    /** Worm plot icon bundle. */
+    private final IconBundle wormPlotIconBundle = new CachingIconBundle(new PNGIconBundle("/org/dishevelled/wormplot/cytoscape3/internal/wormPlot"));
+
+    /** Worm plot action. */
+    private final IdentifiableAction plot = new IdentifiableAction("Worm plot...", wormPlotIconBundle)
+        {
+            @Override
+            public void actionPerformed(final ActionEvent event)
+            {
+                plot();
             }
         };
 
@@ -107,6 +134,13 @@ final class WormPlotApp extends JPanel
                 }
             }
         };
+
+    /** Requires doc. */
+    private static final String REQUIRES = "<html><strong>Note</strong>:  Worm Plot requires " +
+        "<a href=\"http://blast.ncbi.nlm.nih.gov/Blast.cgi?PAGE_TYPE=BlastDocs&DOC_TYPE=Download\">blastn</a> " +
+        " version 2.2.24 or later and <a href=\"https://www.gnu.org/software/grep/\">grep</a> " +
+        " to be installed.</html>";
+
 
 
     /**
@@ -144,6 +178,8 @@ final class WormPlotApp extends JPanel
         overlap.setColumns(20);
         overlap.setText(String.valueOf(WormPlotModel.DEFAULT_OVERLAP));
 
+        plotButton = new JButton(plot);
+
         layoutComponents();
     }
 
@@ -166,7 +202,9 @@ final class WormPlotApp extends JPanel
     private LabelFieldPanel createMainPanel()
     {
         LabelFieldPanel panel = new LabelFieldPanel();
-        panel.setBorder(new EmptyBorder(0, 0, 0, 40));
+        panel.setBorder(new EmptyBorder(12, 0, 0, 40));
+        panel.addField(new JLabel(REQUIRES));
+        panel.addSpacing(20);
         panel.addField("Sequence file name:", createSequenceFileNamePanel());
         panel.addField("Length:", createLengthPanel());
         panel.addField("Overlap:", createOverlapPanel());
@@ -186,8 +224,9 @@ final class WormPlotApp extends JPanel
         panel.add(Box.createHorizontalGlue());
         panel.add(Box.createHorizontalGlue());
         panel.add(Box.createHorizontalGlue());
-        // cancel, exit buttons?
-        panel.add(new JButton(apply));
+        panel.add(new JButton(cancel));
+        panel.add(Box.createHorizontalStrut(12));
+        panel.add(plotButton);
         return panel;
     }
 
@@ -208,11 +247,25 @@ final class WormPlotApp extends JPanel
                 @Override
                 public void actionPerformed(final ActionEvent event)
                 {
+                    // awt file chooser
+                    FileDialog fileDialog = new FileDialog((JDialog) getTopLevelAncestor());
+                    fileDialog.setMode(FileDialog.LOAD);
+                    fileDialog.setMultipleMode(false);
+                    fileDialog.setVisible(true);
+                    // null-safe jdk 1.7+
+                    if (fileDialog.getFiles().length > 0)
+                    {
+                        model.setSequenceFile(fileDialog.getFiles()[0]);
+                    }
+
+                    // swing file chooser
+                    /*
                     JFileChooser fileChooser = new JFileChooser();
                     if (JFileChooser.APPROVE_OPTION == fileChooser.showOpenDialog(WormPlotApp.this))
                     {
                         model.setSequenceFile(fileChooser.getSelectedFile());
                     }
+                    */
                 }
             }));
         return panel;
@@ -253,16 +306,43 @@ final class WormPlotApp extends JPanel
     }
 
     /**
-     * Apply (or run, or go, etc.).
+     * Cancel.
      */
-    private void apply()
+    private void cancel()
+    {
+        getTopLevelAncestor().setVisible(false);        
+    }
+
+    /**
+     * Plot.
+     */
+    private void plot()
     {
         model.setLength(Integer.parseInt(length.getText()));
         model.setOverlap(Integer.parseInt(overlap.getText()));
 
         dialogTaskManager.execute(wormPlotTaskFactory.createTaskIterator(model));
 
-        // todo:  or show some summary stats and have a dismiss button?
         getTopLevelAncestor().setVisible(false);
+    }
+
+    /**
+     * Return the plot button.
+     *
+     * @return the plot button
+     */
+    JButton getPlotButton()
+    {
+        return plotButton;
+    }
+
+    /**
+     * Return the tool bar actions.
+     *
+     * @return the tool bar actions
+     */
+    Iterable<IdentifiableAction> getToolBarActions()
+    {
+        return ImmutableList.of(plot);
     }
 }

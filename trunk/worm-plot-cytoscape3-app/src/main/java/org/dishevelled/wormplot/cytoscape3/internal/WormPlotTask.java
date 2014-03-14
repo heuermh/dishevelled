@@ -90,24 +90,24 @@ final class WormPlotTask
     @Override
     public void run(final TaskMonitor taskMonitor) throws Exception
     {
-        taskMonitor.setTitle("Generating worm plot...");
         taskMonitor.setProgress(0.0d);
+        taskMonitor.setTitle("Generating worm plot...");
 
         try
         {
-            taskMonitor.setTitle("Splitting sequence...");
+            taskMonitor.setStatusMessage("Splitting sequence...");
             File splitFasta = createSplitFasta(model.getSequenceFile(), model.getLength(), model.getOverlap());
             taskMonitor.setProgress(0.2d);
 
-            taskMonitor.setTitle("Calculating self-similarity...");
+            taskMonitor.setStatusMessage("Calculating self-similarity via blastn...");
             File allVsAllBlastResult = allVsAllBlast(splitFasta);
             taskMonitor.setProgress(0.6d);
 
-            taskMonitor.setTitle("Generating edge file...");
+            taskMonitor.setStatusMessage("Generating edge file...");
             File allVsAllEdges = createEdgeFile(allVsAllBlastResult);
             taskMonitor.setProgress(0.8d);
 
-            taskMonitor.setTitle("Importing network...");
+            taskMonitor.setStatusMessage("Importing network...");
             importNetwork(allVsAllEdges, model.getNetwork());
             taskMonitor.setProgress(1.0d);
         }

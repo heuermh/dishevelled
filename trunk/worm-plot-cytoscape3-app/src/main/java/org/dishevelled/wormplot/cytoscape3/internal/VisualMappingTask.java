@@ -25,7 +25,9 @@ package org.dishevelled.wormplot.cytoscape3.internal;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
+import static org.cytoscape.view.presentation.property.ArrowShapeVisualProperty.ARROW;
 import static org.cytoscape.view.presentation.property.BasicVisualLexicon.EDGE_PAINT;
+import static org.cytoscape.view.presentation.property.BasicVisualLexicon.EDGE_TARGET_ARROW_SHAPE;
 import static org.cytoscape.view.presentation.property.BasicVisualLexicon.EDGE_TRANSPARENCY;
 import static org.cytoscape.view.presentation.property.BasicVisualLexicon.EDGE_WIDTH;
 import static org.cytoscape.view.presentation.property.BasicVisualLexicon.NODE_BORDER_PAINT;
@@ -102,6 +104,7 @@ final class VisualMappingTask
     public void run(final TaskMonitor taskMonitor)
     {
         taskMonitor.setProgress(0.0d);
+        taskMonitor.setTitle("Applying visual mapping...");
         taskMonitor.setStatusMessage("Applying visual mapping...");
 
         VisualStyle visualStyle = visualMappingManager.getCurrentVisualStyle();
@@ -109,12 +112,11 @@ final class VisualMappingTask
         // overwrite some defaults
         visualStyle.setDefaultValue(EDGE_TRANSPARENCY, Integer.valueOf(80));
         visualStyle.setDefaultValue(EDGE_WIDTH, Double.valueOf(0.9d));
-        //visualStyle.setDefaultValue(EDGE_TARGET_ARROW_SHAPE, ??);
+        visualStyle.setDefaultValue(EDGE_TARGET_ARROW_SHAPE, ARROW);
         visualStyle.setDefaultValue(NODE_BORDER_PAINT, new Color(85, 87, 83));
         visualStyle.setDefaultValue(NODE_BORDER_TRANSPARENCY, Integer.valueOf(120));
         visualStyle.setDefaultValue(NODE_BORDER_WIDTH, Double.valueOf(0.9d));
         visualStyle.setDefaultValue(NODE_LABEL_COLOR, new Color(46, 52, 54));
-        //visualStyle.setDefaultValue(NODE_SHAPE, ??);
 
         // continuous mapping bitScore --> edge paint
         double minBitScore = Double.MAX_VALUE;
@@ -179,6 +181,7 @@ final class VisualMappingTask
         visualStyle.addVisualMappingFunction(nodeFillColorMapping);
 
         taskMonitor.setProgress(0.66d);
+        taskMonitor.setStatusMessage("Updating network view...");
         visualStyle.apply(networkView);
         networkView.updateView();
 
