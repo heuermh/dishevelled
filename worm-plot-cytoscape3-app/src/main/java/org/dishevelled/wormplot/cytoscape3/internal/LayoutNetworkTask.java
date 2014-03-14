@@ -74,6 +74,7 @@ final class LayoutNetworkTask
     public void run(final TaskMonitor taskMonitor)
     {
         taskMonitor.setProgress(0.0d);
+        taskMonitor.setTitle("Applying layout...");
         taskMonitor.setStatusMessage("Applying layout...");
 
         CyLayoutAlgorithm layoutAlgorithm = layoutAlgorithmManager.getLayout(LAYOUT_ALGORITHM_NAME);

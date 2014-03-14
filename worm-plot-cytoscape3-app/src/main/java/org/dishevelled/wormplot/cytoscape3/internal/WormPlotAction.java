@@ -34,9 +34,11 @@ import java.awt.Component;
 
 import java.awt.event.ActionEvent;
 
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.WindowConstants;
 
 import javax.swing.border.EmptyBorder;
@@ -46,6 +48,12 @@ import org.cytoscape.application.CyApplicationManager;
 import org.cytoscape.application.swing.AbstractCyAction;
 
 import org.cytoscape.work.swing.DialogTaskManager;
+
+import org.dishevelled.iconbundle.tango.TangoProject;
+
+import org.dishevelled.identify.IdentifiableAction;
+import org.dishevelled.identify.IdToolBar;
+import org.dishevelled.identify.ContextMenuListener;
 
 /**
  * Worm plot action.
@@ -112,9 +120,35 @@ final class WormPlotAction extends AbstractCyAction
         contentPane.setLayout(new BorderLayout());
 
         WormPlotApp app = new WormPlotApp(applicationManager, dialogTaskManager, wormPlotTaskFactory);
+
+        IdToolBar toolBar = new IdToolBar();
+        toolBar.displayIconsAndText();
+        for (IdentifiableAction action : app.getToolBarActions())
+        {
+            toolBar.add(action);
+        }
+
+        JPopupMenu toolBarContextMenu = new JPopupMenu();
+        for (Object menuItem : toolBar.getDisplayMenuItems())
+        {
+            toolBarContextMenu.add((JCheckBoxMenuItem) menuItem);
+        }
+        toolBar.addMouseListener(new ContextMenuListener(toolBarContextMenu));
+        toolBarContextMenu.addSeparator();
+        toolBarContextMenu.add(toolBar.createIconSizeMenuItem(TangoProject.EXTRA_SMALL));
+        toolBarContextMenu.add(toolBar.createIconSizeMenuItem(TangoProject.SMALL));
+
+        toolBar.setIconSize(TangoProject.MEDIUM);
+        JCheckBoxMenuItem mediumMenuItem = toolBar.createIconSizeMenuItem(TangoProject.MEDIUM);
+        mediumMenuItem.setEnabled(true);
+
+        toolBarContextMenu.add(mediumMenuItem);
+
+        contentPane.add("North", toolBar);
         contentPane.add("Center", app);
 
         dialog.setContentPane(contentPane);
+        dialog.getRootPane().setDefaultButton(app.getPlotButton());
         dialog.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
         installCloseKeyBinding(dialog);
         dialog.setBounds(200, 200, 600, 372);

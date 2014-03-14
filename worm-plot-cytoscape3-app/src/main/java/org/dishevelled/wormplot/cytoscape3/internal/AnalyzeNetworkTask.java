@@ -71,6 +71,7 @@ final class AnalyzeNetworkTask
     public void run(final TaskMonitor taskMonitor)
     {
         taskMonitor.setProgress(0.0d);
+        taskMonitor.setTitle("Analyzing network...");
         taskMonitor.setStatusMessage("Analyzing network...");
 
         Collection<CyNetwork> networks = ImmutableList.of(network);
