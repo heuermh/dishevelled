@@ -134,6 +134,10 @@ final class WormPlotTask
         try
         {
             splitFasta = File.createTempFile("wormPlot", ".fa");
+            if (sequenceFile == null)
+            {
+                throw new IOException("must provide a sequence file");
+            }
             reader = new BufferedReader(new FileReader(sequenceFile));
             output = new BufferedOutputStream(new FileOutputStream(splitFasta));
 
@@ -141,6 +145,7 @@ final class WormPlotTask
             System.out.println("reading from sequenceFile " + sequenceFile);
             System.out.println("writing to splitFasta length=" + length + " overlap=" + overlap + " " + splitFasta);
 
+            // WTF:  seems like the app in 3.1.0 is hanging at this line:
             for (SequenceIterator iter = SeqIOTools.readFastaDNA(reader); iter.hasNext(); )
             {
                 Sequence sequence = iter.nextSequence();
