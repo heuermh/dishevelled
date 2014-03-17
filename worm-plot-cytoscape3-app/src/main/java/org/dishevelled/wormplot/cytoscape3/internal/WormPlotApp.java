@@ -33,6 +33,9 @@ import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+import java.io.File;
+import java.io.IOException;
+
 import javax.swing.AbstractAction;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -46,6 +49,9 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import com.google.common.collect.ImmutableList;
+
+//import org.apache.commons.lang3.JavaVersion;
+import org.apache.commons.lang.SystemUtils;
 
 import org.cytoscape.application.CyApplicationManager;
 
@@ -90,6 +96,53 @@ final class WormPlotApp extends JPanel
 
     /** Plot button. */
     private final JButton plotButton;
+
+    /** True if JDK7 is available. */
+    private final boolean jdk7Available;
+
+    /** True if blastn is available. */
+    private final boolean blastnAvailable;
+
+    /** True if grep is available. */
+    private final boolean grepAvailable;
+
+    /** Open file dialog action. */
+    private final AbstractAction openFileDialog = new AbstractAction("...")
+        {
+            @Override
+            public void actionPerformed(final ActionEvent event)
+            {
+                // awt file chooser
+                FileDialog fileDialog = new FileDialog((JDialog) getTopLevelAncestor());
+                fileDialog.setMode(FileDialog.LOAD);
+                fileDialog.setMultipleMode(false);
+                fileDialog.setVisible(true);
+
+                /*
+                // jdk 1.6
+                String fileName = fileDialog.getFile();
+                if (fileName != null)
+                {
+                    model.setSequenceFile(new File(fileName));
+                }
+                */
+
+                // null-safe jdk 1.7+
+                if (fileDialog.getFiles().length > 0)
+                {
+                    model.setSequenceFile(fileDialog.getFiles()[0]);
+                }
+
+                /*
+                // swing file chooser
+                JFileChooser fileChooser = new JFileChooser();
+                if (JFileChooser.APPROVE_OPTION == fileChooser.showOpenDialog(WormPlotApp.this))
+                {
+                    model.setSequenceFile(fileChooser.getSelectedFile());
+                }
+                */
+            }
+        };
 
     /** Cancel action. */
     private final AbstractAction cancel = new AbstractAction("Cancel")
@@ -136,11 +189,19 @@ final class WormPlotApp extends JPanel
         };
 
     /** Requires doc. */
-    private static final String REQUIRES = "<html><strong>Note</strong>:  Worm Plot requires " +
+    private static final String REQUIRES = "<html><strong>Note</strong>:  Worm Plot requires JDK 7, " +
         "<a href=\"http://blast.ncbi.nlm.nih.gov/Blast.cgi?PAGE_TYPE=BlastDocs&DOC_TYPE=Download\">blastn</a> " +
         " version 2.2.24 or later and <a href=\"https://www.gnu.org/software/grep/\">grep</a> " +
         " to be installed.</html>";
 
+    /** JDK 7 not available doc. */
+    private static final String JDK7_NOT_AVAILABLE = "<html><font color=\"red\">JDK 7 must be installed and used to run Cytoscape.</font></html>";
+
+    /** Blastn not available doc. */
+    private static final String BLASTN_NOT_AVAILABLE = "<html><font color=\"red\">BLASTN version 2.2.24 or later was not found.</font></html>";
+
+    /** Grep not available doc. */
+    private static final String GREP_NOT_AVAILABLE = "<html><font color=\"red\">Grep was not found.</font></html>";
 
 
     /**
@@ -180,6 +241,13 @@ final class WormPlotApp extends JPanel
 
         plotButton = new JButton(plot);
 
+        jdk7Available = isJdk7Available();
+        blastnAvailable = isBlastnAvailable();
+        grepAvailable = isGrepAvailable();
+
+        openFileDialog.setEnabled(jdk7Available && blastnAvailable && grepAvailable);
+        plot.setEnabled(jdk7Available && blastnAvailable && grepAvailable);
+
         layoutComponents();
     }
 
@@ -204,6 +272,18 @@ final class WormPlotApp extends JPanel
         LabelFieldPanel panel = new LabelFieldPanel();
         panel.setBorder(new EmptyBorder(12, 0, 0, 40));
         panel.addField(new JLabel(REQUIRES));
+        if (!jdk7Available)
+        {
+            panel.addField(new JLabel(JDK7_NOT_AVAILABLE));
+        }
+        if (!blastnAvailable)
+        {
+            panel.addField(new JLabel(BLASTN_NOT_AVAILABLE));
+        }
+        if (!grepAvailable)
+        {
+            panel.addField(new JLabel(GREP_NOT_AVAILABLE));
+        }
         panel.addSpacing(20);
         panel.addField("Sequence file name:", createSequenceFileNamePanel());
         panel.addField("Length:", createLengthPanel());
@@ -242,32 +322,7 @@ final class WormPlotApp extends JPanel
         panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
         panel.add(sequenceFileName);
         panel.add(Box.createHorizontalStrut(4));
-        panel.add(new JButton(new AbstractAction("...")
-            {
-                @Override
-                public void actionPerformed(final ActionEvent event)
-                {
-                    // awt file chooser
-                    FileDialog fileDialog = new FileDialog((JDialog) getTopLevelAncestor());
-                    fileDialog.setMode(FileDialog.LOAD);
-                    fileDialog.setMultipleMode(false);
-                    fileDialog.setVisible(true);
-                    // null-safe jdk 1.7+
-                    if (fileDialog.getFiles().length > 0)
-                    {
-                        model.setSequenceFile(fileDialog.getFiles()[0]);
-                    }
-
-                    // swing file chooser
-                    /*
-                    JFileChooser fileChooser = new JFileChooser();
-                    if (JFileChooser.APPROVE_OPTION == fileChooser.showOpenDialog(WormPlotApp.this))
-                    {
-                        model.setSequenceFile(fileChooser.getSelectedFile());
-                    }
-                    */
-                }
-            }));
+        panel.add(new JButton(openFileDialog));
         return panel;
     }
 
@@ -344,5 +399,58 @@ final class WormPlotApp extends JPanel
     Iterable<IdentifiableAction> getToolBarActions()
     {
         return ImmutableList.of(plot);
+    }
+
+    private static boolean isJdk7Available()
+    {
+        //return JavaVersion.atLeast(JavaVersion.JAVA_1_7);
+        return SystemUtils.isJavaVersionAtLeast(1.7f);
+    }
+
+    private static boolean isBlastnAvailable()
+    {
+        try
+        {
+            ProcessBuilder blastn = new ProcessBuilder("blastn", "-h");
+            Process blastnProcess = blastn.start();
+            try
+            {
+                blastnProcess.waitFor();
+            }
+            catch (InterruptedException e)
+            {
+                // ignore
+            }
+            return true;
+        }
+        catch (IOException e)
+        {
+            // ignore
+            System.out.println(e.getMessage());
+        }
+        return false;
+    }
+
+    private static boolean isGrepAvailable()
+    {
+        try
+        {
+            ProcessBuilder grep = new ProcessBuilder("grep", "-h");
+            Process grepProcess = grep.start();
+            try
+            {
+                grepProcess.waitFor();
+            }
+            catch (InterruptedException e)
+            {
+                // ignore
+            }
+            return true;
+        }
+        catch (IOException e)
+        {
+            // ignore
+        }
+        return false;
     }
 }

@@ -113,7 +113,7 @@ final class WormPlotTask
         }
         catch (IOException e)
         {
-            throw new WormPlotException("Unable to generate worm plot due to I/O error", e);
+            throw new WormPlotException("Unable to generate worm plot due to I/O error: " + e.getMessage(), e);
         }
     }
 

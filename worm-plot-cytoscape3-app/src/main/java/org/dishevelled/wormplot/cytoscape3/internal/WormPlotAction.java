@@ -151,7 +151,7 @@ final class WormPlotAction extends AbstractCyAction
         dialog.getRootPane().setDefaultButton(app.getPlotButton());
         dialog.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
         installCloseKeyBinding(dialog);
-        dialog.setBounds(200, 200, 600, 372);
+        dialog.setBounds(200, 200, 647, 400);
         dialog.setVisible(true);
     }
 }
