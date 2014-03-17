@@ -114,7 +114,7 @@
     </dependency>
   </dependencies>
   <properties>
-    <jdk.version>1.7</jdk.version>
+    <jdk.version>1.6</jdk.version>
     <bundle.symbolicName>worm-plot-cytoscape3-app</bundle.symbolicName>
     <bundle.namespace>org.dishevelled.wormplot.cytoscape3.internal</bundle.namespace>
     <cytoscape.api.version>3.0.2</cytoscape.api.version>
