@@ -53,77 +53,86 @@ final class PredictVariationConsequencesTask
     /** Variation model. */
     private final VariationModel model;
 
+    /** Merge strategy. */
+    private final MergeStrategy mergeStrategy;
+
 
     /**
-     * Create a new predict variation consequences task with the specified model.
+     * Create a new predict variation consequences task with the specified model and merge strategy.
      *
      * @param model model, must not be null
+     * @param mergeStrategy merge strategy, must not be null
      */
-    PredictVariationConsequencesTask(final VariationModel model)
+    PredictVariationConsequencesTask(final VariationModel model, final MergeStrategy mergeStrategy)
     {
         checkNotNull(model);
+        checkNotNull(mergeStrategy);
         this.model = model;
+        this.mergeStrategy = mergeStrategy;
     }
 
 
     @Override
     public void run(final TaskMonitor taskMonitor)
     {
-        taskMonitor.setTitle("Predict variation consequences");
+        taskMonitor.setTitle("Predicting variation consequences...");
         taskMonitor.setProgress(0.0d);
 
-        final Lock nodesReadLock = model.nodes().getReadWriteLock().readLock();
-        final Lock featuresReadLock = model.features().getReadWriteLock().readLock();
-        final Lock variationsReadLock = model.variations().getReadWriteLock().readLock();
-        final Lock variationConsequencesWriteLock = model.variationConsequences().getReadWriteLock().writeLock();
-        nodesReadLock.lock();
-        featuresReadLock.lock();
-        variationsReadLock.lock();
-        variationConsequencesWriteLock.lock();
-        try
+        if (!mergeStrategy.isRetain())
         {
-            // allocate 10% of progress to rebuilding trees
-            model.rebuildTrees();
-            taskMonitor.setProgress(0.1d);
-
-            // allocate 80% of progress to variation filtering and consequence prediction
-            for (int i = 0, size = model.variations().size(); i < size; i++)
+            final Lock nodesReadLock = model.nodes().getReadWriteLock().readLock();
+            final Lock featuresReadLock = model.features().getReadWriteLock().readLock();
+            final Lock variationsReadLock = model.variations().getReadWriteLock().readLock();
+            final Lock variationConsequencesWriteLock = model.variationConsequences().getReadWriteLock().writeLock();
+            nodesReadLock.lock();
+            featuresReadLock.lock();
+            variationsReadLock.lock();
+            variationConsequencesWriteLock.lock();
+            try
             {
-                Variation variation = model.variations().get(i);
-                for (Feature hit : model.hit(variation))
+                // allocate 10% of progress to rebuilding trees
+                model.rebuildTrees();
+                taskMonitor.setProgress(0.1d);
+
+                // allocate 80% of progress to variation filtering and consequence prediction
+                for (int i = 0, size = model.variations().size(); i < size; i++)
                 {
-                    taskMonitor.setStatusMessage("Predicting variation consequences for variation " + variation + "...");
-                    List<VariationConsequence> variationConsequences = model.getVariationConsequencePredictionService().predictConsequences(variation);
-                    taskMonitor.setStatusMessage(resultStatusMessage("Predicted", variationConsequences.size(), "variation consequence", "variation", variation));
+                    Variation variation = model.variations().get(i);
+                    for (Feature hit : model.hit(variation))
+                    {
+                        taskMonitor.setStatusMessage("Predicting variation consequences for variation " + variation + "...");
+                        List<VariationConsequence> variationConsequences = model.getVariationConsequencePredictionService().predictConsequences(variation);
+                        taskMonitor.setStatusMessage(resultStatusMessage("Predicted", variationConsequences.size(), "variation consequence", "variation", variation));
 
-                    model.add(hit, variationConsequences);
-                    model.variationConsequences().addAll(variationConsequences);
+                        model.add(hit, variationConsequences);
+                        model.variationConsequences().addAll(variationConsequences);
+                    }
+                    taskMonitor.setProgress(0.1d + 0.8d * (i / (double) size));
                 }
-                taskMonitor.setProgress(0.1d + 0.8d * (i / (double) size));
-            }
 
-            // allocate 10% of progress to counts
-            for (int i = 0, size = model.nodes().size(); i < size; i++)
+                // allocate 10% of progress to counts
+                for (int i = 0, size = model.nodes().size(); i < size; i++)
+                {
+                    CyNode node = model.nodes().get(i);
+                    Feature feature = model.featureFor(node);
+                    if (feature != null)
+                    {
+                        List<VariationConsequence> variationConsequences = model.consequencesFor(feature);
+
+                        // todo:  counts don't consider existing variations or variationConsequences
+                        addCount(node, model.getNetwork(), "variation_consequence_count", variationConsequences.size());
+                        addConsequenceCounts(node, model.getNetwork(), variationConsequences);
+                    }
+                    taskMonitor.setProgress(0.9d + 0.1d * (i / (double) size));
+                }
+            }
+            finally
             {
-                CyNode node = model.nodes().get(i);
-                Feature feature = model.featureFor(node);
-                if (feature != null)
-                {
-                    List<VariationConsequence> variationConsequences = model.consequencesFor(feature);
-
-                    // todo:  counts don't consider existing variations or variationConsequences
-                    addCount(node, model.getNetwork(), "variation_consequence_count", variationConsequences.size());
-                    addConsequenceCounts(node, model.getNetwork(), variationConsequences);
-                }
-                taskMonitor.setProgress(0.9d + 0.1d * (i / (double) size));
+                nodesReadLock.unlock();
+                featuresReadLock.unlock();
+                variationsReadLock.unlock();
+                variationConsequencesWriteLock.unlock();
             }
-        }
-        finally
-        {
-            nodesReadLock.unlock();
-            featuresReadLock.unlock();
-            variationsReadLock.unlock();
-            variationConsequencesWriteLock.unlock();
         }
         taskMonitor.setProgress(1.0d);
     }

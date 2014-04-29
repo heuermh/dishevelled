@@ -25,6 +25,9 @@ package org.dishevelled.variation.cytoscape3.internal;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
+import static org.dishevelled.variation.cytoscape3.internal.MergeStrategy.REPLACE;
+import static org.dishevelled.variation.cytoscape3.internal.MergeStrategy.RETAIN;
+
 import org.cytoscape.work.AbstractTaskFactory;
 import org.cytoscape.work.TaskIterator;
 
@@ -55,8 +58,9 @@ final class AddVariationsTaskFactory
     @Override
     public TaskIterator createTaskIterator()
     {
-        RetrieveFeaturesTask retrieveFeaturesTask = new RetrieveFeaturesTask(model);
-        AddVariationsTask addVariationsTask = new AddVariationsTask(model);
+        // todo:  only retain or replace for now
+        RetrieveFeaturesTask retrieveFeaturesTask = new RetrieveFeaturesTask(model, model.features().isEmpty() ? REPLACE : RETAIN);
+        AddVariationsTask addVariationsTask = new AddVariationsTask(model, model.variations().isEmpty() ? REPLACE : RETAIN);
         return new TaskIterator(retrieveFeaturesTask, addVariationsTask);
     }
 }

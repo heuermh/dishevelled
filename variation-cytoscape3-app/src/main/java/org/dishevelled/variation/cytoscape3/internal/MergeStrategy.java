@@ -27,6 +27,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Merge strategy.
+ *
+ * @author  Michael Heuer
  */
 enum MergeStrategy
 {
@@ -64,5 +66,35 @@ enum MergeStrategy
     public String getDescription()
     {
         return description;
+    }
+
+    /**
+     * Return true if this merge strategy is <code>RETAIN</code>.
+     *
+     * @return true if this merge strategy is <code>RETAIN</code>
+     */
+    public boolean isRetain()
+    {
+        return this.equals(RETAIN);
+    }
+
+    /**
+     * Return true if this merge strategy is <code>REPLACE</code>.
+     *
+     * @return true if this merge strategy is <code>REPLACE</code>
+     */
+    public boolean isReplace()
+    {
+        return this.equals(REPLACE);
+    }
+
+    /**
+     * Return true if this merge strategy is <code>MERGE</code>.
+     *
+     * @return true if this merge strategy is <code>MERGE</code>
+     */
+    public boolean isMerge()
+    {
+        return this.equals(MERGE);
     }
 }

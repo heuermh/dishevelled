@@ -23,6 +23,8 @@
 */
 package org.dishevelled.variation.cytoscape3.internal;
 
+import static com.google.common.base.Preconditions.checkArgument;
+
 import static org.dishevelled.variation.so.SequenceOntology.indexByName;
 import static org.dishevelled.variation.so.SequenceOntology.sequenceVariants;
 
@@ -50,14 +52,16 @@ final class TableRowColorMapping
 
     /**
      * Create a new table row color mapping.
+     *
+     * @param alpha alpha, must be in range [0..255]
      */
-    TableRowColorMapping()
+    TableRowColorMapping(final int alpha)
     {
+        checkArgument(alpha > -1 && alpha < 256, "alpha must be in range [0..255]");
         Domain sv = sequenceVariants();
         conceptsByName = indexByName(sv);
         colors = new HashMap<Concept, Color>(conceptsByName.size());
 
-        int alpha = 30;
         colors.put(conceptsByName.get("transcript_ablation"), new Color(255, 0, 0, alpha));
         colors.put(conceptsByName.get("stop_gained"), new Color(255, 0, 0, alpha));
         colors.put(conceptsByName.get("stop_lost"), new Color(255, 0, 0, alpha));
