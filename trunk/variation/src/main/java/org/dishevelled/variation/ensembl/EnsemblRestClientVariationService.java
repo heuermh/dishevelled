@@ -29,6 +29,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.github.heuermh.ensemblrestclient.EnsemblRestClientException;
 import com.github.heuermh.ensemblrestclient.FeatureService;
 
 import com.google.common.collect.ImmutableList;
@@ -36,6 +37,9 @@ import com.google.common.collect.ImmutableList;
 import org.dishevelled.variation.Feature;
 import org.dishevelled.variation.Variation;
 import org.dishevelled.variation.VariationService;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Ensembl REST client variation service.
@@ -46,6 +50,7 @@ public final class EnsemblRestClientVariationService
     private final String species;
     private final String reference;
     private final FeatureService featureService;
+    private final Logger logger = LoggerFactory.getLogger(EnsemblRestClientVariationService.class);
 
 
     public EnsemblRestClientVariationService(final String species,
@@ -71,16 +76,26 @@ public final class EnsemblRestClientVariationService
         String region = feature.getRegion() + ":" + feature.getStart() + "-" + feature.getEnd() + ":" + feature.getStrand();
 
         List<Variation> variations = new ArrayList<Variation>();
-        for (com.github.heuermh.ensemblrestclient.Variation variation : featureService.variationFeatures(species, region))
+        try
         {
-            variations.add(new Variation(species,
-                                         reference,
-                                         ImmutableList.of(variation.getIdentifier()),
-                                         variation.getReferenceAllele(),
-                                         variation.getAlternateAlleles(),
-                                         variation.getLocation().getName(),
-                                         variation.getLocation().getStart(),
-                                         variation.getLocation().getEnd()));
+            for (com.github.heuermh.ensemblrestclient.Variation variation : featureService.variationFeatures(species, region))
+            {
+                variations.add(new Variation(species,
+                                             reference,
+                                             ImmutableList.of(variation.getIdentifier()),
+                                             variation.getReferenceAllele(),
+                                             variation.getAlternateAlleles(),
+                                             variation.getLocation().getName(),
+                                             variation.getLocation().getStart(),
+                                             variation.getLocation().getEnd()));
+            }
+        }
+        catch (EnsemblRestClientException e)
+        {
+            if (logger.isWarnEnabled())
+            {
+                logger.warn("unable to find variations for region {} for species {}, rec'd {} {}", region, species, e.getStatus(), e.getReason());
+            }
         }
         return variations;
     }

@@ -49,59 +49,68 @@ final class AddVariationsTask
     /** Variation model. */
     private final VariationModel model;
 
+    /** Merge strategy. */
+    private final MergeStrategy mergeStrategy;
+
 
     /**
-     * Create a new add variations task with the specified model.
+     * Create a new add variations task with the specified model and merge strategy.
      *
      * @param model model, must not be null
+     * @param mergeStrategy merge strategy, must not be null
      */
-    AddVariationsTask(final VariationModel model)
+    AddVariationsTask(final VariationModel model, final MergeStrategy mergeStrategy)
     {
         checkNotNull(model);
+        checkNotNull(mergeStrategy);
         this.model = model;
+        this.mergeStrategy = mergeStrategy;
     }
 
 
     @Override
     public void run(final TaskMonitor taskMonitor)
     {
-        taskMonitor.setTitle("Add variations");
+        taskMonitor.setTitle("Adding variations...");
         taskMonitor.setProgress(0.0d);
 
-        final Lock nodesReadLock = model.nodes().getReadWriteLock().readLock();
-        final Lock featuresReadLock = model.features().getReadWriteLock().readLock();
-        final Lock variationsWriteLock = model.variations().getReadWriteLock().writeLock();
-        nodesReadLock.lock();
-        featuresReadLock.lock();
-        variationsWriteLock.lock();
-        try
+        if (!mergeStrategy.isRetain())
         {
-            for (int i = 0, size = model.features().size(); i < size; i++)
+            final Lock nodesReadLock = model.nodes().getReadWriteLock().readLock();
+            final Lock featuresReadLock = model.features().getReadWriteLock().readLock();
+            final Lock variationsWriteLock = model.variations().getReadWriteLock().writeLock();
+            nodesReadLock.lock();
+            featuresReadLock.lock();
+            variationsWriteLock.lock();
+            try
             {
-                Feature feature = model.features().get(i);
-                taskMonitor.setStatusMessage("Retrieving variations associated with feature " + feature + "...");
-                final List<Variation> variations = model.getVariationService().variations(feature);
-                taskMonitor.setStatusMessage(resultStatusMessage(variations.size(), "variation", "feature", feature));
-
-                // todo:  merge strategy
-                for (Variation variation : variations)
+                for (int i = 0, size = model.features().size(); i < size; i++)
                 {
-                    if (!model.variations().contains(variation))
-                    {
-                        model.variations().add(variation);
-                    }
-                }
+                    Feature feature = model.features().get(i);
+                    taskMonitor.setStatusMessage("Retrieving variations associated with feature " + feature + "...");
+                    final List<Variation> variations = model.getVariationService().variations(feature);
+                    taskMonitor.setStatusMessage(resultStatusMessage(variations.size(), "variation", "feature", feature));
 
-                // todo:  count doesn't consider existing variations
-                addCount(model.nodeFor(feature), model.getNetwork(), "variation_count", variations.size());
-                taskMonitor.setProgress(i / (double) size);
+                    // todo:  merge strategy
+                    for (Variation variation : variations)
+                    {
+                        if (!model.variations().contains(variation))
+                        {
+                            model.variations().add(variation);
+                        }
+                    }
+
+                    // todo:  count doesn't consider existing variations
+                    addCount(model.nodeFor(feature), model.getNetwork(), "variation_count", variations.size());
+                    taskMonitor.setProgress(i / (double) size);
+                }
             }
-        }
-        finally
-        {
-            nodesReadLock.unlock();
-            featuresReadLock.unlock();
-            variationsWriteLock.unlock();
+            finally
+            {
+                nodesReadLock.unlock();
+                featuresReadLock.unlock();
+                variationsWriteLock.unlock();
+            }
         }
         taskMonitor.setProgress(1.0d);
     }

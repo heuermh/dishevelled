@@ -161,7 +161,7 @@ final class VariationConsequenceView
         {
             super("Variation consequences:", variationConsequences, TABLE_FORMAT);
 
-            final TableRowColorMapping tableRowColorMapping = new TableRowColorMapping();
+            final TableRowColorMapping tableRowColorMapping = new TableRowColorMapping(30);
             final TableCellRenderer tableCellRenderer = new DefaultTableCellRenderer()
                 {
                     @Override

@@ -31,6 +31,7 @@ import static org.dishevelled.variation.cytoscape3.internal.VariationUtils.resul
 import ca.odell.glazedlists.util.concurrent.Lock;
 
 import org.apache.commons.lang.StringUtils;
+
 import org.cytoscape.model.CyNode;
 
 import org.cytoscape.work.AbstractTask;
@@ -49,23 +50,29 @@ final class RetrieveFeaturesTask
     /** Variation model. */
     private final VariationModel model;
 
+    /** Merge strategy. */
+    private final MergeStrategy mergeStrategy;
+
 
     /**
-     * Create a new retrieve features task with the specified model.
+     * Create a new retrieve features task with the specified model and merge strategy.
      *
      * @param model model, must not be null
+     * @param mergeStrategy merge strategy, must not be null
      */
-    RetrieveFeaturesTask(final VariationModel model)
+    RetrieveFeaturesTask(final VariationModel model, final MergeStrategy mergeStrategy)
     {
         checkNotNull(model);
+        checkNotNull(mergeStrategy);
         this.model = model;
+        this.mergeStrategy = mergeStrategy;
     }
 
 
     @Override
     public void run(final TaskMonitor taskMonitor)
     {
-        taskMonitor.setTitle("Retrieve features");
+        taskMonitor.setTitle("Retrieving features...");
         taskMonitor.setProgress(0.0d);
 
         // if merge strategy is retain, skip to end
@@ -76,36 +83,66 @@ final class RetrieveFeaturesTask
         //       if merge strategy is replace, remove existing node --> feature mappings and features from features and add new ones
         //       else if merge strategy is merge, remove existing node --> feature mappings and features from features, perform the merge and re-add merged ones
         //       (note that removing feature mappings should also remove downstream variations and consequences, and should update counts in node table)
-
-        final Lock nodesReadLock = model.nodes().getReadWriteLock().readLock();
-        final Lock featuresWriteLock = model.features().getReadWriteLock().writeLock();
-        nodesReadLock.lock();
-        featuresWriteLock.lock();
-        try
+        if (!mergeStrategy.isRetain())
         {
-            for (int i = 0, size = model.nodes().size(); i < size; i++)
+            final Lock nodesReadLock = model.nodes().getReadWriteLock().readLock();
+            final Lock featuresWriteLock = model.features().getReadWriteLock().writeLock();
+            nodesReadLock.lock();
+            featuresWriteLock.lock();
+            try
             {
-                CyNode node = model.nodes().get(i);
-                for (String ensemblGeneId : ensemblGeneIds(node, model.getNetwork(), model.getEnsemblGeneIdColumn()))
+                for (int i = 0, size = model.nodes().size(); i < size; i++)
                 {
-                    if (StringUtils.isNotBlank(ensemblGeneId))
+                    CyNode node = model.nodes().get(i);
+                    for (String ensemblGeneId : ensemblGeneIds(node, model.getNetwork(), model.getEnsemblGeneIdColumn()))
                     {
-                        taskMonitor.setStatusMessage("Retrieving genome feature for Ensembl Gene " + ensemblGeneId + "...");
-                        Feature feature = model.getFeatureService().feature(model.getSpecies(), model.getReference(), ensemblGeneId);
-                        taskMonitor.setStatusMessage(resultStatusMessage(feature == null ? 0 : 1, "genome feature", "Ensembl Gene", ensemblGeneId));
-                        if (feature != null)
+                        if (StringUtils.isNotBlank(ensemblGeneId))
                         {
-                            model.add(node, feature);
+                            taskMonitor.setStatusMessage("Retrieving genome feature for Ensembl Gene " + ensemblGeneId + "...");
+                            /*
+                              
+                              todo:  retrofit.RetrofitError with current version of ensembl-rest-client (1.2)
+                              
+                              retrofit.RetrofitError
+                              at retrofit.RetrofitError.httpError(RetrofitError.java:37)
+                              at retrofit.RestAdapter$RestHandler.invokeRequest(RestAdapter.java:343)
+                              at retrofit.RestAdapter$RestHandler.invoke(RestAdapter.java:222)
+                              at com.sun.proxy.$Proxy38.lookup(Unknown Source)
+                              at org.dishevelled.variation.ensembl.EnsemblRestClientFeatureService.feature(EnsemblRestClientFeatureService.java:69)
+                              at org.dishevelled.variation.cytoscape3.internal.RetrieveFeaturesTask.run(RetrieveFeaturesTask.java:94)
+                              at org.cytoscape.work.internal.task.JDialogTaskManager$TaskRunnable.innerRun(JDialogTaskManager.java:321)
+                              at org.cytoscape.work.internal.task.JDialogTaskManager$TaskRunnable.run(JDialogTaskManager.java:350)
+                              at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:471)
+                              at java.util.concurrent.FutureTask.run(FutureTask.java:262)
+                              at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+                              at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+                              at java.lang.Thread.run(Thread.java:745)
+
+                              Ensembl search says:
+                              Ensembl gene ENSG00000157763 is no longer in the database but it has been mapped to 1 deprecated identifier. Not a Primary Assembly Gene.
+
+                              Fixed with new Ensembl gene identifiers for HLA-A, HLA-B, HLA-C, HLA-DQB1.
+                              Need to handle this error appropriately; should probably use custom error handler in ensembl-rest-client APIs
+
+                              MOVE THIS TO VARIATION LIBRARY INSIDE feature CALL
+
+                            */
+                            Feature feature = model.getFeatureService().feature(model.getSpecies(), model.getReference(), ensemblGeneId);
+                            taskMonitor.setStatusMessage(resultStatusMessage(feature == null ? 0 : 1, "genome feature", "Ensembl Gene", ensemblGeneId));
+                            if (feature != null)
+                            {
+                                model.add(node, feature);
+                            }
                         }
                     }
+                    taskMonitor.setProgress(i / (double) size);
                 }
-                taskMonitor.setProgress(i / (double) size);
             }
-        }
-        finally
-        {
-            nodesReadLock.unlock();
-            featuresWriteLock.unlock();
+            finally
+            {
+                nodesReadLock.unlock();
+                featuresWriteLock.unlock();
+            }
         }
         taskMonitor.setProgress(1.0d);
     }

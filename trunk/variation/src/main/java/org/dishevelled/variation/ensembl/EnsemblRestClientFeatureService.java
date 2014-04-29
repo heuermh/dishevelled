@@ -26,11 +26,15 @@ package org.dishevelled.variation.ensembl;
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
+import com.github.heuermh.ensemblrestclient.EnsemblRestClientException;
 import com.github.heuermh.ensemblrestclient.Lookup;
 import com.github.heuermh.ensemblrestclient.LookupService;
 
 import org.dishevelled.variation.Feature;
 import org.dishevelled.variation.FeatureService;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Ensembl REST client feature service.
@@ -41,6 +45,7 @@ public final class EnsemblRestClientFeatureService
     private final String species;
     private final String reference;
     private final LookupService lookupService;
+    private final Logger logger = LoggerFactory.getLogger(EnsemblRestClientFeatureService.class);
 
 
     public EnsemblRestClientFeatureService(final String species,
@@ -66,18 +71,33 @@ public final class EnsemblRestClientFeatureService
         checkArgument(this.species.equals(species));
         checkArgument(this.reference.equals(reference));
 
-        Lookup lookup = lookupService.lookup(this.species, identifier);
-        if (lookup == null)
+        try
         {
-            return null;
+            Lookup lookup = lookupService.lookup(this.species, identifier);
+            if (lookup == null)
+            {
+                if (logger.isWarnEnabled())
+                {
+                    logger.warn("unable to lookup identifier {} for species {}", identifier, this.species);
+                }
+                return null;
+            }
+            return new Feature(this.species,
+                               reference,
+                               identifier,
+                               lookup.getLocation().getName(),
+                               lookup.getLocation().getStart(),
+                               lookup.getLocation().getEnd(),
+                               lookup.getLocation().getStrand());
         }
-        return new Feature(this.species,
-                           reference,
-                           identifier,
-                           lookup.getLocation().getName(),
-                           lookup.getLocation().getStart(),
-                           lookup.getLocation().getEnd(),
-                           lookup.getLocation().getStrand());
+        catch (EnsemblRestClientException e)
+        {
+            if (logger.isWarnEnabled())
+            {
+                logger.warn("unable to lookup identifier {} for species {}, rec'd {} {}", identifier, this.species, e.getStatus(), e.getReason());
+            }
+        }
+        return null;
     }
 
     @Override

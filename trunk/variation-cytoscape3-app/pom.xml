@@ -120,6 +120,16 @@
       <scope>compile</scope>
     </dependency>
     <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-simple</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
       <groupId>org.osgi</groupId>
       <artifactId>org.osgi.core</artifactId>
       <scope>provided</scope>
@@ -130,11 +140,13 @@
       <type>test-jar</type>
       <scope>test</scope>
     </dependency>
+<!--
     <dependency>
       <groupId>org.ops4j.pax.logging</groupId>
       <artifactId>pax-logging-api</artifactId>
       <scope>test</scope>
     </dependency>
+-->
     <dependency>
       <groupId>org.mockito</groupId>
       <artifactId>mockito-core</artifactId>
@@ -155,7 +167,7 @@
     <jdk.version>1.6</jdk.version>
     <bundle.symbolicName>variation-cytoscape3-app</bundle.symbolicName>
     <bundle.namespace>org.dishevelled.variation.cytoscape3.internal</bundle.namespace>
-    <cytoscape.api.version>3.0.2</cytoscape.api.version>
+    <cytoscape.api.version>3.1.0</cytoscape.api.version>
   </properties>
   <reporting>
     <plugins>
@@ -199,7 +211,7 @@
       <dependency>
         <groupId>com.github.heuermh.ensemblrestclient</groupId>
         <artifactId>ensembl-rest-client</artifactId>
-        <version>1.2</version>
+        <version>1.4-SNAPSHOT</version>
       </dependency>
       <dependency>
         <groupId>org.cytoscape</groupId>
@@ -261,6 +273,16 @@
         <groupId>org.dishevelled</groupId>
         <artifactId>dsh-vocabulary</artifactId>
         <version>1.1</version>
+      </dependency>
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-api</artifactId>
+        <version>1.7.7</version>
+      </dependency>
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-simple</artifactId>
+        <version>1.7.7</version>
       </dependency>
       <dependency>
         <groupId>org.osgi</groupId>
