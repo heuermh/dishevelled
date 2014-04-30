@@ -160,6 +160,9 @@ final class VariationConsequenceView
         VariationConsequenceTable(final EventList<VariationConsequence> variationConsequences)
         {
             super("Variation consequences:", variationConsequences, TABLE_FORMAT);
+            refresh.setEnabled(false);
+            getAddAction().setEnabled(false);
+            getPasteAction().setEnabled(false);
 
             final TableRowColorMapping tableRowColorMapping = new TableRowColorMapping(30);
             final TableCellRenderer tableCellRenderer = new DefaultTableCellRenderer()

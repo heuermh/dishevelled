@@ -148,6 +148,7 @@ final class FeatureView
         FeatureTable(final EventList<Feature> features)
         {
             super("Features:", features, TABLE_FORMAT);
+            refresh.setEnabled(false);
             getAddAction().setEnabled(false);
             getPasteAction().setEnabled(false);
 

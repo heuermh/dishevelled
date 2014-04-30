@@ -154,6 +154,9 @@ final class VariationView
         VariationTable(final EventList<Variation> variations)
         {
             super("Variations:", variations, TABLE_FORMAT);
+            refresh.setEnabled(false);
+            getAddAction().setEnabled(false);
+            getPasteAction().setEnabled(false);
 
             // work around NPE in prepareRenderer on JDK 1.6
             final TableCellRenderer tableCellRenderer = new DefaultTableCellRenderer();
