@@ -211,7 +211,7 @@
       <dependency>
         <groupId>com.github.heuermh.ensemblrestclient</groupId>
         <artifactId>ensembl-rest-client</artifactId>
-        <version>1.4-SNAPSHOT</version>
+        <version>1.4</version>
       </dependency>
       <dependency>
         <groupId>org.cytoscape</groupId>
@@ -289,11 +289,13 @@
         <artifactId>org.osgi.core</artifactId>
         <version>4.2.0</version>
       </dependency>
+<!--
       <dependency>
         <groupId>org.ops4j.pax.logging</groupId>
         <artifactId>pax-logging-api</artifactId>
         <version>1.5.2</version>
       </dependency>
+-->
       <dependency>
         <groupId>xerces</groupId>
         <artifactId>xercesImpl</artifactId>
