@@ -29,6 +29,7 @@ import java.awt.BorderLayout;
 
 import java.awt.event.ActionEvent;
 
+import javax.swing.Action;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
@@ -93,45 +94,97 @@ final class VariationApp
     /** Predict icon bundle. */
     private final IconBundle predictIconBundle = new CachingIconBundle(new PNGIconBundle("/org/dishevelled/variation/cytoscape3/internal/predict"));
 
+
     /** Retrieve features action. */
-    private final IdentifiableAction retrieveFeatures = new IdentifiableAction("Retrieve features...", retrieveIconBundle)
+    private final class RetrieveFeaturesAction extends IdentifiableAction
+    {
+        /**
+         * Create a new retrieve features action.
+         */
+        private RetrieveFeaturesAction()
         {
-            @Override
-            public void actionPerformed(final ActionEvent event)
-            {
-                retrieveFeatures();
-            }
-        };
+            super("Retrieve features...", retrieveIconBundle);
+            putValue(Action.SHORT_DESCRIPTION, "<html>Retrieve genomic features for nodes annotated<br/>with Ensembl gene ids (e.g. ENSG00000157764).</html>");
+        }
+
+        @Override
+        public void actionPerformed(final ActionEvent event)
+        {
+            retrieveFeatures();
+        }
+    };
+
+    /** Retrieve features action. */
+    private final RetrieveFeaturesAction retrieveFeatures = new RetrieveFeaturesAction();
+
 
     /** Add variations action. */
-    private final IdentifiableAction addVariations = new IdentifiableAction("Add variations...", addIconBundle)
+    private final class AddVariationsAction extends IdentifiableAction
+    {
+        /**
+         * Create a new add variations action.
+         */
+        private AddVariationsAction()
         {
-            @Override
-            public void actionPerformed(final ActionEvent event)
-            {
-                addVariations();
-            }
-        };
+            super("Add variations...", addIconBundle);
+            putValue(Action.SHORT_DESCRIPTION, "<html>Add variations that overlap genomic features<br/>for nodes annotated with Ensembl gene ids.<br/><br/>A new column ‘variation_count’ is added to the<br/>node table with the aggregate count of variations<br/>per node.</html>");
+        }
+
+        @Override
+        public void actionPerformed(final ActionEvent event)
+        {
+            addVariations();
+        }
+    }
+
+    /** Add variations action. */
+    private final AddVariationsAction addVariations = new AddVariationsAction();
+
 
     /** Annotate variation consequences action. */
-    private final IdentifiableAction annotateVariationConsequences = new IdentifiableAction("Annotate variation consequences...", annotateIconBundle)
+    private final class AnnotateVariationConsequencesAction extends IdentifiableAction
+    {
+        /**
+         * Create a new annotate variation consequences action.
+         */
+        private AnnotateVariationConsequencesAction()
         {
-            @Override
-            public void actionPerformed(final ActionEvent event)
-            {
-                annotateVariationConsequences();
-            }
-        };
+            super("Annotate variation consequences...", annotateIconBundle);
+            putValue(Action.SHORT_DESCRIPTION, "<html>Annotate variations with consequences, one for each<br/>combination of alternate allele and consequence term.<br/><br/>A new column ‘variation_consequence_count’ is added to the<br/>node table with the aggregate count of variation consequences<br/>per node.<br/><br/>New columns for each Sequence Ontology (SO) consequence term<br/>(e.g. ‘stop_gained’, ‘stop_lost’) are added to the node table<br/>with the count of matching variation consequences per node.</html>");
+        }
+
+        @Override
+        public void actionPerformed(final ActionEvent event)
+        {
+            annotateVariationConsequences();
+        }
+    };
+
+    /** Annotate variation consequences action. */
+    private final AnnotateVariationConsequencesAction annotateVariationConsequences = new AnnotateVariationConsequencesAction();
+
 
     /** Predict variation consequences action. */
-    private final IdentifiableAction predictVariationConsequences = new IdentifiableAction("Predict variation consequences...", predictIconBundle)
+    private final class PredictVariationConsequencesAction extends IdentifiableAction
+    {
+        /**
+         * Create a new predict variation consequences action.
+         */
+        private PredictVariationConsequencesAction()
         {
-            @Override
-            public void actionPerformed(final ActionEvent event)
-            {
-                predictVariationConsequences();
-            }
-        };
+            super("Predict variation consequences...", predictIconBundle);
+            putValue(Action.SHORT_DESCRIPTION, "<html>Predict consequences for variations, one for each<br/>combination of alternate allele and consequence term.<br/><br/>A new column ‘variation_consequence_count’ is added to the<br/>node table with the aggregate count of variation consequences<br/>per node.<br/><br/>New columns for each Sequence Ontology (SO) consequence term<br/>(e.g. ‘stop_gained’, ‘stop_lost’) are added to the node table<br/>with the count of matching variation consequences per node.</html>");
+        }
+
+        @Override
+        public void actionPerformed(final ActionEvent event)
+        {
+            predictVariationConsequences();
+        }
+    };
+
+    /** Predict variation consequences action. */
+    private final PredictVariationConsequencesAction predictVariationConsequences = new PredictVariationConsequencesAction();
 
 
     /**

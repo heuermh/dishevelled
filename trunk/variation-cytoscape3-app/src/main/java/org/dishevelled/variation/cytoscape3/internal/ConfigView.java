@@ -350,6 +350,9 @@ final class ConfigView
         somatic = new JCheckBox("Include somatic variations", model.isSomatic());
         somatic.addActionListener(somaticActionListener);
 
+        canonical.setEnabled(false);
+        somatic.setEnabled(false);
+
         apply();
         layoutComponents();
     }
