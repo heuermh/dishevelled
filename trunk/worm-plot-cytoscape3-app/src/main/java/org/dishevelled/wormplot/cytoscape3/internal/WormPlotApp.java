@@ -34,6 +34,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 import java.io.File;
+import java.io.FilenameFilter;
 import java.io.IOException;
 
 import javax.swing.AbstractAction;
@@ -49,9 +50,6 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import com.google.common.collect.ImmutableList;
-
-//import org.apache.commons.lang3.JavaVersion;
-import org.apache.commons.lang.SystemUtils;
 
 import org.cytoscape.application.CyApplicationManager;
 
@@ -97,14 +95,8 @@ final class WormPlotApp extends JPanel
     /** Plot button. */
     private final JButton plotButton;
 
-    /** True if JDK7 is available. */
-    private final boolean jdk7Available;
-
     /** True if blastn is available. */
     private final boolean blastnAvailable;
-
-    /** True if grep is available. */
-    private final boolean grepAvailable;
 
     /** Open file dialog action. */
     private final AbstractAction openFileDialog = new AbstractAction("...")
@@ -113,25 +105,36 @@ final class WormPlotApp extends JPanel
             public void actionPerformed(final ActionEvent event)
             {
                 // awt file chooser
-                FileDialog fileDialog = new FileDialog((JDialog) getTopLevelAncestor());
-                fileDialog.setMode(FileDialog.LOAD);
-                fileDialog.setMultipleMode(false);
-                fileDialog.setVisible(true);
+                FileDialog fileDialog = new FileDialog((JDialog) getTopLevelAncestor(), "Select a sequence file in FASTA format", FileDialog.LOAD);
+                //fileDialog.setMultipleMode(false); jdk 1.7+
+                fileDialog.setFilenameFilter(new FilenameFilter() {
+                        @Override
+                        public boolean accept(final File directory, final String name) {
+                            return name.endsWith(".fa") || name.endsWith(".fasta") || name.endsWith(".txt");
+                        }
+                    });
 
-                /*
+                // workaround for apple 1.6 jdk bug on osx
+                String fileDialogForDirectories = System.getProperty("apple.awt.fileDialogForDirectories");
+                System.setProperty("apple.awt.fileDialogForDirectories", "false");
+                fileDialog.setVisible(true);
+                System.setProperty("apple.awt.fileDialogForDirectories", fileDialogForDirectories);
+
                 // jdk 1.6
+                String directoryName = fileDialog.getDirectory();
                 String fileName = fileDialog.getFile();
-                if (fileName != null)
+                if (directoryName != null && fileName != null)
                 {
-                    model.setSequenceFile(new File(fileName));
+                    model.setSequenceFile(new File(directoryName, fileName));
                 }
-                */
 
                 // null-safe jdk 1.7+
+                /*
                 if (fileDialog.getFiles().length > 0)
                 {
                     model.setSequenceFile(fileDialog.getFiles()[0]);
                 }
+                */
 
                 /*
                 // swing file chooser
@@ -189,19 +192,12 @@ final class WormPlotApp extends JPanel
         };
 
     /** Requires doc. */
-    private static final String REQUIRES = "<html><strong>Note</strong>:  Worm Plot requires JDK 7, " +
+    private static final String REQUIRES = "<html><strong>Note</strong>:  Worm Plot requires " +
         "<a href=\"http://blast.ncbi.nlm.nih.gov/Blast.cgi?PAGE_TYPE=BlastDocs&DOC_TYPE=Download\">blastn</a> " +
-        " version 2.2.24 or later and <a href=\"https://www.gnu.org/software/grep/\">grep</a> " +
-        " to be installed.</html>";
-
-    /** JDK 7 not available doc. */
-    private static final String JDK7_NOT_AVAILABLE = "<html><font color=\"red\">JDK 7 must be installed and used to run Cytoscape.</font></html>";
+        " version 2.2.24 or later to be installed.</html>";
 
     /** Blastn not available doc. */
     private static final String BLASTN_NOT_AVAILABLE = "<html><font color=\"red\">BLASTN version 2.2.24 or later was not found.</font></html>";
-
-    /** Grep not available doc. */
-    private static final String GREP_NOT_AVAILABLE = "<html><font color=\"red\">Grep was not found.</font></html>";
 
 
     /**
@@ -240,13 +236,9 @@ final class WormPlotApp extends JPanel
         overlap.setText(String.valueOf(WormPlotModel.DEFAULT_OVERLAP));
 
         plotButton = new JButton(plot);
-
-        jdk7Available = isJdk7Available();
         blastnAvailable = isBlastnAvailable();
-        grepAvailable = isGrepAvailable();
-
-        openFileDialog.setEnabled(jdk7Available && blastnAvailable && grepAvailable);
-        plot.setEnabled(jdk7Available && blastnAvailable && grepAvailable);
+        openFileDialog.setEnabled(blastnAvailable);
+        plot.setEnabled(blastnAvailable);
 
         layoutComponents();
     }
@@ -272,17 +264,9 @@ final class WormPlotApp extends JPanel
         LabelFieldPanel panel = new LabelFieldPanel();
         panel.setBorder(new EmptyBorder(12, 0, 0, 40));
         panel.addField(new JLabel(REQUIRES));
-        if (!jdk7Available)
-        {
-            panel.addField(new JLabel(JDK7_NOT_AVAILABLE));
-        }
         if (!blastnAvailable)
         {
             panel.addField(new JLabel(BLASTN_NOT_AVAILABLE));
-        }
-        if (!grepAvailable)
-        {
-            panel.addField(new JLabel(GREP_NOT_AVAILABLE));
         }
         panel.addSpacing(20);
         panel.addField("Sequence file name:", createSequenceFileNamePanel());
@@ -401,12 +385,11 @@ final class WormPlotApp extends JPanel
         return ImmutableList.of(plot);
     }
 
-    private static boolean isJdk7Available()
-    {
-        //return JavaVersion.atLeast(JavaVersion.JAVA_1_7);
-        return SystemUtils.isJavaVersionAtLeast(1.7f);
-    }
-
+    /**
+     * Return true if <code>blastn</code> is callable via ProcessBuilder.
+     *
+     * @return true if <code>blastn</code> is callable via ProcessBuilder
+     */
     private static boolean isBlastnAvailable()
     {
         try
@@ -427,29 +410,6 @@ final class WormPlotApp extends JPanel
         {
             // ignore
             System.out.println(e.getMessage());
-        }
-        return false;
-    }
-
-    private static boolean isGrepAvailable()
-    {
-        try
-        {
-            ProcessBuilder grep = new ProcessBuilder("grep", "-h");
-            Process grepProcess = grep.start();
-            try
-            {
-                grepProcess.waitFor();
-            }
-            catch (InterruptedException e)
-            {
-                // ignore
-            }
-            return true;
-        }
-        catch (IOException e)
-        {
-            // ignore
         }
         return false;
     }

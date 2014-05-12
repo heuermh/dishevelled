@@ -32,11 +32,6 @@
       <scope>compile</scope>
     </dependency>
     <dependency>
-      <groupId>commons-lang</groupId>
-      <artifactId>commons-lang</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <scope>test</scope>
@@ -103,9 +98,14 @@
       <scope>compile</scope>
     </dependency>
     <dependency>
-      <groupId>org.ops4j.pax.logging</groupId>
-      <artifactId>pax-logging-api</artifactId>
-      <scope>test</scope>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-simple</artifactId>
+      <scope>runtime</scope>
     </dependency>
     <dependency>
       <groupId>xerces</groupId>
@@ -159,7 +159,7 @@
       <dependency>
         <groupId>org.biojava</groupId>
         <artifactId>core</artifactId>
-        <version>1.8.4</version>
+        <version>1.8.5</version>
       </dependency>
       <dependency>
         <groupId>org.cytoscape</groupId>
@@ -218,9 +218,14 @@
         <version>4.2.0</version>
       </dependency>
       <dependency>
-        <groupId>org.ops4j.pax.logging</groupId>
-        <artifactId>pax-logging-api</artifactId>
-        <version>1.5.2</version>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-api</artifactId>
+        <version>1.7.7</version>
+      </dependency>
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-simple</artifactId>
+        <version>1.7.7</version>
       </dependency>
       <dependency>
         <groupId>xerces</groupId>
