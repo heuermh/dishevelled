@@ -43,6 +43,9 @@ import org.dishevelled.variation.range.Ranges;
  * @param <C> range endpoint type
  */
 public final class CenteredRangeTree<C extends Comparable> extends AbstractRangeTree<C> {
+    /** Cached size. */
+    private final int size;
+
     /** Root node, if any. */
     private final Node root;
 
@@ -54,9 +57,22 @@ public final class CenteredRangeTree<C extends Comparable> extends AbstractRange
      */
     private CenteredRangeTree(final Iterable<Range<C>> ranges) {
         checkNotNull(ranges);
+
+        // O(n) hit to cache size
+        int count = 0;
+        for (Range<C> range : ranges) {
+            count++;
+        }
+        size = count;
+
         root = createNode(ranges);
     }
 
+
+    @Override
+    public int size() {
+        return size;
+    }
 
     @Override
     public Iterable<Range<C>> intersect(final Range<C> range) {
@@ -71,7 +87,7 @@ public final class CenteredRangeTree<C extends Comparable> extends AbstractRange
      * Create and return a new node for the specified ranges.
      *
      * @param ranges ranges
-     * @param a new node for the specified ranges
+     * @return a new node for the specified ranges
      */
     private Node createNode(final Iterable<Range<C>> ranges) {
         Range<C> span = Iterables.getFirst(ranges, null);
