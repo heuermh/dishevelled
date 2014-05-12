@@ -59,13 +59,20 @@ public final class Ranges {
         C upperEndpoint = range.upperEndpoint();
 
         if (upperEndpoint instanceof Integer) {
-            return (C) Integer.valueOf((((Integer) upperEndpoint) - ((Integer) lowerEndpoint)) / 2);
+            Integer upper = (Integer) upperEndpoint;
+            Integer lower = (Integer) lowerEndpoint;
+            return (C) Integer.valueOf((upper.intValue() + lower.intValue()) / 2);
         }
         if (upperEndpoint instanceof Long) {
-            return (C) Long.valueOf((((Long) upperEndpoint) - ((Long) lowerEndpoint)) / 2L);
+            Long upper = (Long) upperEndpoint;
+            Long lower = (Long) lowerEndpoint;
+            return (C) Long.valueOf((upper.longValue() + lower.longValue()) / 2L);
         }
         if (upperEndpoint instanceof BigInteger) {
-            return (C) ((BigInteger) upperEndpoint).subtract((BigInteger) lowerEndpoint).divide(BigInteger.valueOf(2L));
+            BigInteger upper = (BigInteger) upperEndpoint;
+            BigInteger lower = (BigInteger) lowerEndpoint;
+            BigInteger two = BigInteger.valueOf(2L);
+            return (C) upper.subtract(lower).divide(two);
         }
 
         // todo:  could potentially calculate the center of any range with a discrete domain

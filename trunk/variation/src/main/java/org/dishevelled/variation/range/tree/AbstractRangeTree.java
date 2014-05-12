@@ -25,17 +25,12 @@ package org.dishevelled.variation.range.tree;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Set;
-
-import com.google.common.base.Objects;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Iterables;
-import com.google.common.collect.LinkedListMultimap;
-import com.google.common.collect.ListMultimap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Range;
 
@@ -49,6 +44,7 @@ public abstract class AbstractRangeTree<C extends Comparable> implements RangeTr
 
     @Override
     public int size() {
+        // todo: idea compiler complains about C extending Comparable<?>
         return count(Range.<C>all());
     }
 
