@@ -41,6 +41,8 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.google.common.io.Files;
+
 import org.biojava.bio.BioException;
 
 import org.biojava.bio.seq.Sequence;
@@ -59,6 +61,9 @@ import org.cytoscape.model.CyTable;
 import org.cytoscape.work.AbstractTask;
 import org.cytoscape.work.TaskMonitor;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Worm plot task.
  *
@@ -73,6 +78,9 @@ final class WormPlotTask
 
     /** Split FASTA description line pattern. */
     private static final Pattern NAME = Pattern.compile("^(.+):([0-9]+)-([0-9]+):([0-9]+)$");
+
+    /** Logger. */
+    private static final Logger logger = LoggerFactory.getLogger(WormPlotTask.class);
 
 
     /**
@@ -103,12 +111,8 @@ final class WormPlotTask
             File allVsAllBlastResult = allVsAllBlast(splitFasta);
             taskMonitor.setProgress(0.6d);
 
-            taskMonitor.setStatusMessage("Generating edge file...");
-            File allVsAllEdges = createEdgeFile(allVsAllBlastResult);
-            taskMonitor.setProgress(0.8d);
-
             taskMonitor.setStatusMessage("Importing network...");
-            importNetwork(allVsAllEdges, model.getNetwork());
+            importNetwork(allVsAllBlastResult, model.getNetwork());
             taskMonitor.setProgress(1.0d);
         }
         catch (IOException e)
@@ -142,13 +146,19 @@ final class WormPlotTask
             output = new BufferedOutputStream(new FileOutputStream(splitFasta));
 
             // todo:  use logging
-            System.out.println("reading from sequenceFile " + sequenceFile);
-            System.out.println("writing to splitFasta length=" + length + " overlap=" + overlap + " " + splitFasta);
+            if (logger.isInfoEnabled()) {
+                logger.info("reading from sequenceFile {}", sequenceFile);
+                logger.info("writing to splitFasta length {} overlap {} {}", length, overlap, splitFasta);
+            }
 
             for (SequenceIterator iter = SeqIOTools.readFastaDNA(reader); iter.hasNext(); )
             {
                 Sequence sequence = iter.nextSequence();
-                System.out.println("  read sequence " + sequence);
+
+                if (logger.isTraceEnabled()) {
+                    logger.trace("read sequence {}", sequence);
+                }
+
                 int index = 0;
                 for (int start = 1; start < sequence.length(); start += (length - overlap))
                 {
@@ -156,14 +166,17 @@ final class WormPlotTask
                     String subsequenceName = sequence.getName() + ":" + start + "-" + end + ":" + index;
                     Sequence subsequence = new SimpleSequence(sequence.subList(start, end), null, subsequenceName, null);
 
-                    //System.out.println("     writing sequence " + subsequence);
+                    if (logger.isTraceEnabled()) {
+                        logger.trace("writing subsequence {}", subsequence);
+                    }
                     SeqIOTools.writeFasta(output, subsequence);
                     output.flush();
                     index++;
                 }
             }
-
-            System.out.println("wrote to splitFasta " + splitFasta);
+            if (logger.isInfoEnabled()) {
+                logger.info("wrote to splitFasta {}", splitFasta);
+            }
         }
         catch (BioException e)
         {
@@ -200,8 +213,10 @@ final class WormPlotTask
      */
     private static File allVsAllBlast(final File splitFasta) throws IOException
     {
-        System.out.println("reading from splitFasta " + splitFasta);
-        System.out.println("writing to blastdb " + splitFasta);
+        if (logger.isInfoEnabled()) {
+            logger.info("reading from splitFasta {}", splitFasta);
+            logger.info("writing to blastdb {}", splitFasta);
+        }
 
         // create blast db
         ProcessBuilder makeBlastDb = new ProcessBuilder("makeblastdb",
@@ -217,16 +232,20 @@ final class WormPlotTask
             // ignore
         }
 
-        System.out.println("wrote to blastdb " + splitFasta);
+        if (logger.isInfoEnabled()) {
+            logger.info("wrote to blastdb {}", splitFasta);
+        }
 
         // all vs all blast
         File blastResult = File.createTempFile("wormPlot", ".txt");
 
-        System.out.println("writing to blastResult " + blastResult);
+        if (logger.isInfoEnabled()) {
+            logger.info("writing to blastResult {}", blastResult);
+        }
 
         ProcessBuilder blastn = new ProcessBuilder("blastn", "-db", splitFasta.getPath(),
                                                    "-query", splitFasta.getPath(),
-                                                   "-outfmt", "7",
+                                                   "-outfmt", "6",
                                                    "-out", blastResult.getPath());
         Process blastnProcess = blastn.start();
         try
@@ -238,48 +257,11 @@ final class WormPlotTask
             // ignore
         }
 
-
-        System.out.println("wrote to blastResult " + blastResult);
+        if (logger.isInfoEnabled()) {
+            logger.info("wrote to blastResult {}", blastResult);
+        }
 
         return blastResult;
-    }
-
-    /**
-     * Create and return the edge file from the specified blast result.
-     *
-     * @param blastResult blast result
-     * @return the edge file from the specified blast result
-     * @throws IOException if an I/O error occurs
-     */
-    private static File createEdgeFile(final File blastResult) throws IOException
-    {
-        File edgeFile = File.createTempFile("wormPlot", ".edges.txt");
-
-        System.out.println("reading from blastResult " + blastResult);
-        System.out.println("writing to edgeFile " + edgeFile);
-
-        // or perhaps use https://code.google.com/p/grep4j/
-        List<String> commands = new ArrayList<String>();
-        commands.add("/bin/sh");
-        commands.add("-c");
-        commands.add("grep -v \"#\" " + blastResult.getPath());
-        ProcessBuilder grep = new ProcessBuilder(commands);
-        // jdk 1.7+ only
-        grep.redirectOutput(edgeFile);
-        Process grepProcess = grep.start();
-
-        try
-        {
-            grepProcess.waitFor();
-        }
-        catch (InterruptedException e)
-        {
-            // ignore
-        }
-
-        System.out.println("wrote to edgeFile " + edgeFile);
-
-        return edgeFile;
     }
 
     /**
@@ -298,7 +280,9 @@ final class WormPlotTask
         {
             reader = new BufferedReader(new FileReader(edgeFile));
 
-            System.out.println("reading from edgeFile " + edgeFile);
+            if (logger.isInfoEnabled()) {
+                logger.info("reading from edgeFile {}", edgeFile);
+            }
 
             int lineNumber = 0;
             while (reader.ready())
@@ -389,8 +373,9 @@ final class WormPlotTask
                 }
                 else
                 {
-                    // warning
-                    System.out.println("ill formatted line " + lineNumber + ", length " + tokens.length);
+                    if (logger.isWarnEnabled()) {
+                        logger.warn("ill formatted line {}, length {}", lineNumber, tokens.length);
+                    }
                 }
                 lineNumber++;
             }
