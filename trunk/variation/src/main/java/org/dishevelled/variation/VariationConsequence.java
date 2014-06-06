@@ -27,27 +27,65 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.util.List;
 
+import javax.annotation.concurrent.Immutable;
+
 import com.google.common.base.Objects;
 
 import com.google.common.collect.ImmutableList;
 
 /**
- * Variation consequence.
+ * Variation consequence, flattens variation by alternate allele and consequence term.
+ *
+ * @author  Michael Heuer
  */
-// flattens variation by alternate allele and variation consequence by consequence term
+@Immutable
 public final class VariationConsequence
 {
+    /** Species, e.g. <code>"human"</code>. */
     private final String species;
+
+    /** Reference, e.g. <code>"GRCh37"</code>. */
     private final String reference;
+
+    /** List of identifers, e.g. <code>"rs193189309"</code>. */
     private final List<String> identifiers; // e.g. dbSNP id
+
+    /** Reference allele. */
     private final String referenceAllele;
+
+    /** Alternate alleles. */
     private final String alternateAllele;
+
+    /** Sequence Ontology (SO) term. */
     private final String sequenceOntologyTerm;
+
+    /** Region or contig, using Ensembl-style names, e.g. <code>"1"</code>. */
     private final String region; // seq_region_name
+
+    // todo: confirm 1-based; always on 1/+/positive/forward strand
+    /** Variation start, using base-counted, one-start (a.k.a. one-based, fully-closed) coordinate system. */
     private final int start;
+
+    /** Variation end, using base-counted, one-start (a.k.a. one-based, fully-closed) coordinate system. */
     private final int end;
+
+    /** Cached hash code. */
     private final int hashCode;
 
+
+    /**
+     * Create a new variation consequence.
+     *
+     * @param species species, must not be null
+     * @param reference reference, must not be null
+     * @param identifiers list of identifiers, must not be null
+     * @param referenceAllele reference allele, must not be null
+     * @param alternateAllele alternate allele, must not be null
+     * @param sequenceOntologyTerm Sequence Ontology (SO) term, must not be null
+     * @param region region, must not be null
+     * @param start start, using base-counted, one start coordinate system
+     * @param end end, using base-counted, one start coordinate system
+     */
     public VariationConsequence(final String species,
                                 final String reference,
                                 final List<String> identifiers,
@@ -79,46 +117,92 @@ public final class VariationConsequence
         hashCode = Objects.hashCode(this.species, this.reference, this.identifiers, this.referenceAllele, this.alternateAllele, this.sequenceOntologyTerm, this.region, this.start, this.end);
     }
 
+
+    /**
+     * Return the species for this variation consequence.
+     *
+     * @return the species for this variation consequence
+     */
     public String getSpecies()
     {
         return species;
     }
 
+    /**
+     * Return the reference for this variation consequence.
+     *
+     * @return the reference for this variation consequence
+     */
     public String getReference()
     {
         return reference;
     }
 
+    /**
+     * Return the list of identifiers for this variation consequence.
+     *
+     * @return the list of identifiers for this variation consequence
+     */
     public List<String> getIdentifiers()
     {
         return identifiers;
     }
 
+    /**
+     * Return the reference allele for this variation consequence.
+     *
+     * @return the reference allele for this variation consequence
+     */
     public String getReferenceAllele()
     {
         return referenceAllele;
     }
 
+    /**
+     * Return the alternate allele for this variation consequence.
+     *
+     * @return the alternate allele for this variation consequence
+     */
     public String getAlternateAllele()
     {
         return alternateAllele;
     }
 
+    /**
+     * Return the Sequence Ontology (SO) term for this variation consequence.
+     *
+     * @return the Sequence Ontology (SO) term for this variation consequence
+     */
     public String getSequenceOntologyTerm()
     {
         return sequenceOntologyTerm;
     }
 
+    /**
+     * Return the region for this variation consequence.
+     *
+     * @return the region for this variation consequence
+     */
     public String getRegion()
     {
         return region;
     }
 
+    /**
+     * Return the start for this variation consequence.
+     *
+     * @return the start for this variation consequence
+     */
     public int getStart()
     {
         return start;
     }
 
+    /**
+     * Return the end for this variation consequence.
+     *
+     * @return the end for this variation consequence
+     */
     public int getEnd()
     {
         return end;

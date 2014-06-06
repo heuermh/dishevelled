@@ -37,8 +37,10 @@ import org.dishevelled.variation.range.Ranges;
  * Range list.
  *
  * @param <C> range endpoint type
+ * @author  Michael Heuer
  */
-public final class RangeList<C extends Comparable> extends AbstractRangeTree<C> {
+public final class RangeList<C extends Comparable> extends AbstractRangeTree<C>
+{
     /** List of ranges. */
     private final List<Range<C>> ranges;
 
@@ -48,28 +50,34 @@ public final class RangeList<C extends Comparable> extends AbstractRangeTree<C> 
      *
      * @param ranges ranges, must not be null
      */
-    private RangeList(final Iterable<Range<C>> ranges) {
+    private RangeList(final Iterable<Range<C>> ranges)
+    {
         checkNotNull(ranges);
         this.ranges = ImmutableList.copyOf(ranges);
     }
 
 
     @Override
-    public int size() {
+    public int size()
+    {
         return ranges.size();
     }
 
     @Override
-    public boolean isEmpty() {
+    public boolean isEmpty()
+    {
         return ranges.isEmpty();
     }
 
     @Override
-    public Iterable<Range<C>> intersect(final Range<C> query) {
+    public Iterable<Range<C>> intersect(final Range<C> query)
+    {
         checkNotNull(query);
         List<Range<C>> result = Lists.newLinkedList();
-        for (Range<C> range : ranges) {
-            if (Ranges.intersect(range, query)) {
+        for (Range<C> range : ranges)
+        {
+            if (Ranges.intersect(range, query))
+            {
                 result.add(range);
             }
         }
@@ -83,7 +91,8 @@ public final class RangeList<C extends Comparable> extends AbstractRangeTree<C> 
      * @param ranges ranges, must not be null
      * @return a new range tree from the specified ranges
      */
-    public static <C extends Comparable> RangeTree<C> create(final Iterable<Range<C>> ranges) {
+    public static <C extends Comparable> RangeTree<C> create(final Iterable<Range<C>> ranges)
+    {
         return new RangeList<C>(ranges);
     }
 }

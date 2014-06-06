@@ -30,14 +30,32 @@ import java.util.Map;
 
 /**
  * Synthetic genome.
+ *
+ * @author  Michael Heuer
  */
 public final class SyntheticGenome
 {
+    /** Species. */
     private final String species;
+
+    /** Reference. */
     private final String reference;
+
+    /** List of contig names. */
     private final List<String> names;
+
+    /** Map of lengths keyed by contig name. */
     private final Map<String, Integer> lengths;
 
+
+    /**
+     * Create a new synthetic genome.
+     *
+     * @param species species, must not be null
+     * @param reference reference, must not be null
+     * @param chromosomes number of chromosomes
+     * @param bp base pairs
+     */
     public SyntheticGenome(final String species, final String reference, final int chromosomes, final long bp)
     {
         this.species = species;
@@ -59,21 +77,42 @@ public final class SyntheticGenome
         }
     }
 
+
+    /**
+     * Return the species for this synthetic genome.
+     *
+     * @return the species for this synthetic genome
+     */
     String getSpecies()
     {
         return species;
     }
 
+    /**
+     * Return the reference for this synthetic genome.
+     *
+     * @return the reference for this synthetic genome
+     */
     String getReference()
     {
         return reference;
     }
 
+    /**
+     * Return the list of contig names for this synthetic genome.
+     *
+     * @return the list of contig names for this synthetic genome
+     */
     List<String> getNames()
     {
         return names;
     }
 
+    /**
+     * Return the map of contig lengths keyed by name for this synthetic genome.
+     *
+     * @return the map of contig lengths keyed by name for this synthetic genome
+     */
     Map<String, Integer> getLengths()
     {
         return lengths;

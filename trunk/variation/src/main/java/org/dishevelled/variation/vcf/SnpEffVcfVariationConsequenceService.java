@@ -51,21 +51,51 @@ import org.dishevelled.vocabulary.Concept;
 import org.dishevelled.vocabulary.Mapping;
 import org.dishevelled.vocabulary.Projection;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * SnpEff-annotated VCF file variation consequence service.
+ *
+ * @author  Michael Heuer
  */
 public final class SnpEffVcfVariationConsequenceService implements VariationConsequenceService
 {
+    /** Species. */
     private final String species;
+
+    /** Reference. */
     private final String reference;
+
+    /** SnpEff-annotated VCF file. */
     private final File file;
+
+    /** Map of sequence variant terms keyed by name. */
     private final Map<String, Concept> sequenceVariants;
+
+    /** Map of effect terms keyed by name. */
     private final Map<String, Concept> effects;
+
+    /** Map of effect projections keyed by effect term. */
     private final Map<Concept, Projection> effectProjections;
+
+    /** Map of region terms keyed by name. */
     private final Map<String, Concept> regions;
+
+    /** Map of region projections keyed by region term. */
     private final Map<Concept, Projection> regionProjections;
 
+    /** Logger. */
+    private final Logger logger = LoggerFactory.getLogger(SnpEffVcfVariationConsequenceService.class);
 
+
+    /**
+     * Create a new SnpEff-annotated VCF file variation consequence service.
+     *
+     * @param species species, must not be null
+     * @param reference reference, must not be null
+     * @param file SnpEff-annotated VCF file, must not be null
+     */
     public SnpEffVcfVariationConsequenceService(final String species, final String reference, final File file)
     {
         checkNotNull(species);
@@ -103,9 +133,13 @@ public final class SnpEffVcfVariationConsequenceService implements VariationCons
         {
             VcfReader.stream(Files.newReaderSupplier(file, Charsets.UTF_8), new VcfStreamListener()
                 {
+                    /** Record number. */
+                    private int recordNumber = 0;
+
                     @Override
                     public void record(final VcfRecord record)
                     {
+                        recordNumber++;
                         if (sameVariation(variation, record))
                         {
                             List<String> identifiers = ImmutableList.copyOf(record.getId());
@@ -157,8 +191,10 @@ public final class SnpEffVcfVariationConsequenceService implements VariationCons
                                     }
                                     catch (IOException e)
                                     {
-                                        //System.out.println("error parsing record at line number " + record.getLineNumber());
-                                        //e.printStackTrace();
+                                        if (logger.isWarnEnabled())
+                                        {
+                                            logger.warn("error parsing record number {}, caught {}", recordNumber, e.getMessage());
+                                        }
                                     }
                                 }
                             }
@@ -174,7 +210,10 @@ public final class SnpEffVcfVariationConsequenceService implements VariationCons
         }
         catch (IOException e)
         {
-            // todo
+            if (logger.isWarnEnabled())
+            {
+                logger.warn("unable to find consequences for {} for species {}, caught {}", variation, species, e.getMessage());
+            }
         }
         return consequences;
     }

@@ -42,16 +42,36 @@ import org.dishevelled.variation.Feature;
 import org.dishevelled.variation.Variation;
 import org.dishevelled.variation.VariationService;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * VCF file variation service.
+ *
+ * @author  Michael Heuer
  */
 public final class VcfVariationService implements VariationService
 {
+    /** Species. */
     private final String species;
+
+    /** Reference. */
     private final String reference;
+
+    /** VCF file. */
     private final File file;
 
+    /** Logger. */
+    private final Logger logger = LoggerFactory.getLogger(VcfVariationService.class);
 
+
+    /**
+     * Create a new VCF file variation service.
+     *
+     * @param species species, must not be null
+     * @param reference reference, must not be null
+     * @param file VCF file, must not be null
+     */
     public VcfVariationService(final String species, final String reference, final File file)
     {
         checkNotNull(species);
@@ -99,7 +119,10 @@ public final class VcfVariationService implements VariationService
         }
         catch (IOException e)
         {
-            // todo
+            if (logger.isWarnEnabled())
+            {
+                logger.warn("unable to find variations for region {}:{}-{}:{} for species {}, caught {}", feature.getRegion(), feature.getStart(), feature.getEnd(), feature.getStrand(), species, e.getMessage());
+            }
         }
         return variations;
     }

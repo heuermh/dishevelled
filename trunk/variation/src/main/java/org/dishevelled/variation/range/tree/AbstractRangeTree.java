@@ -39,51 +39,63 @@ import com.google.common.collect.Range;
  * to be overridden to improve performance.
  *
  * @param <C> range endpoint type
+ * @author  Michael Heuer
  */
-public abstract class AbstractRangeTree<C extends Comparable> implements RangeTree<C> {
+public abstract class AbstractRangeTree<C extends Comparable> implements RangeTree<C>
+{
 
     @Override
-    public int size() {
+    public int size()
+    {
         // todo: idea compiler complains about C extending Comparable<?>
         return count(Range.<C>all());
     }
 
     @Override
-    public boolean isEmpty() {
+    public boolean isEmpty()
+    {
         return size() == 0;
     }
 
     @Override
-    public boolean contains(final C location) {
+    public boolean contains(final C location)
+    {
         return count(location) > 0;
     }
 
     @Override
-    public int count(final C location) {
+    public int count(final C location)
+    {
         return count(Range.singleton(location));
     }
 
     @Override
-    public Iterable<Range<C>> query(final C location) {
+    public Iterable<Range<C>> query(final C location)
+    {
         return intersect(Range.singleton(location));
     }
 
     @Override
-    public int count(final Range<C> query) {
+    public int count(final Range<C> query)
+    {
         return Iterables.size(intersect(query));
     }
 
     @Override
-    public boolean intersects(final Range<C> query) {
+    public boolean intersects(final Range<C> query)
+    {
         return count(query) > 0;
     }
 
     @Override
-    public Iterable<Set<Range<C>>> intersect(final Iterable<Range<C>> query) {
+    public Iterable<Set<Range<C>>> intersect(final Iterable<Range<C>> query)
+    {
         checkNotNull(query);
         List<Set<Range<C>>> result = Lists.newLinkedList();
-        for (Range<C> range0 : query) {
-            for (Range<C> range1 : intersect(range0)) {
+        for (Range<C> range0 : query)
+        {
+            for (Range<C> range1 : intersect(range0))
+            {
                 result.add(ImmutableSet.of(range0, range1));
             }
         }
@@ -91,10 +103,13 @@ public abstract class AbstractRangeTree<C extends Comparable> implements RangeTr
     }
 
     @Override
-    public boolean intersects(final Iterable<Range<C>> query) {
+    public boolean intersects(final Iterable<Range<C>> query)
+    {
         checkNotNull(query);
-        for (Range<C> range0 : query) {
-            for (Range<C> range1 : intersect(range0)) {
+        for (Range<C> range0 : query)
+        {
+            for (Range<C> range1 : intersect(range0))
+            {
                 return true;
             }
         }

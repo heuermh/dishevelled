@@ -44,30 +44,59 @@ import com.google.common.io.InputSupplier;
 import com.google.common.io.Files;
 import com.google.common.io.Resources;
 
+/**
+ * VCF reader.
+ *
+ * @author  Michael Heuer
+ */
 public final class VcfReader
 {
 
+    /**
+     * Private no-arg constructor.
+     */
     private VcfReader()
     {
         // empty
     }
 
 
-    public static <R extends Readable & Closeable> void parse(final InputSupplier<R> supplier,
-                                                              final VcfParseListener listener)
+    /**
+     * Parse the specified input supplier.
+     *
+     * @param supplier input supplier, must not be null
+     * @param listener low-level event based parser callback, must not be null
+     * @throws IOException if an I/O error occurs
+     */
+    static <R extends Readable & Closeable> void parse(final InputSupplier<R> supplier,
+                                                       final VcfParseListener listener)
         throws IOException
     {
         VcfParser.parse(supplier, listener);
     }
 
-    public static <R extends Readable & Closeable> void stream(final InputSupplier<R> supplier,
-                                                               final VcfStreamListener listener)
+    /**
+     * Stream the specified input supplier.
+     *
+     * @param supplier input supplier, must not be null
+     * @param listener event based reader callback, must not be null
+     * @throws IOException if an I/O error occurs
+     */
+    static <R extends Readable & Closeable> void stream(final InputSupplier<R> supplier,
+                                                        final VcfStreamListener listener)
         throws IOException
     {
         StreamingVcfParser.stream(supplier, listener);
     }
 
-    public static Iterable<VcfRecord> read(final File file) throws IOException
+    /**
+     * Read zero or more VCF records from the specified file.
+     *
+     * @param file file to read from, must not be null
+     * @return zero or more VCF records read from the specified file
+     * @throws IOException if an I/O error occurs
+     */
+    static Iterable<VcfRecord> read(final File file) throws IOException
     {
         checkNotNull(file);
         Collect collect = new Collect();
@@ -75,7 +104,14 @@ public final class VcfReader
         return collect.getResult();
     }
 
-    public static Iterable<VcfRecord> read(final URL url) throws IOException
+    /**
+     * Read zero or more VCF records from the specified URL.
+     *
+     * @param url URL to read from, must not be null
+     * @return zero or more VCF records read from the specified URL
+     * @throws IOException if an I/O error occurs
+     */
+    static Iterable<VcfRecord> read(final URL url) throws IOException
     {
         checkNotNull(url);
         Collect collect = new Collect();
@@ -83,7 +119,14 @@ public final class VcfReader
         return collect.getResult();
     }
 
-    public static Iterable<VcfRecord> read(final InputStream inputStream) throws IOException
+    /**
+     * Read zero or more VCF records from the specified input stream.
+     *
+     * @param inputStream input stream to read from, must not be null
+     * @return zero or more VCF records read from the specified input stream
+     * @throws IOException if an I/O error occurs
+     */
+    static Iterable<VcfRecord> read(final InputStream inputStream) throws IOException
     {
         checkNotNull(inputStream);
         Collect collect = new Collect();
@@ -98,27 +141,55 @@ public final class VcfReader
         return collect.getResult();
     }
 
-    // do these all need to be here?
+    // todo: do these all need to be here?
 
+    /**
+     * Read zero or more VCF samples from the specified input supplier.
+     *
+     * @param supplier input supplier to read from, must not be null
+     * @return zero or more VCF samples read from the specified input supplier
+     * @throws IOException if an I/O error occurs
+     */
     static <R extends Readable & Closeable> Iterable<VcfSample> samples(final InputSupplier<R> supplier)
         throws IOException
     {
         return VcfSampleParser.samples(supplier);
     }
 
-    public static Iterable<VcfSample> samples(final File file) throws IOException
+    /**
+     * Read zero or more VCF samples from the specified file.
+     *
+     * @param file file to read from, must not be null
+     * @return zero or more VCF samples read from the specified file
+     * @throws IOException if an I/O error occurs
+     */
+    static Iterable<VcfSample> samples(final File file) throws IOException
     {
         checkNotNull(file);
         return samples(Files.newReaderSupplier(file, Charsets.UTF_8));
     }
 
-    public static Iterable<VcfSample> samples(final URL url) throws IOException
+    /**
+     * Read zero or more VCF samples from the specified URL.
+     *
+     * @param url URL to read from, must not be null
+     * @return zero or more VCF samples read from the specified URL
+     * @throws IOException if an I/O error occurs
+     */
+    static Iterable<VcfSample> samples(final URL url) throws IOException
     {
         checkNotNull(url);
         return samples(Resources.newReaderSupplier(url, Charsets.UTF_8));
     }
 
-    public static Iterable<VcfSample> samples(final InputStream inputStream) throws IOException
+    /**
+     * Read zero or more VCF samples from the specified input stream.
+     *
+     * @param inputStream input stream to read from, must not be null
+     * @return zero or more VCF samples read from the specified input stream
+     * @throws IOException if an I/O error occurs
+     */
+    static Iterable<VcfSample> samples(final InputStream inputStream) throws IOException
     {
         checkNotNull(inputStream);
         return samples(new InputSupplier<InputStreamReader>()
@@ -131,8 +202,12 @@ public final class VcfReader
                });
     }
 
+    /**
+     * Collect.
+     */
     private static final class Collect implements VcfStreamListener
     {
+        /** List of VCF records. */
         private final List<VcfRecord> result = Lists.newLinkedList();
 
         @Override
@@ -141,6 +216,11 @@ public final class VcfReader
             result.add(record);
         }
 
+        /**
+         * Return the collected VCF records.
+         *
+         * @return the collected VCF records
+         */
         private Iterable<VcfRecord> getResult()
         {
             return Iterables.unmodifiableIterable(result);

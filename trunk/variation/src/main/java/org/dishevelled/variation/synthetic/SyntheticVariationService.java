@@ -45,15 +45,30 @@ import org.dishevelled.variation.VariationService;
 
 /**
  * Synthetic variation service.
+ *
+ * @author  Michael Heuer
  */
 public final class SyntheticVariationService
     implements VariationService
 {
+    /** Synthetic genome. */
     private final SyntheticGenome genome;
+
+    /** Source of randomness. */
     private final Random random = new Random();
+
+    /** Cache of variations keyed by feature. */
     private final LoadingCache<Feature, List<Variation>> variations;
+
+    /** List of valid symbols. */
     private static final List<String> ALPHABET = ImmutableList.of("A", "T", "C", "G");
 
+
+    /**
+     * Create a new synthetic variation service.
+     *
+     * @param genome synthetic genome
+     */
     @Inject
     public SyntheticVariationService(final SyntheticGenome genome)
     {

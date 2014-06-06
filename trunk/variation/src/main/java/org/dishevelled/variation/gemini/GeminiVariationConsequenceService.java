@@ -54,19 +54,43 @@ import org.dishevelled.vocabulary.Projection;
 
 /**
  * GEMINI command line variation consequence service.
+ *
+ * @author  Michael Heuer
  */
 public final class GeminiVariationConsequenceService implements VariationConsequenceService
 {
+    /** Species. */
     private final String species;
+
+    /** Reference. */
     private final String reference;
+
+    /** GEMINI database name. */
     private final String databaseName;
+
+    /** Map of sequence variant terms keyed by name. */
     private final Map<String, Concept> sequenceVariants;
+
+    /** Map of effect terms keyed by name. */
     private final Map<String, Concept> effects;
+
+    /** Map of effect projections keyed by effect. */
     private final Map<Concept, Projection> effectProjections;
+
+    /** Map of region terms keyed by name. */
     private final Map<String, Concept> regions;
+
+    /** Map of region projections keyed by region. */
     private final Map<Concept, Projection> regionProjections;
 
 
+    /**
+     * Create a new GEMINI command line variation consequence service.
+     *
+     * @param species species, must not be null
+     * @param reference reference, must not be null
+     * @param databaseName GEMINI database name, must not be null
+     */
     public GeminiVariationConsequenceService(final String species, final String reference, final String databaseName)
     {
         checkNotNull(species);

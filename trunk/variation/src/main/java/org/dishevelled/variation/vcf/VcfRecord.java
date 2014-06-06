@@ -25,22 +25,61 @@ package org.dishevelled.variation.vcf;
 
 import java.util.Map;
 
+import javax.annotation.concurrent.Immutable;
+
 /**
  * VCF record.
+ *
+ * @author  Michael Heuer
  */
-public final class VcfRecord
+@Immutable
+final class VcfRecord
 {
+    /** Line number. */
     private long lineNumber;
+
+    /** Chromosome. */
     private String chrom;
+
+    /** Position. */
     private int pos;
+
+    /** Array of ids. */
     private String[] id;
+
+    /** Reference allele. */
     private String ref;
+
+    /** Alternate alleles. */
     private String[] alt;
+
+    /** QUAL score. */
     private double qual;
+
+    /** Filter. */
     private String filter;
+
+    /** INFO key-value pairs. */
     private Map<String, String> info;
+
+    /** GT key-value pairs. */
     private Map<String, String> gt;
 
+
+    /**
+     * Create a new VCF record.
+     *
+     * @param lineNumber line number
+     * @param chrom chromosome
+     * @param pos position
+     * @param id array of ids
+     * @param ref reference allele
+     * @param alt alternate alleles
+     * @param qual QUAL score
+     * @param filter filter
+     * @param info INFO key-value pairs
+     * @param gt GT key-value pairs
+     */
     VcfRecord(final long lineNumber,
               final String chrom,
               final int pos,
@@ -65,52 +104,102 @@ public final class VcfRecord
     }
 
 
-    public long getLineNumber()
+    /**
+     * Return the line number for this VCF record.
+     *
+     * @return the line number for this VCF record
+     */
+    long getLineNumber()
     {
         return lineNumber;
     }
 
-    public String getChrom()
+    /**
+     * Return the chromosome for this VCF record.
+     *
+     * @return the chromosome for this VCF record
+     */
+    String getChrom()
     {
         return chrom;
     }
 
-    public int getPos()
+    /**
+     * Return the position for this VCF record.
+     *
+     * @return the position for this VCF record
+     */
+    int getPos()
     {
         return pos;
     }
 
-    public String[] getId()
+    /**
+     * Return the array of ids for this VCF record.
+     *
+     * @return the array of ids for this VCF record
+     */
+    String[] getId()
     {
         return id;
     }
 
-    public String getRef()
+    /**
+     * Return the reference allele for this VCF record.
+     *
+     * @return the reference allele for this VCF record
+     */
+    String getRef()
     {
         return ref;
     }
 
-    public String[] getAlt()
+    /**
+     * Return the alternate alleles for this VCF record.
+     *
+     * @return the alternate alleles for this VCF record
+     */
+    String[] getAlt()
     {
         return alt;
     }
 
-    public double getQual()
+    /**
+     * Return the QUAL score for this VCF record.
+     *
+     * @return the QUAL score for this VCF record
+     */
+    double getQual()
     {
         return qual;
     }
 
-    public String getFilter()
+    /**
+     * Return the filter for this VCF record.
+     *
+     * @return the filter for this VCF record
+     */
+    String getFilter()
     {
         return filter;
     }
 
-    public Map<String, String> getInfo()
+    /**
+     * Return the INFO key-value pairs for this VCF record.
+     *
+     * @return the INFO key-value pairs for this VCF record
+     */
+    Map<String, String> getInfo()
     {
         return info;
     }
 
-    public Map<String, String> getGt()
+    /**
+     * Return the GT key-value pairs for this VCF record.
+     *
+     * @return the GT key-value pairs for this VCF record
+     */
+    Map<String, String> getGt()
     {
         return gt;
     }

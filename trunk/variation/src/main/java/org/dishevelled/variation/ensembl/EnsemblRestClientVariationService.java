@@ -43,16 +43,32 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Ensembl REST client variation service.
+ *
+ * @author  Michael Heuer
  */
 public final class EnsemblRestClientVariationService
     implements VariationService
 {
+    /** Species. */
     private final String species;
+
+    /** Reference. */
     private final String reference;
+
+    /** Feature service. */
     private final FeatureService featureService;
+
+    /** Logger. */
     private final Logger logger = LoggerFactory.getLogger(EnsemblRestClientVariationService.class);
 
 
+    /**
+     * Create a new Ensembl REST client variation service.
+     *
+     * @param species species, must not be null
+     * @param reference reference, must not be null
+     * @param featureService feature service, must not be null
+     */
     public EnsemblRestClientVariationService(final String species,
                                              final String reference,
                                              final FeatureService featureService)

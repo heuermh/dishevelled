@@ -34,14 +34,29 @@ import com.google.common.collect.ImmutableMap;
 
 import com.google.common.io.InputSupplier;
 
+/**
+ * Streaming VCF parser.
+ *
+ * @author  Michael Heuer
+ */
 final class StreamingVcfParser
 {
 
+    /**
+     * Private no-arg constructor.
+     */
     private StreamingVcfParser()
     {
         // empty
     }
 
+    /**
+     * Stream the specified input supplier.
+     *
+     * @param supplier input supplier, must not be null
+     * @param listener event based reader callback, must not be null
+     * @throws IOException if an I/O error occurs
+     */
     static <R extends Readable & Closeable> void stream(final InputSupplier<R> supplier, final VcfStreamListener listener)
         throws IOException
     {
@@ -50,16 +65,36 @@ final class StreamingVcfParser
 
         VcfParser.parse(supplier, new VcfParseAdapter()
             {
+                /** Line number. */
                 private long lineNumber;
+
+                /** Chromosome. */
                 private String chrom;
+
+                /** Position. */
                 private int pos;
+
+                /** Array of ids. */
                 private String[] id;
+
+                /** Reference alleles. */
                 private String ref;
+
+                /** Alternate alleles. */
                 private String[] alt;
+
+                /** QUAL score. */
                 private double qual;
+
+                /** Filter. */
                 private String filter;
+
+                /** INFO key-value pairs. */
                 private Map<String, String> info;
+
+                /** Map builder for GT key-value pairs. */
                 private ImmutableMap.Builder<String, String> builder = ImmutableMap.builder();
+
 
                 @Override
                 public void lineNumber(final long lineNumber) throws IOException

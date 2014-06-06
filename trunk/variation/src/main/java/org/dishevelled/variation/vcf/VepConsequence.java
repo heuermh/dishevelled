@@ -29,18 +29,35 @@ import java.io.IOException;
 
 import java.util.List;
 
+import javax.annotation.concurrent.Immutable;
+
 import com.google.common.base.Splitter;
 
 /**
  * VEP consequence.
+ *
+ * @author  Michael Heuer
  */
+@Immutable
 final class VepConsequence
 {
+    /** Allele. */
     private final String allele;
+
+    /** Array of consequence terms. */
     private final String[] consequenceTerms;
+
+    /** True if this VEP consequence came from a canonical transcript. */
     private final boolean canonical;
 
 
+    /**
+     * Create a new VEP consequence.
+     *
+     * @param allele allele
+     * @param consequenceTerms array of consequence terms
+     * @param canonical true if this VEP consequence came from a canonical transcript
+     */
     private VepConsequence(final String allele, final String[] consequenceTerms, final boolean canonical)
     {
         checkNotNull(allele);
@@ -51,21 +68,43 @@ final class VepConsequence
     }
 
 
+    /**
+     * Return the allele for this VEP consequence.
+     *
+     * @return the allele for this VEP consequence
+     */
     String getAllele()
     {
         return allele;
     }
 
+    /**
+     * Return the consequence terms for this VEP consequence.
+     *
+     * @return the consequence terms for this VEP consequence
+     */
     String[] getConsequenceTerms()
     {
         return consequenceTerms;
     }
 
+    /**
+     * Return true if this VEP consequence came from a canonical transcript.
+     *
+     * @return true if this VEP consequence came from a canonical transcript
+     */
     boolean isCanonical()
     {
         return canonical;
     }
 
+    /**
+     * Parse the specified token into a VEP consequence.
+     *
+     * @param token token to parse
+     * @return the VEP consequence parsed from the specified token
+     * @throws IOException if an I/O error occurs
+     */
     static VepConsequence parse(final String token) throws IOException
     {
         List<String> values = Splitter.on("|").splitToList(token);
