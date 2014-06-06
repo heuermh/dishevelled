@@ -283,7 +283,7 @@ final class SnpEffEffect
      * Parse the specified value as an integer.
      *
      * @param value value to parse
-     * @param defaultvalue default value
+     * @param defaultValue default value
      * @return the specified value parsed as an interger, or <code>defaultValue</code>
      */
     static int safeParseInt(final String value, final int defaultValue)

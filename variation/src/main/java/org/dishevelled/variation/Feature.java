@@ -70,7 +70,7 @@ public final class Feature
      * @param identifier identifier, must not be null
      * @param region region, must not be null
      * @param start start, using base-counted, one start coordinate system
-     * @param end, end, using base-counted, one start coordinate system
+     * @param end end, using base-counted, one start coordinate system
      * @param strand strand
      */
     public Feature(final String species,
