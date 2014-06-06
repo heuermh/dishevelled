@@ -42,14 +42,27 @@ import org.dishevelled.vocabulary.Concept;
 
 /**
  * Synthetic variation consequence service.
+ *
+ * @author  Michael Heuer
  */
 public final class SyntheticVariationConsequenceService
     implements VariationConsequenceService
 {
+    /** Synthetic genome. */
     private final SyntheticGenome genome;
+
+    /** Source of randomness. */
     private final Random random = new Random();
+
+    /** List of consequence terms. */
     private final List<Concept> consequenceTerms;
 
+
+    /**
+     * Create a new synthetic variation consequence service.
+     *
+     * @param genome synthetic genome
+     */
     @Inject
     public SyntheticVariationConsequenceService(final SyntheticGenome genome)
     {
@@ -86,11 +99,22 @@ public final class SyntheticVariationConsequenceService
         return consequences;
     }
 
+    /**
+     * Sample from the list of consequence terms.
+     *
+     * @return consequence term sampled from the list of consequence terms
+     */
     String sample()
     {
         return consequenceTerms.get(random.nextInt(consequenceTerms.size())).getName();
     }
 
+    /**
+     * Sample from the list of consequence terms excluding the specified term.
+     *
+     * @param existing existing term to exclude
+     * @return consequence term sampled from the list of consequence terms
+     */
     String sample(final String existing)
     {
         String consequenceTerm = sample();

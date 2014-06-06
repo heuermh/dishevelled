@@ -27,6 +27,8 @@ import java.util.List;
 
 /**
  * Variation service.
+ *
+ * @author  Michael Heuer
  */
 public interface VariationService
 {

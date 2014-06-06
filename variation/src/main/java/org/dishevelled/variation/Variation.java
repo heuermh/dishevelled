@@ -27,25 +27,61 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.util.List;
 
+import javax.annotation.concurrent.Immutable;
+
 import com.google.common.base.Objects;
 
 import com.google.common.collect.ImmutableList;
 
 /**
  * Variation.
+ *
+ * @author  Michael Heuer
  */
+@Immutable
 public final class Variation
 {
+    /** Species, e.g. <code>"human"</code>. */
     private final String species;
+
+    /** Reference, e.g. <code>"GRCh37"</code>. */
     private final String reference;
+
+    /** List of identifers, e.g. <code>"rs193189309"</code>. */
     private final List<String> identifiers; // e.g. dbSNP id
+
+    /** Reference allele. */
     private final String referenceAllele;
+
+    /** List of alternate alleles. */
     private final List<String> alternateAlleles;
+
+    /** Region or contig, using Ensembl-style names, e.g. <code>"1"</code>. */
     private final String region;
+
+    // todo: confirm 1-based; always on 1/+/positive/forward strand
+    /** Variation start, using base-counted, one-start (a.k.a. one-based, fully-closed) coordinate system. */
     private final int start;
+
+    /** Variation end, using base-counted, one-start (a.k.a. one-based, fully-closed) coordinate system. */
     private final int end;
+
+    /** Cached hash code. */
     private final int hashCode;
 
+
+    /**
+     * Create a new variation.
+     *
+     * @param species species, must not be null
+     * @param reference reference, must not be null
+     * @param identifiers list of identifiers, must not be null
+     * @param referenceAllele reference allele, must not be null
+     * @param alternateAlleles list of alternate alleles, must not be null
+     * @param region region, must not be null
+     * @param start start, using base-counted, one start coordinate system
+     * @param end end, using base-counted, one start coordinate system
+     */
     public Variation(final String species,
                      final String reference,
                      final List<String> identifiers,
@@ -75,41 +111,81 @@ public final class Variation
     }
 
 
+    /**
+     * Return the species for this variation.
+     *
+     * @return the species for this variation
+     */
     public String getSpecies()
     {
         return species;
     }
 
+    /**
+     * Return the reference for this variation.
+     *
+     * @return the reference for this variation
+     */
     public String getReference()
     {
         return reference;
     }
 
+    /**
+     * Return the list of identifiers for this variation.
+     *
+     * @return the list of identifiers for this variation
+     */
     public List<String> getIdentifiers()
     {
         return identifiers;
     }
 
+    /**
+     * Return the reference allele for this variation.
+     *
+     * @return the reference allele for this variation
+     */
     public String getReferenceAllele()
     {
         return referenceAllele;
     }
 
+    /**
+     * Return the list of alternate alleles for this variation.
+     *
+     * @return the list of alternate alleles for this variation
+     */
     public List<String> getAlternateAlleles()
     {
         return alternateAlleles;
     }
 
+    /**
+     * Return the region for this variation.
+     *
+     * @return the region for this variation
+     */
     public String getRegion()
     {
         return region;
     }
 
+    /**
+     * Return the start for this variation.
+     *
+     * @return the start for this variation
+     */
     public int getStart()
     {
         return start;
     }
 
+    /**
+     * Return the end for this variation.
+     *
+     * @return the end for this variation
+     */
     public int getEnd()
     {
         return end;

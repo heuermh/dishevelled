@@ -25,15 +25,29 @@ package org.dishevelled.variation.vcf;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
+import javax.annotation.concurrent.Immutable;
+
 /**
  * VCF sample.
+ *
+ * @author  Michael Heuer
  */
-public final class VcfSample
+@Immutable
+final class VcfSample
 {
+    /** Id. */
     private final String id;
+
+    /** Array of VCF genomes. */
     private final VcfGenome[] genomes;
 
 
+    /**
+     * Create a new VCF sample.
+     *
+     * @param id id
+     * @param genome VCF genomes
+     */
     VcfSample(final String id, final VcfGenome... genomes)
     {
         checkNotNull(id);
@@ -43,12 +57,22 @@ public final class VcfSample
     }
 
 
-    public String getId()
+    /**
+     * Return the id for this VCF sample.
+     *
+     * @return the id for this VCF sample.
+     */
+    String getId()
     {
         return id;
     }
 
-    public VcfGenome[] getGenomes()
+    /**
+     * Return the VCF genomes for this VCF sample.
+     *
+     * @return the VCF genomes for this VCF sample
+     */
+    VcfGenome[] getGenomes()
     {
         return genomes;
     }

@@ -38,14 +38,29 @@ import com.google.common.collect.ListMultimap;
 
 import com.google.common.io.InputSupplier;
 
+/**
+ * VCF sample parser.
+ *
+ * @author  Michael Heuer
+ */
 final class VcfSampleParser
 {
 
+    /**
+     * Private no-arg constructor.
+     */
     private VcfSampleParser()
     {
         // empty
     }
 
+    /**
+     * Read zero or more VCF samples from the specified input supplier.
+     *
+     * @param supplier input supplier to read from, must not be null
+     * @return zero or more VCF samples read from the specified input supplier
+     * @throws IOException if an I/O error occurs
+     */
     static <R extends Readable & Closeable> Iterable<VcfSample> samples(final InputSupplier<R> supplier)
         throws IOException
     {
@@ -56,8 +71,12 @@ final class VcfSampleParser
         return parseListener.getSamples().values();
     }
 
+    /**
+     * Parse listener.
+     */
     static final class ParseListener extends VcfParseAdapter
     {
+        /** VCF samples keyed by name. */
         private Map<String, VcfSample> samples = new HashMap<String, VcfSample>();
 
         /*
@@ -118,6 +137,11 @@ final class VcfSampleParser
             return false;
         }
 
+        /**
+         * Return the VCF samples keyed by name.
+         *
+         * @return the VCF samples keyed by name
+         */
         Map<String, VcfSample> getSamples()
         {
             return samples;

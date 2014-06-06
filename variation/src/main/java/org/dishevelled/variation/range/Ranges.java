@@ -34,8 +34,11 @@ import com.google.common.collect.Range;
 
 /**
  * Utility methods on ranges.
+ *
+ * @author  Michael Heuer
  */
-public final class Ranges {
+public final class Ranges
+{
 
     /**
      * Return the center of the specified range.
@@ -44,31 +47,38 @@ public final class Ranges {
      * @param range range, must not be null
      * @return the center of the specified range
      */
-    public static <C extends Comparable> C center(final Range<C> range) {
+    public static <C extends Comparable> C center(final Range<C> range)
+    {
         checkNotNull(range);
-        if (!range.hasUpperBound() && !range.hasUpperBound()) {
+        if (!range.hasUpperBound() && !range.hasUpperBound())
+        {
             throw new IllegalStateException("cannot find the center of a range without bounds");
         }
-        if (!range.hasLowerBound()) {
+        if (!range.hasLowerBound())
+        {
             return range.upperEndpoint();
         }
-        if (!range.hasUpperBound()) {
+        if (!range.hasUpperBound())
+        {
             return range.lowerEndpoint();
         }
         C lowerEndpoint = range.lowerEndpoint();
         C upperEndpoint = range.upperEndpoint();
 
-        if (upperEndpoint instanceof Integer) {
+        if (upperEndpoint instanceof Integer)
+        {
             Integer upper = (Integer) upperEndpoint;
             Integer lower = (Integer) lowerEndpoint;
             return (C) Integer.valueOf((upper.intValue() + lower.intValue()) / 2);
         }
-        if (upperEndpoint instanceof Long) {
+        if (upperEndpoint instanceof Long)
+        {
             Long upper = (Long) upperEndpoint;
             Long lower = (Long) lowerEndpoint;
             return (C) Long.valueOf((upper.longValue() + lower.longValue()) / 2L);
         }
-        if (upperEndpoint instanceof BigInteger) {
+        if (upperEndpoint instanceof BigInteger)
+        {
             BigInteger upper = (BigInteger) upperEndpoint;
             BigInteger lower = (BigInteger) lowerEndpoint;
             BigInteger two = BigInteger.valueOf(2L);
@@ -86,7 +96,8 @@ public final class Ranges {
      * @param range0 first range, must not be null
      * @param range1 second range, must not be null
      */
-    public static <C extends Comparable> boolean intersect(final Range<C> range0, final Range<C> range1) {
+    public static <C extends Comparable> boolean intersect(final Range<C> range0, final Range<C> range1)
+    {
         checkNotNull(range0);
         checkNotNull(range1);
         return range0.isConnected(range1) && !range0.intersection(range1).isEmpty();
@@ -100,14 +111,17 @@ public final class Ranges {
      * @param value value, must not be null
      * @return true if the specified range is strictly less than the specified value
      */
-    public static <C extends Comparable> boolean isLessThan(final Range<C> range, final C value) {
+    public static <C extends Comparable> boolean isLessThan(final Range<C> range, final C value)
+    {
         checkNotNull(range);
         checkNotNull(value);
 
-        if (!range.hasUpperBound()) {
+        if (!range.hasUpperBound())
+        {
             return false;
         }
-        if (range.upperBoundType() == BoundType.OPEN && range.upperEndpoint().equals(value)) {
+        if (range.upperBoundType() == BoundType.OPEN && range.upperEndpoint().equals(value))
+        {
             return true;
         }
         return range.upperEndpoint().compareTo(value) < 0;
@@ -125,10 +139,12 @@ public final class Ranges {
         checkNotNull(range);
         checkNotNull(value);
 
-        if (!range.hasLowerBound()) {
+        if (!range.hasLowerBound())
+        {
             return false;
         }
-        if (range.lowerBoundType() == BoundType.OPEN && range.lowerEndpoint().equals(value)) {
+        if (range.lowerBoundType() == BoundType.OPEN && range.lowerEndpoint().equals(value))
+        {
             return true;
         }
         return range.lowerEndpoint().compareTo(value) > 0;
@@ -141,10 +157,13 @@ public final class Ranges {
      * @param <C> range endpoint type
      * @return an ordering by lower endpoint over ranges
      */
-    public static <C extends Comparable> Ordering<Range<C>> orderingByLowerEndpoint() {
-        return new Ordering<Range<C>>() {
+    public static <C extends Comparable> Ordering<Range<C>> orderingByLowerEndpoint()
+    {
+        return new Ordering<Range<C>>()
+        {
             @Override
-            public int compare(final Range<C> left, final Range<C> right) {
+            public int compare(final Range<C> left, final Range<C> right)
+            {
                 return ComparisonChain.start()
                     .compare(left.hasLowerBound(), right.hasLowerBound())
                     .compare(left.lowerEndpoint(), right.lowerEndpoint())
@@ -159,7 +178,8 @@ public final class Ranges {
      * @param <C> range endpoint type
      * @return a reverse ordering by lower endpoint over ranges
      */
-    public static <C extends Comparable> Ordering<Range<C>> reverseOrderingByLowerEndpoint() {
+    public static <C extends Comparable> Ordering<Range<C>> reverseOrderingByLowerEndpoint()
+    {
         Ordering<Range<C>> orderingByLowerEndpoint = orderingByLowerEndpoint();
         return orderingByLowerEndpoint.reverse();
     }
@@ -170,10 +190,13 @@ public final class Ranges {
      * @param <C> range endpoint type
      * @return an ordering by upper endpoint over ranges
      */
-    public static <C extends Comparable> Ordering<Range<C>> orderingByUpperEndpoint() {
-        return new Ordering<Range<C>>() {
+    public static <C extends Comparable> Ordering<Range<C>> orderingByUpperEndpoint()
+    {
+        return new Ordering<Range<C>>()
+        {
             @Override
-            public int compare(final Range<C> left, final Range<C> right) {
+            public int compare(final Range<C> left, final Range<C> right)
+            {
                 return ComparisonChain.start()
                     .compare(left.hasUpperBound(), right.hasUpperBound())
                     .compare(left.upperEndpoint(), right.upperEndpoint())
@@ -188,7 +211,8 @@ public final class Ranges {
      * @param <C> range endpoint type
      * @return a reverse ordering by upper endpoint over ranges
      */
-    public static <C extends Comparable> Ordering<Range<C>> reverseOrderingByUpperEndpoint() {
+    public static <C extends Comparable> Ordering<Range<C>> reverseOrderingByUpperEndpoint()
+    {
         Ordering<Range<C>> orderingByUpperEndpoint = orderingByUpperEndpoint();
         return orderingByUpperEndpoint.reverse();
     }

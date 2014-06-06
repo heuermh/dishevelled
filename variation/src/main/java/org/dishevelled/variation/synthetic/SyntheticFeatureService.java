@@ -41,14 +41,27 @@ import org.dishevelled.variation.FeatureService;
 
 /**
  * Synthetic feature service.
+ *
+ * @author  Michael Heuer
  */
 public final class SyntheticFeatureService
     implements FeatureService
 {
+    /** Synthetic genome. */
     private final SyntheticGenome genome;
+
+    /** Source of randomness. */
     private final Random random = new Random();
+
+    /** Cache of features keyed by identifier. */
     private final LoadingCache<String, Feature> features;
 
+
+    /**
+     * Create a new synthetic feature service.
+     *
+     * @param genome synthetic genome, must not be null
+     */
     @Inject
     public SyntheticFeatureService(final SyntheticGenome genome)
     {

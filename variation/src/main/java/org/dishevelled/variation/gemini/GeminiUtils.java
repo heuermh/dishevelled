@@ -31,12 +31,24 @@ import java.util.regex.Pattern;
 
 /**
  * Static utility methods for GEMINI.
+ *
+ * @author  Michael Heuer
  */
 final class GeminiUtils
 {
+    /** URN for GEMINI identifiers. */
     static final String URN_BASE = "urn:gemini/";
+
+    /** GEMINI identifier pattern. */
     static final Pattern IDENTIFIER = Pattern.compile("^urn:gemini/[^:]+:([0-9]+)$");
 
+
+    /**
+     * Return the GEMINI variantid for the specified identifier.
+     *
+     * @param identifier identifier
+     * @return the GEMINI variantId for the specified identifier
+     */
     static int variantId(final String identifier)
     {
         checkNotNull(identifier);
@@ -48,7 +60,14 @@ final class GeminiUtils
         throw new IllegalArgumentException("identifier " + identifier + " not valid format");
     }
 
-    static String identifier(final int variationId, final String databaseName)
+    /**
+     * Create and return a GEMINI identifier given the specified variant id and database name.
+     *
+     * @param variantId variant id
+     * @param databaseName database name, must not be null, empty, or contain the '<code>:</code>' character
+     * @return a GEMINI identifier given the specified variant id and database name
+     */
+    static String identifier(final int variantId, final String databaseName)
     {
         checkNotNull(databaseName);
         checkArgument(databaseName.length() > 0, "databaseName must not be empty");
@@ -59,10 +78,16 @@ final class GeminiUtils
         // URL encode database name?
         sb.append(databaseName);
         sb.append(":");
-        sb.append(variationId);
+        sb.append(variantId);
         return sb.toString();
     }
 
+    /**
+     * Return true if the specified identifier is a valid GEMINI identifier.
+     *
+     * @param identifier identifier
+     * @return true if the specified identifier is a valid GEMINI identifier
+     */
     static boolean isValidIdentifier(final String identifier)
     {
         if (identifier == null)

@@ -46,17 +46,35 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Ensembl REST client variation consequence prediction service.
+ *
+ * @author  Michael Heuer
  */
 public final class EnsemblRestClientVariationConsequencePredictionService
     implements VariationConsequencePredictionService
 {
+    /** Species. */
     private final String species;
+
+    /** Reference. */
     private final String reference;
+
+    /** Variation service. */
     private final VariationService variationService;
+
+    /** Logger. */
     private final Logger logger = LoggerFactory.getLogger(EnsemblRestClientVariationConsequencePredictionService.class);
+
+    /** Allele string pattern. */
     private static final Pattern ALLELE_STRING = Pattern.compile("^(.*)/(.*)$");
 
 
+    /**
+     * Create a new Ensembl REST client variation consequence prediction service.
+     *
+     * @param species species, must not be null
+     * @param reference reference, must not be null
+     * @param variationService variation service, must not be null
+     */
     public EnsemblRestClientVariationConsequencePredictionService(final String species,
                                                                   final String reference,
                                                                   final VariationService variationService)

@@ -27,6 +27,8 @@ import java.util.List;
 
 /**
  * Variation consequence service.
+ *
+ * @author  Michael Heuer
  */
 public interface VariationConsequenceService
 {

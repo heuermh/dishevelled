@@ -44,21 +44,41 @@ import org.dishevelled.vocabulary.Projection;
 
 /**
  * Mappings between SnpEff terminologies and SequenceOntology.
+ *
+ * @author  Michael Heuer
  */
 public final class SnpEffOntology
 {
+    /** Internal id. */
     private static final AtomicInteger id = new AtomicInteger(0);
 
+
+    /**
+     * Private no-arg constructor.
+     */
     private SnpEffOntology()
     {
         // empty
     }
 
+
+    /**
+     * Index the specified domain by name.
+     *
+     * @param domain domain to index, must not be null
+     * @return the specified domain indexed by name
+     */
     public static Map<String, Concept> indexByName(final Domain domain)
     {
         return SequenceOntology.indexByName(domain);
     }
 
+    /**
+     * Index the specified mapping by source concept.
+     *
+     * @param mapping mapping to index, must not be null
+     * @return the specified mapping indexed by source concept
+     */
     public static Map<Concept, Projection> indexBySourceConcept(final Mapping mapping)
     {
         checkNotNull(mapping);
@@ -70,6 +90,11 @@ public final class SnpEffOntology
         return indexBySourceConcept;
     }
 
+    /**
+     * Create and return a new domain of SnpEff effect terms.
+     *
+     * @return a new domain of SnpEff effect terms
+     */
     public static Domain effects()
     {
         Authority snpEff = new Authority("snpEff");
@@ -108,6 +133,11 @@ public final class SnpEffOntology
         return effects;
     }
 
+    /**
+     * Create and return a new domain of SnpEff region terms.
+     *
+     * @return a new domain of SnpEff region terms
+     */
     public static Domain regions()
     {
         Authority snpEff = new Authority("snpEff");
@@ -131,6 +161,11 @@ public final class SnpEffOntology
         return regions;
     }
 
+    /**
+     * Create and return a new domain of SnpEff impact terms.
+     *
+     * @return a new domain of SnpEff impact terms
+     */
     public static Domain impacts()
     {
         Authority snpEff = new Authority("snpEff");
@@ -145,6 +180,11 @@ public final class SnpEffOntology
         return impacts;
     }
 
+    /**
+     * Create and return a new SnpEff effect to region mapping.
+     *
+     * @return a new SnpEff effect to region mapping
+     */
     public static Mapping effectToRegionMapping()
     {
         Domain effects = effects();
@@ -161,6 +201,11 @@ public final class SnpEffOntology
         return mapping;
     }
 
+    /**
+     * Create and return a new SnpEff effect to impact mapping.
+     *
+     * @return a new SnpEff effect to impact mapping
+     */
     public static Mapping effectToImpactMapping()
     {
         Domain effects = effects();
@@ -203,6 +248,11 @@ public final class SnpEffOntology
         return mapping;
     }
 
+    /**
+     * Create and return a new SnpEff region to effect mapping.
+     *
+     * @return a new SnpEff region to effect mapping
+     */
     public static Mapping regionToEffectMapping()
     {
         Domain effects = effects();
@@ -219,6 +269,11 @@ public final class SnpEffOntology
         return mapping;
     }
 
+    /**
+     * Create and return a new SnpEff region to impact mapping.
+     *
+     * @return a new SnpEff region to impact mapping
+     */
     public static Mapping regionToImpactMapping()
     {
         Domain regions = regions();
@@ -246,6 +301,11 @@ public final class SnpEffOntology
         return mapping;
     }
 
+    /**
+     * Create and return a new SnpEff effect to Sequence Ontology mapping.
+     *
+     * @return a new SnpEff effect to Sequence Ontology mapping
+     */
     public static Mapping effectToSequenceOntologyMapping()
     {
         Domain effects = effects();
@@ -287,6 +347,11 @@ public final class SnpEffOntology
         return mapping;
     }
 
+    /**
+     * Create and return a new SnpEff region to Sequence Ontology mapping.
+     *
+     * @return a new SnpEff region to Sequence Ontology mapping
+     */
     public static Mapping regionToSequenceOntologyMapping()
     {
         Domain regions = regions();

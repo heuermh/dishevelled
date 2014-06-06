@@ -23,7 +23,18 @@
 */
 package org.dishevelled.variation.vcf;
 
-public interface VcfStreamListener
+/**
+ * VCF stream listener.
+ *
+ * @author  Michael Heuer
+ */
+interface VcfStreamListener
 {
+
+    /**
+     * Notify this listener of a VCF record.
+     *
+     * @param record VCF record
+     */
     void record(VcfRecord record);
 }

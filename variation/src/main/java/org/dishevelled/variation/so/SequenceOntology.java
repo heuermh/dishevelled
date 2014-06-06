@@ -38,16 +38,30 @@ import org.dishevelled.vocabulary.Relation;
 
 /**
  * Subset of the sequence ontology used by Ensembl Variation Effect Predictor (VEP).
+ *
+ * @author  Michael Heuer
  */
 public final class SequenceOntology
 {
+    /** Internal id. */
     private static final AtomicInteger id = new AtomicInteger(0);
 
+
+    /**
+     * Private no-arg constructor.
+     */
     private SequenceOntology()
     {
         // empty
     }
 
+
+    /**
+     * Index the specified domain by name.
+     *
+     * @param domain domain to index, must not be null
+     * @return the specified domain indexed by name
+     */
     public static Map<String, Concept> indexByName(final Domain domain)
     {
         checkNotNull(domain);
@@ -59,6 +73,12 @@ public final class SequenceOntology
         return indexByName;
     }
 
+    /**
+     * Count assignments in the specified domain.
+     *
+     * @param domain domain, must not be null
+     * @return map of assignment counts keyed by term
+     */
     public static Map<Concept, Integer> countAssignments(final Domain domain)
     {
         checkNotNull(domain);
@@ -74,6 +94,12 @@ public final class SequenceOntology
         return count;
     }
 
+    /**
+     * Depth first search.
+     *
+     * @param concept concept
+     * @param count map of assignment counts keyed by term
+     */
     private static void depthFirstToRoot(final Concept concept, final Map<Concept, Integer> count)
     {
         for (Relation outRelation : concept.outRelations())
@@ -83,6 +109,11 @@ public final class SequenceOntology
         count.put(concept, count.get(concept) + 1);
     }
 
+    /**
+     * Create and return a new domain of Sequence Ontology sequence feature terms.
+     *
+     * @return a new domain of Sequence Ontology sequence feature terms
+     */
     public static Domain sequenceFeatures()
     {
         Authority so = new Authority("sequenceOntology");
@@ -124,6 +155,11 @@ public final class SequenceOntology
         return sf;
     }
 
+    /**
+     * Create and return a new domain of Sequence Ontology sequence variant terms.
+     *
+     * @return a new domain of Sequence Ontology sequence variant terms
+     */
     public static Domain sequenceVariants()
     {
         Authority so = new Authority("sequenceOntology");

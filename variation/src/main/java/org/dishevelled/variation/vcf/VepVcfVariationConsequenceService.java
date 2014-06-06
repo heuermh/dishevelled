@@ -42,16 +42,36 @@ import org.dishevelled.variation.Variation;
 import org.dishevelled.variation.VariationConsequence;
 import org.dishevelled.variation.VariationConsequenceService;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * VEP-annotated VCF file variation consequence service.
+ *
+ * @author  Michael Heuer
  */
 public final class VepVcfVariationConsequenceService implements VariationConsequenceService
 {
+    /** Species. */
     private final String species;
+
+    /** Reference. */
     private final String reference;
+
+    /** VEP-annotated VCF file. */
     private final File file;
 
+    /** Logger. */
+    private final Logger logger = LoggerFactory.getLogger(VepVcfVariationConsequenceService.class);
 
+
+    /**
+     * Create a new VEP-annotated variation consequence service.
+     *
+     * @param species species, must not be null
+     * @param reference reference, must not be null
+     * @param file VEP-annotated VCF file, must not be null
+     */
     public VepVcfVariationConsequenceService(final String species, final String reference, final File file)
     {
         checkNotNull(species);
@@ -78,9 +98,13 @@ public final class VepVcfVariationConsequenceService implements VariationConsequ
             // todo: need to transparently handle vcf.gz files
             VcfReader.stream(Files.newReaderSupplier(file, Charsets.UTF_8), new VcfStreamListener()
                 {
+                    /** Record number. */
+                    private int recordNumber = 0;
+
                     @Override
                     public void record(final VcfRecord record)
                     {
+                        recordNumber++;
                         if (sameVariation(variation, record))
                         {
                             List<String> identifiers = ImmutableList.copyOf(record.getId());
@@ -130,8 +154,10 @@ public final class VepVcfVariationConsequenceService implements VariationConsequ
                                     }
                                     catch (IOException e)
                                     {
-                                        //System.out.println("error parsing record at line number " + record.getLineNumber());
-                                        //e.printStackTrace();
+                                        if (logger.isWarnEnabled())
+                                        {
+                                            logger.warn("error parsing record number {}, caught {}", recordNumber, e.getMessage());
+                                        }
                                     }
                                 }
                             }
@@ -147,7 +173,10 @@ public final class VepVcfVariationConsequenceService implements VariationConsequ
         }
         catch (IOException e)
         {
-            // todo
+            if (logger.isWarnEnabled())
+            {
+                logger.warn("unable to find consequences for {} for species {}, caught {}", variation, species, e.getMessage());
+            }
         }
         return consequences;
     }

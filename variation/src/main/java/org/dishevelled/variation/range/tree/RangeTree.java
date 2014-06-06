@@ -31,8 +31,10 @@ import com.google.common.collect.Range;
  * Range tree.
  *
  * @param <C> range endpoint type
+ * @author  Michael Heuer
  */
-public interface RangeTree<C extends Comparable> {
+public interface RangeTree<C extends Comparable>
+{
 
     /**
      * Return the number of ranges in this range tree.
@@ -125,14 +127,6 @@ public interface RangeTree<C extends Comparable> {
 
        see
        http://bedtools.readthedocs.org/en/latest/content/tools/closest.html
-
-       Iterable<Range<C>> window(Range<C> query, int window);
-       Iterable<Range<C>> window(Range<C> query, int upstream, int downstream);
-       Iterable<Range<C>> window(Iterable<Range<C>> query, int window);
-       Iterable<Set<Range<C>>> window(Iterable<Range<C>> query, int upstream, int downstream);
-
-       see
-       http://bedtools.readthedocs.org/en/latest/content/tools/window.html
 
      */
 }

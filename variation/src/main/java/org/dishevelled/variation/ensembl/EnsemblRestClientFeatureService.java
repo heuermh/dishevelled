@@ -38,16 +38,32 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Ensembl REST client feature service.
+ *
+ * @author  Michael Heuer
  */
 public final class EnsemblRestClientFeatureService
     implements FeatureService
 {
+    /** Species. */
     private final String species;
+
+    /** Reference. */
     private final String reference;
+
+    /** Lookup service. */
     private final LookupService lookupService;
+
+    /** Logger. */
     private final Logger logger = LoggerFactory.getLogger(EnsemblRestClientFeatureService.class);
 
 
+    /**
+     * Create a new Ensembl REST client feature service.
+     *
+     * @param species species, must not be null
+     * @param reference reference, must not be null
+     * @param lookupService lookup service, must not be null
+     */
     public EnsemblRestClientFeatureService(final String species,
                                            final String reference,
                                            final LookupService lookupService)

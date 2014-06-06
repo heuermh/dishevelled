@@ -25,22 +25,54 @@ package org.dishevelled.variation;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
+import javax.annotation.concurrent.Immutable;
+
 import com.google.common.base.Objects;
 
 /**
  * Feature.
+ *
+ * @author  Michael Heuer
  */
+@Immutable
 public final class Feature
 {
+    /** Species, e.g. <code>"human"</code>. */
     private final String species;
+
+    /** Reference, e.g. <code>"GRCh37"</code>. */
     private final String reference;
-    private final String identifier; // gene_id
+
+    /** Identifer, e.g. <code>"ENSG00000107404"</code>. */
+    private final String identifier;
+
+    /** Region or contig, using Ensembl-style names, e.g. <code>"1"</code>. */
     private final String region;
+
+    /** Feature start, using base-counted, one-start (a.k.a. one-based, fully-closed) coordinate system. */
     private final int start;
+
+    /** Feature end, using base-counted, one-start (a.k.a. one-based, fully-closed) coordinate system. */
     private final int end;
+
+    /** Strand, <code>1</code> or <code>-1</code>. */
     private final int strand;
+
+    /** Cached hash code. */
     private final int hashCode;
 
+
+    /**
+     * Create a new feature.
+     *
+     * @param species species, must not be null
+     * @param reference reference, must not be null
+     * @param identifier identifier, must not be null
+     * @param region region, must not be null
+     * @param start start, using base-counted, one start coordinate system
+     * @param end, end, using base-counted, one start coordinate system
+     * @param strand strand
+     */
     public Feature(final String species,
                    final String reference,
                    final String identifier,
@@ -66,36 +98,71 @@ public final class Feature
     }
 
 
+    /**
+     * Return the species for this feature.
+     *
+     * @return the species for this feature
+     */
     public String getSpecies()
     {
         return species;
     }
 
+    /**
+     * Return the reference for this feature.
+     *
+     * @return the reference for this feature
+     */
     public String getReference()
     {
         return reference;
     }
 
+    /**
+     * Return the identifier for this feature.
+     *
+     * @return the identifier for this feature
+     */
     public String getIdentifier()
     {
         return identifier;
     }
 
+    /**
+     * Return the region for this feature.
+     *
+     * @return the region for this feature
+     */
     public String getRegion()
     {
         return region;
     }
 
+    /**
+     * Return the start for this feature.
+     *
+     * @return the start for this feature
+     */
     public int getStart()
     {
         return start;
     }
 
+    /**
+     * Return the end for this feature.
+     *
+     * @return the end for this feature
+     */
     public int getEnd()
     {
         return end;
     }
 
+    /**
+     * Return the strand for this feature.
+     *
+     * @return the strand for this feature
+     */
     public int getStrand()
     {
         return strand;

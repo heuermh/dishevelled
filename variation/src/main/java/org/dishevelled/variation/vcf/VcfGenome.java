@@ -25,16 +25,33 @@ package org.dishevelled.variation.vcf;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
+import javax.annotation.concurrent.Immutable;
+
 /**
  * VCF genome.
+ *
+ * @author  Michael Heuer
  */
-public final class VcfGenome
+@Immutable
+final class VcfGenome
 {
+    /** Id. */
     private final String id;
+
+    /** Mixture. */
     private final double mixture;
+
+    /** Description. */
     private final String description;
 
 
+    /**
+     * Create a new VCF genome.
+     *
+     * @param id id
+     * @param mixture mixture
+     * @param description description
+     */
     VcfGenome(final String id, final double mixture, final String description)
     {
         checkNotNull(id);
@@ -44,17 +61,32 @@ public final class VcfGenome
     }
 
 
-    public String getId()
+    /**
+     * Return the id for this VCF genome.
+     *
+     * @return the id for this VCF genome
+     */
+    String getId()
     {
         return id;
     }
 
-    public double getMixture()
+    /**
+     * Return the mixture for this VCF genome.
+     *
+     * @return the mixture for this VCF genome
+     */
+    double getMixture()
     {
         return mixture;
     }
 
-    public String getDescription()
+    /**
+     * Return the description for this VCF genome.
+     *
+     * @return the description for this VCF genome
+     */
+    String getDescription()
     {
         return description;
     }

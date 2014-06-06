@@ -34,6 +34,8 @@ import org.dishevelled.variation.VariationService;
 
 /**
  * Ensembl REST client service module.
+ *
+ * @author  Michael Heuer
  */
 public final class EnsemblRestClientServiceModule
     extends AbstractModule

@@ -44,8 +44,13 @@ import org.dishevelled.variation.Feature;
 import org.dishevelled.variation.Variation;
 import org.dishevelled.variation.VariationService;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Google Genomics API variation service.
+ *
+ * @author  Michael Heuer
  */
 public final class GoogleGenomicsVariationService implements VariationService
 {
@@ -60,6 +65,9 @@ public final class GoogleGenomicsVariationService implements VariationService
 
     /** Google Genomics API. */
     private final Genomics genomics;
+
+    /** Logger. */
+    private final Logger logger = LoggerFactory.getLogger(GoogleGenomicsVariationService.class);
 
 
     /**
@@ -98,7 +106,7 @@ public final class GoogleGenomicsVariationService implements VariationService
             .setContig(feature.getRegion())
             .setStartPosition(Long.valueOf(feature.getStart()))
             .setEndPosition(Long.valueOf(feature.getEnd()));
-        
+
         List<Variation> variations = Lists.newArrayList();
         try
         {
@@ -109,16 +117,19 @@ public final class GoogleGenomicsVariationService implements VariationService
                 List<String> identifiers = ImmutableList.copyOf(variant.getNames());
                 String ref = variant.getReferenceBases();
                 List<String> alt = ImmutableList.copyOf(variant.getAlternateBases());
-                String region = variant.getContig();
+                String contig = variant.getContig();
                 int position = variant.getPosition().intValue(); // todo: variant position is 1-based, confirm this is correct
                 int start = position - 1;
                 int end = start + ref.length();
-                variations.add(new Variation(species, reference, identifiers, ref, alt, region, start, end));
+                variations.add(new Variation(species, reference, identifiers, ref, alt, contig, start, end));
             }
         }
         catch (IOException e)
         {
-            // todo
+            if (logger.isWarnEnabled())
+            {
+                logger.warn("unable to find variations for region {}:{}-{}:{} for species {}, caught {}", feature.getRegion(), feature.getStart(), feature.getEnd(), feature.getStrand(), species, e.getMessage());
+            }
         }
         return variations;
     }

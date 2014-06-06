@@ -25,6 +25,8 @@ package org.dishevelled.variation;
 
 /**
  * Feature service.
+ *
+ * @author  Michael Heuer
  */
 public interface FeatureService
 {

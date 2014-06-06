@@ -41,8 +41,10 @@ import org.dishevelled.variation.range.Ranges;
  * Centered range tree.
  *
  * @param <C> range endpoint type
+ * @author  Michael Heuer
  */
-public final class CenteredRangeTree<C extends Comparable> extends AbstractRangeTree<C> {
+public final class CenteredRangeTree<C extends Comparable> extends AbstractRangeTree<C>
+{
     /** Cached size. */
     private final int size;
 
@@ -55,12 +57,14 @@ public final class CenteredRangeTree<C extends Comparable> extends AbstractRange
      *
      * @param ranges ranges, must not be null
      */
-    private CenteredRangeTree(final Iterable<Range<C>> ranges) {
+    private CenteredRangeTree(final Iterable<Range<C>> ranges)
+    {
         checkNotNull(ranges);
 
         // O(n) hit to cache size
         int count = 0;
-        for (Range<C> range : ranges) {
+        for (Range<C> range : ranges)
+        {
             count++;
         }
         size = count;
@@ -70,12 +74,14 @@ public final class CenteredRangeTree<C extends Comparable> extends AbstractRange
 
 
     @Override
-    public int size() {
+    public int size()
+    {
         return size;
     }
 
     @Override
-    public Iterable<Range<C>> intersect(final Range<C> range) {
+    public Iterable<Range<C>> intersect(final Range<C> range)
+    {
         checkNotNull(range);
         List<Range<C>> result = Lists.newLinkedList();
         Set<Node> visited = Sets.newHashSet();
@@ -89,30 +95,38 @@ public final class CenteredRangeTree<C extends Comparable> extends AbstractRange
      * @param ranges ranges
      * @return a new node for the specified ranges
      */
-    private Node createNode(final Iterable<Range<C>> ranges) {
+    private Node createNode(final Iterable<Range<C>> ranges)
+    {
         Range<C> span = Iterables.getFirst(ranges, null);
-        if (span == null) {
+        if (span == null)
+        {
             return null;
         }
-        for (Range<C> range : ranges) {
+        for (Range<C> range : ranges)
+        {
             checkNotNull(range, "ranges must not contain null ranges");
             span = range.span(span);
         }
-        if (span.isEmpty()) {
+        if (span.isEmpty())
+        {
             return null;
         }
         C center = Ranges.center(span);
         List<Range<C>> left = Lists.newArrayList();
         List<Range<C>> right = Lists.newArrayList();
         List<Range<C>> overlap = Lists.newArrayList();
-        for (Range<C> range : ranges) {
-            if (Ranges.isLessThan(range, center)) {
+        for (Range<C> range : ranges)
+        {
+            if (Ranges.isLessThan(range, center))
+            {
                 left.add(range);
             }
-            else if (Ranges.isGreaterThan(range, center)) {
+            else if (Ranges.isGreaterThan(range, center))
+            {
                 right.add(range);
             }
-            else {
+            else
+            {
                 overlap.add(range);
             }
         }
@@ -127,37 +141,50 @@ public final class CenteredRangeTree<C extends Comparable> extends AbstractRange
      * @param result list of matching ranges
      * @param visited set of visited nodes
      */
-    private void depthFirstSearch(final Range<C> query, final Node node, final List<Range<C>> result, final Set<Node> visited) {
-        if (node == null || visited.contains(node) || query.isEmpty()) {
+    private void depthFirstSearch(final Range<C> query, final Node node, final List<Range<C>> result, final Set<Node> visited)
+    {
+        if (node == null || visited.contains(node) || query.isEmpty())
+        {
             return;
         }
-        if (node.left() != null && Ranges.isLessThan(query, node.center())) {
+        if (node.left() != null && Ranges.isLessThan(query, node.center()))
+        {
             depthFirstSearch(query, node.left(), result, visited);
         }
-        else if (node.right() != null && Ranges.isGreaterThan(query, node.center())) {
+        else if (node.right() != null && Ranges.isGreaterThan(query, node.center()))
+        {
             depthFirstSearch(query, node.right(), result, visited);
         }
-        if (Ranges.isGreaterThan(query, node.center())) {
-            for (Range<C> range : node.overlapByUpperEndpoint()) {
-                if (Ranges.intersect(range, query)) {
+        if (Ranges.isGreaterThan(query, node.center()))
+        {
+            for (Range<C> range : node.overlapByUpperEndpoint())
+            {
+                if (Ranges.intersect(range, query))
+                {
                     result.add(range);
                 }
-                if (Ranges.isGreaterThan(query, range.upperEndpoint())) {
+                if (Ranges.isGreaterThan(query, range.upperEndpoint()))
+                {
                     break;
                 }
             }
         }
-        else if (Ranges.isLessThan(query, node.center())) {
-            for (Range<C> range : node.overlapByLowerEndpoint()) {
-                if (Ranges.intersect(range, query)) {
+        else if (Ranges.isLessThan(query, node.center()))
+        {
+            for (Range<C> range : node.overlapByLowerEndpoint())
+            {
+                if (Ranges.intersect(range, query))
+                {
                     result.add(range);
                 }
-                if (Ranges.isLessThan(query, range.lowerEndpoint())) {
+                if (Ranges.isLessThan(query, range.lowerEndpoint()))
+                {
                     break;
                 }
             }
         }
-        else {
+        else
+        {
             result.addAll(node.overlapByLowerEndpoint());
         }
         visited.add(node);
@@ -166,7 +193,8 @@ public final class CenteredRangeTree<C extends Comparable> extends AbstractRange
     /**
      * Node.
      */
-    private class Node {
+    private class Node
+    {
         /** Center. */
         private final C center;
 
@@ -191,7 +219,8 @@ public final class CenteredRangeTree<C extends Comparable> extends AbstractRange
          * @param right right node, if any
          * @param overlap list of overlapping nodes
          */
-        Node(final C center, final Node left, final Node right, final List<Range<C>> overlap) {
+        Node(final C center, final Node left, final Node right, final List<Range<C>> overlap)
+        {
             this.center = center;
             this.left = left;
             this.right = right;
@@ -209,7 +238,8 @@ public final class CenteredRangeTree<C extends Comparable> extends AbstractRange
          *
          * @return the center
          */
-        C center() {
+        C center()
+        {
             return center;
         }
 
@@ -218,7 +248,8 @@ public final class CenteredRangeTree<C extends Comparable> extends AbstractRange
          *
          * @return the left node or <code>null</code> if no such node exists
          */
-        Node left() {
+        Node left()
+        {
             return left;
         }
 
@@ -227,7 +258,8 @@ public final class CenteredRangeTree<C extends Comparable> extends AbstractRange
          *
          * @return the right node or <code>null</code> if no such node exists
          */
-        Node right() {
+        Node right()
+        {
             return right;
         }
 
@@ -236,7 +268,8 @@ public final class CenteredRangeTree<C extends Comparable> extends AbstractRange
          *
          * @return the list of overlapping ranges ordered by lower endpoint
          */
-        List<Range<C>> overlapByLowerEndpoint() {
+        List<Range<C>> overlapByLowerEndpoint()
+        {
             return overlapByLowerEndpoint;
         }
 
@@ -245,7 +278,8 @@ public final class CenteredRangeTree<C extends Comparable> extends AbstractRange
          *
          * @return the list of overlapping ranges ordered by upper endpoint
          */
-        List<Range<C>> overlapByUpperEndpoint() {
+        List<Range<C>> overlapByUpperEndpoint()
+        {
             return overlapByUpperEndpoint;
         }
     }
@@ -257,7 +291,8 @@ public final class CenteredRangeTree<C extends Comparable> extends AbstractRange
      * @param ranges ranges, must not be null
      * @return a new range tree from the specified ranges
      */
-    public static <C extends Comparable> RangeTree<C> create(final Iterable<Range<C>> ranges) {
+    public static <C extends Comparable> RangeTree<C> create(final Iterable<Range<C>> ranges)
+    {
         return new CenteredRangeTree<C>(ranges);
     }
 }

@@ -27,19 +27,116 @@ import java.io.IOException;
 
 import java.util.Map;
 
-public interface VcfParseListener
+/**
+ * VCF parse listener.
+ *
+ * @author  Michael Heuer
+ */
+interface VcfParseListener
 {
+
+    /**
+     * Notify this parse listener of the line number.
+     *
+     * @param lineNumber line number
+     * @throws IOException if an I/O error occurs
+     */
     void lineNumber(long lineNumber) throws IOException;
+
+    /**
+     * Notify this parse listener of a meta string.
+     *
+     * @param meta meta string
+     * @throws IOException if an I/O error occurs
+     */
     void meta(String meta) throws IOException;
+
+    /**
+     * Notify this parse listener of sample strings.
+     *
+     * @param samples sample strings
+     * @throws IOException if an I/O error occurs
+     */
     void samples(String... samples) throws IOException;
+
+    /**
+     * Notify this parse listener of a chrom string.
+     *
+     * @param chrom chrom string
+     * @throws IOException if an I/O error occurs
+     */
     void chrom(String chrom) throws IOException;
+
+    /**
+     * Notify this parse listener of a position.
+     *
+     * @param pos position
+     * @throws IOException if an I/O error occurs
+     */
     void pos(int pos) throws IOException;
+
+    /**
+     * Notify this parse listener of id strings.
+     *
+     * @param id id strings
+     * @throws IOException if an I/O error occurs
+     */
     void id(String... id) throws IOException;
+
+    /**
+     * Notify this parse listener of a ref string.
+     *
+     * @param ref ref string
+     * @throws IOException if an I/O error occurs
+     */
     void ref(String ref) throws IOException;
+
+    /**
+     * Notify this parse listener of alt strings.
+     *
+     * @param alt alt strings
+     * @throws IOException if an I/O error occurs
+     */
     void alt(String... alt) throws IOException;
+
+    /**
+     * Notify this parse listener of a qual string.
+     *
+     * @param qual qual string
+     * @throws IOException if an I/O error occurs
+     */
     void qual(double qual) throws IOException;
+
+    /**
+     * Notify this parse listener of a filter string.
+     *
+     * @param filter filter string
+     * @throws IOException if an I/O error occurs
+     */
     void filter(String filter) throws IOException;
+
+    /**
+     * Notify this parse listener of a info key-value pairs.
+     *
+     * @param info info key-value pairs
+     * @throws IOException if an I/O error occurs
+     */
     void info(Map<String, String> info) throws IOException;
+
+    /**
+     * Notify this parse listener of a sample gt pair.
+     *
+     * @param sample sample string
+     * @param gt gt string
+     * @throws IOException if an I/O error occurs
+     */
     void gt(String sample, String gt) throws IOException;
+
+    /**
+     * Notify this parse listener a record is complete.
+     *
+     * @return true to continue parsing
+     * @throws IOException if an I/O error occurs
+     */
     boolean complete() throws IOException;
 }

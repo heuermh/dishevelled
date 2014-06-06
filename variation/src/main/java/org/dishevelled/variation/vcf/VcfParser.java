@@ -40,15 +40,27 @@ import com.google.common.io.LineProcessor;
 
 /**
  * Low-level VCF parser.
+ *
+ * @author  Michael Heuer
  */
 final class VcfParser
 {
 
+    /**
+     * Private no-arg constructor.
+     */
     private VcfParser()
     {
         // empty
     }
 
+    /**
+     * Parse the specified input supplier.
+     *
+     * @param supplier input supplier, must not be null
+     * @param listener low-level event based parser callback, must not be null
+     * @throws IOException if an I/O error occurs
+     */
     static <R extends Readable & Closeable> void parse(final InputSupplier<R> supplier, final VcfParseListener listener)
         throws IOException
     {
@@ -57,17 +69,32 @@ final class VcfParser
         CharStreams.readLines(supplier, lineProcessor);
     }
 
+    /**
+     * VCF line processor.
+     */
     private static final class VcfLineProcessor implements LineProcessor<Object>
     {
+        /** Line number. */
         private long lineNumber = 0;
+
+        /** VCF parse listener. */
         private final VcfParseListener listener;
+
+        /** Map of sample names keyed by column. */
         private final Map<Integer, String> samples = newHashMap();
 
+
+        /**
+         * Create a new VCF line processor.
+         *
+         * @param listener VCF parse listener
+         */
         private VcfLineProcessor(final VcfParseListener listener)
         {
             checkNotNull(listener);
             this.listener = listener;
         }
+
 
         @Override
         public Object getResult()

@@ -34,6 +34,8 @@ import org.dishevelled.variation.VariationService;
 
 /**
  * Synthetic module.
+ *
+ * @author  Michael Heuer
  */
 public final class SyntheticModule
     extends AbstractModule

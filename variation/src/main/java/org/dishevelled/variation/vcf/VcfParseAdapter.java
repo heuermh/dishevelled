@@ -27,7 +27,12 @@ import java.io.IOException;
 
 import java.util.Map;
 
-public class VcfParseAdapter implements VcfParseListener
+/**
+ * VCF parse adapter.
+ *
+ * @author  Michael Heuer
+ */
+class VcfParseAdapter implements VcfParseListener
 {
 
     @Override
