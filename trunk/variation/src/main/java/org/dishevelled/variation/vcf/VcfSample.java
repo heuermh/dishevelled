@@ -46,7 +46,7 @@ final class VcfSample
      * Create a new VCF sample.
      *
      * @param id id
-     * @param genome VCF genomes
+     * @param genomes VCF genomes
      */
     VcfSample(final String id, final VcfGenome... genomes)
     {
