@@ -111,9 +111,9 @@ public final class VepVcfVariationConsequenceService implements VariationConsequ
                             String ref = record.getRef();
                             List<String> alt = ImmutableList.copyOf(record.getAlt());
                             String region = record.getChrom();
-                            int position = record.getPos();
-                            int start = position - 1;
-                            int end = start + ref.length();
+                            long position = record.getPos();
+                            long start = position - 1;
+                            long end = start + ref.length();
 
                             /*
 
@@ -167,7 +167,7 @@ public final class VepVcfVariationConsequenceService implements VariationConsequ
                     // todo: not sure this is a valid comparison
                     private boolean sameVariation(final Variation variation, final VcfRecord record)
                     {
-                        return variation.getRegion().equals(record.getChrom()) && (variation.getStart() == (record.getPos() - 1));
+                        return variation.getRegion().equals(record.getChrom()) && (variation.getStart() == (record.getPos() - 1L));
                     }
                 });
         }

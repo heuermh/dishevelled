@@ -73,7 +73,7 @@ interface VcfParseListener
      * @param pos position
      * @throws IOException if an I/O error occurs
      */
-    void pos(int pos) throws IOException;
+    void pos(long pos) throws IOException;
 
     /**
      * Notify this parse listener of id strings.

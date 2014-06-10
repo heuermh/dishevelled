@@ -73,9 +73,9 @@ public final class SyntheticFeatureService
                 public Feature load(final String identifier)
                 {
                     String name = genome.getNames().get(random.nextInt(genome.getNames().size()));
-                    int length = genome.getLengths().get(name) == null ? 100000 : genome.getLengths().get(name);
-                    int start = random.nextInt(length);
-                    int end = start + random.nextInt(Math.min(length - start, 100000));
+                    long length = genome.getLengths().get(name) == null ? 100000L : genome.getLengths().get(name);
+                    long start = Double.valueOf(random.nextDouble() * length).longValue();
+                    long end = start + Double.valueOf(random.nextDouble() * Math.min(length - start, 100000L)).longValue();
 
                     return new Feature(genome.getSpecies(), genome.getReference(), identifier, name, start, end, 1);
                 }

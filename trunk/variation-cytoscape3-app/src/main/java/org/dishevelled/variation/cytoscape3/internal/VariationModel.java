@@ -41,6 +41,7 @@ import com.google.common.collect.HashBiMap;
 import com.google.common.collect.ListMultimap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.google.common.collect.Range;
 
 import org.cytoscape.model.CyNetwork;
 import org.cytoscape.model.CyNode;
@@ -53,9 +54,8 @@ import org.dishevelled.variation.VariationConsequence;
 import org.dishevelled.variation.VariationConsequenceService;
 import org.dishevelled.variation.VariationConsequencePredictionService;
 
-import org.dishevelled.variation.interval.Interval;
-
-import org.dishevelled.variation.interval.tree.CenteredIntervalTree;
+import org.dishevelled.variation.range.tree.CenteredRangeTree;
+import org.dishevelled.variation.range.tree.RangeTree;
 
 /**
  * Variation model.
@@ -109,11 +109,11 @@ final class VariationModel
     /** Bidirectional mapping of nodes to features. */
     private final BiMap<CyNode, Feature> nodesToFeatures;
 
-    /** Bidirectional mapping of features to intervals. */
-    private final BiMap<Feature, Interval> featuresToIntervals;
+    /** Bidirectional mapping of features to ranges. */
+    private final BiMap<Feature, Range<Long>> featuresToRanges;
 
-    /** Map of interval trees keyed by region name. */
-    private final Map<String, CenteredIntervalTree> intervalTrees;
+    /** Map of range trees keyed by region name. */
+    private final Map<String, RangeTree<Long>> rangeTrees;
 
     /** Map of lists of variation consequences by feature. */
     private final ListMultimap<Feature, VariationConsequence> featuresToConsequences;
@@ -152,8 +152,8 @@ final class VariationModel
         variations = GlazedLists.eventList(new ArrayList<Variation>());
         variationConsequences = GlazedLists.eventList(new ArrayList<VariationConsequence>());
         nodesToFeatures = HashBiMap.create();
-        featuresToIntervals = HashBiMap.create();
-        intervalTrees = Maps.newHashMap();
+        featuresToRanges = HashBiMap.create();
+        rangeTrees = Maps.newHashMap();
         featuresToConsequences = ArrayListMultimap.create();
 
         propertyChangeSupport = new PropertyChangeSupport(this);
@@ -455,11 +455,11 @@ final class VariationModel
     // indexes
 
     /**
-     * Rebuild interval trees.
+     * Rebuild range trees.
      */
     void rebuildTrees()
     {
-        intervalTrees.clear();
+        rangeTrees.clear();
         ListMultimap<String, Feature> featuresByRegion = ArrayListMultimap.create();
         for (Feature feature : features)
         {
@@ -468,15 +468,15 @@ final class VariationModel
         for (String region : featuresByRegion.keySet())
         {
             List<Feature> regionFeatures = featuresByRegion.get(region);
-            List<Interval> intervals = Lists.newArrayListWithCapacity(regionFeatures.size());
+            List<Range<Long>> ranges = Lists.newArrayListWithCapacity(regionFeatures.size());
             for (Feature feature : regionFeatures)
             {
-                // todo:  confirm that feature intervals in Ensembl are closed
-                Interval interval = Interval.closed(feature.getStart(), feature.getEnd());
-                intervals.add(interval);
-                featuresToIntervals.put(feature, interval);
+                // todo:  confirm that feature ranges in Ensembl are closed
+                Range<Long> range = Range.closed(feature.getStart(), feature.getEnd());
+                ranges.add(range);
+                featuresToRanges.put(feature, range);
             }
-            intervalTrees.put(region, new CenteredIntervalTree(intervals));
+            rangeTrees.put(region, CenteredRangeTree.create(ranges));
         }
     }
 
@@ -528,26 +528,26 @@ final class VariationModel
     {
         checkNotNull(variation);
         List<Feature> hits = Lists.newArrayList();
-        CenteredIntervalTree intervalTree = intervalTrees.get(variation.getRegion());
+        RangeTree<Long> rangeTree = rangeTrees.get(variation.getRegion());
 
-        Interval query;
+        Range<Long> query;
         if (variation.getStart() == variation.getEnd())
         {
-            query = Interval.singleton(variation.getStart());
+            query = Range.singleton(variation.getStart());
         }
         // todo: Ensembl REST client variation query returns end < start for deletions, e.g ref - alt [AAA]
         else if (variation.getEnd() < variation.getStart())
         {
-            query = Interval.closedOpen(variation.getEnd(), variation.getStart());
+            query = Range.closedOpen(variation.getEnd(), variation.getStart());
         }
         else
         {
-            query = Interval.closedOpen(variation.getStart(), variation.getEnd());
+            query = Range.closedOpen(variation.getStart(), variation.getEnd());
         }
 
-        for (Interval interval : intervalTree.intersect(query))
+        for (Range<Long> range : rangeTree.intersect(query))
         {
-            hits.add(featuresToIntervals.inverse().get(interval));
+            hits.add(featuresToRanges.inverse().get(range));
         }
         return hits;
     }

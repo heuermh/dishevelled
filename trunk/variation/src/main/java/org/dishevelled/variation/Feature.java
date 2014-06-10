@@ -50,10 +50,10 @@ public final class Feature
     private final String region;
 
     /** Feature start, using base-counted, one-start (a.k.a. one-based, fully-closed) coordinate system. */
-    private final int start;
+    private final long start;
 
     /** Feature end, using base-counted, one-start (a.k.a. one-based, fully-closed) coordinate system. */
-    private final int end;
+    private final long end;
 
     /** Strand, <code>1</code> or <code>-1</code>. */
     private final int strand;
@@ -77,8 +77,8 @@ public final class Feature
                    final String reference,
                    final String identifier,
                    final String region,
-                   final int start,
-                   final int end,
+                   final long start,
+                   final long end,
                    final int strand)
     {
         checkNotNull(species);
@@ -143,7 +143,7 @@ public final class Feature
      *
      * @return the start for this feature
      */
-    public int getStart()
+    public long getStart()
     {
         return start;
     }
@@ -153,7 +153,7 @@ public final class Feature
      *
      * @return the end for this feature
      */
-    public int getEnd()
+    public long getEnd()
     {
         return end;
     }

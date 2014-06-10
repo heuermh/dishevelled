@@ -95,7 +95,7 @@ public final class VcfVariationService implements VariationService
         final List<Variation> variations = new ArrayList<Variation>();
         try
         {
-            // todo: need to transparently handle vcf.gz files
+            // todo: need to transparently handle vcf.gz, vcf.bgz/.bgzf files
             VcfReader.stream(Files.newReaderSupplier(file, Charsets.UTF_8), new VcfStreamListener()
                 {
                     @Override
@@ -107,9 +107,9 @@ public final class VcfVariationService implements VariationService
                             String ref = record.getRef();
                             List<String> alt = ImmutableList.copyOf(record.getAlt());
                             String region = record.getChrom();
-                            int position = record.getPos();
-                            int start = position - 1;
-                            int end = start + ref.length();
+                            long position = record.getPos();
+                            long start = position - 1L;
+                            long end = start + ref.length();
 
                             // todo: only add variation if sample matches some query and any genotype is not reference; modify alt alleles if so
                             variations.add(new Variation(species, reference, identifiers, ref, alt, region, start, end));

@@ -146,9 +146,9 @@ public final class SnpEffVcfVariationConsequenceService implements VariationCons
                             String ref = record.getRef();
                             List<String> alt = ImmutableList.copyOf(record.getAlt());
                             String region = record.getChrom();
-                            int position = record.getPos();
-                            int start = position - 1;
-                            int end = start + ref.length();
+                            long position = record.getPos();
+                            long start = position - 1L;
+                            long end = start + ref.length();
 
                             // pull SnpEff from info, then for each alt/SnpEff effect pair, add a new variation consequence
                             if (record.getInfo().containsKey("EFF"))
@@ -204,7 +204,7 @@ public final class SnpEffVcfVariationConsequenceService implements VariationCons
                     // todo: not sure this is a valid comparison
                     private boolean sameVariation(final Variation variation, final VcfRecord record)
                     {
-                        return variation.getRegion().equals(record.getChrom()) && (variation.getStart() == (record.getPos() - 1));
+                        return variation.getRegion().equals(record.getChrom()) && (variation.getStart() == (record.getPos() - 1L));
                     }
                 });
         }

@@ -123,8 +123,8 @@ public final class GeminiVariationService implements VariationService
                 // note: gemini puts chr on the region name
                 String region = tokens[4].replace("chr", "");
 
-                int start = Integer.parseInt(tokens[5]);
-                int end = Integer.parseInt(tokens[6]);
+                long start = Long.parseLong(tokens[5]);
+                long end = Long.parseLong(tokens[6]);
 
                 variations.add(new Variation(species, reference, identifiers, ref, alt, region, start, end));
             }

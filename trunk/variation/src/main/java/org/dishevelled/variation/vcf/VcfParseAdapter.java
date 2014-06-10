@@ -60,7 +60,7 @@ class VcfParseAdapter implements VcfParseListener
     }
 
     @Override
-    public void pos(final int pos) throws IOException
+    public void pos(final long pos) throws IOException
     {
         // empty
     }

@@ -64,10 +64,10 @@ public final class VariationConsequence
 
     // todo: confirm 1-based; always on 1/+/positive/forward strand
     /** Variation start, using base-counted, one-start (a.k.a. one-based, fully-closed) coordinate system. */
-    private final int start;
+    private final long start;
 
     /** Variation end, using base-counted, one-start (a.k.a. one-based, fully-closed) coordinate system. */
-    private final int end;
+    private final long end;
 
     /** Cached hash code. */
     private final int hashCode;
@@ -93,8 +93,8 @@ public final class VariationConsequence
                                 final String alternateAllele,
                                 final String sequenceOntologyTerm,
                                 final String region,
-                                final int start,
-                                final int end)
+                                final long start,
+                                final long end)
     {
         checkNotNull(species);
         checkNotNull(reference);
@@ -193,7 +193,7 @@ public final class VariationConsequence
      *
      * @return the start for this variation consequence
      */
-    public int getStart()
+    public long getStart()
     {
         return start;
     }
@@ -203,7 +203,7 @@ public final class VariationConsequence
      *
      * @return the end for this variation consequence
      */
-    public int getEnd()
+    public long getEnd()
     {
         return end;
     }
