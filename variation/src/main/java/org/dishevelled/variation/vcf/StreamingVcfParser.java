@@ -72,7 +72,7 @@ final class StreamingVcfParser
                 private String chrom;
 
                 /** Position. */
-                private int pos;
+                private long pos = -1L;
 
                 /** Array of ids. */
                 private String[] id;
@@ -84,7 +84,7 @@ final class StreamingVcfParser
                 private String[] alt;
 
                 /** QUAL score. */
-                private double qual;
+                private double qual = -1.0d;
 
                 /** Filter. */
                 private String filter;
@@ -109,7 +109,7 @@ final class StreamingVcfParser
                 }
 
                 @Override
-                public void pos(final int pos) throws IOException
+                public void pos(final long pos) throws IOException
                 {
                     this.pos = pos;
                 }
@@ -162,7 +162,7 @@ final class StreamingVcfParser
                     listener.record(new VcfRecord(lineNumber, chrom, pos, id, ref, alt, qual, filter, info, builder.build()));
 
                     chrom = null;
-                    pos = -1;
+                    pos = -1L;
                     id = null;
                     ref = null;
                     alt = null;

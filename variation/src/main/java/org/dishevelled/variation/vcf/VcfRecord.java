@@ -42,7 +42,7 @@ final class VcfRecord
     private String chrom;
 
     /** Position. */
-    private int pos;
+    private long pos;
 
     /** Array of ids. */
     private String[] id;
@@ -82,7 +82,7 @@ final class VcfRecord
      */
     VcfRecord(final long lineNumber,
               final String chrom,
-              final int pos,
+              final long pos,
               final String[] id,
               final String ref,
               final String[] alt,
@@ -129,7 +129,7 @@ final class VcfRecord
      *
      * @return the position for this VCF record
      */
-    int getPos()
+    long getPos()
     {
         return pos;
     }

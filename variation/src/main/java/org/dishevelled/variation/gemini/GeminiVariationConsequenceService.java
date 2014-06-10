@@ -163,8 +163,8 @@ public final class GeminiVariationConsequenceService implements VariationConsequ
                 // note: gemini puts chr on the region name
                 String region = tokens[4].replace("chr", "");
 
-                int start = Integer.parseInt(tokens[5]);
-                int end = Integer.parseInt(tokens[6]);
+                long start = Long.parseLong(tokens[5]);
+                long end = Long.parseLong(tokens[6]);
 
                 // map from SnpEff ontology to Sequence Ontology if necessary
                 // todo: consider moving this to SnpEffOntology

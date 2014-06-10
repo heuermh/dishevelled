@@ -80,7 +80,7 @@ public final class SyntheticVariationService
                 public List<Variation> load(final Feature feature)
                 {
                     List<Variation> variations = new ArrayList<Variation>();
-                    for (int i = 0, size = (feature.getEnd() - feature.getStart()) / 1000; i < size; i++)
+                    for (long i = 0, size = (feature.getEnd() - feature.getStart()) / 1000L; i < size; i++)
                     {
                         String referenceAllele = sample();
                         List<String> alternateAlleles = new ArrayList<String>();
@@ -93,8 +93,8 @@ public final class SyntheticVariationService
                         {
                             alternateAlleles.add(sample(referenceAllele, alternateAlleles));
                         }
-                        int start = feature.getStart() + random.nextInt(feature.getEnd() - feature.getStart());
-                        int end = start + referenceAllele.length();
+                        long start = feature.getStart() + Double.valueOf(random.nextDouble() * (feature.getEnd() - feature.getStart())).longValue();
+                        long end = start + referenceAllele.length();
                         variations.add(new Variation(genome.getSpecies(), genome.getReference(), Collections.<String>emptyList(), referenceAllele, alternateAlleles, feature.getRegion(), start, end));
                     }
                     return variations;

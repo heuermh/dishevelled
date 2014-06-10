@@ -131,7 +131,7 @@ final class VcfParser
                 // data lines
                 listener.lineNumber(lineNumber);
                 listener.chrom(tokens[0]);
-                listener.pos(Integer.parseInt(tokens[1]));
+                listener.pos(Long.parseLong(tokens[1]));
                 listener.id(tokens[2].split(";"));
                 listener.ref(tokens[3]);
 
