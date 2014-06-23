@@ -26,6 +26,8 @@ package org.dishevelled.variation.cytoscape3.internal;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.awt.BorderLayout;
+import java.awt.Desktop;
+import java.awt.Desktop.Action;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -37,6 +39,9 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 import java.io.File;
+import java.io.IOException;
+
+import java.net.URI;
 
 import javax.swing.AbstractAction;
 import javax.swing.Box;
@@ -62,6 +67,13 @@ import org.dishevelled.variation.ensembl.EnsemblRestClientVariationConsequencePr
 
 import org.dishevelled.variation.gemini.GeminiVariationService;
 import org.dishevelled.variation.gemini.GeminiVariationConsequenceService;
+
+// todo:  try to remove these dependencies if possible
+import com.google.api.services.genomics.Genomics;
+import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
+
+import org.dishevelled.variation.googlegenomics.GoogleGenomicsFactory;
+import org.dishevelled.variation.googlegenomics.GoogleGenomicsVariationService;
 
 import org.dishevelled.variation.synthetic.SyntheticFeatureService;
 import org.dishevelled.variation.synthetic.SyntheticGenome;
@@ -97,6 +109,21 @@ final class ConfigView
     /** Ensembl REST server URL. */
     private final JTextField ensemblRestServerUrl;
 
+    /** Google Genomics API server URL. */
+    private final JTextField googleGenomicsServerUrl;
+
+    /** Google Genomics API datasetId. */
+    private final JTextField googleGenomicsDatasetId;
+
+    /** Google Genomics API authorization code. */
+    private final JTextField googleGenomicsAuthorizationCode;
+
+    /** Google Genomics API factory. */
+    private final GoogleGenomicsFactory googleGenomicsFactory;
+
+    /** Google Genomics API flow. */
+    private GoogleAuthorizationCodeFlow googleGenomicsFlow;
+
     /** GEMINI database name. */
     private final JTextField geminiDatabaseName;
 
@@ -128,6 +155,16 @@ final class ConfigView
             public void actionPerformed(final ActionEvent event)
             {
                 apply();
+            }
+        };
+
+    /** Google Genomics authorize action. */
+    private final AbstractAction authorize = new AbstractAction("Authorize...")
+        {
+            @Override
+            public void actionPerformed(final ActionEvent event)
+            {
+                authorize();
             }
         };
 
@@ -284,7 +321,7 @@ final class ConfigView
     private static final String[] FEATURE_SERVICE_NAMES = new String[] { "Ensembl REST client", "Synthetic genome" };
 
     /** Variation service names. */
-    private static final String[] VARIATION_SERVICE_NAMES = new String[] { "Ensembl REST client", "GEMINI command line", "VCF file", "Synthetic genome" };
+    private static final String[] VARIATION_SERVICE_NAMES = new String[] { "Ensembl REST client", "GEMINI command line", "Google Genomics API", "VCF file", "Synthetic genome" };
 
     /** Variation consequence service names. */
     private static final String[] VARIATION_CONSEQUENCE_SERVICE_NAMES = new String[] { "Ensembl REST client", "GEMINI command line", "SnpEff-annotated VCF file", "VEP-annotated VCF file", "Synthetic genome" };
@@ -325,6 +362,17 @@ final class ConfigView
 
         ensemblRestServerUrl = new JTextField(32);
         ensemblRestServerUrl.setText("http://beta.rest.ensembl.org/");
+
+        googleGenomicsServerUrl = new JTextField(32);
+        googleGenomicsServerUrl.setText("https://www.googleapis.com/genomics/v1beta");
+
+        googleGenomicsDatasetId = new JTextField(20);
+        googleGenomicsDatasetId.setText("example");
+
+        googleGenomicsAuthorizationCode = new JTextField(32);
+        googleGenomicsAuthorizationCode.setText("");
+
+        googleGenomicsFactory = new GoogleGenomicsFactory();
 
         geminiDatabaseName = new JTextField(48);
         geminiDatabaseName.setText("example.db");
@@ -379,6 +427,9 @@ final class ConfigView
         panel.addField("Ensembl gene id column:", wrap(ensemblGeneIdColumn));
         panel.addSpacing(12);
         panel.addField("Ensembl REST service URL:", wrap(ensemblRestServerUrl));
+        panel.addField("Google Genomics API service URL:", wrap(googleGenomicsServerUrl));
+        panel.addField("Google Genomics API datasetId:", wrap(googleGenomicsDatasetId));
+        panel.addField("Google Genomics API authorization code:", createGoogleGenomicsAuthorizationCodePanel());
         panel.addField("GEMINI database name:", createGeminiDatabaseNamePanel());
         panel.addField("VCF file name:", createVcfFileNamePanel());
         panel.addSpacing(12);
@@ -509,6 +560,70 @@ final class ConfigView
     }
 
     /**
+     * Create and return a new Google Genomics API authorization code panel.
+     *
+     * @return a new Google Genomics API authorization code panel
+     */
+    private JPanel createGoogleGenomicsAuthorizationCodePanel()
+    {
+        JPanel panel = new JPanel();
+        panel.setOpaque(false);
+        panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+        panel.add(googleGenomicsAuthorizationCode);
+        panel.add(Box.createHorizontalStrut(4));
+        panel.add(new JButton(authorize));
+        panel.add(Box.createGlue());
+        panel.add(Box.createGlue());
+        return panel;
+    }
+
+    /**
+     * Authorize using the Google Genomics API.
+     */
+    private void authorize()
+    {
+        try
+        {
+            googleGenomicsFlow = googleGenomicsFactory.startFlow();
+            String authorizationUrl = googleGenomicsFactory.authorizationUrl(googleGenomicsFlow);
+
+            if (Desktop.isDesktopSupported())
+            {
+                Desktop desktop = Desktop.getDesktop();
+                if (desktop.isSupported(Action.BROWSE))
+                {
+                    desktop.browse(URI.create(authorizationUrl));
+                }
+            }
+            // Finally just ask user to open in their browser using copy-paste
+            //System.out.println("Please open the following URL in your browser:");
+            //System.out.println("  " + url);
+        }
+        catch (IOException e)
+        {
+            throw new RuntimeException("could not authorize Google Genomics API", e);
+        }
+    }
+
+    /**
+     * Create and return the Google Genomics API.
+     *
+     * @return the Google Genomics API
+     */
+    private Genomics createGoogleGenomics()
+    {
+        try
+        {
+            return googleGenomicsFactory.genomics(googleGenomicsServerUrl.getText(), googleGenomicsAuthorizationCode.getText(), googleGenomicsFlow);
+        }
+        catch (IOException e)
+        {
+            throw new RuntimeException("could not create Google Genomics API", e);
+            // todo: pop up error message
+        }
+    }
+
+    /**
      * Apply.
      */
     private void apply()
@@ -536,6 +651,10 @@ final class ConfigView
         else if ("GEMINI command line".equals(variationServiceName.getSelectedItem()))
         {
             model.setVariationService(new GeminiVariationService(model.getSpecies(), model.getReference(), databaseName));
+        }
+        else if ("Google Genomics API".equals(variationServiceName.getSelectedItem()))
+        {
+            model.setVariationService(new GoogleGenomicsVariationService(model.getSpecies(), model.getReference(), googleGenomicsDatasetId.getText(), createGoogleGenomics()));
         }
         else if ("VCF file".equals(variationServiceName.getSelectedItem()))
         {
