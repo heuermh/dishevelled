@@ -106,6 +106,9 @@ final class VariationModel
     /** List of variation consequences. */
     private final EventList<VariationConsequence> variationConsequences;
 
+    /** List of column names for the current network. */
+    private final EventList<String> columnNames;
+
     /** Bidirectional mapping of nodes to features. */
     private final BiMap<CyNode, Feature> nodesToFeatures;
 
@@ -128,7 +131,7 @@ final class VariationModel
     private static final String DEFAULT_REFERENCE = "GRCh37";
 
     /** Default Ensembl gene id column, <code>ensembl</code>. */
-    private static final String DEFAULT_ENSEMBL_GENE_ID_COLUMN = "ensembl";
+    static final String DEFAULT_ENSEMBL_GENE_ID_COLUMN = "ensembl";
 
     /** Use canonical transcripts only by default. */
     private static final boolean DEFAULT_CANONICAL = true;
@@ -151,6 +154,7 @@ final class VariationModel
         features = GlazedLists.eventList(new ArrayList<Feature>());
         variations = GlazedLists.eventList(new ArrayList<Variation>());
         variationConsequences = GlazedLists.eventList(new ArrayList<VariationConsequence>());
+        columnNames = GlazedLists.eventList(new ArrayList<String>());
         nodesToFeatures = HashBiMap.create();
         featuresToRanges = HashBiMap.create();
         rangeTrees = Maps.newHashMap();
@@ -305,12 +309,25 @@ final class VariationModel
         this.network = network;
         propertyChangeSupport.firePropertyChange("network", oldNetwork, this.network);
 
-        // or move this to property change listener
+        // or move these to property change listener
+
+        // update list of nodes
         nodes.clear();
         if (this.network != null)
         {
             nodes.addAll(this.network.getNodeList());
         }
+        // update list of column names
+        columnNames.clear();
+        if (this.network != null)
+        {
+            columnNames.addAll(VariationUtils.columnNames(this.network));
+        }
+        if (!columnNames.contains(ensemblGeneIdColumn))
+        {
+            setEnsemblGeneIdColumn(null);
+        }
+
         // also need to remove/add network node change listener or similar
     }
 
@@ -450,6 +467,16 @@ final class VariationModel
     EventList<VariationConsequence> variationConsequences()
     {
         return variationConsequences;
+    }
+
+    /**
+     * Return the list of column names for the current network.
+     *
+     * @return the list of column names for the current network
+     */
+    EventList<String> columnNames()
+    {
+        return columnNames;
     }
 
     // indexes
