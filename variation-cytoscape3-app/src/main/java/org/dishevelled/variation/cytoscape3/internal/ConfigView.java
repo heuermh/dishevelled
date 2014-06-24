@@ -56,6 +56,8 @@ import javax.swing.JPanel;
 
 import javax.swing.border.EmptyBorder;
 
+import ca.odell.glazedlists.swing.DefaultEventComboBoxModel;
+
 import com.github.heuermh.ensemblrestclient.EnsemblRestClientFactory;
 
 import org.dishevelled.layout.LabelFieldPanel;
@@ -102,9 +104,8 @@ final class ConfigView
     /** Reference. */
     private final JTextField reference;
 
-    /** Ensembl gene id column. */
-    // todo: should be a combo box containing all the column names from the current node table
-    private final JTextField ensemblGeneIdColumn;
+    /** Column names. */
+    private final JComboBox columnNames;
 
     /** Ensembl REST server URL. */
     private final JTextField ensemblRestServerUrl;
@@ -184,7 +185,7 @@ final class ConfigView
                 }
                 else if ("ensemblGeneIdColumn".equals(event.getPropertyName()))
                 {
-                    ensemblGeneIdColumn.setText((String) event.getNewValue());
+                    columnNames.setSelectedItem(event.getNewValue());
                 }
                 else if ("canonical".equals(event.getPropertyName()))
                 {
@@ -237,23 +238,13 @@ final class ConfigView
             }
         };
 
-    /** Ensembl gene id column action listener. */
-    private final ActionListener ensemblGeneIdColumnActionListener = new ActionListener()
+    /** Column names action listener. */
+    private final ActionListener columnNamesActionListener = new ActionListener()
         {
             @Override
             public void actionPerformed(final ActionEvent event)
             {
-                model.setEnsemblGeneIdColumn(ensemblGeneIdColumn.getText());
-            }
-        };
-
-    /** Ensembl gene id column focus listener. */
-    private final FocusListener ensemblGeneIdColumnFocusListener = new FocusAdapter()
-        {
-            @Override
-            public void focusLost(final FocusEvent event)
-            {
-                model.setEnsemblGeneIdColumn(ensemblGeneIdColumn.getText());
+                model.setEnsemblGeneIdColumn((String) columnNames.getSelectedItem());
             }
         };
 
@@ -355,13 +346,11 @@ final class ConfigView
         reference.addActionListener(referenceActionListener);
         reference.addFocusListener(referenceFocusListener);
 
-        ensemblGeneIdColumn = new JTextField(32);
-        ensemblGeneIdColumn.setText(model.getEnsemblGeneIdColumn());
-        ensemblGeneIdColumn.addActionListener(ensemblGeneIdColumnActionListener);
-        ensemblGeneIdColumn.addFocusListener(ensemblGeneIdColumnFocusListener);
+        columnNames = new JComboBox(new DefaultEventComboBoxModel<String>(model.columnNames()));
+        columnNames.addActionListener(columnNamesActionListener);
 
         ensemblRestServerUrl = new JTextField(32);
-        ensemblRestServerUrl.setText("http://beta.rest.ensembl.org/");
+        ensemblRestServerUrl.setText("http://beta.rest.ensembl.org");
 
         googleGenomicsServerUrl = new JTextField(32);
         googleGenomicsServerUrl.setText("https://www.googleapis.com/genomics/v1beta");
@@ -424,7 +413,7 @@ final class ConfigView
         panel.setOpaque(false);
         panel.addField("Species:", wrap(species));
         panel.addField("Reference:", wrap(reference));
-        panel.addField("Ensembl gene id column:", wrap(ensemblGeneIdColumn));
+        panel.addField("Ensembl gene id column:", createEnsemblGeneIdColumnPanel());
         panel.addSpacing(12);
         panel.addField("Ensembl REST service URL:", wrap(ensemblRestServerUrl));
         panel.addField("Google Genomics API service URL:", wrap(googleGenomicsServerUrl));
@@ -468,6 +457,23 @@ final class ConfigView
         panel.addField(" ", somatic);
         panel.addFinalSpacing();
         return panel;
+    }
+
+    /**
+     * Create and return a new Ensembl gene id panel.
+     *
+     * @return a new Ensembl gene id panel
+     */
+    private JPanel createEnsemblGeneIdColumnPanel()
+    {
+        JPanel panel = new JPanel();
+        panel.setOpaque(false);
+        panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+        panel.add(columnNames);
+        panel.add(Box.createGlue());
+        panel.add(Box.createGlue());
+        return panel;
+
     }
 
     /**
@@ -614,12 +620,12 @@ final class ConfigView
     {
         try
         {
+
             return googleGenomicsFactory.genomics(googleGenomicsServerUrl.getText(), googleGenomicsAuthorizationCode.getText(), googleGenomicsFlow);
         }
         catch (IOException e)
         {
             throw new RuntimeException("could not create Google Genomics API", e);
-            // todo: pop up error message
         }
     }
 

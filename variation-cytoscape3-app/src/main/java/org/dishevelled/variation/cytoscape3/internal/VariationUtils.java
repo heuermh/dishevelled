@@ -49,6 +49,7 @@ import javax.swing.JRootPane;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Lists;
 
 import org.cytoscape.model.CyColumn;
 import org.cytoscape.model.CyNetwork;
@@ -239,6 +240,25 @@ final class VariationUtils
             }
         }
         return max;
+    }
+
+    /**
+     * Return the list of column names for the specified network.
+     *
+     * @param network network
+     * @return the list of column names for the specified network
+     */
+    static List<String> columnNames(final CyNetwork network)
+    {
+        CyTable table = network.getDefaultNodeTable();
+        List<String> columnNames = Lists.newArrayList();
+        for (CyColumn column : table.getColumns())
+        {
+            columnNames.add(column.getName());
+        }
+        // sorted or in order?
+        Collections.sort(columnNames);
+        return columnNames;
     }
 
     /**
