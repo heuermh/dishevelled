@@ -62,7 +62,7 @@ import com.google.api.services.genomics.Genomics;
 public final class GoogleGenomicsFactory
 {
     /** Application name. */
-    private static final String APPLICATION_NAME = "Name/1.0";
+    private static final String APPLICATION_NAME = "Variation/1.0-SNAPSHOT";
 
     /** Data store directory. */
     private static final File DATA_STORE_DIR = new File(System.getProperty("user.home"), ".variation/data-store");
@@ -71,7 +71,7 @@ public final class GoogleGenomicsFactory
     private static final String CLIENT_SECRETS = "client_secrets.json";
 
     /** Genomics scope. */
-    private static final String GENOMICS_SCOPE = "https://www.googleapis.com/auth/genomics"; // https://www.googleapis.com/auth/genomics.readonly ?
+    private static final String GENOMICS_SCOPE = "https://www.googleapis.com/auth/genomics.readonly";
 
     /** List of scopes. */
     private static final List<String> SCOPES = ImmutableList.of(GENOMICS_SCOPE);
