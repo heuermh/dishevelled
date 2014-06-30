@@ -23,7 +23,8 @@
 */
 package org.dishevelled.variation.googlegenomics;
 
-import static com.google.common.base.Preconditions;
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.io.File;
 import java.io.InputStreamReader;
@@ -105,7 +106,7 @@ public final class GoogleGenomicsFactory
 
     /** Cache of genomics APIs keyed by root URL, authorization code, and authorization code flow. */
     private final LoadingCache<GenomicsKey, Genomics> cache = CacheBuilder.newBuilder()
-        .expireAfterWrite(4000, TimeUnit.SECONDS)
+        .expireAfterWrite(3540, TimeUnit.SECONDS)
         .build(new CacheLoader<GenomicsKey, Genomics>()
                {
                    @Override
@@ -182,9 +183,11 @@ public final class GoogleGenomicsFactory
                              final String authorizationCode,
                              final GoogleAuthorizationCodeFlow googleAuthorizationCodeFlow) throws IOException
     {
-        checkNotNull(rootUrl);
-        checkNotNull(authorizationCode);
-        checkNotNull(googleAuthorizationCodeFlow);
+        checkNotNull(rootUrl, "root url must not be null");
+        checkArgument(rootUrl.length() > 0, "root url must not be empty");
+        checkNotNull(authorizationCode, "authorization code must not be null");
+        checkArgument(authorizationCode.length() > 0, "authorization code must not be empty");
+        checkNotNull(googleAuthorizationCodeFlow, "authorizaton code flow must not be null");
         return cache.getUnchecked(new GenomicsKey(rootUrl, authorizationCode, googleAuthorizationCodeFlow));
     }
 
@@ -195,17 +198,17 @@ public final class GoogleGenomicsFactory
         final GoogleAuthorizationCodeFlow googleAuthorizationCodeFlow = genomicsKey.googleAuthorizationCodeFlow();
         if (logger.isInfoEnabled())
         {
-            logger.info("creating new google genomics api for root url {} authorization code {}", rootUrl, authorizationCode.substring(0, 8) + "...");
+            logger.info("creating new google genomics api for root url {} authorization code {}", rootUrl, abbrev(authorizationCode));
         }
         TokenResponse tokenResponse = googleAuthorizationCodeFlow.newTokenRequest(authorizationCode).setRedirectUri(REDIRECT_URI).execute();
         if (logger.isInfoEnabled())
         {
-            logger.info("received token response {}", tokenResponse.getAccessToken() == null ? "null" : tokenResponse.getAccessToken().substring(0, 8) + "...");
+            logger.info("received token response {}", abbrev(tokenResponse.getAccessToken()));
         }
         final Credential credential = googleAuthorizationCodeFlow.createAndStoreCredential(tokenResponse, "user");
         if (logger.isInfoEnabled())
         {
-            logger.info("received credential {} expires in {} s", credential.getAccessToken() == null ? "null" : credential.getAccessToken().substring(0, 8) + "...", credential.getExpiresInSeconds());
+            logger.info("received credential {} expires in {} s", abbrev(credential.getAccessToken()), credential.getExpiresInSeconds());
         }
         Genomics genomics = new Genomics.Builder(httpTransport, jsonFactory, credential)
             .setApplicationName(APPLICATION_NAME)
@@ -222,7 +225,7 @@ public final class GoogleGenomicsFactory
 
         if (logger.isInfoEnabled())
         {
-            logger.info("created new google genomics api for root URL {} authorization code {} application name {}", rootUrl, authorizationCode.substring(0, 8) + "...", genomics.getApplicationName() == null ? "null" : genomics.getApplicationName());
+            logger.info("created new google genomics api for root URL {} authorization code {} application name {}", rootUrl, abbrev(authorizationCode), genomics.getApplicationName() == null ? "null" : genomics.getApplicationName());
         }
         return genomics;
     }
@@ -277,6 +280,11 @@ public final class GoogleGenomicsFactory
             logger.error("unable to create data store factory", e);
             throw new RuntimeException("unable to create data store factory", e);
         }
+    }
+
+    private static String abbrev(final String value)
+    {
+        return value == null ? "null" : value.substring(0, Math.min(value.length(), 8)) + "...";
     }
 
     /**
