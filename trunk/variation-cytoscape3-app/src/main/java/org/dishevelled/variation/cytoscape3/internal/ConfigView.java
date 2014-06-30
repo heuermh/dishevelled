@@ -159,6 +159,16 @@ final class ConfigView
             }
         };
 
+    /** Refresh columns action. */
+    private final AbstractAction refreshColumns = new AbstractAction("Refresh columns")
+        {
+            @Override
+            public void actionPerformed(final ActionEvent event)
+            {
+                refreshColumns();
+            }
+        };
+
     /** Google Genomics authorize action. */
     private final AbstractAction authorize = new AbstractAction("Authorize...")
         {
@@ -175,7 +185,13 @@ final class ConfigView
             @Override
             public void propertyChange(final PropertyChangeEvent event)
             {
-                if ("species".equals(event.getPropertyName()))
+                if ("network".equals(event.getPropertyName()))
+                {
+                    System.out.println("before refresh " + model.getEnsemblGeneIdColumn() + " columnNames " + model.columnNames());
+                    refreshColumns();
+                    System.out.println("after refresh " + model.getEnsemblGeneIdColumn() + " columnNames " + model.columnNames());
+                }
+                else if ("species".equals(event.getPropertyName()))
                 {
                     species.setText((String) event.getNewValue());
                 }
@@ -244,7 +260,11 @@ final class ConfigView
             @Override
             public void actionPerformed(final ActionEvent event)
             {
-                model.setEnsemblGeneIdColumn((String) columnNames.getSelectedItem());
+                if (columnNames.getSelectedItem() != null)
+                {
+                    model.setEnsemblGeneIdColumn((String) columnNames.getSelectedItem());
+                }
+                apply.setEnabled(true);
             }
         };
 
@@ -284,6 +304,20 @@ final class ConfigView
             @Override
             public void actionPerformed(final ActionEvent event)
             {
+                if ("Google Genomics API".equals(variationServiceName.getSelectedItem()))
+                {
+                    googleGenomicsServerUrl.setEnabled(true);
+                    googleGenomicsDatasetId.setEnabled(true);
+                    googleGenomicsAuthorizationCode.setEnabled(true);
+                    authorize.setEnabled(true);
+                }
+                else
+                {
+                    googleGenomicsServerUrl.setEnabled(false);
+                    googleGenomicsDatasetId.setEnabled(false);
+                    googleGenomicsAuthorizationCode.setEnabled(false);
+                    authorize.setEnabled(false);
+                }
                 apply.setEnabled(true);
             }
         };
@@ -346,6 +380,7 @@ final class ConfigView
         reference.addActionListener(referenceActionListener);
         reference.addFocusListener(referenceFocusListener);
 
+        // todo:  need to update this when network changes
         columnNames = new JComboBox(new DefaultEventComboBoxModel<String>(model.columnNames()));
         columnNames.addActionListener(columnNamesActionListener);
 
@@ -354,13 +389,17 @@ final class ConfigView
 
         googleGenomicsServerUrl = new JTextField(32);
         googleGenomicsServerUrl.setText("https://www.googleapis.com/genomics/v1beta");
+        googleGenomicsServerUrl.setEnabled(false);
 
         googleGenomicsDatasetId = new JTextField(20);
         googleGenomicsDatasetId.setText("example");
+        googleGenomicsDatasetId.setEnabled(false);
 
         googleGenomicsAuthorizationCode = new JTextField(32);
         googleGenomicsAuthorizationCode.setText("");
+        googleGenomicsAuthorizationCode.setEnabled(false);
 
+        authorize.setEnabled(false);
         googleGenomicsFactory = new GoogleGenomicsFactory();
 
         geminiDatabaseName = new JTextField(48);
@@ -415,43 +454,17 @@ final class ConfigView
         panel.addField("Reference:", wrap(reference));
         panel.addField("Ensembl gene id column:", createEnsemblGeneIdColumnPanel());
         panel.addSpacing(12);
-        panel.addField("Ensembl REST service URL:", wrap(ensemblRestServerUrl));
-        panel.addField("Google Genomics API service URL:", wrap(googleGenomicsServerUrl));
-        panel.addField("Google Genomics API datasetId:", wrap(googleGenomicsDatasetId));
-        panel.addField("Google Genomics API authorization code:", createGoogleGenomicsAuthorizationCodePanel());
-        panel.addField("GEMINI database name:", createGeminiDatabaseNamePanel());
-        panel.addField("VCF file name:", createVcfFileNamePanel());
-        panel.addSpacing(12);
-
-        /*
-
-          ideas . . .
-
-          default to no service ?
-          map of service implementation name to factory
-          factory provides a labelfieldpanel with configuration fields
-          when service combo box changes swap out the configuration panel
-          configuration panel should reuse configuration for other services if possible
-          checkbox to share configuration?
-          any changes enable Apply button which instantiates the services and sets them in the model
-          the Apply button is then disabled
-
-          or include all the configuration parameters and enable/disable as required
-            Ensembl REST server URL, string, default to http://beta.rest.ensembl.org/
-            GEMINI database name, file, default to example.db, include [...] button to open file browser
-            VCF file, file, default to example.vcf, include [...] button to open file browser
-            Synthetic genome chromosomes, integer, default to 22
-            Synthetic genome bp, long, default to 3000000000L
-
-          or remove these from the config view and try to do this configuration when the task starts?
-             might be necessary to have this for say the add button in variation and consequence views
-
-         */
-
         panel.addField("Feature service:", wrap(featureServiceName));
         panel.addField("Variation service:", wrap(variationServiceName));
         panel.addField("Consequence service:", wrap(variationConsequenceServiceName));
         panel.addField("Consequence prediction service:", wrap(variationConsequencePredictionServiceName));
+        panel.addSpacing(12);
+        panel.addField("Ensembl REST service URL:", wrap(ensemblRestServerUrl));
+        panel.addField("VCF file name:", createVcfFileNamePanel());
+        panel.addField("GEMINI database name:", createGeminiDatabaseNamePanel());
+        panel.addField("Google Genomics API service URL:", wrap(googleGenomicsServerUrl));
+        panel.addField("Google Genomics API datasetId:", wrap(googleGenomicsDatasetId));
+        panel.addField("Google Genomics API authorization code:", createGoogleGenomicsAuthorizationCodePanel());
         panel.addSpacing(12);
         panel.addField(" ", canonical);
         panel.addField(" ", somatic);
@@ -470,6 +483,8 @@ final class ConfigView
         panel.setOpaque(false);
         panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
         panel.add(columnNames);
+        panel.add(Box.createHorizontalStrut(12));
+        panel.add(new JButton(refreshColumns));
         panel.add(Box.createGlue());
         panel.add(Box.createGlue());
         return panel;
@@ -620,12 +635,29 @@ final class ConfigView
     {
         try
         {
-
             return googleGenomicsFactory.genomics(googleGenomicsServerUrl.getText(), googleGenomicsAuthorizationCode.getText(), googleGenomicsFlow);
         }
         catch (IOException e)
         {
             throw new RuntimeException("could not create Google Genomics API", e);
+        }
+    }
+
+    /**
+     * Refresh columns.
+     */
+    private void refreshColumns()
+    {
+        model.refreshColumns();
+
+        System.out.println("during refresh " + model.getEnsemblGeneIdColumn() + " columnNames " + model.columnNames());
+        if (model.columnNames().contains(model.getEnsemblGeneIdColumn()))
+        {
+            columnNames.setSelectedItem(model.getEnsemblGeneIdColumn());
+        }
+        else
+        {
+            columnNames.setSelectedIndex(0);
         }
     }
 
@@ -660,6 +692,24 @@ final class ConfigView
         }
         else if ("Google Genomics API".equals(variationServiceName.getSelectedItem()))
         {
+            /*
+
+              when creating an instance of the service a second time with the same authorization token:
+
+              Caused by: com.google.api.client.auth.oauth2.TokenResponseException: 400 Bad Request
+              {
+                "error" : "invalid_grant",
+                "error_description" : "Invalid code."
+              }
+              at com.google.api.client.auth.oauth2.TokenResponseException.from(TokenResponseException.java:105)
+              at com.google.api.client.auth.oauth2.TokenRequest.executeUnparsed(TokenRequest.java:287)
+              at com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeTokenRequest.execute(GoogleAuthorizationCodeTokenRequest.java:158)
+              at org.dishevelled.variation.googlegenomics.GoogleGenomicsFactory.genomics(GoogleGenomicsFactory.java:143)
+              at org.dishevelled.variation.cytoscape3.internal.ConfigView.createGoogleGenomics(ConfigView.java:624)
+
+              as a temporary workaround, use a cache with expiry same as auth token
+
+             */
             model.setVariationService(new GoogleGenomicsVariationService(model.getSpecies(), model.getReference(), googleGenomicsDatasetId.getText(), createGoogleGenomics()));
         }
         else if ("VCF file".equals(variationServiceName.getSelectedItem()))
