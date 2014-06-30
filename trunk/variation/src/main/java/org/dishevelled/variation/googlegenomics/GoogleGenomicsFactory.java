@@ -23,6 +23,8 @@
 */
 package org.dishevelled.variation.googlegenomics;
 
+import static com.google.common.base.Preconditions;
+
 import java.io.File;
 import java.io.InputStreamReader;
 import java.io.IOException;
@@ -30,6 +32,13 @@ import java.io.IOException;
 import java.security.GeneralSecurityException;
 
 import java.util.List;
+import java.util.Objects;
+
+import java.util.concurrent.TimeUnit;
+
+import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.CacheLoader;
+import com.google.common.cache.LoadingCache;
 
 import com.google.common.collect.ImmutableList;
 
@@ -53,6 +62,9 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.store.FileDataStoreFactory;
 
 import com.google.api.services.genomics.Genomics;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Factory methods for the Google Genomics API.
@@ -91,6 +103,21 @@ public final class GoogleGenomicsFactory
     /** Data store factory. */
     private final FileDataStoreFactory dataStoreFactory;
 
+    /** Cache of genomics APIs keyed by root URL, authorization code, and authorization code flow. */
+    private final LoadingCache<GenomicsKey, Genomics> cache = CacheBuilder.newBuilder()
+        .expireAfterWrite(4000, TimeUnit.SECONDS)
+        .build(new CacheLoader<GenomicsKey, Genomics>()
+               {
+                   @Override
+                   public Genomics load(final GenomicsKey genomicsKey) throws IOException
+                   {
+                       return createGenomics(genomicsKey);
+                   }
+               });
+
+    /** Logger. */
+    private final Logger logger = LoggerFactory.getLogger(GoogleGenomicsFactory.class);
+
 
     /**
      * Create a new Google Genomics API factory.
@@ -101,6 +128,11 @@ public final class GoogleGenomicsFactory
         clientSecrets = createGoogleClientSecrets(jsonFactory, CLIENT_SECRETS);
         httpTransport = createNetHttpTransport();
         dataStoreFactory = createFileDataStoreFactory(DATA_STORE_DIR);
+
+        if (logger.isInfoEnabled())
+        {
+            logger.info("created google genomics factory with client id {}", clientSecrets.getDetails().getClientId());
+        }
     }
 
 
@@ -113,6 +145,10 @@ public final class GoogleGenomicsFactory
      */
     public GoogleAuthorizationCodeFlow startFlow() throws IOException
     {
+        if (logger.isInfoEnabled())
+        {
+            logger.info("starting new google genomics authorization code flow");
+        }
         return new GoogleAuthorizationCodeFlow.Builder(httpTransport, jsonFactory, clientSecrets, SCOPES)
             .setDataStoreFactory(dataStoreFactory).build();
     }
@@ -125,7 +161,13 @@ public final class GoogleGenomicsFactory
      */
     public String authorizationUrl(final GoogleAuthorizationCodeFlow googleAuthorizationCodeFlow)
     {
-        return googleAuthorizationCodeFlow.newAuthorizationUrl().setRedirectUri(REDIRECT_URI).build();
+        checkNotNull(googleAuthorizationCodeFlow);
+        String authorizationUrl = googleAuthorizationCodeFlow.newAuthorizationUrl().setRedirectUri(REDIRECT_URI).build();
+        if (logger.isInfoEnabled())
+        {
+            logger.info("created new google genomics authorization url {}", authorizationUrl);
+        }
+        return authorizationUrl;
     }
 
     /**
@@ -140,9 +182,32 @@ public final class GoogleGenomicsFactory
                              final String authorizationCode,
                              final GoogleAuthorizationCodeFlow googleAuthorizationCodeFlow) throws IOException
     {
+        checkNotNull(rootUrl);
+        checkNotNull(authorizationCode);
+        checkNotNull(googleAuthorizationCodeFlow);
+        return cache.getUnchecked(new GenomicsKey(rootUrl, authorizationCode, googleAuthorizationCodeFlow));
+    }
+
+    Genomics createGenomics(final GenomicsKey genomicsKey) throws IOException
+    {
+        final String rootUrl = genomicsKey.rootUrl();
+        final String authorizationCode = genomicsKey.authorizationCode();
+        final GoogleAuthorizationCodeFlow googleAuthorizationCodeFlow = genomicsKey.googleAuthorizationCodeFlow();
+        if (logger.isInfoEnabled())
+        {
+            logger.info("creating new google genomics api for root url {} authorization code {}", rootUrl, authorizationCode.substring(0, 8) + "...");
+        }
         TokenResponse tokenResponse = googleAuthorizationCodeFlow.newTokenRequest(authorizationCode).setRedirectUri(REDIRECT_URI).execute();
+        if (logger.isInfoEnabled())
+        {
+            logger.info("received token response {}", tokenResponse.getAccessToken() == null ? "null" : tokenResponse.getAccessToken().substring(0, 8) + "...");
+        }
         final Credential credential = googleAuthorizationCodeFlow.createAndStoreCredential(tokenResponse, "user");
-        return new Genomics.Builder(httpTransport, jsonFactory, credential)
+        if (logger.isInfoEnabled())
+        {
+            logger.info("received credential {} expires in {} s", credential.getAccessToken() == null ? "null" : credential.getAccessToken().substring(0, 8) + "...", credential.getExpiresInSeconds());
+        }
+        Genomics genomics = new Genomics.Builder(httpTransport, jsonFactory, credential)
             .setApplicationName(APPLICATION_NAME)
             .setRootUrl(rootUrl)
             .setServicePath("/")
@@ -154,6 +219,12 @@ public final class GoogleGenomicsFactory
                         httpRequest.setReadTimeout(60000); // 60 seconds                                                                                            
                     }
                 }).build();
+
+        if (logger.isInfoEnabled())
+        {
+            logger.info("created new google genomics api for root URL {} authorization code {} application name {}", rootUrl, authorizationCode.substring(0, 8) + "...", genomics.getApplicationName() == null ? "null" : genomics.getApplicationName());
+        }
+        return genomics;
     }
 
 
@@ -172,6 +243,7 @@ public final class GoogleGenomicsFactory
         }
         catch (IOException e)
         {
+            logger.error("unable to load client secrets", e);
             throw new RuntimeException("unable to load client secrets", e);
         }
     }
@@ -184,10 +256,12 @@ public final class GoogleGenomicsFactory
         }
         catch (GeneralSecurityException e)
         {
+            logger.error("unable to create HTTP transport", e);
             throw new RuntimeException("unable to create HTTP transport", e);
         }
         catch (IOException e)
         {
+            logger.error("unable to create HTTP transport", e);
             throw new RuntimeException("unable to create HTTP transport", e);
         }
     }
@@ -200,7 +274,69 @@ public final class GoogleGenomicsFactory
         }
         catch (IOException e)
         {
+            logger.error("unable to create data store factory", e);
             throw new RuntimeException("unable to create data store factory", e);
+        }
+    }
+
+    /**
+     * Compound key of root URL, authorization code, and authorization code flow.
+     */
+    private static class GenomicsKey
+    {
+        private final String rootUrl;
+        private final String authorizationCode;
+        private final GoogleAuthorizationCodeFlow googleAuthorizationCodeFlow;
+        private final int hashCode;
+
+        private GenomicsKey(final String rootUrl,
+                            final String authorizationCode,
+                            final GoogleAuthorizationCodeFlow googleAuthorizationCodeFlow)
+        {
+            this.rootUrl = rootUrl;
+            this.authorizationCode = authorizationCode;
+            this.googleAuthorizationCodeFlow = googleAuthorizationCodeFlow;
+            hashCode = Objects.hash(rootUrl, authorizationCode, googleAuthorizationCodeFlow);
+        }
+
+
+        private String rootUrl()
+        {
+            return rootUrl;
+        }
+
+        private String authorizationCode()
+        {
+            return authorizationCode;
+        }
+
+        private GoogleAuthorizationCodeFlow googleAuthorizationCodeFlow()
+        {
+            return googleAuthorizationCodeFlow;
+        }
+
+        @Override
+        public boolean equals(final Object o)
+        {
+            if (o == this)
+            {
+                return true;
+            }
+            if (!(o instanceof GenomicsKey))
+            {
+                return false;
+            }
+            GenomicsKey genomicsKey = (GenomicsKey) o;
+            return Objects.equals(rootUrl, genomicsKey.rootUrl)
+                && Objects.equals(authorizationCode, genomicsKey.authorizationCode)
+                && Objects.equals(googleAuthorizationCodeFlow, googleAuthorizationCodeFlow);
+        }
+
+
+        @Override
+        public int hashCode()
+        {
+            return hashCode;
         }
     }
 }
