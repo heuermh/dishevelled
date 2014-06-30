@@ -317,18 +317,21 @@ final class VariationModel
         {
             nodes.addAll(this.network.getNodeList());
         }
+
+        // also need to remove/add network node change listener or similar
+    }
+
+    /**
+     * Refresh columns.
+     */
+    void refreshColumns()
+    {
         // update list of column names
         columnNames.clear();
         if (this.network != null)
         {
             columnNames.addAll(VariationUtils.columnNames(this.network));
         }
-        if (!columnNames.contains(ensemblGeneIdColumn))
-        {
-            setEnsemblGeneIdColumn(null);
-        }
-
-        // also need to remove/add network node change listener or similar
     }
 
     /**
