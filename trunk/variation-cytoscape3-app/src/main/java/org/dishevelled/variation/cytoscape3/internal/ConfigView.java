@@ -187,9 +187,7 @@ final class ConfigView
             {
                 if ("network".equals(event.getPropertyName()))
                 {
-                    System.out.println("before refresh " + model.getEnsemblGeneIdColumn() + " columnNames " + model.columnNames());
                     refreshColumns();
-                    System.out.println("after refresh " + model.getEnsemblGeneIdColumn() + " columnNames " + model.columnNames());
                 }
                 else if ("species".equals(event.getPropertyName()))
                 {
@@ -650,7 +648,6 @@ final class ConfigView
     {
         model.refreshColumns();
 
-        System.out.println("during refresh " + model.getEnsemblGeneIdColumn() + " columnNames " + model.columnNames());
         if (model.columnNames().contains(model.getEnsemblGeneIdColumn()))
         {
             columnNames.setSelectedItem(model.getEnsemblGeneIdColumn());
