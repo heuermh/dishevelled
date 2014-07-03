@@ -34,6 +34,7 @@
     <module>color-scheme</module>
     <!--<module>color-scheme-cytoscape3-app</module>-->
     <module>commandline</module>
+    <module>compress</module>
     <module>curate</module>
     <module>curate-examples</module>
     <module>disclosure-triangle</module>
