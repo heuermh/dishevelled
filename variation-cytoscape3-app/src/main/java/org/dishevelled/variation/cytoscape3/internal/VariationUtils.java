@@ -29,16 +29,20 @@ import static org.dishevelled.variation.so.SequenceOntology.countAssignments;
 import static org.dishevelled.variation.so.SequenceOntology.indexByName;
 import static org.dishevelled.variation.so.SequenceOntology.sequenceVariants;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
+import java.awt.FileDialog;
 import java.awt.Toolkit;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
+
+import java.io.File;
+import java.io.FilenameFilter;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -284,6 +288,61 @@ final class VariationUtils
         JRootPane rootPane = dialog.getRootPane();
         rootPane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(closeStroke, "close");
         rootPane.getActionMap().put("close", close);
+    }
+
+    static File chooseFile(final JDialog dialog, final String title)
+    {
+        return chooseFile(dialog, title, null);
+    }
+
+    static File chooseFile(final JDialog dialog, final String title, final String fileExtension)
+    {
+        // awt file chooser
+        FileDialog fileDialog = new FileDialog(dialog, title, FileDialog.LOAD);
+        //fileDialog.setMultipleMode(false); jdk 1.7+
+        if (fileExtension != null)
+        {
+            fileDialog.setFilenameFilter(new FilenameFilter()
+                {
+                    @Override
+                    public boolean accept(final File directory, final String name)
+                    {
+                        return name.endsWith(fileExtension);
+                    }
+                });
+        }
+
+        // workaround for apple 1.6 jdk bug on osx
+        String fileDialogForDirectories = System.getProperty("apple.awt.fileDialogForDirectories");
+        System.setProperty("apple.awt.fileDialogForDirectories", "false");
+        fileDialog.setVisible(true);
+        System.setProperty("apple.awt.fileDialogForDirectories", fileDialogForDirectories);
+
+        // jdk 1.6
+        String directoryName = fileDialog.getDirectory();
+        String fileName = fileDialog.getFile();
+        if (directoryName != null && fileName != null)
+        {
+            return new File(directoryName, fileName);
+        }
+        return null;
+
+        // null-safe jdk 1.7+
+        /*
+          if (fileDialog.getFiles().length > 0)
+          {
+            model.setSequenceFile(fileDialog.getFiles()[0]);
+          }
+        */
+        
+        /*
+        // swing file chooser
+        JFileChooser fileChooser = new JFileChooser();
+        if (JFileChooser.APPROVE_OPTION == fileChooser.showOpenDialog(WormPlotApp.this))
+        {
+          model.setSequenceFile(fileChooser.getSelectedFile());
+        }
+        */
     }
 
     /**
