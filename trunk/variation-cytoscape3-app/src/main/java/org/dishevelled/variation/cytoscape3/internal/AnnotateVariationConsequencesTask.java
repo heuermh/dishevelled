@@ -34,6 +34,7 @@ import java.util.List;
 import ca.odell.glazedlists.util.concurrent.Lock;
 
 import org.cytoscape.model.CyNode;
+
 import org.cytoscape.work.AbstractTask;
 import org.cytoscape.work.TaskMonitor;
 
@@ -113,8 +114,7 @@ final class AnnotateVariationConsequencesTask
                 for (int i = 0, size = model.nodes().size(); i < size; i++)
                 {
                     CyNode node = model.nodes().get(i);
-                    Feature feature = model.featureFor(node);
-                    if (feature != null)
+                    for (Feature feature : model.featuresFor(node))
                     {
                         List<VariationConsequence> variationConsequences = model.consequencesFor(feature);
 

@@ -109,8 +109,11 @@ final class VariationModel
     /** List of column names for the current network. */
     private final EventList<String> columnNames;
 
-    /** Bidirectional mapping of nodes to features. */
-    private final BiMap<CyNode, Feature> nodesToFeatures;
+    /** Map of features keyed by node. */
+    private final ListMultimap<CyNode, Feature> nodesToFeatures;
+
+    /** Map of nodes keyed by feature. */
+    private final ListMultimap<Feature, CyNode> featuresToNodes;
 
     /** Bidirectional mapping of features to ranges. */
     private final BiMap<Feature, Range<Long>> featuresToRanges;
@@ -155,7 +158,8 @@ final class VariationModel
         variations = GlazedLists.eventList(new ArrayList<Variation>());
         variationConsequences = GlazedLists.eventList(new ArrayList<VariationConsequence>());
         columnNames = GlazedLists.eventList(new ArrayList<String>());
-        nodesToFeatures = HashBiMap.create();
+        featuresToNodes = ArrayListMultimap.create();
+        nodesToFeatures = ArrayListMultimap.create();
         featuresToRanges = HashBiMap.create();
         rangeTrees = Maps.newHashMap();
         featuresToConsequences = ArrayListMultimap.create();
@@ -530,6 +534,7 @@ final class VariationModel
         {
             features.add(feature);
         }
+        featuresToNodes.put(feature, node);
         nodesToFeatures.put(node, feature);
         // or create column in node table for feature, add node back-reference to Feature
     }
@@ -583,27 +588,27 @@ final class VariationModel
     }
 
     /**
-     * Return the feature associated with the specified node, if any.
+     * Return the features associated with the specified node, if any.
      *
      * @param node node, must not be null
-     * @return the feature associated with the specified node, or <code>null</code> if no such feature exists
+     * @return the features associated with the specified node, or an empty list if no such feature exists
      */
-    Feature featureFor(final CyNode node)
+    Iterable<Feature> featuresFor(final CyNode node)
     {
         checkNotNull(node);
         return nodesToFeatures.get(node);
     }
 
     /**
-     * Return the node associated with the specified feature, if any.
+     * Return the nodes associated with the specified feature, if any.
      *
      * @param feature feature, must not be null
-     * @return the node associated with the specified feature, or <code>null</code> if no such node exists
+     * @return the nodes associated with the specified feature, or an empty list if no such node exists
      */
-    CyNode nodeFor(final Feature feature)
+    Iterable<CyNode> nodesFor(final Feature feature)
     {
         checkNotNull(feature);
-        return nodesToFeatures.inverse().get(feature);
+        return featuresToNodes.get(feature);
     }
 
     /**

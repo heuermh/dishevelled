@@ -114,8 +114,7 @@ final class PredictVariationConsequencesTask
                 for (int i = 0, size = model.nodes().size(); i < size; i++)
                 {
                     CyNode node = model.nodes().get(i);
-                    Feature feature = model.featureFor(node);
-                    if (feature != null)
+                    for (Feature feature : model.featuresFor(node))
                     {
                         List<VariationConsequence> variationConsequences = model.consequencesFor(feature);
 

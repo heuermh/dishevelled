@@ -32,6 +32,8 @@ import java.util.List;
 
 import ca.odell.glazedlists.util.concurrent.Lock;
 
+import org.cytoscape.model.CyNode;
+
 import org.cytoscape.work.AbstractTask;
 import org.cytoscape.work.TaskMonitor;
 
@@ -101,7 +103,10 @@ final class AddVariationsTask
                     }
 
                     // todo:  count doesn't consider existing variations
-                    addCount(model.nodeFor(feature), model.getNetwork(), "variation_count", variations.size());
+                    for (CyNode node : model.nodesFor(feature))
+                    {
+                        addCount(node, model.getNetwork(), "variation_count", variations.size());
+                    }
                     taskMonitor.setProgress(i / (double) size);
                 }
             }
