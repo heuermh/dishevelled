@@ -25,6 +25,8 @@ package org.dishevelled.variation.cytoscape3.internal;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
+import static org.dishevelled.variation.cytoscape3.internal.VariationUtils.chooseFile;
+
 import java.awt.BorderLayout;
 import java.awt.Desktop;
 import java.awt.Desktop.Action;
@@ -50,6 +52,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
+import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JTextField;
 import javax.swing.JPanel;
@@ -506,10 +509,10 @@ final class ConfigView
                 @Override
                 public void actionPerformed(final ActionEvent event)
                 {
-                    JFileChooser fileChooser = new JFileChooser();
-                    if (JFileChooser.APPROVE_OPTION == fileChooser.showOpenDialog(ConfigView.this))
+                    File geminiDatabaseFile = chooseFile((JDialog) getTopLevelAncestor(), "Select a GEMINI database file");
+                    if (geminiDatabaseFile != null)
                     {
-                        geminiDatabaseName.setText(fileChooser.getSelectedFile().getName());
+                        geminiDatabaseName.setText(geminiDatabaseFile.getAbsolutePath());
                     }
                 }
             }));
@@ -533,10 +536,10 @@ final class ConfigView
                 @Override
                 public void actionPerformed(final ActionEvent event)
                 {
-                    JFileChooser fileChooser = new JFileChooser();
-                    if (JFileChooser.APPROVE_OPTION == fileChooser.showOpenDialog(ConfigView.this))
+                    File vcfFile = chooseFile((JDialog) getTopLevelAncestor(), "Select a VCF file", ".vcf");
+                    if (vcfFile != null)
                     {
-                        vcfFileName.setText(fileChooser.getSelectedFile().getName());
+                        vcfFileName.setText(vcfFile.getAbsolutePath());
                     }
                 }
             }));
