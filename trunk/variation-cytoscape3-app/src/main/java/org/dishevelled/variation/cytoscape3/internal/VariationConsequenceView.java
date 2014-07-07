@@ -183,6 +183,7 @@ final class VariationConsequenceView
                     }
                 };
             getTable().setDefaultRenderer(Integer.class, tableCellRenderer);
+            getTable().setDefaultRenderer(Long.class, tableCellRenderer);
             getTable().setDefaultRenderer(String.class, tableCellRenderer);
             getTable().setDefaultRenderer(List.class, tableCellRenderer);
 
