@@ -158,7 +158,10 @@ final class VariationUtils
             if (String.class.equals(columnClass))
             {
                 String ensemblGeneId = row.get(ensemblGeneIdColumn, String.class);
-                return ImmutableList.of(ensemblGeneId);
+                if (ensemblGeneId != null)
+                {
+                    return ImmutableList.of(ensemblGeneId);
+                }
             }
             else if (columnClass.equals(List.class))
             {
