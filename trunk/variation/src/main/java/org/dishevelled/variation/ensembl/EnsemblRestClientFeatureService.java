@@ -87,6 +87,16 @@ public final class EnsemblRestClientFeatureService
         checkArgument(this.species.equals(species));
         checkArgument(this.reference.equals(reference));
 
+        // todo: replace with retry-following-429 Too Many Requests, prevent throttling by Ensembl beta endpoints
+        try
+        {
+            Thread.sleep(600L);
+        }
+        catch (InterruptedException e)
+        {
+            // ignore
+        }
+
         try
         {
             Lookup lookup = lookupService.lookup(this.species, identifier);

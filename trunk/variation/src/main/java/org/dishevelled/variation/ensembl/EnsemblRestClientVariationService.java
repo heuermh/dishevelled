@@ -91,6 +91,16 @@ public final class EnsemblRestClientVariationService
         checkArgument(reference.equals(feature.getReference()));
         String region = feature.getRegion() + ":" + feature.getStart() + "-" + feature.getEnd() + ":" + feature.getStrand();
 
+        // todo: replace with retry-following-429 Too Many Requests, prevent throttling by Ensembl beta endpoints
+        try
+        {
+            Thread.sleep(600L);
+        }
+        catch (InterruptedException e)
+        {
+            // ignore
+        }
+
         List<Variation> variations = new ArrayList<Variation>();
         try
         {
