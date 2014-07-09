@@ -156,9 +156,8 @@ public final class GoogleGenomicsVariationServiceTest
         assertEquals(ImmutableList.of("identifier"), variation.getIdentifiers());
         assertEquals("C", variation.getReferenceAllele());
         assertEquals(ImmutableList.of("G", "T"), variation.getAlternateAlleles());
-        // todo: variation is 0-based?
-        assertEquals(0, variation.getStart());
-        assertEquals(1, variation.getEnd());
+        assertEquals(1, variation.getStart());
+        assertEquals(2, variation.getEnd());
     }
 
     @Test
