@@ -97,6 +97,16 @@ public final class EnsemblRestClientVariationConsequencePredictionService
         checkArgument(this.reference.equals(reference));
         String region = variation.getRegion() + ":" + variation.getStart() + "-" + variation.getEnd();
 
+        // todo: replace with retry-following-429 Too Many Requests, prevent throttling by Ensembl beta endpoints
+        try
+        {
+            Thread.sleep(600L);
+        }
+        catch (InterruptedException e)
+        {
+            // ignore
+        }
+
         List<VariationConsequence> consequences = new ArrayList<VariationConsequence>();
         for (String alternateAllele : variation.getAlternateAlleles())
         {

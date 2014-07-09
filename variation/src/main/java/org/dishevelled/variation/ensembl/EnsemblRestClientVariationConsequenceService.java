@@ -96,6 +96,16 @@ public final class EnsemblRestClientVariationConsequenceService
         checkArgument(species.equals(variation.getSpecies()));
         checkArgument(reference.equals(variation.getReference()));
 
+        // todo: replace with retry-following-429 Too Many Requests, prevent throttling by Ensembl beta endpoints
+        try
+        {
+            Thread.sleep(600L);
+        }
+        catch (InterruptedException e)
+        {
+            // ignore
+        }
+
         List<VariationConsequence> consequences = new ArrayList<VariationConsequence>();
         for (String identifier : variation.getIdentifiers())
         {
