@@ -26,6 +26,9 @@ package org.dishevelled.variation.ensembl;
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
+import static org.dishevelled.variation.ensembl.EnsemblRestClientUtils.retryIfNecessary;
+import static org.dishevelled.variation.ensembl.EnsemblRestClientUtils.throttle;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,6 +43,8 @@ import com.github.heuermh.ensemblrestclient.VariationService;
 import org.dishevelled.variation.Variation;
 import org.dishevelled.variation.VariationConsequence;
 import org.dishevelled.variation.VariationConsequencePredictionService;
+
+import org.dishevelled.variation.ensembl.EnsemblRestClientUtils.Remote;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -95,17 +100,9 @@ public final class EnsemblRestClientVariationConsequencePredictionService
         checkNotNull(variation);
         checkArgument(this.species.equals(species));
         checkArgument(this.reference.equals(reference));
-        String region = variation.getRegion() + ":" + variation.getStart() + "-" + variation.getEnd();
+        final String region = variation.getRegion() + ":" + variation.getStart() + "-" + variation.getEnd();
 
-        // todo: replace with retry-following-429 Too Many Requests, prevent throttling by Ensembl beta endpoints
-        try
-        {
-            Thread.sleep(600L);
-        }
-        catch (InterruptedException e)
-        {
-            // ignore
-        }
+        throttle();
 
         List<VariationConsequence> consequences = new ArrayList<VariationConsequence>();
         for (String alternateAllele : variation.getAlternateAlleles())
@@ -113,7 +110,15 @@ public final class EnsemblRestClientVariationConsequencePredictionService
             try
             {
                 // todo:  not sure how to represent indels this way . . .
-                for (Transcript transcript : variationService.consequences(species, region, alternateAllele).getTranscripts())
+                final String aa = alternateAllele;
+                for (Transcript transcript : retryIfNecessary(new Remote<List<Transcript>>()
+                    {
+                        @Override
+                        public List<Transcript> remote() throws EnsemblRestClientException
+                        {
+                            return variationService.consequences(species, region, aa).getTranscripts();
+                        }
+                    }))
                 {
                     // only use canonical transcript
                     if (transcript.isCanonical())
