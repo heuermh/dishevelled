@@ -26,6 +26,8 @@ package org.dishevelled.variation.vcf;
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
+import static org.dishevelled.compress.Sources.charSource;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -95,8 +97,7 @@ public final class VcfVariationService implements VariationService
         final List<Variation> variations = new ArrayList<Variation>();
         try
         {
-            // todo: need to transparently handle vcf.gz, vcf.bgz/.bgzf files
-            VcfReader.stream(Files.newReaderSupplier(file, Charsets.UTF_8), new VcfStreamListener()
+            VcfReader.stream(charSource(file), new VcfStreamListener()
                 {
                     @Override
                     public void record(final VcfRecord record)
