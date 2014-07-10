@@ -44,6 +44,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.KeyStroke;
@@ -295,19 +298,21 @@ final class VariationUtils
         return chooseFile(dialog, title, null);
     }
 
-    static File chooseFile(final JDialog dialog, final String title, final String fileExtension)
+    static File chooseFile(final JDialog dialog, final String title, final String fileNamePattern)
     {
         // awt file chooser
         FileDialog fileDialog = new FileDialog(dialog, title, FileDialog.LOAD);
         //fileDialog.setMultipleMode(false); jdk 1.7+
-        if (fileExtension != null)
+        if (fileNamePattern != null)
         {
+            final Pattern pattern = Pattern.compile(fileNamePattern);
             fileDialog.setFilenameFilter(new FilenameFilter()
                 {
                     @Override
                     public boolean accept(final File directory, final String name)
                     {
-                        return name.endsWith(fileExtension);
+                        Matcher m = pattern.matcher(name);
+                        return m.matches();
                     }
                 });
         }

@@ -49,6 +49,11 @@
       </dependency>
       <dependency>
         <groupId>org.dishevelled</groupId>
+        <artifactId>dsh-compress</artifactId>
+        <version>1.0</version>
+      </dependency>
+      <dependency>
+        <groupId>org.dishevelled</groupId>
         <artifactId>dsh-vocabulary</artifactId>
         <version>1.1</version>
       </dependency>
@@ -104,6 +109,11 @@
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.dishevelled</groupId>
+      <artifactId>dsh-compress</artifactId>
+      <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>org.dishevelled</groupId>

@@ -536,7 +536,7 @@ final class ConfigView
                 @Override
                 public void actionPerformed(final ActionEvent event)
                 {
-                    File vcfFile = chooseFile((JDialog) getTopLevelAncestor(), "Select a VCF file", ".vcf");
+                    File vcfFile = chooseFile((JDialog) getTopLevelAncestor(), "Select a VCF file", "^.*[vcf,gz,gzip,bz,bzip2]+$");
                     if (vcfFile != null)
                     {
                         vcfFileName.setText(vcfFile.getAbsolutePath());
