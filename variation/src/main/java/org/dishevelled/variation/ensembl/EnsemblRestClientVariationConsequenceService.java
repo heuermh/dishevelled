@@ -26,6 +26,9 @@ package org.dishevelled.variation.ensembl;
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
+import static org.dishevelled.variation.ensembl.EnsemblRestClientUtils.retryIfNecessary;
+import static org.dishevelled.variation.ensembl.EnsemblRestClientUtils.throttle;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,6 +43,8 @@ import com.github.heuermh.ensemblrestclient.VariationService;
 import org.dishevelled.variation.Variation;
 import org.dishevelled.variation.VariationConsequence;
 import org.dishevelled.variation.VariationConsequenceService;
+
+import org.dishevelled.variation.ensembl.EnsemblRestClientUtils.Remote;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -96,22 +101,22 @@ public final class EnsemblRestClientVariationConsequenceService
         checkArgument(species.equals(variation.getSpecies()));
         checkArgument(reference.equals(variation.getReference()));
 
-        // todo: replace with retry-following-429 Too Many Requests, prevent throttling by Ensembl beta endpoints
-        try
-        {
-            Thread.sleep(600L);
-        }
-        catch (InterruptedException e)
-        {
-            // ignore
-        }
+        throttle();
 
         List<VariationConsequence> consequences = new ArrayList<VariationConsequence>();
         for (String identifier : variation.getIdentifiers())
         {
             try
             {
-                for (Transcript transcript : variationService.consequences(species, identifier).getTranscripts())
+                final String id = identifier;
+                for (Transcript transcript : retryIfNecessary(new Remote<List<Transcript>>()
+                    {
+                        @Override
+                        public List<Transcript> remote() throws EnsemblRestClientException
+                        {
+                            return variationService.consequences(species, id).getTranscripts();
+                        }
+                    }))
                 {
                     // only use canonical transcript
                     if (transcript.isCanonical())

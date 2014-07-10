@@ -26,6 +26,9 @@ package org.dishevelled.variation.ensembl;
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
+import static org.dishevelled.variation.ensembl.EnsemblRestClientUtils.retryIfNecessary;
+import static org.dishevelled.variation.ensembl.EnsemblRestClientUtils.throttle;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,6 +40,8 @@ import com.google.common.collect.ImmutableList;
 import org.dishevelled.variation.Feature;
 import org.dishevelled.variation.Variation;
 import org.dishevelled.variation.VariationService;
+
+import org.dishevelled.variation.ensembl.EnsemblRestClientUtils.Remote;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -89,22 +94,21 @@ public final class EnsemblRestClientVariationService
         checkNotNull(feature);
         checkArgument(species.equals(feature.getSpecies()));
         checkArgument(reference.equals(feature.getReference()));
-        String region = feature.getRegion() + ":" + feature.getStart() + "-" + feature.getEnd() + ":" + feature.getStrand();
+        final String region = feature.getRegion() + ":" + feature.getStart() + "-" + feature.getEnd() + ":" + feature.getStrand();
 
-        // todo: replace with retry-following-429 Too Many Requests, prevent throttling by Ensembl beta endpoints
-        try
-        {
-            Thread.sleep(600L);
-        }
-        catch (InterruptedException e)
-        {
-            // ignore
-        }
+        throttle();
 
         List<Variation> variations = new ArrayList<Variation>();
         try
         {
-            for (com.github.heuermh.ensemblrestclient.Variation variation : featureService.variationFeatures(species, region))
+            for (com.github.heuermh.ensemblrestclient.Variation variation : retryIfNecessary(new Remote<List<com.github.heuermh.ensemblrestclient.Variation>>()
+                    {
+                        @Override
+                        public List<com.github.heuermh.ensemblrestclient.Variation> remote() throws EnsemblRestClientException
+                        {
+                            return featureService.variationFeatures(species, region);
+                        }
+                    }))
             {
                 variations.add(new Variation(species,
                                              reference,
