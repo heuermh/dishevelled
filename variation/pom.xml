@@ -45,7 +45,7 @@
       <dependency>
         <groupId>com.github.heuermh.ensemblrestclient</groupId>
         <artifactId>ensembl-rest-client</artifactId>
-        <version>1.5</version>
+        <version>1.5.1</version>
       </dependency>
       <dependency>
         <groupId>org.dishevelled</groupId>
