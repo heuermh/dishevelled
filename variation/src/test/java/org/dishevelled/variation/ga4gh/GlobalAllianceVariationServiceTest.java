@@ -106,11 +106,12 @@ public final class GlobalAllianceVariationServiceTest
     public void testConvert()
     {
         GAVariant variant = new GAVariant();
-        variant.setReferenceSequenceName("1");
+        variant.setReferenceName("1");
         List<CharSequence> names = Lists.newArrayList();
         names.add("rs1234");
         variant.setNames(names);
-        variant.setPosition(42L); // 0-based
+        variant.setStart(42L); // 0-based, closed-open interval
+        variant.setEnd(43L);
         variant.setReferenceBases("G");
         List<CharSequence> alternateBases = Lists.newArrayList();
         alternateBases.add("A");
