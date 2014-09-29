@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.dishevelled</groupId>
     <artifactId>dsh-parent</artifactId>
-    <version>5-SNAPSHOT</version>
+    <version>7-SNAPSHOT</version>
     <relativePath>../parent/pom.xml</relativePath>
   </parent>
   <artifactId>dsh-matrix-io</artifactId>
