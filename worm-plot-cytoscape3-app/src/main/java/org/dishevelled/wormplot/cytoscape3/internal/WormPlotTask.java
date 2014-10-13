@@ -33,15 +33,11 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.OutputStream;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import com.google.common.io.Files;
 
 import org.biojava.bio.BioException;
 
@@ -125,8 +121,10 @@ final class WormPlotTask
     /**
      * Create and return the split fasta file from the specified sequence file.
      *
-     * @param splitFasta split fasta file
-     * @return the all vs all blast file from the split fasta file
+     * @param sequenceFile sequence file
+     * @param length length
+     * @param overlap overlap
+     * @return the split fasta file from the sequence file
      * @throws IOException if an I/O error occurs
      */
     private static File createSplitFasta(final File sequenceFile, final int length, final int overlap)
@@ -145,8 +143,8 @@ final class WormPlotTask
             reader = new BufferedReader(new FileReader(sequenceFile));
             output = new BufferedOutputStream(new FileOutputStream(splitFasta));
 
-            // todo:  use logging
-            if (logger.isInfoEnabled()) {
+            if (logger.isInfoEnabled())
+            {
                 logger.info("reading from sequenceFile {}", sequenceFile);
                 logger.info("writing to splitFasta length {} overlap {} {}", length, overlap, splitFasta);
             }
@@ -155,7 +153,8 @@ final class WormPlotTask
             {
                 Sequence sequence = iter.nextSequence();
 
-                if (logger.isTraceEnabled()) {
+                if (logger.isTraceEnabled())
+                {
                     logger.trace("read sequence {}", sequence);
                 }
 
@@ -166,7 +165,8 @@ final class WormPlotTask
                     String subsequenceName = sequence.getName() + ":" + start + "-" + end + ":" + index;
                     Sequence subsequence = new SimpleSequence(sequence.subList(start, end), null, subsequenceName, null);
 
-                    if (logger.isTraceEnabled()) {
+                    if (logger.isTraceEnabled())
+                    {
                         logger.trace("writing subsequence {}", subsequence);
                     }
                     SeqIOTools.writeFasta(output, subsequence);
@@ -174,7 +174,8 @@ final class WormPlotTask
                     index++;
                 }
             }
-            if (logger.isInfoEnabled()) {
+            if (logger.isInfoEnabled())
+            {
                 logger.info("wrote to splitFasta {}", splitFasta);
             }
         }
@@ -213,7 +214,8 @@ final class WormPlotTask
      */
     private static File allVsAllBlast(final File splitFasta) throws IOException
     {
-        if (logger.isInfoEnabled()) {
+        if (logger.isInfoEnabled())
+        {
             logger.info("reading from splitFasta {}", splitFasta);
             logger.info("writing to blastdb {}", splitFasta);
         }
@@ -232,14 +234,16 @@ final class WormPlotTask
             // ignore
         }
 
-        if (logger.isInfoEnabled()) {
+        if (logger.isInfoEnabled())
+        {
             logger.info("wrote to blastdb {}", splitFasta);
         }
 
         // all vs all blast
         File blastResult = File.createTempFile("wormPlot", ".txt");
 
-        if (logger.isInfoEnabled()) {
+        if (logger.isInfoEnabled())
+        {
             logger.info("writing to blastResult {}", blastResult);
         }
 
@@ -257,7 +261,8 @@ final class WormPlotTask
             // ignore
         }
 
-        if (logger.isInfoEnabled()) {
+        if (logger.isInfoEnabled())
+        {
             logger.info("wrote to blastResult {}", blastResult);
         }
 
@@ -280,7 +285,8 @@ final class WormPlotTask
         {
             reader = new BufferedReader(new FileReader(edgeFile));
 
-            if (logger.isInfoEnabled()) {
+            if (logger.isInfoEnabled())
+            {
                 logger.info("reading from edgeFile {}", edgeFile);
             }
 
@@ -373,7 +379,8 @@ final class WormPlotTask
                 }
                 else
                 {
-                    if (logger.isWarnEnabled()) {
+                    if (logger.isWarnEnabled())
+                    {
                         logger.warn("ill formatted line {}, length {}", lineNumber, tokens.length);
                     }
                 }

@@ -56,6 +56,11 @@ final class WormPlotTaskFactory
 
     /**
      * Create a new worm plot task factory.
+     *
+     * @param analyzeNetworkCollectionTaskFactory analyze network collection task factory, must not be null
+     * @param layoutAlgorithmManager layout algorithm manager, must not be null
+     * @param visualMappingManager visual mapping manager, must not be null
+     * @param continuousMappingFactory continuous mapping factory, must not be null
      */
     WormPlotTaskFactory(final AnalyzeNetworkCollectionTaskFactory analyzeNetworkCollectionTaskFactory,
                         final CyLayoutAlgorithmManager layoutAlgorithmManager,

@@ -42,7 +42,6 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -107,9 +106,11 @@ final class WormPlotApp extends JPanel
                 // awt file chooser
                 FileDialog fileDialog = new FileDialog((JDialog) getTopLevelAncestor(), "Select a sequence file in FASTA format", FileDialog.LOAD);
                 //fileDialog.setMultipleMode(false); jdk 1.7+
-                fileDialog.setFilenameFilter(new FilenameFilter() {
+                fileDialog.setFilenameFilter(new FilenameFilter()
+                    {
                         @Override
-                        public boolean accept(final File directory, final String name) {
+                        public boolean accept(final File directory, final String name)
+                        {
                             return name.endsWith(".fa") || name.endsWith(".fasta") || name.endsWith(".txt");
                         }
                     });
@@ -192,18 +193,20 @@ final class WormPlotApp extends JPanel
         };
 
     /** Requires doc. */
-    private static final String REQUIRES = "<html><strong>Note</strong>:  Worm Plot requires " +
-        "<a href=\"http://blast.ncbi.nlm.nih.gov/Blast.cgi?PAGE_TYPE=BlastDocs&DOC_TYPE=Download\">blastn</a> " +
-        " version 2.2.24 or later to be installed.</html>";
+    private static final String REQUIRES = "<html><strong>Note</strong>:  Worm Plot requires "
+        + "<a href=\"http://blast.ncbi.nlm.nih.gov/Blast.cgi?PAGE_TYPE=BlastDocs&DOC_TYPE=Download\">blastn</a> "
+        + " version 2.2.29 or later to be installed.</html>";
 
     /** Blastn not available doc. */
-    private static final String BLASTN_NOT_AVAILABLE = "<html><font color=\"red\">BLASTN version 2.2.24 or later was not found.</font></html>";
+    private static final String BLASTN_NOT_AVAILABLE = "<html><font color=\"red\">BLASTN version 2.2.29 or later was not found.</font></html>";
 
 
     /**
      * Create a new worm plot app.
      *
+     * @param applicationManager application manager, must not be null
      * @param dialogTaskManager dialog task manager, must not be null
+     * @param wormPlotTaskFactory worm plot task factory, must not be null
      */
     WormPlotApp(final CyApplicationManager applicationManager,
                 final DialogTaskManager dialogTaskManager,
@@ -324,7 +327,6 @@ final class WormPlotApp extends JPanel
         panel.add(new JLabel("base pairs (bp)"));
         panel.add(Box.createHorizontalStrut(60));
         return panel;
-        
     }
 
     /**
@@ -341,7 +343,6 @@ final class WormPlotApp extends JPanel
         panel.add(new JLabel("base pairs (bp)"));
         panel.add(Box.createHorizontalStrut(80));
         return panel;
-        
     }
 
     /**
@@ -349,7 +350,7 @@ final class WormPlotApp extends JPanel
      */
     private void cancel()
     {
-        getTopLevelAncestor().setVisible(false);        
+        getTopLevelAncestor().setVisible(false);
     }
 
     /**
