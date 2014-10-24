@@ -65,6 +65,8 @@ import com.github.heuermh.ensemblrestclient.EnsemblRestClientFactory;
 
 import org.dishevelled.layout.LabelFieldPanel;
 
+import org.dishevelled.variation.adam.AdamVariationService;
+
 import org.dishevelled.variation.ensembl.EnsemblRestClientFeatureService;
 import org.dishevelled.variation.ensembl.EnsemblRestClientVariationService;
 import org.dishevelled.variation.ensembl.EnsemblRestClientVariationConsequenceService;
@@ -127,6 +129,9 @@ final class ConfigView
 
     /** Google Genomics API flow. */
     private GoogleAuthorizationCodeFlow googleGenomicsFlow;
+
+    /** ADAM file name. */
+    private final JTextField adamFileName;
 
     /** GEMINI database name. */
     private final JTextField geminiDatabaseName;
@@ -347,7 +352,7 @@ final class ConfigView
     private static final String[] FEATURE_SERVICE_NAMES = new String[] { "Ensembl REST client", "Synthetic genome" };
 
     /** Variation service names. */
-    private static final String[] VARIATION_SERVICE_NAMES = new String[] { "Ensembl REST client", "GEMINI command line", "Google Genomics API", "VCF file", "Synthetic genome" };
+    private static final String[] VARIATION_SERVICE_NAMES = new String[] { "Ensembl REST client", "ADAM file", "GEMINI command line", "Google Genomics API", "VCF file", "Synthetic genome" };
 
     /** Variation consequence service names. */
     private static final String[] VARIATION_CONSEQUENCE_SERVICE_NAMES = new String[] { "Ensembl REST client", "GEMINI command line", "SnpEff-annotated VCF file", "VEP-annotated VCF file", "Synthetic genome" };
@@ -402,6 +407,9 @@ final class ConfigView
 
         authorize.setEnabled(false);
         googleGenomicsFactory = new GoogleGenomicsFactory();
+
+        adamFileName = new JTextField(48);
+        adamFileName.setText("example.adam");
 
         geminiDatabaseName = new JTextField(48);
         geminiDatabaseName.setText("example.db");
@@ -462,6 +470,7 @@ final class ConfigView
         panel.addSpacing(12);
         panel.addField("Ensembl REST service URL:", wrap(ensemblRestServerUrl));
         panel.addField("VCF file name:", createVcfFileNamePanel());
+        panel.addField("ADAM file name:", createAdamFileNamePanel());
         panel.addField("GEMINI database name:", createGeminiDatabaseNamePanel());
         panel.addField("Google Genomics API service URL:", wrap(googleGenomicsServerUrl));
         panel.addField("Google Genomics API datasetId:", wrap(googleGenomicsDatasetId));
@@ -513,6 +522,33 @@ final class ConfigView
                     if (geminiDatabaseFile != null)
                     {
                         geminiDatabaseName.setText(geminiDatabaseFile.getAbsolutePath());
+                    }
+                }
+            }));
+        return panel;
+    }
+
+    /**
+     * Create and return a new ADAM file name panel.
+     *
+     * @return a new ADAM file name panel
+     */
+    private JPanel createAdamFileNamePanel()
+    {
+        JPanel panel = new JPanel();
+        panel.setOpaque(false);
+        panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+        panel.add(adamFileName);
+        panel.add(Box.createHorizontalStrut(4));
+        panel.add(new JButton(new AbstractAction("...")
+            {
+                @Override
+                public void actionPerformed(final ActionEvent event)
+                {
+                    File adamFile = chooseFile((JDialog) getTopLevelAncestor(), "Select a ADAM file", "^.*[adam,parquet]+$");
+                    if (adamFile != null)
+                    {
+                        adamFileName.setText(adamFile.getAbsolutePath());
                     }
                 }
             }));
@@ -684,7 +720,11 @@ final class ConfigView
 
         if ("Ensembl REST client".equals(variationServiceName.getSelectedItem()))
         {
-            model.setVariationService(new EnsemblRestClientVariationService(model.getSpecies(), model.getReference(), ensemblRestClientFactory.createFeatureService(serverUrl)));
+            model.setVariationService(new EnsemblRestClientVariationService(model.getSpecies(), model.getReference(), ensemblRestClientFactory.createOverlapService(serverUrl)));
+        }
+        else if ("ADAM file".equals(variationServiceName.getSelectedItem()))
+        {
+            model.setVariationService(new AdamVariationService(model.getSpecies(), model.getReference(), adamFileName.getText()));
         }
         else if ("GEMINI command line".equals(variationServiceName.getSelectedItem()))
         {

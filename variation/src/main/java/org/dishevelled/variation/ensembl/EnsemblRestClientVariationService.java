@@ -33,7 +33,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.github.heuermh.ensemblrestclient.EnsemblRestClientException;
-import com.github.heuermh.ensemblrestclient.FeatureService;
+import com.github.heuermh.ensemblrestclient.OverlapService;
 
 import com.google.common.collect.ImmutableList;
 
@@ -60,8 +60,8 @@ public final class EnsemblRestClientVariationService
     /** Reference. */
     private final String reference;
 
-    /** Feature service. */
-    private final FeatureService featureService;
+    /** Overlap service. */
+    private final OverlapService overlapService;
 
     /** Logger. */
     private final Logger logger = LoggerFactory.getLogger(EnsemblRestClientVariationService.class);
@@ -72,19 +72,19 @@ public final class EnsemblRestClientVariationService
      *
      * @param species species, must not be null
      * @param reference reference, must not be null
-     * @param featureService feature service, must not be null
+     * @param overlapService overlap service, must not be null
      */
     public EnsemblRestClientVariationService(final String species,
                                              final String reference,
-                                             final FeatureService featureService)
+                                             final OverlapService overlapService)
     {
         checkNotNull(species);
         checkNotNull(reference);
-        checkNotNull(featureService);
+        checkNotNull(overlapService);
 
         this.species = species;
         this.reference = reference;
-        this.featureService = featureService;
+        this.overlapService = overlapService;
     }
 
 
@@ -106,7 +106,7 @@ public final class EnsemblRestClientVariationService
                         @Override
                         public List<com.github.heuermh.ensemblrestclient.Variation> remote() throws EnsemblRestClientException
                         {
-                            return featureService.variationFeatures(species, region);
+                            return overlapService.variations(species, region);
                         }
                     }))
             {
