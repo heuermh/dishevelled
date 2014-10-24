@@ -391,7 +391,7 @@ final class ConfigView
         columnNames.addActionListener(columnNamesActionListener);
 
         ensemblRestServerUrl = new JTextField(32);
-        ensemblRestServerUrl.setText("http://beta.rest.ensembl.org");
+        ensemblRestServerUrl.setText("http://rest.ensembl.org");
 
         googleGenomicsServerUrl = new JTextField(32);
         googleGenomicsServerUrl.setText("https://www.googleapis.com/genomics/v1beta");
