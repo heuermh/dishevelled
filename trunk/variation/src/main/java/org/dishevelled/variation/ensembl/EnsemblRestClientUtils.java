@@ -38,7 +38,7 @@ import org.slf4j.LoggerFactory;
 final class EnsemblRestClientUtils
 {
     /** Throttle delay. */
-    static final long THROTTLE_DELAY = 400L;
+    static final long THROTTLE_DELAY = 20L;
 
     /** Maximum number of retries, <code>10</code>. */
     static final int MAX_RETRIES = 10;

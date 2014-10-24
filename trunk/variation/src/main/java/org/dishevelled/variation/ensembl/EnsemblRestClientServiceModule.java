@@ -54,9 +54,9 @@ public final class EnsemblRestClientServiceModule
     }
 
     @Provides @Singleton
-    static VariationService createVariationService(final com.github.heuermh.ensemblrestclient.FeatureService featureService)
+    static VariationService createVariationService(final com.github.heuermh.ensemblrestclient.OverlapService overlapService)
     {
-        return new EnsemblRestClientVariationService("human", "GRCh37", featureService);
+        return new EnsemblRestClientVariationService("human", "GRCh37", overlapService);
     }
 
     @Provides @Singleton
