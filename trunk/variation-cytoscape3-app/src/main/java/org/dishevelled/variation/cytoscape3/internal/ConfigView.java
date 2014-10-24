@@ -386,7 +386,6 @@ final class ConfigView
         reference.addActionListener(referenceActionListener);
         reference.addFocusListener(referenceFocusListener);
 
-        // todo:  need to update this when network changes
         columnNames = new JComboBox(new DefaultEventComboBoxModel<String>(model.columnNames()));
         columnNames.addActionListener(columnNamesActionListener);
 
