@@ -63,12 +63,40 @@ public final class Usage
                              final ArgumentList arguments,
                              final OutputStream out)
     {
+        usage(null, message, cause, commandLine, arguments, out);
+    }
+
+    /**
+     * Generate an usage string to the specified output stream.
+     *
+     * @since 1.1
+     * @param header header
+     * @param message message
+     * @param cause cause
+     * @param commandLine command line
+     * @param arguments list of arguments
+     * @param out output stream, must not be null
+     */
+    public static void usage(final String header,
+                             final String message,
+                             final Throwable cause,
+                             final CommandLine commandLine,
+                             final ArgumentList arguments,
+                             final OutputStream out)
+    {
         if (out == null)
         {
             throw new IllegalArgumentException("out must not be null");
         }
 
         PrintWriter pw = new PrintWriter(out, false);
+
+        if (header != null)
+        {
+            pw.println(header);            
+            pw.print("\n");
+        }
+
         pw.println("usage:");
 
         if (message != null)
@@ -116,7 +144,6 @@ public final class Usage
                 }
 
                 pw.println(sb.toString());
-                pw.print("\n");
             }
         }
 
