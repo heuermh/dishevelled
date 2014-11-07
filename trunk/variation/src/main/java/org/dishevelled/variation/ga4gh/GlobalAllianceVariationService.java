@@ -36,7 +36,7 @@ import org.dishevelled.variation.Feature;
 import org.dishevelled.variation.Variation;
 import org.dishevelled.variation.VariationService;
 
-import org.ga4gh.GAVariant;
+import org.ga4gh.Variant;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -86,14 +86,14 @@ public final class GlobalAllianceVariationService implements VariationService
         return variations;
     }
 
-    Variation convert(final GAVariant variant)
+    Variation convert(final Variant variant)
     {
         checkNotNull(variant);
         List<String> identifiers = toStringList(variant.getNames());
         String ref = toString(variant.getReferenceBases());
         List<String> alt = toStringList(variant.getAlternateBases());
         String region = toString(variant.getReferenceName());
-        long start = variant.getStart() + 1L; // GA4GH GAVariant is 0-based, closed-open interval
+        long start = variant.getStart() + 1L; // GA4GH Variant is 0-based, closed-open interval
         long end = variant.getEnd() + 1L;
         return new Variation(species, reference, identifiers, ref, alt, region, start, end);
     }

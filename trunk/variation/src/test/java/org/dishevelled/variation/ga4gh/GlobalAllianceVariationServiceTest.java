@@ -34,7 +34,7 @@ import com.google.common.collect.Lists;
 import org.dishevelled.variation.Feature;
 import org.dishevelled.variation.Variation;
 
-import org.ga4gh.GAVariant;
+import org.ga4gh.Variant;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -105,7 +105,7 @@ public final class GlobalAllianceVariationServiceTest
     @Test
     public void testConvert()
     {
-        GAVariant variant = new GAVariant();
+        Variant variant = new Variant();
         variant.setReferenceName("1");
         List<CharSequence> names = Lists.newArrayList();
         names.add("rs1234");
