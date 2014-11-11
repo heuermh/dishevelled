@@ -49,9 +49,9 @@ public final class FileSetArgument
      * @param required <code>true</code> if this argument is required
      */
     public FileSetArgument(final String shortName,
-                              final String longName,
-                              final String description,
-                              final boolean required)
+                           final String longName,
+                           final String description,
+                           final boolean required)
     {
         super(shortName, longName, description, required);
     }

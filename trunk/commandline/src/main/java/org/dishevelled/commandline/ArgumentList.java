@@ -42,13 +42,13 @@ public final class ArgumentList
     implements Iterable<Argument<?>>
 {
     /** Set of argument short names. */
-    private Set<String> shortNames;
+    private final Set<String> shortNames;
 
     /** Set of argument long names. */
-    private Set<String> longNames;
+    private final Set<String> longNames;
 
     /** List of arguments. */
-    private List<Argument<?>> arguments;
+    private final List<Argument<?>> arguments;
 
 
     /**
