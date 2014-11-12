@@ -4,20 +4,20 @@
   <parent>
     <groupId>org.dishevelled</groupId>
     <artifactId>dsh-parent</artifactId>
-    <version>7-SNAPSHOT</version>
+    <version>7</version>
     <relativePath>../parent/pom.xml</relativePath>
   </parent>
   <artifactId>dsh-commandline</artifactId>
   <packaging>jar</packaging>
   <name>dishevelled.org commandline</name>
-  <version>1.1-SNAPSHOT</version>
+  <version>1.1</version>
   <description>Command line parser based on typed arguments.</description>
   <url>http://www.dishevelled.org/commandline</url>
   <inceptionYear>2004</inceptionYear>
   <scm>
-    <connection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/commandline</connection>
-    <developerConnection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/commandline</developerConnection>
-    <url>http://svn.sourceforge.net/viewvc/dishevelled/trunk/commandline</url>
+    <connection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/tags/dsh-commandline-1.1</connection>
+    <developerConnection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/tags/dsh-commandline-1.1</developerConnection>
+    <url>http://svn.sourceforge.net/viewvc/dishevelled/tags/dsh-commandline-1.1</url>
   </scm>
   <distributionManagement>
     <site>
