@@ -50,24 +50,24 @@ public final class EnsemblRestClientServiceModule
     @Provides @Singleton
     static FeatureService createFeatureService(final com.github.heuermh.ensemblrestclient.LookupService lookupService)
     {
-        return new EnsemblRestClientFeatureService("human", "GRCh37", lookupService);
+        return new EnsemblRestClientFeatureService("human", "GRCh38", lookupService);
     }
 
     @Provides @Singleton
     static VariationService createVariationService(final com.github.heuermh.ensemblrestclient.OverlapService overlapService)
     {
-        return new EnsemblRestClientVariationService("human", "GRCh37", overlapService);
+        return new EnsemblRestClientVariationService("human", "GRCh38", overlapService);
     }
 
     @Provides @Singleton
     static VariationConsequenceService createVariationConsequenceService(final com.github.heuermh.ensemblrestclient.VariationService variationService)
     {
-        return new EnsemblRestClientVariationConsequenceService("human", "GRCh37", variationService);
+        return new EnsemblRestClientVariationConsequenceService("human", "GRCh38", variationService);
     }
 
     @Provides @Singleton
     static VariationConsequencePredictionService createVariationConsequencePredictionService(final com.github.heuermh.ensemblrestclient.VariationService variationService)
     {
-        return new EnsemblRestClientVariationConsequencePredictionService("human", "GRCh37", variationService);
+        return new EnsemblRestClientVariationConsequencePredictionService("human", "GRCh38", variationService);
     }
 }
