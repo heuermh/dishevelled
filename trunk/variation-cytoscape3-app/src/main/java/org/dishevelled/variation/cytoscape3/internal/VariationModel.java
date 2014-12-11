@@ -130,8 +130,8 @@ final class VariationModel
     /** Default species, <code>human</code>. */
     private static final String DEFAULT_SPECIES = "human";
 
-    /** Default reference, <code>GRCh37</code>. */
-    private static final String DEFAULT_REFERENCE = "GRCh37";
+    /** Default reference, <code>GRCh38</code>. */
+    private static final String DEFAULT_REFERENCE = "GRCh38";
 
     /** Default Ensembl gene id column, <code>ensembl</code>. */
     static final String DEFAULT_ENSEMBL_GENE_ID_COLUMN = "ensembl";

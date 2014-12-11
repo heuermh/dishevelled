@@ -35,10 +35,10 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.github.heuermh.ensemblrestclient.Allele;
 import com.github.heuermh.ensemblrestclient.EnsemblRestClientException;
-import com.github.heuermh.ensemblrestclient.Transcript;
+import com.github.heuermh.ensemblrestclient.TranscriptConsequences;
 import com.github.heuermh.ensemblrestclient.VariationService;
+import com.github.heuermh.ensemblrestclient.VariationConsequences;
 
 import org.dishevelled.variation.Variation;
 import org.dishevelled.variation.VariationConsequence;
@@ -109,41 +109,31 @@ public final class EnsemblRestClientVariationConsequenceService
             try
             {
                 final String id = identifier;
-                for (Transcript transcript : retryIfNecessary(new Remote<List<Transcript>>()
+                VariationConsequences vc = retryIfNecessary(new Remote<VariationConsequences>()
                     {
                         @Override
-                        public List<Transcript> remote() throws EnsemblRestClientException
+                        public VariationConsequences remote() throws EnsemblRestClientException
                         {
-                            return variationService.consequences(species, id).getTranscripts();
+                            return variationService.consequences(species, id);
                         }
-                    }))
-                {
-                    // only use canonical transcript
-                    if (transcript.isCanonical())
-                    {
-                        // todo:  check unique alleles?
-                        for (Allele allele : transcript.getAlleles())
-                        {
-                            // parse allele string
-                            Matcher matcher = ALLELE_STRING.matcher(allele.getAlleleString());
-                            if (matcher.matches())
-                            {
-                                String referenceAllele = matcher.group(1);
-                                String alternateAllele = matcher.group(2);
+                    });
 
-                                // todo:  check unique consequence terms?
-                                for (String consequenceTerm : allele.getConsequenceTerms())
-                                {
-                                    consequences.add(new VariationConsequence(variation.getSpecies(),
-                                                                              variation.getReference(),
-                                                                              variation.getIdentifiers(),
-                                                                              referenceAllele,
-                                                                              alternateAllele,
-                                                                              consequenceTerm,
-                                                                              variation.getRegion(),
-                                                                              variation.getStart(),
-                                                                              variation.getEnd()));
-                                }
+                String referenceAllele = vc.getReferenceAllele();
+                for (String alternateAllele : vc.getAlternateAlleles()) {
+                    for (TranscriptConsequences tc : vc.getTranscriptConsequences()) {
+                        // only consider canonical transcripts
+                        if (tc.isCanonical() && alternateAllele.equals(tc.getAlternateAllele())) {
+                            for (String consequenceTerm : tc.getConsequenceTerms())
+                            {
+                                consequences.add(new VariationConsequence(variation.getSpecies(),
+                                                                          variation.getReference(),
+                                                                          variation.getIdentifiers(),
+                                                                          referenceAllele,
+                                                                          alternateAllele,
+                                                                          consequenceTerm,
+                                                                          variation.getRegion(),
+                                                                          variation.getStart(),
+                                                                          variation.getEnd()));
                             }
                         }
                     }
@@ -156,24 +146,8 @@ public final class EnsemblRestClientVariationConsequenceService
                     logger.warn("unable to find consequences for {} for species {}, rec'd {} {}", identifier, species, e.getStatus(), e.getReason());
                 }
             }
-            slowDown();
         }
         return consequences;
-    }
-
-    /**
-     * Slow down calls to prevent rate limit throttling.
-     */
-    private static void slowDown()
-    {
-        try
-        {
-            Thread.sleep(666L);
-        }
-        catch (InterruptedException e)
-        {
-            // ignore
-        }
     }
 
     @Override
