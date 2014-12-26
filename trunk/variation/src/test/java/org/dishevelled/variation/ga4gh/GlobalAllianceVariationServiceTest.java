@@ -34,7 +34,7 @@ import com.google.common.collect.Lists;
 import org.dishevelled.variation.Feature;
 import org.dishevelled.variation.Variation;
 
-import org.ga4gh.Variant;
+import org.ga4gh.models.Variant;
 
 import org.junit.Before;
 import org.junit.Test;

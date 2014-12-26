@@ -36,7 +36,7 @@ import org.dishevelled.variation.Feature;
 import org.dishevelled.variation.Variation;
 import org.dishevelled.variation.VariationService;
 
-import org.ga4gh.Variant;
+import org.ga4gh.models.Variant;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
