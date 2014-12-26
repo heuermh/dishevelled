@@ -30,28 +30,15 @@
       <dependency>
         <groupId>com.google.apis</groupId>
         <artifactId>google-api-services-genomics</artifactId>
-        <version>v1beta-rev5-1.18.0-rc</version>
-      </dependency>
-      <dependency>
-        <groupId>com.google.http-client</groupId>
-        <artifactId>google-http-client-jackson2</artifactId>
-        <version>1.17.0-rc</version>
+        <version>v1beta2-rev13-1.19.0</version>
         <exclusions>
           <exclusion>
-            <groupId>commons-logging</groupId>
-            <artifactId>commons-logging</artifactId>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava-jdk5</artifactId>
           </exclusion>
           <exclusion>
-            <groupId>commons-logging</groupId>
-            <artifactId>commons-logging-api</artifactId>
-          </exclusion>
-          <exclusion>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-          </exclusion>
-          <exclusion>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-log4j12</artifactId>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
           </exclusion>
         </exclusions>
       </dependency>
@@ -218,11 +205,6 @@
     <dependency>
       <groupId>com.google.apis</groupId>
       <artifactId>google-api-services-genomics</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.google.http-client</groupId>
-      <artifactId>google-http-client-jackson2</artifactId>
       <scope>compile</scope>
     </dependency>
     <dependency>

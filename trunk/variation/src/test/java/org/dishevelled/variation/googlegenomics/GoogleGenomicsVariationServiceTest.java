@@ -81,8 +81,9 @@ public final class GoogleGenomicsVariationServiceTest
         feature = new Feature(species, reference, "identifier", "region", 1, 2, 1);
         variant = new Variant();
         variant.setNames(ImmutableList.of("identifier"));
-        variant.setContig("region");
-        variant.setPosition(1L);
+        variant.setReferenceName("region");
+        variant.setStart(0L);
+        variant.setEnd(1L);
         variant.setReferenceBases("C");
         variant.setAlternateBases(ImmutableList.of("G", "T"));
         response = new SearchVariantsResponse();
@@ -157,7 +158,7 @@ public final class GoogleGenomicsVariationServiceTest
         assertEquals("C", variation.getReferenceAllele());
         assertEquals(ImmutableList.of("G", "T"), variation.getAlternateAlleles());
         assertEquals(1, variation.getStart());
-        assertEquals(2, variation.getEnd());
+        assertEquals(1, variation.getEnd());
     }
 
     @Test

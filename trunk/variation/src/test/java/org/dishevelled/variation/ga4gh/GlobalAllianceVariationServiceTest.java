@@ -124,7 +124,7 @@ public final class GlobalAllianceVariationServiceTest
         assertEquals(ImmutableList.of("rs1234"), variation.getIdentifiers());
         assertEquals("1", variation.getRegion());
         assertEquals(43L, variation.getStart()); // 1-based
-        assertEquals(44L, variation.getEnd());
+        assertEquals(43L, variation.getEnd());
         assertEquals("G", variation.getReferenceAllele());
         assertEquals(ImmutableList.of("A", "C", "T"), variation.getAlternateAlleles());
     }
