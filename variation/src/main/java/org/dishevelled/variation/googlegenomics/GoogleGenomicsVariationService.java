@@ -102,10 +102,10 @@ public final class GoogleGenomicsVariationService implements VariationService
         checkArgument(reference.equals(feature.getReference()));
 
         SearchVariantsRequest request = new SearchVariantsRequest()
-            .setDatasetId(datasetId)
-            .setContig(feature.getRegion())
-            .setStartPosition(feature.getStart())
-            .setEndPosition(feature.getEnd());
+            .setVariantSetIds(ImmutableList.of(datasetId))
+            .setReferenceName(feature.getRegion())
+            .setStart(feature.getStart())
+            .setEnd(feature.getEnd());
 
         List<Variation> variations = Lists.newArrayList();
         try
@@ -117,11 +117,10 @@ public final class GoogleGenomicsVariationService implements VariationService
                 List<String> identifiers = ImmutableList.copyOf(variant.getNames());
                 String ref = variant.getReferenceBases();
                 List<String> alt = ImmutableList.copyOf(variant.getAlternateBases());
-                String contig = variant.getContig();
-                // Google Genomics API is a 1-based coordinate system
-                long position = variant.getPosition();
-                long start = position;
-                long end = start + ref.length();
+                String contig = variant.getReferenceName();
+                // Google Genomics API is a 0-based coordinate system
+                long start = variant.getStart() + 1L;
+                long end = variant.getEnd();
                 variations.add(new Variation(species, reference, identifiers, ref, alt, contig, start, end));
             }
         }
