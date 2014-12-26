@@ -393,7 +393,7 @@ final class ConfigView
         ensemblRestServerUrl.setText("http://rest.ensembl.org");
 
         googleGenomicsServerUrl = new JTextField(32);
-        googleGenomicsServerUrl.setText("https://www.googleapis.com/genomics/v1beta");
+        googleGenomicsServerUrl.setText("https://www.googleapis.com/genomics/v1beta2");
         googleGenomicsServerUrl.setEnabled(false);
 
         googleGenomicsDatasetId = new JTextField(20);
