@@ -85,6 +85,16 @@ public class UnsafeBitSet extends MutableBitSet {
     }
 
     /**
+     * Return <code>wlen</code> for the bits backing this unsafe bit set.
+     *
+     * @since 2.1
+     * @return <code>wlen</code> for the bits backing this unsafe bit set
+     */
+    public final int getWlen() {
+        return wlen();
+    }
+
+    /**
      * Set the <code>long[]</code> backing this unsafe bit set to <code>bits</code>.
      *
      * @param bits bits stored in <code>long[]</code>

@@ -442,6 +442,22 @@ public class UnsafeBitSetTest extends AbstractBitSetTest {
     }
 
     @Test
+    public void testGetBits() {
+        assertNotNull(empty.getBits());
+        assertNotNull(full.getBits());
+        assertNotNull(partial.getBits());
+        assertNotNull(half.getBits());
+    }
+
+    @Test
+    public void testGetWlen() {
+        assertTrue(empty.getWlen() > 0);
+        assertTrue(full.getWlen() > 0);
+        assertTrue(partial.getWlen() > 0);
+        assertTrue(half.getWlen() > 0);
+    }
+
+    @Test
     public void testSerializable() {
         assertTrue(bitset instanceof Serializable);
     }
