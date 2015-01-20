@@ -90,7 +90,7 @@
         </plugin>
         <plugin>
           <artifactId>maven-gpg-plugin</artifactId>
-          <version>1.5</version>
+          <version>1.6</version>
         </plugin>
         <plugin>
           <artifactId>maven-install-plugin</artifactId>
@@ -102,7 +102,7 @@
         </plugin>
         <plugin>
           <artifactId>maven-javadoc-plugin</artifactId>
-          <version>2.10.1</version>
+          <version>2.9.1</version>
         </plugin>
         <plugin>
           <artifactId>maven-release-plugin</artifactId>
@@ -169,7 +169,7 @@
       <dependency>
         <groupId>com.google.guava</groupId>
         <artifactId>guava</artifactId>
-        <version>17.0</version>
+        <version>18.0</version>
       </dependency>
       <dependency>
         <groupId>com.google.inject</groupId>
@@ -306,7 +306,7 @@
       </plugin>
       <plugin>
         <artifactId>maven-javadoc-plugin</artifactId>
-        <version>2.10.1</version>
+        <version>2.9.1</version>
         <configuration>
           <detectLinks>true</detectLinks>
           <quiet>true</quiet>
