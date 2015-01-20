@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.dishevelled</groupId>
     <artifactId>dsh-parent</artifactId>
-    <version>7-SNAPSHOT</version>
+    <version>8-SNAPSHOT</version>
     <relativePath>../parent/pom.xml</relativePath>
   </parent>
   <artifactId>${artifactId}</artifactId>
@@ -13,7 +13,7 @@
   <version>1.0-SNAPSHOT</version>
   <description>${description}</description>
   <url>http://www.dishevelled.org/${artifactId.substring(4)}</url>
-  <inceptionYear>2014</inceptionYear>
+  <inceptionYear>2015</inceptionYear>
   <scm>
     <connection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/${artifactId.substring(4)}</connection>
     <developerConnection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/${artifactId.substring(4)}</developerConnection>
@@ -45,7 +45,7 @@
         <artifactId>maven-javadoc-plugin</artifactId>
         <configuration>
           <!-- todo:  must manually update the copyright dates here -->
-          <bottom>Copyright (c) 2014 held jointly by the individual authors. Licensed under the &lt;a href="http://www.fsf.org/licensing/licenses/lgpl.html"&gt;GNU Lesser General Public License&lt;a&gt; (LGPL).</bottom>
+          <bottom>Copyright (c) 2015 held jointly by the individual authors. Licensed under the &lt;a href="http://www.fsf.org/licensing/licenses/lgpl.html"&gt;GNU Lesser General Public License&lt;a&gt; (LGPL).</bottom>
         </configuration>
       </plugin>
       <plugin>
