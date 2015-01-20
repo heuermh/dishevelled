@@ -4,20 +4,20 @@
   <parent>
     <groupId>org.dishevelled</groupId>
     <artifactId>dsh-parent</artifactId>
-    <version>7</version>
+    <version>8-SNAPSHOT</version>
     <relativePath>../parent/pom.xml</relativePath>
   </parent>
   <artifactId>dsh-archetype</artifactId>
   <packaging>jar</packaging>
   <name>dishevelled.org archetype</name>
-  <version>1.2</version>
+  <version>1.3-SNAPSHOT</version>
   <description>dishevelled.org maven project archetype.</description>
   <url>http://www.dishevelled.org/archetype</url>
   <inceptionYear>2007</inceptionYear>
   <scm>
-    <connection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/tags/dsh-archetype-1.2</connection>
-    <developerConnection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/tags/dsh-archetype-1.2</developerConnection>
-    <url>https://svn.code.sf.net/p/dishevelled/code/tags/dsh-archetype-1.2</url>
+    <connection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/archetype</connection>
+    <developerConnection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/archetype</developerConnection>
+    <url>https://svn.code.sf.net/p/dishevelled/code/trunk/archetype</url>
   </scm>
   <distributionManagement>
     <site>
