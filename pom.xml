@@ -1,103 +1,28 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="ISO-8859-1"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.dishevelled</groupId>
     <artifactId>dsh-parent</artifactId>
-    <version>7-SNAPSHOT</version>
-    <relativePath>./parent/pom.xml</relativePath>
+    <version>7</version>
+    <relativePath>../parent/pom.xml</relativePath>
   </parent>
-  <artifactId>dsh-multi-module</artifactId>
-  <packaging>pom</packaging>
-  <name>dishevelled.org multi-module</name>
-  <version>1.0-SNAPSHOT</version>
-  <description>Multi-module build for all dishevelled.org projects.</description>
+  <artifactId>dsh-archetype</artifactId>
+  <packaging>jar</packaging>
+  <name>dishevelled.org archetype</name>
+  <version>1.2</version>
+  <description>dishevelled.org maven project archetype.</description>
+  <url>http://www.dishevelled.org/archetype</url>
+  <inceptionYear>2007</inceptionYear>
   <scm>
-    <connection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk</connection>
-    <developerConnection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk</developerConnection>
-    <url>https://svn.code.sf.net/p/dishevelled/code/trunk</url>
+    <connection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/tags/dsh-archetype-1.2</connection>
+    <developerConnection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/tags/dsh-archetype-1.2</developerConnection>
+    <url>https://svn.code.sf.net/p/dishevelled/code/tags/dsh-archetype-1.2</url>
   </scm>
-  <build/>
-  <reporting/>
-  <modules>
-    <module>affinity</module>
-    <module>analysis</module>
-    <module>analysis-examples</module>
-    <module>archetype</module>
-    <module>bitset</module>
-    <module>brainstorm</module>
-    <module>cluster</module>
-    <module>cluster-examples</module>
-    <module>codegen</module>
-    <module>codegen-shell</module>
-    <module>collect</module>
-    <module>color-scheme</module>
-    <!--<module>color-scheme-cytoscape3-app</module>-->
-    <module>commandline</module>
-    <module>compress</module>
-    <module>curate</module>
-    <module>curate-examples</module>
-    <module>disclosure-triangle</module>
-    <module>disclosure-triangle-examples</module>
-    <module>eventlist-view</module>
-    <module>eventlist-view-examples</module>
-    <module>evolve</module>
-    <module>evolve-examples</module>
-    <module>functor</module>
-    <module>graph</module>
-    <module>graph-io</module>
-    <module>iconbundle</module>
-    <module>iconbundle-svg</module>
-    <module>iconbundle-tango</module>
-    <module>iconbundle-tango-examples</module>
-    <module>iconbundle-tools</module>
-    <module>identify</module>
-    <module>interpolate</module>
-    <module>layout</module>
-    <module>layout-examples</module>
-    <module>matrix</module>
-    <module>matrix-io</module>
-    <module>matrix-nonblocking</module>
-    <module>matrix-io-nonblocking</module>
-    <module>multi-map</module>
-    <module>observable</module>
-    <module>observable-graph</module>
-    <module>piccolo-ease</module>
-    <module>piccolo-ease-examples</module>
-    <module>piccolo-eventlist-view</module>
-    <module>piccolo-eventlist-view-examples</module>
-    <module>piccolo-identify</module>
-    <module>piccolo-identify-examples</module>
-    <module>piccolo-physics</module>
-    <module>piccolo-physics-examples</module>
-    <module>piccolo-ribbon</module>
-    <module>piccolo-ribbon-examples</module>
-    <module>piccolo-sprite</module>
-    <module>piccolo-sprite-examples</module>
-    <module>piccolo-state-machine-sprite</module>
-    <module>piccolo-state-machine-sprite-examples</module>
-    <module>piccolo-tilemap</module>
-    <module>piccolo-tilemap-examples</module>
-    <module>piccolo-transition</module>
-    <module>piccolo-transition-examples</module>
-    <module>piccolo-venn</module>
-    <module>piccolo-venn-examples</module>
-    <module>site-skin</module>
-    <module>swarm</module>
-    <module>swarm-examples</module>
-    <module>thumbnail</module>
-    <module>thumbnail-examples</module>
-    <module>timer</module>
-    <module>variation</module>
-    <!--<module>variation-cytoscape3-app</module>-->
-    <module>venn</module>
-    <!--<module>venn-app</module>-->
-    <!--<module>venn-cytoscape-plugin</module>-->
-    <!--<module>venn-cytoscape3-app</module>-->
-    <module>venn-examples</module>
-    <module>venn-tools</module>
-    <module>vocabulary</module>
-    <module>weighted</module>
-    <!--<module>worm-plot-cytoscape3-app</module>-->
-  </modules>
+  <distributionManagement>
+    <site>
+      <id>dishevelled.sf.net</id>
+      <url>scp://shell.sourceforge.net/home/project-web/dishevelled/htdocs/archetype-${project.version}</url>
+    </site>
+  </distributionManagement>
 </project>
