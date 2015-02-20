@@ -26,7 +26,7 @@ package org.dishevelled.variation.vcf;
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
-import static org.dishevelled.compress.Sources.charSource;
+import static org.dishevelled.compress.Readers.reader;
 
 import java.io.File;
 import java.io.IOException;
@@ -43,6 +43,10 @@ import com.google.common.io.Files;
 import org.dishevelled.variation.Variation;
 import org.dishevelled.variation.VariationConsequence;
 import org.dishevelled.variation.VariationConsequenceService;
+
+import org.nmdp.ngs.variant.vcf.VcfReader;
+import org.nmdp.ngs.variant.vcf.VcfRecord;
+import org.nmdp.ngs.variant.vcf.VcfStreamAdapter;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -97,7 +101,7 @@ public final class VepVcfVariationConsequenceService implements VariationConsequ
         final List<VariationConsequence> consequences = new ArrayList<VariationConsequence>();
         try
         {
-            VcfReader.stream(charSource(file), new VcfStreamListener()
+            VcfReader.stream(reader(file), new VcfStreamAdapter()
                 {
                     /** Record number. */
                     private int recordNumber = 0;
@@ -128,7 +132,7 @@ public final class VepVcfVariationConsequenceService implements VariationConsequ
                             // pull VEP CSQ from info, then for each canonical transcript alt/consequence term pair, add a new variation consequence
                             if (record.getInfo().containsKey("CSQ"))
                             {
-                                String[] csqTokens = record.getInfo().get("CSQ").split(",");
+                                List<String> csqTokens = record.getInfo().get("CSQ");
                                 for (String csqToken : csqTokens)
                                 {
                                     try

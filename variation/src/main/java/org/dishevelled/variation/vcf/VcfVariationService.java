@@ -26,7 +26,7 @@ package org.dishevelled.variation.vcf;
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
-import static org.dishevelled.compress.Sources.charSource;
+import static org.dishevelled.compress.Readers.reader;
 
 import java.io.File;
 import java.io.IOException;
@@ -43,6 +43,10 @@ import com.google.common.io.Files;
 import org.dishevelled.variation.Feature;
 import org.dishevelled.variation.Variation;
 import org.dishevelled.variation.VariationService;
+
+import org.nmdp.ngs.variant.vcf.VcfReader;
+import org.nmdp.ngs.variant.vcf.VcfRecord;
+import org.nmdp.ngs.variant.vcf.VcfStreamAdapter;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -97,7 +101,7 @@ public final class VcfVariationService implements VariationService
         final List<Variation> variations = new ArrayList<Variation>();
         try
         {
-            VcfReader.stream(charSource(file), new VcfStreamListener()
+            VcfReader.stream(reader(file), new VcfStreamAdapter()
                 {
                     @Override
                     public void record(final VcfRecord record)

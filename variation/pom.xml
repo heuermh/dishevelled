@@ -171,6 +171,11 @@
         <version>0.6.0-SNAPSHOT</version>
       </dependency>
       <dependency>
+        <groupId>org.nmdp.ngs</groupId>
+        <artifactId>ngs-variant</artifactId>
+        <version>1.6</version>
+      </dependency>
+      <dependency>
         <groupId>org.slf4j</groupId>
         <artifactId>slf4j-api</artifactId>
         <version>1.7.7</version>
@@ -275,6 +280,11 @@
     <dependency>
       <groupId>org.ga4gh</groupId>
       <artifactId>ga4gh-format</artifactId>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.nmdp.ngs</groupId>
+      <artifactId>ngs-variant</artifactId>
       <scope>compile</scope>
     </dependency>
     <dependency>
