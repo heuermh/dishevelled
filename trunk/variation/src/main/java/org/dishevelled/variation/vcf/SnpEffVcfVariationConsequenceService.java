@@ -26,7 +26,7 @@ package org.dishevelled.variation.vcf;
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
-import static org.dishevelled.compress.Sources.charSource;
+import static org.dishevelled.compress.Readers.reader;
 
 import java.io.File;
 import java.io.IOException;
@@ -52,6 +52,10 @@ import org.dishevelled.variation.so.SequenceOntology;
 import org.dishevelled.vocabulary.Concept;
 import org.dishevelled.vocabulary.Mapping;
 import org.dishevelled.vocabulary.Projection;
+
+import org.nmdp.ngs.variant.vcf.VcfReader;
+import org.nmdp.ngs.variant.vcf.VcfRecord;
+import org.nmdp.ngs.variant.vcf.VcfStreamAdapter;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -133,7 +137,7 @@ public final class SnpEffVcfVariationConsequenceService implements VariationCons
         final List<VariationConsequence> consequences = new ArrayList<VariationConsequence>();
         try
         {
-            VcfReader.stream(charSource(file), new VcfStreamListener()
+            VcfReader.stream(reader(file), new VcfStreamAdapter()
                 {
                     /** Record number. */
                     private int recordNumber = 0;
@@ -155,7 +159,7 @@ public final class SnpEffVcfVariationConsequenceService implements VariationCons
                             // pull SnpEff from info, then for each alt/SnpEff effect pair, add a new variation consequence
                             if (record.getInfo().containsKey("EFF"))
                             {
-                                String[] effTokens = record.getInfo().get("EFF").split(",");
+                                List<String> effTokens = record.getInfo().get("EFF");
                                 for (String effToken : effTokens)
                                 {
                                     try
