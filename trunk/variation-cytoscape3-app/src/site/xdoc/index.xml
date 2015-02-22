@@ -2,7 +2,7 @@
 <!--
 
     dsh-variation-cytoscape3-app  Variation Cytoscape3 app.
-    Copyright (c) 2013-2014 held jointly by the individual authors.
+    Copyright (c) 2013-2015 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
@@ -37,7 +37,15 @@ dishevelled.org <b>variation-cytoscape3-app</b> provides a Cytoscape 3 [<a href=
 </section>
 
 <p>
-The Variation Cytoscape 3 app was presented in a poster at the 2013 Cold Spring Harbor Laboratory conference on Genome Informatics [<a href="#2">2</a>] titled "Visualizing consequences of genetic variation in biological networks" by L.F. Tang et al.  The presentation and supplementary slides are available in OpenDocument presentation (.odp) and PowerPoint (.pptx) formats.
+The Variation Cytoscape 3 app was presented in a poster at the 2014 Intelligent Systems for Molecular Biology (ISMB) Network Biology (NetBio) SIG [<a href="#2">2</a>].  The presentation is available in Portable Document Format (.pdf) format.
+</p>
+
+<p>
+&gt; <a href="presentations/NetBio2014.pdf">NetBio2014.pdf</a><br/>
+</p>
+
+<p>
+The Variation Cytoscape 3 app was also presented in a poster at the 2013 Cold Spring Harbor Laboratory conference on Genome Informatics [<a href="#3">3</a>] titled "Visualizing consequences of genetic variation in biological networks" by L.F. Tang et al.  The presentation and supplementary slides are available in OpenDocument presentation (.odp) and PowerPoint (.pptx) formats.
 </p>
 
 <p>
@@ -53,7 +61,11 @@ The Variation Cytoscape 3 app was presented in a poster at the 2013 Cold Spring 
 &gt; <a href="http://cytoscape.org">http://cytoscape.org</a>
 </p>
 <p id="2">
-[2] 2013 Cold Spring Harbor Laboratory conference on Genome Informatics<br/>
+[2] 2014 Intelligent Systems for Molecular Biology Network Biology SIG<br/>
+&gt; <a href="http://nrnb.org/netbiosig/">http://nrnb.org/netbiosig/</a>
+</p>
+<p id="3">
+[3] 2013 Cold Spring Harbor Laboratory conference on Genome Informatics<br/>
 &gt; <a href="http://meetings.cshl.edu/meetings/2013/info13.shtml">http://meetings.cshl.edu/meetings/2013/info13.shtml</a>
 </p>
 </section>
