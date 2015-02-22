@@ -172,6 +172,11 @@
       </dependency>
       <dependency>
         <groupId>org.nmdp.ngs</groupId>
+        <artifactId>ngs-range</artifactId>
+        <version>1.6</version>
+      </dependency>
+      <dependency>
+        <groupId>org.nmdp.ngs</groupId>
         <artifactId>ngs-variant</artifactId>
         <version>1.6</version>
       </dependency>
@@ -280,6 +285,11 @@
     <dependency>
       <groupId>org.ga4gh</groupId>
       <artifactId>ga4gh-format</artifactId>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.nmdp.ngs</groupId>
+      <artifactId>ngs-range</artifactId>
       <scope>compile</scope>
     </dependency>
     <dependency>
