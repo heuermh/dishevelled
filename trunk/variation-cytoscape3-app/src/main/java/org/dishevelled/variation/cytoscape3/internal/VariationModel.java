@@ -54,8 +54,8 @@ import org.dishevelled.variation.VariationConsequence;
 import org.dishevelled.variation.VariationConsequenceService;
 import org.dishevelled.variation.VariationConsequencePredictionService;
 
-import org.dishevelled.variation.range.tree.CenteredRangeTree;
-import org.dishevelled.variation.range.tree.RangeTree;
+import org.nmdp.ngs.range.tree.CenteredRangeTree;
+import org.nmdp.ngs.range.tree.RangeTree;
 
 /**
  * Variation model.
