@@ -44,7 +44,7 @@ public final class VariationConsequence
     /** Species, e.g. <code>"human"</code>. */
     private final String species;
 
-    /** Reference, e.g. <code>"GRCh37"</code>. */
+    /** Reference, e.g. <code>"GRCh38"</code>. */
     private final String reference;
 
     /** List of identifers, e.g. <code>"rs193189309"</code>. */
