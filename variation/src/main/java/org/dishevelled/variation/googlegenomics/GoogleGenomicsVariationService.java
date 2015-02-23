@@ -118,10 +118,7 @@ public final class GoogleGenomicsVariationService implements VariationService
                 String ref = variant.getReferenceBases();
                 List<String> alt = ImmutableList.copyOf(variant.getAlternateBases());
                 String contig = variant.getReferenceName();
-                // Google Genomics API is a 0-based coordinate system
-                long start = variant.getStart() + 1L;
-                long end = variant.getEnd();
-                variations.add(new Variation(species, reference, identifiers, ref, alt, contig, start, end));
+                variations.add(new Variation(species, reference, identifiers, ref, alt, contig, variant.getStart(), variant.getEnd()));
             }
         }
         catch (IOException e)

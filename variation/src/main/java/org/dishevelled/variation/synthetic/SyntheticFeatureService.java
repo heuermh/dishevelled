@@ -28,6 +28,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.util.Random;
 
+import java.util.concurrent.atomic.AtomicLong;
+
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
@@ -49,6 +51,9 @@ public final class SyntheticFeatureService
 {
     /** Synthetic genome. */
     private final SyntheticGenome genome;
+
+    /** Next identifier. */
+    private final AtomicLong nextId = new AtomicLong(0L);
 
     /** Source of randomness. */
     private final Random random = new Random();
@@ -72,12 +77,12 @@ public final class SyntheticFeatureService
                 @Override
                 public Feature load(final String identifier)
                 {
-                    String name = genome.getNames().get(random.nextInt(genome.getNames().size()));
-                    long length = genome.getLengths().get(name) == null ? 100000L : genome.getLengths().get(name);
+                    String region = genome.getRegions().get(random.nextInt(genome.getRegions().size()));
+                    long length = genome.getLengths().get(region) == null ? 100000L : genome.getLengths().get(region);
                     long start = Double.valueOf(random.nextDouble() * length).longValue();
                     long end = start + Double.valueOf(random.nextDouble() * Math.min(length - start, 100000L)).longValue();
 
-                    return new Feature(genome.getSpecies(), genome.getReference(), identifier, name, start, end, 1);
+                    return new Feature(genome.getSpecies(), genome.getReference(), identifier, region, start, end, 1);
                 }
             });
     }
@@ -101,6 +106,24 @@ public final class SyntheticFeatureService
             return null;
         }
         return features.getUnchecked(identifier);
+    }
+
+    @Override
+    public Feature feature(final String species,
+                           final String reference,
+                           final String region,
+                           final long start,
+                           final long end,
+                           final int strand)
+    {
+        checkNotNull(species);
+        checkNotNull(reference);
+        checkNotNull(region);
+        checkArgument(genome.getSpecies().equals(species));
+        checkArgument(genome.getReference().equals(reference));
+        checkArgument(genome.getRegions().contains(region));
+
+        return new Feature(genome.getSpecies(), genome.getReference(), "Feature" + nextId.getAndIncrement(), region, start, end, 1);
     }
 
     @Override

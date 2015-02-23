@@ -53,21 +53,20 @@ public final class VariationConsequence
     /** Reference allele. */
     private final String referenceAllele;
 
-    /** Alternate alleles. */
+    /** Alternate allele. */
     private final String alternateAllele;
+
+    /** Region or contig, using Ensembl-style names, e.g. <code>"1"</code>. */
+    private final String region;
+
+    /** Variation start, using interallele, zero-start (a.k.a. zero-alleled, closed-open) coordinate system. */
+    private final long start;
+
+    /** Variation end, using interallele, zero-start (a.k.a. zero-alleled, closed-open) coordinate system. */
+    private final long end;
 
     /** Sequence Ontology (SO) term. */
     private final String sequenceOntologyTerm;
-
-    /** Region or contig, using Ensembl-style names, e.g. <code>"1"</code>. */
-    private final String region; // seq_region_name
-
-    // todo: confirm 1-based; always on 1/+/positive/forward strand
-    /** Variation start, using base-counted, one-start (a.k.a. one-based, fully-closed) coordinate system. */
-    private final long start;
-
-    /** Variation end, using base-counted, one-start (a.k.a. one-based, fully-closed) coordinate system. */
-    private final long end;
 
     /** Cached hash code. */
     private final int hashCode;
@@ -81,40 +80,40 @@ public final class VariationConsequence
      * @param identifiers list of identifiers, must not be null
      * @param referenceAllele reference allele, must not be null
      * @param alternateAllele alternate allele, must not be null
-     * @param sequenceOntologyTerm Sequence Ontology (SO) term, must not be null
      * @param region region, must not be null
      * @param start start, using base-counted, one start coordinate system
      * @param end end, using base-counted, one start coordinate system
+     * @param sequenceOntologyTerm Sequence Ontology (SO) term, must not be null
      */
     public VariationConsequence(final String species,
                                 final String reference,
                                 final List<String> identifiers,
                                 final String referenceAllele,
                                 final String alternateAllele,
-                                final String sequenceOntologyTerm,
                                 final String region,
                                 final long start,
-                                final long end)
+                                final long end,
+                                final String sequenceOntologyTerm)
     {
         checkNotNull(species);
         checkNotNull(reference);
         checkNotNull(identifiers);
         checkNotNull(referenceAllele);
         checkNotNull(alternateAllele);
-        checkNotNull(sequenceOntologyTerm);
         checkNotNull(region);
+        checkNotNull(sequenceOntologyTerm);
 
         this.species = species;
         this.reference = reference;
         this.identifiers = ImmutableList.copyOf(identifiers);
         this.referenceAllele = referenceAllele;
         this.alternateAllele = alternateAllele;
-        this.sequenceOntologyTerm = sequenceOntologyTerm;
         this.region = region;
         this.start = start;
         this.end = end;
+        this.sequenceOntologyTerm = sequenceOntologyTerm;
 
-        hashCode = Objects.hashCode(this.species, this.reference, this.identifiers, this.referenceAllele, this.alternateAllele, this.sequenceOntologyTerm, this.region, this.start, this.end);
+        hashCode = Objects.hashCode(this.species, this.reference, this.identifiers, this.referenceAllele, this.alternateAllele, this.region, this.start, this.end, this.sequenceOntologyTerm);
     }
 
 
@@ -149,7 +148,8 @@ public final class VariationConsequence
     }
 
     /**
-     * Return the reference allele for this variation consequence.
+     * Return the reference allele for this variation consequence.  The bases representing the
+     * reference allele start at position {@link #start()}.
      *
      * @return the reference allele for this variation consequence
      */
@@ -169,16 +169,6 @@ public final class VariationConsequence
     }
 
     /**
-     * Return the Sequence Ontology (SO) term for this variation consequence.
-     *
-     * @return the Sequence Ontology (SO) term for this variation consequence
-     */
-    public String getSequenceOntologyTerm()
-    {
-        return sequenceOntologyTerm;
-    }
-
-    /**
      * Return the region for this variation consequence.
      *
      * @return the region for this variation consequence
@@ -189,9 +179,14 @@ public final class VariationConsequence
     }
 
     /**
-     * Return the start for this variation consequence.
+     * Return the start of this variation consequence using interbase, zero-start (a.k.a. zero-alleled,
+     * closed-open) coordinate system.
      *
-     * @return the start for this variation consequence
+     * <p>This corresponds to the first base of the string of bases representing the reference
+     * allele. Variations spanning the join of circular genomes are represented as two variations,
+     * one on each side of the join (position <code>0</code>).</p>
+     *
+     * @return the start of this variation consequence
      */
     public long getStart()
     {
@@ -199,13 +194,27 @@ public final class VariationConsequence
     }
 
     /**
-     * Return the end for this variation consequence.
+     * Return the end (exclusive) of this variation consequence using interbase, zero-start (a.k.a. zero-alleled,
+     * closed-open) coordinate system.
      *
-     * @return the end for this variation consequence
+     * <p>Results in <code>[start, end)</code> closed-open interval.  This is typically calculated by
+     * <code>start + referenceAllele.length</code>.</p>
+     *
+     * @return the end of this variation consequence
      */
     public long getEnd()
     {
         return end;
+    }
+
+    /**
+     * Return the Sequence Ontology (SO) term for this variation consequence.
+     *
+     * @return the Sequence Ontology (SO) term for this variation consequence
+     */
+    public String getSequenceOntologyTerm()
+    {
+        return sequenceOntologyTerm;
     }
 
     @Override
@@ -232,9 +241,9 @@ public final class VariationConsequence
             && Objects.equal(identifiers, variationConsequence.identifiers)
             && Objects.equal(referenceAllele, variationConsequence.referenceAllele)
             && Objects.equal(alternateAllele, variationConsequence.alternateAllele)
-            && Objects.equal(sequenceOntologyTerm, variationConsequence.sequenceOntologyTerm)
             && Objects.equal(region, variationConsequence.region)
             && Objects.equal(start, variationConsequence.start)
-            && Objects.equal(end, variationConsequence.end);
+            && Objects.equal(end, variationConsequence.end)
+            && Objects.equal(sequenceOntologyTerm, variationConsequence.sequenceOntologyTerm);
     }
 }

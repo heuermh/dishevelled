@@ -76,7 +76,7 @@ public final class GoogleGenomicsVariationServiceTest
     {
         MockitoAnnotations.initMocks(this);
         species = "human";
-        reference = "GRCh37";
+        reference = "GRCh38";
         datasetId = "datasetId";
         feature = new Feature(species, reference, "identifier", "region", 1, 2, 1);
         variant = new Variant();
@@ -135,7 +135,7 @@ public final class GoogleGenomicsVariationServiceTest
     @Test(expected=IllegalArgumentException.class)
     public void testVariationsReferenceMismatch()
     {
-        variationService.variations(new Feature(species, "GRCh38", "identifier", "region", 1, 2, 1));
+        variationService.variations(new Feature(species, "GRCh37", "identifier", "region", 1, 2, 1));
     }
 
     @Test
@@ -157,8 +157,8 @@ public final class GoogleGenomicsVariationServiceTest
         assertEquals(ImmutableList.of("identifier"), variation.getIdentifiers());
         assertEquals("C", variation.getReferenceAllele());
         assertEquals(ImmutableList.of("G", "T"), variation.getAlternateAlleles());
-        assertEquals(1, variation.getStart());
-        assertEquals(1, variation.getEnd());
+        assertEquals(0L, variation.getStart());
+        assertEquals(1L, variation.getEnd());
     }
 
     @Test

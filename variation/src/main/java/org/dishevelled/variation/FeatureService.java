@@ -32,14 +32,36 @@ public interface FeatureService
 {
 
     /**
-     * Return the genomic coordinates for the specified identifier within the
-     * specified reference, if any.
+     * Return a feature representing the genomic coordinates for the specified identifier
+     * within the specified reference, if any.
      *
      * @param species species, must not be null
      * @param reference reference, must not be null
      * @param identifier identifier, must not be null
-     * @return the genomic coordinates for the specified identifier within the
+     * @return a feature representing the genomic coordinates for the specified identifier
+     *    within the specified reference or <code>null</code> if no such feature exists
+     */
+    Feature feature(String species,
+                    String reference,
+                    String identifier);
+
+    /**
+     * Return a feature representing the specified genomic coordinates within the
+     * specified reference, if any.
+     *
+     * @param species species, must not be null
+     * @param reference reference, must not be null
+     * @param region region, must not be null
+     * @param start start, using interbase, zero-start coordinate system
+     * @param end end, using interbase, zero-start coordinate system
+     * @param strand strand
+     * @return a feature representing the specified genomic coordinates within the
      *    specified reference or <code>null</code> if no such feature exists
      */
-    Feature feature(String species, String reference, String identifier);
+    Feature feature(String species,
+                    String reference,
+                    String region,
+                    long start,
+                    long end,
+                    int strand);
 }

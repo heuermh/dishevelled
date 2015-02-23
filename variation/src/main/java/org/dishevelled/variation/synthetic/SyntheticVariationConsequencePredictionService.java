@@ -86,8 +86,8 @@ public final class SyntheticVariationConsequencePredictionService
         for (String alternateAllele : variation.getAlternateAlleles())
         {
             consequences.add(new VariationConsequence(variation.getSpecies(), variation.getReference(), variation.getIdentifiers(),
-                                                      variation.getReferenceAllele(), alternateAllele, consequenceTerm,
-                                                      variation.getRegion(), variation.getStart(), variation.getEnd()));
+                                                      variation.getReferenceAllele(), alternateAllele,
+                                                      variation.getRegion(), variation.getStart(), variation.getEnd(), consequenceTerm));
         }
         return consequences;
     }

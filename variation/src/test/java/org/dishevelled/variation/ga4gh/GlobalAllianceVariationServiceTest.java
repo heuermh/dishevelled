@@ -54,7 +54,7 @@ public final class GlobalAllianceVariationServiceTest
     public void setUp() throws Exception
     {
         species = "human";
-        reference = "GRCh37";
+        reference = "GRCh38";
         variationService = new GlobalAllianceVariationService(species, reference);
     }
 
@@ -92,7 +92,7 @@ public final class GlobalAllianceVariationServiceTest
     @Test(expected=IllegalArgumentException.class)
     public void testVariationsReferenceMismatch()
     {
-        variationService.variations(new Feature(species, "GRCh38", "identifier", "region", 1, 2, 1));
+        variationService.variations(new Feature(species, "GRCh37", "identifier", "region", 1, 2, 1));
     }
 
 
@@ -123,7 +123,7 @@ public final class GlobalAllianceVariationServiceTest
         assertNotNull(variation);
         assertEquals(ImmutableList.of("rs1234"), variation.getIdentifiers());
         assertEquals("1", variation.getRegion());
-        assertEquals(43L, variation.getStart()); // 1-based
+        assertEquals(42L, variation.getStart());
         assertEquals(43L, variation.getEnd());
         assertEquals("G", variation.getReferenceAllele());
         assertEquals(ImmutableList.of("A", "C", "T"), variation.getAlternateAlleles());

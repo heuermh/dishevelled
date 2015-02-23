@@ -117,7 +117,7 @@ public final class VepVcfVariationConsequenceService implements VariationConsequ
                             List<String> alt = ImmutableList.copyOf(record.getAlt());
                             String region = record.getChrom();
                             long position = record.getPos();
-                            long start = position - 1;
+                            long start = position - 1L;
                             long end = start + ref.length();
 
                             /*
@@ -150,10 +150,10 @@ public final class VepVcfVariationConsequenceService implements VariationConsequ
                                                                                           variation.getIdentifiers(),
                                                                                           variation.getReferenceAllele(),
                                                                                           altAllele,
-                                                                                          sequenceOntologyTerm,
                                                                                           variation.getRegion(),
                                                                                           variation.getStart(),
-                                                                                          variation.getEnd()));
+                                                                                          variation.getEnd(),
+                                                                                          sequenceOntologyTerm));
                                             }
                                         }
                                     }
