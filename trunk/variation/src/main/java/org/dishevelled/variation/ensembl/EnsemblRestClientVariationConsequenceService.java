@@ -130,10 +130,10 @@ public final class EnsemblRestClientVariationConsequenceService
                                                                           variation.getIdentifiers(),
                                                                           referenceAllele,
                                                                           alternateAllele,
-                                                                          consequenceTerm,
                                                                           variation.getRegion(),
                                                                           variation.getStart(),
-                                                                          variation.getEnd()));
+                                                                          variation.getEnd(),
+                                                                          consequenceTerm));
                             }
                         }
                     }

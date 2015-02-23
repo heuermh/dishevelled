@@ -505,8 +505,7 @@ final class VariationModel
             List<Range<Long>> ranges = Lists.newArrayListWithCapacity(regionFeatures.size());
             for (Feature feature : regionFeatures)
             {
-                // todo:  confirm that feature ranges in Ensembl are closed
-                Range<Long> range = Range.closed(feature.getStart(), feature.getEnd());
+                Range<Long> range = Range.closedOpen(feature.getStart(), feature.getEnd());
                 ranges.add(range);
                 featuresToRanges.put(feature, range);
             }

@@ -94,7 +94,7 @@ public final class EnsemblRestClientVariationService
         checkNotNull(feature);
         checkArgument(species.equals(feature.getSpecies()));
         checkArgument(reference.equals(feature.getReference()));
-        final String region = feature.getRegion() + ":" + feature.getStart() + "-" + feature.getEnd() + ":" + feature.getStrand();
+        final String region = feature.getRegion() + ":" + (feature.getStart() + 1L) + "-" + feature.getEnd() + ":" + feature.getStrand();
 
         throttle();
 
@@ -110,14 +110,17 @@ public final class EnsemblRestClientVariationService
                         }
                     }))
             {
+                // convert from 1-based fully closed to 0-based closed open
+                long start = variation.getLocation().getStart() - 1L;
+                long end = variation.getLocation().getEnd();
                 variations.add(new Variation(species,
                                              reference,
                                              ImmutableList.of(variation.getIdentifier()),
                                              variation.getReferenceAllele(),
                                              variation.getAlternateAlleles(),
                                              variation.getLocation().getName(),
-                                             variation.getLocation().getStart(),
-                                             variation.getLocation().getEnd()));
+                                             start,
+                                             end));
             }
         }
         catch (EnsemblRestClientException e)

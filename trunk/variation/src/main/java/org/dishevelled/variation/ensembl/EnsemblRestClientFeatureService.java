@@ -112,12 +112,15 @@ public final class EnsemblRestClientFeatureService
                 }
                 return null;
             }
+            // convert from 1-based fully closed to 0-based closed open
+            long start = lookup.getLocation().getStart() - 1L;
+            long end = lookup.getLocation().getEnd();
             return new Feature(this.species,
                                reference,
                                identifier,
                                lookup.getLocation().getName(),
-                               lookup.getLocation().getStart(),
-                               lookup.getLocation().getEnd(),
+                               start,
+                               end,
                                lookup.getLocation().getStrand());
         }
         catch (EnsemblRestClientException e)
@@ -127,6 +130,23 @@ public final class EnsemblRestClientFeatureService
                 logger.warn("unable to lookup identifier {} for species {}, rec'd {} {}", identifier, this.species, e.getStatus(), e.getReason());
             }
         }
+        return null;
+    }
+
+    @Override
+    public Feature feature(final String species,
+                           final String reference,
+                           final String region,
+                           final long start,
+                           final long end,
+                           final int strand)
+    {
+        checkNotNull(species);
+        checkNotNull(reference);
+        checkNotNull(region);
+        checkArgument(this.species.equals(species));
+        checkArgument(this.reference.equals(reference));
+
         return null;
     }
 

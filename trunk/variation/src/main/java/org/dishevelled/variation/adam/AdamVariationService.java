@@ -146,19 +146,23 @@ public final class AdamVariationService implements VariationService
         final Set<Variation> variations = new HashSet<Variation>();
         try
         {
-            //logger.info("paths = " + paths);
+            logger.info("paths = " + paths);
             for (Path path : paths)
             {
+                logger.info("path = " + path);
+                // todo: unit test hangs here . . .
                 AvroParquetReader<Genotype> parquetReader = new AvroParquetReader<Genotype>(path);
+                logger.info("parquetReader = " + parquetReader);
                 while (true)
                 {
+                    logger.info("reading genotype...");
                     Genotype genotype = parquetReader.read();
-                    //logger.info("genotype = " + genotype);
+                    logger.info("genotype = " + genotype);
                     if (genotype == null)
                     {
                         break;
                     }
-                    //logger.info("variant = " + genotype.getVariant());
+                    logger.info("variant = " + genotype.getVariant());
                     variations.add(convert(genotype.getVariant()));
                 }
                 parquetReader.close();
@@ -195,10 +199,7 @@ public final class AdamVariationService implements VariationService
         String ref = toString(variant.getReferenceAllele());
         List<String> alt = ImmutableList.of(toString(variant.getAlternateAllele()));
         String region = toString(variant.getContig().getContigName());
-        // ADAM is 0-based, closed-open interval
-        long start = variant.getStart() + 1L;
-        long end = variant.getEnd();
-        return new Variation(species, reference, identifiers, ref, alt, region, start, end);
+        return new Variation(species, reference, identifiers, ref, alt, region, variant.getStart(), variant.getEnd());
     }
 
     static String toString(final CharSequence charSequence)

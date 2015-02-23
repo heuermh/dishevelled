@@ -86,14 +86,14 @@ public final class SyntheticVariationConsequenceService
         {
             String consequenceTerm = sample();
             consequences.add(new VariationConsequence(variation.getSpecies(), variation.getReference(), variation.getIdentifiers(),
-                    variation.getReferenceAllele(), alternateAllele, consequenceTerm,
-                    variation.getRegion(), variation.getStart(), variation.getEnd()));
+                    variation.getReferenceAllele(), alternateAllele,
+                    variation.getRegion(), variation.getStart(), variation.getEnd(), consequenceTerm));
 
             if (random.nextDouble() < 0.25)
             {
                 consequences.add(new VariationConsequence(variation.getSpecies(), variation.getReference(), variation.getIdentifiers(),
-                        variation.getReferenceAllele(), alternateAllele, sample(consequenceTerm),
-                        variation.getRegion(), variation.getStart(), variation.getEnd()));
+                        variation.getReferenceAllele(), alternateAllele,
+                        variation.getRegion(), variation.getStart(), variation.getEnd(), sample(consequenceTerm)));
             }
         }
         return consequences;

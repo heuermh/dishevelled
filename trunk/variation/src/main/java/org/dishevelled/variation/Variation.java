@@ -44,7 +44,7 @@ public final class Variation
     /** Species, e.g. <code>"human"</code>. */
     private final String species;
 
-    /** Reference, e.g. <code>"GRCh37"</code>. */
+    /** Reference, e.g. <code>"GRCh38"</code>. */
     private final String reference;
 
     /** List of identifers, e.g. <code>"rs193189309"</code>. */
@@ -59,11 +59,10 @@ public final class Variation
     /** Region or contig, using Ensembl-style names, e.g. <code>"1"</code>. */
     private final String region;
 
-    // todo: confirm 1-based; always on 1/+/positive/forward strand
-    /** Variation start, using base-counted, one-start (a.k.a. one-based, fully-closed) coordinate system. */
+    /** Variation start, using interbase, zero-start (a.k.a. zero-alleled, closed-open) coordinate system. */
     private final long start;
 
-    /** Variation end, using base-counted, one-start (a.k.a. one-based, fully-closed) coordinate system. */
+    /** Variation end, using interbase, zero-start (a.k.a. zero-alleled, closed-open) coordinate system. */
     private final long end;
 
     /** Cached hash code. */
@@ -76,11 +75,11 @@ public final class Variation
      * @param species species, must not be null
      * @param reference reference, must not be null
      * @param identifiers list of identifiers, must not be null
-     * @param referenceAllele reference allele, must not be null
+     * @param referenceAlleles reference alleles, must not be null
      * @param alternateAlleles list of alternate alleles, must not be null
      * @param region region, must not be null
-     * @param start start, using base-counted, one start coordinate system
-     * @param end end, using base-counted, one start coordinate system
+     * @param start start, using allele-counted, one start coordinate system
+     * @param end end, using allele-counted, one start coordinate system
      */
     public Variation(final String species,
                      final String reference,
@@ -142,7 +141,8 @@ public final class Variation
     }
 
     /**
-     * Return the reference allele for this variation.
+     * Return the reference allele for this variation.  The bases representing the
+     * reference allele start at position {@link #start()}.
      *
      * @return the reference allele for this variation
      */
@@ -172,9 +172,14 @@ public final class Variation
     }
 
     /**
-     * Return the start for this variation.
+     * Return the start of this variation using interbase, zero-start (a.k.a. zero-alleled,
+     * closed-open) coordinate system.
      *
-     * @return the start for this variation
+     * <p>This corresponds to the first base of the string of bases representing the reference
+     * allele. Variations spanning the join of circular genomes are represented as two variations,
+     * one on each side of the join (position <code>0</code>).</p>
+     *
+     * @return the start of this variation
      */
     public long getStart()
     {
@@ -182,9 +187,13 @@ public final class Variation
     }
 
     /**
-     * Return the end for this variation.
+     * Return the end (exclusive) of this variation using interbase, zero-start (a.k.a. zero-alleled,
+     * closed-open) coordinate system.
      *
-     * @return the end for this variation
+     * <p>Results in <code>[start, end)</code> closed-open interval.  This is typically calculated by
+     * <code>start + referenceAllele.length</code>.</p>
+     *
+     * @return the end of this variation
      */
     public long getEnd()
     {

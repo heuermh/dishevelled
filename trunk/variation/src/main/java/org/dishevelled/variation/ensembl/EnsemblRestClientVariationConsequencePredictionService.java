@@ -100,7 +100,7 @@ public final class EnsemblRestClientVariationConsequencePredictionService
         checkNotNull(variation);
         checkArgument(this.species.equals(species));
         checkArgument(this.reference.equals(reference));
-        final String region = variation.getRegion() + ":" + variation.getStart() + "-" + variation.getEnd();
+        final String region = variation.getRegion() + ":" + (variation.getStart() + 1L) + "-" + variation.getEnd();
 
         throttle();
 
@@ -131,10 +131,10 @@ public final class EnsemblRestClientVariationConsequencePredictionService
                                                                       variation.getIdentifiers(),
                                                                       referenceAllele,
                                                                       alternateAllele,
-                                                                      consequenceTerm,
                                                                       variation.getRegion(),
                                                                       variation.getStart(),
-                                                                      variation.getEnd()));
+                                                                      variation.getEnd(),
+                                                                      consequenceTerm));
                         }
                     }
                 }

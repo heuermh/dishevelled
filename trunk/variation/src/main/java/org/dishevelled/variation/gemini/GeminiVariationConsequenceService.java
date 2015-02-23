@@ -180,7 +180,7 @@ public final class GeminiVariationConsequenceService implements VariationConsequ
                 }
 
                 if (sequenceOntologyTerm != null) {
-                    variationConsequences.add(new VariationConsequence(species, reference, identifiers, ref, alt, sequenceOntologyTerm, region, start, end));
+                    variationConsequences.add(new VariationConsequence(species, reference, identifiers, ref, alt, region, start, end, sequenceOntologyTerm));
                 }
             }
         }

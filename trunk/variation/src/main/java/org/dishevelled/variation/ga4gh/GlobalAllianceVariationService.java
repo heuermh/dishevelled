@@ -93,9 +93,7 @@ public final class GlobalAllianceVariationService implements VariationService
         String ref = toString(variant.getReferenceBases());
         List<String> alt = toStringList(variant.getAlternateBases());
         String region = toString(variant.getReferenceName());
-        long start = variant.getStart() + 1L; // GA4GH Variant is 0-based, closed-open interval
-        long end = variant.getEnd();
-        return new Variation(species, reference, identifiers, ref, alt, region, start, end);
+        return new Variation(species, reference, identifiers, ref, alt, region, variant.getStart(), variant.getEnd());
     }
 
     static String toString(final CharSequence charSequence)

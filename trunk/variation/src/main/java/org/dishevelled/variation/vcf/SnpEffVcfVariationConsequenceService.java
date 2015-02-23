@@ -189,10 +189,10 @@ public final class SnpEffVcfVariationConsequenceService implements VariationCons
                                                                                       variation.getIdentifiers(),
                                                                                       variation.getReferenceAllele(),
                                                                                       altAllele,
-                                                                                      sequenceOntologyTerm,
                                                                                       variation.getRegion(),
                                                                                       variation.getStart(),
-                                                                                      variation.getEnd()));
+                                                                                      variation.getEnd(),
+                                                                                      sequenceOntologyTerm));
                                         }
                                     }
                                     catch (IOException e)

@@ -41,10 +41,10 @@ public final class SyntheticGenome
     /** Reference. */
     private final String reference;
 
-    /** List of contig names. */
-    private final List<String> names;
+    /** List of regions. */
+    private final List<String> regions;
 
-    /** Map of lengths keyed by contig name. */
+    /** Map of lengths keyed by region. */
     private final Map<String, Integer> lengths;
 
 
@@ -61,18 +61,18 @@ public final class SyntheticGenome
         this.species = species;
         this.reference = reference;
 
-        names = new ArrayList<String>(chromosomes);
+        regions = new ArrayList<String>(chromosomes);
         lengths = new HashMap<String, Integer>(chromosomes);
 
         for (int i = 1, size = chromosomes + 1; i < size; i++)
         {
-            names.add(String.valueOf(i));
+            regions.add(String.valueOf(i));
         }
         long left = bp;
         for (int i = chromosomes - 1; i > 0; i--)
         { 
             int length = (int) (left / i);
-            lengths.put(names.get(i), length);
+            lengths.put(regions.get(i), length);
             left -= length;
         }
     }
@@ -99,19 +99,19 @@ public final class SyntheticGenome
     }
 
     /**
-     * Return the list of contig names for this synthetic genome.
+     * Return the list of regions for this synthetic genome.
      *
-     * @return the list of contig names for this synthetic genome
+     * @return the list of regions for this synthetic genome
      */
-    List<String> getNames()
+    List<String> getRegions()
     {
-        return names;
+        return regions;
     }
 
     /**
-     * Return the map of contig lengths keyed by name for this synthetic genome.
+     * Return the map of region lengths keyed by region for this synthetic genome.
      *
-     * @return the map of contig lengths keyed by name for this synthetic genome
+     * @return the map of region lengths keyed by region for this synthetic genome
      */
     Map<String, Integer> getLengths()
     {
