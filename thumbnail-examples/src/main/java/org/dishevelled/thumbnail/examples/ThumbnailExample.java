@@ -1,7 +1,7 @@
 /*
 
     dsh-thumbnail-examples  Examples for the thumbnail library.
-    Copyright (c) 2013 held jointly by the individual authors.
+    Copyright (c) 2013-2015 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
@@ -30,6 +30,7 @@ import java.io.File;
 import java.net.URI;
 
 import java.util.Collections;
+import java.util.List;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -113,7 +114,7 @@ public final class ThumbnailExample extends JPanel implements Runnable
 
     private void addDirectory(final File directory)
     {
-        new SwingWorker<Void, Void>()
+        new SwingWorker<Void, URI>()
         {
             @Override
             protected Void doInBackground() throws Exception
@@ -125,10 +126,18 @@ public final class ThumbnailExample extends JPanel implements Runnable
                     Matcher matcher = IMAGE_FILE_EXTENSIONS.matcher(file.getPath());
                     if (matcher.matches())
                     {
-                        uris.add(file.toURI());
+                        publish(file.toURI());
                     }
                 }
                 return null;
+            }
+
+            // todo:  even with this, all URIs appear to be added simultaneously after a wait
+            @Override
+            protected void process(final List<URI> toAdd) {
+                for (URI uri : toAdd) {
+                    uris.add(uri);
+                }
             }
         }.run();
     }
