@@ -80,12 +80,12 @@ public final class ThumbnailExample extends JPanel implements Runnable
     {
         super();
         uris = GlazedLists.eventList(Collections.<URI>emptyList());
-        count = new CountLabel<URI>(uris);
+        //count = new CountLabel<URI>(uris);
         list = new UriList(uris);
 
         setLayout(new BorderLayout());
         setBorder(new EmptyBorder(12, 12, 12, 12));
-        //add("North", count);
+        add("North", createCountPanel());
         add("Center", list);
     }
 
@@ -132,7 +132,6 @@ public final class ThumbnailExample extends JPanel implements Runnable
                 return null;
             }
 
-            // todo:  even with this, all URIs appear to be added simultaneously after a wait
             @Override
             protected void process(final List<URI> toAdd) {
                 for (URI uri : toAdd) {

@@ -44,6 +44,9 @@ import org.dishevelled.thumbnail.ThumbnailManager;
  */
 public final class ThumbnailRenderer implements Renderer
 {
+    /** Last modified cache. */
+    private final LastModifiedCache lastModifiedCache;
+
     /** Thumbnail manager. */
     private final ThumbnailManager thumbnailManager;
 
@@ -67,6 +70,7 @@ public final class ThumbnailRenderer implements Renderer
             throw new IllegalArgumentException("thumbnailManager must not be null");
         }
         this.thumbnailManager = thumbnailManager;
+        lastModifiedCache = LastModifiedCache.getInstance();
     }
 
 
@@ -81,20 +85,10 @@ public final class ThumbnailRenderer implements Renderer
     {
         if (value instanceof URI)
         {
+            URI uri = (URI) value;
             try
             {
-                URI uri = (URI) value;
-                long lastModified = 0L;
-                try
-                {
-                    File file = new File(uri);
-                    lastModified = file.lastModified();
-                }
-                catch (IllegalArgumentException e)
-                {
-                    // ignore
-                }
-                Image thumbnail = thumbnailManager.createThumbnail(uri, lastModified);
+                Image thumbnail = thumbnailManager.createThumbnail(uri, lastModifiedCache.get(uri));
                 if (imageIcon == null)
                 {
                     imageIcon = new ImageIcon(thumbnail);

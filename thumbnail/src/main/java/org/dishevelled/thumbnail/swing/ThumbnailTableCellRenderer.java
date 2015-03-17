@@ -46,6 +46,9 @@ import org.dishevelled.thumbnail.ThumbnailManager;
  */
 public final class ThumbnailTableCellRenderer extends DefaultTableCellRenderer
 {
+    /** Last modified cache. */
+    private final LastModifiedCache lastModifiedCache;
+
     /** Thumbnail manager. */
     private final ThumbnailManager thumbnailManager;
 
@@ -66,10 +69,11 @@ public final class ThumbnailTableCellRenderer extends DefaultTableCellRenderer
             throw new IllegalArgumentException("thumbnailManager must not be null");
         }
         this.thumbnailManager = thumbnailManager;
+        lastModifiedCache = LastModifiedCache.getInstance();
     }
 
 
-    /** {@inheritDoc} */
+    @Override
     public Component getTableCellRendererComponent(final JTable table,
                                                    final Object value,
                                                    final boolean isSelected,
@@ -81,20 +85,10 @@ public final class ThumbnailTableCellRenderer extends DefaultTableCellRenderer
 
         if (value instanceof URI)
         {
+            URI uri = (URI) value;
             try
             {
-                URI uri = (URI) value;
-                long lastModified = 0L;
-                try
-                {
-                    File file = new File(uri);
-                    lastModified = file.lastModified();
-                }
-                catch (IllegalArgumentException e)
-                {
-                    // ignore
-                }
-                Image thumbnail = thumbnailManager.createThumbnail(uri, lastModified);
+                Image thumbnail = thumbnailManager.createThumbnail(uri, lastModifiedCache.get(uri));
                 if (imageIcon == null)
                 {
                     imageIcon = new ImageIcon(thumbnail);
