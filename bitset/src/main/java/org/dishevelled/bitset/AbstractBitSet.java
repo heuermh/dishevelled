@@ -41,10 +41,12 @@
  */
 package org.dishevelled.bitset;
 
+import org.dishevelled.functor.UnaryProcedure;
+
 /**
  * Abstract bit set.
  */
-public abstract class AbstractBitSet {
+public abstract class AbstractBitSet { // implements Iterable<Long> ?
 
     /**
      * Return the capacity of this bit set.
@@ -104,6 +106,13 @@ public abstract class AbstractBitSet {
     public abstract long prevClearBit(long index);
 
     /**
+     * Call the specified procedure with the index of each bit set to false in this bit set.
+     *
+     * @param procedure procedure, must not be null
+     */
+    public abstract void forEachClearBit(UnaryProcedure<Long> procedure);
+
+    /**
      * Return the index of the next bit set to true on or after the specified index, or
      * <code>-1</code> if no such bit exists.
      *
@@ -124,6 +133,13 @@ public abstract class AbstractBitSet {
     public abstract long prevSetBit(long index);
 
     /**
+     * Call the specified procedure with the index of each bit set to true in this bit set.
+     *
+     * @param procedure procedure, must not be null
+     */
+    public abstract void forEachSetBit(UnaryProcedure<Long> procedure);
+
+    /**
      * Return true if the specified bit set has any bits set to true that are also set to true
      * in this bit set.
      *
@@ -134,12 +150,8 @@ public abstract class AbstractBitSet {
     public abstract boolean intersects(AbstractBitSet other);
 
 
-    //public abstract void set(Predicate<Long> predicate); ?
-    //public abstract void forEachSetBit(Procedure<Long> procedure);
-    //public abstract void forEachUnsetBit(Procedure<Long> procedure);
-
-
     // optional operations
+
 
     /**
      * Set the bit at the specified index in this bit set to true (optional operation).
@@ -221,7 +233,8 @@ public abstract class AbstractBitSet {
     public abstract void flip(long startIndex, long endIndex);
 
     /**
-     * Set the bit at the specified index in this bit set to the compliment of its current value, without checking bounds (optional operation).
+     * Set the bit at the specified index in this bit set to the compliment of its current value, without checking
+     * bounds (optional operation).
      *
      * @param index index
      * @throws UnsupportedOperationException if this operation is not supported by this bit set
@@ -229,7 +242,8 @@ public abstract class AbstractBitSet {
     public abstract void flipQuick(long index);
 
     /**
-     * Set the bit at the specified index in this bit set to the complement of its current value and return its previous value (optional operation).
+     * Set the bit at the specified index in this bit set to the complement of its current value and return its
+     * previous value (optional operation).
      *
      * @param index index
      * @return  the previous value of the bit at the specified index
@@ -253,6 +267,8 @@ public abstract class AbstractBitSet {
 
     // logical operations
     //   is it possible to return the specific subclass?
+    //   perhaps these need to be moved back to subclasses
+
 
     /**
      * Perform a logical XOR of the specified bit set and this bit set.

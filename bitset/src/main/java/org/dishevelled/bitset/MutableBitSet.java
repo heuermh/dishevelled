@@ -45,6 +45,8 @@ import java.io.Serializable;
 
 import java.util.Arrays;
 
+import org.dishevelled.functor.UnaryProcedure;
+
 /**
  * Mutable bit set.
  */
@@ -163,6 +165,15 @@ public class MutableBitSet extends AbstractBitSet implements Serializable /*, Cl
     }
 
     @Override
+    public void forEachClearBit(final UnaryProcedure<Long> procedure) {
+        if (procedure == null) {
+            throw new NullPointerException("procedure must not be null");
+        }
+        // iterate over an immutable copy for thread safety
+        immutableCopy().forEachClearBit(procedure);
+    }
+
+    @Override
     public long nextSetBit(final long index) {
         int i = (int) (index >>> 6);
         if (i >= wlen) {
@@ -196,7 +207,8 @@ public class MutableBitSet extends AbstractBitSet implements Serializable /*, Cl
             }
             subIndex = 63; // last possible bit
             word = bits[i];
-        } else {
+        }
+        else {
             if (i < 0) {
                 return -1L;
             }
@@ -215,6 +227,15 @@ public class MutableBitSet extends AbstractBitSet implements Serializable /*, Cl
             }
         }
         return -1L;
+    }
+
+    @Override
+    public void forEachSetBit(final UnaryProcedure<Long> procedure) {
+        if (procedure == null) {
+            throw new NullPointerException("procedure must not be null");
+        }
+        // iterate over an immutable copy for thread safety
+        immutableCopy().forEachSetBit(procedure);
     }
 
     @Override
@@ -614,6 +635,18 @@ public class MutableBitSet extends AbstractBitSet implements Serializable /*, Cl
     }
 
     /**
+     * Return a new mutable bit set representing the logical NOT followed by AND of the two specified mutable bit sets.
+     * Neither set is modified.
+     *
+     * @param a first mutable bit set, must not be null
+     * @param b second mutable bit set, must not be null
+     * @return a new mutable bit set representing the logical NOT followed by AND of the two specified mutable bit sets
+     */
+    public static MutableBitSet andNot(final MutableBitSet a, final MutableBitSet b) {
+        return (MutableBitSet) new MutableBitSet().or(a).andNot(b);
+    }
+
+    /**
      * Return the cardinality of the logical NOT followed by AND of the two specified mutable bit sets.  Neither
      * set is modified.
      *
@@ -630,6 +663,18 @@ public class MutableBitSet extends AbstractBitSet implements Serializable /*, Cl
     }
 
     /**
+     * Return a new mutable bit set representing the logical AND of the two specified mutable bit sets.
+     * Neither set is modified.
+     *
+     * @param a first mutable bit set, must not be null
+     * @param b second mutable bit set, must not be null
+     * @return a new mutable bit set representing the logical AND of the two specified mutable bit sets
+     */
+    public static MutableBitSet and(final MutableBitSet a, final MutableBitSet b) {
+        return (MutableBitSet) new MutableBitSet().or(a).and(b);
+    }
+
+    /**
      * Return the cardinality of the logical AND of the two specified mutable bit sets.  Neither set is modified.
      *
      * @param a first mutable bit set, must not be null
@@ -638,6 +683,18 @@ public class MutableBitSet extends AbstractBitSet implements Serializable /*, Cl
      */
     public static long andCount(final MutableBitSet a, final MutableBitSet b) {
         return BitUtil.pop_intersect(a.bits, b.bits, 0, Math.min(a.wlen, b.wlen));
+    }
+
+    /**
+     * Return a new mutable bit set representing the logical OR of the two specified mutable bit sets.
+     * Neither set is modified.
+     *
+     * @param a first mutable bit set, must not be null
+     * @param b second mutable bit set, must not be null
+     * @return a new mutable bit set representing the logical OR of the two specified mutable bit sets
+     */
+    public static MutableBitSet or(final MutableBitSet a, final MutableBitSet b) {
+        return (MutableBitSet) new MutableBitSet().or(a).or(b);
     }
 
     /**
@@ -659,7 +716,19 @@ public class MutableBitSet extends AbstractBitSet implements Serializable /*, Cl
     }
 
     /**
-     * Return the cardinality of the logical XOR of the two specified mutable bit sets.
+     * Return a new mutable bit set representing the logical XOR of the two specified mutable bit sets.
+     * Neither set is modified.
+     *
+     * @param a first mutable bit set, must not be null
+     * @param b second mutable bit set, must not be null
+     * @return a new mutable bit set representing the logical XOR of the two specified mutable bit sets
+     */
+    public static MutableBitSet xor(final MutableBitSet a, final MutableBitSet b) {
+        return (MutableBitSet) new MutableBitSet().or(a).xor(b);
+    }
+
+    /**
+     * Return the cardinality of the logical XOR of the two specified mutable bit sets.  Neither set is modified.
      *
      * @param a first mutable bit set, must not be null
      * @param b second mutable bit set, must not be null

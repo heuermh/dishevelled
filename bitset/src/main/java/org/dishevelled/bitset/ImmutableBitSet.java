@@ -43,6 +43,8 @@ package org.dishevelled.bitset;
 
 import java.io.Serializable;
 
+import org.dishevelled.functor.UnaryProcedure;
+
 /**
  * Immutable bit set.
  */
@@ -138,6 +140,16 @@ public final class ImmutableBitSet extends AbstractBitSet implements Serializabl
     }
 
     @Override
+    public void forEachClearBit(final UnaryProcedure<Long> procedure) {
+        if (procedure == null) {
+            throw new NullPointerException("procedure must not be null");
+        }
+        for (long i = nextClearBit(0L); i >= 0L; i = nextClearBit(i + 1L)) {
+            procedure.run(i);
+        }
+    }
+
+    @Override
     public long nextSetBit(final long index) {
         int i = (int) (index >>> 6);
         if (i >= wlen) {
@@ -191,6 +203,16 @@ public final class ImmutableBitSet extends AbstractBitSet implements Serializabl
             }
         }
         return -1L;
+    }
+
+    @Override
+    public void forEachSetBit(final UnaryProcedure<Long> procedure) {
+        if (procedure == null) {
+            throw new NullPointerException("procedure must not be null");
+        }
+        for (long i = nextSetBit(0L); i >= 0L; i = nextSetBit(i + 1L)) {
+            procedure.run(i);
+        }
     }
 
     @Override
@@ -444,7 +466,18 @@ public final class ImmutableBitSet extends AbstractBitSet implements Serializabl
         return wlen;
     }
 
-    // is it possible to move these statics to Abstract, or does that not make sense?
+    /**
+     * Return a new immutable bit set representing the logical NOT followed by AND of the two specified immutable
+     * bit sets.
+     *
+     * @param a first immutable bit set, must not be null
+     * @param b second immutable bit set, must not be null
+     * @return a new immutable bit set representing the logical NOT followed by AND of the two specified immutable
+     *    bit sets
+     */
+    public static ImmutableBitSet andNot(final ImmutableBitSet a, final ImmutableBitSet b) {
+        return ((MutableBitSet) new MutableBitSet().or(a).andNot(b)).immutableCopy();
+    }
 
     /**
      * Return the cardinality of the logical NOT followed by AND of the two specified immutable bit sets.
@@ -462,6 +495,17 @@ public final class ImmutableBitSet extends AbstractBitSet implements Serializabl
     }
 
     /**
+     * Return a new immutable bit set representing the logical AND of the two specified immutable bit sets.
+     *
+     * @param a first immutable bit set, must not be null
+     * @param b second immutable bit set, must not be null
+     * @return a new immutable bit set representing the logical AND of the two specified immutable bit sets
+     */
+    public static ImmutableBitSet and(final ImmutableBitSet a, final ImmutableBitSet b) {
+        return ((MutableBitSet) new MutableBitSet().or(a).and(b)).immutableCopy();
+    }
+
+    /**
      * Return the cardinality of the logical AND of the two specified immutable bit sets.
      *
      * @param a first immutable bit set, must not be null
@@ -470,6 +514,17 @@ public final class ImmutableBitSet extends AbstractBitSet implements Serializabl
      */
     public static long andCount(final ImmutableBitSet a, final ImmutableBitSet b) {
         return BitUtil.pop_intersect(a.bits, b.bits, 0, Math.min(a.wlen, b.wlen));
+    }
+
+    /**
+     * Return a new immutable bit set representing the logical OR of the two specified immutable bit sets.
+     *
+     * @param a first immutable bit set, must not be null
+     * @param b second immutable bit set, must not be null
+     * @return a new immutable bit set representing the logical OR of the two specified immutable bit sets
+     */
+    public static ImmutableBitSet or(final ImmutableBitSet a, final ImmutableBitSet b) {
+        return ((MutableBitSet) new MutableBitSet().or(a).or(b)).immutableCopy();
     }
 
     /**
@@ -488,6 +543,17 @@ public final class ImmutableBitSet extends AbstractBitSet implements Serializabl
             tot += BitUtil.pop_array(a.bits, b.wlen, a.wlen - b.wlen);
         }
         return tot;
+    }
+
+    /**
+     * Return a new immutable bit set representing the logical XOR of the two specified immutable bit sets.
+     *
+     * @param a first immutable bit set, must not be null
+     * @param b second immutable bit set, must not be null
+     * @return a new immutable bit set representing the logical XOR of the two specified immutable bit sets
+     */
+    public static ImmutableBitSet xor(final ImmutableBitSet a, final ImmutableBitSet b) {
+        return ((MutableBitSet) new MutableBitSet().or(a).xor(b)).immutableCopy();
     }
 
     /**

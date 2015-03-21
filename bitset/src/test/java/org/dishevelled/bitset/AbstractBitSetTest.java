@@ -25,6 +25,8 @@ package org.dishevelled.bitset;
 
 import static org.junit.Assert.assertNotNull;
 
+import org.dishevelled.functor.UnaryProcedure;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -74,5 +76,21 @@ public abstract class AbstractBitSetTest {
     @Test(expected=NullPointerException.class)
     public void testAndNotNullOther() {
         bitset.andNot(null);
+    }
+
+    /**
+     * Count.
+     */
+    protected static final class Count implements UnaryProcedure<Long> {
+        private int count = 0;
+
+        @Override
+        public void run(final Long index) {
+            count++;
+        }
+
+        int count() {
+            return count;
+        }
     }
 }

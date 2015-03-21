@@ -144,6 +144,32 @@ public class MutableBitSetTest extends AbstractBitSetTest {
         assertEquals(-1L, full.prevClearBit(N - 1L));
     }
 
+    @Test(expected=NullPointerException.class)
+    public void testForEachClearBitNull() {
+        empty.forEachClearBit(null);
+    }
+
+    @Test
+    public void testForEachClearBitEmpty() {
+        Count count = new Count();
+        empty.forEachClearBit(count);
+        assertEquals(0, count.count());
+    }
+
+    @Test
+    public void testForEachClearBitPartial() {
+        Count count = new Count();
+        partial.forEachClearBit(count);
+        assertEquals((N / 2L), count.count());
+    }
+
+    @Test
+    public void testForEachClearBitFull() {
+        Count count = new Count();
+        full.forEachClearBit(count);
+        assertEquals(0, count.count());
+    }
+
     @Test
     public void testNextSetBit() {
         assertEquals(-1L, empty.nextSetBit(0L));
@@ -164,6 +190,32 @@ public class MutableBitSetTest extends AbstractBitSetTest {
         assertEquals(-1L, empty.prevSetBit(N - 1L));
         assertEquals(N - 1L, partial.prevSetBit(N - 1L));
         assertEquals(N - 1L, full.prevSetBit(N - 1L));
+    }
+
+    @Test(expected=NullPointerException.class)
+    public void testForEachSetBitNull() {
+        empty.forEachSetBit(null);
+    }
+
+    @Test
+    public void testForEachSetBitEmpty() {
+        Count count = new Count();
+        empty.forEachSetBit(count);
+        assertEquals(0, count.count());
+    }
+
+    @Test
+    public void testForEachSetBitPartial() {
+        Count count = new Count();
+        partial.forEachSetBit(count);
+        assertEquals((N / 2L), count.count());
+    }
+
+    @Test
+    public void testForEachSetBitFull() {
+        Count count = new Count();
+        full.forEachSetBit(count);
+        assertEquals(N, count.count());
     }
 
     @Test
