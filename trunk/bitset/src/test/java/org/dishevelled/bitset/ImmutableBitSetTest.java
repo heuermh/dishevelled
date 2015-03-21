@@ -39,6 +39,8 @@ import java.io.ObjectOutputStream;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 
+import org.dishevelled.functor.UnaryProcedure;
+
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -147,6 +149,32 @@ public final class ImmutableBitSetTest extends AbstractBitSetTest {
         assertEquals(-1L, full.prevClearBit(N - 1L));
     }
 
+    @Test(expected=NullPointerException.class)
+    public void testForEachClearBitNull() {
+        empty.forEachClearBit(null);
+    }
+
+    @Test
+    public void testForEachClearBitEmpty() {
+        Count count = new Count();
+        empty.forEachClearBit(count);
+        assertEquals(0, count.count());
+    }
+
+    @Test
+    public void testForEachClearBitPartial() {
+        Count count = new Count();
+        partial.forEachClearBit(count);
+        assertEquals((N / 2L), count.count());
+    }
+
+    @Test
+    public void testForEachClearBitFull() {
+        Count count = new Count();
+        full.forEachClearBit(count);
+        assertEquals(0, count.count());
+    }
+
     @Test
     public void testNextSetBit() {
         assertEquals(-1L, empty.nextSetBit(0L));
@@ -167,6 +195,32 @@ public final class ImmutableBitSetTest extends AbstractBitSetTest {
         assertEquals(-1L, empty.prevSetBit(N - 1L));
         assertEquals(N - 1L, partial.prevSetBit(N - 1L));
         assertEquals(N - 1L, full.prevSetBit(N - 1L));
+    }
+
+    @Test(expected=NullPointerException.class)
+    public void testForEachSetBitNull() {
+        empty.forEachSetBit(null);
+    }
+
+    @Test
+    public void testForEachSetBitEmpty() {
+        Count count = new Count();
+        empty.forEachSetBit(count);
+        assertEquals(0, count.count());
+    }
+
+    @Test
+    public void testForEachSetBitPartial() {
+        Count count = new Count();
+        partial.forEachSetBit(count);
+        assertEquals((N / 2L), count.count());
+    }
+
+    @Test
+    public void testForEachSetBitFull() {
+        Count count = new Count();
+        full.forEachSetBit(count);
+        assertEquals(N, count.count());
     }
 
     @Test
@@ -445,6 +499,33 @@ public final class ImmutableBitSetTest extends AbstractBitSetTest {
     }
 
     @Test
+    public void testStaticAndNot() {
+        assertEquals(empty, ImmutableBitSet.andNot(empty, empty));
+        assertEquals(empty, ImmutableBitSet.andNot(empty, partial));
+        assertEquals(empty, ImmutableBitSet.andNot(empty, full));
+        assertEquals(partial, ImmutableBitSet.andNot(partial, empty));
+        assertEquals(empty, ImmutableBitSet.andNot(partial, partial));
+        assertEquals(empty, ImmutableBitSet.andNot(partial, full));
+        assertEquals(full, ImmutableBitSet.andNot(full, empty));
+
+        MutableBitSet m = new MutableBitSet(N);
+        m.set(0, (N / 2L));
+        assertEquals(m.immutableCopy(), ImmutableBitSet.andNot(full, partial));
+
+        assertEquals(empty, ImmutableBitSet.andNot(full, full));
+    }
+
+    @Test(expected=NullPointerException.class)
+    public void testStaticAndNotNullA() {
+        ImmutableBitSet.andNot(null, empty);
+    }
+
+    @Test(expected=NullPointerException.class)
+    public void testStaticAndNotNullB() {
+        ImmutableBitSet.andNot(empty, null);
+    }
+
+    @Test
     public void testAndNotCount() {
         assertEquals(0L, ImmutableBitSet.andNotCount(empty, empty));
         assertEquals(0L, ImmutableBitSet.andNotCount(empty, partial));
@@ -465,6 +546,29 @@ public final class ImmutableBitSetTest extends AbstractBitSetTest {
     @Test(expected=NullPointerException.class)
     public void testAndNotCountNullB() {
         ImmutableBitSet.andNotCount(empty, null);
+    }
+
+    @Test
+    public void testStaticAnd() {
+        assertEquals(empty, ImmutableBitSet.and(empty, empty));
+        assertEquals(empty, ImmutableBitSet.and(empty, partial));
+        assertEquals(empty, ImmutableBitSet.and(empty, full));
+        assertEquals(empty, ImmutableBitSet.and(partial, empty));
+        assertEquals(partial, ImmutableBitSet.and(partial, partial));
+        assertEquals(partial, ImmutableBitSet.and(partial, full));
+        assertEquals(empty, ImmutableBitSet.and(full, empty));
+        assertEquals(partial, ImmutableBitSet.and(full, partial));
+        assertEquals(full, ImmutableBitSet.and(full, full));
+    }
+
+    @Test(expected=NullPointerException.class)
+    public void testStaticAndNullA() {
+        ImmutableBitSet.and(null, empty);
+    }
+
+    @Test(expected=NullPointerException.class)
+    public void testStaticAndNullB() {
+        ImmutableBitSet.and(empty, null);
     }
 
     @Test
@@ -491,6 +595,29 @@ public final class ImmutableBitSetTest extends AbstractBitSetTest {
     }
 
     @Test
+    public void testStaticOr() {
+        assertEquals(empty, ImmutableBitSet.or(empty, empty));
+        assertEquals(partial, ImmutableBitSet.or(empty, partial));
+        assertEquals(full, ImmutableBitSet.or(empty, full));
+        assertEquals(partial, ImmutableBitSet.or(partial, empty));
+        assertEquals(partial, ImmutableBitSet.or(partial, partial));
+        assertEquals(full, ImmutableBitSet.or(partial, full));
+        assertEquals(full, ImmutableBitSet.or(full, empty));
+        assertEquals(full, ImmutableBitSet.or(full, partial));
+        assertEquals(full, ImmutableBitSet.or(full, full));
+    }
+
+    @Test(expected=NullPointerException.class)
+    public void testStaticOrCountNullA() {
+        ImmutableBitSet.or(null, empty);
+    }
+
+    @Test(expected=NullPointerException.class)
+    public void testStaticOrCountNullB() {
+        ImmutableBitSet.or(empty, null);
+    }
+
+    @Test
     public void testOrCount() {
         assertEquals(0L, ImmutableBitSet.orCount(empty, empty));
         assertEquals((N / 2L), ImmutableBitSet.orCount(empty, partial));
@@ -511,6 +638,33 @@ public final class ImmutableBitSetTest extends AbstractBitSetTest {
     @Test(expected=NullPointerException.class)
     public void testOrCountNullB() {
         ImmutableBitSet.orCount(empty, null);
+    }
+
+    @Test
+    public void testStaticXor() {
+        assertEquals(empty, ImmutableBitSet.xor(empty, empty));
+        assertEquals(partial, ImmutableBitSet.xor(empty, partial));
+        assertEquals(full, ImmutableBitSet.xor(empty, full));
+        assertEquals(partial, ImmutableBitSet.xor(partial, empty));
+        assertEquals(empty, ImmutableBitSet.xor(partial, partial));
+
+        MutableBitSet m = new MutableBitSet(N);
+        m.set(0, (N / 2L));
+
+        assertEquals(m.immutableCopy(), ImmutableBitSet.xor(partial, full));
+        assertEquals(full, ImmutableBitSet.xor(full, empty));
+        assertEquals(m.immutableCopy(), ImmutableBitSet.xor(full, partial));
+        assertEquals(empty, ImmutableBitSet.xor(full, full));
+    }
+
+    @Test(expected=NullPointerException.class)
+    public void testStaticXorNullA() {
+        ImmutableBitSet.xor(null, empty);
+    }
+
+    @Test(expected=NullPointerException.class)
+    public void testStaticXorNullB() {
+        ImmutableBitSet.xor(empty, null);
     }
 
     @Test
