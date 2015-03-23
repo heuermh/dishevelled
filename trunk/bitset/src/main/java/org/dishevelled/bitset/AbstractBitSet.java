@@ -264,44 +264,6 @@ public abstract class AbstractBitSet { // implements Iterable<Long> ?
      */
     public abstract void trimTrailingZeros();
 
-
-    // logical operations
-    //   is it possible to return the specific subclass?
-    //   perhaps these need to be moved back to subclasses
-
-
-    /**
-     * Perform a logical XOR of the specified bit set and this bit set.
-     *
-     * @param other bit set to XOR with this bit set, must not be null
-     * @return this bit set or a copy of this bit set, for method chaining
-     */
-    public abstract AbstractBitSet xor(AbstractBitSet other);
-
-    /**
-     * Perform a logical AND of the specified bit set and this bit set.  Also known as a union operation.
-     *
-     * @param other bit set to AND with this bit set, must not be null
-     * @return this bit set or a copy of this bit set, for method chaining
-     */
-    public abstract AbstractBitSet and(AbstractBitSet other);
-
-    /**
-     * Perform a logical OR of the specified bit set and this bit set.  Also known as an intersect operation.
-     *
-     * @param other bit set to OR with this bit set, must not be null
-     * @return this bit set or a copy of this bit set, for method chaining
-     */
-    public abstract AbstractBitSet or(AbstractBitSet other);
-
-    /**
-     * Perform a logical NOT followed by AND of the specified bit set and this bit set.  Also known as a remove operation.
-     *
-     * @param other bit set to NOT followed by AND with this bit set, must not be null
-     * @return this bit set or a copy of this bit set, for method chaining
-     */
-    public abstract AbstractBitSet andNot(AbstractBitSet other);
-
     /**
      * Return the <code>long[]</code> backing this bit set.
      *

@@ -58,26 +58,6 @@ public abstract class AbstractBitSetTest {
         bitset.intersects(null);
     }
 
-    @Test(expected=NullPointerException.class)
-    public void testXorNullOther() {
-        bitset.xor(null);
-    }
-
-    @Test(expected=NullPointerException.class)
-    public void testAndNullOther() {
-        bitset.and(null);
-    }
-
-    @Test(expected=NullPointerException.class)
-    public void testOrNullOther() {
-        bitset.or(null);
-    }
-
-    @Test(expected=NullPointerException.class)
-    public void testAndNotNullOther() {
-        bitset.andNot(null);
-    }
-
     /**
      * Count.
      */

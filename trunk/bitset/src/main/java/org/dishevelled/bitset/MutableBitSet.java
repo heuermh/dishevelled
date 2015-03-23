@@ -441,12 +441,14 @@ public class MutableBitSet extends AbstractBitSet implements Serializable /*, Cl
     }
 
     /**
-     * {@inheritDoc}
+     * Perform a logical XOR of the specified bit set and this bit set.
      *
      * <p>This mutable bit set is modified in place and a reference to this is returned for method chaining.</p>
+     *
+     * @param other bit set to XOR with this bit set, must not be null
+     * @return this mutable bit set, for method chaining
      */
-    @Override
-    public AbstractBitSet xor(final AbstractBitSet other) {
+    public MutableBitSet xor(final AbstractBitSet other) {
         int newLen = Math.max(wlen, other.wlen());
         ensureCapacityWords(newLen);
         assert (numBits = Math.max(other.numBits(), numBits)) >= 0;
@@ -465,12 +467,14 @@ public class MutableBitSet extends AbstractBitSet implements Serializable /*, Cl
     }
 
     /**
-     * {@inheritDoc}
+     * Perform a logical AND of the specified bit set and this bit set.  Also known as a union operation.
      *
      * <p>This mutable bit set is modified in place and a reference to this is returned for method chaining.</p>
+     *
+     * @param other bit set to AND with this bit set, must not be null
+     * @return this mutable bit set, for method chaining
      */
-    @Override
-    public AbstractBitSet and(final AbstractBitSet other) {
+    public MutableBitSet and(final AbstractBitSet other) {
         int newLen = Math.min(this.wlen, other.wlen());
         long[] thisArr = this.bits;
         long[] otherArr = other.bits();
@@ -488,12 +492,14 @@ public class MutableBitSet extends AbstractBitSet implements Serializable /*, Cl
     }
 
     /**
-     * {@inheritDoc}
+     * Perform a logical OR of the specified bit set and this bit set.  Also known as an intersect operation.
      *
      * <p>This mutable bit set is modified in place and a reference to this is returned for method chaining.</p>
+     *
+     * @param other bit set to OR with this bit set, must not be null
+     * @return this mutable bit set, for method chaining
      */
-    @Override
-    public AbstractBitSet or(final AbstractBitSet other) {
+    public MutableBitSet or(final AbstractBitSet other) {
         int newLen = Math.max(wlen, other.wlen());
         ensureCapacityWords(newLen);
         assert (numBits = Math.max(other.numBits(), numBits)) >= 0;
@@ -512,12 +518,14 @@ public class MutableBitSet extends AbstractBitSet implements Serializable /*, Cl
     }
 
     /**
-     * {@inheritDoc}
+     * Perform a logical NOT followed by AND of the specified bit set and this bit set.  Also known as a remove operation.
      *
      * <p>This mutable bit set is modified in place and a reference to this is returned for method chaining.</p>
+     *
+     * @param other bit set to NOT followed by AND with this bit set, must not be null
+     * @return this mutable bit set, for method chaining
      */
-    @Override
-    public AbstractBitSet andNot(final AbstractBitSet other) {
+    public MutableBitSet andNot(final AbstractBitSet other) {
         int idx = Math.min(wlen, other.wlen());
         long[] thisArr = this.bits;
         long[] otherArr = other.bits();
