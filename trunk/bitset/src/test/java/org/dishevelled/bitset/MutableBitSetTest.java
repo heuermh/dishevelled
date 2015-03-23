@@ -242,6 +242,33 @@ public class MutableBitSetTest extends AbstractBitSetTest {
     }
 
     @Test
+    public void testStaticAndNot() {
+        assertEquals(empty, MutableBitSet.andNot(empty, empty));
+        assertEquals(empty, MutableBitSet.andNot(empty, partial));
+        assertEquals(empty, MutableBitSet.andNot(empty, full));
+        assertEquals(partial, MutableBitSet.andNot(partial, empty));
+        assertEquals(empty, MutableBitSet.andNot(partial, partial));
+        assertEquals(empty, MutableBitSet.andNot(partial, full));
+        assertEquals(full, MutableBitSet.andNot(full, empty));
+
+        MutableBitSet m = new MutableBitSet(N);
+        m.set(0, (N / 2L));
+        assertEquals(m, MutableBitSet.andNot(full, partial));
+
+        assertEquals(empty, MutableBitSet.andNot(full, full));
+    }
+
+    @Test(expected=NullPointerException.class)
+    public void testStaticAndNotNullA() {
+        MutableBitSet.andNot(null, empty);
+    }
+
+    @Test(expected=NullPointerException.class)
+    public void testStaticAndNotNullB() {
+        MutableBitSet.andNot(empty, null);
+    }
+
+    @Test
     public void testAndNotCount() {
         assertEquals(0L, MutableBitSet.andNotCount(empty, empty));
         assertEquals(0L, MutableBitSet.andNotCount(empty, partial));
@@ -262,6 +289,29 @@ public class MutableBitSetTest extends AbstractBitSetTest {
     @Test(expected=NullPointerException.class)
     public void testAndNotCountNullB() {
         MutableBitSet.andNotCount(empty, null);
+    }
+
+    @Test
+    public void testStaticAnd() {
+        assertEquals(empty, MutableBitSet.and(empty, empty));
+        assertEquals(empty, MutableBitSet.and(empty, partial));
+        assertEquals(empty, MutableBitSet.and(empty, full));
+        assertEquals(empty, MutableBitSet.and(partial, empty));
+        assertEquals(partial, MutableBitSet.and(partial, partial));
+        assertEquals(partial, MutableBitSet.and(partial, full));
+        assertEquals(empty, MutableBitSet.and(full, empty));
+        assertEquals(partial, MutableBitSet.and(full, partial));
+        assertEquals(full, MutableBitSet.and(full, full));
+    }
+
+    @Test(expected=NullPointerException.class)
+    public void testStaticAndNullA() {
+        MutableBitSet.and(null, empty);
+    }
+
+    @Test(expected=NullPointerException.class)
+    public void testStaticAndNullB() {
+        MutableBitSet.and(empty, null);
     }
 
     @Test
@@ -288,6 +338,29 @@ public class MutableBitSetTest extends AbstractBitSetTest {
     }
 
     @Test
+    public void testStaticOr() {
+        assertEquals(empty, MutableBitSet.or(empty, empty));
+        assertEquals(partial, MutableBitSet.or(empty, partial));
+        assertEquals(full, MutableBitSet.or(empty, full));
+        assertEquals(partial, MutableBitSet.or(partial, empty));
+        assertEquals(partial, MutableBitSet.or(partial, partial));
+        assertEquals(full, MutableBitSet.or(partial, full));
+        assertEquals(full, MutableBitSet.or(full, empty));
+        assertEquals(full, MutableBitSet.or(full, partial));
+        assertEquals(full, MutableBitSet.or(full, full));
+    }
+
+    @Test(expected=NullPointerException.class)
+    public void testStaticOrCountNullA() {
+        MutableBitSet.or(null, empty);
+    }
+
+    @Test(expected=NullPointerException.class)
+    public void testStaticOrCountNullB() {
+        MutableBitSet.or(empty, null);
+    }
+
+    @Test
     public void testOrCount() {
         assertEquals(0L, MutableBitSet.orCount(empty, empty));
         assertEquals((N / 2L), MutableBitSet.orCount(empty, partial));
@@ -308,6 +381,33 @@ public class MutableBitSetTest extends AbstractBitSetTest {
     @Test(expected=NullPointerException.class)
     public void testOrCountNullB() {
         MutableBitSet.orCount(empty, null);
+    }
+
+    @Test
+    public void testStaticXor() {
+        assertEquals(empty, MutableBitSet.xor(empty, empty));
+        assertEquals(partial, MutableBitSet.xor(empty, partial));
+        assertEquals(full, MutableBitSet.xor(empty, full));
+        assertEquals(partial, MutableBitSet.xor(partial, empty));
+        assertEquals(empty, MutableBitSet.xor(partial, partial));
+
+        MutableBitSet m = new MutableBitSet(N);
+        m.set(0, (N / 2L));
+
+        assertEquals(m, MutableBitSet.xor(partial, full));
+        assertEquals(full, MutableBitSet.xor(full, empty));
+        assertEquals(m, MutableBitSet.xor(full, partial));
+        assertEquals(empty, MutableBitSet.xor(full, full));
+    }
+
+    @Test(expected=NullPointerException.class)
+    public void testStaticXorNullA() {
+        MutableBitSet.xor(null, empty);
+    }
+
+    @Test(expected=NullPointerException.class)
+    public void testStaticXorNullB() {
+        MutableBitSet.xor(empty, null);
     }
 
     @Test
@@ -476,6 +576,12 @@ public class MutableBitSetTest extends AbstractBitSetTest {
         //assertEquals(N / 4L, half.andNot(empty).cardinality());
         //assertEquals(N / 4L, half.andNot(partial).cardinality());
         //assertTrue(half.andNot(full).isEmpty());
+    }
+
+    @Test
+    public void testLogicalMethodChaining() {
+        MutableBitSet result = empty.or(partial).xor(full);
+        assertNotNull(result);
     }
 
     @Test

@@ -277,6 +277,11 @@ public final class ImmutableBitSetTest extends AbstractBitSetTest {
     }
 
     @Test(expected=UnsupportedOperationException.class)
+    public void testGetAndSetThrowsUnsupportedOperationException() {
+        bitset.getAndSet(0L);
+    }
+
+    @Test(expected=UnsupportedOperationException.class)
     public void testFlipThrowsUnsupportedOperationException() {
         bitset.flip(0L);
     }
@@ -464,6 +469,12 @@ public final class ImmutableBitSetTest extends AbstractBitSetTest {
         assertEquals(N / 4L, half.andNot(empty).cardinality());
         assertEquals(N / 4L, half.andNot(partial).cardinality());
         assertTrue(half.andNot(full).isEmpty());
+    }
+
+    @Test
+    public void testLogicalMethodChaining() {
+        ImmutableBitSet result = empty.or(partial).xor(full);
+        assertNotNull(result);
     }
 
     @Test
