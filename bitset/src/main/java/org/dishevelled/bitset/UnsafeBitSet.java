@@ -106,7 +106,55 @@ public class UnsafeBitSet extends MutableBitSet {
 
     // need a setter for wlen?
 
-   /**
+    /**
+     * Perform a logical XOR of the specified bit set and this bit set.
+     *
+     * <p>This other bit set is modified in place and a reference to this is returned for method chaining.</p>
+     *
+     * @param other bit set to XOR with this bit set, must not be null
+     * @return this other bit set, for method chaining
+     */
+    public UnsafeBitSet xor(final AbstractBitSet other) {
+        return (UnsafeBitSet) super.xor(other);
+    }
+
+    /**
+     * Perform a logical AND of the specified bit set and this bit set.  Also known as a union operation.
+     *
+     * <p>This unsafe bit set is modified in place and a reference to this is returned for method chaining.</p>
+     *
+     * @param other bit set to AND with this bit set, must not be null
+     * @return this unsafe bit set, for method chaining
+     */
+    public UnsafeBitSet and(final AbstractBitSet other) {
+        return (UnsafeBitSet) super.and(other);
+    }
+
+    /**
+     * Perform a logical OR of the specified bit set and this bit set.  Also known as an intersect operation.
+     *
+     * <p>This unsafe bit set is modified in place and a reference to this is returned for method chaining.</p>
+     *
+     * @param other bit set to OR with this bit set, must not be null
+     * @return this unsafe bit set, for method chaining
+     */
+    public UnsafeBitSet or(final AbstractBitSet other) {
+        return (UnsafeBitSet) super.or(other);
+    }
+
+    /**
+     * Perform a logical NOT followed by AND of the specified bit set and this bit set.  Also known as a remove operation.
+     *
+     * <p>This unsafe bit set is modified in place and a reference to this is returned for method chaining.</p>
+     *
+     * @param other bit set to NOT followed by AND with this bit set, must not be null
+     * @return this unsafe bit set, for method chaining
+     */
+    public UnsafeBitSet andNot(final AbstractBitSet other) {
+        return (UnsafeBitSet) super.andNot(other);
+    }
+
+    /**
      * Return a new mutable copy of this unsafe bit set.
      *
      * @return a new mutable copy of this unsafe bit set
