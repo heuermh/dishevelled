@@ -70,6 +70,11 @@ public class UnsafeBitSetTest extends AbstractBitSetTest {
     }
 
     @Test
+    public void testNoArgConstructor() {
+        assertNotNull(new UnsafeBitSet());
+    }
+
+    @Test
     public void testCapacity() {
         assertTrue(empty.capacity() >= N);
         assertTrue(partial.capacity() >= N);
@@ -423,6 +428,12 @@ public class UnsafeBitSetTest extends AbstractBitSetTest {
         //assertEquals(N / 4L, half.andNot(empty).cardinality());
         //assertEquals(N / 4L, half.andNot(partial).cardinality());
         //assertTrue(half.andNot(full).isEmpty());
+    }
+
+    @Test
+    public void testLogicalMethodChaining() {
+        UnsafeBitSet result = empty.or(partial).xor(full);
+        assertNotNull(result);
     }
 
     @Test
