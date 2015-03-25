@@ -23,6 +23,10 @@
 */
 package org.dishevelled.bitset;
 
+import java.util.concurrent.atomic.AtomicLong;
+
+import org.dishevelled.functor.UnaryProcedure;
+
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -153,14 +157,106 @@ public final class PerformanceTest {
         }
     };
 
+    private static final class Capacity implements Op<AbstractBitSet, Long> {
+        public Long execute(final AbstractBitSet[] bitsets) {
+            long result = 0L;
+            for (AbstractBitSet bitset : bitsets) {
+                result += bitset.capacity();
+            }
+            return result;
+        }
+    };
+
+    private static final class Cardinality implements Op<AbstractBitSet, Long> {
+        public Long execute(final AbstractBitSet[] bitsets) {
+            long result = 0L;
+            for (AbstractBitSet bitset : bitsets) {
+                result += bitset.cardinality();
+            }
+            return result;
+        }
+    };
+
+    private static final class SumGet implements Op<AbstractBitSet, Long> {
+        public Long execute(final AbstractBitSet[] bitsets) {
+            long result = 0L;
+            for (AbstractBitSet bitset : bitsets) {
+                for (long i = 0, size = bitset.capacity(); i < size; i++) {
+                    if (bitset.get(i)) {
+                        result++;
+                    }
+                }
+            }
+            return result;
+        }
+    };
+
+    private static final class SumGetQuick implements Op<AbstractBitSet, Long> {
+        public Long execute(final AbstractBitSet[] bitsets) {
+            long result = 0L;
+            for (AbstractBitSet bitset : bitsets) {
+                for (long i = 0, size = bitset.capacity(); i < size; i++) {
+                    if (bitset.get(i)) {
+                        result++;
+                    }
+                }
+            }
+            return result;
+        }
+    };
+
+    private static final class SumNextSetBit implements Op<AbstractBitSet, Long> {
+        public Long execute(final AbstractBitSet[] bitsets) {
+            long result = 0L;
+            for (AbstractBitSet bitset : bitsets) {
+                for (long i = bitset.nextSetBit(0L); i >= 0L; i = bitset.nextSetBit(i + 1L)) {
+                    result++;
+                }
+            }
+            return result;
+        }
+    };
+
+    private static final class SumForEachSetBitAtomicLong implements Op<AbstractBitSet, Long> {
+        public Long execute(final AbstractBitSet[] bitsets) {
+            final AtomicLong result = new AtomicLong(0L);
+            for (AbstractBitSet bitset : bitsets) {
+                bitset.forEachSetBit(new UnaryProcedure<Long>() {
+                        @Override
+                        public void run(final Long index) {
+                            result.getAndIncrement();
+                        }
+                    });
+            }
+            return result.get();
+        }
+    };
+
+    private static final class SumForEachSetBitCount implements Op<AbstractBitSet, Long> {
+        public Long execute(final AbstractBitSet[] bitsets) {
+            long result = 0L;
+            for (AbstractBitSet bitset : bitsets) {
+                AbstractBitSetTest.Count count = new AbstractBitSetTest.Count();
+                bitset.forEachSetBit(count);
+                result += count.count();
+            }
+            return result;
+        }
+    };
+
     @Test
     public void testSparseMutableCount() {
         run("sparse mutable count", SPARSE_MUTABLE, new Count());
     }
 
     @Test
-    public void testSparseImmutableCount() {
-        run("sparse immutable count", SPARSE_IMMUTABLE, new Count());
+    public void testSparseMutableCapacity() {
+        run("sparse mutable capacity", SPARSE_MUTABLE, new Capacity());
+    }
+
+    @Test
+    public void testSparseMutableCardinality() {
+        run("sparse mutable cardinality", SPARSE_MUTABLE, new Cardinality());
     }
 
     @Test
@@ -184,6 +280,47 @@ public final class PerformanceTest {
     }
 
     @Test
+    public void testSparseMutableSumGet() {
+        run("sparse mutable sum get", SPARSE_MUTABLE, new SumGet());
+    }
+
+    @Test
+    public void testSparseMutableSumGetQuick() {
+        run("sparse mutable sum getQuick", SPARSE_MUTABLE, new SumGetQuick());
+    }
+
+    @Test
+    public void testSparseMutableSumNextSetBit() {
+        run("sparse mutable sum nextSetBit", SPARSE_MUTABLE, new SumNextSetBit());
+    }
+
+    @Test
+    public void testSparseMutableSumForEachSetBitAtomicLong() {
+        run("sparse mutable sum forEachSetBit atomic long", SPARSE_MUTABLE, new SumForEachSetBitAtomicLong());
+    }
+
+    @Test
+    public void testSparseMutableSumForEachSetBitCount() {
+        run("sparse mutable sum forEachSetBit count", SPARSE_MUTABLE, new SumForEachSetBitCount());
+    }
+
+
+    @Test
+    public void testSparseImmutableCount() {
+        run("sparse immutable count", SPARSE_IMMUTABLE, new Count());
+    }
+
+    @Test
+    public void testSparseImmutableCapacity() {
+        run("sparse immutable capacity", SPARSE_IMMUTABLE, new Capacity());
+    }
+
+    @Test
+    public void testSparseImmutableCardinality() {
+        run("sparse immutable cardinality", SPARSE_IMMUTABLE, new Cardinality());
+    }
+
+    @Test
     public void testSparseImmutableAnd() {
         run("sparse immutable and", SPARSE_IMMUTABLE, new And());
     }
@@ -203,6 +340,46 @@ public final class PerformanceTest {
         run("sparse immutable xor", SPARSE_IMMUTABLE, new Xor());
     }
 
+    @Test
+    public void testSparseImmutableSumGet() {
+        run("sparse immutable sum get", SPARSE_IMMUTABLE, new SumGet());
+    }
+
+    @Test
+    public void testSparseImmutableSumGetQuick() {
+        run("sparse immutable sum getQuick", SPARSE_IMMUTABLE, new SumGetQuick());
+    }
+
+    @Test
+    public void testSparseImmutableSumNextSetBit() {
+        run("sparse immutable sum nextSetBit", SPARSE_IMMUTABLE, new SumNextSetBit());
+    }
+
+    @Test
+    public void testSparseImmutableSumForEachSetBitAtomicLong() {
+        run("sparse immutable sum forEachSetBit atomic long", SPARSE_IMMUTABLE, new SumForEachSetBitAtomicLong());
+    }
+
+    @Test
+    public void testSparseImmutableSumForEachSetBitCount() {
+        run("sparse immutable sum forEachSetBit count", SPARSE_IMMUTABLE, new SumForEachSetBitCount());
+    }
+
+
+    @Test
+    public void testDenseMutableCount() {
+        run("dense mutable count", DENSE_MUTABLE, new Count());
+    }
+
+    @Test
+    public void testDenseMutableCapacity() {
+        run("dense mutable capacity", DENSE_MUTABLE, new Capacity());
+    }
+
+    @Test
+    public void testDenseMutableCardinality() {
+        run("dense mutable cardinality", DENSE_MUTABLE, new Cardinality());
+    }
 
     @Test
     public void testDenseMutableAnd() {
@@ -225,6 +402,47 @@ public final class PerformanceTest {
     }
 
     @Test
+    public void testDenseMutableSumGet() {
+        run("dense mutable sum get", DENSE_MUTABLE, new SumGet());
+    }
+
+    @Test
+    public void testDenseMutableSumGetQuick() {
+        run("dense mutable sum getQuick", DENSE_MUTABLE, new SumGetQuick());
+    }
+
+    @Test
+    public void testDenseMutableSumNextSetBit() {
+        run("dense mutable sum nextSetBit", DENSE_MUTABLE, new SumNextSetBit());
+    }
+
+    @Test
+    public void testDenseMutableSumForEachSetBitAtomicLong() {
+        run("dense mutable sum forEachSetBit atomic long", DENSE_MUTABLE, new SumForEachSetBitAtomicLong());
+    }
+
+    @Test
+    public void testDenseMutableSumForEachSetBitCount() {
+        run("dense mutable sum forEachSetBit count", DENSE_MUTABLE, new SumForEachSetBitCount());
+    }
+
+
+    @Test
+    public void testDenseImmutableCount() {
+        run("dense immutable count", DENSE_IMMUTABLE, new Count());
+    }
+
+    @Test
+    public void testDenseImmutableCapacity() {
+        run("dense immutable capacity", DENSE_IMMUTABLE, new Capacity());
+    }
+
+    @Test
+    public void testDenseImmutableCardinality() {
+        run("dense immutable cardinality", DENSE_IMMUTABLE, new Cardinality());
+    }
+
+    @Test
     public void testDenseImmutableAnd() {
         run("dense immutable and", DENSE_IMMUTABLE, new And());
     }
@@ -242,5 +460,30 @@ public final class PerformanceTest {
     @Test
     public void testDenseImmutableXor() {
         run("dense immutable xor", DENSE_IMMUTABLE, new Xor());
+    }
+
+    @Test
+    public void testDenseImmutableSumGet() {
+        run("dense immutable sum get", DENSE_IMMUTABLE, new SumGet());
+    }
+
+    @Test
+    public void testDenseImmutableSumGetQuick() {
+        run("dense immutable sum getQuick", DENSE_IMMUTABLE, new SumGetQuick());
+    }
+
+    @Test
+    public void testDenseImmutableSumNextSetBit() {
+        run("dense immutable sum nextSetBit", DENSE_IMMUTABLE, new SumNextSetBit());
+    }
+
+    @Test
+    public void testDenseImmutableSumForEachSetBitAtomicLong() {
+        run("dense immutable sum forEachSetBit atomic long", DENSE_IMMUTABLE, new SumForEachSetBitAtomicLong());
+    }
+
+    @Test
+    public void testDenseImmutableSumForEachSetBitCount() {
+        run("dense immutable sum forEachSetBit count", DENSE_IMMUTABLE, new SumForEachSetBitCount());
     }
 }
