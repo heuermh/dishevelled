@@ -61,15 +61,15 @@ public abstract class AbstractBitSetTest {
     /**
      * Count.
      */
-    protected static final class Count implements UnaryProcedure<Long> {
-        private int count = 0;
+    static final class Count implements UnaryProcedure<Long> {
+        private long count = 0;
 
         @Override
         public void run(final Long index) {
             count++;
         }
 
-        int count() {
+        long count() {
             return count;
         }
     }
