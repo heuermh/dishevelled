@@ -26,16 +26,11 @@ package org.dishevelled.thumbnail.swing;
 import java.awt.Component;
 import java.awt.Image;
 
-import java.io.File;
-import java.io.IOException;
-
 import java.net.URI;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.Renderer;
-
-import org.dishevelled.thumbnail.ThumbnailManager;
 
 /**
  * Renderer that displays the thumbnail for a given URI.
@@ -44,11 +39,8 @@ import org.dishevelled.thumbnail.ThumbnailManager;
  */
 public final class ThumbnailRenderer implements Renderer
 {
-    /** Last modified cache. */
-    private final LastModifiedCache lastModifiedCache;
-
-    /** Thumbnail manager. */
-    private final ThumbnailManager thumbnailManager;
+    /** Thumbnail cache. */
+    private final ThumbnailCache thumbnailCache;
 
     /** JLabel delegate. */
     private final JLabel delegate = new JLabel();
@@ -58,19 +50,18 @@ public final class ThumbnailRenderer implements Renderer
 
 
     /**
-     * Create a new thumbnail renderer with the specified thumbnail manager.
+     * Create a new thumbnail renderer with the specified thumbnail cache.
      *
-     * @param thumbnailManager thumbnail manager, must not be null
+     * @param thumbnailCache thumbnail cache, must not be null
      */
-    public ThumbnailRenderer(final ThumbnailManager thumbnailManager)
+    public ThumbnailRenderer(final ThumbnailCache thumbnailCache)
     {
         super();
-        if (thumbnailManager == null)
+        if (thumbnailCache == null)
         {
-            throw new IllegalArgumentException("thumbnailManager must not be null");
+            throw new IllegalArgumentException("thumbnailCache must not be null");
         }
-        this.thumbnailManager = thumbnailManager;
-        lastModifiedCache = LastModifiedCache.getInstance();
+        this.thumbnailCache = thumbnailCache;
     }
 
 
@@ -86,23 +77,16 @@ public final class ThumbnailRenderer implements Renderer
         if (value instanceof URI)
         {
             URI uri = (URI) value;
-            try
+            Image thumbnail = thumbnailCache.getThumbnail(uri);
+            if (imageIcon == null)
             {
-                Image thumbnail = thumbnailManager.createThumbnail(uri, lastModifiedCache.get(uri));
-                if (imageIcon == null)
-                {
-                    imageIcon = new ImageIcon(thumbnail);
-                }
-                else
-                {
-                    imageIcon.setImage(thumbnail);
-                }
-                delegate.setIcon(imageIcon);
+                imageIcon = new ImageIcon(thumbnail);
             }
-            catch (IOException e)
+            else
             {
-                // ignore
+                imageIcon.setImage(thumbnail);
             }
+            delegate.setIcon(imageIcon);
         }
     }
 }

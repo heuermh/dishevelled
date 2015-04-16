@@ -52,7 +52,7 @@ public interface ThumbnailManager
      *
      * @param uri URI for the original image, must not be null
      * @param modificationTime modification time for the original image
-     * @return a normal size (128x128 pixel) thumbnail image for the specified URI
+     * @return a large size (256x256 pixel) thumbnail image for the specified URI
      * @throws IOException if an I/O error occurs
      */
     BufferedImage createLargeThumbnail(final URI uri, final long modificationTime) throws IOException;

@@ -26,17 +26,12 @@ package org.dishevelled.thumbnail.swing;
 import java.awt.Component;
 import java.awt.Image;
 
-import java.io.File;
-import java.io.IOException;
-
 import java.net.URI;
 
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JList;
-
-import org.dishevelled.thumbnail.ThumbnailManager;
 
 /**
  * List cell renderer that displays the large thumbnail for a given URI.
@@ -45,30 +40,26 @@ import org.dishevelled.thumbnail.ThumbnailManager;
  */
 public final class LargeThumbnailListCellRenderer extends DefaultListCellRenderer
 {
-    /** Last modified cache. */
-    private final LastModifiedCache lastModifiedCache;
-
-    /** Thumbnail manager. */
-    private final ThumbnailManager thumbnailManager;
+    /** Thumbnail cache. */
+    private final ThumbnailCache thumbnailCache;
 
     /** ImageIcon wrapper for thumbnail image. */
     private transient ImageIcon imageIcon;
 
 
     /**
-     * Create a new large thumbnail list cell renderer with the specified thumbnail manager.
+     * Create a new large thumbnail list cell renderer with the specified thumbnail cache.
      *
-     * @param thumbnailManager thumbnail manager, must not be null
+     * @param thumbnailCache thumbnail cache, must not be null
      */
-    public LargeThumbnailListCellRenderer(final ThumbnailManager thumbnailManager)
+    public LargeThumbnailListCellRenderer(final ThumbnailCache thumbnailCache)
     {
         super();
-        if (thumbnailManager == null)
+        if (thumbnailCache == null)
         {
-            throw new IllegalArgumentException("thumbnailManager must not be null");
+            throw new IllegalArgumentException("thumbnailCache must not be null");
         }
-        this.thumbnailManager = thumbnailManager;
-        lastModifiedCache = LastModifiedCache.getInstance();
+        this.thumbnailCache = thumbnailCache;
     }
 
 
@@ -84,23 +75,16 @@ public final class LargeThumbnailListCellRenderer extends DefaultListCellRendere
         if (value instanceof URI)
         {
             URI uri = (URI) value;
-            try
+            Image thumbnail = thumbnailCache.getLargeThumbnail(uri);
+            if (imageIcon == null)
             {
-                Image thumbnail = thumbnailManager.createLargeThumbnail(uri, lastModifiedCache.get(uri));
-                if (imageIcon == null)
-                {
-                    imageIcon = new ImageIcon(thumbnail);
-                }
-                else
-                {
-                    imageIcon.setImage(thumbnail);
-                }
-                label.setIcon(imageIcon);
+                imageIcon = new ImageIcon(thumbnail);
             }
-            catch (IOException e)
+            else
             {
-                // ignore
+                imageIcon.setImage(thumbnail);
             }
+            label.setIcon(imageIcon);
         }
         return label;
     }

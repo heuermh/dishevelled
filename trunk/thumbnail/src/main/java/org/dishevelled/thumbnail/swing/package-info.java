@@ -24,5 +24,23 @@
 
 /**
  * Lightweight components for thumbnails.
+ *
+ * <p>
+ * All the components in this package use {@link ThumbnailCache} for performance.  The same
+ * thumbnail cache should be used for more than one component. For example,
+ * <pre>
+ * ThumbnailManager manager = new XdgThumbnailManager();
+ * ThumbnailCache cache = new ThumbnailCache(manager);
+ *
+ * JList&lt;URI&gt; list = new JList&lt;URI&gt;();
+ * list.setCellRenderer(new ThumbnailListCellRenderer(cache));
+ * JTable table = new JTable();
+ * table.setDefaultCellRenderer(URI.class, new ThumbnailTableCellRenderer(cache));
+ *
+ * // repaint components on reload of thumbnail images
+ * cache.add(list);
+ * cache.add(table);
+ * </pre>
+ * </p>
  */
 package org.dishevelled.thumbnail.swing;
