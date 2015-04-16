@@ -39,7 +39,6 @@ import java.nio.file.WatchKey;
 import java.nio.file.WatchService;
 
 import java.util.concurrent.ConcurrentMap;
-import java.util.concurrent.Executors;
 import java.util.concurrent.ExecutorService;
 
 import com.google.common.cache.CacheBuilder;
@@ -56,7 +55,7 @@ import com.google.common.collect.Maps;
 final class LastModifiedCache
 {
     /** Executor service. */
-    private final ExecutorService executorService = Executors.newFixedThreadPool(1);
+    private final ExecutorService executorService;
 
     /** File system watcher. */
     private final WatchService watcher;
@@ -83,9 +82,17 @@ final class LastModifiedCache
 
     /**
      * Create a new last modified cache.
+     *
+     * @param executorService executor service, must not be null
      */
-    LastModifiedCache()
+    LastModifiedCache(final ExecutorService executorService)
     {
+        if (executorService == null)
+        {
+            throw new IllegalArgumentException("executorService must not be null");
+        }
+        this.executorService = executorService;
+
         try
         {
             watcher = FileSystems.getDefault().newWatchService();
@@ -195,25 +202,5 @@ final class LastModifiedCache
     private static <T> WatchEvent<T> cast(final WatchEvent<?> event)
     {
         return (WatchEvent<T>) event;
-    }
-
-    // todo:  consider using lang3.concurrent initializer instead
-    /**
-     * Return the last modified cache.
-     *
-     * @return the last modified cache
-     */
-    static LastModifiedCache getInstance()
-    {
-        return LastModifiedCacheHolder.lastModifiedCache;
-    }
-
-    /**
-     * Initialization on demand holder.
-     */
-    static class LastModifiedCacheHolder
-    {
-        /** Last modified cache. */
-        static LastModifiedCache lastModifiedCache = new LastModifiedCache();
     }
 }

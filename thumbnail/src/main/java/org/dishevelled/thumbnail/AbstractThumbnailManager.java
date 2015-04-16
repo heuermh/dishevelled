@@ -111,6 +111,7 @@ public abstract class AbstractThumbnailManager implements ThumbnailManager
         this.directory = directory;
         normalDirectory = new File(this.directory, "normal");
         largeDirectory = new File(this.directory, "large");
+        // todo: fail directory should be application specific; e.g. fail/dsh-thumbnail-1.0/
         failDirectory = new File(this.directory, "fail");
         normalDirectory.mkdirs();
         largeDirectory.mkdirs();
@@ -178,6 +179,8 @@ public abstract class AbstractThumbnailManager implements ThumbnailManager
         {
             throw new IllegalArgumentException("uri must not be null");
         }
+
+        // todo: check fail directory here
 
         File thumbnailFile = new File(thumbnailDirectory, DigestUtils.md5Hex(uri.toString()) + ".png");
         if (thumbnailFile.exists())

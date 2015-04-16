@@ -49,8 +49,10 @@ import ca.odell.glazedlists.GlazedLists;
 import org.dishevelled.eventlist.view.CountLabel;
 import org.dishevelled.eventlist.view.ElementsList;
 
+import org.dishevelled.thumbnail.ThumbnailManager;
 import org.dishevelled.thumbnail.XdgThumbnailManager;
 
+import org.dishevelled.thumbnail.swing.ThumbnailCache;
 import org.dishevelled.thumbnail.swing.ThumbnailListCellRenderer;
 
 /**
@@ -61,7 +63,7 @@ import org.dishevelled.thumbnail.swing.ThumbnailListCellRenderer;
 public final class ThumbnailExample extends JPanel implements Runnable
 {
     /** Count of URIs. */
-    private final CountLabel<URI> count;
+    //private final CountLabel<URI> count;
 
     /** List of URIs. */
     private final UriList list;
@@ -85,7 +87,7 @@ public final class ThumbnailExample extends JPanel implements Runnable
 
         setLayout(new BorderLayout());
         setBorder(new EmptyBorder(12, 12, 12, 12));
-        add("North", createCountPanel());
+        //add("North", createCountPanel());
         add("Center", list);
     }
 
@@ -149,8 +151,11 @@ public final class ThumbnailExample extends JPanel implements Runnable
         UriList(final EventList<URI> eventList)
         {
             super(eventList);
+            ThumbnailManager thumbnailManager = new XdgThumbnailManager();
+            ThumbnailCache thumbnailCache = new ThumbnailCache(thumbnailManager);
             getLabel().setText("Thumbnails");
-            getList().setCellRenderer(new ThumbnailListCellRenderer(new XdgThumbnailManager()));
+            getList().setCellRenderer(new ThumbnailListCellRenderer(thumbnailCache));
+            thumbnailCache.add(getList());
             getPasteAction().setEnabled(false);
         }
 
