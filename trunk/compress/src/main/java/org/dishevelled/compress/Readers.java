@@ -28,6 +28,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import static org.dishevelled.compress.Compress.isBzip2File;
 import static org.dishevelled.compress.Compress.isGzipFile;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -37,6 +38,9 @@ import java.io.InputStreamReader;
 import java.io.IOException;
 
 import javax.annotation.Nullable;
+
+import org.apache.commons.compress.compressors.CompressorException;
+import org.apache.commons.compress.compressors.CompressorStreamFactory;
 
 import org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream;
 
@@ -60,6 +64,74 @@ public final class Readers
 
 
     /**
+     * Create and return a new buffered reader for the specified input stream.
+     *
+     * @since 1.1
+     * @param inputStream input stream, must not be null
+     * @return a new buffered reader for the specified input stream
+     * @throws IOException if an I/O error occurs
+     */
+    public static BufferedReader inputStreamReader(final InputStream inputStream) throws IOException
+    {
+        checkNotNull(inputStream);
+        return new BufferedReader(new InputStreamReader(inputStream));
+    }
+
+    /**
+     * Create and return a new buffered reader for the specified compressed file,
+     * autodetecting the compression type from the first few bytes of the file.
+     *
+     * @since 1.1
+     * @param file file, must not be null
+     * @return a new buffered reader for the specified file
+     * @throws IOException if an I/O error occurs
+     */
+    public static BufferedReader compressedFileReader(final File file) throws IOException
+    {
+        checkNotNull(file);
+        return compressedInputStreamReader(new FileInputStream(file));
+    }
+
+    /**
+     * Create and return a new buffered reader for the specified compressed input stream,
+     * autodetecting the compression type from the first few bytes of the stream.
+     *
+     * @since 1.1
+     * @param inputStream input stream, must not be null
+     * @return a new buffered reader for the specified input stream
+     * @throws IOException if an I/O error occurs
+     */
+    public static BufferedReader compressedInputStreamReader(final InputStream inputStream) throws IOException
+    {
+        checkNotNull(inputStream);
+        BufferedInputStream bufferedInputStream = inputStream instanceof BufferedInputStream ? (BufferedInputStream) inputStream : new BufferedInputStream(inputStream);
+        try
+        {
+            return new BufferedReader(new InputStreamReader(new CompressorStreamFactory().createCompressorInputStream(bufferedInputStream)));
+        }
+        catch (CompressorException e)
+        {
+            System.out.println("caught " + e);
+            //bufferedInputStream.reset();
+            return inputStreamReader(bufferedInputStream);
+        }
+    }
+
+    /**
+     * Create and return a new buffered reader for the specified gzip compressed file.
+     *
+     * @since 1.1
+     * @param file gzip compressed file, must not be null
+     * @return a new buffered reader for the specified gzip compressed file
+     * @throws IOException if an I/O error occurs
+     */
+    public static BufferedReader gzipFileReader(final File file) throws IOException
+    {
+        checkNotNull(file);
+        return gzipInputStreamReader(new FileInputStream(file));
+    }
+
+    /**
      * Create and return a new buffered reader for the specified gzip compressed input stream.
      *
      * @param inputStream gzip compressed input stream, must not be null
@@ -70,6 +142,20 @@ public final class Readers
     {
         checkNotNull(inputStream);
         return new BufferedReader(new InputStreamReader(new GzipCompressorInputStream(inputStream)));
+    }
+
+    /**
+     * Create and return a new buffered reader for the specified bzip2 compressed file.
+     *
+     * @since 1.1
+     * @param file bzip2 compressed file, must not be null
+     * @return a new buffered reader for the specified bzip2 compressed file
+     * @throws IOException if an I/O error occurs
+     */
+    public static BufferedReader bzip2FileReader(final File file) throws IOException
+    {
+        checkNotNull(file);
+        return bzip2InputStreamReader(new FileInputStream(file));
     }
 
     /**
@@ -98,15 +184,15 @@ public final class Readers
     {
         if (file == null)
         {
-            return new BufferedReader(new InputStreamReader(System.in));
+            return compressedInputStreamReader(System.in);
         }
         else if (isGzipFile(file))
         {
-            return new BufferedReader(new InputStreamReader(new GzipCompressorInputStream(new FileInputStream(file))));
+            return gzipFileReader(file);
         }
         else if (isBzip2File(file))
         {
-            return new BufferedReader(new InputStreamReader(new BZip2CompressorInputStream(new FileInputStream(file))));
+            return bzip2FileReader(file);
         }
         return new BufferedReader(new FileReader(file));
     }

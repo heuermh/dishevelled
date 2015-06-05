@@ -28,11 +28,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import static org.dishevelled.compress.Compress.isBzip2File;
 import static org.dishevelled.compress.Compress.isGzipFile;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.IOException;
 import java.io.Reader;
 
@@ -42,10 +39,6 @@ import javax.annotation.Nullable;
 
 import com.google.common.io.CharSource;
 import com.google.common.io.Files;
-
-import org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream;
-
-import org.apache.commons.compress.compressors.gzip.GzipCompressorInputStream;
 
 /**
  * File and input stream sources with support for gzip and bzip2 compression.
@@ -67,17 +60,40 @@ public final class Sources
     /**
      * Create and return a new char source for the specified input stream.
      *
-     * @param inputStream input stream
+     * @since 1.1
+     * @param inputStream input stream, must not be null
      * @return a new char source for the specified input stream
      */
-    private static CharSource inputStreamCharSource(final InputStream inputStream)
+    public static CharSource inputStreamCharSource(final InputStream inputStream)
     {
+        checkNotNull(inputStream);
         return new CharSource()
             {
                 @Override
                 public Reader openStream() throws IOException
                 {
-                    return new BufferedReader(new InputStreamReader(inputStream));
+                    return Readers.inputStreamReader(inputStream);
+                }
+            };
+    }
+
+    /**
+     * Create and return a new char source for the specified compressed input stream,
+     * autodetecting the compression type from the first few bytes of the stream.
+     *
+     * @since 1.1
+     * @param inputStream input stream, must not be null
+     * @return a new char source for the specified input stream
+     */
+    public static CharSource compressedInputStreamCharSource(final InputStream inputStream)
+    {
+        checkNotNull(inputStream);
+        return new CharSource()
+            {
+                @Override
+                public Reader openStream() throws IOException
+                {
+                    return Readers.compressedInputStreamReader(inputStream);
                 }
             };
     }
@@ -96,7 +112,7 @@ public final class Sources
                 @Override
                 public Reader openStream() throws IOException
                 {
-                    return new BufferedReader(new InputStreamReader(new GzipCompressorInputStream(inputStream)));
+                    return Readers.gzipInputStreamReader(inputStream);
                 }
             };
     }
@@ -115,7 +131,7 @@ public final class Sources
                 @Override
                 public Reader openStream() throws IOException
                 {
-                    return new BufferedReader(new InputStreamReader(new BZip2CompressorInputStream(inputStream)));
+                    return Readers.bzip2InputStreamReader(inputStream);
                 }
             };
     }
@@ -133,7 +149,7 @@ public final class Sources
                 @Override
                 public Reader openStream() throws IOException
                 {
-                    return new BufferedReader(new InputStreamReader(new GzipCompressorInputStream(new FileInputStream(file))));
+                    return Readers.gzipFileReader(file);
                 }
             };
     }
@@ -151,7 +167,7 @@ public final class Sources
                 @Override
                 public Reader openStream() throws IOException
                 {
-                    return new BufferedReader(new InputStreamReader(new BZip2CompressorInputStream(new FileInputStream(file))));
+                    return Readers.bzip2FileReader(file);
                 }
             };
     }
@@ -185,7 +201,7 @@ public final class Sources
         checkNotNull(charset);
         if (file == null)
         {
-            return inputStreamCharSource(System.in);
+            return compressedInputStreamCharSource(System.in);
         }
         else if (isGzipFile(file))
         {
