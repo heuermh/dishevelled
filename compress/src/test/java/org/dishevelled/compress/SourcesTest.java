@@ -25,10 +25,15 @@ package org.dishevelled.compress;
 
 import static org.dishevelled.compress.Sources.bzip2InputStreamCharSource;
 import static org.dishevelled.compress.Sources.charSource;
+import static org.dishevelled.compress.Sources.compressedInputStreamCharSource;
+import static org.dishevelled.compress.Sources.inputStreamCharSource;
 import static org.dishevelled.compress.Sources.gzipInputStreamCharSource;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -64,9 +69,13 @@ public final class SourcesTest
     public void testCharSourceFile() throws IOException
     {
         File file = File.createTempFile("charSourcesTest", ".txt");
+        try (FileOutputStream outputStream = new FileOutputStream(file))
+        {
+            Resources.copy(SourcesTest.class.getResource("example.txt"), outputStream);
+        }
         try (Reader reader = charSource(file).openStream())
         {
-            assertNotNull(reader);
+            assertValidReader(reader);
         }
         file.delete();
     }
@@ -81,7 +90,7 @@ public final class SourcesTest
         }
         try (Reader reader = charSource(file).openStream())
         {
-            assertNotNull(reader);
+            assertValidReader(reader);
         }
         file.delete();
     }
@@ -96,7 +105,7 @@ public final class SourcesTest
         }
         try (Reader reader = charSource(file).openStream())
         {
-            assertNotNull(reader);
+            assertValidReader(reader);
         }
         file.delete();
     }
@@ -111,9 +120,13 @@ public final class SourcesTest
     public void testCharSourceCharsetFile() throws IOException
     {
         File file = File.createTempFile("charSourcesTest", ".txt");
+        try (FileOutputStream outputStream = new FileOutputStream(file))
+        {
+            Resources.copy(SourcesTest.class.getResource("example.txt"), outputStream);
+        }
         try (Reader reader = charSource(file, Charset.forName("UTF-8")).openStream())
         {
-            assertNotNull(reader);
+            assertValidReader(reader);
         }
         file.delete();
     }
@@ -134,7 +147,7 @@ public final class SourcesTest
         }
         try (Reader reader = gzipInputStreamCharSource(new FileInputStream(file)).openStream())
         {
-            assertNotNull(reader);
+            assertValidReader(reader);
         }
         file.delete();
     }
@@ -149,7 +162,7 @@ public final class SourcesTest
         }
         try (Reader reader = gzipInputStreamCharSource(new FileInputStream(file)).openStream())
         {
-            assertNotNull(reader);
+            assertValidReader(reader);
         }
         file.delete();
     }
@@ -164,7 +177,7 @@ public final class SourcesTest
         }
         try (Reader reader = gzipInputStreamCharSource(new FileInputStream(file)).openStream())
         {
-            assertNotNull(reader);
+            assertValidReader(reader);
         }
         file.delete();
     }
@@ -185,7 +198,7 @@ public final class SourcesTest
         }
         try (Reader reader = bzip2InputStreamCharSource(new FileInputStream(file)).openStream())
         {
-            assertNotNull(reader);
+            assertValidReader(reader);
         }
         file.delete();
     }
@@ -200,7 +213,7 @@ public final class SourcesTest
         }
         try (Reader reader = bzip2InputStreamCharSource(new FileInputStream(file)).openStream())
         {
-            assertNotNull(reader);
+            assertValidReader(reader);
         }
         file.delete();
     }
@@ -215,8 +228,92 @@ public final class SourcesTest
         }
         try (Reader reader = bzip2InputStreamCharSource(new FileInputStream(file)).openStream())
         {
-            assertNotNull(reader);
+            assertValidReader(reader);
         }
         file.delete();
+    }
+
+    @Test(expected=NullPointerException.class)
+    public void testInputStreamCharSourceNullInputStream() throws IOException
+    {
+        inputStreamCharSource(null);
+    }
+
+    @Test
+    public void testInputStreamCharSource() throws IOException
+    {
+        File file = File.createTempFile("charSourcesTest", ".txt");
+        try (FileOutputStream outputStream = new FileOutputStream(file))
+        {
+            Resources.copy(SourcesTest.class.getResource("example.txt"), outputStream);
+        }
+        try (Reader reader = inputStreamCharSource(new FileInputStream(file)).openStream())
+        {
+            assertValidReader(reader);
+        }
+        file.delete();
+    }
+
+    @Test(expected=NullPointerException.class)
+    public void testCompressedInputStreamCharSourceNullInputStream() throws IOException
+    {
+        compressedInputStreamCharSource(null);
+    }
+
+    @Test
+    public void testCompressedInputStreamCharSourcePlainText() throws IOException
+    {
+        File file = File.createTempFile("charSourcesTest", ".txt");
+        try (FileOutputStream outputStream = new FileOutputStream(file))
+        {
+            Resources.copy(SourcesTest.class.getResource("example.txt"), outputStream);
+        }
+        try (Reader reader = compressedInputStreamCharSource(new FileInputStream(file)).openStream())
+        {
+            assertValidReader(reader);
+        }
+        file.delete();
+    }
+
+    @Test
+    public void testCompressedInputStreamCharSourceGzip() throws IOException
+    {
+        File file = File.createTempFile("charSourcesTest", ".txt.gz");
+        try (FileOutputStream outputStream = new FileOutputStream(file))
+        {
+            Resources.copy(SourcesTest.class.getResource("example.txt.gz"), outputStream);
+        }
+        try (Reader reader = compressedInputStreamCharSource(new FileInputStream(file)).openStream())
+        {
+            assertValidReader(reader);
+        }
+        file.delete();
+    }
+
+    @Test
+    public void testCompressedInputStreamCharSourceBzip2() throws IOException
+    {
+        File file = File.createTempFile("charSourcesTest", ".txt.bz2");
+        try (FileOutputStream outputStream = new FileOutputStream(file))
+        {
+            Resources.copy(SourcesTest.class.getResource("example.txt.bz2"), outputStream);
+        }
+        try (Reader reader = compressedInputStreamCharSource(new FileInputStream(file)).openStream())
+        {
+            assertValidReader(reader);
+        }
+        file.delete();
+    }
+
+    static void assertValidReader(final Reader reader) throws IOException {
+        assertNotNull(reader);
+
+        BufferedReader bufferedReader = new BufferedReader(reader);
+        int lineNumber = 0;
+        for (String line = null; (line = bufferedReader.readLine()) != null; ) {
+            assertTrue(line.startsWith("example"));
+            lineNumber++;
+        }
+        assertEquals(5, lineNumber);
     }
 }
