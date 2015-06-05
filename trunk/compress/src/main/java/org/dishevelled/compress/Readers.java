@@ -111,8 +111,7 @@ public final class Readers
         }
         catch (CompressorException e)
         {
-            System.out.println("caught " + e);
-            //bufferedInputStream.reset();
+            // fall back to uncompressed input stream reader
             return inputStreamReader(bufferedInputStream);
         }
     }

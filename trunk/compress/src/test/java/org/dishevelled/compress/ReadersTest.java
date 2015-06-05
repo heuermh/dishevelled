@@ -69,6 +69,10 @@ public final class ReadersTest
     public void testReaderFile() throws IOException
     {
         File file = File.createTempFile("readersTest", ".txt");
+        try (FileOutputStream outputStream = new FileOutputStream(file))
+        {
+            Resources.copy(SourcesTest.class.getResource("example.txt"), outputStream);
+        }
         try (BufferedReader reader = reader(file))
         {
             assertValidReader(reader);
@@ -203,6 +207,10 @@ public final class ReadersTest
     public void testCompressedFileReaderPlainText() throws IOException
     {
         File file = File.createTempFile("readersTest", ".txt");
+        try (FileOutputStream outputStream = new FileOutputStream(file))
+        {
+            Resources.copy(SourcesTest.class.getResource("example.txt"), outputStream);
+        }
         try (BufferedReader reader = compressedFileReader(file))
         {
             assertValidReader(reader);
