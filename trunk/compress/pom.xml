@@ -4,20 +4,20 @@
   <parent>
     <groupId>org.dishevelled</groupId>
     <artifactId>dsh-parent</artifactId>
-    <version>9</version>
+    <version>10-SNAPSHOT</version>
     <relativePath>../parent/pom.xml</relativePath>
   </parent>
   <artifactId>dsh-compress</artifactId>
   <packaging>jar</packaging>
   <name>dishevelled.org compress</name>
-  <version>1.1</version>
+  <version>1.2-SNAPSHOT</version>
   <description>Compression utility classes.</description>
   <url>http://www.dishevelled.org/compress</url>
   <inceptionYear>2014</inceptionYear>
   <scm>
-    <connection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/tags/dsh-compress-1.1</connection>
-    <developerConnection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/tags/dsh-compress-1.1</developerConnection>
-    <url>https://svn.code.sf.net/p/dishevelled/code/tags/dsh-compress-1.1</url>
+    <connection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/compress</connection>
+    <developerConnection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/compress</developerConnection>
+    <url>https://svn.code.sf.net/p/dishevelled/code/trunk/compress</url>
   </scm>
   <distributionManagement>
     <site>
