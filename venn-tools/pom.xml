@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.dishevelled</groupId>
     <artifactId>dsh-parent</artifactId>
-    <version>7-SNAPSHOT</version>
+    <version>9</version>
     <relativePath>../parent/pom.xml</relativePath>
   </parent>
   <artifactId>dsh-venn-tools</artifactId>
@@ -84,13 +84,13 @@
     <dependency>
       <groupId>org.dishevelled</groupId>
       <artifactId>dsh-commandline</artifactId>
-      <version>1.1-SNAPSHOT</version>
+      <version>1.1</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>org.dishevelled</groupId>
       <artifactId>dsh-venn</artifactId>
-      <version>1.1-SNAPSHOT</version>
+      <version>1.2-SNAPSHOT</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
@@ -111,7 +111,7 @@
         <artifactId>maven-javadoc-plugin</artifactId>
         <configuration>
           <!-- todo:  must manually update the copyright dates here -->
-          <bottom>Copyright (c) 2010-2013 held jointly by the individual authors. Licensed under the &lt;a href="http://www.fsf.org/licensing/licenses/lgpl.html"&gt;GNU Lesser General Public License&lt;a&gt; (LGPL).</bottom>
+          <bottom>Copyright (c) 2010-2015 held jointly by the individual authors. Licensed under the &lt;a href="http://www.fsf.org/licensing/licenses/lgpl.html"&gt;GNU Lesser General Public License&lt;a&gt; (LGPL).</bottom>
         </configuration>
       </plugin>
       <plugin>

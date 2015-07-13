@@ -1,7 +1,7 @@
 /*
 
     dsh-piccolo-venn  Piccolo2D venn diagram nodes and supporting classes.
-    Copyright (c) 2009-2013 held jointly by the individual authors.
+    Copyright (c) 2009-2015 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
@@ -34,7 +34,6 @@ import org.piccolo2d.nodes.PText;
  *
  * @param <E> value type
  * @author  Michael Heuer
- * @version $Revision$ $Date$
  */
 public abstract class AbstractVennNode<E>
     extends PNode

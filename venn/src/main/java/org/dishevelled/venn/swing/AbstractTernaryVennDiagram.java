@@ -1,7 +1,7 @@
 /*
 
     dsh-venn  Lightweight components for venn diagrams.
-    Copyright (c) 2009-2013 held jointly by the individual authors.
+    Copyright (c) 2009-2015 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
@@ -41,7 +41,6 @@ import org.dishevelled.venn.model.TernaryVennModelImpl;
  *
  * @param <E> value type
  * @author  Michael Heuer
- * @version $Revision$ $Date$
  */
 public abstract class AbstractTernaryVennDiagram<E>
     extends LabelFieldPanel

@@ -1,7 +1,7 @@
 /*
 
     dsh-piccolo-venn  Piccolo2D venn diagram nodes and supporting classes.
-    Copyright (c) 2009-2013 held jointly by the individual authors.
+    Copyright (c) 2009-2015 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
@@ -67,8 +67,8 @@ public class VennNode<E>
     /** Thread pool executor service. */
     private static final ExecutorService EXECUTOR_SERVICE = Executors.newFixedThreadPool(2);
 
-    /** Animation length, in milliseconds, <code>2000L</code>. */
-    private static final long MS = 2000L;
+    /** Animation length, in milliseconds, <code>800L</code>. */
+    private static final long MS = 800L;
 
     /** Area paint. */
     private static final Paint AREA_PAINT = new Color(0, 0, 0, 0);

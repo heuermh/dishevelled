@@ -1,7 +1,7 @@
 /*
 
     dsh-venn-cytoscape3-app  Cytoscape3 app for venn and euler diagrams.
-    Copyright (c) 2012-2013 held jointly by the individual authors.
+    Copyright (c) 2012-2015 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
@@ -122,6 +122,8 @@ import org.cytoscape.venneuler.VennEulerLayouter;
 
 /**
  * Groups view.
+ *
+ * @author  Michael Heuer
  */
 final class GroupsView
     extends JPanel

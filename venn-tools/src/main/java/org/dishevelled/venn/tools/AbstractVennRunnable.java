@@ -1,7 +1,7 @@
 /*
 
     dsh-venn-tools  Command line tools for venn diagrams.
-    Copyright (c) 2010-2013 held jointly by the individual authors.
+    Copyright (c) 2010-2015 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
@@ -41,7 +41,6 @@ import org.dishevelled.commandline.Argument;
  * Abstract venn runnable.
  *
  * @author  Michael Heuer
- * @version $Revision$ $Date$
  */
 abstract class AbstractVennRunnable
     implements Runnable
