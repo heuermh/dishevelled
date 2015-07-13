@@ -1,7 +1,7 @@
 /*
 
     dsh-venn-app  App for venn and euler diagrams.
-    Copyright (c) 2013 held jointly by the individual authors.
+    Copyright (c) 2013-2015 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
@@ -94,6 +94,8 @@ import org.w3c.dom.DOMImplementation;
 
 /**
  * Diagram view.
+ *
+ * @author  Michael Heuer
  */
 final class DiagramView
     extends JPanel
