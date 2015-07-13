@@ -71,7 +71,16 @@ final class VennDiagramsUtils
         CyTable nodeTable = network.getDefaultNodeTable();
         CyRow nodeRow = nodeTable.getRow(group.getGroupNode().getSUID());
         String name = nodeRow.get(CyNetwork.NAME, String.class);
-        return (name == null) ? group.toString() : name;
+        if (name != null)
+        {
+            return name;
+        }
+        String sharedName = nodeRow.get("shared name", String.class);
+        if (sharedName != null)
+        {
+            return sharedName;
+        }
+        return group.toString();
     }
 
     /**
@@ -105,6 +114,7 @@ final class VennDiagramsUtils
         CyTable nodeTable = network.getDefaultNodeTable();
         CyRow nodeRow = nodeTable.getRow(group.getGroupNode().getSUID());        
         nodeRow.set(CyNetwork.NAME, name);
+        nodeRow.set("shared name", name);
     }
 
     /**
