@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.dishevelled</groupId>
     <artifactId>dsh-parent</artifactId>
-    <version>7-SNAPSHOT</version>
+    <version>10-SNAPSHOT</version>
     <relativePath>../parent/pom.xml</relativePath>
   </parent>
   <artifactId>dsh-matrix-nonblocking</artifactId>
@@ -14,17 +14,6 @@
   <description>Non-blocking matrix implementations.</description>
   <url>http://www.dishevelled.org/matrix-nonblocking</url>
   <inceptionYear>2010</inceptionYear>
-  <scm>
-    <connection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/matrix-nonblocking</connection>
-    <developerConnection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/matrix-nonblocking</developerConnection>
-    <url>https://svn.code.sf.net/p/dishevelled/code/trunk/matrix-nonblocking</url>
-  </scm>
-  <distributionManagement>
-    <site>
-      <id>dishevelled.sf.net</id>
-      <url>scp://shell.sourceforge.net/home/project-web/dishevelled/htdocs/matrix-nonblocking-${project.version}</url>
-    </site>
-  </distributionManagement>
   <dependencies>
     <dependency>
       <groupId>org.dishevelled</groupId>

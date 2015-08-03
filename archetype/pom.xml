@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.dishevelled</groupId>
     <artifactId>dsh-parent</artifactId>
-    <version>8-SNAPSHOT</version>
+    <version>10-SNAPSHOT</version>
     <relativePath>../parent/pom.xml</relativePath>
   </parent>
   <artifactId>dsh-archetype</artifactId>
@@ -14,15 +14,4 @@
   <description>dishevelled.org maven project archetype.</description>
   <url>http://www.dishevelled.org/archetype</url>
   <inceptionYear>2007</inceptionYear>
-  <scm>
-    <connection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/archetype</connection>
-    <developerConnection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/archetype</developerConnection>
-    <url>https://svn.code.sf.net/p/dishevelled/code/trunk/archetype</url>
-  </scm>
-  <distributionManagement>
-    <site>
-      <id>dishevelled.sf.net</id>
-      <url>scp://shell.sourceforge.net/home/project-web/dishevelled/htdocs/archetype-${project.version}</url>
-    </site>
-  </distributionManagement>
 </project>

@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.dishevelled</groupId>
     <artifactId>dsh-parent</artifactId>
-    <version>7-SNAPSHOT</version>
+    <version>10-SNAPSHOT</version>
     <relativePath>../parent/pom.xml</relativePath>
   </parent>
   <artifactId>dsh-cluster-examples</artifactId>
@@ -14,17 +14,6 @@
   <description>Examples for the cluster library.</description>
   <url>http://www.dishevelled.org/cluster-examples</url>
   <inceptionYear>2008</inceptionYear>
-  <scm>
-    <connection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/cluster-examples</connection>
-    <developerConnection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/cluster-examples</developerConnection>
-    <url>https://svn.code.sf.net/p/dishevelled/code/trunk/cluster-examples</url>
-  </scm>
-  <distributionManagement>
-    <site>
-      <id>dishevelled.sf.net</id>
-      <url>scp://shell.sourceforge.net/home/project-web/dishevelled/htdocs/cluster-examples-${project.version}</url>
-    </site>
-  </distributionManagement>
   <dependencies>
     <dependency>
       <groupId>org.dishevelled</groupId>

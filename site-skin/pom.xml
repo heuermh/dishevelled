@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.dishevelled</groupId>
     <artifactId>dsh-parent</artifactId>
-    <version>7-SNAPSHOT</version>
+    <version>10-SNAPSHOT</version>
     <relativePath>../parent/pom.xml</relativePath>
   </parent>
   <artifactId>dsh-site-skin</artifactId>
@@ -14,15 +14,4 @@
   <description>dishevelled.org maven 2 site plugin skin.</description>
   <url>http://www.dishevelled.org/site-skin</url>
   <inceptionYear>2006</inceptionYear>
-  <scm>
-    <connection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/site-skin</connection>
-    <developerConnection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/site-skin</developerConnection>
-    <url>https://svn.code.sf.net/p/dishevelled/code/trunk/site-skin</url>
-  </scm>
-  <distributionManagement>
-    <site>
-      <id>dishevelled.sf.net</id>
-      <url>scp://shell.sourceforge.net/home/project-web/dishevelled/htdocs/site-skin-${project.version}</url>
-    </site>
-  </distributionManagement>
 </project>

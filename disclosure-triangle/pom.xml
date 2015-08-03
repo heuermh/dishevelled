@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.dishevelled</groupId>
     <artifactId>dsh-parent</artifactId>
-    <version>7-SNAPSHOT</version>
+    <version>10-SNAPSHOT</version>
     <relativePath>../parent/pom.xml</relativePath>
   </parent>
   <artifactId>dsh-disclosure-triangle</artifactId>
@@ -14,17 +14,6 @@
   <description>Disclosure triangle container.</description>
   <url>http://www.dishevelled.org/disclosure-triangle</url>
   <inceptionYear>2007</inceptionYear>
-  <scm>
-    <connection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/disclosure-triangle</connection>
-    <developerConnection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/disclosure-triangle</developerConnection>
-    <url>https://svn.code.sf.net/p/dishevelled/code/trunk/disclosure-triangle</url>
-  </scm>
-  <distributionManagement>
-    <site>
-      <id>dishevelled.sf.net</id>
-      <url>scp://shell.sourceforge.net/home/project-web/dishevelled/htdocs/disclosure-triangle-${project.version}</url>
-    </site>
-  </distributionManagement>
   <dependencies>
     <dependency>
       <groupId>junit</groupId>

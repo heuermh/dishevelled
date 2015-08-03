@@ -27,7 +27,7 @@
   <parent>
     <groupId>org.dishevelled</groupId>
     <artifactId>dsh-parent</artifactId>
-    <version>8-SNAPSHOT</version>
+    <version>10-SNAPSHOT</version>
     <relativePath>../parent/pom.xml</relativePath>
   </parent>
   <artifactId>dsh-thumbnail</artifactId>
@@ -37,17 +37,6 @@
   <description>Implementation of the freedesktop.org thumbnail specification.</description>
   <url>http://www.dishevelled.org/thumbnail</url>
   <inceptionYear>2013</inceptionYear>
-  <scm>
-    <connection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/thumbnail</connection>
-    <developerConnection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/thumbnail</developerConnection>
-    <url>https://svn.code.sf.net/p/dishevelled/code/trunk/thumbnail</url>
-  </scm>
-  <distributionManagement>
-    <site>
-      <id>dishevelled.sf.net</id>
-      <url>scp://shell.sourceforge.net/home/project-web/dishevelled/htdocs/thumbnail-${project.version}</url>
-    </site>
-  </distributionManagement>
   <dependencyManagement>
     <dependencies>
       <dependency>

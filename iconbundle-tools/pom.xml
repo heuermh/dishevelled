@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.dishevelled</groupId>
     <artifactId>dsh-parent</artifactId>
-    <version>7-SNAPSHOT</version>
+    <version>10-SNAPSHOT</version>
     <relativePath>../parent/pom.xml</relativePath>
   </parent>
   <artifactId>dsh-iconbundle-tools</artifactId>
@@ -14,17 +14,6 @@
   <description>Command line icon bundle tools.</description>
   <url>http://www.dishevelled.org/iconbundle-tools</url>
   <inceptionYear>2003</inceptionYear>
-  <scm>
-    <connection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/iconbundle-tools</connection>
-    <developerConnection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/iconbundle-tools</developerConnection>
-    <url>https://svn.code.sf.net/p/dishevelled/code/trunk/iconbundle-tools</url>
-  </scm>
-  <distributionManagement>
-    <site>
-      <id>dishevelled.sf.net</id>
-      <url>scp://shell.sourceforge.net/home/project-web/dishevelled/htdocs/iconbundle-tools-${project.version}</url>
-    </site>
-  </distributionManagement>
   <dependencies>
     <dependency>
       <groupId>org.dishevelled</groupId>
@@ -41,7 +30,7 @@
     <dependency>
       <groupId>org.dishevelled</groupId>
       <artifactId>dsh-commandline</artifactId>
-      <version>1.1-SNAPSHOT</version>
+      <version>1.1</version>
       <scope>compile</scope>
     </dependency>
     <dependency>

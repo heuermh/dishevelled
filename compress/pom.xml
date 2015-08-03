@@ -14,17 +14,6 @@
   <description>Compression utility classes.</description>
   <url>http://www.dishevelled.org/compress</url>
   <inceptionYear>2014</inceptionYear>
-  <scm>
-    <connection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/compress</connection>
-    <developerConnection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/compress</developerConnection>
-    <url>https://svn.code.sf.net/p/dishevelled/code/trunk/compress</url>
-  </scm>
-  <distributionManagement>
-    <site>
-      <id>dishevelled.sf.net</id>
-      <url>scp://shell.sourceforge.net/home/project-web/dishevelled/htdocs/compress-${project.version}</url>
-    </site>
-  </distributionManagement>
   <dependencies>
     <dependency>
       <groupId>com.google.code.findbugs</groupId>

@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.dishevelled</groupId>
     <artifactId>dsh-parent</artifactId>
-    <version>7-SNAPSHOT</version>
+    <version>10-SNAPSHOT</version>
     <relativePath>../parent/pom.xml</relativePath>
   </parent>
   <artifactId>dsh-piccolo-ease-examples</artifactId>
@@ -14,17 +14,6 @@
   <description>Piccolo2D easing activities examples.</description>
   <url>http://www.dishevelled.org/piccolo-ease-examples</url>
   <inceptionYear>2009</inceptionYear>
-  <scm>
-    <connection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/piccolo-ease-examples</connection>
-    <developerConnection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/piccolo-ease-examples</developerConnection>
-    <url>https://svn.code.sf.net/p/dishevelled/code/trunk/piccolo-ease-examples</url>
-  </scm>
-  <distributionManagement>
-    <site>
-      <id>dishevelled.sf.net</id>
-      <url>scp://shell.sourceforge.net/home/project-web/dishevelled/htdocs/piccolo-ease-examples-${project.version}</url>
-    </site>
-  </distributionManagement>
   <build>
     <plugins>
       <plugin>

@@ -27,7 +27,7 @@
   <parent>
     <groupId>org.dishevelled</groupId>
     <artifactId>dsh-parent</artifactId>
-    <version>9-SNAPSHOT</version>
+    <version>10-SNAPSHOT</version>
     <relativePath>../parent/pom.xml</relativePath>
   </parent>
   <artifactId>dsh-variation-cytoscape3-app</artifactId>
@@ -37,17 +37,6 @@
   <description>Variation Cytoscape3 app.</description>
   <url>http://www.dishevelled.org/variation-cytoscape3-app</url>
   <inceptionYear>2013</inceptionYear>
-  <scm>
-    <connection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/variation-cytoscape3-app</connection>
-    <developerConnection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/variation-cytoscape3-app</developerConnection>
-    <url>https://svn.code.sf.net/p/dishevelled/code/trunk/variation-cytoscape3-app</url>
-  </scm>
-  <distributionManagement>
-    <site>
-      <id>dishevelled.sf.net</id>
-      <url>scp://shell.sourceforge.net/home/project-web/dishevelled/htdocs/variation-cytoscape3-app-${project.version}</url>
-    </site>
-  </distributionManagement>
   <dependencies>
     <dependency>
       <groupId>com.google.guava</groupId>

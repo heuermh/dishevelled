@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.dishevelled</groupId>
     <artifactId>dsh-parent</artifactId>
-    <version>9</version>
+    <version>10-SNAPSHOT</version>
     <relativePath>../parent/pom.xml</relativePath>
   </parent>
   <artifactId>dsh-venn-examples</artifactId>
@@ -14,17 +14,6 @@
   <description>Examples for the venn library.</description>
   <url>http://www.dishevelled.org/venn-examples</url>
   <inceptionYear>2009</inceptionYear>
-  <scm>
-    <connection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/venn-examples</connection>
-    <developerConnection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/venn-examples</developerConnection>
-    <url>https://svn.code.sf.net/p/dishevelled/code/trunk/venn-examples</url>
-  </scm>
-  <distributionManagement>
-    <site>
-      <id>dishevelled.sf.net</id>
-      <url>scp://shell.sourceforge.net/home/project-web/dishevelled/htdocs/venn-examples-${project.version}</url>
-    </site>
-  </distributionManagement>
   <build>
     <plugins>
       <plugin>

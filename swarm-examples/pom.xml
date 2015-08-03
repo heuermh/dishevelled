@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.dishevelled</groupId>
     <artifactId>dsh-parent</artifactId>
-    <version>7-SNAPSHOT</version>
+    <version>10-SNAPSHOT</version>
     <relativePath>../parent/pom.xml</relativePath>
   </parent>
   <artifactId>dsh-swarm-examples</artifactId>
@@ -14,17 +14,6 @@
   <description>Examples for the swarm library.</description>
   <url>http://www.dishevelled.org/swarm-examples</url>
   <inceptionYear>2007</inceptionYear>
-  <scm>
-    <connection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/swarm-examples</connection>
-    <developerConnection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/swarm-examples</developerConnection>
-    <url>https://svn.code.sf.net/p/dishevelled/code/trunk/swarm-examples</url>
-  </scm>
-  <distributionManagement>
-    <site>
-      <id>dishevelled.sf.net</id>
-      <url>scp://shell.sourceforge.net/home/project-web/dishevelled/htdocs/swarm-examples-${project.version}</url>
-    </site>
-  </distributionManagement>
   <build>
     <plugins>
       <plugin>
@@ -46,7 +35,7 @@
     <dependency>
       <groupId>org.dishevelled</groupId>
       <artifactId>dsh-commandline</artifactId>
-      <version>1.1-SNAPSHOT</version>
+      <version>1.1</version>
       <scope>compile</scope>
     </dependency>
     <dependency>

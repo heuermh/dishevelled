@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.dishevelled</groupId>
     <artifactId>dsh-parent</artifactId>
-    <version>7-SNAPSHOT</version>
+    <version>10-SNAPSHOT</version>
     <relativePath>../parent/pom.xml</relativePath>
   </parent>
   <artifactId>dsh-piccolo-ribbon-examples</artifactId>
@@ -14,17 +14,6 @@
   <description>Piccolo2D ribbon node examples.</description>
   <url>http://www.dishevelled.org/piccolo-ribbon-examples</url>
   <inceptionYear>2006</inceptionYear>
-  <scm>
-    <connection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/piccolo-ribbon-examples</connection>
-    <developerConnection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/piccolo-ribbon-examples</developerConnection>
-    <url>https://svn.code.sf.net/p/dishevelled/code/trunk/piccolo-ribbon-examples</url>
-  </scm>
-  <distributionManagement>
-    <site>
-      <id>dishevelled.sf.net</id>
-      <url>scp://shell.sourceforge.net/home/project-web/dishevelled/htdocs/piccolo-ribbon-examples-${project.version}</url>
-    </site>
-  </distributionManagement>
   <build>
     <plugins>
       <plugin>
@@ -47,7 +36,7 @@
       <dependency>
         <groupId>org.dishevelled</groupId>
         <artifactId>dsh-piccolo-ribbon</artifactId>
-        <version>${project.version}</version>
+        <version>1.0</version>
       </dependency>
     </dependencies>
   </dependencyManagement>

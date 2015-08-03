@@ -15,19 +15,11 @@
   <description>dishevelled.org parent</description>
   <url>http://www.dishevelled.org/parent</url>
   <inceptionYear>2009</inceptionYear>
-  <mailingLists>
-    <mailingList>
-      <name>dishevelled.org developer mailing list</name>
-      <subscribe>dishevelled-devel-subscribe@lists.sourceforge.net</subscribe>
-      <unsubscribe>dishevelled-devel-unsubscribe@lists.sourceforge.net</unsubscribe>
-      <archive>http://sourceforge.net/mailarchive/forum.php?forum_id=46111</archive>
-    </mailingList>
-  </mailingLists>
   <developers>
     <developer>
       <id>heuermh</id>
       <name>Michael L Heuer</name>
-      <email>heuermh at users.sourceforge.net</email>
+      <email>heuermh at acm.org</email>
       <organization>dishevelled.org</organization>
       <roles>
         <role>developer</role>
@@ -36,17 +28,21 @@
       <timezone>6</timezone>
     </developer>
   </developers>
+  <issueManagement>
+    <system>GitHub</system>
+    <url>https://github.com/heuermh/dishevelled/issues</url>
+  </issueManagement>
   <licenses>
     <license>
       <name>GNU Lesser General Public License (LGPL)</name>
-      <url>http://www.fsf.org/licensing/licenses/lgpl.html</url>
+      <url>http://www.gnu.org/licenses/lgpl.html</url>
       <distribution>repo</distribution>
     </license>
   </licenses>
   <scm>
-    <connection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/parent</connection>
-    <developerConnection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/parent</developerConnection>
-    <url>https://svn.code.sf.net/p/dishevelled/code/trunk/parent</url>
+    <connection>scm:git:git@github.com:heuermh/dishevelled.git</connection>
+    <developerConnection>scm:git:git@github.com:heuermh/dishevelled.git</developerConnection>
+    <url>git@github.com:heuermh/dishevelled.git</url>
   </scm>
   <organization>
     <name>dishevelled.org</name>
@@ -62,7 +58,7 @@
       <plugins>
         <plugin>
           <artifactId>maven-archetype-plugin</artifactId>
-          <version>2.2</version>
+          <version>2.3</version>
         </plugin>
         <plugin>
           <artifactId>maven-assembly-plugin</artifactId>
@@ -98,7 +94,7 @@
         </plugin>
         <plugin>
           <artifactId>maven-jar-plugin</artifactId>
-          <version>2.5</version>
+          <version>2.6</version>
         </plugin>
         <plugin>
           <artifactId>maven-javadoc-plugin</artifactId>
@@ -115,13 +111,6 @@
         <plugin>
           <artifactId>maven-site-plugin</artifactId>
           <version>3.4</version>
-          <dependencies>
-            <dependency>
-              <groupId>org.apache.maven.wagon</groupId>
-              <artifactId>wagon-ssh</artifactId>
-              <version>2.4</version>
-            </dependency>
-          </dependencies>
         </plugin>
         <plugin>
           <artifactId>maven-source-plugin</artifactId>
@@ -140,6 +129,16 @@
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>clirr-maven-plugin</artifactId>
           <version>2.6.1</version>
+        </plugin>
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>templating-maven-plugin</artifactId>
+          <version>1.0-alpha-3</version>
+        </plugin>
+        <plugin>
+          <groupId>pl.project13.maven</groupId>
+          <artifactId>git-commit-id-plugin</artifactId>
+          <version>2.1.15</version>
         </plugin>
       </plugins>
     </pluginManagement>

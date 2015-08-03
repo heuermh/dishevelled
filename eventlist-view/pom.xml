@@ -27,7 +27,7 @@
   <parent>
     <groupId>org.dishevelled</groupId>
     <artifactId>dsh-parent</artifactId>
-    <version>8-SNAPSHOT</version>
+    <version>10-SNAPSHOT</version>
     <relativePath>../parent/pom.xml</relativePath>
   </parent>
   <artifactId>dsh-eventlist-view</artifactId>
@@ -37,17 +37,6 @@
   <description>Views for event lists.</description>
   <url>http://www.dishevelled.org/eventlist-view</url>
   <inceptionYear>2010</inceptionYear>
-  <scm>
-    <connection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/eventlist-view</connection>
-    <developerConnection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/eventlist-view</developerConnection>
-    <url>https://svn.code.sf.net/p/dishevelled/code/trunk/eventlist-view</url>
-  </scm>
-  <distributionManagement>
-    <site>
-      <id>dishevelled.sf.net</id>
-      <url>scp://shell.sourceforge.net/home/project-web/dishevelled/htdocs/eventlist-view-${project.version}</url>
-    </site>
-  </distributionManagement>
   <dependencyManagement>
     <dependencies>
       <dependency>

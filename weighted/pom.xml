@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.dishevelled</groupId>
     <artifactId>dsh-parent</artifactId>
-    <version>7-SNAPSHOT</version>
+    <version>10-SNAPSHOT</version>
     <relativePath>../parent/pom.xml</relativePath>
   </parent>
   <artifactId>dsh-weighted</artifactId>
@@ -19,7 +19,7 @@
     <developer>
       <id>heuermh</id>
       <name>Michael L Heuer</name>
-      <email>heuermh at users.sourceforge.net</email>
+      <email>heuermh at acm.org</email>
       <organization>dishevelled.org</organization>
       <roles>
         <role>developer</role>
@@ -34,17 +34,6 @@
       </roles>
     </developer>
   </developers>
-  <scm>
-    <connection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/weighted</connection>
-    <developerConnection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/weighted</developerConnection>
-    <url>https://svn.code.sf.net/p/dishevelled/code/trunk/weighted</url>
-  </scm>
-  <distributionManagement>
-    <site>
-      <id>dishevelled.sf.net</id>
-      <url>scp://shell.sourceforge.net/home/project-web/dishevelled/htdocs/weighted-${project.version}</url>
-    </site>
-  </distributionManagement>
   <dependencies>
     <dependency>
       <groupId>junit</groupId>

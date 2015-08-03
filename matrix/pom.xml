@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.dishevelled</groupId>
     <artifactId>dsh-parent</artifactId>
-    <version>7-SNAPSHOT</version>
+    <version>10-SNAPSHOT</version>
     <relativePath>../parent/pom.xml</relativePath>
   </parent>
   <artifactId>dsh-matrix</artifactId>
@@ -14,17 +14,6 @@
   <description>long-addressable bit and typed object matrix implementations.</description>
   <url>http://www.dishevelled.org/matrix</url>
   <inceptionYear>2004</inceptionYear>
-  <scm>
-    <connection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/matrix</connection>
-    <developerConnection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/matrix</developerConnection>
-    <url>https://svn.code.sf.net/p/dishevelled/code/trunk/matrix</url>
-  </scm>
-  <distributionManagement>
-    <site>
-      <id>dishevelled.sf.net</id>
-      <url>scp://shell.sourceforge.net/home/project-web/dishevelled/htdocs/matrix-${project.version}</url>
-    </site>
-  </distributionManagement>
   <build>
     <pluginManagement>
       <plugins>
@@ -52,13 +41,13 @@
     <dependency>
       <groupId>org.dishevelled</groupId>
       <artifactId>dsh-bitset</artifactId>
-      <version>2.1-SNAPSHOT</version>
+      <version>3.0</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>org.dishevelled</groupId>
       <artifactId>dsh-functor</artifactId>
-      <version>1.1-SNAPSHOT</version>
+      <version>1.0</version>
       <scope>compile</scope>
     </dependency>
     <dependency>

@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.dishevelled</groupId>
     <artifactId>dsh-parent</artifactId>
-    <version>7-SNAPSHOT</version>
+    <version>10-SNAPSHOT</version>
     <relativePath>../parent/pom.xml</relativePath>
   </parent>
   <artifactId>dsh-piccolo-tilemap</artifactId>
@@ -14,17 +14,6 @@
   <description>Piccolo2D tile map nodes and supporting classes.</description>
   <url>http://www.dishevelled.org/piccolo-tilemap</url>
   <inceptionYear>2006</inceptionYear>
-  <scm>
-    <connection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/piccolo-tilemap</connection>
-    <developerConnection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/piccolo-tilemap</developerConnection>
-    <url>https://svn.code.sf.net/p/dishevelled/code/trunk/piccolo-tilemap</url>
-  </scm>
-  <distributionManagement>
-    <site>
-      <id>dishevelled.sf.net</id>
-      <url>scp://shell.sourceforge.net/home/project-web/dishevelled/htdocs/piccolo-tilemap-${project.version}</url>
-    </site>
-  </distributionManagement>
   <dependencyManagement>
     <dependencies>
       <dependency>

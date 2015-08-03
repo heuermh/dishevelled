@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.dishevelled</groupId>
     <artifactId>dsh-parent</artifactId>
-    <version>7-SNAPSHOT</version>
+    <version>10-SNAPSHOT</version>
     <relativePath>../parent/pom.xml</relativePath>
   </parent>
   <artifactId>dsh-disclosure-triangle-examples</artifactId>
@@ -14,17 +14,6 @@
   <description>Examples for the disclosure-triangle library.</description>
   <url>http://www.dishevelled.org/disclosure-triangle-examples</url>
   <inceptionYear>2007</inceptionYear>
-  <scm>
-    <connection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/disclosure-triangle-examples</connection>
-    <developerConnection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/disclosure-triangle-examples</developerConnection>
-    <url>https://svn.code.sf.net/p/dishevelled/code/trunk/disclosure-triangle-examples</url>
-  </scm>
-  <distributionManagement>
-    <site>
-      <id>dishevelled.sf.net</id>
-      <url>scp://shell.sourceforge.net/home/project-web/dishevelled/htdocs/disclosure-triangle-examples-${project.version}</url>
-    </site>
-  </distributionManagement>
   <build>
     <plugins>
       <plugin>

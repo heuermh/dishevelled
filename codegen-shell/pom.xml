@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.dishevelled</groupId>
     <artifactId>dsh-parent</artifactId>
-    <version>7-SNAPSHOT</version>
+    <version>10-SNAPSHOT</version>
     <relativePath>../parent/pom.xml</relativePath>
   </parent>
   <artifactId>dsh-codegen-shell</artifactId>
@@ -14,17 +14,6 @@
   <description>Runnable shell for the codegen library.</description>
   <url>http://www.dishevelled.org/codegen-shell</url>
   <inceptionYear>2004</inceptionYear>
-  <scm>
-    <connection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/codegen-shell</connection>
-    <developerConnection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/codegen-shell</developerConnection>
-    <url>https://svn.code.sf.net/p/dishevelled/code/trunk/codegen-shell</url>
-  </scm>
-  <distributionManagement>
-    <site>
-      <id>dishevelled.sf.net</id>
-      <url>scp://shell.sourceforge.net/home/project-web/dishevelled/htdocs/codegen-shell-${project.version}</url>
-    </site>
-  </distributionManagement>
   <build>
     <plugins>
       <plugin>
@@ -52,7 +41,7 @@
     <dependency>
       <groupId>org.dishevelled</groupId>
       <artifactId>dsh-commandline</artifactId>
-      <version>1.1-SNAPSHOT</version>
+      <version>1.1</version>
       <scope>compile</scope>
     </dependency>
     <dependency>

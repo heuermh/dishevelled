@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.dishevelled</groupId>
     <artifactId>dsh-parent</artifactId>
-    <version>7-SNAPSHOT</version>
+    <version>10-SNAPSHOT</version>
     <relativePath>../parent/pom.xml</relativePath>
   </parent>
   <artifactId>dsh-piccolo-state-machine-sprite-examples</artifactId>
@@ -14,17 +14,6 @@
   <description>Piccolo2D state machine sprite node examples.</description>
   <url>http://www.dishevelled.org/piccolo-state-machine-sprite-examples</url>
   <inceptionYear>2009</inceptionYear>
-  <scm>
-    <connection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/piccolo-state-machine-sprite-examples</connection>
-    <developerConnection>scm:svn|https://svn.code.sf.net/p/dishevelled/code/trunk/piccolo-state-machine-sprite-examples</developerConnection>
-    <url>https://svn.code.sf.net/p/dishevelled/code/trunk/piccolo-state-machine-sprite-examples</url>
-  </scm>
-  <distributionManagement>
-    <site>
-      <id>dishevelled.sf.net</id>
-      <url>scp://shell.sourceforge.net/home/project-web/dishevelled/htdocs/piccolo-state-machine-sprite-examples-${project.version}</url>
-    </site>
-  </distributionManagement>
   <build>
     <plugins>
       <plugin>
