@@ -46,7 +46,7 @@ import javax.swing.border.EmptyBorder;
 import ca.odell.glazedlists.EventList;
 import ca.odell.glazedlists.GlazedLists;
 
-import org.dishevelled.eventlist.view.CountLabel;
+//import org.dishevelled.eventlist.view.CountLabel;
 import org.dishevelled.eventlist.view.ElementsList;
 
 import org.dishevelled.thumbnail.ThumbnailManager;
@@ -114,6 +114,11 @@ public final class ThumbnailExample extends JPanel implements Runnable
         frame.setVisible(true);
     }
 
+    /**
+     * Add the specified directory.
+     *
+     * @param directory directory to add
+     */
     private void addDirectory(final File directory)
     {
         new SwingWorker<Void, URI>()
@@ -135,8 +140,10 @@ public final class ThumbnailExample extends JPanel implements Runnable
             }
 
             @Override
-            protected void process(final List<URI> toAdd) {
-                for (URI uri : toAdd) {
+            protected void process(final List<URI> toAdd)
+            {
+                for (URI uri : toAdd)
+                {
                     uris.add(uri);
                 }
             }
@@ -148,6 +155,11 @@ public final class ThumbnailExample extends JPanel implements Runnable
      */
     private class UriList extends ElementsList<URI>
     {
+        /**
+         * Create a new URI list.
+         *
+         * @param eventList event list
+         */
         UriList(final EventList<URI> eventList)
         {
             super(eventList);
@@ -178,6 +190,9 @@ public final class ThumbnailExample extends JPanel implements Runnable
         }
     }
 
+    /**
+     * Print usage string and exit.
+     */
     private static void usage()
     {
         System.err.println("usage\njava ThumbnailExample [directory]");
@@ -197,7 +212,7 @@ public final class ThumbnailExample extends JPanel implements Runnable
         }
         else if (args.length == 1)
         {
-            SwingUtilities.invokeLater(new ThumbnailExample(new File(args[0])));;
+            SwingUtilities.invokeLater(new ThumbnailExample(new File(args[0])));
         }
         else
         {

@@ -76,16 +76,21 @@ public final class ThumbnailCache
     /** Last modified cache. */
     private final LastModifiedCache lastModifiedCache;
 
+    /** Maximum cache size. */
+    private static final int MAXIMUM_SIZE = 100000;
+
+    /** Cache refresh after write, in ms. */
+    private static final int REFRESH = 10;
+
     /** Cache of thumbnails keyed by URI, allowing for asynchronous refresh. */
     private final LoadingCache<URI, BufferedImage> cache = CacheBuilder.newBuilder()
-        .maximumSize(100000)
-        .refreshAfterWrite(10, TimeUnit.MILLISECONDS)
+        .maximumSize(MAXIMUM_SIZE)
+        .refreshAfterWrite(REFRESH, TimeUnit.MILLISECONDS)
         .build(new CacheLoader<URI, BufferedImage>()
                {
                    @Override
                    public BufferedImage load(final URI uri)
                    {
-                       System.out.println(System.nanoTime() + " returning empty image for URI " + uri);
                        return EMPTY_IMAGE;
                    }
 
@@ -97,8 +102,8 @@ public final class ThumbnailCache
                            ListenableFutureTask<BufferedImage> task = ListenableFutureTask.create(new Callable<BufferedImage>()
                                {
                                    @Override
-                                   public BufferedImage call() throws IOException {
-                                       System.out.println(System.nanoTime() + " creating thumbnail for URI " + uri);
+                                   public BufferedImage call() throws IOException
+                                   {
                                        return thumbnailManager.createThumbnail(uri, lastModifiedCache.get(uri));
                                    }
                                });
@@ -114,7 +119,6 @@ public final class ThumbnailCache
                                                {
                                                    for (Component component : repaint)
                                                    {
-                                                       System.out.println("  repainting " + component);
                                                        component.repaint();
                                                    }
                                                }
@@ -124,21 +128,19 @@ public final class ThumbnailCache
                            executorService.execute(task);
                            return task;
                        }
-                       System.out.println(System.nanoTime() + " returning immediate future thumbnail for URI " + uri);
                        return Futures.immediateFuture(image);
                    }
                });
 
     /** Cache of large thumbnails keyed by URI, allowing for asynchronous refresh. */
     private final LoadingCache<URI, BufferedImage> largeCache = CacheBuilder.newBuilder()
-        .maximumSize(100000)
-        .refreshAfterWrite(10, TimeUnit.MILLISECONDS)
+        .maximumSize(MAXIMUM_SIZE)
+        .refreshAfterWrite(REFRESH, TimeUnit.MILLISECONDS)
         .build(new CacheLoader<URI, BufferedImage>()
                {
                    @Override
                    public BufferedImage load(final URI uri)
                    {
-                       System.out.println(System.nanoTime() + " returning empty image for URI " + uri);
                        return EMPTY_IMAGE;
                    }
 
@@ -150,15 +152,14 @@ public final class ThumbnailCache
                            ListenableFutureTask<BufferedImage> task = ListenableFutureTask.create(new Callable<BufferedImage>()
                                {
                                    @Override
-                                   public BufferedImage call() throws IOException {
-                                       System.out.println(System.nanoTime() + " creating thumbnail for URI " + uri);
+                                   public BufferedImage call() throws IOException
+                                   {
                                        return thumbnailManager.createLargeThumbnail(uri, lastModifiedCache.get(uri));
                                    }
                                });
                            executorService.execute(task);
                            return task;
                        }
-                       System.out.println(System.nanoTime() + " returning immediate future thumbnail for URI " + uri);
                        return Futures.immediateFuture(image);
                    }
                });

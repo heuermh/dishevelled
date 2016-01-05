@@ -69,10 +69,16 @@ public abstract class AbstractThumbnailManager implements ThumbnailManager
     /** Directory for metadata about failed thumbnail images. */
     private final File failDirectory;
 
+    /** Maximum cache size. */
+    private static final int MAXIMUM_SIZE = 1000;
+
+    /** Cache expire after write, in seconds. */
+    private static final int EXPIRE = 30;
+
     /** Cache of thumbnails keyed by thumbnail file. */
     private final LoadingCache<File, Thumbnail> cache = CacheBuilder.newBuilder()
-        .maximumSize(1000)
-        .expireAfterWrite(30, TimeUnit.SECONDS)
+        .maximumSize(MAXIMUM_SIZE)
+        .expireAfterWrite(EXPIRE, TimeUnit.SECONDS)
         .build(new CacheLoader<File, Thumbnail>()
                {
                    @Override
@@ -160,7 +166,24 @@ public abstract class AbstractThumbnailManager implements ThumbnailManager
         }
     }
 
-     /**
+    /**
+     * Attempt to create an empty fail file.
+     *
+     * @param failFile fail file to create
+     */
+    private void createFailFile(final File failFile)
+    {
+        try
+        {
+            failFile.createNewFile();
+        }
+        catch (IOException e)
+        {
+            // ignore
+        }
+    }
+
+    /**
      * Create and return a thumbnail image for the specified URI.
      *
      * @param uri URI for the original image, must not be null
@@ -179,10 +202,17 @@ public abstract class AbstractThumbnailManager implements ThumbnailManager
         {
             throw new IllegalArgumentException("uri must not be null");
         }
+        String fileName = DigestUtils.md5Hex(uri.toString()) + ".png";
 
-        // todo: check fail directory here
+        // fail fast if fail file exists
+        File failFile = new File(failDirectory, fileName);
+        if (failFile.exists())
+        {
+            throw new IOException("cannot create a thumbnail image for " + uri);
+        }
 
-        File thumbnailFile = new File(thumbnailDirectory, DigestUtils.md5Hex(uri.toString()) + ".png");
+        // check if thumbnail exists
+        File thumbnailFile = new File(thumbnailDirectory, fileName);
         if (thumbnailFile.exists())
         {
             Thumbnail thumbnail = cache.getUnchecked(thumbnailFile);
@@ -192,11 +222,21 @@ public abstract class AbstractThumbnailManager implements ThumbnailManager
             }
         }
 
+        // load the image and create new thumbnail
         URL url = uri.toURL();
-        // likely place for IOException to be thrown
-        BufferedImage image = ImageIO.read(url);
+        BufferedImage image = null;
+        try
+        {
+            image = ImageIO.read(url);
+        }
+        catch (IOException e)
+        {
+            createFailFile(failFile);
+            throw new IOException("cannot create a thumbnail image for " + uri, e);
+        }
         if (image == null)
         {
+            createFailFile(failFile);
             throw new IOException("cannot create a thumbnail image for " + uri);
         }
         Thumbnail thumbnail = new Thumbnail(uri, modificationTime, image.getWidth(), image.getHeight(),

@@ -63,9 +63,12 @@ final class LastModifiedCache
     /** Watch keys. */
     private final ConcurrentMap<WatchKey, Path> watchKeys = Maps.newConcurrentMap();
 
+    /** Maximum cache size. */
+    private static final int MAXIMUM_SIZE = 100000;
+
     /** Cache of last modified timestamps keyed by URI. */
     private final LoadingCache<Path, Long> cache = CacheBuilder.newBuilder()
-        .maximumSize(100000)
+        .maximumSize(MAXIMUM_SIZE)
         .build(new CacheLoader<Path, Long>()
                {
                    @Override
@@ -76,7 +79,7 @@ final class LastModifiedCache
                        {
                            watchKeys.putIfAbsent(parent.register(watcher, ENTRY_DELETE, ENTRY_MODIFY), parent);
                        }
-                       return(path.toFile().lastModified());
+                       return (path.toFile().lastModified());
                    }
                });
 
@@ -198,6 +201,13 @@ final class LastModifiedCache
         return cache.getUnchecked(path);
     }
 
+    /**
+     * Cast the specified watch event to <code>WatchEvent&lt;T&gt;</code>.
+     *
+     * @param <T> type
+     * @param event watch event to cast
+     * @return the specified watch event cast to <code>WatchEvent&lt;T&gt;</code>
+     */
     @SuppressWarnings("unchecked")
     private static <T> WatchEvent<T> cast(final WatchEvent<?> event)
     {

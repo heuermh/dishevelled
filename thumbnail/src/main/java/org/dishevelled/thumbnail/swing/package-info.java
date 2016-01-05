@@ -25,7 +25,6 @@
 /**
  * Lightweight components for thumbnails.
  *
- * <p>
  * All the components in this package use {@link ThumbnailCache} for performance.  The same
  * thumbnail cache should be used for more than one component. For example,
  * <pre>
@@ -41,6 +40,5 @@
  * cache.add(list);
  * cache.add(table);
  * </pre>
- * </p>
  */
 package org.dishevelled.thumbnail.swing;

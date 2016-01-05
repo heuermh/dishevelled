@@ -33,16 +33,10 @@ import java.io.InputStream;
 import java.io.IOException;
 
 import java.nio.file.Files;
-import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.nio.file.WatchEvent;
 import java.nio.file.WatchKey;
 import java.nio.file.WatchService;
-
-import java.net.URI;
-
-import java.util.Collections;
-import java.util.List;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.Executors;
@@ -90,6 +84,9 @@ public final class ThumbnailDrop implements Callable<Integer>
     /** Match JPEG file extensions. */
     private static final Pattern JPEG_FILE_EXTENSIONS = Pattern.compile("^.+\\.(?i)(?:jpe?g)$");
 
+    /** Main thread timeout, in ms. */
+    private static final long TIMEOUT = 1000L;
+
     /** Usage string. */
     private static final String USAGE = "thumbnail-drop -w . -d ~/images &";
 
@@ -101,7 +98,9 @@ public final class ThumbnailDrop implements Callable<Integer>
      * @param destinationDirectory destination directory, must not be null
      * @param executorService executor service, must not be null
      */
-    public ThumbnailDrop(final File watchDirectory, final File destinationDirectory, final ExecutorService executorService)
+    public ThumbnailDrop(final File watchDirectory,
+                         final File destinationDirectory,
+                         final ExecutorService executorService)
     {
         if (watchDirectory == null)
         {
@@ -123,7 +122,6 @@ public final class ThumbnailDrop implements Callable<Integer>
         {
             watcher = this.watchDirectory.getFileSystem().newWatchService();
             this.watchDirectory.register(watcher, ENTRY_CREATE);
-            System.out.println("created file system watch service for watch directory " + this.watchDirectory);
         }
         catch (Exception e)
         {
@@ -154,7 +152,6 @@ public final class ThumbnailDrop implements Callable<Integer>
             }
             catch (InterruptedException e)
             {
-                System.out.println("processEvents interrupted " + e.getMessage());
                 return;
             }
             for (WatchEvent<?> event : key.pollEvents())
@@ -162,7 +159,6 @@ public final class ThumbnailDrop implements Callable<Integer>
                 WatchEvent.Kind kind = event.kind();
                 if (kind == OVERFLOW)
                 {
-                    System.out.println("overflow event " + event);
                     continue;
                 }
 
@@ -171,18 +167,15 @@ public final class ThumbnailDrop implements Callable<Integer>
                 Path path = watchDirectory.resolve(name);
                 if (kind == ENTRY_CREATE)
                 {
-                    System.out.println("heard path created " + path);
                     created(path);
                 }
                 else if (kind == ENTRY_MODIFY)
                 {
-                    System.out.println("heard path modified " + path);
                     modified(path);
                 }
             }
             if (!key.reset())
             {
-                System.out.println("canceling key and closing watcher ...");
                 key.cancel();
                 try
                 {
@@ -215,39 +208,60 @@ public final class ThumbnailDrop implements Callable<Integer>
                 if (destinationFile.exists())
                 {
                     // if destination file exists, delete newly created path
-                    System.out.println("destination file " + destinationFile + " exists, removing " + path + " ...");
                     Files.delete(path);
                 }
                 else
                 {
                     // else move newly created path to destination directory
-                    System.out.println("moving to destination file " + destinationFile + " ...");
                     Files.move(path, destinationFile.toPath());
                 }
-                
+
                 // trigger thumbnail creation
-                System.out.println("creating thumbnails ...");
                 thumbnailManager.createThumbnail(destinationFile.toURI(), 0L);
                 thumbnailManager.createLargeThumbnail(destinationFile.toURI(), 0L);
-                System.out.println("done.");
             }
             catch (IOException e)
             {
-                System.out.println("caught IOException " + e.getMessage());
+                // ignore
             }
         }
     }
 
+    /**
+     * Notify this the specified path has been modified.
+     *
+     * @param path modified path
+     */
     void modified(final Path path)
     {
         created(path);
     }
 
+    /**
+     * Generate a new file name for the specified path from its MD5 checksum.
+     *
+     * @param path path
+     * @return a new file name for the specified path from its MD5 checksum
+     * @throws IOException if an I/O error occurs
+     */
     static String fileName(final Path path) throws IOException
     {
-        try (InputStream inputStream = new FileInputStream(path.toFile()))
+        InputStream inputStream = null;
+        try
         {
+            inputStream = new FileInputStream(path.toFile());
             return DigestUtils.md5Hex(inputStream) + ".jpg";
+        }
+        finally
+        {
+            try
+            {
+                inputStream.close();
+            }
+            catch (Exception e)
+            {
+                // ignore
+            }
         }
     }
 
@@ -258,16 +272,22 @@ public final class ThumbnailDrop implements Callable<Integer>
         {
             try
             {
-                Thread.currentThread().sleep(1000L);
+                Thread.currentThread().sleep(TIMEOUT);
             }
             catch (InterruptedException e)
             {
-                System.out.println("call interrupted " + e.getMessage());
                 return 0;
             }
         }
     }
 
+    /**
+     * Cast the specified watch event to <code>WatchEvent&lt;T&gt;</code>.
+     *
+     * @param <T> type
+     * @param event watch event to cast
+     * @return the specified watch event cast to <code>WatchEvent&lt;T&gt;</code>
+     */
     @SuppressWarnings("unchecked")
     private static <T> WatchEvent<T> cast(final WatchEvent<?> event)
     {
@@ -293,21 +313,25 @@ public final class ThumbnailDrop implements Callable<Integer>
         try
         {
             CommandLineParser.parse(commandLine, arguments);
-            if (help.wasFound()) {
+            if (help.wasFound())
+            {
                 Usage.usage(USAGE, null, commandLine, arguments, System.out);
                 System.exit(0);
             }
             ExecutorService executorService = Executors.newSingleThreadExecutor();
             thumbnailDrop = new ThumbnailDrop(watchDirectory.getValue(), destinationDirectory.getValue(), executorService);
         }
-        catch (CommandLineParseException e) {
+        catch (CommandLineParseException e)
+        {
             Usage.usage(USAGE, e, commandLine, arguments, System.err);
             System.exit(-1);
         }
-        try {
+        try
+        {
             System.exit(thumbnailDrop.call());
         }
-        catch (Exception e) {
+        catch (Exception e)
+        {
             e.printStackTrace();
             System.exit(1);
         }
