@@ -29,7 +29,6 @@ import org.dishevelled.color.scheme.Interpolation;
  * Log base 2 interpolation.
  *
  * @author  Michael Heuer
- * @version $Revision$ $Date$
  */
 public final class Log2Interpolation
     implements Interpolation
@@ -59,7 +58,7 @@ public final class Log2Interpolation
         return (value == 0.0d) ? 0.0d : ((value < 0.0d) ? -1 * log2(-value) : log2(value));
     }
 
-    /** {@inheritDoc} */
+    @Override
     public double interpolate(final double value,
                               final double sourceMinimum,
                               final double sourceMaximum,

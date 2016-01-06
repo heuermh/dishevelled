@@ -31,7 +31,6 @@ import junit.framework.TestCase;
  * Unit test for Log2Interpolation.
  *
  * @author  Michael Heuer
- * @version $Revision$ $Date$
  */
 public class Log2InterpolationTest
     extends TestCase

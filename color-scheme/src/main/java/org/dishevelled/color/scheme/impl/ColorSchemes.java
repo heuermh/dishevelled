@@ -48,8 +48,6 @@ import org.dishevelled.color.scheme.Interpolation;
 import org.dishevelled.color.scheme.factory.DefaultColorFactory;
 import org.dishevelled.color.scheme.interpolate.Interpolations;
 
-
-
 import org.xml.sax.XMLReader;
 import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
@@ -60,7 +58,6 @@ import org.xml.sax.ContentHandler;
  * Color schemes.
  *
  * @author  Michael Heuer
- * @version $Revision$ $Date$
  */
 public final class ColorSchemes
 {
@@ -115,6 +112,22 @@ public final class ColorSchemes
     }
 
     /**
+     * Create and return a discrete color scheme with the specified name and number of colors, if any.
+     * The color schemes are defined in a simple XML format and read from the color-scheme library classpath.
+     *
+     * @since 2.1
+     * @param name name
+     * @param colors number of colors
+     * @return a discrete color scheme with the specified name and number of colors, or
+     *    <code>null</code> if no such discrete color scheme exists
+     */
+    public static ColorScheme getDiscreteColorScheme(final String name,
+                                                     final int colors)
+    {
+        return getDiscreteColorScheme(name, colors, Interpolations.LINEAR);
+    }
+
+    /**
      * Create and return a discrete color scheme with the specified name, number of colors, and interpolation,
      * if any.  The color schemes are defined in a simple XML format and read from the color-scheme library classpath.
      *
@@ -161,6 +174,22 @@ public final class ColorSchemes
             IOUtils.closeQuietly(inputStream);
         }
         return colorScheme;
+    }
+
+    /**
+     * Create and return a continuous color scheme with the specified name and number of colors, if any.
+     * The color schemes are defined in a simple XML format and read from the color-scheme library classpath.
+     *
+     * @since 2.1
+     * @param name name
+     * @param colors number of colors
+     * @return a continuous color scheme with the specified name and number of colors, or
+     *    <code>null</code> if no such continuous color scheme exists
+     */
+    public static ColorScheme getContinuousColorScheme(final String name,
+                                                       final int colors)
+    {
+        return getContinuousColorScheme(name, colors, Interpolations.LINEAR);
     }
 
     /**
@@ -231,7 +260,7 @@ public final class ColorSchemes
         private final ColorHandler colorHandler = new ColorHandler();
 
 
-        /** {@inheritDoc} */
+        @Override
         public void startElement(final String nsURI,
                                  final String localName,
                                  final String qName,
@@ -250,7 +279,7 @@ public final class ColorSchemes
             }
         }
 
-        /** {@inheritDoc} */
+        @Override
         public void endElement(final String nsURI,
                                final String localName,
                                final String qName,
@@ -306,7 +335,7 @@ public final class ColorSchemes
         private Color color;
 
 
-        /** {@inheritDoc} */
+        @Override
         public void startElement(final String nsURI,
                                  final String localName,
                                  final String qName,
@@ -321,7 +350,7 @@ public final class ColorSchemes
             this.color = COLOR_FACTORY.createColor(r, g, b, a);
         }
 
-        /** {@inheritDoc} */
+        @Override
         public Object endTree(final StAXContext context)
             throws SAXException
         {

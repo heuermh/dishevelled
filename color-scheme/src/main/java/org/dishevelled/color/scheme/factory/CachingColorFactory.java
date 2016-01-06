@@ -34,7 +34,6 @@ import org.dishevelled.color.scheme.ColorFactory;
  * Caching color factory.
  *
  * @author  Michael Heuer
- * @version $Revision$ $Date$
  */
 public final class CachingColorFactory
     implements ColorFactory
@@ -56,7 +55,7 @@ public final class CachingColorFactory
     }
 
 
-    /** {@inheritDoc} */
+    @Override
     public Color createColor(final int red, final int green, final int blue, final float alpha)
     {
         int a = Math.min(255, Math.round(alpha * 255));

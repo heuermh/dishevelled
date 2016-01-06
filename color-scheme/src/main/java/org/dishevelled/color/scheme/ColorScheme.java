@@ -29,7 +29,6 @@ import java.awt.Color;
  * Color scheme.
  *
  * @author  Michael Heuer
- * @version $Revision$ $Date$
  */
 public interface ColorScheme
 {

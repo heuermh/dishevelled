@@ -29,13 +29,12 @@ import org.dishevelled.color.scheme.Interpolation;
  * Linear interpolation.
  *
  * @author  Michael Heuer
- * @version $Revision$ $Date$
  */
 public final class LinearInterpolation
     implements Interpolation
 {
 
-    /** {@inheritDoc} */
+    @Override
     public double interpolate(final double value,
                               final double sourceMinimum,
                               final double sourceMaximum,

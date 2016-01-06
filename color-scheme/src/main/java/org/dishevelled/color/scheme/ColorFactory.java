@@ -29,7 +29,6 @@ import java.awt.Color;
  * Factory for creating Color instances.
  *
  * @author  Michael Heuer
- * @version $Revision$ $Date$
  */
 public interface ColorFactory
 {

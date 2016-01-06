@@ -36,7 +36,6 @@ import org.dishevelled.color.scheme.Interpolation;
  * Continuous divergent color scheme.
  *
  * @author  Michael Heuer
- * @version $Revision$ $Date$
  */
 public final class ContinuousDivergentColorScheme
     implements ColorScheme
@@ -173,64 +172,64 @@ public final class ContinuousDivergentColorScheme
         return name;
     }
 
-    /** {@inheritDoc} */
+    @Override
     public double getMinimumValue()
     {
         return minimumValue;
     }
 
-    /** {@inheritDoc} */
+    @Override
     public void setMinimumValue(final double minimumValue)
     {
         this.minimumValue = minimumValue;
         recalculateAnchors();
     }
 
-    /** {@inheritDoc} */
+    @Override
     public double getMaximumValue()
     {
         return maximumValue;
     }
 
-    /** {@inheritDoc} */
+    @Override
     public void setMaximumValue(final double maximumValue)
     {
         this.maximumValue = maximumValue;
         recalculateAnchors();
     }
 
-    /** {@inheritDoc} */
+    @Override
     public double getZeroValue()
     {
         return zeroValue;
     }
 
-    /** {@inheritDoc} */
+    @Override
     public void setZeroValue(final double zeroValue)
     {
         this.zeroValue = zeroValue;
         recalculateAnchors();
     }
 
-    /** {@inheritDoc} */
+    @Override
     public ColorFactory getColorFactory()
     {
         return colorFactory;
     }
 
-    /** {@inheritDoc} */
+    @Override
     public void setColorFactory(final ColorFactory colorFactory)
     {
         throw new UnsupportedOperationException("setMaximumValue operation not supported by this color scheme");
     }
 
-    /** {@inheritDoc} */
+    @Override
     public Interpolation getInterpolation()
     {
         return interpolation;
     }
 
-    /** {@inheritDoc} */
+    @Override
     public void setInterpolation(final Interpolation interpolation)
     {
         throw new UnsupportedOperationException("setInterpolation operation not supported by this color scheme");
@@ -266,7 +265,7 @@ public final class ContinuousDivergentColorScheme
         return colors.get(colors.size() - 1);
     }
 
-    /** {@inheritDoc} */
+    @Override
     public Color getColor(final double value)
     {
         if (value < getMinimumAnchor())

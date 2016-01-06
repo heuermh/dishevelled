@@ -27,7 +27,6 @@ package org.dishevelled.color.scheme;
  * Interpolation.
  *
  * @author  Michael Heuer
- * @version $Revision$ $Date$
  */
 public interface Interpolation
 {

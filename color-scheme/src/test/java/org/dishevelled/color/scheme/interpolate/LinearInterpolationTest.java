@@ -31,7 +31,6 @@ import junit.framework.TestCase;
  * Unit test for LinearInterpolation.
  *
  * @author  Michael Heuer
- * @version $Revision$ $Date$
  */
 public class LinearInterpolationTest
     extends TestCase

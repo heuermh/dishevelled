@@ -31,13 +31,12 @@ import org.dishevelled.color.scheme.factory.DefaultColorFactory;
  * Unit test for DefaultColorFactory.
  *
  * @author  Michael Heuer
- * @version $Revision$ $Date$
  */
 public final class DefaultColorFactoryTest
     extends AbstractColorFactoryTest
 {
 
-    /** {@inheritDoc} */
+    @Override
     protected ColorFactory createColorFactory()
     {
         return new DefaultColorFactory();

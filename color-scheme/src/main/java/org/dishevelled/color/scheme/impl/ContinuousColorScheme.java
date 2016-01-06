@@ -36,7 +36,6 @@ import org.dishevelled.color.scheme.Interpolation;
  * Continuous color scheme.
  *
  * @author  Michael Heuer
- * @version $Revision$ $Date$
  */
 public final class ContinuousColorScheme
     implements ColorScheme
@@ -122,61 +121,61 @@ public final class ContinuousColorScheme
         return name;
     }
 
-    /** {@inheritDoc} */
+    @Override
     public double getMinimumValue()
     {
         return minimumValue;
     }
 
-    /** {@inheritDoc} */
+    @Override
     public void setMinimumValue(final double minimumValue)
     {
         throw new UnsupportedOperationException("setMinimumValue operation not supported by this color scheme");
     }
 
-    /** {@inheritDoc} */
+    @Override
     public double getMaximumValue()
     {
         return maximumValue;
     }
 
-    /** {@inheritDoc} */
+    @Override
     public void setMaximumValue(final double maximumValue)
     {
         throw new UnsupportedOperationException("setMaximumValue operation not supported by this color scheme");
     }
 
-    /** {@inheritDoc} */
+    @Override
     public double getZeroValue()
     {
         return Double.NaN;
     }
 
-    /** {@inheritDoc} */
+    @Override
     public void setZeroValue(final double zeroValue)
     {
         throw new UnsupportedOperationException("setZeroValue operation not supported by this color scheme");
     }
 
-    /** {@inheritDoc} */
+    @Override
     public ColorFactory getColorFactory()
     {
         return colorFactory;
     }
 
-    /** {@inheritDoc} */
+    @Override
     public void setColorFactory(final ColorFactory colorFactory)
     {
         throw new UnsupportedOperationException("setMaximumValue operation not supported by this color scheme");
     }
 
-    /** {@inheritDoc} */
+    @Override
     public Interpolation getInterpolation()
     {
         return interpolation;
     }
 
-    /** {@inheritDoc} */
+    @Override
     public void setInterpolation(final Interpolation interpolation)
     {
         throw new UnsupportedOperationException("setInterpolation operation not supported by this color scheme");
@@ -212,7 +211,7 @@ public final class ContinuousColorScheme
         return colors.get(colors.size() - 1);
     }
 
-    /** {@inheritDoc} */
+    @Override
     public Color getColor(final double value)
     {
         if (value < getMinimumAnchor())

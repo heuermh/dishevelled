@@ -31,7 +31,6 @@ import junit.framework.TestCase;
  * Unit test for Log10Interpolation.
  *
  * @author  Michael Heuer
- * @version $Revision$ $Date$
  */
 public class Log10InterpolationTest
     extends TestCase

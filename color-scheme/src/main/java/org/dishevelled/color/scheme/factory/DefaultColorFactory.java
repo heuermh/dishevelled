@@ -31,13 +31,12 @@ import org.dishevelled.color.scheme.ColorFactory;
  * Default color factory.
  *
  * @author  Michael Heuer
- * @version $Revision$ $Date$
  */
 public final class DefaultColorFactory
     implements ColorFactory
 {
 
-    /** {@inheritDoc} */
+    @Override
     public Color createColor(final int red, final int green, final int blue, final float alpha)
     {
         return new Color(red, green, blue, Math.min(255, Math.round(alpha * 255)));

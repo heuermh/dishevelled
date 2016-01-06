@@ -23,13 +23,15 @@
 */
 package org.dishevelled.color.scheme.impl;
 
+import static java.util.Collections.emptyList;
+
 import java.awt.Color;
 
 import java.util.List;
 
 import junit.framework.TestCase;
 
-import static org.dishevelled.collect.Lists.*;
+import com.google.common.collect.ImmutableList;
 
 import org.dishevelled.color.scheme.ColorFactory;
 import org.dishevelled.color.scheme.ColorScheme;
@@ -37,13 +39,10 @@ import org.dishevelled.color.scheme.factory.DefaultColorFactory;
 import org.dishevelled.color.scheme.impl.DiscreteDivergentColorScheme;
 import org.dishevelled.color.scheme.interpolate.Interpolations;
 
-
-
 /**
  * Unit test for DiscreteDivergentColorScheme.
  *
  * @author  Michael Heuer
- * @version $Revision$ $Date$
  */
 public final class DiscreteDivergentColorSchemeTest
     extends TestCase
@@ -52,8 +51,8 @@ public final class DiscreteDivergentColorSchemeTest
     public void testConstructor()
     {
         List<Color> emptyColors = emptyList();
-        List<Color> singletonColor = asList(Color.WHITE);
-        List<Color> colors = asList(Color.WHITE, Color.GRAY, Color.BLACK);
+        List<Color> singletonColor = ImmutableList.of(Color.WHITE);
+        List<Color> colors = ImmutableList.of(Color.WHITE, Color.GRAY, Color.BLACK);
         ColorFactory colorFactory = new DefaultColorFactory();
         new DiscreteDivergentColorScheme("color-scheme", colors, 0.0d, 0.5d, 1.0d, colorFactory, Interpolations.LINEAR);
         new DiscreteDivergentColorScheme("color-scheme", colors, -1.0d, 0.0d, 1.0d, colorFactory, Interpolations.LINEAR);
@@ -113,7 +112,7 @@ public final class DiscreteDivergentColorSchemeTest
 
     public void testTwoColorScheme()
     {
-        ColorScheme colorScheme = new DiscreteDivergentColorScheme("name", asList(Color.BLACK, Color.WHITE), 0.0d, 0.5d, 1.0d, new DefaultColorFactory(), Interpolations.LINEAR);
+        ColorScheme colorScheme = new DiscreteDivergentColorScheme("name", ImmutableList.of(Color.BLACK, Color.WHITE), 0.0d, 0.5d, 1.0d, new DefaultColorFactory(), Interpolations.LINEAR);
         assertNotNull(colorScheme);
         //assertEquals("name", colorScheme.getName());
         // out of bounds
@@ -128,7 +127,7 @@ public final class DiscreteDivergentColorSchemeTest
 
     public void testEvenColorScheme()
     {
-        ColorScheme colorScheme = new DiscreteDivergentColorScheme("name", asList(Color.BLACK, Color.RED, Color.BLUE, Color.WHITE), 0.0d, 0.5d, 1.0d, new DefaultColorFactory(), Interpolations.LINEAR);
+        ColorScheme colorScheme = new DiscreteDivergentColorScheme("name", ImmutableList.of(Color.BLACK, Color.RED, Color.BLUE, Color.WHITE), 0.0d, 0.5d, 1.0d, new DefaultColorFactory(), Interpolations.LINEAR);
         assertNotNull(colorScheme);
         //assertEquals("name", colorScheme.getName());
         // out of bounds
@@ -148,7 +147,7 @@ public final class DiscreteDivergentColorSchemeTest
 
     public void testOddColorScheme()
     {
-        ColorScheme colorScheme = new DiscreteDivergentColorScheme("name", asList(Color.BLACK, Color.RED, Color.WHITE), 0.0d, 0.5d, 1.0d, new DefaultColorFactory(), Interpolations.LINEAR);
+        ColorScheme colorScheme = new DiscreteDivergentColorScheme("name", ImmutableList.of(Color.BLACK, Color.RED, Color.WHITE), 0.0d, 0.5d, 1.0d, new DefaultColorFactory(), Interpolations.LINEAR);
         assertNotNull(colorScheme);
         //assertEquals("name", colorScheme.getName());
         // out of bounds
@@ -166,7 +165,7 @@ public final class DiscreteDivergentColorSchemeTest
 
     public void testEvenDiscreteDivergentColorScheme()
     {
-        List<Color> colors = asList(Color.WHITE, Color.BLACK);
+        List<Color> colors = ImmutableList.of(Color.WHITE, Color.BLACK);
         ColorFactory colorFactory = new DefaultColorFactory();
         DiscreteDivergentColorScheme colorScheme = new DiscreteDivergentColorScheme("color-scheme", colors, 0.0d, 0.5d, 1.0d, colorFactory, Interpolations.LINEAR);
         assertNotNull(colorScheme);
@@ -187,7 +186,7 @@ public final class DiscreteDivergentColorSchemeTest
 
     public void testOddDiscreteDivergentColorScheme()
     {
-        List<Color> colors = asList(Color.WHITE, Color.RED, Color.BLACK);
+        List<Color> colors = ImmutableList.of(Color.WHITE, Color.RED, Color.BLACK);
         ColorFactory colorFactory = new DefaultColorFactory();
         DiscreteDivergentColorScheme colorScheme = new DiscreteDivergentColorScheme("color-scheme", colors, 0.0d, 0.5d, 1.0d, colorFactory, Interpolations.LINEAR);
         assertNotNull(colorScheme);

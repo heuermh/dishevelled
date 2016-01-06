@@ -34,7 +34,6 @@ import org.dishevelled.color.scheme.Interpolation;
  * Interpolations.
  *
  * @author  Michael Heuer
- * @version $Revision$ $Date$
  */
 public final class Interpolations
 {

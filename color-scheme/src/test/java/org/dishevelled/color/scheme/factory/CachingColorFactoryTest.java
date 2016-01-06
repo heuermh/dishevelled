@@ -33,13 +33,12 @@ import org.dishevelled.color.scheme.factory.CachingColorFactory;
  * Unit test for CachingColorFactory.
  *
  * @author  Michael Heuer
- * @version $Revision$ $Date$
  */
 public final class CachingColorFactoryTest
     extends AbstractColorFactoryTest
 {
 
-    /** {@inheritDoc} */
+    @Override
     protected ColorFactory createColorFactory()
     {
         return new CachingColorFactory();
