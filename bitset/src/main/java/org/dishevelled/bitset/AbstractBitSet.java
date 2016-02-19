@@ -89,13 +89,12 @@ public abstract class AbstractBitSet { // implements Iterable<Long> ?
      * Return the index of the next bit set to false on or after the specified index, or
      * <code>-1L</code> if no such bit exists.
      *
-     * <p>E.g.
+     * <br>E.g.
      * <pre>
      * for (long i = bs.nextClearBit(0L); i &gt;= 0L; i = bs.nextClearBit(i + 1L)) {
      *   // ...
      * }
      * </pre>
-     * </p>
      *
      * @param index index
      * @return the index of the next bit set to false on or after the specified index, or
@@ -107,13 +106,12 @@ public abstract class AbstractBitSet { // implements Iterable<Long> ?
      * Return the index of the previous bit set to false on or before the specified index, or
      * <code>-1L</code> if no such bit exists.
      *
-     * <p>E.g.
+     * <br>E.g.
      * <pre>
      * for (long i = bs.capacity(); (i = bs.prevClearBit(i-1)) &gt;= 0L; ) {
      *   // ...
      * }
      * </pre>
-     * </p>
      *
      * @param index index
      * @return the index of the previous bit set to false on or before the specified index, or
@@ -124,7 +122,7 @@ public abstract class AbstractBitSet { // implements Iterable<Long> ?
     /**
      * Call the specified procedure with the index of each bit set to false in this bit set.
      *
-     * <p>E.g.
+     * <br>E.g.
      * <pre>
      * bs.forEachClearBit(new UnaryProcedure&lt;Long&gt;() {
      *     public void run(final Long i) {
@@ -132,7 +130,6 @@ public abstract class AbstractBitSet { // implements Iterable<Long> ?
      *     }
      *   });
      * </pre>
-     * </p>
      *
      * @param procedure procedure, must not be null
      */
@@ -142,13 +139,12 @@ public abstract class AbstractBitSet { // implements Iterable<Long> ?
      * Return the index of the next bit set to true on or after the specified index, or
      * <code>-1L</code> if no such bit exists.
      *
-     * <p>E.g.
+     * <br>E.g.
      * <pre>
      * for (long i = bs.nextSetBit(0L); i &gt;= 0L; i = bs.nextSetBit(i + 1L)) {
      *   // ...
      * }
      * </pre>
-     * </p>
      *
      * @param index index
      * @return the index of the next bit set to true on or after the specified index, or
@@ -160,13 +156,12 @@ public abstract class AbstractBitSet { // implements Iterable<Long> ?
      * Return the index of the previous bit set to true on or before the specified index, or
      * <code>-1L</code> if no such bit exists.
      *
-     * <p>E.g.
+     * <br>E.g.
      * <pre>
      * for (long i = bs.capacity(); (i = bs.prevSetBit(i-1)) &gt;= 0L; ) {
      *   // ...
      * }
      * </pre>
-     * </p>
      *
      * @param index index
      * @return the index of the previous bit set to true on or before the specified index, or
@@ -177,7 +172,7 @@ public abstract class AbstractBitSet { // implements Iterable<Long> ?
     /**
      * Call the specified procedure with the index of each bit set to true in this bit set.
      *
-     * <p>E.g.
+     * <br>E.g.
      * <pre>
      * bs.forEachSetBit(new UnaryProcedure&lt;Long&gt;() {
      *     public void run(final Long i) {
@@ -185,7 +180,6 @@ public abstract class AbstractBitSet { // implements Iterable<Long> ?
      *     }
      *   });
      * </pre>
-     * </p>
      *
      * @param procedure procedure, must not be null
      */

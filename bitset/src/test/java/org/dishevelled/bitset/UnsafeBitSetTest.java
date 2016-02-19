@@ -437,6 +437,22 @@ public class UnsafeBitSetTest extends AbstractBitSetTest {
     }
 
     @Test
+    public void testImmutableCopy() {
+        ImmutableBitSet immutableEmpty = empty.immutableCopy();
+        assertNotNull(immutableEmpty);
+        assertTrue(immutableEmpty.isEmpty());
+
+        ImmutableBitSet immutablePartial = partial.immutableCopy();
+        assertNotNull(immutablePartial);
+        assertEquals((N / 2L), immutablePartial.cardinality());
+
+        ImmutableBitSet immutableFull = full.immutableCopy();
+        assertNotNull(immutableFull);
+        assertTrue(immutableFull.get(0L));
+        assertTrue(immutableFull.get(N - 1L));
+    }
+
+    @Test
     public void testMutableCopy() {
         MutableBitSet mutableEmpty = empty.mutableCopy();
         assertNotNull(mutableEmpty);
@@ -450,6 +466,22 @@ public class UnsafeBitSetTest extends AbstractBitSetTest {
         assertNotNull(mutableFull);
         assertTrue(mutableFull.get(0L));
         assertTrue(mutableFull.get(N - 1L));
+    }
+
+    @Test
+    public void testUnsafeCopy() {
+        UnsafeBitSet unsafeEmpty = empty.unsafeCopy();
+        assertNotNull(unsafeEmpty);
+        assertTrue(unsafeEmpty.isEmpty());
+
+        UnsafeBitSet unsafePartial = partial.unsafeCopy();
+        assertNotNull(unsafePartial);
+        assertEquals((N / 2L), unsafePartial.cardinality());
+
+        UnsafeBitSet unsafeFull = full.unsafeCopy();
+        assertNotNull(unsafeFull);
+        assertTrue(unsafeFull.get(0L));
+        assertTrue(unsafeFull.get(N - 1L));
     }
 
     @Test

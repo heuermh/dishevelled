@@ -545,6 +545,16 @@ public class MutableBitSet extends AbstractBitSet implements Serializable /*, Cl
     }
 
     /**
+     * Return a new mutable copy of this mutable bit set.
+     *
+     * @since 3.1
+     * @return a new mutable copy of this mutable bit set
+     */
+    public MutableBitSet mutableCopy() {
+        return new MutableBitSet(bits, wlen); // bits is cloned in ctr
+    }
+
+    /**
      * Return a new unsafe copy of this mutable bit set.
      *
      * @return a new unsafe copy of this mutable bit set

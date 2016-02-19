@@ -601,6 +601,22 @@ public class MutableBitSetTest extends AbstractBitSetTest {
     }
 
     @Test
+    public void testMutableCopy() {
+        MutableBitSet mutableEmpty = empty.mutableCopy();
+        assertNotNull(mutableEmpty);
+        assertTrue(mutableEmpty.isEmpty());
+
+        MutableBitSet mutablePartial = partial.mutableCopy();
+        assertNotNull(mutablePartial);
+        assertEquals((N / 2L), mutablePartial.cardinality());
+
+        MutableBitSet mutableFull = full.mutableCopy();
+        assertNotNull(mutableFull);
+        assertTrue(mutableFull.get(0L));
+        assertTrue(mutableFull.get(N - 1L));
+    }
+
+    @Test
     public void testUnsafeCopy() {
         UnsafeBitSet unsafeEmpty = empty.unsafeCopy();
         assertNotNull(unsafeEmpty);

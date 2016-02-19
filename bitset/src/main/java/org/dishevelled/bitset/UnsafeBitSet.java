@@ -155,11 +155,31 @@ public class UnsafeBitSet extends MutableBitSet {
     }
 
     /**
+     * Return a new immutable copy of this unsafe bit set.
+     *
+     * @since 3.1
+     * @return a new immutable copy of this unsafe bit set
+     */
+    public ImmutableBitSet immutableCopy() {
+        return new ImmutableBitSet(bits, wlen); // bits is cloned in ctr
+    }
+
+    /**
      * Return a new mutable copy of this unsafe bit set.
      *
      * @return a new mutable copy of this unsafe bit set
      */
     public final MutableBitSet mutableCopy() {
         return new MutableBitSet(bits.clone(), wlen);
+    }
+
+    /**
+     * Return a new unsafe copy of this unsafe bit set.
+     *
+     * @since 3.1
+     * @return a new unsafe copy of this unsafe bit set
+     */
+    public UnsafeBitSet unsafeCopy() {
+        return new UnsafeBitSet(bits.clone(), wlen);
     }
 }

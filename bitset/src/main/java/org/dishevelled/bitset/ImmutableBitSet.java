@@ -383,6 +383,16 @@ public final class ImmutableBitSet extends AbstractBitSet implements Serializabl
     }
 
     /**
+     * Return a new immutable copy of this immutable bit set.
+     *
+     * @since 3.1
+     * @return a new immutable copy of this immutable bit set
+     */
+    public ImmutableBitSet immutableCopy() {
+        return new ImmutableBitSet(bits.clone(), wlen * 64, wlen);
+    }
+
+    /**
      * Return a new mutable copy of this immutable bit set.
      *
      * @return a new mutable copy of this immutable bit set
