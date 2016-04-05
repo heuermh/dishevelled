@@ -38,6 +38,8 @@ import java.nio.file.WatchEvent;
 import java.nio.file.WatchKey;
 import java.nio.file.WatchService;
 
+import java.nio.file.attribute.BasicFileAttributes;
+
 import java.util.concurrent.Callable;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ExecutorService;
@@ -58,6 +60,9 @@ import org.dishevelled.commandline.argument.FileArgument;
 
 import org.dishevelled.thumbnail.ThumbnailManager;
 import org.dishevelled.thumbnail.XdgThumbnailManager;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Image directory watcher thumbnail example.
@@ -81,14 +86,23 @@ public final class ThumbnailDrop implements Callable<Integer>
     /** Thumbnail manager. */
     private final ThumbnailManager thumbnailManager = new XdgThumbnailManager();
 
+    /** Logger. */
+    private final Logger logger = LoggerFactory.getLogger(ThumbnailDrop.class);
+
     /** Match JPEG file extensions. */
     private static final Pattern JPEG_FILE_EXTENSIONS = Pattern.compile("^.+\\.(?i)(?:jpe?g)$");
 
     /** Main thread timeout, in ms. */
     private static final long TIMEOUT = 1000L;
 
+    /** Empty file initial retry, in ms. */
+    private static final long INITIAL_RETRY = 50L;
+
+    /** Empty file maximum retry, in ms. */
+    private static final long MAXIMUM_RETRY = 2000L;
+
     /** Usage string. */
-    private static final String USAGE = "thumbnail-drop -w . -d ~/images &";
+    private static final String USAGE = "thumbnail-drop -w . -d ~/images";
 
 
     /**
@@ -197,6 +211,8 @@ public final class ThumbnailDrop implements Callable<Integer>
      */
     void created(final Path path)
     {
+        logger.trace("heard " + path + " created");
+
         // sucks
         // String mimeType = Files.probeContentType(path);
         Matcher matcher = JPEG_FILE_EXTENSIONS.matcher(path.toString());
@@ -204,25 +220,42 @@ public final class ThumbnailDrop implements Callable<Integer>
         {
             try
             {
+                // block until file is non-empty
+                waitForNonEmptyFile(path);
+
                 File destinationFile = new File(destinationDirectory.toFile(), fileName(path));
                 if (destinationFile.exists())
                 {
                     // if destination file exists, delete newly created path
+                    logger.info(destinationFile + " exists, deleting " + path);
                     Files.delete(path);
                 }
                 else
                 {
                     // else move newly created path to destination directory
+                    logger.info("moving " + path + " to " + destinationFile);
                     Files.move(path, destinationFile.toPath());
                 }
 
                 // trigger thumbnail creation
+                logger.trace("creating thumbnails for " + destinationFile);
                 thumbnailManager.createThumbnail(destinationFile.toURI(), 0L);
                 thumbnailManager.createLargeThumbnail(destinationFile.toURI(), 0L);
             }
             catch (IOException e)
             {
-                // ignore
+                logger.warn("unable to create thumbnails, " + e.getMessage());
+
+                try
+                {
+                    // delete problematic file from watch directory
+                    logger.info("deleting " + path);
+                    Files.delete(path);
+                }
+                catch (IOException ioe)
+                {
+                    // ignore
+                }
             }
         }
     }
@@ -234,7 +267,49 @@ public final class ThumbnailDrop implements Callable<Integer>
      */
     void modified(final Path path)
     {
+        logger.trace("heard " + path + " modified");
         created(path);
+    }
+
+    /**
+     * Block the current thread until the specified path is non-empty, up to the maximum retry.
+     *
+     * @see #MAXIMUM_RETRY
+     * @param path path
+     * @throws IOException if an I/O error occurs
+     */
+    void waitForNonEmptyFile(final Path path) throws IOException
+    {
+        for (long retry = INITIAL_RETRY; retry < MAXIMUM_RETRY; retry *= 2)
+        {
+            if (isNonEmpty(path))
+            {
+                return;
+            }
+            try
+            {
+                logger.trace("  waiting " + retry + "ms for empty file...");
+                Thread.currentThread().sleep(retry);
+            }
+            catch (InterruptedException e)
+            {
+                // ok
+            }
+        }
+        throw new IOException("path " + path + " is empty");
+    }
+
+    /**
+     * Return true if the specified path is a non-empty regular file.
+     *
+     * @param path path
+     * @return true if the specified path is a non-empty regular file
+     * @throws IOException if an I/O error occurs
+     */
+    static boolean isNonEmpty(final Path path) throws IOException
+    {
+        BasicFileAttributes attr = Files.readAttributes(path, BasicFileAttributes.class);
+        return attr.isRegularFile() && (attr.size() > 0L);
     }
 
     /**
@@ -305,8 +380,9 @@ public final class ThumbnailDrop implements Callable<Integer>
         Switch help = new Switch("h", "help", "display help message");
         FileArgument watchDirectory = new FileArgument("w", "watch-directory", "watch directory", true);
         FileArgument destinationDirectory = new FileArgument("d", "destination-directory", "destination directory", true);
+        Switch verbose = new Switch("v", "verbose", "verbose logging output");
 
-        ArgumentList arguments = new ArgumentList(help, watchDirectory, destinationDirectory);
+        ArgumentList arguments = new ArgumentList(help, watchDirectory, destinationDirectory, verbose);
         CommandLine commandLine = new CommandLine(args);
 
         ThumbnailDrop thumbnailDrop = null;
@@ -318,6 +394,22 @@ public final class ThumbnailDrop implements Callable<Integer>
                 Usage.usage(USAGE, null, commandLine, arguments, System.out);
                 System.exit(0);
             }
+
+            System.setProperty("org.slf4j.simpleLogger.logFile", "System.out");
+            System.setProperty("org.slf4j.simpleLogger.showDateTime", "false");
+            System.setProperty("org.slf4j.simpleLogger.showThreadName", "false");
+            System.setProperty("org.slf4j.simpleLogger.showLogName", "false");
+            System.setProperty("org.slf4j.simpleLogger.levelInBrackets", "false");
+
+            if (verbose.wasFound())
+            {
+                System.setProperty("org.slf4j.simpleLogger.defaultLogLevel", "trace");
+            }
+            else
+            {
+                System.setProperty("org.slf4j.simpleLogger.defaultLogLevel", "info");
+            }
+
             ExecutorService executorService = Executors.newSingleThreadExecutor();
             thumbnailDrop = new ThumbnailDrop(watchDirectory.getValue(), destinationDirectory.getValue(), executorService);
         }
