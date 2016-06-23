@@ -25,8 +25,11 @@ package org.dishevelled.color.scheme.factory;
 
 import java.awt.Color;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+
+import com.google.common.cache.Cache;
+import com.google.common.cache.CacheBuilder;
 
 import org.dishevelled.color.scheme.ColorFactory;
 
@@ -38,32 +41,32 @@ import org.dishevelled.color.scheme.ColorFactory;
 public final class CachingColorFactory
     implements ColorFactory
 {
-    /** Map of colors keyed by integer ARGB value. */
-    // todo:  could be more efficient with a native int --> object map
-    private final Map<Integer, Color> colors;
-
-    /** Default initial capacity, <code>1024</code>. */
-    private static final int DEFAULT_INITIAL_CAPACITY = 1024;
-
-
-    /**
-     * Create a new caching color factory.
-     */
-    public CachingColorFactory()
-    {
-        colors = new HashMap<Integer, Color>(DEFAULT_INITIAL_CAPACITY);
-    }
-
+    /** Cache of colors keyed by integer ARGB value. */
+    private final Cache<Integer, Color> colors = CacheBuilder.newBuilder()
+        .maximumSize(100000L)
+        .build();
 
     @Override
     public Color createColor(final int red, final int green, final int blue, final float alpha)
     {
-        int a = Math.min(255, Math.round(alpha * 255));
-        int key = (a & 0xFF) << 24 | (red & 0xFF) << 16 | (green & 0xFF) << 8  | (blue & 0xFF) << 0;
-        if (!colors.containsKey(key))
+        final int a = Math.min(255, Math.round(alpha * 255));
+        final int key = (a & 0xFF) << 24 | (red & 0xFF) << 16 | (green & 0xFF) << 8  | (blue & 0xFF) << 0;
+
+        try
         {
-            colors.put(key, new Color(red, green, blue, a));
+            return colors.get(key, new Callable<Color>()
+                {
+                    @Override
+                    public Color call()
+                    {
+                        return new Color(red, green, blue, a);
+                    }
+                });
         }
-        return colors.get(key);
+        catch (ExecutionException e)
+        {
+            // shouldn't happen, no checked exceptions are thrown above
+            return Color.WHITE;
+        }
     }
 }
