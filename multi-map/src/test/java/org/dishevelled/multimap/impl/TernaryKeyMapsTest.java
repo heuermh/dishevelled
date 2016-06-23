@@ -33,7 +33,6 @@ import static org.dishevelled.multimap.impl.TernaryKeyMaps.*;
  * Unit test for TernaryKeyMaps.
  *
  * @author  Michael Heuer
- * @version $Revision$ $Date$
  */
 public final class TernaryKeyMapsTest
     extends TestCase

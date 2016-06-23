@@ -29,7 +29,6 @@ import org.dishevelled.multimap.QuaternaryKeyMap;
  * Static utility methods for QuaternaryKeyMaps.
  *
  * @author  Michael Heuer
- * @version $Revision$ $Date$
  */
 public final class QuaternaryKeyMaps
 {

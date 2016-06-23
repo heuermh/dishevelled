@@ -34,7 +34,6 @@ import java.util.Map;
  * @param <K4> fourth key type
  * @param <V> value type
  * @author  Michael Heuer
- * @version $Revision$ $Date$
  */
 public interface QuaternaryKeyMap<K1, K2, K3, K4, V>
     extends Map<QuaternaryKey<K1, K2, K3, K4>, V>
@@ -67,6 +66,7 @@ public interface QuaternaryKeyMap<K1, K2, K3, K4, V>
      * Remove the mapping for a quaternary key of {<code>key1, key2, key3, key4</code>} from this map
      * if one exists (optional operation).
      *
+     * @since 2.0
      * @param key1 first key
      * @param key2 second key
      * @param key3 third key
@@ -75,7 +75,7 @@ public interface QuaternaryKeyMap<K1, K2, K3, K4, V>
      *    or <code>null</code> if no such mapping exists
      * @throws UnsupportedOperationException if the remove operation is not supported by this map
      */
-    V remove(K1 key1, K2 key2, K3 key3, K4 key4);
+    V removeKey(K1 key1, K2 key2, K3 key3, K4 key4);
 
     /**
      * Map a quaternary key of {<code>key1, key2, key3, key4</code>} to the specified value

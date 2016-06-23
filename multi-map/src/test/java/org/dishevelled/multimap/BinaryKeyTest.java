@@ -29,7 +29,6 @@ import junit.framework.TestCase;
  * Unit test for BinaryKey.
  *
  * @author  Michael Heuer
- * @version $Revision$ $Date$
  */
 public final class BinaryKeyTest
     extends TestCase

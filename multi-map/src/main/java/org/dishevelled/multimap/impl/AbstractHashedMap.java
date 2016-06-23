@@ -292,7 +292,7 @@ abstract class AbstractHashedMap<K, V>
 
     /**
      * Puts all the values from the specified map into this map.
-     * <p/>
+     *
      * This implementation iterates around the specified map and
      * uses {@link #put(Object, Object)}.
      *
@@ -409,7 +409,7 @@ abstract class AbstractHashedMap<K, V>
     //-----------------------------------------------------------------------
     /**
      * Gets the entry mapped to the key specified.
-     * <p/>
+     *
      * This method exists for subclasses that may need to perform a multi-step
      * process accessing the entry. The public methods in this class don't use this
      * method to gain a small performance boost.
@@ -432,7 +432,7 @@ abstract class AbstractHashedMap<K, V>
     //-----------------------------------------------------------------------
     /**
      * Updates an existing key-value mapping to change the value.
-     * <p/>
+     *
      * This implementation calls <code>setValue()</code> on the entry.
      * Subclasses could override to handle changes to the map.
      *
@@ -445,7 +445,7 @@ abstract class AbstractHashedMap<K, V>
 
     /**
      * Reuses an existing key-value mapping, storing completely new data.
-     * <p/>
+     *
      * This implementation sets all the data fields on the entry.
      * Subclasses could populate additional entry fields.
      *
@@ -465,7 +465,7 @@ abstract class AbstractHashedMap<K, V>
     //-----------------------------------------------------------------------
     /**
      * Adds a new key-value mapping into this map.
-     * <p/>
+     *
      * This implementation calls <code>createEntry()</code>, <code>addEntry()</code>
      * and <code>checkCapacity()</code>.
      * It also handles changes to <code>modCount</code> and <code>size</code>.
@@ -486,7 +486,7 @@ abstract class AbstractHashedMap<K, V>
 
     /**
      * Creates an entry to store the key-value data.
-     * <p/>
+     *
      * This implementation creates a new HashEntry instance.
      * Subclasses can override this to return a different storage class,
      * or implement caching.
@@ -503,7 +503,7 @@ abstract class AbstractHashedMap<K, V>
 
     /**
      * Adds an entry into this map.
-     * <p/>
+     *
      * This implementation adds the entry to the data storage table.
      * Subclasses could override to handle changes to the map.
      *
@@ -517,7 +517,7 @@ abstract class AbstractHashedMap<K, V>
     //-----------------------------------------------------------------------
     /**
      * Removes a mapping from the map.
-     * <p/>
+     *
      * This implementation calls <code>removeEntry()</code> and <code>destroyEntry()</code>.
      * It also handles changes to <code>modCount</code> and <code>size</code>.
      * Subclasses could override to fully control removals from the map.
@@ -535,7 +535,7 @@ abstract class AbstractHashedMap<K, V>
 
     /**
      * Removes an entry from the chain stored in a particular index.
-     * <p/>
+     *
      * This implementation removes the entry from the data storage table.
      * The size is not updated.
      * Subclasses could override to handle changes to the map.
@@ -554,7 +554,7 @@ abstract class AbstractHashedMap<K, V>
 
     /**
      * Kills an entry ready for the garbage collector.
-     * <p/>
+     *
      * This implementation prepares the HashEntry for garbage collection.
      * Subclasses can override this to implement caching (override clear as well).
      *
@@ -569,7 +569,7 @@ abstract class AbstractHashedMap<K, V>
     //-----------------------------------------------------------------------
     /**
      * Checks the capacity of the map and enlarges it if necessary.
-     * <p/>
+     *
      * This implementation uses the threshold to check if the map needs enlarging
      */
     protected void checkCapacity() {
@@ -935,7 +935,7 @@ abstract class AbstractHashedMap<K, V>
     //-----------------------------------------------------------------------
     /**
      * HashEntry used to store the data.
-     * <p/>
+     *
      * If you subclass <code>AbstractHashedMap</code> but not <code>HashEntry</code>
      * then you will not be able to access the protected fields.
      * The <code>entryXxx()</code> methods on <code>AbstractHashedMap</code> exist
@@ -1098,21 +1098,22 @@ abstract class AbstractHashedMap<K, V>
     /**
      * Writes the map data to the stream. This method must be overridden if a
      * subclass must be setup before <code>put()</code> is used.
-     * <p/>
+     *
      * Serialization is not one of the JDK's nicest topics. Normal serialization will
      * initialise the superclass before the subclass. Sometimes however, this isn't
      * what you want, as in this case the <code>put()</code> method on read can be
      * affected by subclass state.
-     * <p/>
+     *
      * The solution adopted here is to serialize the state data of this class in
      * this protected method. This method must be called by the
      * <code>writeObject()</code> of the first serializable subclass.
-     * <p/>
+     *
      * Subclasses may override if they have a specific field that must be present
      * on read before this implementation will work. Generally, the read determines
      * what must be serialized here, if anything.
      *
      * @param out the output stream
+     * @throws IOException if an I/O error occurs
      */
     protected void doWriteObject(ObjectOutputStream out) throws IOException {
         out.writeFloat(loadFactor);
@@ -1128,20 +1129,22 @@ abstract class AbstractHashedMap<K, V>
     /**
      * Reads the map data from the stream. This method must be overridden if a
      * subclass must be setup before <code>put()</code> is used.
-     * <p/>
+     *
      * Serialization is not one of the JDK's nicest topics. Normal serialization will
      * initialise the superclass before the subclass. Sometimes however, this isn't
      * what you want, as in this case the <code>put()</code> method on read can be
      * affected by subclass state.
-     * <p/>
+     *
      * The solution adopted here is to deserialize the state data of this class in
      * this protected method. This method must be called by the
      * <code>readObject()</code> of the first serializable subclass.
-     * <p/>
+     *
      * Subclasses may override if the subclass has a specific field that must be present
      * before <code>put()</code> or <code>calculateThreshold()</code> will work correctly.
      *
      * @param in the input stream
+     * @throws IOException if an I/O error occurs
+     * @throws ClassNotFoundException if a deserialized class cannot be found
      */
     protected void doReadObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
         loadFactor = in.readFloat();
@@ -1160,7 +1163,7 @@ abstract class AbstractHashedMap<K, V>
     //-----------------------------------------------------------------------
     /**
      * Clones the map without cloning the keys or values.
-     * <p/>
+     *
      * To implement <code>clone()</code>, a subclass must implement the
      * <code>Cloneable</code> interface and make this method public.
      *

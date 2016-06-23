@@ -30,7 +30,6 @@ package org.dishevelled.multimap;
  * @param <K2> second key type
  * @param <K3> third key type
  * @author  Michael Heuer
- * @version $Revision$ $Date$
  */
 public final class TernaryKey<K1, K2, K3>
 {
@@ -50,8 +49,8 @@ public final class TernaryKey<K1, K2, K3>
     /**
      * Create a new ternary key with the specified keys.
      *
-     * <p>The keys should be immutable.  If they are not then they must not be
-     * modified after adding to this ternary key.</p>
+     * The keys should be immutable.  If they are not then they must not be
+     * modified after adding to this ternary key.
      *
      * @param key1 first key
      * @param key2 second key
@@ -103,7 +102,7 @@ public final class TernaryKey<K1, K2, K3>
         return key3;
     }
 
-    /** {@inheritDoc} */
+    @Override
     public boolean equals(final Object other)
     {
         if (other == this)
@@ -120,7 +119,7 @@ public final class TernaryKey<K1, K2, K3>
         return false;
     }
 
-    /** {@inheritDoc} */
+    @Override
     public int hashCode()
     {
         return hashCode;

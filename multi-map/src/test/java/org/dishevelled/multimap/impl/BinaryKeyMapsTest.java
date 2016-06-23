@@ -33,7 +33,6 @@ import static org.dishevelled.multimap.impl.BinaryKeyMaps.*;
  * Unit test for BinaryKeyMaps.
  *
  * @author  Michael Heuer
- * @version $Revision$ $Date$
  */
 public final class BinaryKeyMapsTest
     extends TestCase

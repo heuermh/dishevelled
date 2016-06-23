@@ -30,13 +30,12 @@ import org.dishevelled.multimap.BinaryKeyMap;
  * Unit test for HashedBinaryKeyMap.
  *
  * @author  Michael Heuer
- * @version $Revision$ $Date$
  */
 public final class HashedBinaryKeyMapTest
     extends AbstractBinaryKeyMapTest
 {
 
-    /** {@inheritDoc} */
+    @Override
     protected <K1, K2, V> BinaryKeyMap<K1, K2, V> createBinaryKeyMap()
     {
         return new HashedBinaryKeyMap<K1, K2, V>();

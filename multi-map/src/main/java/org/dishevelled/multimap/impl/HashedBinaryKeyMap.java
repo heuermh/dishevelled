@@ -35,7 +35,6 @@ import org.dishevelled.multimap.BinaryKeyMap;
  * @param <K2> second key type
  * @param <V> value type
  * @author  Michael Heuer
- * @version $Revision$ $Date$
  */
 public final class HashedBinaryKeyMap<K1, K2, V>
     extends AbstractHashedMap<BinaryKey<K1, K2>, V>
@@ -117,7 +116,7 @@ public final class HashedBinaryKeyMap<K1, K2, V>
             && (key2 == null ? key.getSecondKey() == null : key2.equals(key.getSecondKey()));
     }
 
-    /** {@inheritDoc} */
+    @Override
     public boolean containsKey(final K1 key1, final K2 key2)
     {
         int hashCode = hash(key1, key2);
@@ -133,7 +132,7 @@ public final class HashedBinaryKeyMap<K1, K2, V>
         return false;
     }
 
-    /** {@inheritDoc} */
+    @Override
     public V get(final K1 key1, final K2 key2)
     {
         int hashCode = hash(key1, key2);
@@ -149,7 +148,7 @@ public final class HashedBinaryKeyMap<K1, K2, V>
         return null;
     }
 
-    /** {@inheritDoc} */
+    @Override
     public V put(final K1 key1, final K2 key2, final V value)
     {
         int hashCode = hash(key1, key2);
@@ -169,7 +168,7 @@ public final class HashedBinaryKeyMap<K1, K2, V>
         return null;
     }
 
-    /** {@inheritDoc} */
+    @Override
     public V put(final BinaryKey<K1, K2> key, final V value)
     {
         if (key == null)
@@ -179,8 +178,8 @@ public final class HashedBinaryKeyMap<K1, K2, V>
         return super.put(key, value);
     }
 
-    /** {@inheritDoc} */
-    public V remove(final K1 key1, final K2 key2)
+    @Override
+    public V removeKey(final K1 key1, final K2 key2)
     {
         int hashCode = hash(key1, key2);
         int index = hashIndex(hashCode, data.length);

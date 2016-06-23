@@ -32,7 +32,6 @@ import java.util.Map;
  * @param <K2> second key type
  * @param <V> value type
  * @author  Michael Heuer
- * @version $Revision$ $Date$
  */
 public interface BinaryKeyMap<K1, K2, V>
     extends Map<BinaryKey<K1, K2>, V>
@@ -61,13 +60,14 @@ public interface BinaryKeyMap<K1, K2, V>
      * Remove the mapping for a binary key of {<code>key1, key2</code>} from this map
      * if one exists (optional operation).
      *
+     * @since 2.0
      * @param key1 first key
      * @param key2 second key
      * @return the value previously mapped to a binary key of {<code>key1, key2</code>},
      *    or <code>null</code> if no such mapping exists
      * @throws UnsupportedOperationException if the remove operation is not supported by this map
      */
-    V remove(K1 key1, K2 key2);
+    V removeKey(K1 key1, K2 key2);
 
     /**
      * Map a binary key of {<code>key1, key2</code>} to the specified value (optional

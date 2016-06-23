@@ -37,7 +37,6 @@ import org.dishevelled.multimap.QuaternaryKeyMap;
  * @param <K4> fourth key type
  * @param <V> value type
  * @author  Michael Heuer
- * @version $Revision$ $Date$
  */
 public final class HashedQuaternaryKeyMap<K1, K2, K3, K4, V>
     extends AbstractHashedMap<QuaternaryKey<K1, K2, K3, K4>, V>
@@ -137,7 +136,7 @@ public final class HashedQuaternaryKeyMap<K1, K2, K3, K4, V>
             && (key4 == null ? key.getFourthKey() == null : key4.equals(key.getFourthKey()));
     }
 
-    /** {@inheritDoc} */
+    @Override
     public boolean containsKey(final K1 key1, final K2 key2, final K3 key3, final K4 key4)
     {
         int hashCode = hash(key1, key2, key3, key4);
@@ -153,7 +152,7 @@ public final class HashedQuaternaryKeyMap<K1, K2, K3, K4, V>
         return false;
     }
 
-    /** {@inheritDoc} */
+    @Override
     public V get(final K1 key1, final K2 key2, final K3 key3, final K4 key4)
     {
         int hashCode = hash(key1, key2, key3, key4);
@@ -169,7 +168,7 @@ public final class HashedQuaternaryKeyMap<K1, K2, K3, K4, V>
         return null;
     }
 
-    /** {@inheritDoc} */
+    @Override
     public V put(final K1 key1, final K2 key2, final K3 key3, final K4 key4, final V value)
     {
         int hashCode = hash(key1, key2, key3, key4);
@@ -189,7 +188,7 @@ public final class HashedQuaternaryKeyMap<K1, K2, K3, K4, V>
         return null;
     }
 
-    /** {@inheritDoc} */
+    @Override
     public V put(final QuaternaryKey<K1, K2, K3, K4> key, final V value)
     {
         if (key == null)
@@ -199,8 +198,8 @@ public final class HashedQuaternaryKeyMap<K1, K2, K3, K4, V>
         return super.put(key, value);
     }
 
-    /** {@inheritDoc} */
-    public V remove(final K1 key1, final K2 key2, final K3 key3, final K4 key4)
+    @Override
+    public V removeKey(final K1 key1, final K2 key2, final K3 key3, final K4 key4)
     {
         int hashCode = hash(key1, key2, key3, key4);
         int index = hashIndex(hashCode, data.length);

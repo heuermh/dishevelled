@@ -33,7 +33,6 @@ import static org.dishevelled.multimap.impl.QuaternaryKeyMaps.*;
  * Unit test for QuaternaryKeyMaps.
  *
  * @author  Michael Heuer
- * @version $Revision$ $Date$
  */
 public final class QuaternaryKeyMapsTest
     extends TestCase

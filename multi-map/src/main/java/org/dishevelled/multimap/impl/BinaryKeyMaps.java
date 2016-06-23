@@ -29,7 +29,6 @@ import org.dishevelled.multimap.BinaryKeyMap;
  * Static utility methods for BinaryKeyMaps.
  *
  * @author  Michael Heuer
- * @version $Revision$ $Date$
  */
 public final class BinaryKeyMaps
 {

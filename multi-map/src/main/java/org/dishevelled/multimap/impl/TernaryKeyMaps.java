@@ -29,7 +29,6 @@ import org.dishevelled.multimap.TernaryKeyMap;
  * Static utility methods for TernaryKeyMaps.
  *
  * @author  Michael Heuer
- * @version $Revision$ $Date$
  */
 public final class TernaryKeyMaps
 {

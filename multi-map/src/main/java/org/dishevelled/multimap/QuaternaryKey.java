@@ -31,7 +31,6 @@ package org.dishevelled.multimap;
  * @param <K3> third key type
  * @param <K4> fourth key type
  * @author  Michael Heuer
- * @version $Revision$ $Date$
  */
 public final class QuaternaryKey<K1, K2, K3, K4>
 {
@@ -54,8 +53,8 @@ public final class QuaternaryKey<K1, K2, K3, K4>
     /**
      * Create a new quaternary key with the specified keys.
      *
-     * <p>The keys should be immutable.  If they are not then they must not be
-     * modified after adding to this quaternary key.</p>
+     * The keys should be immutable.  If they are not then they must not be
+     * modified after adding to this quaternary key.
      *
      * @param key1 first key
      * @param key2 second key
@@ -121,7 +120,7 @@ public final class QuaternaryKey<K1, K2, K3, K4>
         return key4;
     }
 
-    /** {@inheritDoc} */
+    @Override
     public boolean equals(final Object other)
     {
         if (other == this)
@@ -139,7 +138,7 @@ public final class QuaternaryKey<K1, K2, K3, K4>
         return false;
     }
 
-    /** {@inheritDoc} */
+    @Override
     public int hashCode()
     {
         return hashCode;

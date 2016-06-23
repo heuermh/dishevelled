@@ -30,13 +30,12 @@ import org.dishevelled.multimap.QuaternaryKeyMap;
  * Unit test for HashedQuaternaryKeyMap.
  *
  * @author  Michael Heuer
- * @version $Revision$ $Date$
  */
 public final class HashedQuaternaryKeyMapTest
     extends AbstractQuaternaryKeyMapTest
 {
 
-    /** {@inheritDoc} */
+    @Override
     protected <K1, K2, K3, K4, V> QuaternaryKeyMap<K1, K2, K3, K4, V> createQuaternaryKeyMap()
     {
         return new HashedQuaternaryKeyMap<K1, K2, K3, K4, V>();

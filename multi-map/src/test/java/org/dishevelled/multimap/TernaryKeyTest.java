@@ -32,7 +32,6 @@ import junit.framework.TestCase;
  * Unit test for TernaryKey.
  *
  * @author  Michael Heuer
- * @version $Revision$ $Date$
  */
 public final class TernaryKeyTest
     extends TestCase

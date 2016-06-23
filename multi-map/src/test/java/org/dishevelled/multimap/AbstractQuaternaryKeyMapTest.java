@@ -29,7 +29,6 @@ import junit.framework.TestCase;
  * Abstract unit test for implementations of QuaternaryKeyMap.
  *
  * @author  Michael Heuer
- * @version $Revision$ $Date$
  */
 public abstract class AbstractQuaternaryKeyMapTest
     extends TestCase

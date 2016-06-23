@@ -36,7 +36,6 @@ import org.dishevelled.multimap.TernaryKeyMap;
  * @param <K3> third key type
  * @param <V> value type
  * @author  Michael Heuer
- * @version $Revision$ $Date$
  */
 public final class HashedTernaryKeyMap<K1, K2, K3, V>
     extends AbstractHashedMap<TernaryKey<K1, K2, K3>, V>
@@ -128,7 +127,7 @@ public final class HashedTernaryKeyMap<K1, K2, K3, V>
             && (key3 == null ? key.getThirdKey() == null : key3.equals(key.getThirdKey()));
     }
 
-    /** {@inheritDoc} */
+    @Override
     public boolean containsKey(final K1 key1, final K2 key2, final K3 key3)
     {
         int hashCode = hash(key1, key2, key3);
@@ -144,7 +143,7 @@ public final class HashedTernaryKeyMap<K1, K2, K3, V>
         return false;
     }
 
-    /** {@inheritDoc} */
+    @Override
     public V get(final K1 key1, final K2 key2, final K3 key3)
     {
         int hashCode = hash(key1, key2, key3);
@@ -160,7 +159,7 @@ public final class HashedTernaryKeyMap<K1, K2, K3, V>
         return null;
     }
 
-    /** {@inheritDoc} */
+    @Override
     public V put(final K1 key1, final K2 key2, final K3 key3, final V value)
     {
         int hashCode = hash(key1, key2, key3);
@@ -180,7 +179,7 @@ public final class HashedTernaryKeyMap<K1, K2, K3, V>
         return null;
     }
 
-    /** {@inheritDoc} */
+    @Override
     public V put(final TernaryKey<K1, K2, K3> key, final V value)
     {
         if (key == null)
@@ -190,8 +189,8 @@ public final class HashedTernaryKeyMap<K1, K2, K3, V>
         return super.put(key, value);
     }
 
-    /** {@inheritDoc} */
-    public V remove(final K1 key1, final K2 key2, final K3 key3)
+    @Override
+    public V removeKey(final K1 key1, final K2 key2, final K3 key3)
     {
         int hashCode = hash(key1, key2, key3);
         int index = hashIndex(hashCode, data.length);

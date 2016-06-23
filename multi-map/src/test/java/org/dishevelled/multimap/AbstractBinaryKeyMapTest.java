@@ -34,7 +34,6 @@ import junit.framework.TestCase;
  * Abstract unit test for implementations of BinaryKeyMap.
  *
  * @author  Michael Heuer
- * @version $Revision$ $Date$
  */
 public abstract class AbstractBinaryKeyMapTest
     extends TestCase
@@ -220,7 +219,7 @@ public abstract class AbstractBinaryKeyMapTest
         }
     }
 
-    public void testBinaryKeyRemove()
+    public void testBinaryKeyRemoveKey()
     {
         List<BinaryKey<Integer, String>> keys = getBinaryKeys();
         List<Double> values = getValues();
@@ -234,10 +233,10 @@ public abstract class AbstractBinaryKeyMapTest
             Double value = values.get(i);
 
             assertTrue(map.containsKey(key.getFirstKey(), key.getSecondKey()));
-            assertEquals(value, map.remove(key.getFirstKey(), key.getSecondKey()));
+            assertEquals(value, map.removeKey(key.getFirstKey(), key.getSecondKey()));
             assertFalse(map.containsKey(key.getFirstKey(), key.getSecondKey()));
             assertEquals(size - 1, map.size());
-            assertEquals(null, map.remove(key.getFirstKey(), key.getSecondKey()));
+            assertEquals(null, map.removeKey(key.getFirstKey(), key.getSecondKey()));
             assertEquals(false, map.containsKey(key.getFirstKey(), key.getSecondKey()));
         }
     }

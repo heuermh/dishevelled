@@ -29,7 +29,6 @@ package org.dishevelled.multimap;
  * @param <K1> first key type
  * @param <K2> second key type
  * @author  Michael Heuer
- * @version $Revision$ $Date$
  */
 public final class BinaryKey<K1, K2>
 {
@@ -46,8 +45,8 @@ public final class BinaryKey<K1, K2>
     /**
      * Create a new binary key with the specified keys.
      *
-     * <p>The keys should be immutable.  If they are not then they must not be
-     * modified after adding to this binary key.</p>
+     * The keys should be immutable.  If they are not then they must not be
+     * modified after adding to this binary key.
      *
      * @param key1 first key
      * @param key2 second key
@@ -85,7 +84,7 @@ public final class BinaryKey<K1, K2>
         return key2;
     }
 
-    /** {@inheritDoc} */
+    @Override
     public boolean equals(final Object other)
     {
         if (other == this)
@@ -101,7 +100,7 @@ public final class BinaryKey<K1, K2>
         return false;
     }
 
-    /** {@inheritDoc} */
+    @Override
     public int hashCode()
     {
         return hashCode;

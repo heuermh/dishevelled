@@ -32,7 +32,6 @@ import junit.framework.TestCase;
  * Unit test for QuaternaryKey.
  *
  * @author  Michael Heuer
- * @version $Revision$ $Date$
  */
 public final class QuaternaryKeyTest
     extends TestCase

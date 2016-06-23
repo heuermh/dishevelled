@@ -33,7 +33,6 @@ import java.util.Map;
  * @param <K3> third key type
  * @param <V> value type
  * @author  Michael Heuer
- * @version $Revision$ $Date$
  */
 public interface TernaryKeyMap<K1, K2, K3, V>
     extends Map<TernaryKey<K1, K2, K3>, V>
@@ -64,6 +63,7 @@ public interface TernaryKeyMap<K1, K2, K3, V>
      * Remove the mapping for a ternary key of {<code>key1, key2, key3</code>} from this map
      * if one exists (optional operation).
      *
+     * @since 2.0
      * @param key1 first key
      * @param key2 second key
      * @param key3 third key
@@ -71,7 +71,7 @@ public interface TernaryKeyMap<K1, K2, K3, V>
      *    or <code>null</code> if no such mapping exists
      * @throws UnsupportedOperationException if the remove operation is not supported by this map
      */
-    V remove(K1 key1, K2 key2, K3 key3);
+    V removeKey(K1 key1, K2 key2, K3 key3);
 
     /**
      * Map a ternary key of {<code>key1, key2, key3</code>} to the specified value
