@@ -30,7 +30,6 @@ import java.util.List;
 
 import org.dishevelled.color.scheme.ColorFactory;
 import org.dishevelled.color.scheme.ColorScheme;
-import org.dishevelled.color.scheme.Interpolation;
 
 /**
  * Discrete color scheme.
@@ -58,9 +57,6 @@ public final class DiscreteColorScheme
     /** Color factory. */
     private final ColorFactory colorFactory;
 
-    /** Interpolation. */
-    private final Interpolation interpolation;
-
 
     /**
      * Create a new discrete color scheme.
@@ -70,14 +66,12 @@ public final class DiscreteColorScheme
      * @param minimumValue minimum value
      * @param maximumValue maximum value
      * @param colorFactory color factory, must not be null
-     * @param interpolation interpolation, must not be null
      */
     public DiscreteColorScheme(final String name,
                                final List<Color> colors,
                                final double minimumValue,
                                final double maximumValue,
-                               final ColorFactory colorFactory,
-                               final Interpolation interpolation)
+                               final ColorFactory colorFactory)
     {
         if (colors == null)
         {
@@ -91,16 +85,12 @@ public final class DiscreteColorScheme
         {
             throw new IllegalArgumentException("colorFactory must not be null");
         }
-        if (interpolation == null)
-        {
-            throw new IllegalArgumentException("interpolation must not be null");
-        }
         this.name = name;
         this.colors = new ArrayList<Color>(colors);
         this.minimumValue = minimumValue;
         this.maximumValue = maximumValue;
         this.colorFactory = colorFactory;
-        this.interpolation = interpolation;
+
         // discrete color scheme requires one fewer anchor than colors
         anchors = new ArrayList<Double>(colors.size() - 1);
         double anchorLength = (Math.abs(maximumValue - minimumValue) / colors.size());
@@ -167,18 +157,6 @@ public final class DiscreteColorScheme
     public void setColorFactory(final ColorFactory colorFactory)
     {
         throw new UnsupportedOperationException("setMaximumValue operation not supported by this color scheme");
-    }
-
-    @Override
-    public Interpolation getInterpolation()
-    {
-        return interpolation;
-    }
-
-    @Override
-    public void setInterpolation(final Interpolation interpolation)
-    {
-        throw new UnsupportedOperationException("setInterpolation operation not supported by this color scheme");
     }
 
     /**

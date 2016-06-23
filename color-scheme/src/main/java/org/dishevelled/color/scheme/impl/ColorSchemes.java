@@ -44,9 +44,7 @@ import org.apache.commons.io.IOUtils;
 
 import org.dishevelled.color.scheme.ColorFactory;
 import org.dishevelled.color.scheme.ColorScheme;
-import org.dishevelled.color.scheme.Interpolation;
 import org.dishevelled.color.scheme.factory.DefaultColorFactory;
-import org.dishevelled.color.scheme.interpolate.Interpolations;
 
 import org.xml.sax.XMLReader;
 import org.xml.sax.Attributes;
@@ -99,11 +97,11 @@ public final class ColorSchemes
         int colors = Integer.parseInt(matcher.group(3));
         if ("discrete".equals(type))
         {
-            return getDiscreteColorScheme(name, colors, Interpolations.LINEAR);
+            return getDiscreteColorScheme(name, colors);
         }
         else if ("continuous".equals(type))
         {
-            return getContinuousColorScheme(name, colors, Interpolations.LINEAR);
+            return getContinuousColorScheme(name, colors);
         }
         else
         {
@@ -124,23 +122,6 @@ public final class ColorSchemes
     public static ColorScheme getDiscreteColorScheme(final String name,
                                                      final int colors)
     {
-        return getDiscreteColorScheme(name, colors, Interpolations.LINEAR);
-    }
-
-    /**
-     * Create and return a discrete color scheme with the specified name, number of colors, and interpolation,
-     * if any.  The color schemes are defined in a simple XML format and read from the color-scheme library classpath.
-     *
-     * @param name name
-     * @param colors number of colors
-     * @param interpolation interpolation, must not be null
-     * @return a discrete color scheme with the specified name, number of colors, and interpolation, or
-     *    <code>null</code> if no such discrete color scheme exists
-     */
-    public static ColorScheme getDiscreteColorScheme(final String name,
-                                                     final int colors,
-                                                     final Interpolation interpolation)
-    {
         InputStream inputStream = null;
         ColorScheme colorScheme = null;
         try
@@ -156,13 +137,13 @@ public final class ColorSchemes
             {
                 colorScheme = new DiscreteDivergentColorScheme(colorSchemeHandler.getName(),
                                                                colorSchemeHandler.getColors(), 0.0d, 0.5d, 1.0d,
-                                                               COLOR_FACTORY, interpolation);
+                                                               COLOR_FACTORY);
             }
             else
             {
                 colorScheme = new DiscreteColorScheme(colorSchemeHandler.getName(),
                                                       colorSchemeHandler.getColors(), 0.0d, 1.0d,
-                                                      COLOR_FACTORY, interpolation);
+                                                      COLOR_FACTORY);
             }
         }
         catch (Exception e)
@@ -189,23 +170,6 @@ public final class ColorSchemes
     public static ColorScheme getContinuousColorScheme(final String name,
                                                        final int colors)
     {
-        return getContinuousColorScheme(name, colors, Interpolations.LINEAR);
-    }
-
-    /**
-     * Create and return a continuous color scheme with the specified name, number of colors, and interpolation,
-     * if any.  The color schemes are defined in a simple XML format and read from the color-scheme library classpath.
-     *
-     * @param name name
-     * @param colors number of colors
-     * @param interpolation interpolation, must not be null
-     * @return a continuous color scheme with the specified name, number of colors, and interpolation, or
-     *    <code>null</code> if no such continuous color scheme exists
-     */
-    public static ColorScheme getContinuousColorScheme(final String name,
-                                                       final int colors,
-                                                       final Interpolation interpolation)
-    {
         InputStream inputStream = null;
         ColorScheme colorScheme = null;
         try
@@ -221,13 +185,13 @@ public final class ColorSchemes
             {
                 colorScheme = new ContinuousDivergentColorScheme(colorSchemeHandler.getName(),
                                                                  colorSchemeHandler.getColors(), 0.0d, 0.5d, 1.0d,
-                                                                 COLOR_FACTORY, interpolation);
+                                                                 COLOR_FACTORY);
             }
             else
             {
                 colorScheme = new ContinuousColorScheme(colorSchemeHandler.getName(),
                                                         colorSchemeHandler.getColors(), 0.0d, 1.0d,
-                                                        COLOR_FACTORY, interpolation);
+                                                        COLOR_FACTORY);
             }
         }
         catch (Exception e)

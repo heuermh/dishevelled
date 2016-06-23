@@ -94,21 +94,6 @@ public interface ColorScheme
     void setColorFactory(ColorFactory colorFactory);
 
     /**
-     * Return the interpolation method for this color scheme.  The interpolation method will not be null.
-     *
-     * @return the interpolation method for this color scheme
-     */
-    Interpolation getInterpolation();
-
-    /**
-     * Set the interpolation method for this color scheme to <code>interpolation</code> (optional operation).
-     *
-     * @param interpolation interpolation method, must not be null
-     * @throws UnsupportedOperationException if this operation is not supported by this color scheme
-     */
-    void setInterpolation(Interpolation interpolation);
-
-    /**
      * Return a color appropriate for the specified value.
      *
      * @param value value

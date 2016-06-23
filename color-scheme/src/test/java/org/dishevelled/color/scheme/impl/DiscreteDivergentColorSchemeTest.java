@@ -37,7 +37,6 @@ import org.dishevelled.color.scheme.ColorFactory;
 import org.dishevelled.color.scheme.ColorScheme;
 import org.dishevelled.color.scheme.factory.DefaultColorFactory;
 import org.dishevelled.color.scheme.impl.DiscreteDivergentColorScheme;
-import org.dishevelled.color.scheme.interpolate.Interpolations;
 
 /**
  * Unit test for DiscreteDivergentColorScheme.
@@ -54,18 +53,18 @@ public final class DiscreteDivergentColorSchemeTest
         List<Color> singletonColor = ImmutableList.of(Color.WHITE);
         List<Color> colors = ImmutableList.of(Color.WHITE, Color.GRAY, Color.BLACK);
         ColorFactory colorFactory = new DefaultColorFactory();
-        new DiscreteDivergentColorScheme("color-scheme", colors, 0.0d, 0.5d, 1.0d, colorFactory, Interpolations.LINEAR);
-        new DiscreteDivergentColorScheme("color-scheme", colors, -1.0d, 0.0d, 1.0d, colorFactory, Interpolations.LINEAR);
-        new DiscreteDivergentColorScheme("color-scheme", colors, 1.0d, 50.0d, 99.0d, colorFactory, Interpolations.LINEAR);
-        new DiscreteDivergentColorScheme("color-scheme", colors, -99.0d, -50.0d, -1.0d, colorFactory, Interpolations.LINEAR);
-        new DiscreteDivergentColorScheme("color-scheme", colors, -1 * Double.MAX_VALUE, 0.0d, Double.MAX_VALUE, colorFactory, Interpolations.LINEAR);
-        //new DiscreteDivergentColorScheme("color-scheme", colors, Double.NaN, 0.5d, 1.0d, colorFactory, Interpolations.LINEAR);
-        //new DiscreteDivergentColorScheme("color-scheme", colors, 0.0d, 0.5d, Double.NaN, colorFactory, Interpolations.LINEAR);
-        new DiscreteDivergentColorScheme(null, colors, 0.0d, 0.5d, 1.0d, colorFactory, Interpolations.LINEAR);
+        new DiscreteDivergentColorScheme("color-scheme", colors, 0.0d, 0.5d, 1.0d, colorFactory);
+        new DiscreteDivergentColorScheme("color-scheme", colors, -1.0d, 0.0d, 1.0d, colorFactory);
+        new DiscreteDivergentColorScheme("color-scheme", colors, 1.0d, 50.0d, 99.0d, colorFactory);
+        new DiscreteDivergentColorScheme("color-scheme", colors, -99.0d, -50.0d, -1.0d, colorFactory);
+        new DiscreteDivergentColorScheme("color-scheme", colors, -1 * Double.MAX_VALUE, 0.0d, Double.MAX_VALUE, colorFactory);
+        //new DiscreteDivergentColorScheme("color-scheme", colors, Double.NaN, 0.5d, 1.0d, colorFactory);
+        //new DiscreteDivergentColorScheme("color-scheme", colors, 0.0d, 0.5d, Double.NaN, colorFactory);
+        new DiscreteDivergentColorScheme(null, colors, 0.0d, 0.5d, 1.0d, colorFactory);
 
         try
         {
-            new DiscreteDivergentColorScheme("color-scheme", null, 0.0d, 0.5d, 1.0d, colorFactory, Interpolations.LINEAR);
+            new DiscreteDivergentColorScheme("color-scheme", null, 0.0d, 0.5d, 1.0d, colorFactory);
             fail("ctr(,null,,,,) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
@@ -74,7 +73,7 @@ public final class DiscreteDivergentColorSchemeTest
         }
         try
         {
-            new DiscreteDivergentColorScheme("color-scheme", emptyColors, 0.0d, 0.5d, 1.0d, colorFactory, Interpolations.LINEAR);
+            new DiscreteDivergentColorScheme("color-scheme", emptyColors, 0.0d, 0.5d, 1.0d, colorFactory);
             fail("ctr(,emptyColors,,,,) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
@@ -83,7 +82,7 @@ public final class DiscreteDivergentColorSchemeTest
         }
         try
         {
-            new DiscreteDivergentColorScheme("color-scheme", singletonColor, 0.0d, 0.5d, 1.0d, colorFactory, Interpolations.LINEAR);
+            new DiscreteDivergentColorScheme("color-scheme", singletonColor, 0.0d, 0.5d, 1.0d, colorFactory);
             fail("ctr(,singletonColor,,,,) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
@@ -92,17 +91,8 @@ public final class DiscreteDivergentColorSchemeTest
         }
         try
         {
-            new DiscreteDivergentColorScheme("color-scheme", colors, 0.0d, 0.5d, 1.0d, null, Interpolations.LINEAR);
+            new DiscreteDivergentColorScheme("color-scheme", colors, 0.0d, 0.5d, 1.0d, null);
             fail("ctr(,,,,null,) expected IllegalArgumentException");
-        }
-        catch (IllegalArgumentException e)
-        {
-            // expected
-        }
-        try
-        {
-            new DiscreteDivergentColorScheme("color-scheme", colors, 0.0d, 0.5d, 1.0d, colorFactory, null);
-            fail("ctr(,,,,,null) expected IllegalArgumentException");
         }
         catch (IllegalArgumentException e)
         {
@@ -112,7 +102,7 @@ public final class DiscreteDivergentColorSchemeTest
 
     public void testTwoColorScheme()
     {
-        ColorScheme colorScheme = new DiscreteDivergentColorScheme("name", ImmutableList.of(Color.BLACK, Color.WHITE), 0.0d, 0.5d, 1.0d, new DefaultColorFactory(), Interpolations.LINEAR);
+        ColorScheme colorScheme = new DiscreteDivergentColorScheme("name", ImmutableList.of(Color.BLACK, Color.WHITE), 0.0d, 0.5d, 1.0d, new DefaultColorFactory());
         assertNotNull(colorScheme);
         //assertEquals("name", colorScheme.getName());
         // out of bounds
@@ -127,7 +117,7 @@ public final class DiscreteDivergentColorSchemeTest
 
     public void testEvenColorScheme()
     {
-        ColorScheme colorScheme = new DiscreteDivergentColorScheme("name", ImmutableList.of(Color.BLACK, Color.RED, Color.BLUE, Color.WHITE), 0.0d, 0.5d, 1.0d, new DefaultColorFactory(), Interpolations.LINEAR);
+        ColorScheme colorScheme = new DiscreteDivergentColorScheme("name", ImmutableList.of(Color.BLACK, Color.RED, Color.BLUE, Color.WHITE), 0.0d, 0.5d, 1.0d, new DefaultColorFactory());
         assertNotNull(colorScheme);
         //assertEquals("name", colorScheme.getName());
         // out of bounds
@@ -147,7 +137,7 @@ public final class DiscreteDivergentColorSchemeTest
 
     public void testOddColorScheme()
     {
-        ColorScheme colorScheme = new DiscreteDivergentColorScheme("name", ImmutableList.of(Color.BLACK, Color.RED, Color.WHITE), 0.0d, 0.5d, 1.0d, new DefaultColorFactory(), Interpolations.LINEAR);
+        ColorScheme colorScheme = new DiscreteDivergentColorScheme("name", ImmutableList.of(Color.BLACK, Color.RED, Color.WHITE), 0.0d, 0.5d, 1.0d, new DefaultColorFactory());
         assertNotNull(colorScheme);
         //assertEquals("name", colorScheme.getName());
         // out of bounds
@@ -167,14 +157,13 @@ public final class DiscreteDivergentColorSchemeTest
     {
         List<Color> colors = ImmutableList.of(Color.WHITE, Color.BLACK);
         ColorFactory colorFactory = new DefaultColorFactory();
-        DiscreteDivergentColorScheme colorScheme = new DiscreteDivergentColorScheme("color-scheme", colors, 0.0d, 0.5d, 1.0d, colorFactory, Interpolations.LINEAR);
+        DiscreteDivergentColorScheme colorScheme = new DiscreteDivergentColorScheme("color-scheme", colors, 0.0d, 0.5d, 1.0d, colorFactory);
         assertNotNull(colorScheme);
         assertEquals("color-scheme", colorScheme.getName());
         assertEquals(0.0d, colorScheme.getMinimumValue(), 0.1d);
         assertEquals(0.5d, colorScheme.getZeroValue(), 0.1d);
         assertEquals(1.0d, colorScheme.getMaximumValue(), 0.1d);
         assertEquals(colorFactory, colorScheme.getColorFactory());
-        assertEquals(Interpolations.LINEAR, colorScheme.getInterpolation());
         assertEquals(Color.WHITE, colorScheme.getColor(-99.0d));
         assertEquals(Color.WHITE, colorScheme.getColor(0.0d));
         assertEquals(Color.WHITE, colorScheme.getColor(0.25d));
@@ -188,13 +177,12 @@ public final class DiscreteDivergentColorSchemeTest
     {
         List<Color> colors = ImmutableList.of(Color.WHITE, Color.RED, Color.BLACK);
         ColorFactory colorFactory = new DefaultColorFactory();
-        DiscreteDivergentColorScheme colorScheme = new DiscreteDivergentColorScheme("color-scheme", colors, 0.0d, 0.5d, 1.0d, colorFactory, Interpolations.LINEAR);
+        DiscreteDivergentColorScheme colorScheme = new DiscreteDivergentColorScheme("color-scheme", colors, 0.0d, 0.5d, 1.0d, colorFactory);
         assertNotNull(colorScheme);
         assertEquals("color-scheme", colorScheme.getName());
         assertEquals(0.0d, colorScheme.getMinimumValue(), 0.1d);
         assertEquals(1.0d, colorScheme.getMaximumValue(), 0.1d);
         assertEquals(colorFactory, colorScheme.getColorFactory());
-        assertEquals(Interpolations.LINEAR, colorScheme.getInterpolation());
         assertEquals(Color.WHITE, colorScheme.getColor(-99.0d));
         assertEquals(Color.WHITE, colorScheme.getColor(0.0d));
         assertEquals(Color.WHITE, colorScheme.getColor(0.33d));

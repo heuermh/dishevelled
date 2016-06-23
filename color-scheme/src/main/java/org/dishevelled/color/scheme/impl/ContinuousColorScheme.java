@@ -30,7 +30,6 @@ import java.util.List;
 
 import org.dishevelled.color.scheme.ColorFactory;
 import org.dishevelled.color.scheme.ColorScheme;
-import org.dishevelled.color.scheme.Interpolation;
 
 /**
  * Continuous color scheme.
@@ -58,9 +57,6 @@ public final class ContinuousColorScheme
     /** Color factory. */
     private final ColorFactory colorFactory;
 
-    /** Interpolation. */
-    private final Interpolation interpolation;
-
 
     /**
      * Create a new continuous color scheme.
@@ -70,14 +66,12 @@ public final class ContinuousColorScheme
      * @param minimumValue minimum value
      * @param maximumValue maximum value
      * @param colorFactory color factory, must not be null
-     * @param interpolation interpolation, must not be null
      */
     public ContinuousColorScheme(final String name,
                                  final List<Color> colors,
                                  final double minimumValue,
                                  final double maximumValue,
-                                 final ColorFactory colorFactory,
-                                 final Interpolation interpolation)
+                                 final ColorFactory colorFactory)
     {
         if (colors == null)
         {
@@ -91,16 +85,12 @@ public final class ContinuousColorScheme
         {
             throw new IllegalArgumentException("colorFactory must not be null");
         }
-        if (interpolation == null)
-        {
-            throw new IllegalArgumentException("interpolation must not be null");
-        }
         this.name = name;
         this.colors = new ArrayList<Color>(colors);
         this.minimumValue = minimumValue;
         this.maximumValue = maximumValue;
         this.colorFactory = colorFactory;
-        this.interpolation = interpolation;
+
         // continuous color scheme requires one anchor for each color
         anchors = new ArrayList<Double>(colors.size());
         double anchorLength = (Math.abs(maximumValue - minimumValue) / (colors.size() - 1));
@@ -169,18 +159,6 @@ public final class ContinuousColorScheme
         throw new UnsupportedOperationException("setMaximumValue operation not supported by this color scheme");
     }
 
-    @Override
-    public Interpolation getInterpolation()
-    {
-        return interpolation;
-    }
-
-    @Override
-    public void setInterpolation(final Interpolation interpolation)
-    {
-        throw new UnsupportedOperationException("setInterpolation operation not supported by this color scheme");
-    }
-
     /**
      * Return the minimum color for this color scheme.
      *
@@ -232,17 +210,37 @@ public final class ContinuousColorScheme
                 Color upperColor = colors.get(i);
                 lowerAnchor = anchors.get(i - 1);
                 lowerColor = colors.get(i - 1);
-                int r = (int) interpolation.interpolate(value, lowerAnchor, upperAnchor,
-                                                        (double) lowerColor.getRed(), (double) upperColor.getRed());
-                int g = (int) interpolation.interpolate(value, lowerAnchor, upperAnchor,
-                                                       (double) lowerColor.getGreen(), (double) upperColor.getGreen());
-                int b = (int) interpolation.interpolate(value, lowerAnchor, upperAnchor,
-                                                        (double) lowerColor.getBlue(), (double) upperColor.getBlue());
-                int a = (int) interpolation.interpolate(value, lowerAnchor, upperAnchor,
-                                                       (double) lowerColor.getAlpha(), (double) upperColor.getAlpha());
+                int r = (int) interpolate(value, lowerAnchor, upperAnchor,
+                                         (double) lowerColor.getRed(), (double) upperColor.getRed());
+                int g = (int) interpolate(value, lowerAnchor, upperAnchor,
+                                          (double) lowerColor.getGreen(), (double) upperColor.getGreen());
+                int b = (int) interpolate(value, lowerAnchor, upperAnchor,
+                                          (double) lowerColor.getBlue(), (double) upperColor.getBlue());
+                int a = (int) interpolate(value, lowerAnchor, upperAnchor,
+                                          (double) lowerColor.getAlpha(), (double) upperColor.getAlpha());
                 return colorFactory.createColor(r, g, b, ((float) a) / 255.0f);
             }
         }
         return getMaximumColor();
+    }
+
+    /**
+     * Interpolate the specified value from the specified source range to the specified target range.
+     *
+     * @param value value to interpolate
+     * @param sourceMinimum source range minimum value
+     * @param sourceMaximum source range maximum value
+     * @param targetMinimum target range minimum value
+     * @param targetMaximum target range maximum value
+     * @return the specified value interpolated from the specified source range to the specified target range
+     */
+    private static double interpolate(final double value,
+                                      final double sourceMinimum,
+                                      final double sourceMaximum,
+                                      final double targetMinimum,
+                                      final double targetMaximum)
+    {
+        return targetMinimum + (targetMaximum - targetMinimum)
+            * ((value - sourceMinimum) / (sourceMaximum - sourceMinimum));
     }
 }

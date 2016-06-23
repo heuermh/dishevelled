@@ -30,7 +30,6 @@ import java.util.List;
 
 import org.dishevelled.color.scheme.ColorFactory;
 import org.dishevelled.color.scheme.ColorScheme;
-import org.dishevelled.color.scheme.Interpolation;
 
 /**
  * Discrete divergent color scheme.
@@ -61,9 +60,6 @@ public final class DiscreteDivergentColorScheme
     /** Color factory. */
     private final ColorFactory colorFactory;
 
-    /** Interpolation. */
-    private final Interpolation interpolation;
-
 
     /**
      * Create a new discrete divergent color scheme.
@@ -74,15 +70,13 @@ public final class DiscreteDivergentColorScheme
      * @param zeroValue zero value
      * @param maximumValue maximum value
      * @param colorFactory color factory, must not be null
-     * @param interpolation interpolation, must not be null
      */
     public DiscreteDivergentColorScheme(final String name,
                                         final List<Color> colors,
                                         final double minimumValue,
                                         final double zeroValue,
                                         final double maximumValue,
-                                        final ColorFactory colorFactory,
-                                        final Interpolation interpolation)
+                                        final ColorFactory colorFactory)
     {
         if (colors == null)
         {
@@ -96,17 +90,12 @@ public final class DiscreteDivergentColorScheme
         {
             throw new IllegalArgumentException("colorFactory must not be null");
         }
-        if (interpolation == null)
-        {
-            throw new IllegalArgumentException("interpolation must not be null");
-        }
         this.name = name;
         this.colors = new ArrayList<Color>(colors);
         this.minimumValue = minimumValue;
         this.zeroValue = zeroValue;
         this.maximumValue = maximumValue;
         this.colorFactory = colorFactory;
-        this.interpolation = interpolation;
 
         anchors = new ArrayList<Double>(colors.size() - 1);
         recalculateAnchors();
@@ -217,18 +206,6 @@ public final class DiscreteDivergentColorScheme
     public void setColorFactory(final ColorFactory colorFactory)
     {
         throw new UnsupportedOperationException("setMaximumValue operation not supported by this color scheme");
-    }
-
-    @Override
-    public Interpolation getInterpolation()
-    {
-        return interpolation;
-    }
-
-    @Override
-    public void setInterpolation(final Interpolation interpolation)
-    {
-        throw new UnsupportedOperationException("setInterpolation operation not supported by this color scheme");
     }
 
     /**
