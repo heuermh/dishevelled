@@ -23,6 +23,8 @@
 */
 package org.dishevelled.compress;
 
+import static org.dishevelled.compress.Readers.bgzfFileReader;
+import static org.dishevelled.compress.Readers.bgzfInputStreamReader;
 import static org.dishevelled.compress.Readers.bzip2FileReader;
 import static org.dishevelled.compress.Readers.bzip2InputStreamReader;
 import static org.dishevelled.compress.Readers.compressedFileReader;
@@ -71,7 +73,7 @@ public final class ReadersTest
         File file = File.createTempFile("readersTest", ".txt");
         try (FileOutputStream outputStream = new FileOutputStream(file))
         {
-            Resources.copy(SourcesTest.class.getResource("example.txt"), outputStream);
+            Resources.copy(ReadersTest.class.getResource("example.txt"), outputStream);
         }
         try (BufferedReader reader = reader(file))
         {
@@ -81,12 +83,27 @@ public final class ReadersTest
     }
 
     @Test
-    public void testReaderGzipFile() throws IOException
+    public void testReaderBgzfFile() throws IOException
+    {
+        File file = File.createTempFile("readersTest", ".bgzf");
+        try (FileOutputStream outputStream = new FileOutputStream(file))
+        {
+            Resources.copy(ReadersTest.class.getResource("example.txt.bgzf"), outputStream);
+        }
+        try (BufferedReader reader = reader(file))
+        {
+            assertValidReader(reader);
+        }
+        file.delete();
+    }
+
+    @Test
+    public void testReaderBgzfFileWithGzFileExtension() throws IOException
     {
         File file = File.createTempFile("readersTest", ".gz");
         try (FileOutputStream outputStream = new FileOutputStream(file))
         {
-            Resources.copy(SourcesTest.class.getResource("example.txt.gz"), outputStream);
+            Resources.copy(ReadersTest.class.getResource("example.txt.bgzf.gz"), outputStream);
         }
         try (BufferedReader reader = reader(file))
         {
@@ -101,7 +118,7 @@ public final class ReadersTest
         File file = File.createTempFile("readersTest", ".bz2");
         try (FileOutputStream outputStream = new FileOutputStream(file))
         {
-            Resources.copy(SourcesTest.class.getResource("example.txt.bz2"), outputStream);
+            Resources.copy(ReadersTest.class.getResource("example.txt.bz2"), outputStream);
         }
         try (BufferedReader reader = reader(file))
         {
@@ -122,7 +139,7 @@ public final class ReadersTest
         File file = File.createTempFile("readersTest", ".gz");
         try (FileOutputStream outputStream = new FileOutputStream(file))
         {
-            Resources.copy(SourcesTest.class.getResource("example.txt.gz"), outputStream);
+            Resources.copy(ReadersTest.class.getResource("example.txt.gz"), outputStream);
         }
         try (BufferedReader reader = gzipFileReader(file))
         {
@@ -158,7 +175,7 @@ public final class ReadersTest
         File file = File.createTempFile("readersTest", ".bz2");
         try (FileOutputStream outputStream = new FileOutputStream(file))
         {
-            Resources.copy(SourcesTest.class.getResource("example.txt.bz2"), outputStream);
+            Resources.copy(ReadersTest.class.getResource("example.txt.bz2"), outputStream);
         }
         try (BufferedReader reader = bzip2FileReader(file))
         {
@@ -209,7 +226,37 @@ public final class ReadersTest
         File file = File.createTempFile("readersTest", ".txt");
         try (FileOutputStream outputStream = new FileOutputStream(file))
         {
-            Resources.copy(SourcesTest.class.getResource("example.txt"), outputStream);
+            Resources.copy(ReadersTest.class.getResource("example.txt"), outputStream);
+        }
+        try (BufferedReader reader = compressedFileReader(file))
+        {
+            assertValidReader(reader);
+        }
+        file.delete();
+    }
+
+    @Test
+    public void testCompressedFileReaderBgzf() throws IOException
+    {
+        File file = File.createTempFile("readersTest", ".bgzf");
+        try (FileOutputStream outputStream = new FileOutputStream(file))
+        {
+            Resources.copy(ReadersTest.class.getResource("example.txt.bgzf"), outputStream);
+        }
+        try (BufferedReader reader = compressedFileReader(file))
+        {
+            assertValidReader(reader);
+        }
+        file.delete();
+    }
+
+    @Test
+    public void testCompressedFileReaderBgzfWithGzFileExtension() throws IOException
+    {
+        File file = File.createTempFile("readersTest", ".gz");
+        try (FileOutputStream outputStream = new FileOutputStream(file))
+        {
+            Resources.copy(ReadersTest.class.getResource("example.txt.bgzf.gz"), outputStream);
         }
         try (BufferedReader reader = compressedFileReader(file))
         {
@@ -224,7 +271,7 @@ public final class ReadersTest
         File file = File.createTempFile("readersTest", ".gz");
         try (FileOutputStream outputStream = new FileOutputStream(file))
         {
-            Resources.copy(SourcesTest.class.getResource("example.txt.gz"), outputStream);
+            Resources.copy(ReadersTest.class.getResource("example.txt.gz"), outputStream);
         }
         try (BufferedReader reader = compressedFileReader(file))
         {
@@ -239,7 +286,7 @@ public final class ReadersTest
         File file = File.createTempFile("readersTest", ".bz2");
         try (FileOutputStream outputStream = new FileOutputStream(file))
         {
-            Resources.copy(SourcesTest.class.getResource("example.txt.bz2"), outputStream);
+            Resources.copy(ReadersTest.class.getResource("example.txt.bz2"), outputStream);
         }
         try (BufferedReader reader = bzip2FileReader(file))
         {
@@ -258,6 +305,24 @@ public final class ReadersTest
     public void testCompressedInputStreamReaderPlainText() throws IOException
     {
         try (InputStream inputStream = ReadersTest.class.getResourceAsStream("example.txt"); BufferedReader reader = compressedInputStreamReader(inputStream))
+        {
+            assertValidReader(reader);
+        }
+    }
+
+    @Test
+    public void testCompressedInputStreamReaderBgzf() throws IOException
+    {
+        try (InputStream inputStream = ReadersTest.class.getResourceAsStream("example.txt.bgzf"); BufferedReader reader = compressedInputStreamReader(inputStream))
+        {
+            assertValidReader(reader);
+        }
+    }
+
+    @Test
+    public void testCompressedInputStreamReaderBgzfWithGzFileExtension() throws IOException
+    {
+        try (InputStream inputStream = ReadersTest.class.getResourceAsStream("example.txt.bgzf.gz"); BufferedReader reader = compressedInputStreamReader(inputStream))
         {
             assertValidReader(reader);
         }

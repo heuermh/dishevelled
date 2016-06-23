@@ -25,6 +25,7 @@ package org.dishevelled.compress;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
+import static org.dishevelled.compress.Compress.isBgzfFile;
 import static org.dishevelled.compress.Compress.isBzip2File;
 import static org.dishevelled.compress.Compress.isGzipFile;
 
@@ -43,6 +44,8 @@ import javax.annotation.Nullable;
 import com.google.common.io.CharSink;
 import com.google.common.io.Files;
 import com.google.common.io.FileWriteMode;
+
+import htsjdk.samtools.util.BlockCompressedOutputStream;
 
 import org.apache.commons.compress.compressors.bzip2.BZip2CompressorOutputStream;
 
@@ -122,6 +125,25 @@ public final class Sinks
     }
 
     /**
+     * Create and return a new char sink for the specified bgzf file.
+     *
+     * @since 1.2
+     * @param file bgzf file
+     * @return a new char sink for the specified bgzf file
+     */
+    private static CharSink bgzfFileCharSink(final File file)
+    {
+        return new CharSink()
+            {
+                @Override
+                public Writer openStream() throws IOException
+                {
+                    return new BufferedWriter(new OutputStreamWriter(new BlockCompressedOutputStream(file)));
+                }
+            };
+    }
+
+    /**
      * Create and return a new char sink for the specified gzip file.
      *
      * @param file gzip file
@@ -160,11 +182,11 @@ public final class Sinks
     }
 
     /**
-     * Create and return a new char sink with support for gzip or bzip2 compression for the specified file
+     * Create and return a new char sink with support for bgzf, gzip, or bzip2 compression for the specified file
      * or <code>stdout</code> if the file is null.  Defaults to <code>UTF-8</code> charset.
      *
      * @param file file, if any
-     * @return a new char sink with support for gzip or bzip2 compression for the specified file
+     * @return a new char sink with support for bgzf, gzip, or bzip2 compression for the specified file
      *    or <code>stdout</code> if the file is null
      * @throws IOException if an I/O error occurs
      */
@@ -174,12 +196,12 @@ public final class Sinks
     }
 
     /**
-     * Create and return a new char sink with support for gzip or bzip2 compression for the specified file
+     * Create and return a new char sink with support for bgzf, gzip, or bzip2 compression for the specified file
      * or <code>stdout</code> if the file is null.  Defaults to <code>UTF-8</code> charset.
      *
      * @param file file, if any
      * @param append true to append to the specified file
-     * @return a new char sink with support for gzip or bzip2 compression for the specified file
+     * @return a new char sink with support for bgzf, gzip, or bzip2 compression for the specified file
      *    or <code>stdout</code> if the file is null
      * @throws IOException if an I/O error occurs
      */
@@ -189,13 +211,13 @@ public final class Sinks
     }
 
     /**
-     * Create and return a new char sink with support for gzip or bzip2 compression for the specified file
+     * Create and return a new char sink with support for bgzf, gzip, or bzip2 compression for the specified file
      * or <code>stdout</code> if the file is null.
      *
      * @param file file, if any
      * @param charset charset, must not be null
      * @param append true to append to the specified file
-     * @return a new char sink with support for gzip or bzip2 compression for the specified file
+     * @return a new char sink with support for bgzf, gzip, or bzip2 compression for the specified file
      *    or <code>stdout</code> if the file is null
      * @throws IOException if an I/O error occurs
      */
@@ -205,6 +227,10 @@ public final class Sinks
         if (file == null)
         {
             return outputStreamCharSink(System.out);
+        }
+        else if (isBgzfFile(file))
+        {
+            return bgzfFileCharSink(file);
         }
         else if (isGzipFile(file))
         {

@@ -25,6 +25,8 @@ package org.dishevelled.compress;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
+import static org.dishevelled.compress.Compress.isBgzfFile;
+import static org.dishevelled.compress.Compress.isBgzfInputStream;
 import static org.dishevelled.compress.Compress.isBzip2File;
 import static org.dishevelled.compress.Compress.isGzipFile;
 
@@ -39,6 +41,8 @@ import java.io.IOException;
 
 import javax.annotation.Nullable;
 
+import htsjdk.samtools.util.BlockCompressedInputStream;
+
 import org.apache.commons.compress.compressors.CompressorException;
 import org.apache.commons.compress.compressors.CompressorStreamFactory;
 
@@ -47,7 +51,7 @@ import org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream;
 import org.apache.commons.compress.compressors.gzip.GzipCompressorInputStream;
 
 /**
- * File and input stream readers with support for gzip and bzip2 compression.
+ * File and input stream readers with support for bgzf, gzip, and bzip2 compression.
  *
  * @author  Michael Heuer
  */
@@ -107,6 +111,10 @@ public final class Readers
         BufferedInputStream bufferedInputStream = inputStream instanceof BufferedInputStream ? (BufferedInputStream) inputStream : new BufferedInputStream(inputStream);
         try
         {
+            if (isBgzfInputStream(bufferedInputStream))
+            {
+                return bgzfInputStreamReader(bufferedInputStream);
+            }
             return new BufferedReader(new InputStreamReader(new CompressorStreamFactory().createCompressorInputStream(bufferedInputStream)));
         }
         catch (CompressorException e)
@@ -114,6 +122,34 @@ public final class Readers
             // fall back to uncompressed input stream reader
             return inputStreamReader(bufferedInputStream);
         }
+    }
+
+    /**
+     * Create and return a new buffered reader for the specified bgzf compressed file.
+     *
+     * @since 1.2
+     * @param file bgzf compressed file, must not be null
+     * @return a new buffered reader for the specified bgzf compressed file
+     * @throws IOException if an I/O error occurs
+     */
+    public static BufferedReader bgzfFileReader(final File file) throws IOException
+    {
+        checkNotNull(file);
+        return new BufferedReader(new InputStreamReader(new BlockCompressedInputStream(file)));
+    }
+
+    /**
+     * Create and return a new buffered reader for the specified bgzf compressed input stream.
+     *
+     * @since 1.2
+     * @param inputStream bgzf compressed input stream, must not be null
+     * @return a new buffered reader for the specified bgzf compressed input stream
+     * @throws IOException if an I/O error occurs
+     */
+    public static BufferedReader bgzfInputStreamReader(final InputStream inputStream) throws IOException
+    {
+        checkNotNull(inputStream);
+        return new BufferedReader(new InputStreamReader(new BlockCompressedInputStream(inputStream)));
     }
 
     /**
@@ -171,11 +207,11 @@ public final class Readers
     }
 
     /**
-     * Create and return a new buffered reader with support for gzip or bzip2 compression for the specified file
+     * Create and return a new buffered reader with support for bgzf, gzip, or bzip2 compression for the specified file
      * or <code>stdin</code> if the file is null.
      *
      * @param file file, if any
-     * @return a new buffered reader with support for gzip or bzip2 compression for the specified file
+     * @return a new buffered reader with support for bgzf, gzip, or bzip2 compression for the specified file
      *    or <code>stdin</code> if the file is null
      * @throws IOException if an I/O error occurs
      */
@@ -184,6 +220,10 @@ public final class Readers
         if (file == null)
         {
             return compressedInputStreamReader(System.in);
+        }
+        else if (isBgzfFile(file))
+        {
+            return bgzfFileReader(file);
         }
         else if (isGzipFile(file))
         {

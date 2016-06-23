@@ -23,7 +23,19 @@
 */
 package org.dishevelled.compress;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.io.IOException;
+
+import javax.annotation.Nullable;
+
+import com.google.common.io.Files;
+
+import htsjdk.samtools.util.BlockCompressedInputStream;
 
 import org.apache.commons.compress.compressors.bzip2.BZip2Utils;
 
@@ -47,13 +59,65 @@ final class Compress
 
 
     /**
-     * Return true if the specified file is a gzip file.
+     * Return true if the specified file is a block compressed gzip (BGZF) file.
+     *
+     * @param file file
+     * @return true if the specified file is a block compressed gzip (BGZF) file
+     */
+    static boolean isBgzfFile(@Nullable final File file)
+    {
+        if (file == null)
+        {
+            return false;
+        }
+        if (Files.getFileExtension(file.getName()).equals("bgzf"))
+        {
+            return true;
+        }
+        try (BufferedInputStream inputStream = new BufferedInputStream(new FileInputStream(file)))
+        {
+            return isBgzfInputStream(inputStream);
+        }
+        catch (IOException e)
+        {
+            return false;
+        }
+    }
+
+    /**
+     * Return true if the specified file is a block compressed gzip (BGZF) input stream.
+     *
+     * @param inputStream input stream, must not be null
+     * @return true if the specified file is a block compressed gzip (BGZF) input stream
+     */
+    static boolean isBgzfInputStream(final InputStream inputStream)
+    {
+        checkNotNull(inputStream);
+        BufferedInputStream bufferedInputStream = inputStream instanceof BufferedInputStream ? (BufferedInputStream) inputStream : new BufferedInputStream(inputStream);
+        try
+        {
+            return BlockCompressedInputStream.isValidFile(bufferedInputStream);
+        }
+        catch (IOException e)
+        {
+            return false;
+        }
+    }
+
+    /**
+     * Return true if the specified file is a gzip file.  Block compressed gzip (BGZF)
+     * files are also gzip files, so <code>isBgzfFile(File)</code> should be called before
+     * this method.
      *
      * @param file file
      * @return true if the specified file is a gzip file
      */
-    static boolean isGzipFile(final File file)
+    static boolean isGzipFile(@Nullable final File file)
     {
+        if (file == null)
+        {
+            return false;
+        }
         return GzipUtils.isCompressedFilename(file.getName());
     }
 
@@ -63,8 +127,12 @@ final class Compress
      * @param file file
      * @return true if the specified file is a bzip2 file
      */
-    static boolean isBzip2File(final File file)
+    static boolean isBzip2File(@Nullable final File file)
     {
+        if (file == null)
+        {
+            return false;
+        }
         return BZip2Utils.isCompressedFilename(file.getName());
     }
 }

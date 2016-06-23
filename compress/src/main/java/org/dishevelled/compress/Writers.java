@@ -25,6 +25,7 @@ package org.dishevelled.compress;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
+import static org.dishevelled.compress.Compress.isBgzfFile;
 import static org.dishevelled.compress.Compress.isBzip2File;
 import static org.dishevelled.compress.Compress.isGzipFile;
 
@@ -39,12 +40,14 @@ import java.io.IOException;
 
 import javax.annotation.Nullable;
 
+import htsjdk.samtools.util.BlockCompressedOutputStream;
+
 import org.apache.commons.compress.compressors.bzip2.BZip2CompressorOutputStream;
 
 import org.apache.commons.compress.compressors.gzip.GzipCompressorOutputStream;
 
 /**
- * File and output stream writers with support for gzip and bzip2 compression.
+ * File and output stream writers with support for bgzf, gzip, and bzip2 compression.
  *
  * @author  Michael Heuer
  */
@@ -87,11 +90,11 @@ public final class Writers
     }
 
     /**
-     * Create and return a new buffered print writer with support for gzip or bzip2 compression for the specified file
+     * Create and return a new buffered print writer with support for bgzf, gzip, or bzip2 compression for the specified file
      * or <code>stdout</code> if the file is null.
      *
      * @param file file, if any
-     * @return a new buffered print writer with support for gzip or bzip2 compression for the specified file
+     * @return a new buffered print writer with support for bgzf, gzip, or bzip2 compression for the specified file
      *    or <code>stdout</code> if the file is null
      * @throws IOException if an I/O error occurs
      */
@@ -101,12 +104,12 @@ public final class Writers
     }
 
     /**
-     * Create and return a new buffered print writer with support for gzip or bzip2 compression for the specified file
+     * Create and return a new buffered print writer with support for bgzf, gzip, or bzip2 compression for the specified file
      * or <code>stdout</code> if the file is null.
      *
      * @param file file, if any
      * @param append true to append to the specified file
-     * @return a new buffered print writer with support for gzip or bzip2 compression for the specified file
+     * @return a new buffered print writer with support for bgzf, gzip, or bzip2 compression for the specified file
      *    or <code>stdout</code> if the file is null
      * @throws IOException if an I/O error occurs
      */
@@ -115,6 +118,10 @@ public final class Writers
         if (file == null)
         {
             return new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)), true);
+        }
+        else if (isBgzfFile(file))
+        {
+            return new PrintWriter(new BufferedWriter(new OutputStreamWriter(new BlockCompressedOutputStream(file))), true);
         }
         else if (isGzipFile(file))
         {

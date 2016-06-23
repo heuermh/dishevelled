@@ -66,6 +66,17 @@ public final class WritersTest
     }
 
     @Test
+    public void testWriterBgzfFile() throws IOException
+    {
+        File file = File.createTempFile("writersTest", ".bgzf");
+        try (PrintWriter writer = writer(file))
+        {
+            assertNotNull(writer);
+        }
+        file.delete();
+    }
+
+    @Test
     public void testWriterGzipFile() throws IOException
     {
         File file = File.createTempFile("writersTest", ".gz");
@@ -100,6 +111,17 @@ public final class WritersTest
     public void testWriterFileAppend() throws IOException
     {
         File file = File.createTempFile("writersTest", ".txt");
+        try (PrintWriter writer = writer(file, true))
+        {
+            assertNotNull(writer);
+        }
+        file.delete();
+    }
+
+    @Test
+    public void testWriterBgzfFileAppend() throws IOException
+    {
+        File file = File.createTempFile("writersTest", ".bgzf");
         try (PrintWriter writer = writer(file, true))
         {
             assertNotNull(writer);

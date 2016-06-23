@@ -25,6 +25,7 @@ package org.dishevelled.compress;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
+import static org.dishevelled.compress.Compress.isBgzfFile;
 import static org.dishevelled.compress.Compress.isBzip2File;
 import static org.dishevelled.compress.Compress.isGzipFile;
 
@@ -41,7 +42,7 @@ import com.google.common.io.CharSource;
 import com.google.common.io.Files;
 
 /**
- * File and input stream sources with support for gzip and bzip2 compression.
+ * File and input stream sources with support for bgzf, gzip, and bzip2 compression.
  *
  * @author  Michael Heuer
  */
@@ -99,6 +100,26 @@ public final class Sources
     }
 
     /**
+     * Create and return a new char source for the specified bgzf compressed input stream.
+     *
+     * @since 1.2
+     * @param inputStream bgzf compressed input stream, must not be null
+     * @return a new char source for the specified bgzf compressed input stream
+     */
+    public static CharSource bgzfInputStreamCharSource(final InputStream inputStream)
+    {
+        checkNotNull(inputStream);
+        return new CharSource()
+            {
+                @Override
+                public Reader openStream() throws IOException
+                {
+                    return Readers.bgzfInputStreamReader(inputStream);
+                }
+            };
+    }
+
+    /**
      * Create and return a new char source for the specified gzip compressed input stream.
      *
      * @param inputStream gzip compressed input stream, must not be null
@@ -132,6 +153,24 @@ public final class Sources
                 public Reader openStream() throws IOException
                 {
                     return Readers.bzip2InputStreamReader(inputStream);
+                }
+            };
+    }
+
+    /**
+     * Create and return a new char source for the specified bgzf file.
+     *
+     * @param file bgzf file
+     * @return a new char source for the specified bgzf file
+     */
+    private static CharSource bgzfFileCharSource(final File file)
+    {
+        return new CharSource()
+            {
+                @Override
+                public Reader openStream() throws IOException
+                {
+                    return Readers.bgzfFileReader(file);
                 }
             };
     }
@@ -173,11 +212,11 @@ public final class Sources
     }
 
     /**
-     * Create and return a new char source with support for gzip or bzip2 compression for the specified file
+     * Create and return a new char source with support for bgzf, gzip, or bzip2 compression for the specified file
      * or <code>stdin</code> if the file is null.  Defaults to <code>UTF-8</code> charset.
      *
      * @param file file, if any
-     * @return a new char source with support for gzip or bzip2 compression for the specified file
+     * @return a new char source with support for bgzf, gzip, or bzip2 compression for the specified file
      *    or <code>stdin</code> if the file is null
      * @throws IOException if an I/O error occurs
      */
@@ -187,12 +226,12 @@ public final class Sources
     }
 
     /**
-     * Create and return a new char source with support for gzip or bzip2 compression for the specified file
+     * Create and return a new char source with support for bgzf, gzip, or bzip2 compression for the specified file
      * or <code>stdin</code> if the file is null.
      *
      * @param file file, if any
      * @param charset charset, must not be null
-     * @return a new char source with support for gzip or bzip2 compression for the specified file
+     * @return a new char source with support for bgzf, gzip, or bzip2 compression for the specified file
      *    or <code>stdin</code> if the file is null
      * @throws IOException if an I/O error occurs
      */
@@ -202,6 +241,10 @@ public final class Sources
         if (file == null)
         {
             return compressedInputStreamCharSource(System.in);
+        }
+        else if (isBgzfFile(file))
+        {
+            return bgzfFileCharSource(file);
         }
         else if (isGzipFile(file))
         {
