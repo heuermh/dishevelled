@@ -51,8 +51,8 @@
     </dependency>
   </dependencies>
   <properties>
-    <jdk.version>1.7</jdk.version>
-    <maven.enforcer.jdk-version>[1.7,)</maven.enforcer.jdk-version>
+    <jdk.version>1.8</jdk.version>
+    <maven.enforcer.jdk-version>[1.8,)</maven.enforcer.jdk-version>
   </properties>
   <build>
     <plugins>
