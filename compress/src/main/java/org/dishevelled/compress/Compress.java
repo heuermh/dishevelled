@@ -70,7 +70,8 @@ final class Compress
         {
             return false;
         }
-        if (Files.getFileExtension(file.getName()).equals("bgzf"))
+        String fileExtension = Files.getFileExtension(file.getName());
+        if (fileExtension.equals("bgzf") || fileExtension.equals("bgz"))
         {
             return true;
         }

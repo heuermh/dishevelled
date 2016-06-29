@@ -66,6 +66,17 @@ public final class WritersTest
     }
 
     @Test
+    public void testWriterBgzFile() throws IOException
+    {
+        File file = File.createTempFile("writersTest", ".bgz");
+        try (PrintWriter writer = writer(file))
+        {
+            assertNotNull(writer);
+        }
+        file.delete();
+    }
+
+    @Test
     public void testWriterBgzfFile() throws IOException
     {
         File file = File.createTempFile("writersTest", ".bgzf");

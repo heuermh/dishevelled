@@ -83,6 +83,21 @@ public final class ReadersTest
     }
 
     @Test
+    public void testReaderBgzFile() throws IOException
+    {
+        File file = File.createTempFile("readersTest", ".bgz");
+        try (FileOutputStream outputStream = new FileOutputStream(file))
+        {
+            Resources.copy(ReadersTest.class.getResource("example.txt.bgz"), outputStream);
+        }
+        try (BufferedReader reader = reader(file))
+        {
+            assertValidReader(reader);
+        }
+        file.delete();
+    }
+
+    @Test
     public void testReaderBgzfFile() throws IOException
     {
         File file = File.createTempFile("readersTest", ".bgzf");
