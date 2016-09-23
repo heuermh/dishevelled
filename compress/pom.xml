@@ -4,13 +4,13 @@
   <parent>
     <groupId>org.dishevelled</groupId>
     <artifactId>dsh-parent</artifactId>
-    <version>11</version>
+    <version>12</version>
     <relativePath>../parent/pom.xml</relativePath>
   </parent>
   <artifactId>dsh-compress</artifactId>
   <packaging>jar</packaging>
   <name>dishevelled.org compress</name>
-  <version>1.2</version>
+  <version>1.2-SNAPSHOT</version>
   <description>Compression utility classes.</description>
   <url>http://www.dishevelled.org/compress</url>
   <inceptionYear>2014</inceptionYear>
@@ -98,8 +98,4 @@
       </plugin>
     </plugins>
   </reporting>
-
-  <scm>
-    <tag>dsh-compress-1.2</tag>
-  </scm>
 </project>
