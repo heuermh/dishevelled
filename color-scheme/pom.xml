@@ -33,7 +33,7 @@
   <artifactId>dsh-color-scheme</artifactId>
   <packaging>jar</packaging>
   <name>dishevelled.org color-scheme</name>
-  <version>3.0</version>
+  <version>3.1-SNAPSHOT</version>
   <description>Color schemes.</description>
   <url>http://www.dishevelled.org/color-scheme</url>
   <inceptionYear>2009</inceptionYear>
@@ -41,7 +41,7 @@
     <connection>scm:git:git@github.com:heuermh/dishevelled.git</connection>
     <developerConnection>scm:git:git@github.com:heuermh/dishevelled.git</developerConnection>
     <url>git@github.com:heuermh/dishevelled.git</url>
-    <tag>dsh-color-scheme-3.0</tag>
+    <tag>HEAD</tag>
   </scm>
   <dependencies>
     <dependency>
