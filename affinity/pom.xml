@@ -14,6 +14,11 @@
   <description>Framework for clustering by affinity propagation.</description>
   <url>http://www.dishevelled.org/affinity</url>
   <inceptionYear>2007</inceptionYear>
+  <scm>
+    <connection>scm:git:git@github.com:heuermh/dishevelled-bio.git</connection>
+    <developerConnection>scm:git:git@github.com:heuermh/dishevelled-bio.git</developerConnection>
+    <url>git@github.com:heuermh/dishevelled-bio.git</url>
+  </scm>
   <properties>
     <jdk.version>1.5</jdk.version>
   </properties>

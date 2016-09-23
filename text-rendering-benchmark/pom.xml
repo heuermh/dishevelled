@@ -15,6 +15,11 @@
   <description>Text rendering benchmarks.</description>
   <url>http://www.dishevelled.org/text-rendering-benchmark</url>
   <inceptionYear>2009</inceptionYear>
+  <scm>
+    <connection>scm:git:git@github.com:heuermh/dishevelled-bio.git</connection>
+    <developerConnection>scm:git:git@github.com:heuermh/dishevelled-bio.git</developerConnection>
+    <url>git@github.com:heuermh/dishevelled-bio.git</url>
+  </scm>
   <build>
     <plugins>
       <plugin>

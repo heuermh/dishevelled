@@ -1,7 +1,7 @@
 /*
 
     ${artifactId}  ${description}
-    Copyright (c) 2015 held jointly by the individual authors.
+    Copyright (c) 2016 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
@@ -23,7 +23,7 @@
 */
 package ${packageName};
 
-import junit.framework.TestCase;
+import org.junit.Test;
 
 /**
  * Unit test for Foo.
@@ -31,9 +31,9 @@ import junit.framework.TestCase;
  * @author  Michael Heuer
  */
 public final class FooTest
-    extends TestCase
 {
 
+    @Test
     public void testFoo()
     {
         // empty

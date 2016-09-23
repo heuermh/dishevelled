@@ -14,6 +14,11 @@
   <description>Piccolo2D ribbon nodes and supporting classes.</description>
   <url>http://www.dishevelled.org/piccolo-ribbon</url>
   <inceptionYear>2006</inceptionYear>
+  <scm>
+    <connection>scm:git:git@github.com:heuermh/dishevelled-bio.git</connection>
+    <developerConnection>scm:git:git@github.com:heuermh/dishevelled-bio.git</developerConnection>
+    <url>git@github.com:heuermh/dishevelled-bio.git</url>
+  </scm>
   <dependencies>
     <dependency>
       <groupId>org.piccolo2d</groupId>

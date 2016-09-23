@@ -14,6 +14,11 @@
   <description>Piccolo2D identifiable bean node examples.</description>
   <url>http://www.dishevelled.org/piccolo-identify-examples</url>
   <inceptionYear>2007</inceptionYear>
+  <scm>
+    <connection>scm:git:git@github.com:heuermh/dishevelled-bio.git</connection>
+    <developerConnection>scm:git:git@github.com:heuermh/dishevelled-bio.git</developerConnection>
+    <url>git@github.com:heuermh/dishevelled-bio.git</url>
+  </scm>
   <build>
     <plugins>
       <plugin>

@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.dishevelled</groupId>
     <artifactId>dsh-parent</artifactId>
-    <version>10-SNAPSHOT</version>
+    <version>12</version>
     <relativePath>../parent/pom.xml</relativePath>
   </parent>
   <artifactId>${artifactId}</artifactId>
@@ -13,7 +13,12 @@
   <version>1.0-SNAPSHOT</version>
   <description>${description}</description>
   <url>http://www.dishevelled.org/${artifactId.substring(4)}</url>
-  <inceptionYear>2015</inceptionYear>
+  <inceptionYear>2016</inceptionYear>
+  <scm>
+    <connection>scm:git:git@github.com:heuermh/dishevelled-bio.git</connection>
+    <developerConnection>scm:git:git@github.com:heuermh/dishevelled-bio.git</developerConnection>
+    <url>git@github.com:heuermh/dishevelled-bio.git</url>
+  </scm>
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
@@ -33,7 +38,7 @@
         <artifactId>maven-javadoc-plugin</artifactId>
         <configuration>
           <!-- todo:  must manually update the copyright dates here -->
-          <bottom>Copyright (c) 2015 held jointly by the individual authors. Licensed under the &lt;a href="http://www.fsf.org/licensing/licenses/lgpl.html"&gt;GNU Lesser General Public License&lt;a&gt; (LGPL).</bottom>
+          <bottom>Copyright (c) 2016 held jointly by the individual authors. Licensed under the &lt;a href="http://www.fsf.org/licensing/licenses/lgpl.html"&gt;GNU Lesser General Public License&lt;a&gt; (LGPL).</bottom>
         </configuration>
       </plugin>
       <plugin>

@@ -14,6 +14,11 @@
   <description>Observable decorators for graph interfaces.</description>
   <url>http://www.dishevelled.org/observable-graph</url>
   <inceptionYear>2008</inceptionYear>
+  <scm>
+    <connection>scm:git:git@github.com:heuermh/dishevelled-bio.git</connection>
+    <developerConnection>scm:git:git@github.com:heuermh/dishevelled-bio.git</developerConnection>
+    <url>git@github.com:heuermh/dishevelled-bio.git</url>
+  </scm>
   <dependencies>
     <dependency>
       <groupId>org.dishevelled</groupId>
