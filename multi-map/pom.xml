@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.dishevelled</groupId>
     <artifactId>dsh-parent</artifactId>
-    <version>11</version>
+    <version>12</version>
     <relativePath>../parent/pom.xml</relativePath>
   </parent>
   <artifactId>dsh-multi-map</artifactId>
@@ -14,6 +14,11 @@
   <description>Multi-key map interfaces and implementation.</description>
   <url>http://www.dishevelled.org/multi-map</url>
   <inceptionYear>2007</inceptionYear>
+  <scm>
+    <connection>scm:git:git@github.com:heuermh/dishevelled.git</connection>
+    <developerConnection>scm:git:git@github.com:heuermh/dishevelled.git</developerConnection>
+    <url>git@github.com:heuermh/dishevelled.git</url>
+  </scm>
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
@@ -40,7 +45,7 @@
         <artifactId>maven-javadoc-plugin</artifactId>
         <configuration>
           <!-- todo:  must manually update the copyright dates here -->
-          <bottom>Copyright (c) 2007-2013 held jointly by the individual authors. Licensed under the &lt;a href="http://www.fsf.org/licensing/licenses/lgpl.html"&gt;GNU Lesser General Public License&lt;a&gt; (LGPL).</bottom>
+          <bottom>Copyright (c) 2007-2016 held jointly by the individual authors. Licensed under the &lt;a href="http://www.fsf.org/licensing/licenses/lgpl.html"&gt;GNU Lesser General Public License&lt;a&gt; (LGPL).</bottom>
           <show>public</show>
         </configuration>
       </plugin>
