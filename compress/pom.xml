@@ -10,7 +10,7 @@
   <artifactId>dsh-compress</artifactId>
   <packaging>jar</packaging>
   <name>dishevelled.org compress</name>
-  <version>1.2-SNAPSHOT</version>
+  <version>1.2</version>
   <description>Compression utility classes.</description>
   <url>http://www.dishevelled.org/compress</url>
   <inceptionYear>2014</inceptionYear>
@@ -98,4 +98,8 @@
       </plugin>
     </plugins>
   </reporting>
+
+  <scm>
+    <tag>dsh-compress-1.2</tag>
+  </scm>
 </project>
