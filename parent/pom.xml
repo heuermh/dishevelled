@@ -11,7 +11,7 @@
   <artifactId>dsh-parent</artifactId>
   <packaging>pom</packaging>
   <name>dishevelled.org parent</name>
-  <version>12-SNAPSHOT</version>
+  <version>13-SNAPSHOT</version>
   <description>dishevelled.org parent</description>
   <url>http://www.dishevelled.org/parent</url>
   <inceptionYear>2009</inceptionYear>
