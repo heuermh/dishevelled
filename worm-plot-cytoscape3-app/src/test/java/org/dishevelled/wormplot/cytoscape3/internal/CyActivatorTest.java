@@ -1,7 +1,7 @@
 /*
 
     dsh-worm-plot-cytoscape3-app  Worm plot Cytoscape 3 app.
-    Copyright (c) 2014 held jointly by the individual authors.
+    Copyright (c) 2014-2017 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
@@ -31,6 +31,8 @@ import org.cytoscape.service.util.internal.FakeBundleContext;
 
 import org.cytoscape.task.analyze.AnalyzeNetworkCollectionTaskFactory;
 
+import org.cytoscape.util.swing.FileUtil;
+
 import org.cytoscape.view.layout.CyLayoutAlgorithmManager;
 
 import org.cytoscape.view.vizmap.VisualMappingFunctionFactory;
@@ -59,6 +61,7 @@ public final class CyActivatorTest
         cyActivator = new CyActivator();
         bundleContext = new FakeBundleContext(CyApplicationManager.class,
                                               DialogTaskManager.class,
+                                              FileUtil.class,
                                               AnalyzeNetworkCollectionTaskFactory.class,
                                               CyLayoutAlgorithmManager.class,
                                               VisualMappingManager.class,

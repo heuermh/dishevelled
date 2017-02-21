@@ -1,7 +1,7 @@
 /*
 
     dsh-worm-plot-cytoscape3-app  Worm plot Cytoscape 3 app.
-    Copyright (c) 2014 held jointly by the individual authors.
+    Copyright (c) 2014-2017 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
@@ -47,6 +47,8 @@ import org.cytoscape.application.CyApplicationManager;
 
 import org.cytoscape.application.swing.AbstractCyAction;
 
+import org.cytoscape.util.swing.FileUtil;
+
 import org.cytoscape.work.swing.DialogTaskManager;
 
 import org.dishevelled.iconbundle.tango.TangoProject;
@@ -68,6 +70,9 @@ final class WormPlotAction extends AbstractCyAction
     /** Dialog task manager. */
     private final DialogTaskManager dialogTaskManager;
 
+    /** File util. */
+    private final FileUtil fileUtil;
+
     /** Worm plot task factory. */
     private final WormPlotTaskFactory wormPlotTaskFactory;
 
@@ -77,10 +82,12 @@ final class WormPlotAction extends AbstractCyAction
      *
      * @param applicationManager application manager, must not be null
      * @param dialogTaskManager dialog task manager, must not be null
+     * @param fileUtil file util, must not be null
      * @param wormPlotTaskFactory worm plot task factory, must not be null
      */
     WormPlotAction(final CyApplicationManager applicationManager,
                    final DialogTaskManager dialogTaskManager,
+                   final FileUtil fileUtil,
                    final WormPlotTaskFactory wormPlotTaskFactory)
     {
         super("Worm Plot");
@@ -88,9 +95,11 @@ final class WormPlotAction extends AbstractCyAction
 
         checkNotNull(applicationManager);
         checkNotNull(dialogTaskManager);
+        checkNotNull(fileUtil);
         checkNotNull(wormPlotTaskFactory);
         this.applicationManager = applicationManager;
         this.dialogTaskManager = dialogTaskManager;
+        this.fileUtil = fileUtil;
         this.wormPlotTaskFactory = wormPlotTaskFactory;
     }
 
@@ -119,7 +128,7 @@ final class WormPlotAction extends AbstractCyAction
         contentPane.setBorder(new EmptyBorder(12, 12, 12, 12));
         contentPane.setLayout(new BorderLayout());
 
-        WormPlotApp app = new WormPlotApp(applicationManager, dialogTaskManager, wormPlotTaskFactory);
+        WormPlotApp app = new WormPlotApp(applicationManager, dialogTaskManager, fileUtil, wormPlotTaskFactory);
 
         IdToolBar toolBar = new IdToolBar();
         toolBar.displayIconsAndText();

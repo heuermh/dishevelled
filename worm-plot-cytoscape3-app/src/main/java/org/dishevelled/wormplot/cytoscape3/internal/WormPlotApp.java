@@ -1,7 +1,7 @@
 /*
 
     dsh-worm-plot-cytoscape3-app  Worm plot Cytoscape 3 app.
-    Copyright (c) 2014 held jointly by the individual authors.
+    Copyright (c) 2014-2017 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
@@ -52,6 +52,9 @@ import com.google.common.collect.ImmutableList;
 
 import org.cytoscape.application.CyApplicationManager;
 
+import org.cytoscape.util.swing.FileChooserFilter;
+import org.cytoscape.util.swing.FileUtil;
+
 import org.cytoscape.work.swing.DialogTaskManager;
 
 import org.dishevelled.layout.LabelFieldPanel;
@@ -75,6 +78,9 @@ final class WormPlotApp extends JPanel
 
     /** Dialog task manager. */
     private final DialogTaskManager dialogTaskManager;
+
+    /** File util. */
+    private final FileUtil fileUtil;
 
     /** Worm plot task factory. */
     private final WormPlotTaskFactory wormPlotTaskFactory;
@@ -103,48 +109,11 @@ final class WormPlotApp extends JPanel
             @Override
             public void actionPerformed(final ActionEvent event)
             {
-                // awt file chooser
-                FileDialog fileDialog = new FileDialog((JDialog) getTopLevelAncestor(), "Select a sequence file in FASTA format", FileDialog.LOAD);
-                //fileDialog.setMultipleMode(false); jdk 1.7+
-                fileDialog.setFilenameFilter(new FilenameFilter()
-                    {
-                        @Override
-                        public boolean accept(final File directory, final String name)
-                        {
-                            return name.endsWith(".fa") || name.endsWith(".fasta") || name.endsWith(".txt");
-                        }
-                    });
-
-                // workaround for apple 1.6 jdk bug on osx
-                String fileDialogForDirectories = System.getProperty("apple.awt.fileDialogForDirectories");
-                System.setProperty("apple.awt.fileDialogForDirectories", "false");
-                fileDialog.setVisible(true);
-                System.setProperty("apple.awt.fileDialogForDirectories", fileDialogForDirectories);
-
-                // jdk 1.6
-                String directoryName = fileDialog.getDirectory();
-                String fileName = fileDialog.getFile();
-                if (directoryName != null && fileName != null)
-                {
-                    model.setSequenceFile(new File(directoryName, fileName));
+                FileChooserFilter filter = new FileChooserFilter("Sequence file in FASTA format", new String[] { "fa", "fasta", "txt" });
+                File sequenceFile = fileUtil.getFile((JDialog) getTopLevelAncestor(), "Select a sequence file in FASTA format", FileUtil.LOAD, ImmutableList.of(filter));
+                if (sequenceFile != null) {
+                    model.setSequenceFile(sequenceFile);
                 }
-
-                // null-safe jdk 1.7+
-                /*
-                if (fileDialog.getFiles().length > 0)
-                {
-                    model.setSequenceFile(fileDialog.getFiles()[0]);
-                }
-                */
-
-                /*
-                // swing file chooser
-                JFileChooser fileChooser = new JFileChooser();
-                if (JFileChooser.APPROVE_OPTION == fileChooser.showOpenDialog(WormPlotApp.this))
-                {
-                    model.setSequenceFile(fileChooser.getSelectedFile());
-                }
-                */
             }
         };
 
@@ -206,18 +175,22 @@ final class WormPlotApp extends JPanel
      *
      * @param applicationManager application manager, must not be null
      * @param dialogTaskManager dialog task manager, must not be null
+     * @param fileUtil file util, must not be null
      * @param wormPlotTaskFactory worm plot task factory, must not be null
      */
     WormPlotApp(final CyApplicationManager applicationManager,
                 final DialogTaskManager dialogTaskManager,
+                final FileUtil fileUtil,
                 final WormPlotTaskFactory wormPlotTaskFactory)
     {
         super();
         checkNotNull(applicationManager);
         checkNotNull(dialogTaskManager);
+        checkNotNull(fileUtil);
         checkNotNull(wormPlotTaskFactory);
         this.applicationManager = applicationManager;
         this.dialogTaskManager = dialogTaskManager;
+        this.fileUtil = fileUtil;
         this.wormPlotTaskFactory = wormPlotTaskFactory;
 
         model = new WormPlotModel();
@@ -410,7 +383,6 @@ final class WormPlotApp extends JPanel
         catch (IOException e)
         {
             // ignore
-            System.out.println(e.getMessage());
         }
         return false;
     }

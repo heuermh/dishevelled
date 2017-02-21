@@ -1,7 +1,7 @@
 /*
 
     dsh-worm-plot-cytoscape3-app  Worm plot Cytoscape 3 app.
-    Copyright (c) 2014 held jointly by the individual authors.
+    Copyright (c) 2014-2017 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
@@ -29,9 +29,11 @@ import org.cytoscape.application.CyApplicationManager;
 
 import org.cytoscape.application.swing.CyAction;
 
+import org.cytoscape.service.util.AbstractCyActivator;
+
 import org.cytoscape.task.analyze.AnalyzeNetworkCollectionTaskFactory;
 
-import org.cytoscape.service.util.AbstractCyActivator;
+import org.cytoscape.util.swing.FileUtil;
 
 import org.cytoscape.view.layout.CyLayoutAlgorithmManager;
 
@@ -59,6 +61,7 @@ public final class CyActivator extends AbstractCyActivator
         }
         CyApplicationManager applicationManager = getService(bundleContext, CyApplicationManager.class);
         DialogTaskManager dialogTaskManager = getService(bundleContext, DialogTaskManager.class);
+        FileUtil fileUtil = getService(bundleContext, FileUtil.class);
         AnalyzeNetworkCollectionTaskFactory analyzeNetworkCollectionTaskFactory = getService(bundleContext, AnalyzeNetworkCollectionTaskFactory.class);
         CyLayoutAlgorithmManager layoutAlgorithmManager = getService(bundleContext, CyLayoutAlgorithmManager.class);
         VisualMappingManager visualMappingManager = getService(bundleContext, VisualMappingManager.class);
@@ -71,6 +74,7 @@ public final class CyActivator extends AbstractCyActivator
 
         WormPlotAction wormPlotAction = new WormPlotAction(applicationManager,
                                                            dialogTaskManager,
+                                                           fileUtil,
                                                            wormPlotTaskFactory);
 
         Properties properties = new Properties();

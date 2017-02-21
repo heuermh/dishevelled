@@ -1,7 +1,7 @@
 /*
 
     dsh-worm-plot-cytoscape3-app  Worm plot Cytoscape 3 app.
-    Copyright (c) 2014 held jointly by the individual authors.
+    Copyright (c) 2014-2017 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
@@ -25,12 +25,15 @@ package org.dishevelled.wormplot.cytoscape3.internal;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 
 import java.util.HashMap;
@@ -39,14 +42,15 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.biojava.bio.BioException;
+import com.google.common.collect.ImmutableList;
 
-import org.biojava.bio.seq.Sequence;
-import org.biojava.bio.seq.SequenceIterator;
+import org.biojava.nbio.core.exceptions.CompoundNotFoundException;
 
-import org.biojava.bio.seq.impl.SimpleSequence;
+import org.biojava.nbio.core.sequence.AccessionID;
+import org.biojava.nbio.core.sequence.DNASequence;
 
-import org.biojava.bio.seq.io.SeqIOTools;
+import org.biojava.nbio.core.sequence.io.FastaReaderHelper;
+import org.biojava.nbio.core.sequence.io.FastaWriterHelper;
 
 import org.cytoscape.model.CyEdge;
 import org.cytoscape.model.CyNetwork;
@@ -96,7 +100,6 @@ final class WormPlotTask
     {
         taskMonitor.setProgress(0.0d);
         taskMonitor.setTitle("Generating worm plot...");
-
         try
         {
             taskMonitor.setStatusMessage("Splitting sequence...");
@@ -113,6 +116,7 @@ final class WormPlotTask
         }
         catch (IOException e)
         {
+            logger.error("could not generate worm plot", e);
             throw new WormPlotException("Unable to generate worm plot due to I/O error: " + e.getMessage(), e);
         }
     }
@@ -131,17 +135,17 @@ final class WormPlotTask
         throws IOException
     {
         File splitFasta = null;
-        BufferedReader reader = null;
-        OutputStream output = null;
+        InputStream inputStream = null;
+        OutputStream outputStream = null;
         try
         {
-            splitFasta = File.createTempFile("wormPlot", ".fa");
             if (sequenceFile == null)
             {
                 throw new IOException("must provide a sequence file");
             }
-            reader = new BufferedReader(new FileReader(sequenceFile));
-            output = new BufferedOutputStream(new FileOutputStream(splitFasta));
+            splitFasta = File.createTempFile("wormPlot", ".fa");
+            inputStream = new BufferedInputStream(new FileInputStream(sequenceFile));
+            outputStream = new BufferedOutputStream(new FileOutputStream(splitFasta));
 
             if (logger.isInfoEnabled())
             {
@@ -149,9 +153,11 @@ final class WormPlotTask
                 logger.info("writing to splitFasta length {} overlap {} {}", length, overlap, splitFasta);
             }
 
-            for (SequenceIterator iter = SeqIOTools.readFastaDNA(reader); iter.hasNext(); )
+            int sequencesRead = 0;
+            int subsequencesWritten = 0;
+            for (DNASequence sequence : FastaReaderHelper.readFastaDNASequence(inputStream).values())
             {
-                Sequence sequence = iter.nextSequence();
+                sequencesRead++;
 
                 if (logger.isTraceEnabled())
                 {
@@ -159,27 +165,35 @@ final class WormPlotTask
                 }
 
                 int index = 0;
-                for (int start = 1; start < sequence.length(); start += (length - overlap))
+                for (int start = 1; start < sequence.getLength(); start += (length - overlap))
                 {
-                    int end = Math.min(sequence.length(), start + length);
-                    String subsequenceName = sequence.getName() + ":" + start + "-" + end + ":" + index;
-                    Sequence subsequence = new SimpleSequence(sequence.subList(start, end), null, subsequenceName, null);
+                    int end = Math.min(sequence.getLength(), start + length);
+                    String[] tokens = sequence.getAccession().getID().split("\\s+");
+                    String subsequenceName = tokens[0] + ":" + start + "-" + end + ":" + index;
+                    DNASequence subsequence = new DNASequence(sequence.getSubSequence(start, end).getSequenceAsString());
+                    subsequence.setAccession(new AccessionID(subsequenceName));
 
                     if (logger.isTraceEnabled())
                     {
                         logger.trace("writing subsequence {}", subsequence);
                     }
-                    SeqIOTools.writeFasta(output, subsequence);
-                    output.flush();
+                    FastaWriterHelper.writeNucleotideSequence(outputStream, ImmutableList.of(subsequence));
+                    outputStream.flush();
                     index++;
+                    subsequencesWritten++;
                 }
             }
             if (logger.isInfoEnabled())
             {
-                logger.info("wrote to splitFasta {}", splitFasta);
+                logger.info("read {} sequences from sequenceFile {}", sequencesRead, sequenceFile);
+                logger.info("wrote {} subsequences to splitFasta {}", subsequencesWritten, splitFasta);
             }
         }
-        catch (BioException e)
+        catch (CompoundNotFoundException e)
+        {
+            throw new IOException(e.getMessage());
+        }
+        catch (Exception e)
         {
             throw new IOException(e.getMessage());
         }
@@ -187,7 +201,7 @@ final class WormPlotTask
         {
             try
             {
-                reader.close();
+                inputStream.close();
             }
             catch (Exception e)
             {
@@ -195,7 +209,7 @@ final class WormPlotTask
             }
             try
             {
-                output.close();
+                outputStream.close();
             }
             catch (Exception e)
             {
