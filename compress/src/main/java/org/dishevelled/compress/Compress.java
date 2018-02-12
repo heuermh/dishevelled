@@ -75,6 +75,7 @@ final class Compress
         {
             return true;
         }
+        // block compressed gzip files may also have .gz file extension, check the stream
         try (BufferedInputStream inputStream = new BufferedInputStream(new FileInputStream(file)))
         {
             return isBgzfInputStream(inputStream);
@@ -123,6 +124,39 @@ final class Compress
     }
 
     /**
+     * Return true if the specified file is a gzip input stream.
+     *
+     * @since 1.3
+     * @param inputStream input stream, must not be null
+     * @return true if the specified file is a gzip input stream
+     */
+    static boolean isGzipInputStream(final InputStream inputStream)
+    {
+        checkNotNull(inputStream);
+        InputStream in = inputStream.markSupported() ? inputStream : new BufferedInputStream(inputStream);
+        try
+        {
+            in.mark(2);
+            return in.read() == 31 && in.read() == 139;
+        }
+        catch (IOException e)
+        {
+            return false;
+        }
+        finally
+        {
+            try
+            {
+                in.reset();
+            }
+            catch (IOException e)
+            {
+                // ignore
+            }
+        }
+    }
+
+    /**
      * Return true if the specified file is a bzip2 file.
      *
      * @param file file
@@ -135,5 +169,38 @@ final class Compress
             return false;
         }
         return BZip2Utils.isCompressedFilename(file.getName());
+    }
+
+    /**
+     * Return true if the specified file is a bzip2 input stream.
+     *
+     * @since 1.3
+     * @param inputStream input stream, must not be null
+     * @return true if the specified file is a bzip2 input stream
+     */
+    static boolean isBzip2InputStream(final InputStream inputStream)
+    {
+        checkNotNull(inputStream);
+        InputStream in = inputStream.markSupported() ? inputStream : new BufferedInputStream(inputStream);
+        try
+        {
+            in.mark(3);
+            return in.read() == 'B' && in.read() == 'Z' && in.read() == 'h';
+        }
+        catch (IOException e)
+        {
+            return false;
+        }
+        finally
+        {
+            try
+            {
+                in.reset();
+            }
+            catch (IOException e)
+            {
+                // ignore
+            }
+        }
     }
 }
