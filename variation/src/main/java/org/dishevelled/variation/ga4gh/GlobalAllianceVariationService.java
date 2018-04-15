@@ -89,9 +89,9 @@ public final class GlobalAllianceVariationService implements VariationService
     Variation convert(final Variant variant)
     {
         checkNotNull(variant);
-        List<String> identifiers = toStringList(variant.getNames());
+        List<String> identifiers = variant.getNames();
         String ref = toString(variant.getReferenceBases());
-        List<String> alt = toStringList(variant.getAlternateBases());
+        List<String> alt = variant.getAlternateBases();
         String region = toString(variant.getReferenceName());
         return new Variation(species, reference, identifiers, ref, alt, region, variant.getStart(), variant.getEnd());
     }

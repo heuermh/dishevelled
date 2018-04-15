@@ -107,13 +107,13 @@ public final class GlobalAllianceVariationServiceTest
     {
         Variant variant = new Variant();
         variant.setReferenceName("1");
-        List<CharSequence> names = Lists.newArrayList();
+        List<String> names = Lists.newArrayList();
         names.add("rs1234");
         variant.setNames(names);
         variant.setStart(42L); // 0-based, closed-open interval
         variant.setEnd(43L);
         variant.setReferenceBases("G");
-        List<CharSequence> alternateBases = Lists.newArrayList();
+        List<String> alternateBases = Lists.newArrayList();
         alternateBases.add("A");
         alternateBases.add("C");
         alternateBases.add("T");

@@ -27,7 +27,7 @@
   <parent>
     <groupId>org.dishevelled</groupId>
     <artifactId>dsh-parent</artifactId>
-    <version>12</version>
+    <version>14-SNAPSHOT</version>
     <relativePath>../parent/pom.xml</relativePath>
   </parent>
   <artifactId>dsh-variation</artifactId>
@@ -62,10 +62,6 @@
             <artifactId>commons-logging</artifactId>
           </exclusion>
         </exclusions>
-      </dependency>
-      <dependency>
-        <groupId>com.google.code.findbugs</groupId>
-        <artifactId>jsr305</artifactId>
       </dependency>
       <dependency>
         <groupId>com.github.heuermh.ensemblrestclient</groupId>
@@ -117,10 +113,6 @@
           </exclusion>
         </exclusions>
         <version>1.5.0</version>
-      </dependency>
-      <dependency>
-        <groupId>commons-io</groupId>
-        <artifactId>commons-io</artifactId>
       </dependency>
       <dependency>
         <groupId>org.apache.avro</groupId>
@@ -185,9 +177,9 @@
         <version>1.1</version>
       </dependency>
       <dependency>
-        <groupId>org.ga4gh</groupId>
-        <artifactId>ga4gh-format</artifactId>
-        <version>0.6.0-SNAPSHOT</version>
+        <groupId>org.opencb.ga4gh</groupId>
+        <artifactId>ga4gh</artifactId>
+        <version>0.5.1.1</version>
       </dependency>
       <dependency>
         <groupId>org.nmdp.ngs</groupId>
@@ -302,8 +294,8 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.ga4gh</groupId>
-      <artifactId>ga4gh-format</artifactId>
+      <groupId>org.opencb.ga4gh</groupId>
+      <artifactId>ga4gh</artifactId>
       <scope>compile</scope>
     </dependency>
     <dependency>
