@@ -5,13 +5,9 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
 
-import org.apache.commons.io.IOUtils;
-
 import org.dishevelled.color.scheme.ColorScheme;
 
 import static org.dishevelled.color.scheme.impl.ColorSchemes.*;
-
-import org.dishevelled.color.scheme.interpolate.Interpolations;
 
 public final class ExportColorSchemes
 {
@@ -663,12 +659,19 @@ public final class ExportColorSchemes
         export(getDiscreteColorScheme("gut", 9, Interpolations.LINEAR), "discrete-gut-9");
         export(getContinuousColorScheme("gut", 10, Interpolations.LINEAR), "continuous-gut-10");
         export(getDiscreteColorScheme("gut", 10, Interpolations.LINEAR), "discrete-gut-10");
-        */
 
         export(getContinuousColorScheme("enceladus", 3, Interpolations.LINEAR), "continuous-enceladus-3");
         export(getDiscreteColorScheme("enceladus", 3, Interpolations.LINEAR), "discrete-enceladus-3");
         export(getContinuousColorScheme("europa", 3, Interpolations.LINEAR), "continuous-europa-3");
         export(getDiscreteColorScheme("europa", 3, Interpolations.LINEAR), "discrete-europa-3");
+        */
+
+        export(getContinuousColorScheme("earth", 2), "continuous-earth-2");
+        export(getDiscreteColorScheme("earth", 2), "discrete-earth-2");
+        export(getContinuousColorScheme("earth", 3), "continuous-earth-3");
+        export(getDiscreteColorScheme("earth", 3), "discrete-earth-3");
+        export(getContinuousColorScheme("earth", 4), "continuous-earth-4");
+        export(getDiscreteColorScheme("earth", 4), "discrete-earth-4");
     }
 
     private static final void export(final ColorScheme colorScheme, final String fileName)
@@ -706,7 +709,14 @@ public final class ExportColorSchemes
         }
         finally
         {
-            IOUtils.closeQuietly(writer);
+            try
+            {
+                writer.close();
+            }
+            catch (Exception e)
+            {
+                // ignore
+            }
         }
     }
 

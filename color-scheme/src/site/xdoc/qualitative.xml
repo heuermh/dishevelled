@@ -92,6 +92,14 @@ See <a href="http://colorbrewer.org">http://colorbrewer.org</a> for further deta
 <p><object data="images/continuous-dark-2-8.svg" type="image/svg+xml" width="810" height="80"></object></p>
 <p><object data="images/discrete-dark-2-8.svg" type="image/svg+xml" width="810" height="80"></object></p>
 </subsection>
+<subsection name="Earth" id="earth">
+<p><object data="images/continuous-earth-2.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-earth-2.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/continuous-earth-3.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-earth-3.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/continuous-earth-4.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-earth-4.svg" type="image/svg+xml" width="810" height="80"></object></p>
+</subsection>
 <subsection name="GnGy" id="gn-gy">
 <p><object data="images/continuous-gn-gy-2.svg" type="image/svg+xml" width="810" height="80"></object></p>
 <p><object data="images/discrete-gn-gy-2.svg" type="image/svg+xml" width="810" height="80"></object></p>
