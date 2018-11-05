@@ -64,10 +64,24 @@ public final class Writers
 
 
     /**
-     * Create and return a new buffered print writer for the specified gzip compressed output stream.
+     * Create and return a new buffered print writer with bgzf compression for the specified output stream.
      *
-     * @param outputStream gzip compressed output stream, must not be null
-     * @return a new buffered print writer for the specified gzip compressed output stream
+     * @since 1.3
+     * @param outputStream output stream, must not be null
+     * @return a new buffered print writer with bgzf compression for the specified output stream
+     * @throws IOException if an I/O error occurs
+     */
+    public static PrintWriter bgzfOutputStreamWriter(final OutputStream outputStream) throws IOException
+    {
+        checkNotNull(outputStream);
+        return new PrintWriter(new BufferedWriter(new OutputStreamWriter(new BlockCompressedOutputStream(outputStream, (File) null))), true);
+    }
+
+    /**
+     * Create and return a new buffered print writer with gzip compression for the specified output stream.
+     *
+     * @param outputStream output stream, must not be null
+     * @return a new buffered print writer with gzip compression for the specified output stream
      * @throws IOException if an I/O error occurs
      */
     public static PrintWriter gzipOutputStreamWriter(final OutputStream outputStream) throws IOException
@@ -77,10 +91,10 @@ public final class Writers
     }
 
     /**
-     * Create and return a new buffered print writer for the specified bzip2 compressed output stream.
+     * Create and return a new buffered print writer with bzip2 compression for the specified output stream.
      *
-     * @param outputStream bzip2 compressed output stream, must not be null
-     * @return a new buffered print writer for the specified bzip2 compressed output stream
+     * @param outputStream output stream, must not be null
+     * @return a new buffered print writer with bzip2 compression for the specified output stream
      * @throws IOException if an I/O error occurs
      */
     public static PrintWriter bzip2OutputStreamWriter(final OutputStream outputStream) throws IOException

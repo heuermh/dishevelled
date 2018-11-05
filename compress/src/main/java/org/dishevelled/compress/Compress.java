@@ -44,9 +44,10 @@ import org.apache.commons.compress.compressors.gzip.GzipUtils;
 /**
  * Compression utility methods.
  *
+ * @since 1.3
  * @author  Michael Heuer
  */
-final class Compress
+public final class Compress
 {
 
     /**
@@ -59,19 +60,31 @@ final class Compress
 
 
     /**
+     * Return true if the specified file is a block compressed gzip (BGZF) file name.
+     *
+     * @since 1.3
+     * @param fileName file name, must not be null
+     * @return true if the specified file is a block compressed gzip (BGZF) file name
+     */
+    public static boolean isBgzfFilename(final String fileName)
+    {
+        checkNotNull(fileName);
+        return BgzfUtils.isCompressedFilename(fileName);
+    }
+
+    /**
      * Return true if the specified file is a block compressed gzip (BGZF) file.
      *
-     * @param file file
+     * @param file file, if any
      * @return true if the specified file is a block compressed gzip (BGZF) file
      */
-    static boolean isBgzfFile(@Nullable final File file)
+    public static boolean isBgzfFile(@Nullable final File file)
     {
         if (file == null)
         {
             return false;
         }
-        String fileExtension = Files.getFileExtension(file.getName());
-        if (fileExtension.equals("bgzf") || fileExtension.equals("bgz"))
+        if (isBgzfFilename(file.getName()))
         {
             return true;
         }
@@ -92,7 +105,7 @@ final class Compress
      * @param inputStream input stream, must not be null
      * @return true if the specified file is a block compressed gzip (BGZF) input stream
      */
-    static boolean isBgzfInputStream(final InputStream inputStream)
+    public static boolean isBgzfInputStream(final InputStream inputStream)
     {
         checkNotNull(inputStream);
         BufferedInputStream bufferedInputStream = inputStream instanceof BufferedInputStream ? (BufferedInputStream) inputStream : new BufferedInputStream(inputStream);
@@ -107,20 +120,33 @@ final class Compress
     }
 
     /**
+     * Return true if the specified file is a gzip file name.
+     *
+     * @since 1.3
+     * @param fileName file name, must not be null
+     * @return true if the specified file is a gzip file name
+     */
+    public static boolean isGzipFilename(final String fileName)
+    {
+        checkNotNull(fileName);
+        return GzipUtils.isCompressedFilename(fileName);
+    }
+
+    /**
      * Return true if the specified file is a gzip file.  Block compressed gzip (BGZF)
      * files are also gzip files, so <code>isBgzfFile(File)</code> should be called before
      * this method.
      *
-     * @param file file
+     * @param file file, if any
      * @return true if the specified file is a gzip file
      */
-    static boolean isGzipFile(@Nullable final File file)
+    public static boolean isGzipFile(@Nullable final File file)
     {
         if (file == null)
         {
             return false;
         }
-        return GzipUtils.isCompressedFilename(file.getName());
+        return isGzipFilename(file.getName());
     }
 
     /**
@@ -130,7 +156,7 @@ final class Compress
      * @param inputStream input stream, must not be null
      * @return true if the specified file is a gzip input stream
      */
-    static boolean isGzipInputStream(final InputStream inputStream)
+    public static boolean isGzipInputStream(final InputStream inputStream)
     {
         checkNotNull(inputStream);
         InputStream in = inputStream.markSupported() ? inputStream : new BufferedInputStream(inputStream);
@@ -157,18 +183,30 @@ final class Compress
     }
 
     /**
+     * Return true if the specified file is a bzip2 file name.
+     *
+     * @since 1.3
+     * @param fileName file name, must not be null
+     * @return true if the specified file is a bzip2 file name
+     */
+    public static boolean isBzip2Filename(final String fileName)
+    {
+        return BZip2Utils.isCompressedFilename(fileName);
+    }
+
+    /**
      * Return true if the specified file is a bzip2 file.
      *
-     * @param file file
+     * @param file file, if any
      * @return true if the specified file is a bzip2 file
      */
-    static boolean isBzip2File(@Nullable final File file)
+    public static boolean isBzip2File(@Nullable final File file)
     {
         if (file == null)
         {
             return false;
         }
-        return BZip2Utils.isCompressedFilename(file.getName());
+        return isBzip2Filename(file.getName());
     }
 
     /**
@@ -178,7 +216,7 @@ final class Compress
      * @param inputStream input stream, must not be null
      * @return true if the specified file is a bzip2 input stream
      */
-    static boolean isBzip2InputStream(final InputStream inputStream)
+    public static boolean isBzip2InputStream(final InputStream inputStream)
     {
         checkNotNull(inputStream);
         InputStream in = inputStream.markSupported() ? inputStream : new BufferedInputStream(inputStream);

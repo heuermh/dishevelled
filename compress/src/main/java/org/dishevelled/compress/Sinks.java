@@ -71,11 +71,13 @@ public final class Sinks
     /**
      * Create and return a new char sink for the specified output stream.
      *
-     * @param outputStream output stream
+     * @since 1.3
+     * @param outputStream output stream, must not be null
      * @return a new char sink for the specified output stream
      */
-    private static CharSink outputStreamCharSink(final OutputStream outputStream)
+    public static CharSink outputStreamCharSink(final OutputStream outputStream)
     {
+        checkNotNull(outputStream);
         return new CharSink()
             {
                 @Override
@@ -87,10 +89,30 @@ public final class Sinks
     }
 
     /**
-     * Create and return a new char sink for the specified gzip compressed output stream.
+     * Create and return a new block compressed gzip (BGZF) char sink for the specified output stream.
      *
-     * @param outputStream gzip compressed output stream, must not be null
-     * @return a new char sink for the specified gzip compressed output stream
+     * @since 1.3
+     * @param outputStream output stream, must not be null
+     * @return a new block compressed gzip (BGZF) char sink for the specified output stream
+     */
+    public static CharSink bgzfOutputStreamCharSink(final OutputStream outputStream)
+    {
+        checkNotNull(outputStream);
+        return new CharSink()
+            {
+                @Override
+                public Writer openStream() throws IOException
+                {
+                    return new BufferedWriter(new OutputStreamWriter(new BlockCompressedOutputStream(outputStream, (File) null)));
+                }
+            };
+    }
+
+    /**
+     * Create and return a new gzip compressed char sink for the specified output stream.
+     *
+     * @param outputStream output stream, must not be null
+     * @return a new gzip compressed char sink for the specified output stream
      */
     public static CharSink gzipOutputStreamCharSink(final OutputStream outputStream)
     {
@@ -106,10 +128,10 @@ public final class Sinks
     }
 
     /**
-     * Create and return a new char sink for the specified bzip2 compressed output stream.
+     * Create and return a new bzip2 compressed char sink for the specified output stream.
      *
-     * @param outputStream gzip compressed output stream, must not be null
-     * @return a new char sink for the specified bzip2 compressed output stream
+     * @param outputStream output stream, must not be null
+     * @return a new bzip2 compressed char sink for the specified output stream
      */
     public static CharSink bzip2OutputStreamCharSink(final OutputStream outputStream)
     {
@@ -125,14 +147,15 @@ public final class Sinks
     }
 
     /**
-     * Create and return a new char sink for the specified bgzf file.
+     * Create and return a new block compressed gzip (BGZF) char sink for the specified file.
      *
      * @since 1.2
-     * @param file bgzf file
-     * @return a new char sink for the specified bgzf file
+     * @param file file, must not be null
+     * @return a new block compressed gzip (BGZF) char sink for the specified file
      */
-    private static CharSink bgzfFileCharSink(final File file)
+    public static CharSink bgzfFileCharSink(final File file)
     {
+        checkNotNull(file);
         return new CharSink()
             {
                 @Override
@@ -144,14 +167,16 @@ public final class Sinks
     }
 
     /**
-     * Create and return a new char sink for the specified gzip file.
+     * Create and return a new gzip compressed char sink for the specified file.
      *
-     * @param file gzip file
+     * @since 1.3
+     * @param file file, must not be null
      * @param append true to append to the specified file
-     * @return a new char sink for the specified gzip file
+     * @return a new gzip compressed char sink for the specified file
      */
-    private static CharSink gzipFileCharSink(final File file, final boolean append)
+    public static CharSink gzipFileCharSink(final File file, final boolean append)
     {
+        checkNotNull(file);
         return new CharSink()
             {
                 @Override
@@ -163,14 +188,16 @@ public final class Sinks
     }
 
     /**
-     * Create and return a new char sink for the specified bzip2 file.
+     * Create and return a new bzip2 compressed char sink for the specified file.
      *
-     * @param file bzip2 file
+     * @since 1.3
+     * @param file file, must not be null
      * @param append true to append to the specified file
-     * @return a new char sink for the specified bzip2 file
+     * @return a new bzip2 compressed char sink for the specified file
      */
-    private static CharSink bzip2FileCharSink(final File file, final boolean append)
+    public static CharSink bzip2FileCharSink(final File file, final boolean append)
     {
+        checkNotNull(file);
         return new CharSink()
             {
                 @Override

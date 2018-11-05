@@ -100,11 +100,11 @@ public final class Sources
     }
 
     /**
-     * Create and return a new char source for the specified bgzf compressed input stream.
+     * Create and return a new block compressed gzip (BGZF) char source for the specified input stream.
      *
      * @since 1.2
-     * @param inputStream bgzf compressed input stream, must not be null
-     * @return a new char source for the specified bgzf compressed input stream
+     * @param inputStream input stream, must not be null
+     * @return a new block compressed gzip (BGZF) char source for the specified input stream
      */
     public static CharSource bgzfInputStreamCharSource(final InputStream inputStream)
     {
@@ -120,10 +120,11 @@ public final class Sources
     }
 
     /**
-     * Create and return a new char source for the specified gzip compressed input stream.
+     * Create and return a new gzip compressed char source for the specified input stream.
      *
-     * @param inputStream gzip compressed input stream, must not be null
-     * @return a new char source for the specified gzip compressed input stream
+     * @since 1.3
+     * @param inputStream input stream, must not be null
+     * @return a new gzip compressed char source for the specified input stream
      */
     public static CharSource gzipInputStreamCharSource(final InputStream inputStream)
     {
@@ -139,10 +140,11 @@ public final class Sources
     }
 
     /**
-     * Create and return a new char source for the specified bzip2 compressed input stream.
+     * Create and return a new bzip2 compressed char source for the specified input stream.
      *
-     * @param inputStream bzip2 compressed input stream, must not be null
-     * @return a new char source for the specified bzip2 compressed input stream
+     * @since 1.3
+     * @param inputStream input stream, must not be null
+     * @return a new bzip2 compressed char source for the specified input stream
      */
     public static CharSource bzip2InputStreamCharSource(final InputStream inputStream)
     {
@@ -158,13 +160,15 @@ public final class Sources
     }
 
     /**
-     * Create and return a new char source for the specified bgzf file.
+     * Create and return a new block compressed gzip (BGZF) char source for the specified file.
      *
-     * @param file bgzf file
-     * @return a new char source for the specified bgzf file
+     * @since 1.3
+     * @param file file, must not be null
+     * @return a new block compressed gzip (BGZF) char source for the specified file
      */
-    private static CharSource bgzfFileCharSource(final File file)
+    public static CharSource bgzfFileCharSource(final File file)
     {
+        checkNotNull(file);
         return new CharSource()
             {
                 @Override
@@ -176,13 +180,15 @@ public final class Sources
     }
 
     /**
-     * Create and return a new char source for the specified gzip file.
+     * Create and return a new gzip compressed char source for the specified file.
      *
-     * @param file gzip file
-     * @return a new char source for the specified gzip file
+     * @since 1.3
+     * @param file file, must not be null
+     * @return a new gzip compressed char source for the specified file
      */
-    private static CharSource gzipFileCharSource(final File file)
+    public static CharSource gzipFileCharSource(final File file)
     {
+        checkNotNull(file);
         return new CharSource()
             {
                 @Override
@@ -194,13 +200,15 @@ public final class Sources
     }
 
     /**
-     * Create and return a new char source for the specified bzip2 file.
+     * Create and return a new bzip2 compressed char source for the specified file.
      *
-     * @param file bzip2 file
-     * @return a new char source for the specified bzip2 file
+     * @since 1.3
+     * @param file file, must not be null
+     * @return a new bzip2 compressed char source for the specified file
      */
-    private static CharSource bzip2FileCharSource(final File file)
+    public static CharSource bzip2FileCharSource(final File file)
     {
+        checkNotNull(file);
         return new CharSource()
             {
                 @Override

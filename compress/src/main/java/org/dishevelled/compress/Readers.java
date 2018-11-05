@@ -125,11 +125,11 @@ public final class Readers
     }
 
     /**
-     * Create and return a new buffered reader for the specified bgzf compressed file.
+     * Create and return a new buffered reader for the specified block compressed gzip (BGZF) compressed file.
      *
      * @since 1.2
      * @param file bgzf compressed file, must not be null
-     * @return a new buffered reader for the specified bgzf compressed file
+     * @return a new buffered reader for the specified block compressed gzip (BGZF) compressed file
      * @throws IOException if an I/O error occurs
      */
     public static BufferedReader bgzfFileReader(final File file) throws IOException
@@ -139,11 +139,11 @@ public final class Readers
     }
 
     /**
-     * Create and return a new buffered reader for the specified bgzf compressed input stream.
+     * Create and return a new buffered reader for the specified block compressed gzip (BGZF) compressed input stream.
      *
      * @since 1.2
      * @param inputStream bgzf compressed input stream, must not be null
-     * @return a new buffered reader for the specified bgzf compressed input stream
+     * @return a new buffered reader for the specified block compressed gzip (BGZF) compressed input stream
      * @throws IOException if an I/O error occurs
      */
     public static BufferedReader bgzfInputStreamReader(final InputStream inputStream) throws IOException
