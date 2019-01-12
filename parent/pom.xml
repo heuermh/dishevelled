@@ -285,12 +285,12 @@
       <dependency>
         <groupId>org.piccolo2d</groupId>
         <artifactId>piccolo2d-core</artifactId>
-        <version>3.0</version>
+        <version>3.0.1</version>
       </dependency>
       <dependency>
         <groupId>org.piccolo2d</groupId>
         <artifactId>piccolo2d-extras</artifactId>
-        <version>3.0</version>
+        <version>3.0.1</version>
       </dependency>
       <dependency>
         <groupId>stax</groupId>
