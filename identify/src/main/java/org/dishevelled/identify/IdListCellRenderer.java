@@ -43,7 +43,7 @@ import org.dishevelled.iconbundle.IconTextDirection;
  * @author  Michael Heuer
  */
 public class IdListCellRenderer
-    extends DefaultListCellRenderer
+    extends StripeListCellRenderer
 {
     /** Default icon size. */
     public static final IconSize DEFAULT_ICON_SIZE = IconSize.DEFAULT_16X16;
