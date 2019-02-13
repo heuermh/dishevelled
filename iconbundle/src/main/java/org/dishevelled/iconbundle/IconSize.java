@@ -33,12 +33,12 @@ import java.io.ObjectStreamException;
 /**
  * Extensible typesafe enumeration of icon sizes.
  *
- * <p>To create a non-default icon size, subclass IconSize
+ * To create a non-default icon size, subclass IconSize
  * as follows:
  * <pre>
  *  IconSize CUSTOM_48X52 = new IconSize(48, 52) { }
  * </pre>
- * and optionally override readResolve to support serialization.</p>
+ * and optionally override readResolve to support serialization.
  *
  * @author  Michael Heuer
  */

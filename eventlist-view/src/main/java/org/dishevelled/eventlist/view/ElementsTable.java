@@ -1,7 +1,7 @@
 /*
 
     dsh-eventlist-view  Views for event lists.
-    Copyright (c) 2010-2015 held jointly by the individual authors.
+    Copyright (c) 2010-2019 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
@@ -41,6 +41,7 @@ import ca.odell.glazedlists.swing.GlazedListsSwing;
 import ca.odell.glazedlists.swing.TableComparatorChooser;
 
 import org.dishevelled.identify.ContextMenuListener;
+import org.dishevelled.identify.StripeTableCellRenderer;
 
 /**
  * Elements table.
@@ -73,6 +74,7 @@ public class ElementsTable<E>
                                        (SortedList<E>) getModel(),
                                        AbstractTableComparatorChooser.MULTIPLE_COLUMN_MOUSE);
 
+        StripeTableCellRenderer.install(table);
         table.setSelectionModel(getListSelectionModelAdapter());
         table.addMouseListener(new ContextMenuListener(getContextMenu()));
 

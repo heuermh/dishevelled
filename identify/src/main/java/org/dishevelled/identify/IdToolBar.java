@@ -1,7 +1,7 @@
 /*
 
     dsh-identify  Lightweight components for identifiable beans.
-    Copyright (c) 2003-2013 held jointly by the individual authors.
+    Copyright (c) 2003-2019 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
@@ -146,7 +146,7 @@ public final class IdToolBar
     /**
      * Create a new tool bar with the specified orientation.
      *
-     * @param orientation orientation, must be either <code>HORIZONTAL<code>
+     * @param orientation orientation, must be either <code>HORIZONTAL</code>
      *    or <code>VERTICAL</code>
      */
     public IdToolBar(final int orientation)
@@ -179,7 +179,7 @@ public final class IdToolBar
      * Create a new tool bar with the specified name and orientation.
      *
      * @param name name of this tool bar
-     * @param orientation orientation, must be either <code>HORIZONTAL<code>
+     * @param orientation orientation, must be either <code>HORIZONTAL</code>
      *    or <code>VERTICAL</code>
      */
     public IdToolBar(final String name, final int orientation)

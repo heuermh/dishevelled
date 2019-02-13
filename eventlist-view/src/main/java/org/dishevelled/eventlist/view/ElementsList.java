@@ -1,7 +1,7 @@
 /*
 
     dsh-eventlist-view  Views for event lists.
-    Copyright (c) 2010-2015 held jointly by the individual authors.
+    Copyright (c) 2010-2019 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
@@ -35,6 +35,7 @@ import ca.odell.glazedlists.EventList;
 import ca.odell.glazedlists.swing.GlazedListsSwing;
 
 import org.dishevelled.identify.ContextMenuListener;
+import org.dishevelled.identify.StripeListCellRenderer;
 
 /**
  * Elements list.
@@ -59,6 +60,7 @@ public class ElementsList<E>
         super(model);
 
         list = new JList(GlazedListsSwing.eventListModelWithThreadProxyList(getModel()));
+        list.setCellRenderer(new StripeListCellRenderer());
         list.setSelectionModel(getListSelectionModelAdapter());
         list.addMouseListener(new ContextMenuListener(getContextMenu()));
 

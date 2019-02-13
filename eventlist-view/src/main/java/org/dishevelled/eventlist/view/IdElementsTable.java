@@ -1,7 +1,7 @@
 /*
 
     dsh-eventlist-view  Views for event lists.
-    Copyright (c) 2010-2015 held jointly by the individual authors.
+    Copyright (c) 2010-2019 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
@@ -66,6 +66,7 @@ public class IdElementsTable<E>
             throw new IllegalArgumentException("columnClass must not be null");
         }
         getTable().setDefaultRenderer(columnClass, tableCellRenderer);
+        updateRowHeight();
     }
 
     /**
@@ -88,6 +89,7 @@ public class IdElementsTable<E>
             throw new IllegalArgumentException("columnClass must not be null");
         }
         getTable().setDefaultRenderer(columnClass, tableCellRenderer);
+        updateRowHeight();
     }
 
 
@@ -113,6 +115,17 @@ public class IdElementsTable<E>
     {
         IconSize oldIconSize = tableCellRenderer.getIconSize();
         tableCellRenderer.setIconSize(iconSize);
+        updateRowHeight();
         firePropertyChange("iconSize", oldIconSize, iconSize);
+    }
+
+    /**
+     * Update row height, called when the icon size changes.
+     *
+     * @since 2.1
+     */
+    protected void updateRowHeight()
+    {
+        getTable().setRowHeight(getIconSize().getHeight() + 4);
     }
 }

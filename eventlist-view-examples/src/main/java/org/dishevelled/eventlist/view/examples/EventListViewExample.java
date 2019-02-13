@@ -29,6 +29,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -45,7 +46,7 @@ import javax.swing.border.EmptyBorder;
 import ca.odell.glazedlists.EventList;
 import ca.odell.glazedlists.GlazedLists;
 
-import ca.odell.glazedlists.gui.TableFormat;
+import ca.odell.glazedlists.gui.AdvancedTableFormat;
 
 import org.dishevelled.functor.UnaryFunction;
 
@@ -55,6 +56,7 @@ import org.dishevelled.eventlist.view.ElementsList;
 import org.dishevelled.eventlist.view.ElementsTable;
 import org.dishevelled.eventlist.view.ElementsSummary;
 import org.dishevelled.eventlist.view.IdElementsList;
+import org.dishevelled.eventlist.view.IdElementsTable;
 import org.dishevelled.eventlist.view.IdElementsSummary;
 
 import org.dishevelled.layout.LabelFieldPanel;
@@ -144,13 +146,11 @@ public final class EventListViewExample
         left.addLabel("Elements list:");
         left.addFinalField(new ElementsList<String>("Elements:", eventList));
 
-        LabelFieldPanel center = new LabelFieldPanel();
-        center.addLabel("Identifiable elements list:");
-        center.addFinalField(new IdElementsList<String>("Identifiable elements:", eventList));
+        LabelFieldPanel leftCenter = new LabelFieldPanel();
+        leftCenter.addLabel("Identifiable elements list:");
+        leftCenter.addFinalField(new IdElementsList<String>("Identifiable elements:", eventList));
 
-        LabelFieldPanel right = new LabelFieldPanel();
-        right.addLabel("Elements table:");
-        TableFormat<String> tableFormat = new TableFormat<String>()
+        AdvancedTableFormat<String> tableFormat = new AdvancedTableFormat<String>()
             {
                 @Override
                 public int getColumnCount()
@@ -183,11 +183,38 @@ public final class EventListViewExample
                         return value.length();
                     }
                 }
+
+                @Override
+                public Class getColumnClass(final int column)
+                {
+                    if (column == 0)
+                    {
+                        return String.class;
+                    }
+                    else
+                    {
+                        return Integer.class;
+                    }
+                }
+
+                @Override
+                public Comparator getColumnComparator(final int column)
+                {
+                    return null;
+                }
             };
-        right.addFinalField(new ElementsTable<String>("Elements:", eventList, tableFormat));
+
+        LabelFieldPanel rightCenter = new LabelFieldPanel();
+        rightCenter.addLabel("Elements table:");
+        rightCenter.addFinalField(new ElementsTable<String>("Elements:", eventList, tableFormat));
+
+        LabelFieldPanel right = new LabelFieldPanel();
+        right.addLabel("Identifiable elements table:");
+        right.addFinalField(new IdElementsTable<String>("Identifiable elements:", eventList, tableFormat, String.class));
 
         panel.add(left);
-        panel.add(center);
+        panel.add(leftCenter);
+        panel.add(rightCenter);
         panel.add(right);
         return panel;
     }
