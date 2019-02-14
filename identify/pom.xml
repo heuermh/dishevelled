@@ -4,13 +4,13 @@
   <parent>
     <groupId>org.dishevelled</groupId>
     <artifactId>dsh-parent</artifactId>
-    <version>16-SNAPSHOT</version>
+    <version>15</version>
     <relativePath>../parent/pom.xml</relativePath>
   </parent>
   <artifactId>dsh-identify</artifactId>
   <packaging>jar</packaging>
   <name>dishevelled.org identify</name>
-  <version>1.2-SNAPSHOT</version>
+  <version>1.2</version>
   <description>Lightweight components for identifiable beans.</description>
   <url>http://www.dishevelled.org/identify</url>
   <inceptionYear>2003</inceptionYear>
@@ -18,6 +18,7 @@
     <connection>scm:git:git@github.com:heuermh/dishevelled.git</connection>
     <developerConnection>scm:git:git@github.com:heuermh/dishevelled.git</developerConnection>
     <url>git@github.com:heuermh/dishevelled.git</url>
+    <tag>dsh-identify-1.2</tag>
   </scm>
   <build>
     <pluginManagement>
@@ -39,13 +40,13 @@
     <dependency>
       <groupId>org.dishevelled</groupId>
       <artifactId>dsh-iconbundle</artifactId>
-      <version>1.1-SNAPSHOT</version>
+      <version>1.0</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>org.dishevelled</groupId>
       <artifactId>dsh-iconbundle-tango</artifactId>
-      <version>1.1-SNAPSHOT</version>
+      <version>1.0</version>
       <scope>test</scope>
     </dependency>
     <dependency>
