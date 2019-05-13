@@ -317,7 +317,7 @@
     <plugins>
       <plugin>
         <artifactId>maven-checkstyle-plugin</artifactId>
-        <version>3.0.1</version>
+        <version>3.0.0</version>
         <configuration>
           <configLocation>${basedir}/src/build/conf/checkstyle.xml</configLocation>
           <enableRulesSummary>false</enableRulesSummary>
