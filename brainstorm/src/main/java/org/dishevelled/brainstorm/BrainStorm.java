@@ -1,7 +1,7 @@
 /*
 
     dsh-brainstorm  Brain storm, a fit of mental confusion or excitement.
-    Copyright (c) 2008-2013 held jointly by the individual authors.
+    Copyright (c) 2008-2019 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
@@ -41,6 +41,7 @@ import static java.awt.RenderingHints.*;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 
 import java.awt.font.FontRenderContext;
@@ -74,6 +75,8 @@ import javax.swing.Timer;
 import org.apache.commons.lang.StringUtils;
 
 import org.apache.commons.io.FileUtils;
+
+import org.beryx.awt.color.ColorFactory;
 
 import org.dishevelled.commandline.ArgumentList;
 import org.dishevelled.commandline.CommandLine;
@@ -170,8 +173,8 @@ public final class BrainStorm
         this.fontName = fontName;
         this.fontSize = fontSize;
         this.rows = rows;
-        this.backgroundColor = parse(backgroundColor);
-        this.textColor = parse(textColor);
+        this.backgroundColor = ColorFactory.valueOf(backgroundColor);
+        this.textColor = ColorFactory.valueOf(textColor);
         setOpaque(true);
         initComponents();
         layoutComponents();
@@ -221,7 +224,11 @@ public final class BrainStorm
 
         // add new input mappings
         textArea.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_EQUALS, keyMask), "increase-font-size");
+        textArea.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_EQUALS, keyMask | InputEvent.SHIFT_MASK), "increase-font-size");
+        textArea.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_PLUS, keyMask), "increase-font-size");
+        textArea.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_PLUS, keyMask | InputEvent.SHIFT_MASK), "increase-font-size");
         textArea.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_MINUS, keyMask), "decrease-font-size");
+        textArea.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_MINUS, keyMask | InputEvent.SHIFT_MASK), "decrease-font-size");
         textArea.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_S, keyMask), "save");
         textArea.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "quit");
         textArea.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_Q, keyMask), "quit");
@@ -250,6 +257,7 @@ public final class BrainStorm
         {
             if ((fontName != null) && (fontName.equalsIgnoreCase(actual)))
             {
+                System.out.println("found font " + actual);
                 return actual;
             }
         }
@@ -562,19 +570,6 @@ public final class BrainStorm
         }
     }
 
-    // todo:  use parseColor impl from elsewhere
-    private static Color parse(final String value)
-    {
-        if ("black".equals(value))
-        {
-            return Color.BLACK;
-        }
-        else
-        {
-            return Color.LIGHT_GRAY;
-        }
-    }
-
     /**
      * Main.
      *
@@ -602,8 +597,8 @@ public final class BrainStorm
 
             if (help.wasFound())
             {
-                System.out.println("Brain storm, a fit of mental confusion or excitement.\n\nCopyright (c) 2008-2013 held jointly by the individual authors.\nLicensed under the GNU Lesser General Public License (LGPL). \n");
-                Usage.usage("java BrainStorm [args]", null, commandLine, arguments, System.out);
+                System.out.println("Brain storm, a fit of mental confusion or excitement.\n\nCopyright (c) 2008-2019 held jointly by the individual authors.\nLicensed under the GNU Lesser General Public License (LGPL). \n");
+                Usage.usage("brain-storm [args]", null, commandLine, arguments, System.out);
             }
             else
             {

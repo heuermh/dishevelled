@@ -1,7 +1,7 @@
 /*
 
     dsh-brainstorm  Brain storm, a fit of mental confusion or excitement.
-    Copyright (c) 2008-2013 held jointly by the individual authors.
+    Copyright (c) 2008-2019 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
@@ -37,8 +37,8 @@
  *   <li>Ctrl-S or Ctrl-X Ctrl-S to save</li>
  *   <li>Q or ESC or Ctrl-X Ctrl-C to quit</li>
  *   <li>Some sort of property editor dialog</li>
- *   <li>Blinking old-school cursor.</li>
- *   <li>Cursor paint/transparency.</li>
+ *   <li>Blinking old-school cursor</li>
+ *   <li>Cursor paint/transparency</li>
  * </ul>
  *
  * <ul>Command line options for:
