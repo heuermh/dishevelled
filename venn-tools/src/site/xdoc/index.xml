@@ -2,7 +2,7 @@
 <!--
 
     dsh-venn-tools  Command line tools for venn diagrams.
-    Copyright (c) 2010-2015 held jointly by the individual authors.
+    Copyright (c) 2010-2019 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
@@ -32,7 +32,7 @@
 
 <p>
 dishevelled.org <b>venn-tools</b> provides command line tools for venn diagrams.
-The venn-tools library requires java version 1.5 or later.
+The venn-tools library requires java version 1.8 or later.
 </p>
 </section>
 

@@ -2,7 +2,7 @@
 <!--
 
     dsh-venn-cytoscape3-app  Cytoscape3 app for venn and euler diagrams.
-    Copyright (c) 2012-2015 held jointly by the individual authors.
+    Copyright (c) 2012-2019 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
@@ -33,7 +33,7 @@
 <p>
 dishevelled.org <b>venn-cytoscape3-app</b> provides a Cytoscape 3 [<a href="#1">1</a>] app for
 generating Venn and Euler diagrams.  The Venn and Euler diagram Cytoscape app requires java version
-1.6 or later and Cytoscape version 3.0 or later.
+1.8 or later and Cytoscape version 3.0 or later.
 </p>
 </section>
 

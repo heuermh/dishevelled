@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.dishevelled</groupId>
     <artifactId>dsh-parent</artifactId>
-    <version>16-SNAPSHOT</version>
+    <version>18-SNAPSHOT</version>
     <relativePath>../parent/pom.xml</relativePath>
   </parent>
   <artifactId>dsh-venn-tools</artifactId>
@@ -106,7 +106,7 @@
         <artifactId>maven-javadoc-plugin</artifactId>
         <configuration>
           <!-- todo:  must manually update the copyright dates here -->
-          <bottom>Copyright (c) 2010-2015 held jointly by the individual authors. Licensed under the &lt;a href="http://www.fsf.org/licensing/licenses/lgpl.html"&gt;GNU Lesser General Public License&lt;a&gt; (LGPL).</bottom>
+          <bottom>Copyright (c) 2010-2019 held jointly by the individual authors. Licensed under the &lt;a href="http://www.fsf.org/licensing/licenses/lgpl.html"&gt;GNU Lesser General Public License&lt;a&gt; (LGPL).</bottom>
         </configuration>
       </plugin>
       <plugin>

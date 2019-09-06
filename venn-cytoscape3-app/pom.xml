@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.dishevelled</groupId>
     <artifactId>dsh-parent</artifactId>
-    <version>16-SNAPSHOT</version>
+    <version>18-SNAPSHOT</version>
     <relativePath>../parent/pom.xml</relativePath>
   </parent>
   <artifactId>dsh-venn-cytoscape3-app</artifactId>
@@ -52,11 +52,6 @@
     </dependency>
     <dependency>
       <groupId>org.cytoscape</groupId>
-      <artifactId>venneuler</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.cytoscape</groupId>
       <artifactId>work-api</artifactId>
       <scope>provided</scope>
     </dependency>
@@ -92,6 +87,11 @@
       <scope>compile</scope>
     </dependency>
     <dependency>
+      <groupId>org.dishevelled</groupId>
+      <artifactId>dsh-venn-euler</artifactId>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
       <groupId>org.ops4j.pax.logging</groupId>
       <artifactId>pax-logging-api</artifactId>
       <scope>test</scope>
@@ -108,7 +108,7 @@
     </dependency>
   </dependencies>
   <properties>
-    <jdk.version>1.6</jdk.version>
+    <jdk.version>1.8</jdk.version>
     <bundle.symbolicName>venn-cytoscape3-app</bundle.symbolicName>
     <bundle.namespace>org.dishevelled.venn.cytoscape3.internal</bundle.namespace>
     <cytoscape.api.version>3.0.2</cytoscape.api.version>
@@ -122,7 +122,7 @@
         <artifactId>maven-javadoc-plugin</artifactId>
         <configuration>
           <!-- todo:  must manually update the copyright dates here -->
-          <bottom>Copyright (c) 2012-2015 held jointly by the individual authors. Licensed under the &lt;a href="http://www.fsf.org/licensing/licenses/lgpl.html"&gt;GNU Lesser General Public License&lt;a&gt; (LGPL).</bottom>
+          <bottom>Copyright (c) 2012-2019 held jointly by the individual authors. Licensed under the &lt;a href="http://www.fsf.org/licensing/licenses/lgpl.html"&gt;GNU Lesser General Public License&lt;a&gt; (LGPL).</bottom>
         </configuration>
       </plugin>
       <plugin>
@@ -178,11 +178,6 @@
         <version>${cytoscape.api.version}</version>
       </dependency>
       <dependency>
-        <groupId>org.cytoscape</groupId>
-        <artifactId>venneuler</artifactId>
-        <version>1.0.0</version>
-      </dependency>
-      <dependency>
         <groupId>org.dishevelled</groupId>
         <artifactId>dsh-iconbundle</artifactId>
         <version>1.0</version>
@@ -201,6 +196,11 @@
         <groupId>org.dishevelled</groupId>
         <artifactId>dsh-piccolo-venn</artifactId>
         <version>1.1-SNAPSHOT</version>
+      </dependency>
+      <dependency>
+        <groupId>org.dishevelled</groupId>
+        <artifactId>dsh-venn-euler</artifactId>
+        <version>1.2-SNAPSHOT</version>
       </dependency>
       <dependency>
         <groupId>org.osgi</groupId>

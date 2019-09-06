@@ -94,6 +94,7 @@
     <!--<module>venn-app</module>-->
     <!--<module>venn-cytoscape-plugin</module>-->
     <!--<module>venn-cytoscape3-app</module>-->
+    <module>venn-euler</module>
     <module>venn-examples</module>
     <module>venn-tools</module>
     <module>vocabulary</module>

@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.dishevelled</groupId>
     <artifactId>dsh-parent</artifactId>
-    <version>16-SNAPSHOT</version>
+    <version>18-SNAPSHOT</version>
     <relativePath>../parent/pom.xml</relativePath>
   </parent>
   <artifactId>dsh-venn-app</artifactId>
@@ -28,7 +28,7 @@
         <configuration>
           <bundleName>VennApp</bundleName>
           <mainClass>org.dishevelled.venn.app.VennApp</mainClass>
-          <jvmVersion>1.6+</jvmVersion>
+          <jvmVersion>1.8+</jvmVersion>
         </configuration>
         <executions>
           <execution>
@@ -84,11 +84,6 @@
   <dependencyManagement>
     <dependencies>
       <dependency>
-        <groupId>org.cytoscape</groupId>
-        <artifactId>venneuler</artifactId>
-        <version>1.0.0</version>
-      </dependency>
-      <dependency>
         <groupId>org.dishevelled</groupId>
         <artifactId>dsh-iconbundle</artifactId>
         <version>1.0</version>
@@ -108,6 +103,11 @@
         <artifactId>dsh-piccolo-venn</artifactId>
         <version>1.1-SNAPSHOT</version>
       </dependency>
+      <dependency>
+        <groupId>org.dishevelled</groupId>
+        <artifactId>dsh-venn-euler</artifactId>
+        <version>1.2-SNAPSHOT</version>
+      </dependency>
     </dependencies>
   </dependencyManagement>
   <dependencies>
@@ -124,11 +124,6 @@
     <dependency>
       <groupId>org.apache.xmlgraphics</groupId>
       <artifactId>batik-svggen</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.cytoscape</groupId>
-      <artifactId>venneuler</artifactId>
       <scope>compile</scope>
     </dependency>
     <dependency>
@@ -152,13 +147,18 @@
       <scope>compile</scope>
     </dependency>
     <dependency>
+      <groupId>org.dishevelled</groupId>
+      <artifactId>dsh-venn-euler</artifactId>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <scope>test</scope>
     </dependency>
   </dependencies>
   <properties>
-    <jdk.version>1.6</jdk.version>
+    <jdk.version>1.8</jdk.version>
   </properties>
   <reporting>
     <plugins>
@@ -169,7 +169,7 @@
         <artifactId>maven-javadoc-plugin</artifactId>
         <configuration>
           <!-- todo:  must manually update the copyright dates here -->
-          <bottom>Copyright (c) 2013-2015 held jointly by the individual authors. Licensed under the &lt;a href="http://www.fsf.org/licensing/licenses/lgpl.html"&gt;GNU Lesser General Public License&lt;a&gt; (LGPL).</bottom>
+          <bottom>Copyright (c) 2013-2019 held jointly by the individual authors. Licensed under the &lt;a href="http://www.fsf.org/licensing/licenses/lgpl.html"&gt;GNU Lesser General Public License&lt;a&gt; (LGPL).</bottom>
         </configuration>
       </plugin>
       <plugin>

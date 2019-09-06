@@ -1,7 +1,7 @@
 /*
 
     dsh-venn-cytoscape3-app  Cytoscape3 app for venn and euler diagrams.
-    Copyright (c) 2012-2015 held jointly by the individual authors.
+    Copyright (c) 2012-2019 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
@@ -112,13 +112,13 @@ import org.dishevelled.venn.VennLayout;
 import org.dishevelled.venn.VennLayouter;
 import org.dishevelled.venn.VennLayouter.PerformanceHint;
 
+import org.dishevelled.venn.euler.VennEulerLayouter;
+
 import org.dishevelled.venn.model.VennModels;
 
 import org.dishevelled.venn.swing.BinaryVennList;
 import org.dishevelled.venn.swing.TernaryVennList;
 import org.dishevelled.venn.swing.QuaternaryVennList;
-
-import org.cytoscape.venneuler.VennEulerLayouter;
 
 /**
  * Groups view.
