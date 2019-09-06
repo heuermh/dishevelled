@@ -4,13 +4,13 @@
   <parent>
     <groupId>org.dishevelled</groupId>
     <artifactId>dsh-parent</artifactId>
-    <version>18-SNAPSHOT</version>
+    <version>17</version>
     <relativePath>../parent/pom.xml</relativePath>
   </parent>
   <artifactId>dsh-venn-tools</artifactId>
   <packaging>jar</packaging>
   <name>dishevelled.org venn-tools</name>
-  <version>1.1-SNAPSHOT</version>
+  <version>1.1</version>
   <description>Command line tools for venn diagrams.</description>
   <url>http://www.dishevelled.org/venn-tools</url>
   <inceptionYear>2010</inceptionYear>
@@ -18,6 +18,7 @@
     <connection>scm:git:git@github.com:heuermh/dishevelled.git</connection>
     <developerConnection>scm:git:git@github.com:heuermh/dishevelled.git</developerConnection>
     <url>git@github.com:heuermh/dishevelled.git</url>
+    <tag>dsh-venn-tools-1.1</tag>
   </scm>
   <build>
     <plugins>
@@ -85,7 +86,7 @@
     <dependency>
       <groupId>org.dishevelled</groupId>
       <artifactId>dsh-venn</artifactId>
-      <version>1.2-SNAPSHOT</version>
+      <version>1.2</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
