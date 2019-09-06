@@ -25,7 +25,6 @@
 /**
  * Command line tools for venn diagrams.
  *
- * <p>
  * Examples:
  * <pre>
  * $ venn2 --count first.txt second.txt
@@ -170,6 +169,5 @@
  * intersection1\tunion1...
  * first.txt only\nfirst0\nfirst1\n... &gt; first-only.txt
  * </pre>
- * </p>
  */
 package org.dishevelled.venn.tools;
