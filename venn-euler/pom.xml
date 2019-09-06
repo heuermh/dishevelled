@@ -4,13 +4,13 @@
   <parent>
     <groupId>org.dishevelled</groupId>
     <artifactId>dsh-parent</artifactId>
-    <version>18-SNAPSHOT</version>
+    <version>17</version>
     <relativePath>../parent/pom.xml</relativePath>
   </parent>
   <artifactId>dsh-venn-euler</artifactId>
   <packaging>jar</packaging>
   <name>dishevelled.org venn-euler</name>
-  <version>1.2-SNAPSHOT</version>
+  <version>1.2</version>
   <description>Lightweight components for venn/euler diagrams.</description>
   <url>http://www.dishevelled.org/venn-euler</url>
   <inceptionYear>2009</inceptionYear>
@@ -18,6 +18,7 @@
     <connection>scm:git:git@github.com:heuermh/dishevelled.git</connection>
     <developerConnection>scm:git:git@github.com:heuermh/dishevelled.git</developerConnection>
     <url>git@github.com:heuermh/dishevelled.git</url>
+    <tag>dsh-venn-euler-1.2</tag>
   </scm>
   <developers>
     <developer>
@@ -31,7 +32,7 @@
     <dependency>
       <groupId>org.dishevelled</groupId>
       <artifactId>dsh-venn</artifactId>
-      <version>1.2-SNAPSHOT</version>
+      <version>1.2</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
