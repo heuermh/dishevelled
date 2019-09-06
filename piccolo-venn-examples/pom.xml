@@ -4,13 +4,13 @@
   <parent>
     <groupId>org.dishevelled</groupId>
     <artifactId>dsh-parent</artifactId>
-    <version>18-SNAPSHOT</version>
+    <version>17</version>
     <relativePath>../parent/pom.xml</relativePath>
   </parent>
   <artifactId>dsh-piccolo-venn-examples</artifactId>
   <packaging>jar</packaging>
   <name>dishevelled.org piccolo-venn-examples</name>
-  <version>1.1-SNAPSHOT</version>
+  <version>1.1</version>
   <description>Piccolo2D venn diagram node examples.</description>
   <url>http://www.dishevelled.org/piccolo-venn-examples</url>
   <inceptionYear>2009</inceptionYear>
@@ -18,13 +18,14 @@
     <connection>scm:git:git@github.com:heuermh/dishevelled.git</connection>
     <developerConnection>scm:git:git@github.com:heuermh/dishevelled.git</developerConnection>
     <url>git@github.com:heuermh/dishevelled.git</url>
+    <tag>dsh-piccolo-venn-examples-1.1</tag>
   </scm>
   <dependencyManagement>
     <dependencies>
       <dependency>
         <groupId>org.dishevelled</groupId>
         <artifactId>dsh-piccolo-venn</artifactId>
-        <version>1.1-SNAPSHOT</version>
+        <version>1.1</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
