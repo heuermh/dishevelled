@@ -4,13 +4,13 @@
   <parent>
     <groupId>org.dishevelled</groupId>
     <artifactId>dsh-parent</artifactId>
-    <version>17</version>
+    <version>18-SNAPSHOT</version>
     <relativePath>../parent/pom.xml</relativePath>
   </parent>
   <artifactId>dsh-venn-app</artifactId>
   <packaging>jar</packaging>
   <name>dishevelled.org venn-app</name>
-  <version>1.0</version>
+  <version>1.1-SNAPSHOT</version>
   <description>App for venn and euler diagrams.</description>
   <url>http://www.dishevelled.org/venn-app</url>
   <inceptionYear>2013</inceptionYear>
@@ -18,7 +18,7 @@
     <connection>scm:git:git@github.com:heuermh/dishevelled.git</connection>
     <developerConnection>scm:git:git@github.com:heuermh/dishevelled.git</developerConnection>
     <url>git@github.com:heuermh/dishevelled.git</url>
-    <tag>dsh-venn-app-1.0</tag>
+    <tag>HEAD</tag>
   </scm>
   <build>
     <plugins>
