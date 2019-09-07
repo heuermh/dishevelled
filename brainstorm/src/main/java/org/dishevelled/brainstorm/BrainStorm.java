@@ -159,6 +159,11 @@ public final class BrainStorm
      * Create a new brain storm with the specified file name.
      *
      * @param fileName file name
+     * @param fontName font name
+     * @param fontSize font size
+     * @param rows number of rows to display
+     * @param backgroundColor background color
+     * @param textColor text color
      */
     public BrainStorm(final String fileName,
                       final String fontName,

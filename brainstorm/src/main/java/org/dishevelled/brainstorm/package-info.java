@@ -25,7 +25,8 @@
 /**
  * Brain storm, a fit of mental confusion or excitement.
  *
- * <ul>Feature list:
+ * Feature list:
+ * <ul>
  *   <li>full screen 2-line scrolling text editor with word-based line wrap</li>
  *   <li>font, font size</li>
  *   <li>foreground/text paint</li>
@@ -41,7 +42,8 @@
  *   <li>Cursor paint/transparency</li>
  * </ul>
  *
- * <ul>Command line options for:
+ * Command line options for:
+ * <ul>
  *   <li>font size</li>
  *   <li>font familiy</li>
  *   <li>number of lines to show (default 2)</li>
