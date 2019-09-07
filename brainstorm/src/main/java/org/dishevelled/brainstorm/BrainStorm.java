@@ -92,7 +92,6 @@ import org.dishevelled.commandline.argument.StringArgument;
  * Brain storm.
  *
  * @author  Michael Heuer
- * @version $Revision$ $Date$
  */
 public final class BrainStorm
     extends JPanel
@@ -257,7 +256,6 @@ public final class BrainStorm
         {
             if ((fontName != null) && (fontName.equalsIgnoreCase(actual)))
             {
-                System.out.println("found font " + actual);
                 return actual;
             }
         }
@@ -612,7 +610,7 @@ public final class BrainStorm
         }
         catch (CommandLineParseException e)
         {
-            Usage.usage("java BrainStorm [args]", e, commandLine, arguments, System.err);
+            Usage.usage("brain-storm [args]", e, commandLine, arguments, System.err);
         }
     }
 }
