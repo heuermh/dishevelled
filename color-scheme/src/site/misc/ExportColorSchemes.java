@@ -699,7 +699,6 @@ public final class ExportColorSchemes
         export(getDiscreteColorScheme("unambiguous", 6), "discrete-unambiguous-6");
         export(getDiscreteColorScheme("unambiguous", 7), "discrete-unambiguous-7");
         export(getDiscreteColorScheme("unambiguous", 8), "discrete-unambiguous-8");
-        */
 
         export(getDiscreteColorScheme("tableau", 3), "discrete-tableau-3");
         export(getDiscreteColorScheme("tableau", 4), "discrete-tableau-4");
@@ -718,6 +717,56 @@ public final class ExportColorSchemes
         export(getDiscreteColorScheme("category", 8), "discrete-category-8");
         export(getDiscreteColorScheme("category", 9), "discrete-category-9");
         export(getDiscreteColorScheme("category", 10), "discrete-category-10");
+        */
+
+        export(getDiscreteColorScheme("aaas", 3), "discrete-aaas-3");
+        export(getDiscreteColorScheme("aaas", 4), "discrete-aaas-4");
+        export(getDiscreteColorScheme("aaas", 5), "discrete-aaas-5");
+        export(getDiscreteColorScheme("aaas", 6), "discrete-aaas-6");
+        export(getDiscreteColorScheme("aaas", 7), "discrete-aaas-7");
+        export(getDiscreteColorScheme("aaas", 8), "discrete-aaas-8");
+        export(getDiscreteColorScheme("aaas", 9), "discrete-aaas-9");
+        export(getDiscreteColorScheme("aaas", 10), "discrete-aaas-10");
+
+        export(getDiscreteColorScheme("npg", 3), "discrete-npg-3");
+        export(getDiscreteColorScheme("npg", 4), "discrete-npg-4");
+        export(getDiscreteColorScheme("npg", 5), "discrete-npg-5");
+        export(getDiscreteColorScheme("npg", 6), "discrete-npg-6");
+        export(getDiscreteColorScheme("npg", 7), "discrete-npg-7");
+        export(getDiscreteColorScheme("npg", 8), "discrete-npg-8");
+        export(getDiscreteColorScheme("npg", 9), "discrete-npg-9");
+        export(getDiscreteColorScheme("npg", 10), "discrete-npg-10");
+
+        export(getDiscreteColorScheme("nejm", 3), "discrete-nejm-3");
+        export(getDiscreteColorScheme("nejm", 4), "discrete-nejm-4");
+        export(getDiscreteColorScheme("nejm", 5), "discrete-nejm-5");
+        export(getDiscreteColorScheme("nejm", 6), "discrete-nejm-6");
+        export(getDiscreteColorScheme("nejm", 7), "discrete-nejm-7");
+        export(getDiscreteColorScheme("nejm", 8), "discrete-nejm-8");
+
+        export(getDiscreteColorScheme("lancet", 3), "discrete-lancet-3");
+        export(getDiscreteColorScheme("lancet", 4), "discrete-lancet-4");
+        export(getDiscreteColorScheme("lancet", 5), "discrete-lancet-5");
+        export(getDiscreteColorScheme("lancet", 6), "discrete-lancet-6");
+        export(getDiscreteColorScheme("lancet", 7), "discrete-lancet-7");
+        export(getDiscreteColorScheme("lancet", 8), "discrete-lancet-8");
+        export(getDiscreteColorScheme("lancet", 9), "discrete-lancet-9");
+
+        export(getDiscreteColorScheme("jama", 3), "discrete-jama-3");
+        export(getDiscreteColorScheme("jama", 4), "discrete-jama-4");
+        export(getDiscreteColorScheme("jama", 5), "discrete-jama-5");
+        export(getDiscreteColorScheme("jama", 6), "discrete-jama-6");
+        export(getDiscreteColorScheme("jama", 7), "discrete-jama-7");
+
+        export(getDiscreteColorScheme("jco", 3), "discrete-jco-3");
+        export(getDiscreteColorScheme("jco", 4), "discrete-jco-4");
+        export(getDiscreteColorScheme("jco", 5), "discrete-jco-5");
+        export(getDiscreteColorScheme("jco", 6), "discrete-jco-6");
+        export(getDiscreteColorScheme("jco", 7), "discrete-jco-7");
+        export(getDiscreteColorScheme("jco", 8), "discrete-jco-8");
+        export(getDiscreteColorScheme("jco", 9), "discrete-jco-9");
+        export(getDiscreteColorScheme("jco", 10), "discrete-jco-10");
+        
     }
 
     private static final void export(final ColorScheme colorScheme, final String fileName)
