@@ -44,7 +44,7 @@ import org.apache.commons.io.IOUtils;
 
 import org.dishevelled.color.scheme.ColorFactory;
 import org.dishevelled.color.scheme.ColorScheme;
-import org.dishevelled.color.scheme.factory.DefaultColorFactory;
+import org.dishevelled.color.scheme.factory.CachingColorFactory;
 
 import org.xml.sax.XMLReader;
 import org.xml.sax.Attributes;
@@ -63,7 +63,7 @@ public final class ColorSchemes
     private static final Pattern COLOR_SCHEME = Pattern.compile("^([a-z]+)-([a-z0-9-]+)-([0-9]+)$");
 
     /** Color factory. */
-    private static final ColorFactory COLOR_FACTORY = new DefaultColorFactory();
+    private static final ColorFactory COLOR_FACTORY = new CachingColorFactory();
 
     /** Default alpha, 1.0f. @since 3.1. */
     static final float DEFAULT_ALPHA = 1.0f;
@@ -118,7 +118,8 @@ public final class ColorSchemes
      * @param alpha alpha to validate
      * @throws IllegalArgumentException if alpha is not in range [0.0, 1.0]
      */
-    static void validateAlpha(final float alpha) {
+    static void validateAlpha(final float alpha)
+    {
         if (alpha < 0.0 || alpha > 1.0)
         {
             throw new IllegalArgumentException("alpha " + alpha + " not in range [0.0, 1.0]");
@@ -149,7 +150,7 @@ public final class ColorSchemes
      * @since 3.1
      * @param name name
      * @param colors number of colors
-     * @param alpha alpha, in range [0.0, 1.0]
+     * @param alpha alpha in range [0.0, 1.0]
      * @return a discrete color scheme with the specified name and number of colors, or
      *    <code>null</code> if no such discrete color scheme exists
      */
@@ -217,7 +218,7 @@ public final class ColorSchemes
      * @since 3.1
      * @param name name
      * @param colors number of colors
-     * @param alpha, alpha in range [0.0, 1.0]
+     * @param alpha alpha in range [0.0, 1.0]
      * @return a continuous color scheme with the specified name and number of colors, or
      *    <code>null</code> if no such continuous color scheme exists
      */
@@ -391,7 +392,6 @@ public final class ColorSchemes
             int r = Integer.parseInt(attrs.getValue("red"));
             int g = Integer.parseInt(attrs.getValue("green"));
             int b = Integer.parseInt(attrs.getValue("blue"));
-            //float a = Float.parseFloat(attrs.getValue("alpha"));
             this.color = COLOR_FACTORY.createColor(r, g, b, alpha);
         }
 
