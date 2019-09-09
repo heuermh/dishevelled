@@ -24,7 +24,7 @@
 -->
 <color-scheme name="PiGy" type="qualitative">
   <colors>
-    <color red="237" blue="37" green="33" alpha="0.22"/>
+    <color red="237" blue="37" green="33"/>
     <color red="182" blue="175" green="177"/>
   </colors>
 </color-scheme>
