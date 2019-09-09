@@ -686,7 +686,6 @@ public final class ExportColorSchemes
         export(getDiscreteColorScheme("enceladus", 3, Interpolations.LINEAR), "discrete-enceladus-3");
         export(getContinuousColorScheme("europa", 3, Interpolations.LINEAR), "continuous-europa-3");
         export(getDiscreteColorScheme("europa", 3, Interpolations.LINEAR), "discrete-europa-3");
-        */
 
         export(getContinuousColorScheme("earth", 2), "continuous-earth-2");
         export(getDiscreteColorScheme("earth", 2), "discrete-earth-2");
@@ -694,6 +693,13 @@ public final class ExportColorSchemes
         export(getDiscreteColorScheme("earth", 3), "discrete-earth-3");
         export(getContinuousColorScheme("earth", 4), "continuous-earth-4");
         export(getDiscreteColorScheme("earth", 4), "discrete-earth-4");
+        */
+
+        export(getDiscreteColorScheme("unambiguous", 4), "discrete-unambiguous-4");
+        export(getDiscreteColorScheme("unambiguous", 5), "discrete-unambiguous-5");
+        export(getDiscreteColorScheme("unambiguous", 6), "discrete-unambiguous-6");
+        export(getDiscreteColorScheme("unambiguous", 7), "discrete-unambiguous-7");
+        export(getDiscreteColorScheme("unambiguous", 8), "discrete-unambiguous-8");
     }
 
     private static final void export(final ColorScheme colorScheme, final String fileName)
