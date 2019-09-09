@@ -102,13 +102,21 @@ See <a href="http://colorbrewer.org">http://colorbrewer.org</a> for further deta
   </ul>
   <li><a href="qualitative.html">Qualitative</a></li>
   <ul>
+    <li><a href="qualitative.html#aaas">AAAS</a></li>
     <li><a href="qualitative.html#accent">Accent</a></li>
     <li><a href="qualitative.html#bl-rd-bu-wh">BlRdBuWh</a></li>
     <li><a href="qualitative.html#bu-rd">BuRd</a></li>
+    <li><a href="qualitative.html#category">Category</a></li>
     <li><a href="qualitative.html#dark-2">Dark 2</a></li>
+    <li><a href="qualitative.html#earth">Earth</a></li>
     <li><a href="qualitative.html#gn-gy">GnGy</a></li>
-    <li><a href="qualitative.html#gw">Gw</a></li>
     <li><a href="qualitative.html#gut">Gut</a></li>
+    <li><a href="qualitative.html#gw">Gw</a></li>
+    <li><a href="qualitative.html#jama">JAMA</a></li>
+    <li><a href="qualitative.html#jco">JCO</a></li>
+    <li><a href="qualitative.html#lancet">Lancet</a></li>
+    <li><a href="qualitative.html#nejm">NEJM</a></li>
+    <li><a href="qualitative.html#npg">NPG</a></li>
     <li><a href="qualitative.html#paired">Paired</a></li>
     <li><a href="qualitative.html#pastel-1">Pastel 1</a></li>
     <li><a href="qualitative.html#pastel-2">Pastel 2</a></li>
@@ -120,6 +128,8 @@ See <a href="http://colorbrewer.org">http://colorbrewer.org</a> for further deta
     <li><a href="qualitative.html#spectral">Spectral</a></li>
     <li><a href="qualitative.html#steel">Steel</a></li>
     <li><a href="qualitative.html#syn">Syn</a></li>
+    <li><a href="qualitative.html#tableau">Tableau</a></li>
+    <li><a href="qualitative.html#unambiguous">Unambiguous</a></li>
   </ul>
 </ul>
 </section>
