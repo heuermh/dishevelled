@@ -717,7 +717,6 @@ public final class ExportColorSchemes
         export(getDiscreteColorScheme("category", 8), "discrete-category-8");
         export(getDiscreteColorScheme("category", 9), "discrete-category-9");
         export(getDiscreteColorScheme("category", 10), "discrete-category-10");
-        */
 
         export(getDiscreteColorScheme("aaas", 3), "discrete-aaas-3");
         export(getDiscreteColorScheme("aaas", 4), "discrete-aaas-4");
@@ -766,7 +765,17 @@ public final class ExportColorSchemes
         export(getDiscreteColorScheme("jco", 8), "discrete-jco-8");
         export(getDiscreteColorScheme("jco", 9), "discrete-jco-9");
         export(getDiscreteColorScheme("jco", 10), "discrete-jco-10");
-        
+        */
+
+        export(getContinuousColorScheme("inferno", 256), "continuous-inferno-256");
+        export(getContinuousColorScheme("magma", 256), "continuous-magma-256");
+        export(getContinuousColorScheme("plasma", 256), "continuous-plasma-256");
+        export(getContinuousColorScheme("viridis", 256), "continuous-viridis-256");
+
+        export(getDiscreteColorScheme("inferno", 256), "discrete-inferno-256");
+        export(getDiscreteColorScheme("magma", 256), "discrete-magma-256");
+        export(getDiscreteColorScheme("plasma", 256), "discrete-plasma-256");
+        export(getDiscreteColorScheme("viridis", 256), "discrete-viridis-256");
     }
 
     private static final void export(final ColorScheme colorScheme, final String fileName)

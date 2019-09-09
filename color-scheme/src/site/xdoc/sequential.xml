@@ -165,6 +165,14 @@ See <a href="http://colorbrewer.org">http://colorbrewer.org</a> for further deta
 <p><object data="images/continuous-greys-9.svg" type="image/svg+xml" width="810" height="80"></object></p>
 <p><object data="images/discrete-greys-9.svg" type="image/svg+xml" width="810" height="80"></object></p>
 </subsection>
+<subsection name="Inferno" id="inferno">
+<p><object data="images/continuous-inferno-256.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-inferno-256.svg" type="image/svg+xml" width="810" height="80"></object></p>
+</subsection>
+<subsection name="Magma" id="magma">
+<p><object data="images/continuous-magma-256.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-magma-256.svg" type="image/svg+xml" width="810" height="80"></object></p>
+</subsection>
 <subsection name="OrRd" id="or-rd">
 <p><object data="images/continuous-or-rd-3.svg" type="image/svg+xml" width="810" height="80"></object></p>
 <p><object data="images/discrete-or-rd-3.svg" type="image/svg+xml" width="810" height="80"></object></p>
@@ -196,6 +204,10 @@ See <a href="http://colorbrewer.org">http://colorbrewer.org</a> for further deta
 <p><object data="images/discrete-oranges-8.svg" type="image/svg+xml" width="810" height="80"></object></p>
 <p><object data="images/continuous-oranges-9.svg" type="image/svg+xml" width="810" height="80"></object></p>
 <p><object data="images/discrete-oranges-9.svg" type="image/svg+xml" width="810" height="80"></object></p>
+</subsection>
+<subsection name="Plasma" id="plasma">
+<p><object data="images/continuous-plasma-256.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-plasma-256.svg" type="image/svg+xml" width="810" height="80"></object></p>
 </subsection>
 <subsection name="PuBu" id="pu-bu">
 <p><object data="images/continuous-pu-bu-3.svg" type="image/svg+xml" width="810" height="80"></object></p>
@@ -292,6 +304,10 @@ See <a href="http://colorbrewer.org">http://colorbrewer.org</a> for further deta
 <p><object data="images/discrete-reds-8.svg" type="image/svg+xml" width="810" height="80"></object></p>
 <p><object data="images/continuous-reds-9.svg" type="image/svg+xml" width="810" height="80"></object></p>
 <p><object data="images/discrete-reds-9.svg" type="image/svg+xml" width="810" height="80"></object></p>
+</subsection>
+<subsection name="Viridis" id="viridis">
+<p><object data="images/continuous-viridis-256.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-viridis-256.svg" type="image/svg+xml" width="810" height="80"></object></p>
 </subsection>
 <subsection name="WhBl" id="wh-bl">
 <p><object data="images/continuous-wh-bl-2.svg" type="image/svg+xml" width="810" height="80"></object></p>

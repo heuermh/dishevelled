@@ -1,0 +1,284 @@
+<?xml version="1.0"?>
+<!--
+
+    dsh-color-scheme  Color schemes.
+    Copyright (c) 2009-2019 held jointly by the individual authors.
+
+    This library is free software; you can redistribute it and/or modify it
+    under the terms of the GNU Lesser General Public License as published
+    by the Free Software Foundation; either version 3 of the License, or (at
+    your option) any later version.
+
+    This library is distributed in the hope that it will be useful, but WITHOUT
+    ANY WARRANTY; with out even the implied warranty of MERCHANTABILITY or
+    FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
+    License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with this library;  if not, write to the Free Software Foundation,
+    Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307  USA.
+
+    > http://www.fsf.org/licensing/licenses/lgpl.html
+    > http://www.opensource.org/licenses/lgpl-license.php
+
+-->
+<color-scheme name="Magma" type="sequential">
+  <colors>
+    <color red="0" green="0" blue="4"/>
+    <color red="1" green="0" blue="5"/>
+    <color red="1" green="1" blue="6"/>
+    <color red="1" green="1" blue="8"/>
+    <color red="2" green="1" blue="9"/>
+    <color red="2" green="2" blue="11"/>
+    <color red="2" green="2" blue="13"/>
+    <color red="3" green="3" blue="15"/>
+    <color red="3" green="3" blue="18"/>
+    <color red="4" green="4" blue="20"/>
+    <color red="5" green="4" blue="22"/>
+    <color red="6" green="5" blue="24"/>
+    <color red="6" green="5" blue="26"/>
+    <color red="7" green="6" blue="28"/>
+    <color red="8" green="7" blue="30"/>
+    <color red="9" green="7" blue="32"/>
+    <color red="10" green="8" blue="34"/>
+    <color red="11" green="9" blue="36"/>
+    <color red="12" green="9" blue="38"/>
+    <color red="13" green="10" blue="41"/>
+    <color red="14" green="11" blue="43"/>
+    <color red="16" green="11" blue="45"/>
+    <color red="17" green="12" blue="47"/>
+    <color red="18" green="13" blue="49"/>
+    <color red="19" green="13" blue="52"/>
+    <color red="20" green="14" blue="54"/>
+    <color red="21" green="14" blue="56"/>
+    <color red="22" green="15" blue="59"/>
+    <color red="24" green="15" blue="61"/>
+    <color red="25" green="16" blue="63"/>
+    <color red="26" green="16" blue="66"/>
+    <color red="28" green="16" blue="68"/>
+    <color red="29" green="17" blue="71"/>
+    <color red="30" green="17" blue="73"/>
+    <color red="32" green="17" blue="75"/>
+    <color red="33" green="17" blue="78"/>
+    <color red="34" green="17" blue="80"/>
+    <color red="36" green="18" blue="83"/>
+    <color red="37" green="18" blue="85"/>
+    <color red="39" green="18" blue="88"/>
+    <color red="41" green="17" blue="90"/>
+    <color red="42" green="17" blue="92"/>
+    <color red="44" green="17" blue="95"/>
+    <color red="45" green="17" blue="97"/>
+    <color red="47" green="17" blue="99"/>
+    <color red="49" green="17" blue="101"/>
+    <color red="51" green="16" blue="103"/>
+    <color red="52" green="16" blue="105"/>
+    <color red="54" green="16" blue="107"/>
+    <color red="56" green="16" blue="108"/>
+    <color red="57" green="15" blue="110"/>
+    <color red="59" green="15" blue="112"/>
+    <color red="61" green="15" blue="113"/>
+    <color red="63" green="15" blue="114"/>
+    <color red="64" green="15" blue="116"/>
+    <color red="66" green="15" blue="117"/>
+    <color red="68" green="15" blue="118"/>
+    <color red="69" green="16" blue="119"/>
+    <color red="71" green="16" blue="120"/>
+    <color red="73" green="16" blue="120"/>
+    <color red="74" green="16" blue="121"/>
+    <color red="76" green="17" blue="122"/>
+    <color red="78" green="17" blue="123"/>
+    <color red="79" green="18" blue="123"/>
+    <color red="81" green="18" blue="124"/>
+    <color red="82" green="19" blue="124"/>
+    <color red="84" green="19" blue="125"/>
+    <color red="86" green="20" blue="125"/>
+    <color red="87" green="21" blue="126"/>
+    <color red="89" green="21" blue="126"/>
+    <color red="90" green="22" blue="126"/>
+    <color red="92" green="22" blue="127"/>
+    <color red="93" green="23" blue="127"/>
+    <color red="95" green="24" blue="127"/>
+    <color red="96" green="24" blue="128"/>
+    <color red="98" green="25" blue="128"/>
+    <color red="100" green="26" blue="128"/>
+    <color red="101" green="26" blue="128"/>
+    <color red="103" green="27" blue="128"/>
+    <color red="104" green="28" blue="129"/>
+    <color red="106" green="28" blue="129"/>
+    <color red="107" green="29" blue="129"/>
+    <color red="109" green="29" blue="129"/>
+    <color red="110" green="30" blue="129"/>
+    <color red="112" green="31" blue="129"/>
+    <color red="114" green="31" blue="129"/>
+    <color red="115" green="32" blue="129"/>
+    <color red="117" green="33" blue="129"/>
+    <color red="118" green="33" blue="129"/>
+    <color red="120" green="34" blue="129"/>
+    <color red="121" green="34" blue="130"/>
+    <color red="123" green="35" blue="130"/>
+    <color red="124" green="35" blue="130"/>
+    <color red="126" green="36" blue="130"/>
+    <color red="128" green="37" blue="130"/>
+    <color red="129" green="37" blue="129"/>
+    <color red="131" green="38" blue="129"/>
+    <color red="132" green="38" blue="129"/>
+    <color red="134" green="39" blue="129"/>
+    <color red="136" green="39" blue="129"/>
+    <color red="137" green="40" blue="129"/>
+    <color red="139" green="41" blue="129"/>
+    <color red="140" green="41" blue="129"/>
+    <color red="142" green="42" blue="129"/>
+    <color red="144" green="42" blue="129"/>
+    <color red="145" green="43" blue="129"/>
+    <color red="147" green="43" blue="128"/>
+    <color red="148" green="44" blue="128"/>
+    <color red="150" green="44" blue="128"/>
+    <color red="152" green="45" blue="128"/>
+    <color red="153" green="45" blue="128"/>
+    <color red="155" green="46" blue="127"/>
+    <color red="156" green="46" blue="127"/>
+    <color red="158" green="47" blue="127"/>
+    <color red="160" green="47" blue="127"/>
+    <color red="161" green="48" blue="126"/>
+    <color red="163" green="48" blue="126"/>
+    <color red="165" green="49" blue="126"/>
+    <color red="166" green="49" blue="125"/>
+    <color red="168" green="50" blue="125"/>
+    <color red="170" green="51" blue="125"/>
+    <color red="171" green="51" blue="124"/>
+    <color red="173" green="52" blue="124"/>
+    <color red="174" green="52" blue="123"/>
+    <color red="176" green="53" blue="123"/>
+    <color red="178" green="53" blue="123"/>
+    <color red="179" green="54" blue="122"/>
+    <color red="181" green="54" blue="122"/>
+    <color red="183" green="55" blue="121"/>
+    <color red="184" green="55" blue="121"/>
+    <color red="186" green="56" blue="120"/>
+    <color red="188" green="57" blue="120"/>
+    <color red="189" green="57" blue="119"/>
+    <color red="191" green="58" blue="119"/>
+    <color red="192" green="58" blue="118"/>
+    <color red="194" green="59" blue="117"/>
+    <color red="196" green="60" blue="117"/>
+    <color red="197" green="60" blue="116"/>
+    <color red="199" green="61" blue="115"/>
+    <color red="200" green="62" blue="115"/>
+    <color red="202" green="62" blue="114"/>
+    <color red="204" green="63" blue="113"/>
+    <color red="205" green="64" blue="113"/>
+    <color red="207" green="64" blue="112"/>
+    <color red="208" green="65" blue="111"/>
+    <color red="210" green="66" blue="111"/>
+    <color red="211" green="67" blue="110"/>
+    <color red="213" green="68" blue="109"/>
+    <color red="214" green="69" blue="108"/>
+    <color red="216" green="69" blue="108"/>
+    <color red="217" green="70" blue="107"/>
+    <color red="219" green="71" blue="106"/>
+    <color red="220" green="72" blue="105"/>
+    <color red="222" green="73" blue="104"/>
+    <color red="223" green="74" blue="104"/>
+    <color red="224" green="76" blue="103"/>
+    <color red="226" green="77" blue="102"/>
+    <color red="227" green="78" blue="101"/>
+    <color red="228" green="79" blue="100"/>
+    <color red="229" green="80" blue="100"/>
+    <color red="231" green="82" blue="99"/>
+    <color red="232" green="83" blue="98"/>
+    <color red="233" green="84" blue="98"/>
+    <color red="234" green="86" blue="97"/>
+    <color red="235" green="87" blue="96"/>
+    <color red="236" green="88" blue="96"/>
+    <color red="237" green="90" blue="95"/>
+    <color red="238" green="91" blue="94"/>
+    <color red="239" green="93" blue="94"/>
+    <color red="240" green="95" blue="94"/>
+    <color red="241" green="96" blue="93"/>
+    <color red="242" green="98" blue="93"/>
+    <color red="242" green="100" blue="92"/>
+    <color red="243" green="101" blue="92"/>
+    <color red="244" green="103" blue="92"/>
+    <color red="244" green="105" blue="92"/>
+    <color red="245" green="107" blue="92"/>
+    <color red="246" green="108" blue="92"/>
+    <color red="246" green="110" blue="92"/>
+    <color red="247" green="112" blue="92"/>
+    <color red="247" green="114" blue="92"/>
+    <color red="248" green="116" blue="92"/>
+    <color red="248" green="118" blue="92"/>
+    <color red="249" green="120" blue="93"/>
+    <color red="249" green="121" blue="93"/>
+    <color red="249" green="123" blue="93"/>
+    <color red="250" green="125" blue="94"/>
+    <color red="250" green="127" blue="94"/>
+    <color red="250" green="129" blue="95"/>
+    <color red="251" green="131" blue="95"/>
+    <color red="251" green="133" blue="96"/>
+    <color red="251" green="135" blue="97"/>
+    <color red="252" green="137" blue="97"/>
+    <color red="252" green="138" blue="98"/>
+    <color red="252" green="140" blue="99"/>
+    <color red="252" green="142" blue="100"/>
+    <color red="252" green="144" blue="101"/>
+    <color red="253" green="146" blue="102"/>
+    <color red="253" green="148" blue="103"/>
+    <color red="253" green="150" blue="104"/>
+    <color red="253" green="152" blue="105"/>
+    <color red="253" green="154" blue="106"/>
+    <color red="253" green="155" blue="107"/>
+    <color red="254" green="157" blue="108"/>
+    <color red="254" green="159" blue="109"/>
+    <color red="254" green="161" blue="110"/>
+    <color red="254" green="163" blue="111"/>
+    <color red="254" green="165" blue="113"/>
+    <color red="254" green="167" blue="114"/>
+    <color red="254" green="169" blue="115"/>
+    <color red="254" green="170" blue="116"/>
+    <color red="254" green="172" blue="118"/>
+    <color red="254" green="174" blue="119"/>
+    <color red="254" green="176" blue="120"/>
+    <color red="254" green="178" blue="122"/>
+    <color red="254" green="180" blue="123"/>
+    <color red="254" green="182" blue="124"/>
+    <color red="254" green="183" blue="126"/>
+    <color red="254" green="185" blue="127"/>
+    <color red="254" green="187" blue="129"/>
+    <color red="254" green="189" blue="130"/>
+    <color red="254" green="191" blue="132"/>
+    <color red="254" green="193" blue="133"/>
+    <color red="254" green="194" blue="135"/>
+    <color red="254" green="196" blue="136"/>
+    <color red="254" green="198" blue="138"/>
+    <color red="254" green="200" blue="140"/>
+    <color red="254" green="202" blue="141"/>
+    <color red="254" green="204" blue="143"/>
+    <color red="254" green="205" blue="144"/>
+    <color red="254" green="207" blue="146"/>
+    <color red="254" green="209" blue="148"/>
+    <color red="254" green="211" blue="149"/>
+    <color red="254" green="213" blue="151"/>
+    <color red="254" green="215" blue="153"/>
+    <color red="254" green="216" blue="154"/>
+    <color red="253" green="218" blue="156"/>
+    <color red="253" green="220" blue="158"/>
+    <color red="253" green="222" blue="160"/>
+    <color red="253" green="224" blue="161"/>
+    <color red="253" green="226" blue="163"/>
+    <color red="253" green="227" blue="165"/>
+    <color red="253" green="229" blue="167"/>
+    <color red="253" green="231" blue="169"/>
+    <color red="253" green="233" blue="170"/>
+    <color red="253" green="235" blue="172"/>
+    <color red="252" green="236" blue="174"/>
+    <color red="252" green="238" blue="176"/>
+    <color red="252" green="240" blue="178"/>
+    <color red="252" green="242" blue="180"/>
+    <color red="252" green="244" blue="182"/>
+    <color red="252" green="246" blue="184"/>
+    <color red="252" green="247" blue="185"/>
+    <color red="252" green="249" blue="187"/>
+    <color red="252" green="251" blue="189"/>
+    <color red="252" green="253" blue="191"/>
+  </colors>
+</color-scheme>
