@@ -71,6 +71,16 @@ See <a href="http://colorbrewer.org">http://colorbrewer.org</a> for further deta
 <subsection name="BuRd" id="bu-rd">
 <p><object data="images/discrete-bu-rd-2.svg" type="image/svg+xml" width="810" height="80"></object></p>
 </subsection>
+<subsection name="Category" id="category">
+<p><object data="images/discrete-category-3.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-category-4.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-category-5.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-category-6.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-category-7.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-category-8.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-category-9.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-category-10.svg" type="image/svg+xml" width="810" height="80"></object></p>
+</subsection>
 <subsection name="Dark 2" id="dark-2">
 <p><object data="images/discrete-dark-2-3.svg" type="image/svg+xml" width="810" height="80"></object></p>
 <p><object data="images/discrete-dark-2-4.svg" type="image/svg+xml" width="810" height="80"></object></p>
@@ -185,6 +195,16 @@ See <a href="http://colorbrewer.org">http://colorbrewer.org</a> for further deta
 <p><object data="images/discrete-syn-4.svg" type="image/svg+xml" width="810" height="80"></object></p>
 <p><object data="images/discrete-syn-5.svg" type="image/svg+xml" width="810" height="80"></object></p>
 <p><object data="images/discrete-syn-6.svg" type="image/svg+xml" width="810" height="80"></object></p>
+</subsection>
+<subsection name="Tableau" id="tableau">
+<p><object data="images/discrete-tableau-3.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-tableau-4.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-tableau-5.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-tableau-6.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-tableau-7.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-tableau-8.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-tableau-9.svg" type="image/svg+xml" width="810" height="80"></object></p>
+<p><object data="images/discrete-tableau-10.svg" type="image/svg+xml" width="810" height="80"></object></p>
 </subsection>
 <subsection name="Unambiguous" id="unambiguous">
 <p><object data="images/discrete-unambiguous-4.svg" type="image/svg+xml" width="810" height="80"></object></p>

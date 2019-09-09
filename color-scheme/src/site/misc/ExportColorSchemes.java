@@ -693,13 +693,31 @@ public final class ExportColorSchemes
         export(getDiscreteColorScheme("earth", 3), "discrete-earth-3");
         export(getContinuousColorScheme("earth", 4), "continuous-earth-4");
         export(getDiscreteColorScheme("earth", 4), "discrete-earth-4");
-        */
 
         export(getDiscreteColorScheme("unambiguous", 4), "discrete-unambiguous-4");
         export(getDiscreteColorScheme("unambiguous", 5), "discrete-unambiguous-5");
         export(getDiscreteColorScheme("unambiguous", 6), "discrete-unambiguous-6");
         export(getDiscreteColorScheme("unambiguous", 7), "discrete-unambiguous-7");
         export(getDiscreteColorScheme("unambiguous", 8), "discrete-unambiguous-8");
+        */
+
+        export(getDiscreteColorScheme("tableau", 3), "discrete-tableau-3");
+        export(getDiscreteColorScheme("tableau", 4), "discrete-tableau-4");
+        export(getDiscreteColorScheme("tableau", 5), "discrete-tableau-5");
+        export(getDiscreteColorScheme("tableau", 6), "discrete-tableau-6");
+        export(getDiscreteColorScheme("tableau", 7), "discrete-tableau-7");
+        export(getDiscreteColorScheme("tableau", 8), "discrete-tableau-8");
+        export(getDiscreteColorScheme("tableau", 9), "discrete-tableau-9");
+        export(getDiscreteColorScheme("tableau", 10), "discrete-tableau-10");
+
+        export(getDiscreteColorScheme("category", 3), "discrete-category-3");
+        export(getDiscreteColorScheme("category", 4), "discrete-category-4");
+        export(getDiscreteColorScheme("category", 5), "discrete-category-5");
+        export(getDiscreteColorScheme("category", 6), "discrete-category-6");
+        export(getDiscreteColorScheme("category", 7), "discrete-category-7");
+        export(getDiscreteColorScheme("category", 8), "discrete-category-8");
+        export(getDiscreteColorScheme("category", 9), "discrete-category-9");
+        export(getDiscreteColorScheme("category", 10), "discrete-category-10");
     }
 
     private static final void export(final ColorScheme colorScheme, final String fileName)
