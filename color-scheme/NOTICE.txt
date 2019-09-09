@@ -20,3 +20,17 @@ Alternately, this acknowledgment may appear in the software itself, if and where
 4. The name "ColorBrewer" must not be used to endorse or promote products derived from this software without prior written permission. 
 For written permission, please contact Cynthia Brewer at cbrewer@psu.edu.
 5. Products derived from this software may not be called "ColorBrewer", nor may "ColorBrewer" appear in their name, without prior written permission of Cynthia Brewer.
+
+---
+
+aaas, jama, jco, lancet, nejm, npg qualitative color schemes from
+
+Scientific journal and sci-fi themed color palettes for ggplot2
+https://github.com/nanxstats/ggsci
+
+---
+
+category, tableau qualitative color schemes from
+
+Sequential, diverging and categorical color scales.
+https://github.com/d3/d3-scale-chromatic
