@@ -2,7 +2,7 @@
 <!--
 
     dsh-color-scheme  Color schemes.
-    Copyright (c) 2009-2016 held jointly by the individual authors.
+    Copyright (c) 2009-2019 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
@@ -33,7 +33,7 @@
 <p>
 dishevelled.org <b>color-scheme</b> provides color schemes, a means of mapping
 a range of numerical values to a discrete or continuous gradient of colors.  The color-scheme
-library requires java version 1.5 or later.
+library requires java version 1.8 or later.
 </p>
 </section>
 
@@ -46,15 +46,15 @@ for a range of input values, <code>0.0d</code> to <code>1.0d</code>.
 
 <p>A continuous color scheme interpolates colors for all intermediate values.</p>
 <source>
-// continuous blues color scheme, with four colors, values interpolated linearly
-<a href="apidocs/org/dishevelled/colorscheme/ColorScheme.html">ColorScheme</a> continuousBlues4 = <a href="apidocs/org/dishevelled/colorscheme/impl/ColorSchemes.html">ColorSchemes</a>.getContinuousColorScheme("blues", 4, Interpolations.LINEAR);
+// continuous blues color scheme, with four colors
+<a href="apidocs/org/dishevelled/colorscheme/ColorScheme.html">ColorScheme</a> continuousBlues4 = <a href="apidocs/org/dishevelled/colorscheme/impl/ColorSchemes.html">ColorSchemes</a>.getContinuousColorScheme("blues", 4);
 </source>
 <p><object data="images/continuous-blues-4.svg" type="image/svg+xml" width="810" height="80"></object></p>
 
 <p>A discrete color scheme provides only those colors defined in the color scheme.</p>
 <source>
-// discrete blues color scheme, with seven colors, values interpolated linearly
-<a href="apidocs/org/dishevelled/colorscheme/ColorScheme.html">ColorScheme</a> discreteBlues7 = <a href="apidocs/org/dishevelled/colorscheme/impl/ColorSchemes.html">ColorSchemes</a>.getDiscreteColorScheme("blues", 7, Interpolations.LINEAR);
+// discrete blues color scheme, with seven colors
+<a href="apidocs/org/dishevelled/colorscheme/ColorScheme.html">ColorScheme</a> discreteBlues7 = <a href="apidocs/org/dishevelled/colorscheme/impl/ColorSchemes.html">ColorSchemes</a>.getDiscreteColorScheme("blues", 7);
 </source>
 <p><object data="images/discrete-blues-7.svg" type="image/svg+xml" width="810" height="80"></object></p>
 

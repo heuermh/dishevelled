@@ -27,12 +27,12 @@ For written permission, please contact Cynthia Brewer at cbrewer@psu.edu.
 -->
 <color-scheme name="PiYG" type="divergent">
   <colors>
-    <color red="197" blue="125" green="27" alpha="1.0"/>
-    <color red="233" blue="201" green="163" alpha="1.0"/>
-    <color red="253" blue="239" green="224" alpha="1.0"/>
-    <color red="247" blue="247" green="247" alpha="1.0"/>
-    <color red="230" blue="208" green="245" alpha="1.0"/>
-    <color red="161" blue="106" green="215" alpha="1.0"/>
-    <color red="77" blue="33" green="146" alpha="1.0"/>
+    <color red="197" blue="125" green="27"/>
+    <color red="233" blue="201" green="163"/>
+    <color red="253" blue="239" green="224"/>
+    <color red="247" blue="247" green="247"/>
+    <color red="230" blue="208" green="245"/>
+    <color red="161" blue="106" green="215"/>
+    <color red="77" blue="33" green="146"/>
   </colors>
 </color-scheme>

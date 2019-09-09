@@ -2,7 +2,7 @@
 <!--
 
     dsh-color-scheme  Color schemes.
-    Copyright (c) 2009-2014 held jointly by the individual authors.
+    Copyright (c) 2009-2019 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
@@ -24,8 +24,8 @@
 -->
 <color-scheme name="Earth" type="qualitative">
   <colors>
-    <color red="136" blue="64" green="196" alpha="1.0"/>
-    <color red="110" blue="25" green="66" alpha="1.0"/>
-    <color red="96" blue="162" green="193" alpha="1.0"/>
+    <color red="136" blue="64" green="196"/>
+    <color red="110" blue="25" green="66"/>
+    <color red="96" blue="162" green="193"/>
   </colors>
 </color-scheme>

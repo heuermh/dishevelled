@@ -27,15 +27,15 @@ For written permission, please contact Cynthia Brewer at cbrewer@psu.edu.
 -->
 <color-scheme name="PRGn" type="divergent">
   <colors>
-    <color red="64" blue="75" green="0" alpha="1.0"/>
-    <color red="118" blue="131" green="42" alpha="1.0"/>
-    <color red="153" blue="171" green="112" alpha="1.0"/>
-    <color red="194" blue="207" green="165" alpha="1.0"/>
-    <color red="231" blue="232" green="212" alpha="1.0"/>
-    <color red="217" blue="211" green="240" alpha="1.0"/>
-    <color red="166" blue="160" green="219" alpha="1.0"/>
-    <color red="90" blue="97" green="174" alpha="1.0"/>
-    <color red="27" blue="55" green="120" alpha="1.0"/>
-    <color red="0" blue="27" green="68" alpha="1.0"/>
+    <color red="64" blue="75" green="0"/>
+    <color red="118" blue="131" green="42"/>
+    <color red="153" blue="171" green="112"/>
+    <color red="194" blue="207" green="165"/>
+    <color red="231" blue="232" green="212"/>
+    <color red="217" blue="211" green="240"/>
+    <color red="166" blue="160" green="219"/>
+    <color red="90" blue="97" green="174"/>
+    <color red="27" blue="55" green="120"/>
+    <color red="0" blue="27" green="68"/>
   </colors>
 </color-scheme>

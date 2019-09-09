@@ -2,7 +2,7 @@
 <!--
 
     dsh-color-scheme  Color schemes.
-    Copyright (c) 2009-2014 held jointly by the individual authors.
+    Copyright (c) 2009-2019 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
@@ -24,14 +24,14 @@
 -->
 <color-scheme name="Gut" type="qualitative">
   <colors>
-    <color red="53" green="132" blue="147" alpha="1.0"/>
-    <color red="118" green="99" blue="145" alpha="1.0"/>
-    <color red="138" green="160" blue="84" alpha="1.0"/>
-    <color red="164" green="190" blue="100" alpha="1.0"/>
-    <color red="200" green="98" blue="93" alpha="1.0"/>
-    <color red="176" green="162" blue="196" alpha="1.0"/>
-    <color red="229" green="195" blue="194" alpha="1.0"/>
-    <color red="214" green="227" blue="196" alpha="1.0"/>
-    <color red="207" green="200" blue="219" alpha="1.0"/>
+    <color red="53" green="132" blue="147"/>
+    <color red="118" green="99" blue="145"/>
+    <color red="138" green="160" blue="84"/>
+    <color red="164" green="190" blue="100"/>
+    <color red="200" green="98" blue="93"/>
+    <color red="176" green="162" blue="196"/>
+    <color red="229" green="195" blue="194"/>
+    <color red="214" green="227" blue="196"/>
+    <color red="207" green="200" blue="219"/>
   </colors>
 </color-scheme>

@@ -2,7 +2,7 @@
 <!--
 
     dsh-color-scheme  Color schemes.
-    Copyright (c) 2009-2014 held jointly by the individual authors.
+    Copyright (c) 2009-2019 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
@@ -24,9 +24,9 @@
 -->
 <color-scheme name="BlRdBuWh" type="sequential">
   <colors>
-    <color red="0" blue="0" green="0" alpha="1.0"/>
-    <color red="255" blue="0" green="0" alpha="1.0"/>
-    <color red="0" blue="255" green="0" alpha="1.0"/>
-    <color red="255" blue="255" green="255" alpha="1.0"/>
+    <color red="0" blue="0" green="0"/>
+    <color red="255" blue="0" green="0"/>
+    <color red="0" blue="255" green="0"/>
+    <color red="255" blue="255" green="255"/>
   </colors>
 </color-scheme>

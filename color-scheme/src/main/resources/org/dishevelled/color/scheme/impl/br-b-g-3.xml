@@ -27,8 +27,8 @@ For written permission, please contact Cynthia Brewer at cbrewer@psu.edu.
 -->
 <color-scheme name="BrBG" type="divergent">
   <colors>
-    <color red="216" blue="101" green="179" alpha="1.0"/>
-    <color red="245" blue="245" green="245" alpha="1.0"/>
-    <color red="90" blue="172" green="180" alpha="1.0"/>
+    <color red="216" blue="101" green="179"/>
+    <color red="245" blue="245" green="245"/>
+    <color red="90" blue="172" green="180"/>
   </colors>
 </color-scheme>

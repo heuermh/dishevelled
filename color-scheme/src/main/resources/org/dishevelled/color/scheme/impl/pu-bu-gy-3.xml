@@ -26,6 +26,6 @@
   <colors>
     <color red="61" blue="167" green="75" alpha="0.25"/>
     <color red="122" blue="220" green="211" alpha="0.25"/>
-    <color red="182" blue="175" green="177" alpha="1.0"/>
+    <color red="182" blue="175" green="177"/>
   </colors>
 </color-scheme>

@@ -27,11 +27,11 @@ For written permission, please contact Cynthia Brewer at cbrewer@psu.edu.
 -->
 <color-scheme name="Purples" type="sequential">
   <colors>
-    <color red="242" blue="247" green="240" alpha="1.0"/>
-    <color red="218" blue="235" green="218" alpha="1.0"/>
-    <color red="188" blue="220" green="189" alpha="1.0"/>
-    <color red="158" blue="200" green="154" alpha="1.0"/>
-    <color red="117" blue="177" green="107" alpha="1.0"/>
-    <color red="84" blue="143" green="39" alpha="1.0"/>
+    <color red="242" blue="247" green="240"/>
+    <color red="218" blue="235" green="218"/>
+    <color red="188" blue="220" green="189"/>
+    <color red="158" blue="200" green="154"/>
+    <color red="117" blue="177" green="107"/>
+    <color red="84" blue="143" green="39"/>
   </colors>
 </color-scheme>

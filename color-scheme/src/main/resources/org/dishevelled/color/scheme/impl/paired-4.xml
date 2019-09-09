@@ -27,9 +27,9 @@ For written permission, please contact Cynthia Brewer at cbrewer@psu.edu.
 -->
 <color-scheme name="Paired" type="qualitative">
   <colors>
-    <color red="166" blue="227" green="206" alpha="1.0"/>
-    <color red="31" blue="180" green="120" alpha="1.0"/>
-    <color red="178" blue="138" green="223" alpha="1.0"/>
-    <color red="51" blue="44" green="160" alpha="1.0"/>
+    <color red="166" blue="227" green="206"/>
+    <color red="31" blue="180" green="120"/>
+    <color red="178" blue="138" green="223"/>
+    <color red="51" blue="44" green="160"/>
   </colors>
 </color-scheme>

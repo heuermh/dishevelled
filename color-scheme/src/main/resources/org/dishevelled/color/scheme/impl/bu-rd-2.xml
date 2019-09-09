@@ -27,7 +27,7 @@ For written permission, please contact Cynthia Brewer at cbrewer@psu.edu.
 -->
 <color-scheme name="BuRd" type="qualitative">
   <colors>
-    <color red="115" blue="186" green="143" alpha="1.0"/>
-    <color red="192" blue="103" green="115" alpha="1.0"/>
+    <color red="115" blue="186" green="143"/>
+    <color red="192" blue="103" green="115"/>
   </colors>
 </color-scheme>

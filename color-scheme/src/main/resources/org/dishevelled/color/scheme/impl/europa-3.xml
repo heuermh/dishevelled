@@ -1,7 +1,7 @@
 <!--
 
     dsh-color-scheme  Color schemes.
-    Copyright (c) 2009-2014 held jointly by the individual authors.
+    Copyright (c) 2009-2019 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
@@ -23,8 +23,8 @@
 -->
 <color-scheme name="Europa" type="sequential">
   <colors>
-    <color red="12" blue="34" green="15" alpha="1.0"/>
-    <color red="42" blue="165" green="80" alpha="1.0"/>
-    <color red="235" blue="254" green="247" alpha="1.0"/>
+    <color red="12" blue="34" green="15"/>
+    <color red="42" blue="165" green="80"/>
+    <color red="235" blue="254" green="247"/>
   </colors>
 </color-scheme>

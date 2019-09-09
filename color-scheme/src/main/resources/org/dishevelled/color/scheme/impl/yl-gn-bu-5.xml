@@ -27,10 +27,10 @@ For written permission, please contact Cynthia Brewer at cbrewer@psu.edu.
 -->
 <color-scheme name="YlGnBu" type="sequential">
   <colors>
-    <color red="255" blue="204" green="255" alpha="1.0"/>
-    <color red="161" blue="180" green="218" alpha="1.0"/>
-    <color red="65" blue="196" green="182" alpha="1.0"/>
-    <color red="44" blue="184" green="127" alpha="1.0"/>
-    <color red="37" blue="148" green="52" alpha="1.0"/>
+    <color red="255" blue="204" green="255"/>
+    <color red="161" blue="180" green="218"/>
+    <color red="65" blue="196" green="182"/>
+    <color red="44" blue="184" green="127"/>
+    <color red="37" blue="148" green="52"/>
   </colors>
 </color-scheme>

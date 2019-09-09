@@ -2,7 +2,7 @@
 <!--
 
     dsh-color-scheme  Color schemes.
-    Copyright (c) 2009-2014 held jointly by the individual authors.
+    Copyright (c) 2009-2019 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
@@ -24,10 +24,10 @@
 -->
 <color-scheme name="Syn" type="qualitative">
   <colors>
-    <color red="61" blue="174" green="85" alpha="1.0"/>
-    <color red="236" blue="37" green="30" alpha="1.0"/>
-    <color red="134" blue="144" green="93" alpha="1.0"/>
-    <color red="98" blue="48" green="140" alpha="1.0"/>
-    <color red="238" blue="26" green="99" alpha="1.0"/>
+    <color red="61" blue="174" green="85"/>
+    <color red="236" blue="37" green="30"/>
+    <color red="134" blue="144" green="93"/>
+    <color red="98" blue="48" green="140"/>
+    <color red="238" blue="26" green="99"/>
   </colors>
 </color-scheme>

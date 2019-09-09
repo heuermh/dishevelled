@@ -27,9 +27,9 @@ For written permission, please contact Cynthia Brewer at cbrewer@psu.edu.
 -->
 <color-scheme name="Set3" type="qualitative">
   <colors>
-    <color red="141" blue="199" green="211" alpha="1.0"/>
-    <color red="255" blue="179" green="255" alpha="1.0"/>
-    <color red="190" blue="218" green="186" alpha="1.0"/>
-    <color red="251" blue="114" green="128" alpha="1.0"/>
+    <color red="141" blue="199" green="211"/>
+    <color red="255" blue="179" green="255"/>
+    <color red="190" blue="218" green="186"/>
+    <color red="251" blue="114" green="128"/>
   </colors>
 </color-scheme>

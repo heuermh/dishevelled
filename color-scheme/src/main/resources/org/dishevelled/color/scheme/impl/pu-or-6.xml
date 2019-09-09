@@ -27,11 +27,11 @@ For written permission, please contact Cynthia Brewer at cbrewer@psu.edu.
 -->
 <color-scheme name="PuOr" type="divergent">
   <colors>
-    <color red="179" blue="6" green="88" alpha="1.0"/>
-    <color red="241" blue="64" green="163" alpha="1.0"/>
-    <color red="254" blue="182" green="224" alpha="1.0"/>
-    <color red="216" blue="235" green="218" alpha="1.0"/>
-    <color red="153" blue="195" green="142" alpha="1.0"/>
-    <color red="84" blue="136" green="39" alpha="1.0"/>
+    <color red="179" blue="6" green="88"/>
+    <color red="241" blue="64" green="163"/>
+    <color red="254" blue="182" green="224"/>
+    <color red="216" blue="235" green="218"/>
+    <color red="153" blue="195" green="142"/>
+    <color red="84" blue="136" green="39"/>
   </colors>
 </color-scheme>

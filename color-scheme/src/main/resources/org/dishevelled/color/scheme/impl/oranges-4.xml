@@ -27,9 +27,9 @@ For written permission, please contact Cynthia Brewer at cbrewer@psu.edu.
 -->
 <color-scheme name="Oranges" type="sequential">
   <colors>
-    <color red="254" blue="222" green="237" alpha="1.0"/>
-    <color red="253" blue="133" green="190" alpha="1.0"/>
-    <color red="253" blue="60" green="141" alpha="1.0"/>
-    <color red="217" blue="1" green="71" alpha="1.0"/>
+    <color red="254" blue="222" green="237"/>
+    <color red="253" blue="133" green="190"/>
+    <color red="253" blue="60" green="141"/>
+    <color red="217" blue="1" green="71"/>
   </colors>
 </color-scheme>

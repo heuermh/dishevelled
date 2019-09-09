@@ -27,9 +27,9 @@ For written permission, please contact Cynthia Brewer at cbrewer@psu.edu.
 -->
 <color-scheme name="Greens" type="sequential">
   <colors>
-    <color red="237" blue="233" green="248" alpha="1.0"/>
-    <color red="186" blue="179" green="228" alpha="1.0"/>
-    <color red="116" blue="118" green="196" alpha="1.0"/>
-    <color red="35" blue="69" green="139" alpha="1.0"/>
+    <color red="237" blue="233" green="248"/>
+    <color red="186" blue="179" green="228"/>
+    <color red="116" blue="118" green="196"/>
+    <color red="35" blue="69" green="139"/>
   </colors>
 </color-scheme>

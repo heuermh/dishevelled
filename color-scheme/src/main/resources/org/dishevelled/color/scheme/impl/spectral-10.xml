@@ -27,15 +27,15 @@ For written permission, please contact Cynthia Brewer at cbrewer@psu.edu.
 -->
 <color-scheme name="Spectral" type="divergent">
   <colors>
-    <color red="158" blue="66" green="1" alpha="1.0"/>
-    <color red="213" blue="79" green="62" alpha="1.0"/>
-    <color red="244" blue="67" green="109" alpha="1.0"/>
-    <color red="253" blue="97" green="174" alpha="1.0"/>
-    <color red="254" blue="139" green="224" alpha="1.0"/>
-    <color red="230" blue="152" green="245" alpha="1.0"/>
-    <color red="171" blue="164" green="221" alpha="1.0"/>
-    <color red="102" blue="165" green="194" alpha="1.0"/>
-    <color red="50" blue="189" green="136" alpha="1.0"/>
-    <color red="94" blue="162" green="79" alpha="1.0"/>
+    <color red="158" blue="66" green="1"/>
+    <color red="213" blue="79" green="62"/>
+    <color red="244" blue="67" green="109"/>
+    <color red="253" blue="97" green="174"/>
+    <color red="254" blue="139" green="224"/>
+    <color red="230" blue="152" green="245"/>
+    <color red="171" blue="164" green="221"/>
+    <color red="102" blue="165" green="194"/>
+    <color red="50" blue="189" green="136"/>
+    <color red="94" blue="162" green="79"/>
   </colors>
 </color-scheme>

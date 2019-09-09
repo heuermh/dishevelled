@@ -2,7 +2,7 @@
 <!--
 
     dsh-color-scheme  Color schemes.
-    Copyright (c) 2009-2014 held jointly by the individual authors.
+    Copyright (c) 2009-2019 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
@@ -24,16 +24,16 @@
 -->
 <color-scheme name="Rubus" type="divergent">
   <colors>
-    <color red="159" green="30" blue="95" alpha="1.0"/>
-    <color red="239" green="118" blue="159" alpha="1.0"/>
-    <color red="241" green="199" blue="221" alpha="1.0"/>
-    <color red="252" green="231" blue="240" alpha="1.0"/>
+    <color red="159" green="30" blue="95"/>
+    <color red="239" green="118" blue="159"/>
+    <color red="241" green="199" blue="221"/>
+    <color red="252" green="231" blue="240"/>
 
-    <color red="255" green="255" blue="255" alpha="1.0"/>
+    <color red="255" green="255" blue="255"/>
 
-    <color red="225" green="243" blue="247" alpha="1.0"/>
-    <color red="214" green="239" blue="245" alpha="1.0"/>
-    <color red="164" green="221" blue="232" alpha="1.0"/>
-    <color red="46" green="190" blue="201" alpha="1.0"/>
+    <color red="225" green="243" blue="247"/>
+    <color red="214" green="239" blue="245"/>
+    <color red="164" green="221" blue="232"/>
+    <color red="46" green="190" blue="201"/>
   </colors>
 </color-scheme>

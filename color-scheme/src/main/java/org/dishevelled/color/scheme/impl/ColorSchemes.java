@@ -1,7 +1,7 @@
 /*
 
     dsh-color-scheme  Color schemes.
-    Copyright (c) 2009-2016 held jointly by the individual authors.
+    Copyright (c) 2009-2019 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
@@ -65,6 +65,9 @@ public final class ColorSchemes
     /** Color factory. */
     private static final ColorFactory COLOR_FACTORY = new DefaultColorFactory();
 
+    /** Default alpha, 1.0f. @since 3.1. */
+    static final float DEFAULT_ALPHA = 1.0f;
+
 
     /**
      * Private no-arg constructor.
@@ -110,6 +113,19 @@ public final class ColorSchemes
     }
 
     /**
+     * Validate alpha is in range [0.0, 1.0].
+     *
+     * @param alpha alpha to validate
+     * @throws IllegalArgumentException if alpha is not in range [0.0, 1.0]
+     */
+    static void validateAlpha(final float alpha) {
+        if (alpha < 0.0 || alpha > 1.0)
+        {
+            throw new IllegalArgumentException("alpha " + alpha + " not in range [0.0, 1.0]");
+        }
+    }
+
+    /**
      * Create and return a discrete color scheme with the specified name and number of colors, if any.
      * The color schemes are defined in a simple XML format and read from the color-scheme library classpath.
      *
@@ -122,6 +138,26 @@ public final class ColorSchemes
     public static ColorScheme getDiscreteColorScheme(final String name,
                                                      final int colors)
     {
+        return getDiscreteColorScheme(name, colors, DEFAULT_ALPHA);
+    }
+
+    /**
+     * Create and return a discrete color scheme with the specified name, number of colors, and alpha,
+     * if any. The color schemes are defined in a simple XML format and read from the color-scheme library
+     * classpath.
+     *
+     * @since 3.1
+     * @param name name
+     * @param colors number of colors
+     * @param alpha alpha, in range [0.0, 1.0]
+     * @return a discrete color scheme with the specified name and number of colors, or
+     *    <code>null</code> if no such discrete color scheme exists
+     */
+    public static ColorScheme getDiscreteColorScheme(final String name,
+                                                     final int colors,
+                                                     final float alpha)
+    {
+        validateAlpha(alpha);
         InputStream inputStream = null;
         ColorScheme colorScheme = null;
         try
@@ -129,7 +165,7 @@ public final class ColorSchemes
             inputStream = ColorSchemes.class.getResourceAsStream(name + "-" + colors + ".xml");
             XMLReader xmlReader = SAXParserFactory.newInstance().newSAXParser().getXMLReader();
             InputSource inputSource = new InputSource(inputStream);
-            ColorSchemeHandler colorSchemeHandler = new ColorSchemeHandler();
+            ColorSchemeHandler colorSchemeHandler = new ColorSchemeHandler(alpha);
             ContentHandler contentHandler = new SAX2StAXAdaptor(colorSchemeHandler);
             xmlReader.setContentHandler(contentHandler);
             xmlReader.parse(inputSource);
@@ -170,6 +206,26 @@ public final class ColorSchemes
     public static ColorScheme getContinuousColorScheme(final String name,
                                                        final int colors)
     {
+        return getContinuousColorScheme(name, colors, DEFAULT_ALPHA);
+    }
+
+    /**
+     * Create and return a continuous color scheme with the specified name, number of colors, and alpha,
+     * if any. The color schemes are defined in a simple XML format and read from the color-scheme library
+     * classpath.
+     *
+     * @since 3.1
+     * @param name name
+     * @param colors number of colors
+     * @param alpha, alpha in range [0.0, 1.0]
+     * @return a continuous color scheme with the specified name and number of colors, or
+     *    <code>null</code> if no such continuous color scheme exists
+     */
+    public static ColorScheme getContinuousColorScheme(final String name,
+                                                       final int colors,
+                                                       final float alpha)
+    {
+        validateAlpha(alpha);
         InputStream inputStream = null;
         ColorScheme colorScheme = null;
         try
@@ -177,7 +233,7 @@ public final class ColorSchemes
             inputStream = ColorSchemes.class.getResourceAsStream(name + "-" + colors + ".xml");
             XMLReader xmlReader = SAXParserFactory.newInstance().newSAXParser().getXMLReader();
             InputSource inputSource = new InputSource(inputStream);
-            ColorSchemeHandler colorSchemeHandler = new ColorSchemeHandler();
+            ColorSchemeHandler colorSchemeHandler = new ColorSchemeHandler(alpha);
             ContentHandler contentHandler = new SAX2StAXAdaptor(colorSchemeHandler);
             xmlReader.setContentHandler(contentHandler);
             xmlReader.parse(inputSource);
@@ -221,7 +277,18 @@ public final class ColorSchemes
         private final List<Color> colors = new ArrayList<Color>();
 
         /** Color handler. */
-        private final ColorHandler colorHandler = new ColorHandler();
+        private final ColorHandler colorHandler;
+
+
+        /**
+         * Create a new color scheme handler with the specified alpha.
+         *
+         * @param alpha alpha
+         */
+        ColorSchemeHandler(final float alpha)
+        {
+            colorHandler = new ColorHandler(alpha);
+        }
 
 
         @Override
@@ -298,6 +365,20 @@ public final class ColorSchemes
         /** Color. */
         private Color color;
 
+        /** Alpha. */
+        private final float alpha;
+
+
+        /**
+         * Create a new color handler with the specified alpha.
+         *
+         * @param alpha alpha
+         */
+        ColorHandler(final float alpha)
+        {
+            this.alpha = alpha;
+        }
+
 
         @Override
         public void startElement(final String nsURI,
@@ -310,8 +391,8 @@ public final class ColorSchemes
             int r = Integer.parseInt(attrs.getValue("red"));
             int g = Integer.parseInt(attrs.getValue("green"));
             int b = Integer.parseInt(attrs.getValue("blue"));
-            float a = Float.parseFloat(attrs.getValue("alpha"));
-            this.color = COLOR_FACTORY.createColor(r, g, b, a);
+            //float a = Float.parseFloat(attrs.getValue("alpha"));
+            this.color = COLOR_FACTORY.createColor(r, g, b, alpha);
         }
 
         @Override

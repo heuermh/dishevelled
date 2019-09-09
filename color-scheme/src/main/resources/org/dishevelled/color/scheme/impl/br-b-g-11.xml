@@ -27,16 +27,16 @@ For written permission, please contact Cynthia Brewer at cbrewer@psu.edu.
 -->
 <color-scheme name="BrBG" type="divergent">
   <colors>
-    <color red="84" blue="5" green="48" alpha="1.0"/>
-    <color red="140" blue="10" green="81" alpha="1.0"/>
-    <color red="191" blue="45" green="129" alpha="1.0"/>
-    <color red="223" blue="125" green="194" alpha="1.0"/>
-    <color red="246" blue="195" green="232" alpha="1.0"/>
-    <color red="245" blue="245" green="245" alpha="1.0"/>
-    <color red="199" blue="229" green="234" alpha="1.0"/>
-    <color red="128" blue="193" green="205" alpha="1.0"/>
-    <color red="53" blue="143" green="151" alpha="1.0"/>
-    <color red="1" blue="94" green="102" alpha="1.0"/>
-    <color red="0" blue="48" green="60" alpha="1.0"/>
+    <color red="84" blue="5" green="48"/>
+    <color red="140" blue="10" green="81"/>
+    <color red="191" blue="45" green="129"/>
+    <color red="223" blue="125" green="194"/>
+    <color red="246" blue="195" green="232"/>
+    <color red="245" blue="245" green="245"/>
+    <color red="199" blue="229" green="234"/>
+    <color red="128" blue="193" green="205"/>
+    <color red="53" blue="143" green="151"/>
+    <color red="1" blue="94" green="102"/>
+    <color red="0" blue="48" green="60"/>
   </colors>
 </color-scheme>

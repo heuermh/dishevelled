@@ -27,8 +27,8 @@ For written permission, please contact Cynthia Brewer at cbrewer@psu.edu.
 -->
 <color-scheme name="PuRd" type="sequential">
   <colors>
-    <color red="231" blue="239" green="225" alpha="1.0"/>
-    <color red="201" blue="199" green="148" alpha="1.0"/>
-    <color red="221" blue="119" green="28" alpha="1.0"/>
+    <color red="231" blue="239" green="225"/>
+    <color red="201" blue="199" green="148"/>
+    <color red="221" blue="119" green="28"/>
   </colors>
 </color-scheme>

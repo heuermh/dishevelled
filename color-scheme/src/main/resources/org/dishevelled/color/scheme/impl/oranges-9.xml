@@ -27,14 +27,14 @@ For written permission, please contact Cynthia Brewer at cbrewer@psu.edu.
 -->
 <color-scheme name="Oranges" type="sequential">
   <colors>
-    <color red="255" blue="235" green="245" alpha="1.0"/>
-    <color red="254" blue="206" green="230" alpha="1.0"/>
-    <color red="253" blue="162" green="208" alpha="1.0"/>
-    <color red="253" blue="107" green="174" alpha="1.0"/>
-    <color red="253" blue="60" green="141" alpha="1.0"/>
-    <color red="241" blue="19" green="105" alpha="1.0"/>
-    <color red="217" blue="1" green="72" alpha="1.0"/>
-    <color red="166" blue="3" green="54" alpha="1.0"/>
-    <color red="127" blue="4" green="39" alpha="1.0"/>
+    <color red="255" blue="235" green="245"/>
+    <color red="254" blue="206" green="230"/>
+    <color red="253" blue="162" green="208"/>
+    <color red="253" blue="107" green="174"/>
+    <color red="253" blue="60" green="141"/>
+    <color red="241" blue="19" green="105"/>
+    <color red="217" blue="1" green="72"/>
+    <color red="166" blue="3" green="54"/>
+    <color red="127" blue="4" green="39"/>
   </colors>
 </color-scheme>

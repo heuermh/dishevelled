@@ -27,9 +27,9 @@ For written permission, please contact Cynthia Brewer at cbrewer@psu.edu.
 -->
 <color-scheme name="Accent" type="qualitative">
   <colors>
-    <color red="127" blue="127" green="201" alpha="1.0"/>
-    <color red="190" blue="212" green="174" alpha="1.0"/>
-    <color red="253" blue="134" green="192" alpha="1.0"/>
-    <color red="255" blue="153" green="255" alpha="1.0"/>
+    <color red="127" blue="127" green="201"/>
+    <color red="190" blue="212" green="174"/>
+    <color red="253" blue="134" green="192"/>
+    <color red="255" blue="153" green="255"/>
   </colors>
 </color-scheme>

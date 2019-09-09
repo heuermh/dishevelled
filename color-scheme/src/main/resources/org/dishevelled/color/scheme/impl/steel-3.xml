@@ -27,8 +27,8 @@ For written permission, please contact Cynthia Brewer at cbrewer@psu.edu.
 -->
 <color-scheme name="Steel" type="qualitative">
   <colors>
-    <color red="59" blue="83" green="76" alpha="1.0"/>
-    <color red="52" blue="202" green="148" alpha="1.0"/>
-    <color red="191" blue="223" green="215" alpha="1.0"/>
+    <color red="59" blue="83" green="76"/>
+    <color red="52" blue="202" green="148"/>
+    <color red="191" blue="223" green="215"/>
   </colors>
 </color-scheme>

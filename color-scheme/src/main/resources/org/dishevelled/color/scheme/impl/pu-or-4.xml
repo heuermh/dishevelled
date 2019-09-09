@@ -27,9 +27,9 @@ For written permission, please contact Cynthia Brewer at cbrewer@psu.edu.
 -->
 <color-scheme name="PuOr" type="divergent">
   <colors>
-    <color red="230" blue="1" green="97" alpha="1.0"/>
-    <color red="253" blue="99" green="184" alpha="1.0"/>
-    <color red="178" blue="210" green="171" alpha="1.0"/>
-    <color red="94" blue="153" green="60" alpha="1.0"/>
+    <color red="230" blue="1" green="97"/>
+    <color red="253" blue="99" green="184"/>
+    <color red="178" blue="210" green="171"/>
+    <color red="94" blue="153" green="60"/>
   </colors>
 </color-scheme>

@@ -27,9 +27,9 @@ For written permission, please contact Cynthia Brewer at cbrewer@psu.edu.
 -->
 <color-scheme name="Purples" type="sequential">
   <colors>
-    <color red="242" blue="247" green="240" alpha="1.0"/>
-    <color red="203" blue="226" green="201" alpha="1.0"/>
-    <color red="158" blue="200" green="154" alpha="1.0"/>
-    <color red="106" blue="163" green="81" alpha="1.0"/>
+    <color red="242" blue="247" green="240"/>
+    <color red="203" blue="226" green="201"/>
+    <color red="158" blue="200" green="154"/>
+    <color red="106" blue="163" green="81"/>
   </colors>
 </color-scheme>

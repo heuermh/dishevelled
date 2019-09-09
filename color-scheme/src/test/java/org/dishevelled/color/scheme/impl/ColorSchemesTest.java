@@ -1,7 +1,7 @@
 /*
 
     dsh-color-scheme  Color schemes.
-    Copyright (c) 2009-2016 held jointly by the individual authors.
+    Copyright (c) 2009-2019 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
@@ -92,5 +92,41 @@ public class ColorSchemesTest extends TestCase
         assertNotNull(continuousRdBlGr3);
 
         assertNull(ColorSchemes.getContinuousColorScheme("wh-bl", 99));
+    }
+
+    public void testValidateAlphaTooSmall()
+    {
+        try
+        {
+            ColorSchemes.validateAlpha(-0.1f);
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+    }
+
+    public void testValidateAlphaTooLarge()
+    {
+        try
+        {
+            ColorSchemes.validateAlpha(1.1f);
+        }
+        catch (IllegalArgumentException e)
+        {
+            // expected
+        }
+    }
+
+    public void testGetDiscreteColorSchemeWithAlpha()
+    {
+        ColorScheme discreteWhBl2 = ColorSchemes.getDiscreteColorScheme("wh-bl", 2, 0.5f);
+        assertNotNull(discreteWhBl2);
+    }
+
+    public void testGetContinuousColorSchemeWithAlpha()
+    {
+        ColorScheme continuousWhBl2 = ColorSchemes.getContinuousColorScheme("wh-bl", 2, 0.5f);
+        assertNotNull(continuousWhBl2);
     }
 }

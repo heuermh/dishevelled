@@ -27,13 +27,13 @@ For written permission, please contact Cynthia Brewer at cbrewer@psu.edu.
 -->
 <color-scheme name="BuGn" type="sequential">
   <colors>
-    <color red="247" blue="253" green="252" alpha="1.0"/>
-    <color red="229" blue="249" green="245" alpha="1.0"/>
-    <color red="204" blue="230" green="236" alpha="1.0"/>
-    <color red="153" blue="201" green="216" alpha="1.0"/>
-    <color red="102" blue="164" green="194" alpha="1.0"/>
-    <color red="65" blue="118" green="174" alpha="1.0"/>
-    <color red="35" blue="69" green="139" alpha="1.0"/>
-    <color red="0" blue="36" green="88" alpha="1.0"/>
+    <color red="247" blue="253" green="252"/>
+    <color red="229" blue="249" green="245"/>
+    <color red="204" blue="230" green="236"/>
+    <color red="153" blue="201" green="216"/>
+    <color red="102" blue="164" green="194"/>
+    <color red="65" blue="118" green="174"/>
+    <color red="35" blue="69" green="139"/>
+    <color red="0" blue="36" green="88"/>
   </colors>
 </color-scheme>

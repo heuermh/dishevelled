@@ -27,8 +27,8 @@ For written permission, please contact Cynthia Brewer at cbrewer@psu.edu.
 -->
 <color-scheme name="RdBu" type="divergent">
   <colors>
-    <color red="239" blue="98" green="138" alpha="1.0"/>
-    <color red="247" blue="247" green="247" alpha="1.0"/>
-    <color red="103" blue="207" green="169" alpha="1.0"/>
+    <color red="239" blue="98" green="138"/>
+    <color red="247" blue="247" green="247"/>
+    <color red="103" blue="207" green="169"/>
   </colors>
 </color-scheme>

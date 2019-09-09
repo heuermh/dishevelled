@@ -27,10 +27,10 @@ For written permission, please contact Cynthia Brewer at cbrewer@psu.edu.
 -->
 <color-scheme name="PuRd" type="sequential">
   <colors>
-    <color red="241" blue="246" green="238" alpha="1.0"/>
-    <color red="215" blue="216" green="181" alpha="1.0"/>
-    <color red="223" blue="176" green="101" alpha="1.0"/>
-    <color red="221" blue="119" green="28" alpha="1.0"/>
-    <color red="152" blue="67" green="0" alpha="1.0"/>
+    <color red="241" blue="246" green="238"/>
+    <color red="215" blue="216" green="181"/>
+    <color red="223" blue="176" green="101"/>
+    <color red="221" blue="119" green="28"/>
+    <color red="152" blue="67" green="0"/>
   </colors>
 </color-scheme>

@@ -2,7 +2,7 @@
 <!--
 
     dsh-color-scheme  Color schemes.
-    Copyright (c) 2009-2014 held jointly by the individual authors.
+    Copyright (c) 2009-2019 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
@@ -24,7 +24,7 @@
 -->
 <color-scheme name="Gw" type="qualitative">
   <colors>
-    <color red="255" blue="86" green="81" alpha="1.0"/>
-    <color red="175" blue="210" green="206" alpha="1.0"/>
+    <color red="255" blue="86" green="81"/>
+    <color red="175" blue="210" green="206"/>
   </colors>
 </color-scheme>

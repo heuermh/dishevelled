@@ -25,6 +25,6 @@
 <color-scheme name="GnGy" type="qualitative">
   <colors>
     <color red="100" blue="65" green="196" alpha="0.25"/>
-    <color red="182" blue="175" green="177" alpha="1.0"/>
+    <color red="182" blue="175" green="177"/>
   </colors>
 </color-scheme>
