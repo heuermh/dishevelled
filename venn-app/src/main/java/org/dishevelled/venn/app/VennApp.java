@@ -45,6 +45,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 
 /**
  * App for venn and euler diagrams.
@@ -211,6 +212,15 @@ public final class VennApp
      */
     public static void main(final String[] args)
     {
+        try
+        {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        }
+        catch (Exception e)
+        {
+            // ignore
+        }
+
         System.setProperty("apple.laf.useScreenMenuBar", "true");
         System.setProperty("com.apple.macos.useScreenMenuBar", "true");
         System.setProperty("com.apple.macos.use-file-dialog-packages", "true");
