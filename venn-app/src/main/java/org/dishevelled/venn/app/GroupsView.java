@@ -285,13 +285,18 @@ final class GroupsView
         groups.add(group);
     }
 
+    JPopupMenu getContextMenu()
+    {
+        return contextMenu;
+    }
+
     /**
      * Layout components.
      */
     private void layoutComponents()
     {
         LabelFieldPanel mainPanel = new LabelFieldPanel();
-        mainPanel.setBorder(new EmptyBorder(12, 12, 0, 12));
+        mainPanel.setBorder(new EmptyBorder(12, 12, 12, 12));
         mainPanel.addLabel("Groups:");
         mainPanel.addFinalField(new JScrollPane(groupList));
 
@@ -306,7 +311,7 @@ final class GroupsView
         detailsButton.setBorderPainted(false);
         detailsButton.setFocusPainted(false);
 
-        toolBar.displayIcons();
+        toolBar.displayIconsAndText();
         toolBar.setIconSize(IconSize.DEFAULT_24X24);
 
         JPopupMenu toolBarContextMenu = new JPopupMenu();

@@ -28,6 +28,7 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
@@ -115,7 +116,7 @@ final class ColorSchemeView extends JPanel
         };
 
     /** Identifiable color scheme. */
-    private class IdColorScheme implements Identifiable
+    private class IdColorScheme implements Identifiable, Comparable
     {
         private final String id;
         private final String name;
@@ -144,6 +145,16 @@ final class ColorSchemeView extends JPanel
         public IconBundle getIconBundle()
         {
             return iconBundle;
+        }
+
+        @Override
+        public int compareTo(final Object o)
+        {
+            if (o instanceof IdColorScheme)
+            {
+                return this.id.compareTo(((IdColorScheme) o).id);
+            }
+            return 0;
         }
     }
 
@@ -174,25 +185,47 @@ final class ColorSchemeView extends JPanel
 
     private void addColorSchemes()
     {
-        colorSchemes.add(new IdColorScheme("aaas", "AAAS"));
-        colorSchemes.add(new IdColorScheme("accent", "Accent"));
-        colorSchemes.add(new IdColorScheme("category", "Category"));
-        colorSchemes.add(new IdColorScheme("dark-2", "Dark 2"));
-        colorSchemes.add(new IdColorScheme("gut", "Gut"));
-        colorSchemes.add(new IdColorScheme("jama", "JAMA"));
-        colorSchemes.add(new IdColorScheme("jco", "JCO"));
-        colorSchemes.add(new IdColorScheme("lancet", "Lancet"));
-        colorSchemes.add(new IdColorScheme("nejm", "NEJM"));
-        colorSchemes.add(new IdColorScheme("npg", "NPG"));
-        colorSchemes.add(new IdColorScheme("pastel-1", "Pastel 1"));
-        colorSchemes.add(new IdColorScheme("pastel-2", "Pastel 2"));
-        colorSchemes.add(new IdColorScheme("set-1", "Set 1"));
-        colorSchemes.add(new IdColorScheme("set-2", "Set 2"));
-        colorSchemes.add(new IdColorScheme("set-3", "Set 3"));
-        colorSchemes.add(new IdColorScheme("spectral", "Spectral"));
-        colorSchemes.add(new IdColorScheme("syn", "Syn"));
-        colorSchemes.add(new IdColorScheme("tableau", "Tableau"));
-        colorSchemes.add(new IdColorScheme("unambiguous", "Unambiguous"));
+        if (n < 13)
+        {
+            colorSchemes.add(new IdColorScheme("set-3", "Set 3"));
+        }
+        if (n < 12)
+        {
+            colorSchemes.add(new IdColorScheme("spectral", "Spectral"));
+        }
+        if (n < 11)
+        {
+            colorSchemes.add(new IdColorScheme("aaas", "AAAS"));
+            colorSchemes.add(new IdColorScheme("category", "Category"));
+            colorSchemes.add(new IdColorScheme("gut", "Gut"));
+            colorSchemes.add(new IdColorScheme("jco", "JCO"));
+            colorSchemes.add(new IdColorScheme("npg", "NPG"));
+            colorSchemes.add(new IdColorScheme("tableau", "Tableau"));
+        }
+        if (n < 10)
+        {
+            colorSchemes.add(new IdColorScheme("dark-2", "Dark 2"));
+            colorSchemes.add(new IdColorScheme("lancet", "Lancet"));
+            colorSchemes.add(new IdColorScheme("pastel-1", "Pastel 1"));
+            colorSchemes.add(new IdColorScheme("set-1", "Set 1"));
+        }
+        if (n < 9)
+        {
+            colorSchemes.add(new IdColorScheme("nejm", "NEJM"));
+            colorSchemes.add(new IdColorScheme("pastel-2", "Pastel 2"));
+            colorSchemes.add(new IdColorScheme("set-2", "Set 2"));
+            colorSchemes.add(new IdColorScheme("unambiguous", "Unambiguous"));
+        }
+        if (n < 8)
+        {
+            colorSchemes.add(new IdColorScheme("accent", "Accent"));
+            colorSchemes.add(new IdColorScheme("jama", "JAMA"));
+        }
+        if (n < 7)
+        {
+            colorSchemes.add(new IdColorScheme("syn", "Syn"));
+        }
+        Collections.sort(colorSchemes);
     }
 
     private void layoutComponents()
