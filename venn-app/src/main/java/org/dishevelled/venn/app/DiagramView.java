@@ -50,6 +50,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import java.util.Iterator;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.Set;
 
 import javax.imageio.ImageIO;
@@ -118,11 +120,14 @@ final class DiagramView
     /** SVG namespace. */
     private static final String SVG_NS = "http://www.w3.org/2000/svg";
 
+    /** I18n. */
+    private static final ResourceBundle I18N = ResourceBundle.getBundle("VennApp", Locale.getDefault());
+
     /** Canvas. */
     private final PCanvas canvas;
 
     /** Choose color scheme. */
-    private final Action chooseColorScheme = new AbstractAction("Choose color scheme...")
+    private final Action chooseColorScheme = new AbstractAction(I18N.getString("DiagramView.chooseColorScheme") + "...")
         {
             @Override
             public void actionPerformed(final ActionEvent event)
@@ -132,7 +137,7 @@ final class DiagramView
         };
 
     /** Choose label font. */
-    private final Action chooseLabelFont = new AbstractAction("Choose label font...")
+    private final Action chooseLabelFont = new AbstractAction(I18N.getString("DiagramView.chooseLabelFont") + "...")
         {
             @Override
             public void actionPerformed(final ActionEvent event)
@@ -142,7 +147,7 @@ final class DiagramView
         };
 
     /** Choose size label font. */
-    private final Action chooseSizeLabelFont = new AbstractAction("Choose size label font...")
+    private final Action chooseSizeLabelFont = new AbstractAction(I18N.getString("DiagramView.chooseSizeLabelFont") + "...")
         {
             @Override
             public void actionPerformed(final ActionEvent event)
@@ -152,7 +157,7 @@ final class DiagramView
         };
 
     /** Export to PNG image action. */
-    private final Action exportToPNG = new AbstractAction("Export to PNG...") // i18n
+    private final Action exportToPNG = new AbstractAction(I18N.getString("DiagramView.exportToPNG") + "...")
         {
             @Override
             public void actionPerformed(final ActionEvent event)
@@ -162,7 +167,7 @@ final class DiagramView
         };
 
     /** Export to SNG image action. */
-    private final Action exportToSVG = new AbstractAction("Export to SVG...") // i18n
+    private final Action exportToSVG = new AbstractAction(I18N.getString("DiagramView.exportToSVG") + "...")
         {
             @Override
             public void actionPerformed(final ActionEvent event)
@@ -172,7 +177,7 @@ final class DiagramView
         };
 
     /** Select all action. */
-    private final Action selectAll = new AbstractAction("Select all") // i18n
+    private final Action selectAll = new AbstractAction(I18N.getString("DiagramView.selectAll"))
         {
             @Override
             public void actionPerformed(final ActionEvent event)
@@ -182,7 +187,7 @@ final class DiagramView
         };
 
     /** Clear selection action. */
-    private final Action clearSelection = new AbstractAction("Clear selection") // i18n
+    private final Action clearSelection = new AbstractAction(I18N.getString("DiagramView.clearSelection"))
         {
             @Override
             public void actionPerformed(final ActionEvent event)
@@ -192,7 +197,7 @@ final class DiagramView
         };
 
     /** Zoom in action. */
-    private final Action zoomIn = new AbstractAction("Zoom in") // i18n
+    private final Action zoomIn = new AbstractAction(I18N.getString("DiagramView.zoomIn"))
         {
             @Override
             public void actionPerformed(final ActionEvent event)
@@ -202,7 +207,7 @@ final class DiagramView
         };
 
     /** Zoom out action. */
-    private final Action zoomOut = new AbstractAction("Zoom out") // i18n
+    private final Action zoomOut = new AbstractAction(I18N.getString("DiagramView.zoomOut"))
         {
             @Override
             public void actionPerformed(final ActionEvent event)
@@ -212,7 +217,7 @@ final class DiagramView
         };
 
     /** Toggle display labels. */
-    private final Action displayLabels = new AbstractAction("Display set labels") // i18n
+    private final Action displayLabels = new AbstractAction(I18N.getString("DiagramView.displayLabels"))
         {
             @Override
             public void actionPerformed(final ActionEvent event)
@@ -222,7 +227,7 @@ final class DiagramView
         };
 
     /** Toggle display size labels. */
-    private final Action displaySizeLabels = new AbstractAction("Display size labels") // i18n
+    private final Action displaySizeLabels = new AbstractAction(I18N.getString("DiagramView.displaySizeLabels"))
         {
             @Override
             public void actionPerformed(final ActionEvent event)
@@ -232,7 +237,7 @@ final class DiagramView
         };
 
     /** Toggle display sizes in set labels. */
-    private final Action displaySizes = new AbstractAction("Display sizes in set labels") // i18n
+    private final Action displaySizes = new AbstractAction(I18N.getString("DiagramView.displaySizes"))
         {
             @Override
             public void actionPerformed(final ActionEvent event)
@@ -242,7 +247,7 @@ final class DiagramView
         };
 
     /** Toggle display sizes for empty areas. */
-    private final Action displaySizesForEmptyAreas = new AbstractAction("Display sizes for empty areas") // i18n
+    private final Action displaySizesForEmptyAreas = new AbstractAction(I18N.getString("DiagramView.displaySizesForEmptyAreas"))
         {
             @Override
             public void actionPerformed(final ActionEvent event)
@@ -528,7 +533,7 @@ final class DiagramView
     {
         Image image = canvas.getLayer().toImage();
         // unsafe cast, if this view isn't rooted in a dialog
-        FileDialog fileDialog = new FileDialog((Dialog) windowForComponent(this), "Export to PNG...", FileDialog.SAVE);
+        FileDialog fileDialog = new FileDialog((Dialog) windowForComponent(this), I18N.getString("DiagramView.exportToPNG") + "...", FileDialog.SAVE);
         fileDialog.setVisible(true);
 
         String directory = fileDialog.getDirectory();
@@ -553,7 +558,7 @@ final class DiagramView
     private void exportToSVG()
     {
         // unsafe cast, if this view isn't rooted in a dialog
-        FileDialog fileDialog = new FileDialog((Dialog) windowForComponent(this), "Export to SVG...", FileDialog.SAVE);
+        FileDialog fileDialog = new FileDialog((Dialog) windowForComponent(this), I18N.getString("DiagramView.exportToSVG") + "...", FileDialog.SAVE);
         fileDialog.setVisible(true);
 
         String directory = fileDialog.getDirectory();
@@ -595,7 +600,7 @@ final class DiagramView
     private void chooseLabelFont()
     {
         // unsafe cast, if this view isn't rooted in a dialog
-        FontDialog fontDialog = new FontDialog((Dialog) windowForComponent(this), "Choose label font...", true);
+        FontDialog fontDialog = new FontDialog((Dialog) windowForComponent(this), I18N.getString("DiagramView.chooseLabelFont") + "...", true);
         fontDialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         fontDialog.setVisible(true);
 
@@ -611,7 +616,7 @@ final class DiagramView
     private void chooseSizeLabelFont()
     {
         // unsafe cast, if this view isn't rooted in a dialog
-        FontDialog fontDialog = new FontDialog((Dialog) windowForComponent(this), "Choose size label font...", true);
+        FontDialog fontDialog = new FontDialog((Dialog) windowForComponent(this), I18N.getString("DiagramView.chooseSizeLabelFont") + "...", true);
         fontDialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         fontDialog.setVisible(true);
 
@@ -685,7 +690,7 @@ final class DiagramView
 
     private void chooseColorScheme()
     {
-        JDialog colorSchemeDialog = new JDialog((Dialog) windowForComponent(this), "Choose color scheme...", true);
+        JDialog colorSchemeDialog = new JDialog((Dialog) windowForComponent(this), I18N.getString("DiagramView.chooseColorScheme") + "...", true);
         colorSchemeDialog.setModalityType(Dialog.ModalityType.DOCUMENT_MODAL);
         colorSchemeDialog.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
 

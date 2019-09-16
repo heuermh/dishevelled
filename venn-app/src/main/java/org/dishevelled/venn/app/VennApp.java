@@ -35,6 +35,8 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -57,11 +59,14 @@ import javax.swing.UIManager;
 public final class VennApp
     implements Runnable
 {
+    /** I18n. */
+    private static final ResourceBundle I18N = ResourceBundle.getBundle("VennApp", Locale.getDefault());
+
     /** Groups view. */
     private final GroupsView groupsView;
 
     /** Exit action. */
-    private final Action exit = new AbstractAction("Exit")
+    private final Action exit = new AbstractAction(I18N.getString("VennApp.exit"))
         {
             @Override
             public void actionPerformed(final ActionEvent event)
@@ -71,7 +76,7 @@ public final class VennApp
         };
 
     /** Open action. */
-    private final Action open = new AbstractAction("Open...")
+    private final Action open = new AbstractAction(I18N.getString("VennApp.open") + "...")
         {
             @Override
             public void actionPerformed(final ActionEvent event)
@@ -182,7 +187,7 @@ public final class VennApp
     private JMenuBar createMenuBar()
     {
         JMenuBar menuBar = new JMenuBar();
-        JMenu fileMenu = new JMenu("File");
+        JMenu fileMenu = new JMenu(I18N.getString("VennApp.file"));
 
         int menuKeyMask = Toolkit.getDefaultToolkit().getMenuShortcutKeyMask();
         JMenuItem openMenuItem = fileMenu.add(open);
@@ -199,7 +204,7 @@ public final class VennApp
     @Override
     public void run()
     {
-        JFrame frame = new JFrame("Venn and Euler Diagrams");
+        JFrame frame = new JFrame(I18N.getString("VennApp.frame"));
         frame.setContentPane(groupsView);
         frame.setJMenuBar(createMenuBar());
 

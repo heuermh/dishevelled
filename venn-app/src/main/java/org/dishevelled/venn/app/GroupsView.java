@@ -28,13 +28,18 @@ import static javax.swing.SwingUtilities.windowForComponent;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+
 import java.awt.event.WindowEvent;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+
 import java.awt.geom.Rectangle2D;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.Set;
 
 import javax.swing.AbstractAction;
@@ -53,12 +58,15 @@ import javax.swing.JRootPane;
 import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
+
 import javax.swing.border.EmptyBorder;
+
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import ca.odell.glazedlists.EventList;
 import ca.odell.glazedlists.GlazedLists;
+
 import ca.odell.glazedlists.swing.EventListModel;
 import ca.odell.glazedlists.swing.EventSelectionModel;
 
@@ -66,24 +74,32 @@ import com.google.common.base.Joiner;
 
 import org.dishevelled.iconbundle.IconBundle;
 import org.dishevelled.iconbundle.IconSize;
+
 import org.dishevelled.iconbundle.impl.CachingIconBundle;
 import org.dishevelled.iconbundle.impl.PNGIconBundle;
+
 import org.dishevelled.identify.ContextMenuListener;
 import org.dishevelled.identify.IdentifiableAction;
 import org.dishevelled.identify.IdButton;
 import org.dishevelled.identify.IdMenuItem;
 import org.dishevelled.identify.IdToolBar;
+
 import org.dishevelled.layout.LabelFieldPanel;
+
 import org.dishevelled.piccolo.venn.BinaryVennNode;
 import org.dishevelled.piccolo.venn.TernaryVennNode;
 import org.dishevelled.piccolo.venn.QuaternaryVennNode;
 import org.dishevelled.piccolo.venn.VennNode;
+
 import org.dishevelled.venn.VennModel;
 import org.dishevelled.venn.VennLayout;
 import org.dishevelled.venn.VennLayouter;
 import org.dishevelled.venn.VennLayouter.PerformanceHint;
+
 import org.dishevelled.venn.euler.VennEulerLayouter;
+
 import org.dishevelled.venn.model.VennModels;
+
 import org.dishevelled.venn.swing.BinaryVennList;
 import org.dishevelled.venn.swing.TernaryVennList;
 import org.dishevelled.venn.swing.QuaternaryVennList;
@@ -96,6 +112,9 @@ import org.dishevelled.venn.swing.QuaternaryVennList;
 final class GroupsView
     extends JPanel
 {
+    /** I18n. */
+    private static final ResourceBundle I18N = ResourceBundle.getBundle("VennApp", Locale.getDefault());
+
     /** List of groups. */
     private final EventList<Group> groups;
 
@@ -112,7 +131,7 @@ final class GroupsView
     private final IconBundle eulerDiagramIconBundle = new CachingIconBundle(new PNGIconBundle("/org/dishevelled/venn/app/eulerDiagram"));
 
     /** Euler diagram action. */
-    private final IdentifiableAction eulerDiagram = new IdentifiableAction("Euler Diagram...", eulerDiagramIconBundle)
+    private final IdentifiableAction eulerDiagram = new IdentifiableAction(I18N.getString("GroupsView.eulerDiagram") + "...", eulerDiagramIconBundle)
         {
             @Override
             public void actionPerformed(final ActionEvent event)
@@ -128,7 +147,7 @@ final class GroupsView
     private final IconBundle vennDiagramIconBundle = new CachingIconBundle(new PNGIconBundle("/org/dishevelled/venn/app/vennDiagram"));
 
     /** Venn diagram action. */
-    private final IdentifiableAction vennDiagram = new IdentifiableAction("Venn Diagram...", vennDiagramIconBundle)
+    private final IdentifiableAction vennDiagram = new IdentifiableAction(I18N.getString("GroupsView.vennDiagram") + "...", vennDiagramIconBundle)
         {
             @Override
             public void actionPerformed(final ActionEvent event)
@@ -154,7 +173,7 @@ final class GroupsView
     private final IconBundle detailsIconBundle = new CachingIconBundle(new PNGIconBundle("/org/dishevelled/venn/app/details"));
 
     /** Details action. */
-    private final IdentifiableAction details = new IdentifiableAction("Details...", detailsIconBundle)
+    private final IdentifiableAction details = new IdentifiableAction(I18N.getString("GroupsView.details") + "...", detailsIconBundle)
         {
             @Override
             public void actionPerformed(final ActionEvent event)
@@ -177,7 +196,7 @@ final class GroupsView
         };
 
     /** Rename group action. */
-    private final Action renameGroup = new AbstractAction("Rename group...")
+    private final Action renameGroup = new AbstractAction(I18N.getString("GroupsView.renameGroup") + "...")
         {
             @Override
             public void actionPerformed(final ActionEvent event)
@@ -297,7 +316,7 @@ final class GroupsView
     {
         LabelFieldPanel mainPanel = new LabelFieldPanel();
         mainPanel.setBorder(new EmptyBorder(12, 12, 12, 12));
-        mainPanel.addLabel("Groups:");
+        mainPanel.addLabel(I18N.getString("GroupsView.details") + ":");
         mainPanel.addFinalField(new JScrollPane(groupList));
 
         IdToolBar toolBar = new IdToolBar();
@@ -347,7 +366,7 @@ final class GroupsView
             vennNode.setLabelText(i, labels.get(i));
         }
 
-        JDialog dialog = new JDialog(windowForComponent(this), Joiner.on(", ").join(labels) + " Euler Diagram");
+        JDialog dialog = new JDialog(windowForComponent(this), Joiner.on(", ").join(labels) + " " + I18N.getString("GroupsView.eulerDiagram"));
         final DiagramView diagramView = new DiagramView(vennNode);
         dialog.setContentPane(diagramView);
         dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
@@ -390,7 +409,7 @@ final class GroupsView
         Set<String> second = new HashSet<String>(selected.get(1).getValues());
         BinaryVennNode<String> binaryVennNode = new BinaryVennNode<String>(firstLabel, first, secondLabel, second);
 
-        JDialog dialog = new JDialog(windowForComponent(this), firstLabel + ", " + secondLabel + " Venn Diagram");
+        JDialog dialog = new JDialog(windowForComponent(this), firstLabel + ", " + secondLabel + " " + I18N.getString("GroupsView.vennDiagram"));
         dialog.setContentPane(new DiagramView(binaryVennNode));
         dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         installCloseKeyBinding(dialog);
@@ -413,7 +432,7 @@ final class GroupsView
         Set<String> third = new HashSet<String>(selected.get(2).getValues());
         TernaryVennNode<String> ternaryVennNode = new TernaryVennNode<String>(firstLabel, first, secondLabel, second, thirdLabel, third);
 
-        JDialog dialog = new JDialog(windowForComponent(this), firstLabel + ", " + secondLabel + ", " + thirdLabel + " Venn Diagram");
+        JDialog dialog = new JDialog(windowForComponent(this), firstLabel + ", " + secondLabel + ", " + thirdLabel + " " + I18N.getString("GroupsView.vennDiagram"));
         dialog.setContentPane(new DiagramView(ternaryVennNode));
         dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         installCloseKeyBinding(dialog);
@@ -438,7 +457,7 @@ final class GroupsView
         Set<String> fourth = new HashSet<String>(selected.get(3).getValues());
         QuaternaryVennNode<String> quaternaryVennNode = new QuaternaryVennNode<String>(firstLabel, first, secondLabel, second, thirdLabel, third, fourthLabel, fourth);
 
-        JDialog dialog = new JDialog(windowForComponent(this), firstLabel + ", " + secondLabel + ", " + thirdLabel + ", " + fourthLabel + " Venn Diagram");
+        JDialog dialog = new JDialog(windowForComponent(this), firstLabel + ", " + secondLabel + ", " + thirdLabel + ", " + fourthLabel + " " + I18N.getString("GroupsView.vennDiagram"));
         dialog.setContentPane(new DiagramView(quaternaryVennNode));
         dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         installCloseKeyBinding(dialog);
@@ -459,7 +478,7 @@ final class GroupsView
         Set<String> second = new HashSet<String>(selected.get(1).getValues());
         final BinaryVennList<String> binaryVennList = new BinaryVennList<String>(firstLabel, first, secondLabel, second);
 
-        JDialog dialog = new JDialog(windowForComponent(this), firstLabel + ", " + secondLabel + " Details");
+        JDialog dialog = new JDialog(windowForComponent(this), firstLabel + ", " + secondLabel + " " + I18N.getString("GroupsView.details"));
         dialog.setContentPane(new DetailsView(binaryVennList));
         dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         installCloseKeyBinding(dialog);
@@ -482,7 +501,7 @@ final class GroupsView
         Set<String> third = new HashSet<String>(selected.get(2).getValues());
         final TernaryVennList<String> ternaryVennList = new TernaryVennList<String>(firstLabel, first, secondLabel, second, thirdLabel, third);
 
-        JDialog dialog = new JDialog(windowForComponent(this), firstLabel + ", " + secondLabel + ", " + thirdLabel + " Details");
+        JDialog dialog = new JDialog(windowForComponent(this), firstLabel + ", " + secondLabel + ", " + thirdLabel + " " + I18N.getString("GroupsView.details"));
         dialog.setContentPane(new DetailsView(ternaryVennList));
         dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         installCloseKeyBinding(dialog);
@@ -507,7 +526,7 @@ final class GroupsView
         Set<String> fourth = new HashSet<String>(selected.get(3).getValues());
         final QuaternaryVennList<String> quaternaryVennList = new QuaternaryVennList<String>(firstLabel, first, secondLabel, second, thirdLabel, third, fourthLabel, fourth);
 
-        JDialog dialog = new JDialog(windowForComponent(this), firstLabel + ", " + secondLabel + ", " + thirdLabel + ", " + fourthLabel + " Details");
+        JDialog dialog = new JDialog(windowForComponent(this), firstLabel + ", " + secondLabel + ", " + thirdLabel + ", " + " " + I18N.getString("GroupsView.details"));
         dialog.setContentPane(new DetailsView(quaternaryVennList));
         dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         installCloseKeyBinding(dialog);
@@ -525,7 +544,7 @@ final class GroupsView
         if (selected.size() == 1)
         {
             Group group = selected.get(0);
-            group.setName(JOptionPane.showInputDialog(windowForComponent(this), "Please enter a new name for this group:", group.getName()));
+            group.setName(JOptionPane.showInputDialog(windowForComponent(this), I18N.getString("GroupsView.renameGroupMessage") + ":", group.getName()));
         }
     }
 

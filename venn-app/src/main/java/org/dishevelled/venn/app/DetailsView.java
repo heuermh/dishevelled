@@ -29,6 +29,9 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 
+import java.util.Locale;
+import java.util.ResourceBundle;
+
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.InputMap;
@@ -64,6 +67,9 @@ final class DetailsView
     /** Maximum number of nodes above which selection sync should be disabled for quaternary details views. */
     private static final int QUATERNARY_SELECTION_SYNC_MAXIMUM = 20000;
 
+    /** I18n. */
+    private static final ResourceBundle I18N = ResourceBundle.getBundle("VennApp", Locale.getDefault());
+
     /** Binary venn list. */
     private final BinaryVennList<String> binaryVennList;
 
@@ -76,7 +82,7 @@ final class DetailsView
     // todo: use identifiable actions for these, if a clear selection icon can be found
     //   ...there is EDIT_SELECT_ALL but 24x24 is not one of the tango icon sizes
     /** Select all action. */
-    private final Action selectAll = new AbstractAction("Select all")
+    private final Action selectAll = new AbstractAction(I18N.getString("DetailsView.selectAll"))
         {
             @Override
             public void actionPerformed(final ActionEvent event)
@@ -97,7 +103,7 @@ final class DetailsView
         };
 
     /** Clear selection action. */
-    private final Action clearSelection = new AbstractAction("Clear selection")
+    private final Action clearSelection = new AbstractAction(I18N.getString("DetailsView.clearSelection"))
         {
             @Override
             public void actionPerformed(final ActionEvent event)

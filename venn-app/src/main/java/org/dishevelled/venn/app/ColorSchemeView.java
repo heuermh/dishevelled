@@ -29,6 +29,8 @@ import java.awt.event.ActionEvent;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
@@ -95,8 +97,11 @@ final class ColorSchemeView extends JPanel
     /** Custom icon size, 128x32. */
     private static final IconSize ICON_SIZE = new IconSize(324, 24) {}; // 810 x 60 originally
 
+    /** I18n. */
+    private static final ResourceBundle I18N = ResourceBundle.getBundle("VennApp", Locale.getDefault());
+    
     /** Cancel action. */
-    private final AbstractAction cancel = new AbstractAction("Cancel")
+    private final AbstractAction cancel = new AbstractAction(I18N.getString("ColorSchemeView.cancel"))
         {
             @Override
             public void actionPerformed(final ActionEvent event)
@@ -106,7 +111,7 @@ final class ColorSchemeView extends JPanel
         };
 
     /** OK action. */
-    private final AbstractAction ok = new AbstractAction("OK")
+    private final AbstractAction ok = new AbstractAction(I18N.getString("ColorSchemeView.ok"))
         {
             @Override
             public void actionPerformed(final ActionEvent event)
@@ -138,7 +143,8 @@ final class ColorSchemeView extends JPanel
         @Override
         public String getName()
         {
-            return name + " with " + n + " colors";
+            // todo: use message format
+            return name + " " + I18N.getString("ColorSchemeView.with") + " " + n + " " + I18N.getString("ColorSchemeView.colors");
         }
 
         @Override
@@ -233,8 +239,8 @@ final class ColorSchemeView extends JPanel
         LabelFieldPanel mainPanel = new LabelFieldPanel();
         mainPanel.setBorder(new EmptyBorder(12, 12, 12, 12));
 
-        mainPanel.addField("Number of colors: ", String.valueOf(n));
-        mainPanel.addField("Alpha (in range [0.0, 1.0]):", alpha);
+        mainPanel.addField(I18N.getString("ColorSchemeView.numberOfColors") + ":", String.valueOf(n));
+        mainPanel.addField("Alpha (" + I18N.getString("ColorSchemeView.inRange") + " [0.0, 1.0]):", alpha);
         mainPanel.addSpacing(20);
         mainPanel.addFinalField(colorSchemeList);
 
