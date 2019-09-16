@@ -74,14 +74,15 @@ import org.apache.batik.dom.GenericDOMImplementation;
 
 import org.apache.batik.svggen.SVGGraphics2D;
 
+import org.dishevelled.color.scheme.ColorScheme;
+
+import org.dishevelled.piccolo.venn.AbstractVennNode;
 import org.dishevelled.piccolo.venn.BinaryVennNode;
 import org.dishevelled.piccolo.venn.TernaryVennNode;
 import org.dishevelled.piccolo.venn.QuaternaryVennNode;
 import org.dishevelled.piccolo.venn.VennNode;
 
 import org.dishevelled.identify.ContextMenuListener;
-
-import org.dishevelled.piccolo.venn.AbstractVennNode;
 
 import org.drjekyll.fontchooser.FontDialog;
 
@@ -95,7 +96,9 @@ import org.piccolo2d.event.PInputEventFilter;
 import org.piccolo2d.event.PMouseWheelZoomEventHandler;
 import org.piccolo2d.event.PPanEventHandler;
 
+import org.piccolo2d.nodes.PArea;
 import org.piccolo2d.nodes.PText;
+import org.piccolo2d.nodes.PPath;
 
 import org.piccolo2d.util.PBounds;
 import org.piccolo2d.util.PPaintContext;
@@ -655,20 +658,91 @@ final class DiagramView
         }
     }
 
-    private void chooseColorScheme()
+    private int n()
     {
-        JDialog colorSchemesDialog = new JDialog((Dialog) windowForComponent(this), "Choose color scheme...", true);
-        colorSchemesDialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        colorSchemesDialog.setContentPane(new ColorSchemeView(4));
-        colorSchemesDialog.setSize(600, 706);
-        colorSchemesDialog.setVisible(true);
+        for (Iterator i = canvas.getLayer().getChildrenIterator(); i.hasNext(); )
+        {
+            PNode node = (PNode) i.next();
+            if (node instanceof BinaryVennNode)
+            {
+                return 2;
+            }
+            else if (node instanceof TernaryVennNode)
+            {
+                return 3;
+            }
+            else if (node instanceof QuaternaryVennNode)
+            {
+                return 4;
+            }
+            else if (node instanceof VennNode)
+            {
+                return ((VennNode) node).size();
+            }
+        }
+        return -1;
     }
 
-    /*
-    private void setColorScheme(final ColorScheme colorScheme)
+    private void chooseColorScheme()
     {
+        JDialog colorSchemeDialog = new JDialog((Dialog) windowForComponent(this), "Choose color scheme...", true);
+        colorSchemeDialog.setModalityType(Dialog.ModalityType.DOCUMENT_MODAL);
+        colorSchemeDialog.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
+
+        int n = n();
+        ColorSchemeView colorSchemeView = new ColorSchemeView(n);
+        colorSchemeDialog.setContentPane(colorSchemeView);
+        colorSchemeDialog.getRootPane().setDefaultButton(colorSchemeView.okButton());
+        colorSchemeDialog.setSize(600, 706);
+        colorSchemeDialog.setVisible(true);
+
+        if (!colorSchemeView.wasCancelled())
+        {
+            setColorScheme(colorSchemeView.getSelectedColorScheme(), n);
+        }
     }
-    */
+
+    private void setColorScheme(final ColorScheme colorScheme, final int n)
+    {
+        for (Iterator i = canvas.getLayer().getChildrenIterator(); i.hasNext(); )
+        {
+            PNode node = (PNode) i.next();
+            if (node instanceof BinaryVennNode)
+            {
+                BinaryVennNode binaryVennNode = (BinaryVennNode) node;
+                binaryVennNode.getFirst().setPaint(colorScheme.getColor(0.0f));
+                binaryVennNode.getSecond().setPaint(colorScheme.getColor(1.0f));
+            }
+            else if (node instanceof TernaryVennNode)
+            {
+                TernaryVennNode ternaryVennNode = (TernaryVennNode) node;
+                ternaryVennNode.getFirst().setPaint(colorScheme.getColor(0.0f));
+                ternaryVennNode.getSecond().setPaint(colorScheme.getColor(0.5f));
+                ternaryVennNode.getThird().setPaint(colorScheme.getColor(1.0f));
+            }
+            else if (node instanceof QuaternaryVennNode)
+            {
+                QuaternaryVennNode quaternaryVennNode = (QuaternaryVennNode) node;
+                quaternaryVennNode.getFirst().setPaint(colorScheme.getColor(0.0f));
+                quaternaryVennNode.getSecond().setPaint(colorScheme.getColor(0.33f));
+                quaternaryVennNode.getThird().setPaint(colorScheme.getColor(0.66f));
+                quaternaryVennNode.getFourth().setPaint(colorScheme.getColor(1.0f));
+            }
+            else if (node instanceof VennNode)
+            {
+                VennNode vennNode = (VennNode) node;
+
+                float d = 1.0f/(n * 1.0f);
+                float f = 0.0f + d/2.0f;
+                for (int j = 0; j < n; j++)
+                {
+                    PPath path = vennNode.getPath(j);
+                    path.setPaint(colorScheme.getColor(f));
+                    f += d;
+                }
+            }
+        }
+    }
 
     /**
      * Display set labels.

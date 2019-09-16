@@ -25,16 +25,28 @@ package org.dishevelled.venn.app;
 
 import java.awt.BorderLayout;
 
+import java.awt.event.ActionEvent;
+
 import java.util.ArrayList;
 
+import javax.swing.AbstractAction;
+import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 
 import javax.swing.border.EmptyBorder;
+
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import ca.odell.glazedlists.EventList;
 import ca.odell.glazedlists.GlazedLists;
 import ca.odell.glazedlists.ListSelection;
+
+import org.dishevelled.color.scheme.ColorScheme;
+
+import org.dishevelled.color.scheme.impl.ColorSchemes;
 
 import org.dishevelled.eventlist.view.IdElementsList;
 
@@ -46,6 +58,7 @@ import org.dishevelled.iconbundle.impl.svg.SVGIconBundle;
 import org.dishevelled.identify.Identifiable;
 
 import org.dishevelled.layout.LabelFieldPanel;
+import org.dishevelled.layout.ButtonPanel;
 
 /**
  * Color scheme view.
@@ -66,11 +79,40 @@ final class ColorSchemeView extends JPanel
     /** Color scheme list. */
     private final ColorSchemeList colorSchemeList;
 
+    /** OK button. */
+    private final JButton okButton;
+
+    /** Was this chooser cancelled? */
+    private boolean cancelled = true;
+
+    /** Selected color scheme. */
+    private ColorScheme selectedColorScheme = null;
+
     /** Default alpha, 0.20. */
     private static final float DEFAULT_ALPHA = 0.20f;
 
     /** Custom icon size, 128x32. */
     private static final IconSize ICON_SIZE = new IconSize(324, 24) {}; // 810 x 60 originally
+
+    /** Cancel action. */
+    private final AbstractAction cancel = new AbstractAction("Cancel")
+        {
+            @Override
+            public void actionPerformed(final ActionEvent event)
+            {
+                cancel();
+            }
+        };
+
+    /** OK action. */
+    private final AbstractAction ok = new AbstractAction("OK")
+        {
+            @Override
+            public void actionPerformed(final ActionEvent event)
+            {
+                ok();
+            }
+        };
 
     /** Identifiable color scheme. */
     private class IdColorScheme implements Identifiable
@@ -85,6 +127,11 @@ final class ColorSchemeView extends JPanel
             this.id = id;
             this.name = name;
             this.iconBundle = new SVGIconBundle(getClass().getResource("/org/dishevelled/color/scheme/examples/discrete-" + id + "-" + n + ".svg"));
+        }
+
+        String getId()
+        {
+            return id;
         }
 
         @Override
@@ -109,7 +156,18 @@ final class ColorSchemeView extends JPanel
         alpha = new JTextField(String.valueOf(DEFAULT_ALPHA));
         colorSchemes = GlazedLists.eventList(new ArrayList<IdColorScheme>());
         colorSchemeList = new ColorSchemeList(colorSchemes);
-        
+
+        ok.setEnabled(false);
+        okButton = new JButton(ok);
+        colorSchemeList.getList().addListSelectionListener(new ListSelectionListener()
+            {
+                @Override
+                public void valueChanged(final ListSelectionEvent e)
+                {
+                    ok.setEnabled(!colorSchemeList.isSelectionEmpty());
+                }
+            });
+
         addColorSchemes();
         layoutComponents();
     }
@@ -140,18 +198,56 @@ final class ColorSchemeView extends JPanel
     private void layoutComponents()
     {
         LabelFieldPanel mainPanel = new LabelFieldPanel();
-        mainPanel.setBorder(new EmptyBorder(12, 12, 0, 12));
+        mainPanel.setBorder(new EmptyBorder(12, 12, 12, 12));
 
         mainPanel.addField("Number of colors: ", String.valueOf(n));
         mainPanel.addField("Alpha (in range [0.0, 1.0]):", alpha);
         mainPanel.addSpacing(20);
         mainPanel.addFinalField(colorSchemeList);
 
+        ButtonPanel buttonPanel = new ButtonPanel();
+        buttonPanel.setBorder(new EmptyBorder(0, 12, 12, 12));
+        buttonPanel.add(okButton);
+        buttonPanel.add(cancel);
+
         setLayout(new BorderLayout());
         add("Center", mainPanel);
+        add("South", buttonPanel);
     }
 
-    private class ColorSchemeList extends IdElementsList
+    private void cancel()
+    {
+        cancelled = true;
+        selectedColorScheme = null;
+        SwingUtilities.windowForComponent(this).setVisible(false);
+    }
+
+    private void ok()
+    {
+        cancelled = false;
+        IdColorScheme idColorScheme = colorSchemeList.getSelectionModel().getSelected().get(0);
+        // todo: input validation on alpha text field
+        Float a = Float.valueOf(alpha.getText());
+        selectedColorScheme = ColorSchemes.getDiscreteColorScheme(idColorScheme.getId(), n, a);
+        SwingUtilities.windowForComponent(this).setVisible(false);
+    }
+
+    JButton okButton()
+    {
+        return okButton;
+    }
+
+    boolean wasCancelled()
+    {
+        return cancelled;
+    }
+
+    ColorScheme getSelectedColorScheme()
+    {
+        return selectedColorScheme;
+    }
+
+    private class ColorSchemeList extends IdElementsList<IdColorScheme>
     {
         private ColorSchemeList(final EventList<IdColorScheme> colorSchemes)
         {
