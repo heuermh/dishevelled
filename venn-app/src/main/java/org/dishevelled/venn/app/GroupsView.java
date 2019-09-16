@@ -26,6 +26,7 @@ package org.dishevelled.venn.app;
 import static javax.swing.SwingUtilities.windowForComponent;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
 import java.awt.event.ActionEvent;
@@ -202,6 +203,21 @@ final class GroupsView
     /** Venn euler layouter. */
     private final VennLayouter<String> vennLayouter = new VennEulerLayouter<String>();
 
+    /** Small dialog size. */
+    private static final Dimension SMALL = new Dimension(666, 500);
+
+    /** Medium dialog size. */
+    private static final Dimension MEDIUM = new Dimension(826, 620);
+
+    /** Wide dialog size. */
+    private static final Dimension WIDE = new Dimension(992, 620);
+
+    /** Large dialog size. */
+    private static final Dimension LARGE = new Dimension(960, 720);
+
+    /** Large wide dialog size. */
+    private static final Dimension LARGE_WIDE = new Dimension(1152, 720);
+
 
     /**
      * Create a new groups view.
@@ -327,15 +343,16 @@ final class GroupsView
         }
 
         JDialog dialog = new JDialog(windowForComponent(this), Joiner.on(", ").join(labels) + " Euler Diagram");
-        dialog.setContentPane(new DiagramView(vennNode));
+        final DiagramView diagramView = new DiagramView(vennNode);
+        dialog.setContentPane(diagramView);
         dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         installCloseKeyBinding(dialog);
 
         // todo: offset per parent frame
-        dialog.setBounds(100, 100, 600, 600);
+        dialog.setSize(MEDIUM);
         if (model.size() > 4)
         {
-            dialog.setBounds(100, 100, 800, 800);
+            dialog.setSize(LARGE);
         }
         dialog.setVisible(true);
 
@@ -344,13 +361,15 @@ final class GroupsView
                 @Override
                 public void run()
                 {
-                    Rectangle2D.Double boundingRectangle = new Rectangle2D.Double(0.0d, 0.0d, 400.0d, 400.0d);
+                    Rectangle2D.Double boundingRectangle = new Rectangle2D.Double(0.0d, 0.0d, SMALL.getWidth(), SMALL.getHeight());
                     if (model.size() > 4)
                     {
-                        boundingRectangle.setRect(0.0d, 0.0d, 600.0d, 600.0d);
+                        boundingRectangle.setRect(0.0d, 0.0d, MEDIUM.getWidth(), MEDIUM.getHeight());
                     }
                     VennLayout layout = vennLayouter.layout(model, boundingRectangle, PerformanceHint.OPTIMIZE_FOR_SPEED);
                     vennNode.setLayout(layout);
+
+                    diagramView.centerView(vennNode);
                 }
             });
     }
@@ -372,7 +391,7 @@ final class GroupsView
         installCloseKeyBinding(dialog);
 
         // todo: offset per parent frame
-        dialog.setBounds(100, 100, 400, 400);
+        dialog.setSize(SMALL);
         dialog.setVisible(true);
     }
 
@@ -395,7 +414,7 @@ final class GroupsView
         installCloseKeyBinding(dialog);
 
         // todo: offset per parent frame
-        dialog.setBounds(100, 100, 400, 400);
+        dialog.setSize(SMALL);
         dialog.setVisible(true);
     }
 
@@ -420,7 +439,7 @@ final class GroupsView
         installCloseKeyBinding(dialog);
 
         // todo: offset per parent frame
-        dialog.setBounds(100, 100, 600, 600);
+        dialog.setSize(MEDIUM);
         dialog.setVisible(true);
     }
 
@@ -441,7 +460,7 @@ final class GroupsView
         installCloseKeyBinding(dialog);
 
         // todo: offset per parent frame
-        dialog.setBounds(100, 100, 600, 450);
+        dialog.setSize(WIDE);
         dialog.setVisible(true);
     }
 
@@ -464,7 +483,7 @@ final class GroupsView
         installCloseKeyBinding(dialog);
 
         // todo: offset per parent frame
-        dialog.setBounds(100, 100, 747, 669);
+        dialog.setSize(LARGE_WIDE);
         dialog.setVisible(true);
     }
 
@@ -489,7 +508,7 @@ final class GroupsView
         installCloseKeyBinding(dialog);
 
         // todo: offset per parent frame
-        dialog.setBounds(100, 100, 894, 888);
+        dialog.setSize(LARGE_WIDE);
         dialog.setVisible(true);
     }
 

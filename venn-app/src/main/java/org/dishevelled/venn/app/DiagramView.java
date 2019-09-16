@@ -23,13 +23,17 @@
 */
 package org.dishevelled.venn.app;
 
+import static org.apache.commons.lang3.SystemUtils.IS_OS_MAC;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dialog;
 import java.awt.FileDialog;
+import java.awt.Font;
 import java.awt.Image;
 import java.awt.Paint;
+import java.awt.Point;
 import java.awt.Toolkit;
 
 import java.awt.event.ActionEvent;
@@ -57,9 +61,12 @@ import javax.swing.InputMap;
 import javax.swing.KeyStroke;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JComponent;
+import javax.swing.JDialog;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
+import javax.swing.SwingUtilities;
+import javax.swing.WindowConstants;
 
 import static javax.swing.SwingUtilities.windowForComponent;
 
@@ -76,6 +83,8 @@ import org.dishevelled.identify.ContextMenuListener;
 
 import org.dishevelled.piccolo.venn.AbstractVennNode;
 
+import org.drjekyll.fontchooser.FontDialog;
+
 import org.piccolo2d.PCamera;
 import org.piccolo2d.PCanvas;
 import org.piccolo2d.PNode;
@@ -86,6 +95,9 @@ import org.piccolo2d.event.PInputEventFilter;
 import org.piccolo2d.event.PMouseWheelZoomEventHandler;
 import org.piccolo2d.event.PPanEventHandler;
 
+import org.piccolo2d.nodes.PText;
+
+import org.piccolo2d.util.PBounds;
 import org.piccolo2d.util.PPaintContext;
 import org.piccolo2d.util.PPickPath;
 
@@ -105,6 +117,36 @@ final class DiagramView
 
     /** Canvas. */
     private final PCanvas canvas;
+
+    /** Choose color scheme. */
+    private final Action chooseColorScheme = new AbstractAction("Choose color scheme...")
+        {
+            @Override
+            public void actionPerformed(final ActionEvent event)
+            {
+                chooseColorScheme();
+            }
+        };
+
+    /** Choose label font. */
+    private final Action chooseLabelFont = new AbstractAction("Choose label font...")
+        {
+            @Override
+            public void actionPerformed(final ActionEvent event)
+            {
+                chooseLabelFont();
+            }
+        };
+
+    /** Choose size label font. */
+    private final Action chooseSizeLabelFont = new AbstractAction("Choose size label font...")
+        {
+            @Override
+            public void actionPerformed(final ActionEvent event)
+            {
+                chooseSizeLabelFont();
+            }
+        };
 
     /** Export to PNG image action. */
     private final Action exportToPNG = new AbstractAction("Export to PNG...") // i18n
@@ -252,21 +294,37 @@ final class DiagramView
         KeyStroke ctrlShiftP = KeyStroke.getKeyStroke(KeyEvent.VK_P, menuKeyMask | InputEvent.SHIFT_DOWN_MASK);
         KeyStroke ctrlShiftS = KeyStroke.getKeyStroke(KeyEvent.VK_S, menuKeyMask | InputEvent.SHIFT_DOWN_MASK);
         KeyStroke ctrlShiftA = KeyStroke.getKeyStroke(KeyEvent.VK_A, menuKeyMask | InputEvent.SHIFT_DOWN_MASK);
+        KeyStroke ctrlShiftB = KeyStroke.getKeyStroke(KeyEvent.VK_A, menuKeyMask | InputEvent.SHIFT_DOWN_MASK);
         KeyStroke ctrlShiftC = KeyStroke.getKeyStroke(KeyEvent.VK_C, menuKeyMask | InputEvent.SHIFT_DOWN_MASK);
+        KeyStroke ctrlShiftF = KeyStroke.getKeyStroke(KeyEvent.VK_F, menuKeyMask | InputEvent.SHIFT_DOWN_MASK);
+        KeyStroke ctrlShiftR = KeyStroke.getKeyStroke(KeyEvent.VK_R, menuKeyMask | InputEvent.SHIFT_DOWN_MASK);
         KeyStroke ctrlShiftPeriod = KeyStroke.getKeyStroke(KeyEvent.VK_COMMA, menuKeyMask | InputEvent.SHIFT_DOWN_MASK);
         KeyStroke ctrlShiftComma = KeyStroke.getKeyStroke(KeyEvent.VK_PERIOD, menuKeyMask | InputEvent.SHIFT_DOWN_MASK);
+        inputMap.put(ctrlShiftR, "chooseColorScheme");
+        inputMap.put(ctrlShiftF, "chooseLabelFont");
+        inputMap.put(ctrlShiftB, "chooseSizeLabelFont");
         inputMap.put(ctrlShiftP, "exportToPNG");
         inputMap.put(ctrlShiftS, "exportToSVG");
         inputMap.put(ctrlShiftA, "selectAll");
         inputMap.put(ctrlShiftC, "clearSelection");
         inputMap.put(ctrlShiftComma, "zoomIn");
         inputMap.put(ctrlShiftPeriod, "zoomOut");
+        getActionMap().put("chooseColorScheme", chooseColorScheme);
+        getActionMap().put("chooseLabelFont", chooseLabelFont);
+        getActionMap().put("chooseSizeLabelFont", chooseSizeLabelFont);
         getActionMap().put("exportToPNG", exportToPNG);
         getActionMap().put("exportToSVG", exportToSVG);
         getActionMap().put("selectAll", selectAll);
         getActionMap().put("clearSelection", clearSelection);
         getActionMap().put("zoomIn", zoomIn);
         getActionMap().put("zoomOut", zoomOut);
+
+        JMenuItem chooseColorSchemeMenuItem = new JMenuItem(chooseColorScheme);
+        chooseColorSchemeMenuItem.setAccelerator(ctrlShiftR);
+        JMenuItem chooseLabelFontMenuItem = new JMenuItem(chooseLabelFont);
+        chooseLabelFontMenuItem.setAccelerator(ctrlShiftF);
+        JMenuItem chooseSizeLabelFontMenuItem = new JMenuItem(chooseSizeLabelFont);
+        chooseSizeLabelFontMenuItem.setAccelerator(ctrlShiftB);
 
         JMenuItem exportToPNGMenuItem = new JMenuItem(exportToPNG);
         exportToPNGMenuItem.setAccelerator(ctrlShiftP);
@@ -281,6 +339,7 @@ final class DiagramView
         displaySizeLabelsMenuItem.setSelected(true);
         JCheckBoxMenuItem displaySizesForEmptyAreasMenuItem = new JCheckBoxMenuItem(displaySizesForEmptyAreas);
         displaySizesForEmptyAreasMenuItem.setSelected(true);
+
         JMenuItem selectAllMenuItem = new JMenuItem(selectAll);
         selectAllMenuItem.setAccelerator(ctrlShiftA);
         JMenuItem clearSelectionMenuItem = new JMenuItem(clearSelection);
@@ -291,6 +350,10 @@ final class DiagramView
         zoomOutMenuItem.setAccelerator(ctrlShiftComma);
 
         JPopupMenu contextMenu = new JPopupMenu();
+        contextMenu.add(chooseColorSchemeMenuItem);
+        contextMenu.add(chooseLabelFontMenuItem);
+        contextMenu.add(chooseSizeLabelFontMenuItem);
+        contextMenu.addSeparator();
         contextMenu.add(exportToPNGMenuItem);
         contextMenu.add(exportToSVGMenuItem);
         contextMenu.addSeparator();
@@ -318,14 +381,14 @@ final class DiagramView
     DiagramView(final BinaryVennNode<String> binaryVennNode)
     {
         this();
-        // todo:  use bounding rect provided by layout
-        binaryVennNode.offset(92.0d, 124.0d);
+
         for (PNode node : binaryVennNode.nodes())
         {
             node.addInputEventListener(new ToolTipTextListener());
             node.addInputEventListener(new MousePressedListener());
         }
         canvas.getLayer().addChild(binaryVennNode);
+        centerView(binaryVennNode);
     }
 
     /**
@@ -336,13 +399,14 @@ final class DiagramView
     DiagramView(final TernaryVennNode<String> ternaryVennNode)
     {
         this();
-        ternaryVennNode.offset(92.0d, 70.0d);
+
         for (PNode node : ternaryVennNode.nodes())
         {
             node.addInputEventListener(new ToolTipTextListener());
             node.addInputEventListener(new MousePressedListener());
         }
         canvas.getLayer().addChild(ternaryVennNode);
+        centerView(ternaryVennNode);
     }
 
     /**
@@ -353,13 +417,14 @@ final class DiagramView
     DiagramView(final QuaternaryVennNode<String> quaternaryVennNode)
     {
         this();
-        quaternaryVennNode.offset(40.0d, 235.0d);
+
         for (PNode node : quaternaryVennNode.nodes())
         {
             node.addInputEventListener(new ToolTipTextListener());
             node.addInputEventListener(new MousePressedListener());
         }
         canvas.getLayer().addChild(quaternaryVennNode);
+        centerView(quaternaryVennNode);
     }
 
     /**
@@ -370,15 +435,36 @@ final class DiagramView
     DiagramView(final VennNode<String> vennNode)
     {
         this();
-        vennNode.offset(100.0d, 100.0d);
+
         for (PNode node : vennNode.nodes())
         {
             node.addInputEventListener(new ToolTipTextListener());
             node.addInputEventListener(new MousePressedListener());
         }
         canvas.getLayer().addChild(vennNode);
+        centerView(vennNode);
     }
 
+
+    /**
+     * Center the view about the specified node.  Happens later
+     * on the event dispatch thread.
+     *
+     * @param node node
+     */
+    void centerView(final PNode node)
+    {
+        SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run()
+                {
+                    Point2D nodeCenter = node.getFullBoundsReference().getCenter2D();
+                    Point2D viewCenter = canvas.getCamera().getBoundsReference().getCenter2D();
+                    canvas.getCamera().setViewOffset(viewCenter.getX() - nodeCenter.getX(),
+                                                     viewCenter.getY() - nodeCenter.getY());
+                }
+            });
+    }
 
     /**
      * Return the label text for the picked node for the specified pick path, if any.
@@ -499,6 +585,90 @@ final class DiagramView
             }
         }
     }
+
+    /**
+     * Choose label font.
+     */
+    private void chooseLabelFont()
+    {
+        // unsafe cast, if this view isn't rooted in a dialog
+        FontDialog fontDialog = new FontDialog((Dialog) windowForComponent(this), "Choose label font...", true);
+        fontDialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        fontDialog.setVisible(true);
+
+        if (!fontDialog.isCancelSelected())
+        {
+            setLabelFont(fontDialog.getSelectedFont());
+        }
+    }
+
+    /**
+     * Choose size label font.
+     */
+    private void chooseSizeLabelFont()
+    {
+        // unsafe cast, if this view isn't rooted in a dialog
+        FontDialog fontDialog = new FontDialog((Dialog) windowForComponent(this), "Choose size label font...", true);
+        fontDialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        fontDialog.setVisible(true);
+
+        if (!fontDialog.isCancelSelected())
+        {
+            setSizeLabelFont(fontDialog.getSelectedFont());
+        }
+    }
+
+    /**
+     * Set the label font for all label nodes to the specified font.
+     *
+     * @param font font
+     */
+    private void setLabelFont(final Font font)
+    {
+        for (Iterator i = canvas.getLayer().getChildrenIterator(); i.hasNext(); )
+        {
+            PNode node = (PNode) i.next();
+            if (node instanceof AbstractVennNode)
+            {
+                AbstractVennNode<String> vennNode = (AbstractVennNode<String>) node;
+                for (PText label : vennNode.labels())
+                {
+                    label.setFont(font);
+                }
+            }
+        }
+    }
+
+    private void setSizeLabelFont(final Font font)
+    {
+        for (Iterator i = canvas.getLayer().getChildrenIterator(); i.hasNext(); )
+        {
+            PNode node = (PNode) i.next();
+            if (node instanceof AbstractVennNode)
+            {
+                AbstractVennNode<String> vennNode = (AbstractVennNode<String>) node;
+                for (PText sizeLabel : vennNode.sizeLabels())
+                {
+                    sizeLabel.setFont(font);
+                }
+            }
+        }
+    }
+
+    private void chooseColorScheme()
+    {
+        JDialog colorSchemesDialog = new JDialog((Dialog) windowForComponent(this), "Choose color scheme...", true);
+        colorSchemesDialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        colorSchemesDialog.setContentPane(new ColorSchemeView(4));
+        colorSchemesDialog.setSize(600, 706);
+        colorSchemesDialog.setVisible(true);
+    }
+
+    /*
+    private void setColorScheme(final ColorScheme colorScheme)
+    {
+    }
+    */
 
     /**
      * Display set labels.
@@ -653,7 +823,6 @@ final class DiagramView
     private class MousePressedListener
         extends PBasicInputEventHandler
     {
-
         /**
          * Create a new mouse pressed listener.
          */
@@ -698,6 +867,16 @@ final class DiagramView
     private class ModeEventHandler
         extends KeyAdapter
     {
+        /** Pan cursor. */
+        private final Cursor panCursor;
+
+        /**
+         * Create a new mode event listener.
+         */
+        ModeEventHandler()
+        {
+            panCursor = IS_OS_MAC ? createMoveCursor() : Cursor.getPredefinedCursor(Cursor.MOVE_CURSOR);
+        }
 
         @Override
         public void keyPressed(final KeyEvent event)
@@ -705,7 +884,7 @@ final class DiagramView
             if (KeyEvent.VK_SPACE == event.getKeyCode())
             {
                 mode = Mode.PAN;
-                ((PCanvas) event.getComponent()).setCursor(Cursor.getPredefinedCursor(Cursor.MOVE_CURSOR));
+                ((PCanvas) event.getComponent()).setCursor(panCursor);
             }
         }
 
@@ -716,6 +895,25 @@ final class DiagramView
             {
                 mode = Mode.EDIT;
                 ((PCanvas) event.getComponent()).setCursor(Cursor.getDefaultCursor());
+            }
+        }
+
+        /**
+         * Create a custom move cursor.
+         *
+         * @return a custom move cursor
+         */
+        private Cursor createMoveCursor()
+        {
+            try
+            {
+                Image moveCursor = ImageIO.read(getClass().getResource("moveCursor16x16.png"));
+                return Toolkit.getDefaultToolkit().createCustomCursor(moveCursor, new Point(8, 8), "moveCursor");
+            }
+            catch (Exception e)
+            {
+                // ignore
+                return null;
             }
         }
     }

@@ -80,32 +80,63 @@ public final class VennApp
 
     /**
      * Create a new app for venn and euler diagrams.
+     *
+     * @param args command line arguments
      */
-    public VennApp()
+    public VennApp(final String[] args)
     {
         super();
         this.groupsView = new GroupsView();
+
+        SwingUtilities.invokeLater(new Runnable()
+            {
+                @Override
+                public void run()
+                {
+                    for (String arg : args)
+                    {
+                        File file = new File(arg);
+                        Group group = readFile(file);
+                        groupsView.addGroup(group);
+                    }
+                }
+            });
     }
 
 
+    /**
+     * Exit.
+     */
     private static void exit()
     {
         System.exit(0);
     }
 
+    /**
+     * Open zero or more text files and load them into the groups view.
+     */
     private void open()
     {
         JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setMultiSelectionEnabled(true);
         int returnVal = fileChooser.showOpenDialog(groupsView);
 
         if (returnVal == JFileChooser.APPROVE_OPTION)
         {
-            File file = fileChooser.getSelectedFile();
-            Group group = readFile(file);
-            groupsView.addGroup(group);
+            for (File file: fileChooser.getSelectedFiles())
+            {
+                Group group = readFile(file);
+                groupsView.addGroup(group);
+            }
         }
     }
 
+    /**
+     * Read the specified file into a group.
+     *
+     * @param file file to read
+     * @return the specified file read into a group
+     */
     private static Group readFile(final File file)
     {
         BufferedReader reader = null;
@@ -142,6 +173,9 @@ public final class VennApp
         return new Group(name, values);
     }
 
+    /**
+     * Create and return the menu bar.
+     */
     private JMenuBar createMenuBar()
     {
         JMenuBar menuBar = new JMenuBar();
@@ -178,8 +212,10 @@ public final class VennApp
     public static void main(final String[] args)
     {
         System.setProperty("apple.laf.useScreenMenuBar", "true");
+        System.setProperty("com.apple.macos.useScreenMenuBar", "true");
+        System.setProperty("com.apple.macos.use-file-dialog-packages", "true");
+        System.setProperty("apple.awt.application.name", "VennApp");
 
-        // todo:  open files from command line args
-        SwingUtilities.invokeLater(new VennApp());
+        SwingUtilities.invokeLater(new VennApp(args));
     }
 }
