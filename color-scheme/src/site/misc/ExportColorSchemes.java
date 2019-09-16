@@ -765,7 +765,6 @@ public final class ExportColorSchemes
         export(getDiscreteColorScheme("jco", 8), "discrete-jco-8");
         export(getDiscreteColorScheme("jco", 9), "discrete-jco-9");
         export(getDiscreteColorScheme("jco", 10), "discrete-jco-10");
-        */
 
         export(getContinuousColorScheme("inferno", 256), "continuous-inferno-256");
         export(getContinuousColorScheme("magma", 256), "continuous-magma-256");
@@ -776,6 +775,28 @@ public final class ExportColorSchemes
         export(getDiscreteColorScheme("magma", 256), "discrete-magma-256");
         export(getDiscreteColorScheme("plasma", 256), "discrete-plasma-256");
         export(getDiscreteColorScheme("viridis", 256), "discrete-viridis-256");
+        */
+
+        export(getDiscreteColorScheme("aaas", 2), "discrete-aaas-2");
+        export(getDiscreteColorScheme("accent", 2), "discrete-accent-2");
+        export(getDiscreteColorScheme("category", 2), "discrete-category-2");
+        export(getDiscreteColorScheme("dark-2", 2), "discrete-dark-2-2");
+        export(getDiscreteColorScheme("gut", 2), "discrete-gut-2");
+        export(getDiscreteColorScheme("jama", 2), "discrete-jama-2");
+        export(getDiscreteColorScheme("jco", 2), "discrete-jco-2");
+        export(getDiscreteColorScheme("lancet", 2), "discrete-lancet-2");
+        export(getDiscreteColorScheme("npg", 2), "discrete-npg-2");
+        export(getDiscreteColorScheme("nejm", 2), "discrete-nejm-2");
+        export(getDiscreteColorScheme("pastel-1", 2), "discrete-pastel-1-2");
+        export(getDiscreteColorScheme("pastel-2", 2), "discrete-pastel-2-2");
+        export(getDiscreteColorScheme("set-1", 2), "discrete-set-1-2");
+        export(getDiscreteColorScheme("set-2", 2), "discrete-set-2-2");
+        export(getDiscreteColorScheme("set-3", 2), "discrete-set-3-2");
+        export(getDiscreteColorScheme("spectral", 2), "discrete-spectral-2");
+        export(getDiscreteColorScheme("syn", 2), "discrete-syn-2");
+        export(getDiscreteColorScheme("tableau", 2), "discrete-tableau-2");
+        export(getDiscreteColorScheme("unambiguous", 2), "discrete-unambiguous-2");
+        export(getDiscreteColorScheme("unambiguous", 3), "discrete-unambiguous-3");
     }
 
     private static final void export(final ColorScheme colorScheme, final String fileName)
