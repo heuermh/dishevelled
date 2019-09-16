@@ -188,10 +188,6 @@ public final class VennApp
         JMenuItem openMenuItem = fileMenu.add(open);
         openMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, menuKeyMask));
 
-        // perhaps not the best place to do this . . .
-        groupsView.getContextMenu().add(openMenuItem, 0);
-        groupsView.getContextMenu().add(new JPopupMenu.Separator(), 1);
-
         // osx doesn't need an exit menu item, Quit VennApp [Q] is present in VennApp application menu
         fileMenu.addSeparator();
         fileMenu.add(exit);
@@ -206,6 +202,13 @@ public final class VennApp
         JFrame frame = new JFrame("Venn and Euler Diagrams");
         frame.setContentPane(groupsView);
         frame.setJMenuBar(createMenuBar());
+
+        JMenuItem openMenuItem = new JMenuItem(open);
+        groupsView.getContextMenu().add(openMenuItem, 0);
+        int menuKeyMask = Toolkit.getDefaultToolkit().getMenuShortcutKeyMask();
+        openMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, menuKeyMask));
+        groupsView.getContextMenu().add(new JPopupMenu.Separator(), 1);
+
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(666, 500);
         frame.setVisible(true);
