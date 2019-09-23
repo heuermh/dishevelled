@@ -160,6 +160,9 @@ public final class DiscreteColorSchemeTest
         DiscreteColorScheme colorScheme = new DiscreteColorScheme("color-scheme", colors, 0.0d, 1.0d, colorFactory);
         assertNotNull(colorScheme);
         assertEquals("color-scheme", colorScheme.getName());
+        assertEquals(2, colorScheme.getSize());
+        assertTrue(colorScheme.getColors().contains(Color.BLACK));
+        assertTrue(colorScheme.getColors().contains(Color.WHITE));
         assertEquals(0.0d, colorScheme.getMinimumValue(), 0.1d);
         assertEquals(1.0d, colorScheme.getMaximumValue(), 0.1d);
         assertEquals(colorFactory, colorScheme.getColorFactory());
@@ -179,6 +182,10 @@ public final class DiscreteColorSchemeTest
         DiscreteColorScheme colorScheme = new DiscreteColorScheme("color-scheme", colors, 0.0d, 1.0d, colorFactory);
         assertNotNull(colorScheme);
         assertEquals("color-scheme", colorScheme.getName());
+        assertEquals(3, colorScheme.getSize());
+        assertTrue(colorScheme.getColors().contains(Color.BLACK));
+        assertTrue(colorScheme.getColors().contains(Color.RED));
+        assertTrue(colorScheme.getColors().contains(Color.WHITE));
         assertEquals(0.0d, colorScheme.getMinimumValue(), 0.1d);
         assertEquals(1.0d, colorScheme.getMaximumValue(), 0.1d);
         assertEquals(colorFactory, colorScheme.getColorFactory());

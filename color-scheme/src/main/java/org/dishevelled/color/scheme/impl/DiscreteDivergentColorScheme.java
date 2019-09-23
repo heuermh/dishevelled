@@ -26,6 +26,7 @@ package org.dishevelled.color.scheme.impl;
 import java.awt.Color;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.dishevelled.color.scheme.ColorFactory;
@@ -155,6 +156,28 @@ public final class DiscreteDivergentColorScheme
     public String getName()
     {
         return name;
+    }
+
+    /**
+     * Return the number of colors in this discrete color scheme.
+     *
+     * @since 3.1
+     * @return the number of colors in this discrete color scheme
+     */
+    public int getSize()
+    {
+        return colors.size();
+    }
+
+    /**
+     * Return an unmodifiable list of colors in this discrete color scheme.
+     *
+     * @since 3.1
+     * @return an unmodifiable list of colors in this discrete color scheme
+     */
+    public List<Color> getColors()
+    {
+        return Collections.unmodifiableList(colors);
     }
 
     @Override
