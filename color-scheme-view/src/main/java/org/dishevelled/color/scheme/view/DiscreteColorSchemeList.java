@@ -23,6 +23,9 @@
 */
 package org.dishevelled.color.scheme.view;
 
+import java.util.Locale;
+import java.util.ResourceBundle;
+
 import ca.odell.glazedlists.EventList;
 
 import org.dishevelled.color.scheme.impl.DiscreteColorScheme;
@@ -36,6 +39,9 @@ import org.dishevelled.eventlist.view.ElementsList;
  */
 public class DiscreteColorSchemeList extends ElementsList<DiscreteColorScheme>
 {
+    /** I18n. */
+    private static final ResourceBundle I18N = ResourceBundle.getBundle("color-scheme-view", Locale.getDefault());
+
 
     /**
      * Create a new discrete color scheme list with the specified discrete color schemes.
@@ -44,7 +50,18 @@ public class DiscreteColorSchemeList extends ElementsList<DiscreteColorScheme>
      */
     public DiscreteColorSchemeList(final EventList<DiscreteColorScheme> colorSchemes)
     {
-        super("Color schemes:", colorSchemes); // i18n
+        super(I18N.getString("DiscreteColorSchemeList.discreteColorSchemes") + ":", colorSchemes);
         getList().setCellRenderer(new DiscreteColorSchemeListCellRenderer());
+    }
+
+
+    @Override
+    public void add()
+    {
+        DiscreteColorScheme colorScheme = DiscreteColorSchemeChooser.showDialog(this, I18N.getString("DiscreteColorSchemeList.createANewDiscreteColorScheme"));
+        if (colorScheme != null)
+        {
+            getModel().add(colorScheme);
+        }
     }
 }

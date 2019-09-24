@@ -43,23 +43,43 @@ import ca.odell.glazedlists.GlazedLists;
 
 import org.dishevelled.color.scheme.impl.DiscreteColorScheme;
 
+import org.dishevelled.color.scheme.factory.CachingColorFactory;
+
 import org.dishevelled.layout.LabelFieldPanel;
 
+/**
+ * Discrete color scheme chooser.
+ *
+ * @author  Michael Heuer
+ */
 public class DiscreteColorSchemeChooser extends LabelFieldPanel
 {
     /** I18n. */
     private static final ResourceBundle I18N = ResourceBundle.getBundle("color-scheme-view", Locale.getDefault());
 
+    /** Name. */
     private final JTextField name;
+
+    /** Color list. */
     private final ColorList colorList;
 
+
+    /**
+     * Create a new discrete color scheme chooser.
+     */
     public DiscreteColorSchemeChooser()
     {
         super();
-        name = new JTextField();        
+        name = new JTextField();
         colorList = new ColorList(GlazedLists.eventList(Collections.emptyList()));
+
+        layoutComponents();
     }
 
+
+    /**
+     * Layout components.
+     */
     private void layoutComponents()
     {
         setBorder(new EmptyBorder(12, 12, 12, 12));
@@ -69,22 +89,79 @@ public class DiscreteColorSchemeChooser extends LabelFieldPanel
         addFinalField(colorList);
     }
 
-    // todo DiscreteColorSchemeTracker
-    DiscreteColorScheme getColorScheme()
+    /**
+     * Return the name text field for this discrete color scheme chooser.
+     *
+     * @return the name text field for this discrete color scheme chooser
+     */
+    JTextField name()
     {
-        return null;
+        return name;
     }
 
+    /**
+     * Return the color list for this discrete color scheme chooser.
+     *
+     * @return the color list for this discrete color scheme chooser
+     */
+    ColorList colorList()
+    {
+        return colorList;
+    }
+
+    /**
+     * Return true if name and color list are valid.
+     *
+     * @return true if name and color list are valid
+     */
+    protected boolean ready()
+    {
+        return colorList.getModel().size() >= 2 && name.getText().length() > 0;
+    }
+
+    /**
+     * Return the color scheme for this discrete color scheme chooser, if any.
+     *
+     * @return the color scheme for this discrete color scheme chooser, if any
+     */
+    DiscreteColorScheme getColorScheme()
+    {
+        if (ready())
+        {
+            return new DiscreteColorScheme(name.getText(), colorList.getModel(), 0.0d, 1.0d, new CachingColorFactory());
+        }
+        else
+        {
+            return null;
+        }
+    }
+
+    /**
+     * Show dialog.
+     *
+     * @param component component
+     * @param title title
+     * @return dialog
+     */
     public static DiscreteColorScheme showDialog(final Component component, final String title)
     {
         DiscreteColorSchemeChooser chooserPane = new DiscreteColorSchemeChooser();
-        JDialog dialog = createDialog(component, title, true, chooserPane);
+        DiscreteColorSchemeChooserDialog dialog = createDialog(component, title, true, chooserPane);
         dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         dialog.show();
-        return chooserPane.getColorScheme();
+        return dialog.getColorScheme();
     }
 
-    public static JDialog createDialog(final Component component, final String title, final boolean modal, final DiscreteColorSchemeChooser chooserPane)
+    /**
+     * Create dialog.
+     *
+     * @param component component
+     * @param title title
+     * @param modal modal
+     * @param chooserPane chooser pane
+     * @return dialog
+     */
+    public static DiscreteColorSchemeChooserDialog createDialog(final Component component, final String title, final boolean modal, final DiscreteColorSchemeChooser chooserPane)
     {
         Window window = SwingUtilities.windowForComponent(component);
         DiscreteColorSchemeChooserDialog dialog;

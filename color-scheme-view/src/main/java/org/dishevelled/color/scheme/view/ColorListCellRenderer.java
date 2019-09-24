@@ -29,6 +29,8 @@ import java.awt.Graphics2D;
 
 import java.awt.image.BufferedImage;
 
+import java.text.NumberFormat;
+
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -54,6 +56,9 @@ public class ColorListCellRenderer extends StripeListCellRenderer
 
     /** Icon height. */
     private int iconHeight = DEFAULT_ICON_HEIGHT;
+
+    /** RBG color components. */
+    private static final float[] RGBA = new float[4];
 
 
     /**
@@ -100,7 +105,8 @@ public class ColorListCellRenderer extends StripeListCellRenderer
     }
 
     /**
-     * Create and return a name for the specified color.
+     * Create and return a name for the specified color. Defaults to
+     * <code>#FFFFFF rgb(255, 255, 255)</code>.
      *
      * @param color color, must not be null
      * @return a name for the specified color
@@ -111,20 +117,94 @@ public class ColorListCellRenderer extends StripeListCellRenderer
         {
             throw new IllegalArgumentException("color must not be null");
         }
-
-        return toRgba(color) + " " + toHex(color);
+        return toHex(color) + " " + toRgb(color);
     }
 
-    private static final float[] RGBA = new float[4];
-
-    protected final String toRgba(final Color color)
+    /**
+     * Format the specified color as <code>rgb(255, 255, 255)</code>.
+     *
+     * @param color color to format, must not be null
+     * @return the specified color formatted as <code>rgb(255, 255, 255)</code>
+     */
+    protected final String toRgb(final Color color)
     {
-        color.getRGBComponents(RGBA);
-        return String.format("rgba=(%d, %d, %d, %d)", RGBA[0], RGBA[1], RGBA[2], RGBA[3]);
+        if (color == null)
+        {
+            throw new IllegalArgumentException("color must not be null");
+        }
+        return String.format("rgb(%d, %d, %d)", color.getRed(), color.getGreen(), color.getBlue());
     }
 
+    /**
+     * Format the specified color as <code>rgb(255, 255, 255, 1.0)</code>.
+     *
+     * @param color color to format, must not be null
+     * @return the specified color formatted as <code>rgb(255, 255, 255, 1.0)</code>
+     */
+    protected final String toIntegerRgba(final Color color)
+    {
+        if (color == null)
+        {
+            throw new IllegalArgumentException("color must not be null");
+        }
+        color.getRGBComponents(RGBA);
+        StringBuilder sb = new StringBuilder();
+        NumberFormat format = NumberFormat.getInstance();
+        format.setMinimumIntegerDigits(1);
+        format.setMaximumFractionDigits(4);
+        sb.append("rgba(");
+        sb.append(color.getRed());
+        sb.append(", ");
+        sb.append(color.getGreen());
+        sb.append(", ");
+        sb.append(color.getBlue());
+        sb.append(", ");
+        sb.append(format.format(RGBA[3]));
+        sb.append(")");
+        return sb.toString();
+    }
+
+    /**
+     * Format the specified color as <code>rgba(1.0, 1.0, 1.0, 1.0)</code>.
+     *
+     * @param color color to format, must not be null
+     * @return the specified color formatted as <code>rgba(1.0, 1.0, 1.0, 1.0)</code>
+     */
+    protected final String toFloatRgba(final Color color)
+    {
+        if (color == null)
+        {
+            throw new IllegalArgumentException("color must not be null");
+        }
+        color.getRGBComponents(RGBA);
+        StringBuilder sb = new StringBuilder();
+        NumberFormat format = NumberFormat.getInstance();
+        format.setMinimumIntegerDigits(1);
+        format.setMaximumFractionDigits(4);
+        sb.append("rgba(");
+        sb.append(format.format(RGBA[0]));
+        sb.append(", ");
+        sb.append(format.format(RGBA[1]));
+        sb.append(", ");
+        sb.append(format.format(RGBA[2]));
+        sb.append(", ");
+        sb.append(format.format(RGBA[3]));
+        sb.append(")");
+        return sb.toString();
+    }
+
+    /**
+     * Format the specified color as <code>#FFFFFF</code>.
+     *
+     * @param color color to format, must not be null
+     * @return the specified color formatted as <code>#FFFFFF</code>
+     */
     protected final String toHex(final Color color)
     {
+        if (color == null)
+        {
+            throw new IllegalArgumentException("color must not be null");
+        }
         return String.format("#%02X%02X%02X", color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha());
     }
 
@@ -140,14 +220,13 @@ public class ColorListCellRenderer extends StripeListCellRenderer
         {
             throw new IllegalArgumentException("color must not be null");
         }
-
         int w = getIconWidth();
         int h = getIconHeight();
 
         BufferedImage image = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g = image.createGraphics();
         g.setPaint(color);
-        g.drawRect(0, 0, w, h);
+        g.fillRect(0, 0, w, h);
         g.dispose();
         return new ImageIcon(image);
     }

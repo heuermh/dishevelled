@@ -28,6 +28,9 @@ import java.awt.Graphics2D;
 
 import java.awt.image.BufferedImage;
 
+import java.util.Locale;
+import java.util.ResourceBundle;
+
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -45,7 +48,7 @@ import org.dishevelled.identify.StripeListCellRenderer;
 public class DiscreteColorSchemeListCellRenderer extends StripeListCellRenderer
 {
     /** Default icon width, <code>64</code>. */
-    public static final int DEFAULT_ICON_WIDTH = 64;
+    public static final int DEFAULT_ICON_WIDTH = 128;
 
     /** Default icon height, <code>14</code>. */
     public static final int DEFAULT_ICON_HEIGHT = 14;
@@ -55,6 +58,9 @@ public class DiscreteColorSchemeListCellRenderer extends StripeListCellRenderer
 
     /** Icon height. */
     private int iconHeight = DEFAULT_ICON_HEIGHT;
+
+    /** I18n. */
+    private static final ResourceBundle I18N = ResourceBundle.getBundle("color-scheme-view", Locale.getDefault());
 
 
     /**
@@ -112,7 +118,7 @@ public class DiscreteColorSchemeListCellRenderer extends StripeListCellRenderer
         {
             throw new IllegalArgumentException("colorScheme must not be null");
         }
-        return colorScheme.getName() + " with " + colorScheme.getSize() + " colors"; // i18n
+        return colorScheme.getName() + " " + I18N.getString("DiscreteColorSchemeListCellRenderer.with") + " " + colorScheme.getSize() + " " + I18N.getString("DiscreteColorSchemeListCellRenderer.colors");
     }
 
     /**
@@ -127,7 +133,6 @@ public class DiscreteColorSchemeListCellRenderer extends StripeListCellRenderer
         {
             throw new IllegalArgumentException("colorScheme must not be null");
         }
-
         int n = colorScheme.getSize();
         int w = getIconWidth();
         int d = w / n;
@@ -138,7 +143,7 @@ public class DiscreteColorSchemeListCellRenderer extends StripeListCellRenderer
         for (int i = 0; i < n; i++)
         {
             g.setPaint(colorScheme.getColors().get(i));
-            g.drawRect(i * d, 0, (i + 1) * d, h);
+            g.fillRect(i * d, 0, (i + 1) * d, h);
         }
         g.dispose();
         return new ImageIcon(image);

@@ -24,6 +24,7 @@
 package org.dishevelled.color.scheme.view;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dialog;
 import java.awt.Frame;
@@ -45,8 +46,21 @@ import javax.swing.SwingUtilities;
 
 import javax.swing.border.EmptyBorder;
 
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+
+import ca.odell.glazedlists.event.ListEvent;
+import ca.odell.glazedlists.event.ListEventListener;
+
+import org.dishevelled.color.scheme.impl.DiscreteColorScheme;
+
 import org.dishevelled.layout.ButtonPanel;
 
+/**
+ * Discrete color scheme chooser dialog.
+ *
+ * @param  Michael Heuer
+ */
 class DiscreteColorSchemeChooserDialog extends JDialog
 {
     /** I18n. */
@@ -75,65 +89,169 @@ class DiscreteColorSchemeChooserDialog extends JDialog
     /** OK button. */
     private final JButton okButton;
 
-    /** Was this chooser cancelled? */
-    private boolean cancelled = true;
+    /** Was this chooser canceled? */
+    private boolean canceled = true;
 
     /** Discrete color scheme chooser. */
     private final DiscreteColorSchemeChooser chooser;
 
 
+    /**
+     * Create a new discrete color scheme chooser dialog.
+     *
+     * @param owner owner
+     * @param title title
+     * @param modal modal
+     * @param chooser chooser
+     */
     DiscreteColorSchemeChooserDialog(final Dialog owner, final String title, final boolean modal, final DiscreteColorSchemeChooser chooser)
     {
         super(owner, title, modal);
 
         ok.setEnabled(false);
         okButton = new JButton(ok);
+        getRootPane().setDefaultButton(okButton);
         this.chooser = chooser;
+
+        chooser.name().getDocument().addDocumentListener(new DocumentListener()
+            {
+                @Override
+                public void changedUpdate(final DocumentEvent e)
+                {
+                    ok.setEnabled(chooser.ready());
+                }
+
+                @Override
+                public void insertUpdate(final DocumentEvent e)
+                {
+                    ok.setEnabled(chooser.ready());
+                }
+
+                @Override
+                public void removeUpdate(final DocumentEvent e)
+                {
+                    ok.setEnabled(chooser.ready());
+                }
+            });
+
+        chooser.colorList().getModel().addListEventListener(new ListEventListener<Color>()
+            {
+                @Override
+                public void listChanged(final ListEvent<Color> e)
+                {
+                    ok.setEnabled(chooser.ready());
+                }
+            });
 
         layoutComponents();
     }
 
+    /**
+     * Create a new discrete color scheme chooser dialog.
+     *
+     * @param owner owner
+     * @param title title
+     * @param modal modal
+     * @param chooser chooser
+     */
     DiscreteColorSchemeChooserDialog(final Frame owner, final String title, final boolean modal, final DiscreteColorSchemeChooser chooser)
     {
         super(owner, title, modal);
 
         ok.setEnabled(false);
         okButton = new JButton(ok);
+        getRootPane().setDefaultButton(okButton);
+
         this.chooser = chooser;
 
+        chooser.name().getDocument().addDocumentListener(new DocumentListener()
+            {
+                @Override
+                public void changedUpdate(final DocumentEvent e)
+                {
+                    ok.setEnabled(chooser.ready());
+                }
+
+                @Override
+                public void insertUpdate(final DocumentEvent e)
+                {
+                    ok.setEnabled(chooser.ready());
+                }
+
+                @Override
+                public void removeUpdate(final DocumentEvent e)
+                {
+                    ok.setEnabled(chooser.ready());
+                }
+            });
+
+        chooser.colorList().getModel().addListEventListener(new ListEventListener<Color>()
+            {
+                @Override
+                public void listChanged(final ListEvent<Color> e)
+                {
+                    ok.setEnabled(chooser.ready());
+                }
+            });
+
         layoutComponents();
+        setSize(400, 533);
     }
 
+
+    /**
+     * Layout components.
+     */
     private void layoutComponents()
     {
         ButtonPanel buttonPanel = new ButtonPanel();
         buttonPanel.setBorder(new EmptyBorder(0, 12, 12, 12));
-        buttonPanel.add(okButton);
         buttonPanel.add(cancel);
+        buttonPanel.add(okButton);
 
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BorderLayout());
-        mainPanel.setBorder(new EmptyBorder(12, 12, 12, 12));
         mainPanel.add("Center", chooser);
         mainPanel.add("South", buttonPanel);
 
         setContentPane(mainPanel);
     }
 
+    /**
+     * Cancel.
+     */
     private void cancel()
     {
-        cancelled = true;
+        canceled = true;
         hide();
     }
 
+    /**
+     * OK.
+     */
     private void ok()
     {
-        cancelled = false;
+        canceled = false;
         hide();
     }
 
-    boolean wasCancelled()
+    /**
+     * Return true if this discrete color scheme chooser dialog was canceled.
+     *
+     * @return true if this discrete color scheme chooser dialog was canceled
+     */
+    boolean wasCanceled()
     {
-        return cancelled;
+        return canceled;
+    }
+
+    /**
+     * Return the color scheme for this discrete color scheme chooser dialog.
+     *
+     * @return the color scheme for this discrete color scheme chooser dialog
+     */
+    DiscreteColorScheme getColorScheme()
+    {
+        return wasCanceled() ? null : chooser.getColorScheme();
     }
 }

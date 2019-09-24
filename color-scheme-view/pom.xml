@@ -77,6 +77,33 @@
   <properties>
     <jdk.version>1.8</jdk.version>
   </properties>
+  <build>
+    <plugins>
+      <!-- note:  order matters here, since all use package execution -->
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>appassembler-maven-plugin</artifactId>
+        <configuration>
+          <repositoryLayout>flat</repositoryLayout>
+          <repositoryName>lib</repositoryName>
+          <programs>
+            <program>
+              <id>example</id>
+              <mainClass>org.dishevelled.color.scheme.view.Example</mainClass>
+            </program>
+          </programs>
+        </configuration>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>assemble</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
   <reporting>
     <plugins>
       <plugin>

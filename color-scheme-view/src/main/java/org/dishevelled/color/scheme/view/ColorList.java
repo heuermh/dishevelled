@@ -25,6 +25,9 @@ package org.dishevelled.color.scheme.view;
 
 import java.awt.Color;
 
+import java.util.Locale;
+import java.util.ResourceBundle;
+
 import javax.swing.JColorChooser;
 import javax.swing.SwingUtilities;
 
@@ -39,6 +42,9 @@ import org.dishevelled.eventlist.view.ElementsList;
  */
 public class ColorList extends ElementsList<Color>
 {
+    /** I18n. */
+    private static final ResourceBundle I18N = ResourceBundle.getBundle("color-scheme-view", Locale.getDefault());
+
 
     /**
      * Create a new color list with the specified colors.
@@ -47,7 +53,7 @@ public class ColorList extends ElementsList<Color>
      */
     public ColorList(final EventList<Color> colors)
     {
-        super("Colors:", colors); // i18n
+        super(I18N.getString("ColorList.colors") + ":", colors);
         getList().setCellRenderer(new ColorListCellRenderer());
     }
 
@@ -55,7 +61,7 @@ public class ColorList extends ElementsList<Color>
     @Override
     public void add()
     {
-        Color color = JColorChooser.showDialog(this, "Select a color:", null); // i18n
+        Color color = JColorChooser.showDialog(this, I18N.getString("ColorList.selectAColor") + ":", null);
         if (color != null)
         {
             getModel().add(color);
