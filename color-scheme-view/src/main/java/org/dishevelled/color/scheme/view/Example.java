@@ -23,37 +23,15 @@
 */
 package org.dishevelled.color.scheme.view;
 
-import java.awt.Toolkit;
-
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
-
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
-import java.util.ResourceBundle;
 
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JPopupMenu;
-import javax.swing.JPopupMenu.Separator;
-import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
 import javax.swing.border.EmptyBorder;
 
-import ca.odell.glazedlists.EventList;
 import ca.odell.glazedlists.GlazedLists;
 
 import org.dishevelled.color.scheme.impl.ColorSchemes;

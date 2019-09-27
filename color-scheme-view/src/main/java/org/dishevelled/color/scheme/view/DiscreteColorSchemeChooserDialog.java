@@ -25,24 +25,18 @@ package org.dishevelled.color.scheme.view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dialog;
 import java.awt.Frame;
 
 import java.awt.event.ActionEvent;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
 
 import javax.swing.border.EmptyBorder;
 
@@ -59,7 +53,7 @@ import org.dishevelled.layout.ButtonPanel;
 /**
  * Discrete color scheme chooser dialog.
  *
- * @param  Michael Heuer
+ * @author  Michael Heuer
  */
 class DiscreteColorSchemeChooserDialog extends JDialog
 {
@@ -111,39 +105,11 @@ class DiscreteColorSchemeChooserDialog extends JDialog
         ok.setEnabled(false);
         okButton = new JButton(ok);
         getRootPane().setDefaultButton(okButton);
+
         this.chooser = chooser;
-
-        chooser.name().getDocument().addDocumentListener(new DocumentListener()
-            {
-                @Override
-                public void changedUpdate(final DocumentEvent e)
-                {
-                    ok.setEnabled(chooser.ready());
-                }
-
-                @Override
-                public void insertUpdate(final DocumentEvent e)
-                {
-                    ok.setEnabled(chooser.ready());
-                }
-
-                @Override
-                public void removeUpdate(final DocumentEvent e)
-                {
-                    ok.setEnabled(chooser.ready());
-                }
-            });
-
-        chooser.colorList().getModel().addListEventListener(new ListEventListener<Color>()
-            {
-                @Override
-                public void listChanged(final ListEvent<Color> e)
-                {
-                    ok.setEnabled(chooser.ready());
-                }
-            });
-
+        createListeners();
         layoutComponents();
+        setSize(400, 533);
     }
 
     /**
@@ -163,41 +129,46 @@ class DiscreteColorSchemeChooserDialog extends JDialog
         getRootPane().setDefaultButton(okButton);
 
         this.chooser = chooser;
-
-        chooser.name().getDocument().addDocumentListener(new DocumentListener()
-            {
-                @Override
-                public void changedUpdate(final DocumentEvent e)
-                {
-                    ok.setEnabled(chooser.ready());
-                }
-
-                @Override
-                public void insertUpdate(final DocumentEvent e)
-                {
-                    ok.setEnabled(chooser.ready());
-                }
-
-                @Override
-                public void removeUpdate(final DocumentEvent e)
-                {
-                    ok.setEnabled(chooser.ready());
-                }
-            });
-
-        chooser.colorList().getModel().addListEventListener(new ListEventListener<Color>()
-            {
-                @Override
-                public void listChanged(final ListEvent<Color> e)
-                {
-                    ok.setEnabled(chooser.ready());
-                }
-            });
-
+        createListeners();
         layoutComponents();
         setSize(400, 533);
     }
 
+    /**
+     * Create listeners.
+     */
+    private void createListeners()
+    {
+        chooser.name().getDocument().addDocumentListener(new DocumentListener()
+        {
+            @Override
+            public void changedUpdate(final DocumentEvent e)
+            {
+                ok.setEnabled(chooser.ready());
+            }
+
+            @Override
+            public void insertUpdate(final DocumentEvent e)
+            {
+                ok.setEnabled(chooser.ready());
+            }
+
+            @Override
+            public void removeUpdate(final DocumentEvent e)
+            {
+                ok.setEnabled(chooser.ready());
+            }
+        });
+
+        chooser.colorList().getModel().addListEventListener(new ListEventListener<Color>()
+        {
+            @Override
+            public void listChanged(final ListEvent<Color> e)
+            {
+                ok.setEnabled(chooser.ready());
+            }
+        });
+    }
 
     /**
      * Layout components.
@@ -223,7 +194,7 @@ class DiscreteColorSchemeChooserDialog extends JDialog
     private void cancel()
     {
         canceled = true;
-        hide();
+        setVisible(true);
     }
 
     /**
@@ -232,7 +203,7 @@ class DiscreteColorSchemeChooserDialog extends JDialog
     private void ok()
     {
         canceled = false;
-        hide();
+        setVisible(true);
     }
 
     /**
