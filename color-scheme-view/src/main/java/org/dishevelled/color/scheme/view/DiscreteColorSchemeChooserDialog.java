@@ -194,7 +194,7 @@ class DiscreteColorSchemeChooserDialog extends JDialog
     private void cancel()
     {
         canceled = true;
-        setVisible(true);
+        hide();
     }
 
     /**
@@ -203,7 +203,7 @@ class DiscreteColorSchemeChooserDialog extends JDialog
     private void ok()
     {
         canceled = false;
-        setVisible(true);
+        hide();
     }
 
     /**
