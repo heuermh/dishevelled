@@ -46,7 +46,7 @@ public class DiscreteColorSchemeList extends ElementsList<DiscreteColorScheme>
     /**
      * Create a new discrete color scheme list with the specified discrete color schemes.
      *
-     * @param colorSchemes Discrete color schemes, must not be null
+     * @param colorSchemes discrete color schemes, must not be null
      */
     public DiscreteColorSchemeList(final EventList<DiscreteColorScheme> colorSchemes)
     {

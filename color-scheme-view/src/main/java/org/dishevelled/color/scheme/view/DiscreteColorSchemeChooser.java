@@ -62,6 +62,9 @@ public class DiscreteColorSchemeChooser extends LabelFieldPanel
     /** Color list. */
     private final ColorList colorList;
 
+    /** Caching color factory. */
+    private static final CachingColorFactory COLOR_FACTORY = new CachingColorFactory();
+
 
     /**
      * Create a new discrete color scheme chooser.
@@ -109,7 +112,8 @@ public class DiscreteColorSchemeChooser extends LabelFieldPanel
     }
 
     /**
-     * Return true if name and color list are valid.
+     * Return true if name and color list are valid. By default the name must
+     * not be empty and the color list must contain at least two colors.
      *
      * @return true if name and color list are valid
      */
@@ -119,15 +123,15 @@ public class DiscreteColorSchemeChooser extends LabelFieldPanel
     }
 
     /**
-     * Return the color scheme for this discrete color scheme chooser, if any.
+     * Return the discrete color scheme for this discrete color scheme chooser, if any.
      *
-     * @return the color scheme for this discrete color scheme chooser, if any
+     * @return the discrete color scheme for this discrete color scheme chooser, if any
      */
     DiscreteColorScheme getColorScheme()
     {
         if (ready())
         {
-            return new DiscreteColorScheme(name.getText(), colorList.getModel(), 0.0d, 1.0d, new CachingColorFactory());
+            return new DiscreteColorScheme(name.getText(), colorList.getModel(), 0.0d, 1.0d, COLOR_FACTORY);
         }
         else
         {
@@ -136,14 +140,22 @@ public class DiscreteColorSchemeChooser extends LabelFieldPanel
     }
 
     /**
-     * Show dialog.
+     * Show a dialog to create and choose a discrete color scheme.
      *
-     * @param component component
-     * @param title title
-     * @return dialog
+     * @param component component, must not be null
+     * @param title title, must not be null
+     * @return the chosen discrete color scheme, or <code>null</code> if the dialog was canceled
      */
     public static DiscreteColorScheme showDialog(final Component component, final String title)
     {
+        if (component == null)
+        {
+            throw new IllegalArgumentException("component must not be null");
+        }
+        if (title == null)
+        {
+            throw new IllegalArgumentException("title must not be null");
+        }
         DiscreteColorSchemeChooser chooserPane = new DiscreteColorSchemeChooser();
         DiscreteColorSchemeChooserDialog dialog = createDialog(component, title, true, chooserPane);
         dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
@@ -152,16 +164,28 @@ public class DiscreteColorSchemeChooser extends LabelFieldPanel
     }
 
     /**
-     * Create dialog.
+     * Create and return a dialog to create a choose a discrete color scheme.
      *
-     * @param component component
-     * @param title title
-     * @param modal modal
-     * @param chooserPane chooser pane
-     * @return dialog
+     * @param component component, must not be null
+     * @param title title, must not be null
+     * @param modal true if the dialog should be modal
+     * @param chooserPane chooser pane, must not be null
+     * @return a dialog to create a choose a discrete color scheme
      */
     public static DiscreteColorSchemeChooserDialog createDialog(final Component component, final String title, final boolean modal, final DiscreteColorSchemeChooser chooserPane)
     {
+        if (component == null)
+        {
+            throw new IllegalArgumentException("component must not be null");
+        }
+        if (title == null)
+        {
+            throw new IllegalArgumentException("title must not be null");
+        }
+        if (chooserPane == null)
+        {
+            throw new IllegalArgumentException("chooserPane must not be null");
+        }
         Window window = SwingUtilities.windowForComponent(component);
         DiscreteColorSchemeChooserDialog dialog;
         if (window instanceof Frame)

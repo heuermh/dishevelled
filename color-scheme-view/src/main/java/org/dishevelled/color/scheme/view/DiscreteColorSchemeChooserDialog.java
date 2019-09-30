@@ -104,12 +104,9 @@ class DiscreteColorSchemeChooserDialog extends JDialog
 
         ok.setEnabled(false);
         okButton = new JButton(ok);
-        getRootPane().setDefaultButton(okButton);
-
         this.chooser = chooser;
-        createListeners();
-        layoutComponents();
-        setSize(400, 533);
+
+        initialize();
     }
 
     /**
@@ -126,9 +123,18 @@ class DiscreteColorSchemeChooserDialog extends JDialog
 
         ok.setEnabled(false);
         okButton = new JButton(ok);
-        getRootPane().setDefaultButton(okButton);
-
         this.chooser = chooser;
+
+        initialize();
+    }
+
+
+    /**
+     * Initialize.
+     */
+    private void initialize()
+    {
+        getRootPane().setDefaultButton(okButton);
         createListeners();
         layoutComponents();
         setSize(400, 533);
