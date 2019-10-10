@@ -27,7 +27,7 @@
   <parent>
     <groupId>org.dishevelled</groupId>
     <artifactId>dsh-parent</artifactId>
-    <version>16-SNAPSHOT</version>
+    <version>18-SNAPSHOT</version>
     <relativePath>../parent/pom.xml</relativePath>
   </parent>
   <artifactId>dsh-eventlist-view</artifactId>
@@ -69,8 +69,8 @@
   </dependencyManagement>
   <dependencies>
     <dependency>
-      <groupId>net.java.dev.glazedlists</groupId>
-      <artifactId>glazedlists_java15</artifactId>
+      <groupId>com.glazedlists</groupId>
+      <artifactId>glazedlists</artifactId>
       <scope>compile</scope>
     </dependency>
     <dependency>
