@@ -32,7 +32,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -56,8 +58,11 @@ import org.dishevelled.iconbundle.IconTextDirection;
 public final class IdToolBar
     extends JToolBar
 {
+    /** I18n. */
+    private static final ResourceBundle I18N = ResourceBundle.getBundle("dsh-identify", Locale.getDefault());
+
     /** Display icons action. */
-    private final AbstractAction displayIcons = new AbstractAction("Display icons")
+    private final AbstractAction displayIcons = new AbstractAction(I18N.getString("IdToolBar.displayIcons"))
         {
             @Override
             public void actionPerformed(final ActionEvent event)
@@ -67,7 +72,7 @@ public final class IdToolBar
         };
 
     /** Display text action. */
-    private final AbstractAction displayText = new AbstractAction("Display text")
+    private final AbstractAction displayText = new AbstractAction(I18N.getString("IdToolBar.displayText"))
         {
             @Override
             public void actionPerformed(final ActionEvent event)
@@ -77,7 +82,7 @@ public final class IdToolBar
         };
 
     /** Display icons and text action. */
-    private final AbstractAction displayIconsAndText = new AbstractAction("Display icons and text")
+    private final AbstractAction displayIconsAndText = new AbstractAction(I18N.getString("IdToolBar.displayIconsAndText"))
         {
             @Override
             public void actionPerformed(final ActionEvent event)
@@ -518,7 +523,7 @@ public final class IdToolBar
                 throw new IllegalArgumentException("iconSize must not be null");
             }
             this.iconSize = iconSize;
-            putValue(Action.NAME, "Use icon size " + iconSize);
+            putValue(Action.NAME, I18N.getString("IdToolBar.useIconSize") + " " + iconSize);
         }
 
 
