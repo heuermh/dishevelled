@@ -100,11 +100,6 @@
   </dependencyManagement>
   <dependencies>
     <dependency>
-      <groupId>net.java.dev.glazedlists</groupId>
-      <artifactId>glazedlists_java15</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-lang3</artifactId>
       <version>3.9</version>
