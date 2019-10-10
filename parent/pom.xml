@@ -247,9 +247,9 @@
         <version>4.12</version>
       </dependency>
       <dependency>
-        <groupId>net.java.dev.glazedlists</groupId>
-        <artifactId>glazedlists_java15</artifactId>
-        <version>1.9.1</version>
+        <groupId>com.glazedlists</groupId>
+        <artifactId>glazedlists</artifactId>
+        <version>1.11.0</version>
       </dependency>
       <dependency>
         <groupId>net.sf.stax</groupId>
