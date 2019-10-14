@@ -60,7 +60,7 @@ public class DiscreteColorSchemeListCellRenderer extends StripeListCellRenderer
     private int iconHeight = DEFAULT_ICON_HEIGHT;
 
     /** I18n. */
-    private static final ResourceBundle I18N = ResourceBundle.getBundle("color-scheme-view", Locale.getDefault());
+    private static final ResourceBundle I18N = ResourceBundle.getBundle("dsh-color-scheme-view", Locale.getDefault());
 
 
     /**

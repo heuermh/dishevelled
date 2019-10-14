@@ -54,7 +54,7 @@ import org.dishevelled.layout.LabelFieldPanel;
 public class DiscreteColorSchemeChooser extends LabelFieldPanel
 {
     /** I18n. */
-    private static final ResourceBundle I18N = ResourceBundle.getBundle("color-scheme-view", Locale.getDefault());
+    private static final ResourceBundle I18N = ResourceBundle.getBundle("dsh-color-scheme-view", Locale.getDefault());
 
     /** Name. */
     private final JTextField name;
@@ -159,6 +159,7 @@ public class DiscreteColorSchemeChooser extends LabelFieldPanel
         DiscreteColorSchemeChooser chooserPane = new DiscreteColorSchemeChooser();
         DiscreteColorSchemeChooserDialog dialog = createDialog(component, title, true, chooserPane);
         dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        dialog.setLocationRelativeTo(component);
         dialog.show();
         return dialog.getColorScheme();
     }

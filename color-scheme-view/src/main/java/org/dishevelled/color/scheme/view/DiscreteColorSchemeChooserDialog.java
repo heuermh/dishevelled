@@ -58,7 +58,7 @@ import org.dishevelled.layout.ButtonPanel;
 class DiscreteColorSchemeChooserDialog extends JDialog
 {
     /** I18n. */
-    private static final ResourceBundle I18N = ResourceBundle.getBundle("color-scheme-view", Locale.getDefault());
+    private static final ResourceBundle I18N = ResourceBundle.getBundle("dsh-color-scheme-view", Locale.getDefault());
 
     /** Cancel action. */
     private final AbstractAction cancel = new AbstractAction(I18N.getString("DiscreteColorSchemeChooserDialog.cancel"))

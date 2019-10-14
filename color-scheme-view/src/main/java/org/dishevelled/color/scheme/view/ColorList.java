@@ -42,7 +42,7 @@ import org.dishevelled.eventlist.view.ElementsList;
 public class ColorList extends ElementsList<Color>
 {
     /** I18n. */
-    private static final ResourceBundle I18N = ResourceBundle.getBundle("color-scheme-view", Locale.getDefault());
+    private static final ResourceBundle I18N = ResourceBundle.getBundle("dsh-color-scheme-view", Locale.getDefault());
 
 
     /**
