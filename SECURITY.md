@@ -9,4 +9,4 @@
 ## Reporting a vulnerability
 
 To report a security vulnerability for dishevelled.org, please
-[create a new issue](https://github.com/heuermh/dishevelled/issues) on Github.
+[create a new issue](https://github.com/heuermh/dishevelled/issues/new) on Github.
