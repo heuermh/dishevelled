@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!--
 
-    dsh-color-scheme-view  Views for color schemes.
+    dsh-color-scheme-view-examples  Examples for dsh-color-scheme-view.
     Copyright (c) 2019 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
@@ -31,8 +31,8 @@
 <section name="Summary">
 
 <p>
-dishevelled.org <b>color-scheme-view</b> provides views for color schemes.
-The color-scheme-view library requires java version 1.8 or later.
+dishevelled.org <b>color-scheme-view-examples</b> provides examples for the color-scheme-view library.
+The color-scheme-view-examples library requires java version 1.8 or later.
 </p>
 </section>
 

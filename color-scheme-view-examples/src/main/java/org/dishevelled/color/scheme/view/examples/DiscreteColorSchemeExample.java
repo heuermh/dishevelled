@@ -1,6 +1,6 @@
 /*
 
-    dsh-color-scheme-view  Views for color schemes.
+    dsh-color-scheme-view-examples  Examples for dsh-color-scheme-view.
     Copyright (c) 2019 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
@@ -21,7 +21,7 @@
     > http://www.opensource.org/licenses/lgpl-license.php
 
 */
-package org.dishevelled.color.scheme.view;
+package org.dishevelled.color.scheme.view.examples;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,21 +37,31 @@ import ca.odell.glazedlists.GlazedLists;
 import org.dishevelled.color.scheme.impl.ColorSchemes;
 import org.dishevelled.color.scheme.impl.DiscreteColorScheme;
 
+import org.dishevelled.color.scheme.view.DiscreteColorSchemeList;
+
 import org.dishevelled.layout.LabelFieldPanel;
 
 /**
- * Temporary example.
+ * Discrete color scheme example.
  *
  * @author  Michael Heuer
  */
-public final class Example extends LabelFieldPanel implements Runnable
+public final class DiscreteColorSchemeExample extends LabelFieldPanel implements Runnable
 {
-    public Example()
+
+    /**
+     * Create a new discrete color scheme example.
+     */
+    public DiscreteColorSchemeExample()
     {
         super();
         layoutComponents();
     }
 
+
+    /**
+     * Layout components.
+     */
     private void layoutComponents()
     {
         setBorder(new EmptyBorder(20, 20, 20, 20));
@@ -63,13 +73,13 @@ public final class Example extends LabelFieldPanel implements Runnable
         colorSchemes.add((DiscreteColorScheme) ColorSchemes.getDiscreteColorScheme("npg", 4));
         colorSchemes.add((DiscreteColorScheme) ColorSchemes.getDiscreteColorScheme("tableau", 4));
 
-        addFinalField(new DiscreteColorSchemeList(GlazedLists.eventList(colorSchemes)));            
+        addFinalField(new DiscreteColorSchemeList(GlazedLists.eventList(colorSchemes)));
     }
 
     @Override
     public void run()
     {
-        JFrame frame = new JFrame("Example");
+        JFrame frame = new JFrame("Discrete Color Scheme Example");
         frame.setContentPane(this);
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -77,6 +87,12 @@ public final class Example extends LabelFieldPanel implements Runnable
         frame.setVisible(true);
     }
 
+
+    /**
+     * Main.
+     *
+     * @param args command line arguments, ignored
+     */
     public static void main(final String[] args)
     {
         try
@@ -93,6 +109,6 @@ public final class Example extends LabelFieldPanel implements Runnable
         System.setProperty("com.apple.macos.use-file-dialog-packages", "true");
         System.setProperty("apple.awt.application.name", "Example");
 
-        SwingUtilities.invokeLater(new Example());
+        SwingUtilities.invokeLater(new DiscreteColorSchemeExample());
     }
 }

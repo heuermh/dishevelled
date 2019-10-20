@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!--
 
-    dsh-color-scheme-view  Views for color schemes.
+    dsh-color-scheme-view-examples  Examples for dsh-color-scheme-view.
     Copyright (c) 2019 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
@@ -22,26 +22,20 @@
     > http://www.opensource.org/licenses/lgpl-license.php
 
 -->
-<document>
-  <properties>
-    <title>color-scheme-view</title>
-  </properties>
-<body>
-
-<section name="Summary">
-
-<p>
-dishevelled.org <b>color-scheme-view</b> provides views for color schemes.
-The color-scheme-view library requires java version 1.8 or later.
-</p>
-</section>
-
-<section name="Acknowledgements">
-  <ul>
-    <li>Powered by Apache <a href="http://maven.apache.org">Maven</a>.</li>
-    <li>Project hosting by <a href="http://sourceforge.net">SourceForge.net</a>.</li>
-  </ul>
-  <p><img src="http://sourceforge.net/sflogo.php?group_id=113165&amp;type=1" width="88" height="31" border="0" alt="SourceForge.net Logo"/></p>
-</section>
-</body>
-</document>
+<project>
+  <body>
+    <menu>
+      <item name="Downloads"/>
+      <item name="Repository" href="source-repository.html"/>
+      <item name="Javadocs" href="apidocs/index.html"/>
+      <item name="Checkstyle" href="checkstyle.html"/>
+      <item name="Test coverage" href="cobertura/index.html"/>
+      <item name="Changes" href="https://www.ohloh.net/p/dishevelled/commits"/>
+    </menu>
+  </body>
+  <skin>
+    <groupId>org.dishevelled</groupId>
+    <artifactId>dsh-site-skin</artifactId>
+    <version>1.0-SNAPSHOT</version>
+  </skin>
+</project>

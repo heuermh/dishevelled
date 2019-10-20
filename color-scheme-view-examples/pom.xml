@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <!--
 
-    dsh-color-scheme-view  Views for color schemes.
+    dsh-color-scheme-view-examples  Examples for dsh-color-scheme-view.
     Copyright (c) 2019 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
@@ -30,12 +30,12 @@
     <version>18-SNAPSHOT</version>
     <relativePath>../parent/pom.xml</relativePath>
   </parent>
-  <artifactId>dsh-color-scheme-view</artifactId>
+  <artifactId>dsh-color-scheme-view-examples</artifactId>
   <packaging>jar</packaging>
-  <name>dishevelled.org color-scheme-view</name>
+  <name>dishevelled.org color-scheme-view-examples</name>
   <version>1.0-SNAPSHOT</version>
-  <description>Views for color schemes.</description>
-  <url>http://www.dishevelled.org/color-scheme-view</url>
+  <description>Examples for dsh-color-scheme-view.</description>
+  <url>http://www.dishevelled.org/color-scheme-view-examples</url>
   <inceptionYear>2019</inceptionYear>
   <scm>
     <connection>scm:git:git@github.com:heuermh/dishevelled.git</connection>
@@ -47,25 +47,15 @@
     <dependencies>
       <dependency>
         <groupId>org.dishevelled</groupId>
-        <artifactId>dsh-color-scheme</artifactId>
-        <version>3.1-SNAPSHOT</version>
-      </dependency>
-      <dependency>
-        <groupId>org.dishevelled</groupId>
-        <artifactId>dsh-eventlist-view</artifactId>
-        <version>2.2-SNAPSHOT</version>
+        <artifactId>dsh-color-scheme-view</artifactId>
+        <version>1.0-SNAPSHOT</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
   <dependencies>
     <dependency>
       <groupId>org.dishevelled</groupId>
-      <artifactId>dsh-color-scheme</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.dishevelled</groupId>
-      <artifactId>dsh-eventlist-view</artifactId>
+      <artifactId>dsh-color-scheme-view</artifactId>
       <scope>compile</scope>
     </dependency>
     <dependency>
@@ -77,6 +67,33 @@
   <properties>
     <jdk.version>1.8</jdk.version>
   </properties>
+  <build>
+    <plugins>
+      <!-- note:  order matters here, since all use package execution -->
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>appassembler-maven-plugin</artifactId>
+        <configuration>
+          <repositoryLayout>flat</repositoryLayout>
+          <repositoryName>lib</repositoryName>
+          <programs>
+            <program>
+              <id>discrete-color-scheme-example</id>
+              <mainClass>org.dishevelled.color.scheme.view.examples.DiscreteColorSchemeExample</mainClass>
+            </program>
+          </programs>
+        </configuration>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>assemble</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
   <reporting>
     <plugins>
       <plugin>
