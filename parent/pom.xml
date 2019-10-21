@@ -50,7 +50,7 @@
     <url>http://www.dishevelled.org</url>
   </organization>
   <prerequisites>
-    <maven>3.0</maven>
+    <maven>3.0.5</maven>
   </prerequisites>
   <properties>
     <jdk.version>1.5</jdk.version>
@@ -139,7 +139,7 @@
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>appassembler-maven-plugin</artifactId>
-          <version>2.0.0</version>
+          <version>2.1.0</version>
         </plugin>
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
@@ -159,7 +159,7 @@
         <plugin>
           <groupId>pl.project13.maven</groupId>
           <artifactId>git-commit-id-plugin</artifactId>
-          <version>2.2.2</version>
+          <version>3.0.1</version>
         </plugin>
       </plugins>
     </pluginManagement>
@@ -284,7 +284,7 @@
       <dependency>
         <groupId>org.mockito</groupId>
         <artifactId>mockito-core</artifactId>
-        <version>2.23.4</version>
+        <version>3.1.0</version>
       </dependency>
       <dependency>
         <groupId>com.github.stephenc.high-scale-lib</groupId>
@@ -322,7 +322,7 @@
     <plugins>
       <plugin>
         <artifactId>maven-checkstyle-plugin</artifactId>
-        <version>3.0.0</version>
+        <version>3.1.0</version>
         <configuration>
           <configLocation>${basedir}/src/build/conf/checkstyle.xml</configLocation>
           <enableRulesSummary>false</enableRulesSummary>
@@ -370,7 +370,7 @@
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>cobertura-maven-plugin</artifactId>
-        <version>3.0.0</version>
+        <version>2.7</version>
       </plugin>
     </plugins>
   </reporting>
