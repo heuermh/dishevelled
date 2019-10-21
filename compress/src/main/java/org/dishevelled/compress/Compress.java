@@ -33,8 +33,6 @@ import java.io.IOException;
 
 import javax.annotation.Nullable;
 
-import com.google.common.io.Files;
-
 import htsjdk.samtools.util.BlockCompressedInputStream;
 
 import org.apache.commons.compress.compressors.bzip2.BZip2Utils;

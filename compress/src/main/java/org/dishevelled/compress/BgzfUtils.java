@@ -36,14 +36,15 @@ import org.apache.commons.compress.compressors.FileNameUtil;
  */
 public abstract class BgzfUtils
 {
-    private static final FileNameUtil fileNameUtil;
+    /** Static FileNameUtil instance. */
+    private static final FileNameUtil FILE_NAME_UTIL;
 
     static
     {
         final Map<String, String> uncompressSuffix = new LinkedHashMap<String, String>();
         uncompressSuffix.put(".bgz", "");
         uncompressSuffix.put(".bgzf", "");
-        fileNameUtil = new FileNameUtil(uncompressSuffix, ".bgz");
+        FILE_NAME_UTIL = new FileNameUtil(uncompressSuffix, ".bgz");
     }
 
 
@@ -55,7 +56,7 @@ public abstract class BgzfUtils
         // empty
     }
 
-    
+
     /**
      * Detects common block compressed gzip (BGZF) suffixes in the given filename.
      *
@@ -65,7 +66,7 @@ public abstract class BgzfUtils
      */
     public static boolean isCompressedFilename(final String filename)
     {
-        return fileNameUtil.isCompressedFilename(filename);
+        return FILE_NAME_UTIL.isCompressedFilename(filename);
     }
 
     /**
@@ -82,7 +83,7 @@ public abstract class BgzfUtils
      */
     public static String getUncompressedFilename(final String filename)
     {
-        return fileNameUtil.getUncompressedFilename(filename);
+        return FILE_NAME_UTIL.getUncompressedFilename(filename);
     }
 
     /**
@@ -96,6 +97,6 @@ public abstract class BgzfUtils
      */
     public static String getCompressedFilename(final String filename)
     {
-        return fileNameUtil.getCompressedFilename(filename);
+        return FILE_NAME_UTIL.getCompressedFilename(filename);
     }
 }
