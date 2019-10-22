@@ -1,6 +1,7 @@
-/*
+<?xml version="1.0"?>
+<!--
 
-    dsh-thumbnail-examples  Examples for the thumbnail library.
+    dsh-thumbnail-drop  Thumbnail image directory watcher.
     Copyright (c) 2013-2019 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
@@ -20,4 +21,21 @@
     > http://www.fsf.org/licensing/licenses/lgpl.html
     > http://www.opensource.org/licenses/lgpl-license.php
 
-*/
+-->
+<project>
+  <body>
+    <menu>
+      <item name="Downloads"/>
+      <item name="Repository" href="source-repository.html"/>
+      <item name="Javadocs" href="apidocs/index.html"/>
+      <item name="Checkstyle" href="checkstyle.html"/>
+      <item name="Test coverage" href="cobertura/index.html"/>
+      <item name="Changes" href="https://www.ohloh.net/p/dishevelled/commits"/>
+    </menu>
+  </body>
+  <skin>
+    <groupId>org.dishevelled</groupId>
+    <artifactId>dsh-site-skin</artifactId>
+    <version>1.0-SNAPSHOT</version>
+  </skin>
+</project>

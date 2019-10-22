@@ -1,7 +1,7 @@
 /*
 
     dsh-thumbnail  Implementation of the freedesktop.org thumbnail specification.
-    Copyright (c) 2013-2015 held jointly by the individual authors.
+    Copyright (c) 2013-2019 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
@@ -28,17 +28,18 @@ import java.awt.Image;
 
 import java.net.URI;
 
-import javax.swing.DefaultListCellRenderer;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JList;
+
+import org.dishevelled.identify.StripeListCellRenderer;
 
 /**
  * List cell renderer that displays the large thumbnail for a given URI.
  *
  * @author  Michael Heuer
  */
-public final class LargeThumbnailListCellRenderer extends DefaultListCellRenderer
+public final class LargeThumbnailListCellRenderer extends StripeListCellRenderer
 {
     /** Thumbnail cache. */
     private final ThumbnailCache thumbnailCache;

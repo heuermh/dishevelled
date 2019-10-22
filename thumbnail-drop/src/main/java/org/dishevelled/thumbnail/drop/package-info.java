@@ -1,6 +1,6 @@
 /*
 
-    dsh-thumbnail-examples  Examples for the thumbnail library.
+    dsh-thumbnail-drop  Thumbnail image directory watcher.
     Copyright (c) 2013-2019 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
@@ -21,3 +21,8 @@
     > http://www.opensource.org/licenses/lgpl-license.php
 
 */
+
+/**
+ * Thumbnail image directory watcher.
+ */
+package org.dishevelled.thumbnail.drop;

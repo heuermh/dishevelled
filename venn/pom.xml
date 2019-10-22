@@ -45,8 +45,8 @@
       <scope>compile</scope>
     </dependency>
     <dependency>
-      <groupId>net.java.dev.glazedlists</groupId>
-      <artifactId>glazedlists_java15</artifactId>
+      <groupId>com.glazedlists</groupId>
+      <artifactId>glazedlists</artifactId>
       <scope>compile</scope>
     </dependency>
     <dependency>

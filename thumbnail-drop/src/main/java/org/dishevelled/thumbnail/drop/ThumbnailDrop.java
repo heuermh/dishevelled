@@ -1,7 +1,7 @@
 /*
 
-    dsh-thumbnail-examples  Examples for the thumbnail library.
-    Copyright (c) 2013-2015 held jointly by the individual authors.
+    dsh-thumbnail-drop  Thumbnail image directory watcher.
+    Copyright (c) 2013-2019 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
@@ -21,7 +21,7 @@
     > http://www.opensource.org/licenses/lgpl-license.php
 
 */
-package org.dishevelled.thumbnail.examples;
+package org.dishevelled.thumbnail.drop;
 
 import static java.nio.file.StandardWatchEventKinds.ENTRY_CREATE;
 import static java.nio.file.StandardWatchEventKinds.ENTRY_MODIFY;

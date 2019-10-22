@@ -89,6 +89,7 @@
     <module>swarm</module>
     <module>swarm-examples</module>
     <module>thumbnail</module>
+    <module>thumbnail-drop</module>
     <module>thumbnail-examples</module>
     <module>timer</module>
     <module>variation</module>
