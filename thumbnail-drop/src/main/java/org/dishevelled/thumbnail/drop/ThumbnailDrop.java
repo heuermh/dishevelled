@@ -377,18 +377,25 @@ public final class ThumbnailDrop implements Callable<Integer>
      */
     public static void main(final String[] args)
     {
+        Switch about = new Switch("a", "about", "display about message");
+        Switch version = new Switch("v", "version", "display about message");
         Switch help = new Switch("h", "help", "display help message");
         FileArgument watchDirectory = new FileArgument("w", "watch-directory", "watch directory", true);
         FileArgument destinationDirectory = new FileArgument("d", "destination-directory", "destination directory", true);
-        Switch verbose = new Switch("v", "verbose", "verbose logging output");
+        Switch verbose = new Switch("r", "verbose", "verbose logging output");
 
-        ArgumentList arguments = new ArgumentList(help, watchDirectory, destinationDirectory, verbose);
+        ArgumentList arguments = new ArgumentList(about, version, help, watchDirectory, destinationDirectory, verbose);
         CommandLine commandLine = new CommandLine(args);
 
         ThumbnailDrop thumbnailDrop = null;
         try
         {
             CommandLineParser.parse(commandLine, arguments);
+            if (about.wasFound() || version.wasFound())
+            {
+                About.about(System.out);
+                System.exit(0);
+            }
             if (help.wasFound())
             {
                 Usage.usage(USAGE, null, commandLine, arguments, System.out);
@@ -415,6 +422,16 @@ public final class ThumbnailDrop implements Callable<Integer>
         }
         catch (CommandLineParseException e)
         {
+            if (about.wasFound() || version.wasFound())
+            {
+                About.about(System.out);
+                System.exit(0);
+            }
+            if (help.wasFound())
+            {
+                Usage.usage(USAGE, null, commandLine, arguments, System.out);
+                System.exit(0);
+            }
             Usage.usage(USAGE, e, commandLine, arguments, System.err);
             System.exit(-1);
         }
