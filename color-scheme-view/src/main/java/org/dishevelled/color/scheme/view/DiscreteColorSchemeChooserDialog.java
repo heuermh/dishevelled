@@ -93,10 +93,10 @@ class DiscreteColorSchemeChooserDialog extends JDialog
     /**
      * Create a new discrete color scheme chooser dialog.
      *
-     * @param owner owner
-     * @param title title
-     * @param modal modal
-     * @param chooser chooser
+     * @param owner owner for this dialog, if any
+     * @param title title, if any
+     * @param modal true if this dialog should be modal
+     * @param chooser chooser, must not be null
      */
     DiscreteColorSchemeChooserDialog(final Dialog owner, final String title, final boolean modal, final DiscreteColorSchemeChooser chooser)
     {
@@ -112,10 +112,10 @@ class DiscreteColorSchemeChooserDialog extends JDialog
     /**
      * Create a new discrete color scheme chooser dialog.
      *
-     * @param owner owner
-     * @param title title
-     * @param modal modal
-     * @param chooser chooser
+     * @param owner owner for this dialog, if any
+     * @param title title, if any
+     * @param modal true if this dialog should be modal
+     * @param chooser chooser, must not be null
      */
     DiscreteColorSchemeChooserDialog(final Frame owner, final String title, final boolean modal, final DiscreteColorSchemeChooser chooser)
     {
