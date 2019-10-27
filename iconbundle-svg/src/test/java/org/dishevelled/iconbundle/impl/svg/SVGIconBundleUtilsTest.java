@@ -1,7 +1,7 @@
 /*
 
     dsh-iconbundle-svg  SVG icon bundle implementation.
-    Copyright (c) 2003-2013 held jointly by the individual authors.
+    Copyright (c) 2003-2019 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
@@ -33,7 +33,6 @@ import junit.framework.TestCase;
  * Unit test for SVGIconBundleUtils.
  *
  * @author  Michael Heuer
- * @version $Revision$ $Date$
  */
 public final class SVGIconBundleUtilsTest
     extends TestCase

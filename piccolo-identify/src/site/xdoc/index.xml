@@ -2,7 +2,7 @@
 <!--
 
     dsh-piccolo-identify  Piccolo2D nodes for identifiable beans.
-    Copyright (c) 2007-2013 held jointly by the individual authors.
+    Copyright (c) 2007-2019 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
@@ -33,7 +33,7 @@
 <p>
 dishevelled.org <b>piccolo-identify</b> provides nodes for identifiable beans and
 supporting classes for the Piccolo2D [<a href="#1">1</a>] structured graphics toolkit.
-The piccolo-identify library requires java version 1.6 or later.
+The piccolo-identify library requires java version 1.8 or later.
 </p>
 </section>
 

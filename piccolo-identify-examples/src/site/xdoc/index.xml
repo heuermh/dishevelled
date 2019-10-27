@@ -2,7 +2,7 @@
 <!--
 
     dsh-piccolo-identify-examples  Piccolo2D identifiable bean node examples.
-    Copyright (c) 2007-2013 held jointly by the individual authors.
+    Copyright (c) 2007-2019 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
@@ -32,7 +32,7 @@
 
 <p>
 dishevelled.org <b>piccolo-identify-examples</b> provides examples for the piccolo-identify library.
-The piccolo-identify-examples project requires java version 1.6 or later.
+The piccolo-identify-examples project requires java version 1.8 or later.
 </p>
 </section>
 

@@ -1,7 +1,7 @@
 /*
 
     dsh-iconbundle-svg  SVG icon bundle implementation.
-    Copyright (c) 2003-2013 held jointly by the individual authors.
+    Copyright (c) 2003-2019 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
@@ -46,7 +46,6 @@ import org.dishevelled.iconbundle.impl.IconBundleUtils;
  * Icon bundle derived from a single scalable base image in SVG format.
  *
  * @author  Michael Heuer
- * @version $Revision: 741 $ $Date: 2010-2013-01-02 20:23:15 -0600 (Sat, 02 Jan 2010-2013) $
  */
 public final class SVGIconBundle
     implements IconBundle

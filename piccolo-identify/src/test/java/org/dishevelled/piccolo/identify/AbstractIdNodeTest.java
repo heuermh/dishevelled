@@ -1,7 +1,7 @@
 /*
 
     dsh-piccolo-identify  Piccolo2D nodes for identifiable beans.
-    Copyright (c) 2007-2013 held jointly by the individual authors.
+    Copyright (c) 2007-2019 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
@@ -41,7 +41,6 @@ import org.dishevelled.identify.ExampleWithNameProperty;
  * Abstract unit test for subclasses of AbstractIdNode.
  *
  * @author  Michael Heuer
- * @version $Revision$ $Date$
  */
 public abstract class AbstractIdNodeTest
     extends TestCase

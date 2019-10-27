@@ -1,7 +1,7 @@
 /*
 
     dsh-piccolo-eventlist-view  Piccolo2D views for event lists.
-    Copyright (c) 2010-2013 held jointly by the individual authors.
+    Copyright (c) 2010-2019 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
@@ -33,6 +33,8 @@ import java.awt.event.ActionEvent;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.swing.AbstractAction;
 
@@ -50,17 +52,19 @@ import org.piccolo2d.PNode;
  *
  * @param <E> model element type
  * @author  Michael Heuer
- * @version $Revision$ $Date$
  */
 public abstract class AbstractEventListNode<E>
     extends PNode
     implements EventListView<E>
 {
+    /** I18n. */
+    private static final ResourceBundle I18N = ResourceBundle.getBundle("dsh-piccolo-eventlist-view", Locale.getDefault());
+
     /** Event list view support. */
     private final EventListViewSupport<E> eventListViewSupport;
 
     /** Select all action. */
-    private final IdentifiableAction selectAllAction = new IdentifiableAction("Select all", EDIT_SELECT_ALL)
+    private final IdentifiableAction selectAllAction = new IdentifiableAction(I18N.getString("AbstractEventListNode.selectAll"), EDIT_SELECT_ALL)
         {
                 @Override
                 public void actionPerformed(final ActionEvent event)
@@ -70,7 +74,7 @@ public abstract class AbstractEventListNode<E>
         };
 
     /** Clear selection action. */
-    private final AbstractAction clearSelectionAction = new AbstractAction("Clear selection")
+    private final AbstractAction clearSelectionAction = new AbstractAction(I18N.getString("AbstractEventListNode.clearSelection"))
         {
                 @Override
                 public void actionPerformed(final ActionEvent event)
@@ -80,7 +84,7 @@ public abstract class AbstractEventListNode<E>
         };
 
     /** Invert selection action. */
-    private final AbstractAction invertSelectionAction = new AbstractAction("Invert selection")
+    private final AbstractAction invertSelectionAction = new AbstractAction(I18N.getString("AbstractEventListNode.invertSelection"))
         {
                 @Override
                 public void actionPerformed(final ActionEvent event)
@@ -90,7 +94,7 @@ public abstract class AbstractEventListNode<E>
         };
 
     /** Cut action. */
-    private final IdentifiableAction cutAction = new IdentifiableAction("Cut", EDIT_CUT)
+    private final IdentifiableAction cutAction = new IdentifiableAction(I18N.getString("AbstractEventListNode.cut"), EDIT_CUT)
         {
                 @Override
                 public void actionPerformed(final ActionEvent event)
@@ -100,7 +104,7 @@ public abstract class AbstractEventListNode<E>
         };
 
     /** Copy action. */
-    private final IdentifiableAction copyAction = new IdentifiableAction("Copy", EDIT_COPY)
+    private final IdentifiableAction copyAction = new IdentifiableAction(I18N.getString("AbstractEventListNode.copy"), EDIT_COPY)
         {
                 @Override
                 public void actionPerformed(final ActionEvent event)
@@ -110,7 +114,7 @@ public abstract class AbstractEventListNode<E>
         };
 
     /** Paste action. */
-    private final IdentifiableAction pasteAction = new IdentifiableAction("Paste", EDIT_PASTE)
+    private final IdentifiableAction pasteAction = new IdentifiableAction(I18N.getString("AbstractEventListNode.paste"), EDIT_PASTE)
         {
                 @Override
                 public void actionPerformed(final ActionEvent event)
@@ -120,7 +124,7 @@ public abstract class AbstractEventListNode<E>
         };
 
     /** Add action. */
-    private final IdentifiableAction addAction = new IdentifiableAction("Add", LIST_ADD)
+    private final IdentifiableAction addAction = new IdentifiableAction(I18N.getString("AbstractEventListNode.add"), LIST_ADD)
         {
                 @Override
                 public void actionPerformed(final ActionEvent event)
@@ -130,7 +134,7 @@ public abstract class AbstractEventListNode<E>
         };
 
     /** Remove action. */
-    private final IdentifiableAction removeAction = new IdentifiableAction("Remove", LIST_REMOVE)
+    private final IdentifiableAction removeAction = new IdentifiableAction(I18N.getString("AbstractEventListNode.remove"), LIST_REMOVE)
         {
                 @Override
                 public void actionPerformed(final ActionEvent event)
@@ -140,7 +144,7 @@ public abstract class AbstractEventListNode<E>
         };
 
     /** Remove all action. */
-    private final AbstractAction removeAllAction = new AbstractAction("Remove all")
+    private final AbstractAction removeAllAction = new AbstractAction(I18N.getString("AbstractEventListNode.removeAll"))
         {
                 @Override
                 public void actionPerformed(final ActionEvent event)

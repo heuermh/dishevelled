@@ -34,7 +34,7 @@
 dishevelled.org <b>identify</b> provides lightweight components for identifiable
 beans, those marked as having a name and an icon bundle.  The identify project has
 a dependency on the dishevelled.org <a href="http://www.dishevelled.org/iconbundle">iconbundle</a>
-library and requires java version 1.6 or later.
+library and requires java version 1.8 or later.
 </p>
 
 <p>
