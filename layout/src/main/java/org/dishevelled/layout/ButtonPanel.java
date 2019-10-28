@@ -24,6 +24,7 @@
 package org.dishevelled.layout;
 
 import java.awt.Component;
+import java.awt.Dimension;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -109,18 +110,29 @@ public final class ButtonPanel
         }
         removeAll();
 
-        add(Box.createHorizontalGlue());
-        add(Box.createHorizontalGlue());
-
         for (Iterator i = buttons.iterator(); i.hasNext(); )
         {
             JButton button = (JButton) i.next();
             add(button);
+        }
+    }
 
-            if (i.hasNext())
-            {
-                add(Box.createHorizontalStrut(buttonSpacing));
-            }
+    /**
+     * Update sizes for the specified button.
+     *
+     * @param button button
+     */
+    private void updateSizes(final JButton button)
+    {
+        Dimension minimumSize = button.getMinimumSize();
+        if (minimumSize.width < minimumButtonWidth)
+        {
+            button.setMinimumSize(new Dimension(minimumButtonWidth, minimumSize.height));
+        }
+        Dimension preferredSize = button.getPreferredSize();
+        if (preferredSize.width < minimumButtonWidth)
+        {
+            button.setPreferredSize(new Dimension(minimumButtonWidth, preferredSize.height));
         }
     }
 
@@ -133,7 +145,10 @@ public final class ButtonPanel
     public JButton add(final JButton button)
     {
         addSpacing();
-        return (JButton) super.add(button);
+        super.add(button);
+        updateSizes(button);
+        return button;
+
     }
 
     /**
@@ -146,7 +161,9 @@ public final class ButtonPanel
     {
         addSpacing();
         JButton button = new JButton(action);
-        return (JButton) super.add(button);
+        super.add(button);
+        updateSizes(button);
+        return button;
     }
 
     /**
