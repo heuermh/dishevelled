@@ -33,6 +33,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseListener;
 
+import javax.accessibility.AccessibleContext;
+
 import javax.swing.Icon;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
@@ -348,6 +350,8 @@ public final class IdLabel
     private void rebuild()
     {
         String name = IdentifyUtils.getNameFor(value);
+        // to prevent stack overflow, setText calls getText via AccessibleJLabel
+        putClientProperty(AccessibleContext.ACCESSIBLE_NAME_PROPERTY, name);
         setText(name);
 
         IconBundle iconBundle = IdentifyUtils.getIconBundleFor(value);
