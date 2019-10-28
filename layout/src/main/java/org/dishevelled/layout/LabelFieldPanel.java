@@ -1,7 +1,7 @@
 /*
 
     dsh-layout  Layout managers for lightweight components.
-    Copyright (c) 2003-2013 held jointly by the individual authors.
+    Copyright (c) 2003-2019 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
@@ -32,11 +32,12 @@ import javax.swing.JPanel;
 import javax.swing.LookAndFeel;
 import javax.swing.UIManager;
 
+import javax.swing.border.EmptyBorder;
+
 /**
  * Label field panel.
  *
  * @author  Michael Heuer
- * @version $Revision$ $Date$
  */
 public class LabelFieldPanel
     extends JPanel
@@ -313,6 +314,53 @@ public class LabelFieldPanel
         }
         super.add(field, layout.finalWideField());
         hasFinal = true;
+    }
+
+    /**
+     * Set the border for this button panel to an empty border the specified width.
+     *
+     * <p>This is a bound property.</p>
+     *
+     * @param width width, must be at least zero
+     */
+    public void setBorder(final int width)
+    {
+        if (width < 0)
+        {
+            throw new IllegalArgumentException("border width must be at least zero");
+        }
+        setBorder(new EmptyBorder(width, width, width, width));
+    }
+
+    /**
+     * Set the border for this button panel to an empty border the specified dimensions.
+     *
+     * <p>This is a bound property.</p>
+     *
+     * @param top top, must be at least zero
+     * @param left left, must be at least zero
+     * @param bottom bottom, must be at least zero
+     * @param right right, must be at least zero
+     */
+    public void setBorder(final int top, final int left, final int bottom, final int right)
+    {
+        if (top < 0)
+        {
+            throw new IllegalArgumentException("border top must be at least zero");
+        }
+        if (left < 0)
+        {
+            throw new IllegalArgumentException("border left must be at least zero");
+        }
+        if (bottom < 0)
+        {
+            throw new IllegalArgumentException("border bottom must be at least zero");
+        }
+        if (right < 0)
+        {
+            throw new IllegalArgumentException("border right must be at least zero");
+        }
+        setBorder(new EmptyBorder(top, left, bottom, right));
     }
 
     // override JPanel methods
