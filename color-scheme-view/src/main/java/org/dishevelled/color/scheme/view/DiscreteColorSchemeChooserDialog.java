@@ -38,8 +38,6 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 
-import javax.swing.border.EmptyBorder;
-
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
@@ -182,7 +180,7 @@ class DiscreteColorSchemeChooserDialog extends JDialog
     private void layoutComponents()
     {
         ButtonPanel buttonPanel = new ButtonPanel();
-        buttonPanel.setBorder(new EmptyBorder(0, 12, 12, 12));
+        buttonPanel.setBorder(0, 12, 12, 12);
         buttonPanel.add(cancel);
         buttonPanel.add(okButton);
 

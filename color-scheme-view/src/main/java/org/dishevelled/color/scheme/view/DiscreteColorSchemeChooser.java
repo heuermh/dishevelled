@@ -36,8 +36,6 @@ import javax.swing.JDialog;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
-import javax.swing.border.EmptyBorder;
-
 import ca.odell.glazedlists.GlazedLists;
 
 import org.dishevelled.color.scheme.impl.DiscreteColorScheme;
@@ -84,7 +82,7 @@ public class DiscreteColorSchemeChooser extends LabelFieldPanel
      */
     private void layoutComponents()
     {
-        setBorder(new EmptyBorder(12, 12, 12, 12));
+        setBorder(12);
 
         addField(I18N.getString("DiscreteColorSchemeChooser.name") + ":", name);
         addSpacing(20);
