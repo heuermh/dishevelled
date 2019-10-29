@@ -74,7 +74,7 @@ import org.dishevelled.identify.IdentifyUtils;
  * by providing private no-arg state methods which will be called via reflection
  * on entry by the state machine engine.</p>
  *
- * <p>For example:
+ * <p>For example:</p>
  * <pre>
  * class MyIdNode extends AbstractIdNode {
  *   // ...
@@ -88,7 +88,7 @@ import org.dishevelled.identify.IdentifyUtils;
  *     setForeground(Color.WHITE);
  *   }
  * }
- * </pre></p>
+ * </pre>
  *
  * @author  Michael Heuer
  */
