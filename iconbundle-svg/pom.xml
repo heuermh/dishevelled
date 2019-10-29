@@ -27,13 +27,13 @@
   <parent>
     <groupId>org.dishevelled</groupId>
     <artifactId>dsh-parent</artifactId>
-    <version>18-SNAPSHOT</version>
+    <version>18</version>
     <relativePath>../parent/pom.xml</relativePath>
   </parent>
   <artifactId>dsh-iconbundle-svg</artifactId>
   <packaging>jar</packaging>
   <name>dishevelled.org iconbundle-svg</name>
-  <version>1.1-SNAPSHOT</version>
+  <version>1.1</version>
   <description>SVG icon bundle implementation.</description>
   <url>http://www.dishevelled.org/iconbundle-svg</url>
   <inceptionYear>2003</inceptionYear>
@@ -41,18 +41,19 @@
     <connection>scm:git:git@github.com:heuermh/dishevelled.git</connection>
     <developerConnection>scm:git:git@github.com:heuermh/dishevelled.git</developerConnection>
     <url>git@github.com:heuermh/dishevelled.git</url>
+    <tag>dsh-iconbundle-svg-1.1</tag>
   </scm>
   <dependencies>
     <dependency>
       <groupId>org.dishevelled</groupId>
       <artifactId>dsh-iconbundle</artifactId>
-      <version>1.1-SNAPSHOT</version>
+      <version>1.1</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>org.dishevelled</groupId>
       <artifactId>dsh-iconbundle</artifactId>
-      <version>${project.version}</version>
+      <version>1.1</version>
       <type>test-jar</type>
       <scope>test</scope>
     </dependency>
