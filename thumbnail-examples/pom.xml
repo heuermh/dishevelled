@@ -27,13 +27,13 @@
   <parent>
     <groupId>org.dishevelled</groupId>
     <artifactId>dsh-parent</artifactId>
-    <version>18</version>
+    <version>19-SNAPSHOT</version>
     <relativePath>../parent/pom.xml</relativePath>
   </parent>
   <artifactId>dsh-thumbnail-examples</artifactId>
   <packaging>jar</packaging>
   <name>dishevelled.org thumbnail-examples</name>
-  <version>1.0</version>
+  <version>1.1-SNAPSHOT</version>
   <description>Examples for the thumbnail library.</description>
   <url>http://www.dishevelled.org/thumbnail-examples</url>
   <inceptionYear>2013</inceptionYear>
@@ -41,7 +41,7 @@
     <connection>scm:git:git@github.com:heuermh/dishevelled.git</connection>
     <developerConnection>scm:git:git@github.com:heuermh/dishevelled.git</developerConnection>
     <url>git@github.com:heuermh/dishevelled.git</url>
-    <tag>dsh-thumbnail-examples-1.0</tag>
+    <tag>HEAD</tag>
   </scm>
   <build>
     <plugins>
