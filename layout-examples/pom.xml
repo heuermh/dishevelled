@@ -27,13 +27,13 @@
   <parent>
     <groupId>org.dishevelled</groupId>
     <artifactId>dsh-parent</artifactId>
-    <version>18-SNAPSHOT</version>
+    <version>18</version>
     <relativePath>../parent/pom.xml</relativePath>
   </parent>
   <artifactId>dsh-layout-examples</artifactId>
   <packaging>jar</packaging>
   <name>dishevelled.org layout-examples</name>
-  <version>1.1-SNAPSHOT</version>
+  <version>1.1</version>
   <description>Examples for the layout library.</description>
   <url>http://www.dishevelled.org/layout-examples</url>
   <inceptionYear>2008</inceptionYear>
@@ -41,12 +41,13 @@
     <connection>scm:git:git@github.com:heuermh/dishevelled.git</connection>
     <developerConnection>scm:git:git@github.com:heuermh/dishevelled.git</developerConnection>
     <url>git@github.com:heuermh/dishevelled.git</url>
+    <tag>dsh-layout-examples-1.1</tag>
   </scm>
   <dependencies>
     <dependency>
       <groupId>org.dishevelled</groupId>
       <artifactId>dsh-layout</artifactId>
-      <version>1.1-SNAPSHOT</version>
+      <version>1.1</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
