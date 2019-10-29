@@ -32,7 +32,7 @@ import java.awt.GridBagConstraints;
  * for the common case of two columns, one of labels and
  * one of fields.
  *
- * <p>A simple example:
+ * A simple example:
  * <pre>
  * JPanel panel = new JPanel();
  * LabelFieldLayout l = new LabelFieldLayout();
@@ -56,17 +56,17 @@ import java.awt.GridBagConstraints;
  *                                       "Final wide field B",
  *                                       "Final wide field C" });
  * panel.add(new JScrollPane(list), l.finalWideField());
- * </pre></p>
+ * </pre>
  *
- * <p>The labels are aligned in the left column and the fields are
+ * The labels are aligned in the left column and the fields are
  * aligned in the right column, except for a wide label or field
  * which stretches vertically across both columns (<code>wideLabel()</code>
  * or <code>wideField()</code>).  Rows containing fields that
  * are JLabels (<code>labelLabel()</code> and <code>labelField()</code>)
  * have less of a vertical gap than those containing other components
- * (<code>normalLabel()</code> and <code>normalField()</code>).</p>
+ * (<code>normalLabel()</code> and <code>normalField()</code>).
  *
- * <p>The final line in a LabelFieldLayout is the one which stretches
+ * The final line in a LabelFieldLayout is the one which stretches
  * vertically to cover space left at the bottom of a container.  Use a
  * final wide label
  * <pre>
@@ -86,14 +86,14 @@ import java.awt.GridBagConstraints;
  * panel.add(Box.createGlue(), l.finalSpacing());
  * </pre>
  *
- * to allow the layout to adapt gracefully to container resize events.</p>
+ * to allow the layout to adapt gracefully to container resize events.
  *
- * <p>The width of the label and field columns can be specified using
+ * The width of the label and field columns can be specified using
  * the constructor <code>LabelFieldLayout(float, float)</code> or the
  * property setters <code>setLabelPercent(float)</code> and
  * <code>setFieldPercent(float)</code>.  The default configuration is
  * to split on thirds, with 33% of the container width for labels and 66%
- * for fields.</p>
+ * for fields.
  *
  * @author  Michael Heuer
  */
