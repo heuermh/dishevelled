@@ -30,13 +30,13 @@
   <parent>
     <groupId>org.dishevelled</groupId>
     <artifactId>dsh-parent</artifactId>
-    <version>18</version>
+    <version>19-SNAPSHOT</version>
     <relativePath>../parent/pom.xml</relativePath>
   </parent>
   <artifactId>dsh-iconbundle-tango-examples</artifactId>
   <packaging>jar</packaging>
   <name>dishevelled.org iconbundle-tango-examples</name>
-  <version>1.0</version>
+  <version>1.1-SNAPSHOT</version>
   <description>Examples using the iconbundle-tango library.</description>
   <url>http://www.dishevelled.org/iconbundle-tango-examples</url>
   <inceptionYear>2005</inceptionYear>
@@ -44,7 +44,7 @@
     <connection>scm:git:git@github.com:heuermh/dishevelled.git</connection>
     <developerConnection>scm:git:git@github.com:heuermh/dishevelled.git</developerConnection>
     <url>git@github.com:heuermh/dishevelled.git</url>
-    <tag>dsh-iconbundle-tango-examples-1.0</tag>
+    <tag>HEAD</tag>
   </scm>
   <build>
     <plugins>
