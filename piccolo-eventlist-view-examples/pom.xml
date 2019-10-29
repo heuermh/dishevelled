@@ -27,13 +27,13 @@
   <parent>
     <groupId>org.dishevelled</groupId>
     <artifactId>dsh-parent</artifactId>
-    <version>18-SNAPSHOT</version>
+    <version>18</version>
     <relativePath>../parent/pom.xml</relativePath>
   </parent>
   <artifactId>dsh-piccolo-eventlist-view-examples</artifactId>
   <packaging>jar</packaging>
   <name>dishevelled.org piccolo-eventlist-view-examples</name>
-  <version>1.1-SNAPSHOT</version>
+  <version>1.1</version>
   <description>Examples for the piccolo-eventlist-view library.</description>
   <url>http://www.dishevelled.org/piccolo-eventlist-view-examples</url>
   <inceptionYear>2010</inceptionYear>
@@ -41,6 +41,7 @@
     <connection>scm:git:git@github.com:heuermh/dishevelled.git</connection>
     <developerConnection>scm:git:git@github.com:heuermh/dishevelled.git</developerConnection>
     <url>git@github.com:heuermh/dishevelled.git</url>
+    <tag>dsh-piccolo-eventlist-view-examples-1.1</tag>
   </scm>
   <build>
     <plugins>
@@ -64,7 +65,7 @@
       <dependency>
         <groupId>org.dishevelled</groupId>
         <artifactId>dsh-eventlist-view</artifactId>
-        <version>2.2-SNAPSHOT</version>
+        <version>2.2</version>
       </dependency>
       <dependency>
         <groupId>org.dishevelled</groupId>
@@ -79,7 +80,7 @@
       <dependency>
         <groupId>org.dishevelled</groupId>
         <artifactId>dsh-piccolo-eventlist-view</artifactId>
-        <version>1.1-SNAPSHOT</version>
+        <version>1.1</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
