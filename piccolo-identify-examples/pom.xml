@@ -27,13 +27,13 @@
   <parent>
     <groupId>org.dishevelled</groupId>
     <artifactId>dsh-parent</artifactId>
-    <version>18-SNAPSHOT</version>
+    <version>18</version>
     <relativePath>../parent/pom.xml</relativePath>
   </parent>
   <artifactId>dsh-piccolo-identify-examples</artifactId>
   <packaging>jar</packaging>
   <name>dishevelled.org piccolo-identify-examples</name>
-  <version>1.1-SNAPSHOT</version>
+  <version>1.1</version>
   <description>Piccolo2D identifiable bean node examples.</description>
   <url>http://www.dishevelled.org/piccolo-identify-examples</url>
   <inceptionYear>2007</inceptionYear>
@@ -41,6 +41,7 @@
     <connection>scm:git:git@github.com:heuermh/dishevelled.git</connection>
     <developerConnection>scm:git:git@github.com:heuermh/dishevelled.git</developerConnection>
     <url>git@github.com:heuermh/dishevelled.git</url>
+    <tag>dsh-piccolo-identify-examples-1.1</tag>
   </scm>
   <build>
     <plugins>
@@ -64,12 +65,12 @@
       <dependency>
         <groupId>org.dishevelled</groupId>
         <artifactId>dsh-piccolo-identify</artifactId>
-        <version>1.1-SNAPSHOT</version>
+        <version>1.1</version>
       </dependency>
       <dependency>
         <groupId>org.dishevelled</groupId>
         <artifactId>dsh-iconbundle-tango</artifactId>
-        <version>1.1-SNAPSHOT</version>
+        <version>1.1</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
