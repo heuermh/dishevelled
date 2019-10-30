@@ -27,13 +27,13 @@
   <parent>
     <groupId>org.dishevelled</groupId>
     <artifactId>dsh-parent</artifactId>
-    <version>18-SNAPSHOT</version>
+    <version>18</version>
     <relativePath>../parent/pom.xml</relativePath>
   </parent>
   <artifactId>dsh-color-scheme-view</artifactId>
   <packaging>jar</packaging>
   <name>dishevelled.org color-scheme-view</name>
-  <version>1.0-SNAPSHOT</version>
+  <version>1.0</version>
   <description>Views for color schemes.</description>
   <url>http://www.dishevelled.org/color-scheme-view</url>
   <inceptionYear>2019</inceptionYear>
@@ -41,19 +41,19 @@
     <connection>scm:git:git@github.com:heuermh/dishevelled.git</connection>
     <developerConnection>scm:git:git@github.com:heuermh/dishevelled.git</developerConnection>
     <url>git@github.com:heuermh/dishevelled.git</url>
-    <tag>HEAD</tag>
+    <tag>dsh-color-scheme-view-1.0</tag>
   </scm>
   <dependencyManagement>
     <dependencies>
       <dependency>
         <groupId>org.dishevelled</groupId>
         <artifactId>dsh-color-scheme</artifactId>
-        <version>3.1-SNAPSHOT</version>
+        <version>3.1</version>
       </dependency>
       <dependency>
         <groupId>org.dishevelled</groupId>
         <artifactId>dsh-eventlist-view</artifactId>
-        <version>2.2-SNAPSHOT</version>
+        <version>2.2</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
