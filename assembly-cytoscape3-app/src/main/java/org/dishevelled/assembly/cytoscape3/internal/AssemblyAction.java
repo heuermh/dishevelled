@@ -86,8 +86,8 @@ final class AssemblyAction extends AbstractCyAction
                    final VisualMappingFunctionFactory continuousMappingFactory,
                    final VisualMappingFunctionFactory discreteMappingFactory)
     {
-        super("Assembly");
-        setPreferredMenu("Apps");
+        super("Open assembly view...");
+        setPreferredMenu("Apps.Assembly");
 
         checkNotNull(applicationManager);
         checkNotNull(visualMappingManager);

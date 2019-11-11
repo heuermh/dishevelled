@@ -44,7 +44,7 @@ final class ImportGfa2Task extends AbstractTask
 
     /** Input file tunable. */
     @Tunable(description = "Graphical Fragment Assembly (GFA) 2.0 file",
-             tooltip = "<html>Graphical Fragment Assembly (GFA) 2.0 file,<br/>compressed files (.bgz, .bzip2, .gz) are supported</html>",
+             tooltip = "<html>Input file in Graphical Fragment Assembly (GFA) 2.0 format.<br/>Compressed files (.bgz, .bzip2, .gz) are supported.</html>",
              required = true,
              params = "input=true;fileCategory=unspecified")
     public File inputFile;

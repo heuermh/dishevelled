@@ -29,6 +29,7 @@ import static org.cytoscape.work.ServiceProperties.COMMAND_NAMESPACE;
 import static org.cytoscape.work.ServiceProperties.IN_CONTEXT_MENU;
 import static org.cytoscape.work.ServiceProperties.IN_MENU_BAR;
 import static org.cytoscape.work.ServiceProperties.PREFERRED_MENU;
+import static org.cytoscape.work.ServiceProperties.TITLE;
 import static org.cytoscape.work.ServiceProperties.TOOLTIP;
 
 import java.util.Properties;
@@ -77,30 +78,30 @@ public final class CyActivator extends AbstractCyActivator
                                                            discreteMappingFactory);
 
         Properties actionProperties = new Properties();
-        //registerService(bundleContext, assemblyAction, CyAction.class, actionProperties);
+        registerService(bundleContext, assemblyAction, CyAction.class, actionProperties);
 
         Properties importGfa1Properties = new Properties();
         importGfa1Properties.setProperty(COMMAND_NAMESPACE, "assembly");
         importGfa1Properties.setProperty(COMMAND, "import_gfa1");
-        importGfa1Properties.setProperty(COMMAND_DESCRIPTION,  "Import Graphical Fragment Assembly (GFA) 1.0...");
+        importGfa1Properties.setProperty(COMMAND_DESCRIPTION,  "Import a network in Graphical Fragment Assembly (GFA) 1.0 format.  Compressed files (.bgz, .bzip2, .gz) are supported.");
         importGfa1Properties.setProperty(PREFERRED_MENU, "Apps.Assembly");
+        importGfa1Properties.setProperty(TITLE, "Import Graphical Fragment Assembly (GFA) 1.0...");
         importGfa1Properties.setProperty(IN_MENU_BAR, "true");
         importGfa1Properties.setProperty(IN_CONTEXT_MENU, "false");
 
         TaskFactory importGfa1TaskFactory = new ImportGfa1TaskFactory();
-        //registerAllServices(bundleContext, importGfa1TaskFactory, importGfa1Properties);
-        registerService(bundleContext, importGfa1TaskFactory, TaskFactory.class, importGfa1Properties);
+        registerAllServices(bundleContext, importGfa1TaskFactory, importGfa1Properties);
 
         Properties importGfa2Properties = new Properties();
         importGfa2Properties.setProperty(COMMAND_NAMESPACE, "assembly");
         importGfa2Properties.setProperty(COMMAND, "import_gfa2");
-        importGfa2Properties.setProperty(COMMAND_DESCRIPTION,  "Import Graphical Fragment Assembly (GFA) 2.0...");
+        importGfa2Properties.setProperty(COMMAND_DESCRIPTION,  "Import a network in Graphical Fragment Assembly (GFA) 2.0 format.  Compressed files (.bgz, .bzip2, .gz) are supported.");
         importGfa2Properties.setProperty(PREFERRED_MENU, "Apps.Assembly");
+        importGfa2Properties.setProperty(TITLE,  "Import Graphical Fragment Assembly (GFA) 2.0...");
         importGfa2Properties.setProperty(IN_MENU_BAR, "true");
         importGfa2Properties.setProperty(IN_CONTEXT_MENU, "false");
 
         TaskFactory importGfa2TaskFactory = new ImportGfa2TaskFactory();
-        //registerAllServices(bundleContext, importGfa2TaskFactory, importGfa2Properties);
-        registerService(bundleContext, importGfa2TaskFactory, TaskFactory.class, importGfa2Properties);
+        registerAllServices(bundleContext, importGfa2TaskFactory, importGfa2Properties);
     }
 }
