@@ -37,7 +37,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author  Michael Heuer
  */
-final class ImportGfa2Task extends AbstractTask
+public final class ImportGfa2Task extends AbstractTask
 {
     /** Logger. */
     private final Logger logger = LoggerFactory.getLogger(getClass());

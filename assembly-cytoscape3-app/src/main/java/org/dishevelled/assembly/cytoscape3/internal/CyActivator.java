@@ -89,7 +89,7 @@ public final class CyActivator extends AbstractCyActivator
         importGfa1Properties.setProperty(IN_MENU_BAR, "true");
         importGfa1Properties.setProperty(IN_CONTEXT_MENU, "false");
 
-        TaskFactory importGfa1TaskFactory = new ImportGfa1TaskFactory();
+        TaskFactory importGfa1TaskFactory = new ImportGfa1TaskFactory(applicationManager);
         registerAllServices(bundleContext, importGfa1TaskFactory, importGfa1Properties);
 
         Properties importGfa2Properties = new Properties();
