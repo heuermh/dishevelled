@@ -103,23 +103,13 @@ final class AssemblyAction extends AbstractCyAction
     @Override
     public void actionPerformed(final ActionEvent event)
     {
-        if (event == null)
-        {
-            throw new NullPointerException("event must not be null");
-        }
-        logger.info("actionPerformed " + event);
+        checkNotNull(event);
 
         JFrame frame = (JFrame) windowForComponent((Component) event.getSource());
         JDialog dialog = new JDialog(frame, "Assembly");
 
-        JPanel contentPane = new JPanel();
-        contentPane.setBorder(new EmptyBorder(12, 12, 12, 12));
-        contentPane.setLayout(new BorderLayout());
-
-        // create app, set as content pane
-        contentPane.add(new JLabel("Assembly"));
-
-        dialog.setContentPane(contentPane);
+        AssemblyApp app = new AssemblyApp(new AssemblyModel());
+        dialog.setContentPane(app);
 
         dialog.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
         //installCloseKeyBinding(dialog);
