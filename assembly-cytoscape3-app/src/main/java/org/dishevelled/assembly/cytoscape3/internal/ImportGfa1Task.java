@@ -186,12 +186,11 @@ public final class ImportGfa1Task extends AbstractTask
             Segment segment = c.getValue();
 
             String name = id + (orientation.isForward() ? "+" : "-");
-            String sequence = orientation.isForward() ? trim(segment.getSequence(), 100) : reverseComplement(segment.getSequence(), 100);
 
-            CyTable nodeTable = network.getDefaultNodeTable();
             if (!nodes.containsKey(name))
             {
                 CyNode node = network.addNode();
+                CyTable nodeTable = network.getDefaultNodeTable();
                 CyRow nodeRow = nodeTable.getRow(node.getSUID());
 
                 setValue(nodeTable, nodeRow, "name", String.class, name);
@@ -202,6 +201,8 @@ public final class ImportGfa1Task extends AbstractTask
                 setValue(nodeTable, nodeRow, "kmerCount", Integer.class, segment.getKmerCountOpt().orElse(null));
                 setValue(nodeTable, nodeRow, "sequenceChecksum", String.class, segment.containsSequenceChecksum() ? String.valueOf(segment.getSequenceChecksum()) : null);
                 setValue(nodeTable, nodeRow, "sequenceUri", String.class, segment.getSequenceUriOpt().orElse(null));
+
+                String sequence = orientation.isForward() ? trim(segment.getSequence(), 100) : reverseComplement(segment.getSequence(), 100);
                 setValue(nodeTable, nodeRow, "sequence", String.class, sequence);
 
                 nodes.put(name, node);
@@ -246,11 +247,11 @@ public final class ImportGfa1Task extends AbstractTask
      * @param columnClass column class
      * @param value value
      */
-    private static <T> void setValue(final CyTable table,
-                                     final CyRow row,
-                                     final String columnName,
-                                     final Class<?> columnClass,
-                                     final T value)
+    static <T> void setValue(final CyTable table,
+                             final CyRow row,
+                             final String columnName,
+                             final Class<?> columnClass,
+                             final T value)
     {
         if (table.getColumn(columnName) == null)
         {
@@ -266,7 +267,7 @@ public final class ImportGfa1Task extends AbstractTask
      * @param limit limit
      * @return the specified value trimmed to the limit, if necessary
      */
-    private String trim(final String value, final int limit) {
+    static String trim(final String value, final int limit) {
         if (value == null)
         {
             return "";
@@ -285,7 +286,7 @@ public final class ImportGfa1Task extends AbstractTask
      * @param limit limit
      * @return the specified value reverse complemented and trimmed to the limit, if necessary
      */
-    private String reverseComplement(final String value, final int limit) {
+    static String reverseComplement(final String value, final int limit) {
         if (value == null)
         {
             return "";
