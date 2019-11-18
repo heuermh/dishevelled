@@ -27,6 +27,13 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import org.cytoscape.application.CyApplicationManager;
 
+import org.cytoscape.task.analyze.AnalyzeNetworkCollectionTaskFactory;
+
+import org.cytoscape.view.layout.CyLayoutAlgorithmManager;
+
+import org.cytoscape.view.vizmap.VisualMappingFunctionFactory;
+import org.cytoscape.view.vizmap.VisualMappingManager;
+
 import org.cytoscape.work.AbstractTaskFactory;
 import org.cytoscape.work.TaskIterator;
 
@@ -43,6 +50,24 @@ final class ImportGfa1TaskFactory extends AbstractTaskFactory
     /** Application manager. */
     private final CyApplicationManager applicationManager;
 
+    /** Analyze network collection task factory. */
+    private final AnalyzeNetworkCollectionTaskFactory analyzeNetworkCollectionTaskFactory;
+
+    /** Layout algorithm manager. */
+    private final CyLayoutAlgorithmManager layoutAlgorithmManager;
+
+    /** Visual mapping manager. */
+    private final VisualMappingManager visualMappingManager;
+
+    /** Continuous mapping factory. */
+    private final VisualMappingFunctionFactory continuousMappingFactory;
+
+    /** Discrete mapping factory. */
+    private final VisualMappingFunctionFactory discreteMappingFactory;
+
+    /** Passthrough mapping factory. */
+    private final VisualMappingFunctionFactory passthroughMappingFactory;
+
     /** Logger. */
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -52,23 +77,51 @@ final class ImportGfa1TaskFactory extends AbstractTaskFactory
      * with the specified application manager.
      *
      * @param applicationManager application manager, must not be null
+     * @param analyzeNetworkCollectionTaskFactory analyze network collection task factory, must not be null
+     * @param layoutAlgorithmManager layout algorithm manager, must not be null
+     * @param visualMappingManager visual mapping manager, must not be null
+     * @param continuousMappingFactory continuous mapping factory, must not be null
+     * @param discreteMappingFactory discreteMappingFactory, must not be null
+     * @param passthroughMappingFactory passthrough mapping factory, must not be null
      */
-    ImportGfa1TaskFactory(final CyApplicationManager applicationManager)
+    ImportGfa1TaskFactory(final CyApplicationManager applicationManager,
+                          final AnalyzeNetworkCollectionTaskFactory analyzeNetworkCollectionTaskFactory,
+                          final CyLayoutAlgorithmManager layoutAlgorithmManager,
+                          final VisualMappingManager visualMappingManager,
+                          final VisualMappingFunctionFactory continuousMappingFactory,
+                          final VisualMappingFunctionFactory discreteMappingFactory,
+                          final VisualMappingFunctionFactory passthroughMappingFactory)
     {
         checkNotNull(applicationManager);
+        checkNotNull(analyzeNetworkCollectionTaskFactory);
+        checkNotNull(layoutAlgorithmManager);
+        checkNotNull(visualMappingManager);
+        checkNotNull(continuousMappingFactory);
+        checkNotNull(discreteMappingFactory);
+        checkNotNull(passthroughMappingFactory);
         this.applicationManager = applicationManager;
+        this.analyzeNetworkCollectionTaskFactory = analyzeNetworkCollectionTaskFactory;
+        this.layoutAlgorithmManager = layoutAlgorithmManager;
+        this.visualMappingManager = visualMappingManager;
+        this.continuousMappingFactory = continuousMappingFactory;
+        this.discreteMappingFactory = discreteMappingFactory;
+        this.passthroughMappingFactory = passthroughMappingFactory;
     }
 
 
     @Override
     public boolean isReady()
     {
-        return true;
+        return applicationManager.getCurrentNetwork() != null && applicationManager.getCurrentNetworkView() != null;
     }
 
     @Override
     public TaskIterator createTaskIterator()
     {
-        return new TaskIterator(new ImportGfa1Task(applicationManager));
+        ImportGfa1Task importTask = new ImportGfa1Task(applicationManager);
+        AnalyzeNetworkTask analyzeNetworkTask = new AnalyzeNetworkTask(applicationManager, analyzeNetworkCollectionTaskFactory);
+        LayoutNetworkTask layoutNetworkTask = new LayoutNetworkTask(applicationManager, layoutAlgorithmManager);
+        VisualMappingTask visualMappingTask = new VisualMappingTask(applicationManager, visualMappingManager, continuousMappingFactory, discreteMappingFactory, passthroughMappingFactory);
+        return new TaskIterator(importTask, analyzeNetworkTask, layoutNetworkTask, visualMappingTask);
     }
 }

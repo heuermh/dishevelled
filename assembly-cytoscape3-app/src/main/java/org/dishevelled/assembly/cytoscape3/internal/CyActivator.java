@@ -38,7 +38,11 @@ import org.cytoscape.application.CyApplicationManager;
 
 import org.cytoscape.application.swing.CyAction;
 
+import org.cytoscape.view.layout.CyLayoutAlgorithmManager;
+
 import org.cytoscape.service.util.AbstractCyActivator;
+
+import org.cytoscape.task.analyze.AnalyzeNetworkCollectionTaskFactory;
 
 import org.cytoscape.view.vizmap.VisualMappingFunctionFactory;
 import org.cytoscape.view.vizmap.VisualMappingManager;
@@ -68,9 +72,12 @@ public final class CyActivator extends AbstractCyActivator
             throw new NullPointerException("bundleContext must not be null");
         }
         CyApplicationManager applicationManager = getService(bundleContext, CyApplicationManager.class);
+        AnalyzeNetworkCollectionTaskFactory analyzeNetworkCollectionTaskFactory = getService(bundleContext, AnalyzeNetworkCollectionTaskFactory.class);
+        CyLayoutAlgorithmManager layoutAlgorithmManager = getService(bundleContext, CyLayoutAlgorithmManager.class);
         VisualMappingManager visualMappingManager = getService(bundleContext, VisualMappingManager.class);
         VisualMappingFunctionFactory continuousMappingFactory = getService(bundleContext, VisualMappingFunctionFactory.class, "(mapping.type=continuous)");
         VisualMappingFunctionFactory discreteMappingFactory = getService(bundleContext, VisualMappingFunctionFactory.class, "(mapping.type=discrete)");
+        VisualMappingFunctionFactory passthroughMappingFactory = getService(bundleContext, VisualMappingFunctionFactory.class, "(mapping.type=passthrough)");
 
         AssemblyAction assemblyAction = new AssemblyAction(applicationManager,
                                                            visualMappingManager,
@@ -89,7 +96,13 @@ public final class CyActivator extends AbstractCyActivator
         importGfa1Properties.setProperty(IN_MENU_BAR, "true");
         importGfa1Properties.setProperty(IN_CONTEXT_MENU, "false");
 
-        TaskFactory importGfa1TaskFactory = new ImportGfa1TaskFactory(applicationManager);
+        TaskFactory importGfa1TaskFactory = new ImportGfa1TaskFactory(applicationManager,
+                                                                      analyzeNetworkCollectionTaskFactory,
+                                                                      layoutAlgorithmManager,
+                                                                      visualMappingManager,
+                                                                      continuousMappingFactory,
+                                                                      discreteMappingFactory,
+                                                                      passthroughMappingFactory);
         registerAllServices(bundleContext, importGfa1TaskFactory, importGfa1Properties);
 
         Properties importGfa2Properties = new Properties();

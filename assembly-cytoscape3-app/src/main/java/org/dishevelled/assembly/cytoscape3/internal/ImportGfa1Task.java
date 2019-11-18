@@ -175,7 +175,6 @@ public final class ImportGfa1Task extends AbstractTask
 
         taskMonitor.setStatusMessage("Building Cytoscape nodes from segments ...");
 
-        // todo: if network is null, need to create a new one
         final CyNetwork network = applicationManager.getCurrentNetwork();
 
         final Map<String, CyNode> nodes = new HashMap<String, CyNode>(segmentsByOrientation.size());
@@ -233,7 +232,6 @@ public final class ImportGfa1Task extends AbstractTask
         nodes.clear();
         links.clear();
 
-        // todo: visual mapping, layout
         // pass paths to AssemblyApp if requested
     }
 
