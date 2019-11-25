@@ -26,18 +26,30 @@ package org.dishevelled.assembly.cytoscape3.internal;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import static org.cytoscape.view.presentation.property.ArrowShapeVisualProperty.ARROW;
+import static org.cytoscape.view.presentation.property.ArrowShapeVisualProperty.NONE;
+import static org.cytoscape.view.presentation.property.ArrowShapeVisualProperty.T;
+import static org.cytoscape.view.presentation.property.BasicVisualLexicon.EDGE_LABEL;
 import static org.cytoscape.view.presentation.property.BasicVisualLexicon.EDGE_PAINT;
+import static org.cytoscape.view.presentation.property.BasicVisualLexicon.EDGE_SOURCE_ARROW_SHAPE;
 import static org.cytoscape.view.presentation.property.BasicVisualLexicon.EDGE_TARGET_ARROW_SHAPE;
 import static org.cytoscape.view.presentation.property.BasicVisualLexicon.EDGE_TRANSPARENCY;
+import static org.cytoscape.view.presentation.property.BasicVisualLexicon.EDGE_TOOLTIP;
 import static org.cytoscape.view.presentation.property.BasicVisualLexicon.EDGE_WIDTH;
 import static org.cytoscape.view.presentation.property.BasicVisualLexicon.NODE_BORDER_PAINT;
 import static org.cytoscape.view.presentation.property.BasicVisualLexicon.NODE_BORDER_TRANSPARENCY;
 import static org.cytoscape.view.presentation.property.BasicVisualLexicon.NODE_BORDER_WIDTH;
 import static org.cytoscape.view.presentation.property.BasicVisualLexicon.NODE_FILL_COLOR;
+import static org.cytoscape.view.presentation.property.BasicVisualLexicon.NODE_LABEL;
 import static org.cytoscape.view.presentation.property.BasicVisualLexicon.NODE_LABEL_COLOR;
+import static org.cytoscape.view.presentation.property.BasicVisualLexicon.NODE_TOOLTIP;
+import static org.cytoscape.view.presentation.property.BasicVisualLexicon.NODE_WIDTH;
 
 import java.awt.Color;
 import java.awt.Paint;
+
+import java.util.Optional;
+
+import com.google.common.collect.Range;
 
 import org.cytoscape.application.CyApplicationManager;
 
@@ -47,12 +59,16 @@ import org.cytoscape.model.CyTable;
 
 import org.cytoscape.view.model.CyNetworkView;
 
+import org.cytoscape.view.presentation.property.values.ArrowShape;
+
 import org.cytoscape.view.vizmap.VisualMappingFunctionFactory;
 import org.cytoscape.view.vizmap.VisualMappingManager;
 import org.cytoscape.view.vizmap.VisualStyle;
 
 import org.cytoscape.view.vizmap.mappings.BoundaryRangeValues;
 import org.cytoscape.view.vizmap.mappings.ContinuousMapping;
+import org.cytoscape.view.vizmap.mappings.DiscreteMapping;
+import org.cytoscape.view.vizmap.mappings.PassthroughMapping;
 
 import org.cytoscape.work.AbstractTask;
 import org.cytoscape.work.TaskMonitor;
@@ -120,24 +136,68 @@ final class VisualMappingTask extends AbstractTask
         // overwrite some defaults
         visualStyle.setDefaultValue(EDGE_TRANSPARENCY, Integer.valueOf(80));
         visualStyle.setDefaultValue(EDGE_WIDTH, Double.valueOf(0.9d));
-        visualStyle.setDefaultValue(EDGE_TARGET_ARROW_SHAPE, ARROW);
         visualStyle.setDefaultValue(NODE_BORDER_PAINT, new Color(85, 87, 83));
         visualStyle.setDefaultValue(NODE_BORDER_TRANSPARENCY, Integer.valueOf(120));
         visualStyle.setDefaultValue(NODE_BORDER_WIDTH, Double.valueOf(0.9d));
         visualStyle.setDefaultValue(NODE_LABEL_COLOR, new Color(46, 52, 54));
 
         CyNetwork network = applicationManager.getCurrentNetwork();
+        CyTable nodeTable = network.getDefaultNodeTable();
 
-        // passthrough mapping, name --> node label
-        // passthrough mapping, sequence --> node tooltip
-        // continuous mapping, length --> node fill color
-        // continuous mapping, length --> node width
+        // passthrough mapping, displaySequence --> node label
+        PassthroughMapping nodeLabelMapping = (PassthroughMapping) passthroughMappingFactory.createVisualMappingFunction("displaySequence", String.class, NODE_LABEL);
+        visualStyle.addVisualMappingFunction(nodeLabelMapping);
+
+        // passthrough mapping, displayLabel --> node tooltip
+        PassthroughMapping nodeTooltipMapping = (PassthroughMapping) passthroughMappingFactory.createVisualMappingFunction("displayLabel", String.class, NODE_TOOLTIP);
+        visualStyle.addVisualMappingFunction(nodeTooltipMapping);
+
+        // continuous mapping, length or sequenceLength --> node fill color
+        Optional<Range<Integer>> displayLengths = rangeOpt(nodeTable.getColumn("displayLength"));
+        if (displayLengths.isPresent())
+        {
+            Range<Integer> r = displayLengths.get();
+
+            Color white = new Color(218, 238, 255);
+            Color blue = new Color(52, 101, 164);
+            BoundaryRangeValues<Paint> minimumNodeFillColor = new BoundaryRangeValues<Paint>(white, white, white);
+            BoundaryRangeValues<Paint> maximumNodeFillColor = new BoundaryRangeValues<Paint>(blue, blue, blue);
+
+            ContinuousMapping<Integer, Paint> nodeFillColorMapping = (ContinuousMapping<Integer, Paint>) continuousMappingFactory.createVisualMappingFunction("displayLength", Integer.class, NODE_FILL_COLOR);
+            nodeFillColorMapping.addPoint(r.lowerEndpoint(), minimumNodeFillColor);
+            nodeFillColorMapping.addPoint(r.upperEndpoint(), maximumNodeFillColor);
+            visualStyle.addVisualMappingFunction(nodeFillColorMapping);
+        }
+
+        // continuous mapping, displaySequenceLength --> node width
+        Optional<Range<Integer>> displaySequenceLengths = rangeOpt(nodeTable.getColumn("displaySequenceLength"));
+        if (displaySequenceLengths.isPresent())
+        {
+            Range<Integer> r = displaySequenceLengths.get();
+
+            BoundaryRangeValues<Double> minimumNodeWidth = new BoundaryRangeValues<Double>(20.0d, 20.0d, 20.0d);
+            BoundaryRangeValues<Double> maximumNodeWidth = new BoundaryRangeValues<Double>(320.0d, 320.0d, 320.0d);
+
+            ContinuousMapping<Integer, Double> nodeWidthMapping = (ContinuousMapping<Integer, Double>) continuousMappingFactory.createVisualMappingFunction("displaySequenceLength", Integer.class, NODE_WIDTH);
+            nodeWidthMapping.addPoint(r.lowerEndpoint(), minimumNodeWidth);
+            nodeWidthMapping.addPoint(r.upperEndpoint(), maximumNodeWidth);
+            visualStyle.addVisualMappingFunction(nodeWidthMapping);
+        }
 
         // passthrough mapping, id --> edge label
+        PassthroughMapping edgeLabelMapping = (PassthroughMapping) passthroughMappingFactory.createVisualMappingFunction("id", String.class, EDGE_LABEL);
+        visualStyle.addVisualMappingFunction(nodeLabelMapping);
+
         // overlap --> edge tooltip
-        // ask about edge label and edge width mapping, any of the counts or mapping quality?
-        // discrete mapping, source orientation --> edge source arrow shape
+        PassthroughMapping edgeTooltipMapping = (PassthroughMapping) passthroughMappingFactory.createVisualMappingFunction("overlap", String.class, EDGE_TOOLTIP);
+        visualStyle.addVisualMappingFunction(nodeLabelMapping);
+
         // discrete mapping, target orientation --> edge target arrow shape
+        DiscreteMapping<String, ArrowShape> edgeTargetArrowMapping = (DiscreteMapping<String, ArrowShape>) discreteMappingFactory.createVisualMappingFunction("targetOrientation", String.class, EDGE_TARGET_ARROW_SHAPE);
+        edgeTargetArrowMapping.putMapValue("+", ARROW);
+        edgeTargetArrowMapping.putMapValue("-", T);
+        visualStyle.addVisualMappingFunction(edgeTargetArrowMapping);
+
 
         taskMonitor.setProgress(0.66d);
         taskMonitor.setStatusMessage("Updating network view...");
@@ -147,5 +207,28 @@ final class VisualMappingTask extends AbstractTask
         networkView.updateView();
 
         taskMonitor.setProgress(1.0d);
+    }
+
+    static Optional<Range<Integer>> rangeOpt(final CyColumn column)
+    {
+        int minimum = Integer.MAX_VALUE;
+        int maximum = 0;
+        boolean found = false;
+        for (Integer value : column.getValues(Integer.class))
+        {
+            if (value != null)
+            {
+                found = true;
+                if (value < minimum)
+                {
+                    minimum = value;
+                }
+                if (value > maximum)
+                {
+                    maximum = value;
+                }
+            }
+        }
+        return found ? Optional.of(Range.closed(minimum, maximum)) : Optional.empty();
     }
 }

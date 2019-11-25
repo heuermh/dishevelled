@@ -84,7 +84,8 @@ public final class ImportGfa1Task extends AbstractTask
 
 
     // other tunables:
-    // limit for sequences
+    // boolean for sequences
+    // limit for display sequences
     // whether to read paths
 
 
@@ -179,6 +180,9 @@ public final class ImportGfa1Task extends AbstractTask
 
         final Map<String, CyNode> nodes = new HashMap<String, CyNode>(segmentsByOrientation.size());
 
+        // potential tunables
+        int limit = 24;
+        boolean loadSequences = true;
         for (Table.Cell<String, Orientation, Segment> c : segmentsByOrientation.cellSet()) {
             String id = c.getRowKey();
             Orientation orientation = c.getColumnKey();
@@ -192,17 +196,72 @@ public final class ImportGfa1Task extends AbstractTask
                 CyTable nodeTable = network.getDefaultNodeTable();
                 CyRow nodeRow = nodeTable.getRow(node.getSUID());
 
-                setValue(nodeTable, nodeRow, "name", String.class, name);
-                setValue(nodeTable, nodeRow, "sequenceLength", Integer.class, segment.getSequence() == null ? null : segment.getSequence().length());
-                setValue(nodeTable, nodeRow, "length", Integer.class, segment.getLengthOpt().orElse(null));
-                setValue(nodeTable, nodeRow, "readCount", Integer.class, segment.getReadCountOpt().orElse(null));
-                setValue(nodeTable, nodeRow, "fragmentCount", Integer.class, segment.getFragmentCountOpt().orElse(null));
-                setValue(nodeTable, nodeRow, "kmerCount", Integer.class, segment.getKmerCountOpt().orElse(null));
-                setValue(nodeTable, nodeRow, "sequenceChecksum", String.class, segment.containsSequenceChecksum() ? String.valueOf(segment.getSequenceChecksum()) : null);
-                setValue(nodeTable, nodeRow, "sequenceUri", String.class, segment.getSequenceUriOpt().orElse(null));
+                Integer length = segment.getLengthOpt().orElse(null);
+                Integer readCount = segment.getReadCountOpt().orElse(null);
+                Integer fragmentCount = segment.getFragmentCountOpt().orElse(null);
+                Integer kmerCount = segment.getKmerCountOpt().orElse(null);
+                String sequenceChecksum = segment.containsSequenceChecksum() ? String.valueOf(segment.getSequenceChecksum()) : null;
+                String sequenceUri = segment.getSequenceUriOpt().orElse(null);
 
-                String sequence = orientation.isForward() ? trim(segment.getSequence(), 100) : reverseComplement(segment.getSequence(), 100);
-                setValue(nodeTable, nodeRow, "sequence", String.class, sequence);
+                setValue(nodeTable, nodeRow, "name", String.class, name);
+                setValue(nodeTable, nodeRow, "length", Integer.class, length);
+                setValue(nodeTable, nodeRow, "readCount", Integer.class, readCount);
+                setValue(nodeTable, nodeRow, "fragmentCount", Integer.class, fragmentCount);
+                setValue(nodeTable, nodeRow, "kmerCount", Integer.class, kmerCount);
+                setValue(nodeTable, nodeRow, "sequenceChecksum", String.class, sequenceChecksum);
+                setValue(nodeTable, nodeRow, "sequenceUri", String.class, sequenceUri);
+
+                // default display length to length
+                Integer displayLength = length;
+
+                String sequence = orientation.isForward() ? segment.getSequence() : reverseComplement(segment.getSequence());
+                if (sequence != null)
+                {
+                    Integer sequenceLength = sequence.length();
+                    String displaySequence = trimFromMiddle(sequence, limit);
+                    Integer displaySequenceLength = displaySequence.length();
+
+                    if (loadSequences)
+                    {
+                        setValue(nodeTable, nodeRow, "sequence", String.class, sequence);
+                    }
+                    setValue(nodeTable, nodeRow, "sequenceLength", Integer.class, sequenceLength);
+                    setValue(nodeTable, nodeRow, "displaySequence", String.class, displaySequence);
+                    setValue(nodeTable, nodeRow, "displaySequenceLength", Integer.class, displaySequenceLength);
+
+                    // override display length with sequence length if necessary
+                    if (length == null || length != sequenceLength)
+                    {
+                        displayLength = sequenceLength;
+                    }
+                }
+
+                StringBuilder sb = new StringBuilder();
+                sb.append(name);
+                if (displayLength != null) {
+                    sb.append(" ");
+                    sb.append(displayLength);
+                    sb.append("bp");
+                }
+                if (readCount != null) {
+                    sb.append(" ");
+                    sb.append(readCount);
+                    sb.append(" reads");
+                }
+                if (fragmentCount != null) {
+                    sb.append(" ");
+                    sb.append(fragmentCount);
+                    sb.append(" fragments");
+                }
+                if (kmerCount != null) {
+                    sb.append(" ");
+                    sb.append(kmerCount);
+                    sb.append(" kmers");
+                }
+                String displayLabel = sb.toString();
+
+                setValue(nodeTable, nodeRow, "displayLength", Integer.class, displayLength);
+                setValue(nodeTable, nodeRow, "displayLabel", String.class, displayLabel);
 
                 nodes.put(name, node);
             }
@@ -213,19 +272,25 @@ public final class ImportGfa1Task extends AbstractTask
 
         for (Link link : links)
         {
-            String sourceId = link.getSource().getId() + (link.getSource().isForwardOrientation() ? "+" : "-");
-            String targetId = link.getTarget().getId() + (link.getTarget().isForwardOrientation() ? "+" : "-");
-            CyNode sourceNode = nodes.get(sourceId);
-            CyNode targetNode = nodes.get(targetId);
+            String sourceId = link.getSource().getId();
+            String sourceOrientation = link.getSource().isForwardOrientation() ? "+" : "-";
+            String targetId = link.getTarget().getId();
+            String targetOrientation = link.getTarget().isForwardOrientation() ? "+" : "-";
+            CyNode sourceNode = nodes.get(sourceId + sourceOrientation);
+            CyNode targetNode = nodes.get(targetId + targetOrientation);
             CyEdge edge = network.addEdge(sourceNode, targetNode, true);
             CyTable edgeTable = network.getDefaultEdgeTable();
             CyRow edgeRow = edgeTable.getRow(edge.getSUID());
 
             setValue(edgeTable, edgeRow, "id", String.class, link.getIdOpt().orElse(null));
+            setValue(edgeTable, edgeRow, "sourceId", String.class, sourceId);
+            setValue(edgeTable, edgeRow, "sourceOrientation", String.class, sourceOrientation);
+            setValue(edgeTable, edgeRow, "targetId", String.class, targetId);
+            setValue(edgeTable, edgeRow, "targetOrientation", String.class, targetOrientation);
             setValue(edgeTable, edgeRow, "overlap", String.class, link.getOverlapOpt().orElse(null));
             setValue(edgeTable, edgeRow, "readCount", Integer.class, link.getReadCountOpt().orElse(null));
             setValue(edgeTable, edgeRow, "fragmentCount", Integer.class, link.getFragmentCountOpt().orElse(null));
-            setValue(edgeTable, edgeRow, "kmerCont", Integer.class, link.getKmerCountOpt().orElse(null));
+            setValue(edgeTable, edgeRow, "kmerCount", Integer.class, link.getKmerCountOpt().orElse(null));
             setValue(edgeTable, edgeRow, "mappingQuality", Integer.class, link.getMappingQualityOpt().orElse(null));
             setValue(edgeTable, edgeRow, "mismatchCount", Integer.class, link.getMismatchCountOpt().orElse(null));
         }
@@ -259,37 +324,45 @@ public final class ImportGfa1Task extends AbstractTask
     }
 
     /**
-     * Trim the specified value to the limit, if necessary.
+     * Trim the specified value to the specified limit.
      *
-     * @param value value to trim
+     * @param value value to trim, if any
      * @param limit limit
-     * @return the specified value trimmed to the limit, if necessary
+     * @return the specified value trimmed to the specified limit
      */
-    static String trim(final String value, final int limit) {
+    static String trimFromMiddle(final String value, final int limit)
+    {
         if (value == null)
         {
-            return "";
+            return null;
+        }
+        if (limit < 3)
+        {
+            return value.substring(0, limit);
         }
         if (value.length() > limit)
         {
-            return value.substring(0, limit) + "...";
+            int head = limit/2;
+            int tail = limit/2 - 1;
+
+            return value.substring(0, head) + "\u2026" + value.substring(value.length() - tail);
         }
         return value;
     }
 
     /**
-     * Reverse complement and trim the specified value to the limit, if necessary.
+     * Reverse complement the specified value.
      *
-     * @param value value to trim
-     * @param limit limit
-     * @return the specified value reverse complemented and trimmed to the limit, if necessary
+     * @param value value to reverse complement
+     * @return the specified value reverse complemented
      */
-    static String reverseComplement(final String value, final int limit) {
+    static String reverseComplement(final String value)
+    {
         if (value == null)
         {
-            return "";
+            return null;
         }
-        int size = Math.min(value.length(), limit);
+        int size = value.length();
         StringBuilder sb = new StringBuilder(size);
         for (int i = 0; i < size; i++)
         {
@@ -331,6 +404,6 @@ public final class ImportGfa1Task extends AbstractTask
                 throw new RuntimeException("invalid symbol " + c);
             }
         }
-        return sb.toString() + ((value.length() > limit) ? "..." : "");
+        return sb.toString();
     }
 }
