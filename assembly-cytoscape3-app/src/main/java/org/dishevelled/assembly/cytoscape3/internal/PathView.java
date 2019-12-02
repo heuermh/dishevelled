@@ -25,14 +25,31 @@ package org.dishevelled.assembly.cytoscape3.internal;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
+import java.awt.Toolkit;
+
+import java.awt.datatransfer.StringSelection;
+
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+
+import java.util.List;
+
 import javax.swing.JLabel;
+import javax.swing.ListSelectionModel;
+
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import ca.odell.glazedlists.EventList;
 import ca.odell.glazedlists.GlazedLists;
 
 import ca.odell.glazedlists.gui.TableFormat;
 
+import ca.odell.glazedlists.swing.AdvancedListSelectionModel;
+import ca.odell.glazedlists.swing.GlazedListsSwing;
+
 import org.dishevelled.bio.assembly.gfa1.Path;
+import org.dishevelled.bio.assembly.gfa1.Traversal;
 
 import org.dishevelled.eventlist.view.CountLabel;
 import org.dishevelled.eventlist.view.ElementsTable;
@@ -48,6 +65,18 @@ final class PathView extends LabelFieldPanel
 {
     /** Assembly model. */
     private final AssemblyModel model;
+
+    /** Input file label. */
+    private final JLabel inputFile;
+
+    /** Path label. */
+    private final JLabel path;
+
+    /** Path count label. */
+    private final CountLabel<Path> pathCount;
+
+    /** Traversal count label. */
+    private final CountLabel<Traversal> traversalCount;
 
     /** Path table. */
     private final PathTable pathTable;
@@ -71,7 +100,31 @@ final class PathView extends LabelFieldPanel
     {
         checkNotNull(model);
         this.model = model;
+
+        inputFile = new JLabel(this.model.getInputFileName() == null ? "" : this.model.getInputFileName());
+        pathCount = new CountLabel<Path>(this.model.paths());
+        path = new JLabel(this.model.getPath() == null ? "" : this.model.getPath().getName());
+        traversalCount = new CountLabel<Traversal>(this.model.traversals());
         pathTable = new PathTable(this.model.paths());
+
+        this.model.addPropertyChangeListener(new PropertyChangeListener()
+            {
+                @Override
+                public void propertyChange(final PropertyChangeEvent e)
+                {
+                    switch (e.getPropertyName())
+                    {
+                    case "inputFile":
+                        inputFile.setText(PathView.this.model.getInputFileName() == null ? "" : PathView.this.model.getInputFileName());
+                        break;
+                    case "path":
+                        path.setText(PathView.this.model.getPath() == null ? "" : PathView.this.model.getPath().getName());
+                        break;
+                    default:
+                        break;
+                    }
+                }
+            });
 
         layoutComponents();
     }
@@ -97,10 +150,12 @@ final class PathView extends LabelFieldPanel
     {
         LabelFieldPanel panel = new LabelFieldPanel();
         panel.setOpaque(false);
-        // todo: update labels based on property change
-        panel.addField("Input file:", new JLabel(model.getInputFileName()));
-        panel.addField("Path:", new JLabel(model.getPath() == null ? "" : model.getPath().getName()));
-        panel.addField("Paths:", new CountLabel<Path>(model.paths()));
+        panel.addField("Input file:", inputFile);
+        panel.addSpacing(6);
+        panel.addField("Paths:", pathCount);
+        panel.addField("Path:", path);
+        panel.addSpacing(6);
+        panel.addField("Traversals:", traversalCount);
         return panel;
     }
 
@@ -120,6 +175,38 @@ final class PathView extends LabelFieldPanel
             super("Paths:", paths, TABLE_FORMAT);
             getAddAction().setEnabled(false);
             getPasteAction().setEnabled(false);
+
+            final AdvancedListSelectionModel<Path> selectionModel = GlazedListsSwing.eventSelectionModelWithThreadProxyList(paths);
+            selectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+            selectionModel.addListSelectionListener(new ListSelectionListener()
+                {
+                    @Override
+                    public void valueChanged(final ListSelectionEvent e)
+                    {
+                        if (!selectionModel.isSelectionEmpty())
+                        {
+                            PathView.this.model.setPath(selectionModel.getSelected().iterator().next());
+                        }
+                    }
+                });
+
+            getTable().setSelectionModel(selectionModel);
+
+            if (!paths.isEmpty())
+            {
+                selectionModel.setSelectionInterval(0, 1);
+            }
+        }
+
+        @Override
+        protected final void copy(final List<Path> toCopy) {
+            StringBuilder sb = new StringBuilder(toCopy.size() * 1024);
+            for (Path path : toCopy) {
+                sb.append(path.toString());
+                sb.append("\n");
+            }
+            StringSelection selection = new StringSelection(sb.toString());
+            Toolkit.getDefaultToolkit().getSystemClipboard().setContents(selection, selection);
         }
     }
 }

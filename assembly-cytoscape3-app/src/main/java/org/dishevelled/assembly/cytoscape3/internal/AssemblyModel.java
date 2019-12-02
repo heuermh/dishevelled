@@ -107,20 +107,20 @@ final class AssemblyModel
     {
         checkNotNull(paths);
 
-        // clear lists if necessary
+        // reset if necessary
         if (!this.paths.isEmpty())
         {
+            setPath(null);
             this.paths.clear();
             traversals.clear();
             traversalsByPath.clear();
         }
 
-        // populate lists
+        // create traversals from paths
         for (Path path : paths)
         {
             traversalsByPath.putAll(path, traversalsFor(path));
         }
-
         if (!traversalsByPath.isEmpty())
         {
             Set<Path> keys = traversalsByPath.keySet();
@@ -173,7 +173,7 @@ final class AssemblyModel
     void setPath(final Path path)
     {
         Path oldPath = this.path;
-        this.path = oldPath;
+        this.path = path;
 
         traversals.clear();
         if (this.path != null && traversalsByPath.containsKey(path))
@@ -272,6 +272,7 @@ final class AssemblyModel
             }
             if (source != null) {
                 Traversal traversal = new Traversal(path.getName(), i - 1, source, target, overlap, emptyTags);
+                traversals.add(traversal);
             }
             source = target;
         }

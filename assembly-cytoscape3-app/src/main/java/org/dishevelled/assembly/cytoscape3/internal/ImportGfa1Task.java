@@ -178,6 +178,7 @@ public final class ImportGfa1Task extends AbstractTask
                     }
                 });
         }
+        logger.info("read " + segmentsById.size() + " segments, " + links.size() + " links, and " + paths.size() + " paths from " + inputFile);
         segmentsById.clear();
 
         taskMonitor.setStatusMessage("Building Cytoscape nodes from segments ...");
@@ -274,6 +275,7 @@ public final class ImportGfa1Task extends AbstractTask
                 nodes.put(name, node);
             }
         }
+        logger.info("converted segments and orientation to " + nodes.size() + " nodes");
         segmentsByOrientation.clear();
 
         taskMonitor.setStatusMessage("Building Cytoscape edges from links ...");
@@ -302,12 +304,15 @@ public final class ImportGfa1Task extends AbstractTask
             setValue(edgeTable, edgeRow, "mappingQuality", Integer.class, link.getMappingQualityOpt().orElse(null));
             setValue(edgeTable, edgeRow, "mismatchCount", Integer.class, link.getMismatchCountOpt().orElse(null));
         }
+        logger.info("converted links to " + links.size() + " edges");
         nodes.clear();
         links.clear();
 
         // pass paths to AssemblyApp if requested
         if (loadPaths)
         {
+            taskMonitor.setStatusMessage("Loading paths in path view ...");
+
             assemblyModel.setInputFileName(inputFile.toString());
             assemblyModel.setPaths(paths);
         }

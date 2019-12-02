@@ -72,7 +72,7 @@ public final class CyActivator extends AbstractCyActivator
         AssemblyModel assemblyModel = new AssemblyModel();
         AssemblyAction assemblyAction = new AssemblyAction(assemblyModel);
         Properties actionProperties = new Properties();
-        registerService(bundleContext, assemblyAction, CyAction.class, actionProperties);
+        //registerService(bundleContext, assemblyAction, CyAction.class, actionProperties);
 
         CyApplicationManager applicationManager = getService(bundleContext, CyApplicationManager.class);
         CyLayoutAlgorithmManager layoutAlgorithmManager = getService(bundleContext, CyLayoutAlgorithmManager.class);
@@ -108,7 +108,7 @@ public final class CyActivator extends AbstractCyActivator
         importGfa2Properties.setProperty(IN_MENU_BAR, "true");
         importGfa2Properties.setProperty(IN_CONTEXT_MENU, "false");
 
-        TaskFactory importGfa2TaskFactory = new ImportGfa2TaskFactory();
+        TaskFactory importGfa2TaskFactory = new ImportGfa2TaskFactory(applicationManager);
         registerAllServices(bundleContext, importGfa2TaskFactory, importGfa2Properties);
     }
 }

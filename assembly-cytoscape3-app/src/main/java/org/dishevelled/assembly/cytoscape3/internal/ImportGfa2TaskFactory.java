@@ -23,6 +23,10 @@
 */
 package org.dishevelled.assembly.cytoscape3.internal;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
+import org.cytoscape.application.CyApplicationManager;
+
 import org.cytoscape.work.AbstractTaskFactory;
 import org.cytoscape.work.TaskIterator;
 
@@ -36,13 +40,30 @@ import org.slf4j.LoggerFactory;
  */
 final class ImportGfa2TaskFactory extends AbstractTaskFactory
 {
+    /** Application manager. */
+    private final CyApplicationManager applicationManager;
+
     /** Logger. */
     private final Logger logger = LoggerFactory.getLogger(getClass());
+
+
+    /**
+     * Create a new import Graphical Fragment Assembly (GFA) 2.0 task factory
+     * with the specified application manager.
+     *
+     * @param applicationManager application manager, must not be null
+     */
+    ImportGfa2TaskFactory(final CyApplicationManager applicationManager)    {
+        checkNotNull(applicationManager);
+        this.applicationManager = applicationManager;
+    }
+
 
     @Override
     public boolean isReady()
     {
-        return true;
+        return false;
+        //return applicationManager.getCurrentNetwork() != null && applicationManager.getCurrentNetworkView() != null;
     }
 
     @Override

@@ -67,7 +67,7 @@ public final class AssemblyAppTask extends AbstractTask
 
         dialog.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
         //installCloseKeyBinding(dialog);
-        dialog.setSize(400, 300);
+        dialog.setSize(800, 600);
         dialog.setVisible(true);
     }
 }
