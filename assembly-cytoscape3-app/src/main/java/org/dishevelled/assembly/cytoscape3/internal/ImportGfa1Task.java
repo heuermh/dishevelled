@@ -247,28 +247,35 @@ public final class ImportGfa1Task extends AbstractTask
 
                 StringBuilder sb = new StringBuilder();
                 sb.append(name);
-                if (displayLength != null) {
-                    sb.append(" ");
+                if (displayLength != null)
+                {
+                    sb.append("  ");
                     sb.append(displayLength);
-                    sb.append("bp");
+                    sb.append(" bp");
                 }
-                if (readCount != null) {
+                String displayName = sb.toString();
+
+                if (readCount != null)
+                {
                     sb.append(" ");
                     sb.append(readCount);
                     sb.append(" reads");
                 }
-                if (fragmentCount != null) {
+                if (fragmentCount != null)
+                {
                     sb.append(" ");
                     sb.append(fragmentCount);
                     sb.append(" fragments");
                 }
-                if (kmerCount != null) {
+                if (kmerCount != null)
+                {
                     sb.append(" ");
                     sb.append(kmerCount);
                     sb.append(" kmers");
                 }
                 String displayLabel = sb.toString();
 
+                setValue(nodeTable, nodeRow, "displayName", String.class, displayName);
                 setValue(nodeTable, nodeRow, "displayLength", Integer.class, displayLength);
                 setValue(nodeTable, nodeRow, "displayLabel", String.class, displayLabel);
 
@@ -309,7 +316,7 @@ public final class ImportGfa1Task extends AbstractTask
         links.clear();
 
         // pass paths to AssemblyApp if requested
-        if (loadPaths)
+        if (loadPaths && !paths.isEmpty())
         {
             taskMonitor.setStatusMessage("Loading paths in path view ...");
 

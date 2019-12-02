@@ -57,17 +57,19 @@ public final class AssemblyAppTask extends AbstractTask
     @Override
     public void run(final TaskMonitor taskMonitor) throws Exception
     {
-        //JFrame frame = (JFrame) windowForComponent((Component) event.getSource());
-        JFrame frame = null;
-        JDialog dialog = new JDialog(frame, "Assembly" + (assemblyModel.getInputFileName() == null ? "" : " " + assemblyModel.getInputFileName()));
+        if (!assemblyModel.paths().isEmpty())
+        {
+            //JFrame frame = (JFrame) windowForComponent((Component) event.getSource());
+            JFrame frame = null;
+            JDialog dialog = new JDialog(frame, "Assembly" + (assemblyModel.getInputFileName() == null ? "" : " " + assemblyModel.getInputFileName()));
 
-        // todo: is an app already visible?
-        AssemblyApp app = new AssemblyApp(assemblyModel);
-        dialog.setContentPane(app);
+            AssemblyApp app = new AssemblyApp(assemblyModel);
+            dialog.setContentPane(app);
 
-        dialog.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
-        //installCloseKeyBinding(dialog);
-        dialog.setSize(800, 600);
-        dialog.setVisible(true);
+            dialog.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
+            //installCloseKeyBinding(dialog);
+            dialog.setSize(840, 600);
+            dialog.setVisible(true);
+        }
     }
 }

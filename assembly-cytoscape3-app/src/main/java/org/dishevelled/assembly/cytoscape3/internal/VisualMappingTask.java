@@ -144,9 +144,17 @@ final class VisualMappingTask extends AbstractTask
         CyNetwork network = applicationManager.getCurrentNetwork();
         CyTable nodeTable = network.getDefaultNodeTable();
 
-        // passthrough mapping, displaySequence --> node label
-        PassthroughMapping nodeLabelMapping = (PassthroughMapping) passthroughMappingFactory.createVisualMappingFunction("displaySequence", String.class, NODE_LABEL);
-        visualStyle.addVisualMappingFunction(nodeLabelMapping);
+        // passthrough mapping, displaySequence --> node label, or fall back to displayName --> node label
+        if (nodeTable.getColumn("displaySequence") != null)
+        {
+            PassthroughMapping displaySequenceNodeLabelMapping = (PassthroughMapping) passthroughMappingFactory.createVisualMappingFunction("displaySequence", String.class, NODE_LABEL);
+            visualStyle.addVisualMappingFunction(displaySequenceNodeLabelMapping);
+        }
+        else if (nodeTable.getColumn("displayName") != null)
+        {
+            PassthroughMapping displayNameNodeLabelMapping = (PassthroughMapping) passthroughMappingFactory.createVisualMappingFunction("displayName", String.class, NODE_LABEL);
+            visualStyle.addVisualMappingFunction(displayNameNodeLabelMapping);
+        }
 
         // passthrough mapping, displayLabel --> node tooltip
         PassthroughMapping nodeTooltipMapping = (PassthroughMapping) passthroughMappingFactory.createVisualMappingFunction("displayLabel", String.class, NODE_TOOLTIP);
@@ -186,11 +194,11 @@ final class VisualMappingTask extends AbstractTask
 
         // passthrough mapping, id --> edge label
         PassthroughMapping edgeLabelMapping = (PassthroughMapping) passthroughMappingFactory.createVisualMappingFunction("id", String.class, EDGE_LABEL);
-        visualStyle.addVisualMappingFunction(nodeLabelMapping);
+        visualStyle.addVisualMappingFunction(edgeLabelMapping);
 
         // overlap --> edge tooltip
         PassthroughMapping edgeTooltipMapping = (PassthroughMapping) passthroughMappingFactory.createVisualMappingFunction("overlap", String.class, EDGE_TOOLTIP);
-        visualStyle.addVisualMappingFunction(nodeLabelMapping);
+        visualStyle.addVisualMappingFunction(edgeTooltipMapping);
 
         // discrete mapping, target orientation --> edge target arrow shape
         DiscreteMapping<String, ArrowShape> edgeTargetArrowMapping = (DiscreteMapping<String, ArrowShape>) discreteMappingFactory.createVisualMappingFunction("targetOrientation", String.class, EDGE_TARGET_ARROW_SHAPE);
@@ -213,11 +221,15 @@ final class VisualMappingTask extends AbstractTask
     /**
      * Return an optional range for the integer values in the specified column, if any.
      *
-     * @param column column
+     * @param column column, if any
      * @return an optional range for the integer values in the specified column, if any
      */
     static Optional<Range<Integer>> rangeOpt(final CyColumn column)
     {
+        if (column == null)
+        {
+            return Optional.empty();
+        }
         int minimum = Integer.MAX_VALUE;
         int maximum = 0;
         boolean found = false;
