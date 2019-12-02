@@ -94,8 +94,28 @@ final class AssemblyModel
     AssemblyModel(final Iterable<Path> paths)
     {
         this();
+        setPaths(paths);
+    }
 
+
+    /**
+     * Set the paths for this assembly model to the specified GFA 1.0 paths.
+     *
+     * @param paths zero or more GFA 1.0 paths, must not be null
+     */
+    void setPaths(final Iterable<Path> paths)
+    {
         checkNotNull(paths);
+
+        // clear lists if necessary
+        if (!this.paths.isEmpty())
+        {
+            this.paths.clear();
+            traversals.clear();
+            traversalsByPath.clear();
+        }
+
+        // populate lists
         for (Path path : paths)
         {
             traversalsByPath.putAll(path, traversalsFor(path));
@@ -108,7 +128,6 @@ final class AssemblyModel
             setPath(keys.iterator().next());
         }
     }
-
 
     /**
      * Return the input file name for this assembly model, if any.

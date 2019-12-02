@@ -209,6 +209,13 @@ final class VisualMappingTask extends AbstractTask
         taskMonitor.setProgress(1.0d);
     }
 
+
+    /**
+     * Return an optional range for the integer values in the specified column, if any.
+     *
+     * @param column column
+     * @return an optional range for the integer values in the specified column, if any
+     */
     static Optional<Range<Integer>> rangeOpt(final CyColumn column)
     {
         int minimum = Integer.MAX_VALUE;

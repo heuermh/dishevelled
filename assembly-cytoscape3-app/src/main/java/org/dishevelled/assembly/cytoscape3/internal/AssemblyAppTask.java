@@ -23,65 +23,45 @@
 */
 package org.dishevelled.assembly.cytoscape3.internal;
 
-import static javax.swing.SwingUtilities.windowForComponent;
-
 import static com.google.common.base.Preconditions.checkNotNull;
-
-import java.awt.BorderLayout;
-import java.awt.Component;
-
-import java.awt.event.ActionEvent;
 
 import javax.swing.JDialog;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
-import javax.swing.border.EmptyBorder;
-
-import org.cytoscape.application.swing.AbstractCyAction;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.cytoscape.work.AbstractTask;
+import org.cytoscape.work.TaskMonitor;
 
 /**
- * Assembly action.
+ * Assembly app task.
  *
  * @author  Michael Heuer
  */
-final class AssemblyAction extends AbstractCyAction
+public final class AssemblyAppTask extends AbstractTask
 {
-    /** Logger. */
-    private final Logger logger = LoggerFactory.getLogger(getClass());
-
     /** Assembly model. */
     private final AssemblyModel assemblyModel;
 
-
     /**
-     * Create a new assembly action.
+     * Create a new assembly app task.
      *
      * @param assemblyModel assembly model, must not be null
      */
-    AssemblyAction(final AssemblyModel assemblyModel)
+    AssemblyAppTask(final AssemblyModel assemblyModel)
     {
-        super("Open assembly view...");
-        setPreferredMenu("Apps.Assembly");
-
         checkNotNull(assemblyModel);
         this.assemblyModel = assemblyModel;
     }
 
 
     @Override
-    public void actionPerformed(final ActionEvent event)
+    public void run(final TaskMonitor taskMonitor) throws Exception
     {
-        checkNotNull(event);
-
-        JFrame frame = (JFrame) windowForComponent((Component) event.getSource());
+        //JFrame frame = (JFrame) windowForComponent((Component) event.getSource());
+        JFrame frame = null;
         JDialog dialog = new JDialog(frame, "Assembly" + (assemblyModel.getInputFileName() == null ? "" : " " + assemblyModel.getInputFileName()));
 
+        // todo: is an app already visible?
         AssemblyApp app = new AssemblyApp(assemblyModel);
         dialog.setContentPane(app);
 

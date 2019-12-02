@@ -38,7 +38,7 @@ import javax.swing.JTabbedPane;
 final class AssemblyApp extends JPanel
 {
     /** Assembly model. */
-    private final AssemblyModel model;
+    private final AssemblyModel assemblyModel;
 
     /** Path view. */
     private final PathView pathView;
@@ -50,17 +50,17 @@ final class AssemblyApp extends JPanel
     /**
      * Create a new assembly app with the specified assembly model.
      *
-     * @param model assembly model, must not be null
+     * @param assemblyModel assembly model, must not be null
      */
-    AssemblyApp(final AssemblyModel model)
+    AssemblyApp(final AssemblyModel assemblyModel)
     {
         super();
 
-        checkNotNull(model);
-        this.model = model;
+        checkNotNull(assemblyModel);
+        this.assemblyModel = assemblyModel;
 
-        pathView = new PathView(this.model);
-        traversalView = new TraversalView(this.model);
+        pathView = new PathView(this.assemblyModel);
+        traversalView = new TraversalView(this.assemblyModel);
 
         layoutComponents();
     }

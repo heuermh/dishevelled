@@ -69,6 +69,9 @@ import org.slf4j.LoggerFactory;
  */
 public final class ImportGfa1Task extends AbstractTask
 {
+    /** Assembly model. */
+    private final AssemblyModel assemblyModel;
+
     /** Application manager. */
     private final CyApplicationManager applicationManager;
 
@@ -93,11 +96,14 @@ public final class ImportGfa1Task extends AbstractTask
      * Create a new import Graphical Fragment Assembly (GFA) 1.0 task with the specified
      * application manager.
      *
+     * @param assemblyModel assembly model, must not be null
      * @param applicationManager application manager, must not be null
      */
-    ImportGfa1Task(final CyApplicationManager applicationManager)
+    ImportGfa1Task(final AssemblyModel assemblyModel, final CyApplicationManager applicationManager)
     {
+        checkNotNull(assemblyModel);
         checkNotNull(applicationManager);
+        this.assemblyModel = assemblyModel;
         this.applicationManager = applicationManager;
     }
 
@@ -183,6 +189,8 @@ public final class ImportGfa1Task extends AbstractTask
         // potential tunables
         int limit = 24;
         boolean loadSequences = true;
+        boolean loadPaths = true;
+
         for (Table.Cell<String, Orientation, Segment> c : segmentsByOrientation.cellSet()) {
             String id = c.getRowKey();
             Orientation orientation = c.getColumnKey();
@@ -298,6 +306,11 @@ public final class ImportGfa1Task extends AbstractTask
         links.clear();
 
         // pass paths to AssemblyApp if requested
+        if (loadPaths)
+        {
+            assemblyModel.setInputFileName(inputFile.toString());
+            assemblyModel.setPaths(paths);
+        }
     }
 
     /**

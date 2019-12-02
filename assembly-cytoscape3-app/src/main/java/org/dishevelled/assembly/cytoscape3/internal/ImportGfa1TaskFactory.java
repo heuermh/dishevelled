@@ -45,6 +45,9 @@ import org.slf4j.LoggerFactory;
  */
 final class ImportGfa1TaskFactory extends AbstractTaskFactory
 {
+    /** Assembly model. */
+    private final AssemblyModel assemblyModel;
+
     /** Application manager. */
     private final CyApplicationManager applicationManager;
 
@@ -71,6 +74,7 @@ final class ImportGfa1TaskFactory extends AbstractTaskFactory
      * Create a new import Graphical Fragment Assembly (GFA) 1.0 task factory
      * with the specified application manager.
      *
+     * @param assemblyModel assembly model, must not be null
      * @param applicationManager application manager, must not be null
      * @param layoutAlgorithmManager layout algorithm manager, must not be null
      * @param visualMappingManager visual mapping manager, must not be null
@@ -78,19 +82,22 @@ final class ImportGfa1TaskFactory extends AbstractTaskFactory
      * @param discreteMappingFactory discreteMappingFactory, must not be null
      * @param passthroughMappingFactory passthrough mapping factory, must not be null
      */
-    ImportGfa1TaskFactory(final CyApplicationManager applicationManager,
+    ImportGfa1TaskFactory(final AssemblyModel assemblyModel,
+                          final CyApplicationManager applicationManager,
                           final CyLayoutAlgorithmManager layoutAlgorithmManager,
                           final VisualMappingManager visualMappingManager,
                           final VisualMappingFunctionFactory continuousMappingFactory,
                           final VisualMappingFunctionFactory discreteMappingFactory,
                           final VisualMappingFunctionFactory passthroughMappingFactory)
     {
+        checkNotNull(assemblyModel);
         checkNotNull(applicationManager);
         checkNotNull(layoutAlgorithmManager);
         checkNotNull(visualMappingManager);
         checkNotNull(continuousMappingFactory);
         checkNotNull(discreteMappingFactory);
         checkNotNull(passthroughMappingFactory);
+        this.assemblyModel = assemblyModel;
         this.applicationManager = applicationManager;
         this.layoutAlgorithmManager = layoutAlgorithmManager;
         this.visualMappingManager = visualMappingManager;
@@ -109,9 +116,10 @@ final class ImportGfa1TaskFactory extends AbstractTaskFactory
     @Override
     public TaskIterator createTaskIterator()
     {
-        ImportGfa1Task importTask = new ImportGfa1Task(applicationManager);
+        ImportGfa1Task importTask = new ImportGfa1Task(assemblyModel, applicationManager);
         LayoutNetworkTask layoutNetworkTask = new LayoutNetworkTask(applicationManager, layoutAlgorithmManager);
         VisualMappingTask visualMappingTask = new VisualMappingTask(applicationManager, visualMappingManager, continuousMappingFactory, discreteMappingFactory, passthroughMappingFactory);
-        return new TaskIterator(importTask, layoutNetworkTask, visualMappingTask);
+        AssemblyAppTask assemblyAppTask = new AssemblyAppTask(assemblyModel);
+        return new TaskIterator(importTask, layoutNetworkTask, visualMappingTask, assemblyAppTask);
     }
 }

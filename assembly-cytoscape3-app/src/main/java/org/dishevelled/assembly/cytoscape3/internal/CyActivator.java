@@ -69,20 +69,17 @@ public final class CyActivator extends AbstractCyActivator
         {
             throw new NullPointerException("bundleContext must not be null");
         }
+        AssemblyModel assemblyModel = new AssemblyModel();
+        AssemblyAction assemblyAction = new AssemblyAction(assemblyModel);
+        Properties actionProperties = new Properties();
+        registerService(bundleContext, assemblyAction, CyAction.class, actionProperties);
+
         CyApplicationManager applicationManager = getService(bundleContext, CyApplicationManager.class);
         CyLayoutAlgorithmManager layoutAlgorithmManager = getService(bundleContext, CyLayoutAlgorithmManager.class);
         VisualMappingManager visualMappingManager = getService(bundleContext, VisualMappingManager.class);
         VisualMappingFunctionFactory continuousMappingFactory = getService(bundleContext, VisualMappingFunctionFactory.class, "(mapping.type=continuous)");
         VisualMappingFunctionFactory discreteMappingFactory = getService(bundleContext, VisualMappingFunctionFactory.class, "(mapping.type=discrete)");
         VisualMappingFunctionFactory passthroughMappingFactory = getService(bundleContext, VisualMappingFunctionFactory.class, "(mapping.type=passthrough)");
-
-        AssemblyAction assemblyAction = new AssemblyAction(applicationManager,
-                                                           visualMappingManager,
-                                                           continuousMappingFactory,
-                                                           discreteMappingFactory);
-
-        Properties actionProperties = new Properties();
-        registerService(bundleContext, assemblyAction, CyAction.class, actionProperties);
 
         Properties importGfa1Properties = new Properties();
         importGfa1Properties.setProperty(COMMAND_NAMESPACE, "assembly");
@@ -93,7 +90,8 @@ public final class CyActivator extends AbstractCyActivator
         importGfa1Properties.setProperty(IN_MENU_BAR, "true");
         importGfa1Properties.setProperty(IN_CONTEXT_MENU, "false");
 
-        TaskFactory importGfa1TaskFactory = new ImportGfa1TaskFactory(applicationManager,
+        TaskFactory importGfa1TaskFactory = new ImportGfa1TaskFactory(assemblyModel,
+                                                                      applicationManager,
                                                                       layoutAlgorithmManager,
                                                                       visualMappingManager,
                                                                       continuousMappingFactory,
