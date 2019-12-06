@@ -78,18 +78,30 @@ public final class ImportGfa1Task extends AbstractTask
     /** Logger. */
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    /** Input file tunable. */
+    /** Input file. */
     @Tunable(description = "Graphical Fragment Assembly (GFA) 1.0 file",
              tooltip = "<html>Input file in Graphical Fragment Assembly (GFA) 1.0 format.<br/>Compressed files (.bgz, .bzip2, .gz) are supported.</html>",
              required = true,
              params = "input=true;fileCategory=unspecified")
     public File inputFile;
 
+    /** True if sequences should be loaded. */
+    @Tunable(description = "Load sequences",
+             tooltip = "<html>True if sequences should be loaded into Cytoscape<br/>from GFA 1.0 segment records.</html>",
+             required = true)
+    public boolean loadSequences = true;
 
-    // other tunables:
-    // boolean for sequences
-    // limit for display sequences
-    // whether to read paths
+    /** True if paths should be loaded. */
+    @Tunable(description = "Load paths",
+             tooltip = "<html>True if paths should be loaded into Cytoscape<br/>from GFA 1.0 path records.</html>",
+             required = true)
+    public boolean loadPaths = true;
+
+    /** Truncate display sequences to the specified limit. */
+    @Tunable(description = "Display sequence limit, in base pairs (bp)",
+             tooltip = "<html>Truncate sequences to the specified limit<br/>before mapping to node label.</html>",
+             required = true)
+    public int displaySequenceLimit = 20;
 
 
     /**
@@ -184,13 +196,7 @@ public final class ImportGfa1Task extends AbstractTask
         taskMonitor.setStatusMessage("Building Cytoscape nodes from segments ...");
 
         final CyNetwork network = applicationManager.getCurrentNetwork();
-
         final Map<String, CyNode> nodes = new HashMap<String, CyNode>(segmentsByOrientation.size());
-
-        // potential tunables
-        int limit = 24;
-        boolean loadSequences = true;
-        boolean loadPaths = true;
 
         for (Table.Cell<String, Orientation, Segment> c : segmentsByOrientation.cellSet()) {
             String id = c.getRowKey();
@@ -227,7 +233,7 @@ public final class ImportGfa1Task extends AbstractTask
                 if (sequence != null)
                 {
                     Integer sequenceLength = sequence.length();
-                    String displaySequence = trimFromMiddle(sequence, limit);
+                    String displaySequence = trimFromMiddle(sequence, displaySequenceLimit);
                     Integer displaySequenceLength = displaySequence.length();
 
                     if (loadSequences)

@@ -28,6 +28,8 @@ import static org.cytoscape.work.ServiceProperties.COMMAND_DESCRIPTION;
 import static org.cytoscape.work.ServiceProperties.COMMAND_NAMESPACE;
 import static org.cytoscape.work.ServiceProperties.IN_CONTEXT_MENU;
 import static org.cytoscape.work.ServiceProperties.IN_MENU_BAR;
+import static org.cytoscape.work.ServiceProperties.INSERT_SEPARATOR_BEFORE;
+import static org.cytoscape.work.ServiceProperties.MENU_GRAVITY;
 import static org.cytoscape.work.ServiceProperties.PREFERRED_MENU;
 import static org.cytoscape.work.ServiceProperties.TITLE;
 import static org.cytoscape.work.ServiceProperties.TOOLTIP;
@@ -38,9 +40,19 @@ import org.cytoscape.application.CyApplicationManager;
 
 import org.cytoscape.application.swing.CyAction;
 
-import org.cytoscape.view.layout.CyLayoutAlgorithmManager;
+import org.cytoscape.model.CyNetwork;
+import org.cytoscape.model.CyNetworkFactory;
+import org.cytoscape.model.CyNetworkManager;
 
 import org.cytoscape.service.util.AbstractCyActivator;
+
+import org.cytoscape.session.CyNetworkNaming;
+
+import org.cytoscape.view.layout.CyLayoutAlgorithmManager;
+
+import org.cytoscape.view.model.CyNetworkView;
+import org.cytoscape.view.model.CyNetworkViewFactory;
+import org.cytoscape.view.model.CyNetworkViewManager;
 
 import org.cytoscape.view.vizmap.VisualMappingFunctionFactory;
 import org.cytoscape.view.vizmap.VisualMappingManager;
@@ -70,12 +82,15 @@ public final class CyActivator extends AbstractCyActivator
             throw new NullPointerException("bundleContext must not be null");
         }
         AssemblyModel assemblyModel = new AssemblyModel();
-        AssemblyAction assemblyAction = new AssemblyAction(assemblyModel);
-        Properties actionProperties = new Properties();
-        //registerService(bundleContext, assemblyAction, CyAction.class, actionProperties);
-
         CyApplicationManager applicationManager = getService(bundleContext, CyApplicationManager.class);
         CyLayoutAlgorithmManager layoutAlgorithmManager = getService(bundleContext, CyLayoutAlgorithmManager.class);
+
+        CyNetworkFactory networkFactory = getService(bundleContext, CyNetworkFactory.class);
+        CyNetworkNaming networkNaming = getService(bundleContext, CyNetworkNaming.class);
+        CyNetworkManager networkManager = getService(bundleContext, CyNetworkManager.class);
+        CyNetworkViewFactory networkViewFactory = getService(bundleContext, CyNetworkViewFactory.class);
+        CyNetworkViewManager networkViewManager = getService(bundleContext, CyNetworkViewManager.class);
+
         VisualMappingManager visualMappingManager = getService(bundleContext, VisualMappingManager.class);
         VisualMappingFunctionFactory continuousMappingFactory = getService(bundleContext, VisualMappingFunctionFactory.class, "(mapping.type=continuous)");
         VisualMappingFunctionFactory discreteMappingFactory = getService(bundleContext, VisualMappingFunctionFactory.class, "(mapping.type=discrete)");
@@ -85,14 +100,21 @@ public final class CyActivator extends AbstractCyActivator
         importGfa1Properties.setProperty(COMMAND_NAMESPACE, "assembly");
         importGfa1Properties.setProperty(COMMAND, "import_gfa1");
         importGfa1Properties.setProperty(COMMAND_DESCRIPTION,  "Import a network in Graphical Fragment Assembly (GFA) 1.0 format.  Compressed files (.bgz, .bzip2, .gz) are supported.");
-        importGfa1Properties.setProperty(PREFERRED_MENU, "Apps.Assembly");
-        importGfa1Properties.setProperty(TITLE, "Import Graphical Fragment Assembly (GFA) 1.0...");
+        importGfa1Properties.setProperty(PREFERRED_MENU, "File.Import");
+        importGfa1Properties.setProperty(TITLE, "Network from Graphical Fragment Assembly (GFA) 1.0...");
         importGfa1Properties.setProperty(IN_MENU_BAR, "true");
         importGfa1Properties.setProperty(IN_CONTEXT_MENU, "false");
+        importGfa1Properties.setProperty(INSERT_SEPARATOR_BEFORE, "false");
+        importGfa1Properties.setProperty(MENU_GRAVITY, "4.0");
 
         TaskFactory importGfa1TaskFactory = new ImportGfa1TaskFactory(assemblyModel,
                                                                       applicationManager,
                                                                       layoutAlgorithmManager,
+                                                                      networkFactory,
+                                                                      networkNaming,
+                                                                      networkManager,
+                                                                      networkViewFactory,
+                                                                      networkViewManager,
                                                                       visualMappingManager,
                                                                       continuousMappingFactory,
                                                                       discreteMappingFactory,
@@ -103,12 +125,14 @@ public final class CyActivator extends AbstractCyActivator
         importGfa2Properties.setProperty(COMMAND_NAMESPACE, "assembly");
         importGfa2Properties.setProperty(COMMAND, "import_gfa2");
         importGfa2Properties.setProperty(COMMAND_DESCRIPTION,  "Import a network in Graphical Fragment Assembly (GFA) 2.0 format.  Compressed files (.bgz, .bzip2, .gz) are supported.");
-        importGfa2Properties.setProperty(PREFERRED_MENU, "Apps.Assembly");
-        importGfa2Properties.setProperty(TITLE,  "Import Graphical Fragment Assembly (GFA) 2.0...");
+        importGfa2Properties.setProperty(PREFERRED_MENU, "File.Import");
+        importGfa2Properties.setProperty(TITLE,  "Network from Graphical Fragment Assembly (GFA) 2.0...");
         importGfa2Properties.setProperty(IN_MENU_BAR, "true");
         importGfa2Properties.setProperty(IN_CONTEXT_MENU, "false");
+        importGfa1Properties.setProperty(INSERT_SEPARATOR_BEFORE, "false");
+        importGfa1Properties.setProperty(MENU_GRAVITY, "4.0");
 
         TaskFactory importGfa2TaskFactory = new ImportGfa2TaskFactory(applicationManager);
-        registerAllServices(bundleContext, importGfa2TaskFactory, importGfa2Properties);
+        //registerAllServices(bundleContext, importGfa2TaskFactory, importGfa2Properties);
     }
 }

@@ -79,7 +79,7 @@ final class TraversalView extends LabelFieldPanel
     private final TraversalTable traversalTable;
 
     /** Table property names. */
-    private static final String[] PROPERTY_NAMES = { "pathId", "ordinal", "source.id", "source.orientation", "target.id", "target.orientation", "overlap" };
+    private static final String[] PROPERTY_NAMES = { "pathName", "ordinal", "source.id", "source.orientation", "target.id", "target.orientation", "overlap" };
 
     /** Table column labels. */
     private static final String[] COLUMN_LABELS = { "Path", "Ordinal", "Source id", "Source orientation", "Target id", "Target orientation", "Overlap" };

@@ -27,7 +27,17 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import org.cytoscape.application.CyApplicationManager;
 
+import org.cytoscape.model.CyNetwork;
+import org.cytoscape.model.CyNetworkFactory;
+import org.cytoscape.model.CyNetworkManager;
+
+import org.cytoscape.session.CyNetworkNaming;
+
 import org.cytoscape.view.layout.CyLayoutAlgorithmManager;
+
+import org.cytoscape.view.model.CyNetworkView;
+import org.cytoscape.view.model.CyNetworkViewFactory;
+import org.cytoscape.view.model.CyNetworkViewManager;
 
 import org.cytoscape.view.vizmap.VisualMappingFunctionFactory;
 import org.cytoscape.view.vizmap.VisualMappingManager;
@@ -54,6 +64,21 @@ final class ImportGfa1TaskFactory extends AbstractTaskFactory
     /** Layout algorithm manager. */
     private final CyLayoutAlgorithmManager layoutAlgorithmManager;
 
+    /** Network factory. */
+    private final CyNetworkFactory networkFactory;
+
+    /** Network naming. */
+    private final CyNetworkNaming networkNaming;
+
+    /** Network manager. */
+    private final CyNetworkManager networkManager;
+
+    /** Network view factory. */
+    private final CyNetworkViewFactory networkViewFactory;
+
+    /** Network view manager. */
+    private final CyNetworkViewManager networkViewManager;
+
     /** Visual mapping manager. */
     private final VisualMappingManager visualMappingManager;
 
@@ -77,6 +102,11 @@ final class ImportGfa1TaskFactory extends AbstractTaskFactory
      * @param assemblyModel assembly model, must not be null
      * @param applicationManager application manager, must not be null
      * @param layoutAlgorithmManager layout algorithm manager, must not be null
+     * @param networkFactory network factory, must not be null
+     * @param networkNaming network naming, must not be null
+     * @param networkManager network manager, must not be null
+     * @param networkViewFactory network view factory, must not be null
+     * @param networkViewManager network view manager, must not be null
      * @param visualMappingManager visual mapping manager, must not be null
      * @param continuousMappingFactory continuous mapping factory, must not be null
      * @param discreteMappingFactory discreteMappingFactory, must not be null
@@ -85,6 +115,11 @@ final class ImportGfa1TaskFactory extends AbstractTaskFactory
     ImportGfa1TaskFactory(final AssemblyModel assemblyModel,
                           final CyApplicationManager applicationManager,
                           final CyLayoutAlgorithmManager layoutAlgorithmManager,
+                          final CyNetworkFactory networkFactory,
+                          final CyNetworkNaming networkNaming,
+                          final CyNetworkManager networkManager,
+                          final CyNetworkViewFactory networkViewFactory,
+                          final CyNetworkViewManager networkViewManager,
                           final VisualMappingManager visualMappingManager,
                           final VisualMappingFunctionFactory continuousMappingFactory,
                           final VisualMappingFunctionFactory discreteMappingFactory,
@@ -93,6 +128,11 @@ final class ImportGfa1TaskFactory extends AbstractTaskFactory
         checkNotNull(assemblyModel);
         checkNotNull(applicationManager);
         checkNotNull(layoutAlgorithmManager);
+        checkNotNull(networkFactory);
+        checkNotNull(networkNaming);
+        checkNotNull(networkManager);
+        checkNotNull(networkViewFactory);
+        checkNotNull(networkViewManager);
         checkNotNull(visualMappingManager);
         checkNotNull(continuousMappingFactory);
         checkNotNull(discreteMappingFactory);
@@ -100,6 +140,11 @@ final class ImportGfa1TaskFactory extends AbstractTaskFactory
         this.assemblyModel = assemblyModel;
         this.applicationManager = applicationManager;
         this.layoutAlgorithmManager = layoutAlgorithmManager;
+        this.networkFactory = networkFactory;
+        this.networkNaming = networkNaming;
+        this.networkManager = networkManager;
+        this.networkViewFactory = networkViewFactory;
+        this.networkViewManager = networkViewManager;
         this.visualMappingManager = visualMappingManager;
         this.continuousMappingFactory = continuousMappingFactory;
         this.discreteMappingFactory = discreteMappingFactory;
@@ -110,16 +155,18 @@ final class ImportGfa1TaskFactory extends AbstractTaskFactory
     @Override
     public boolean isReady()
     {
-        return applicationManager.getCurrentNetwork() != null && applicationManager.getCurrentNetworkView() != null;
+        return true;
+        //return applicationManager.getCurrentNetwork() != null && applicationManager.getCurrentNetworkView() != null;
     }
 
     @Override
     public TaskIterator createTaskIterator()
     {
+        CreateNetworkTask createNetworkTask = new CreateNetworkTask(assemblyModel, networkFactory, networkNaming, networkManager, networkViewFactory, networkViewManager);
         ImportGfa1Task importTask = new ImportGfa1Task(assemblyModel, applicationManager);
         LayoutNetworkTask layoutNetworkTask = new LayoutNetworkTask(applicationManager, layoutAlgorithmManager);
         VisualMappingTask visualMappingTask = new VisualMappingTask(applicationManager, visualMappingManager, continuousMappingFactory, discreteMappingFactory, passthroughMappingFactory);
         AssemblyAppTask assemblyAppTask = new AssemblyAppTask(assemblyModel);
-        return new TaskIterator(importTask, layoutNetworkTask, visualMappingTask, assemblyAppTask);
+        return new TaskIterator(createNetworkTask, importTask, layoutNetworkTask, visualMappingTask, assemblyAppTask);
     }
 }
