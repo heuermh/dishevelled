@@ -27,7 +27,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import org.cytoscape.application.CyApplicationManager;
 
-import org.cytoscape.model.CyNetwork;
 import org.cytoscape.model.CyNetworkFactory;
 import org.cytoscape.model.CyNetworkManager;
 
@@ -35,7 +34,6 @@ import org.cytoscape.session.CyNetworkNaming;
 
 import org.cytoscape.view.layout.CyLayoutAlgorithmManager;
 
-import org.cytoscape.view.model.CyNetworkView;
 import org.cytoscape.view.model.CyNetworkViewFactory;
 import org.cytoscape.view.model.CyNetworkViewManager;
 

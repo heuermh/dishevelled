@@ -26,11 +26,9 @@ package org.dishevelled.assembly.cytoscape3.internal;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import static org.cytoscape.view.presentation.property.ArrowShapeVisualProperty.ARROW;
-import static org.cytoscape.view.presentation.property.ArrowShapeVisualProperty.NONE;
 import static org.cytoscape.view.presentation.property.ArrowShapeVisualProperty.T;
+
 import static org.cytoscape.view.presentation.property.BasicVisualLexicon.EDGE_LABEL;
-import static org.cytoscape.view.presentation.property.BasicVisualLexicon.EDGE_PAINT;
-import static org.cytoscape.view.presentation.property.BasicVisualLexicon.EDGE_SOURCE_ARROW_SHAPE;
 import static org.cytoscape.view.presentation.property.BasicVisualLexicon.EDGE_TARGET_ARROW_SHAPE;
 import static org.cytoscape.view.presentation.property.BasicVisualLexicon.EDGE_TRANSPARENCY;
 import static org.cytoscape.view.presentation.property.BasicVisualLexicon.EDGE_TOOLTIP;

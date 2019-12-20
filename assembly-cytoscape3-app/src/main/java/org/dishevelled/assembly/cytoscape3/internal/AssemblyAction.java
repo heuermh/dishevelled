@@ -27,18 +27,13 @@ import static javax.swing.SwingUtilities.windowForComponent;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-import java.awt.BorderLayout;
 import java.awt.Component;
 
 import java.awt.event.ActionEvent;
 
 import javax.swing.JDialog;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.WindowConstants;
-
-import javax.swing.border.EmptyBorder;
 
 import org.cytoscape.application.swing.AbstractCyAction;
 

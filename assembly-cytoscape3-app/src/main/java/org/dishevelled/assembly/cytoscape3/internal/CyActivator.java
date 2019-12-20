@@ -32,15 +32,11 @@ import static org.cytoscape.work.ServiceProperties.INSERT_SEPARATOR_BEFORE;
 import static org.cytoscape.work.ServiceProperties.MENU_GRAVITY;
 import static org.cytoscape.work.ServiceProperties.PREFERRED_MENU;
 import static org.cytoscape.work.ServiceProperties.TITLE;
-import static org.cytoscape.work.ServiceProperties.TOOLTIP;
 
 import java.util.Properties;
 
 import org.cytoscape.application.CyApplicationManager;
 
-import org.cytoscape.application.swing.CyAction;
-
-import org.cytoscape.model.CyNetwork;
 import org.cytoscape.model.CyNetworkFactory;
 import org.cytoscape.model.CyNetworkManager;
 
@@ -50,7 +46,6 @@ import org.cytoscape.session.CyNetworkNaming;
 
 import org.cytoscape.view.layout.CyLayoutAlgorithmManager;
 
-import org.cytoscape.view.model.CyNetworkView;
 import org.cytoscape.view.model.CyNetworkViewFactory;
 import org.cytoscape.view.model.CyNetworkViewManager;
 

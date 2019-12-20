@@ -33,7 +33,6 @@ import org.cytoscape.session.CyNetworkNaming;
 
 import org.cytoscape.work.AbstractTask;
 import org.cytoscape.work.TaskMonitor;
-import org.cytoscape.work.Tunable;
 
 import org.cytoscape.view.model.CyNetworkView;
 import org.cytoscape.view.model.CyNetworkViewFactory;

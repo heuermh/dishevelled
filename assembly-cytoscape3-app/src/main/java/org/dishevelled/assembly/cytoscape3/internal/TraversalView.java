@@ -159,7 +159,7 @@ final class TraversalView extends LabelFieldPanel
     /**
      * Traversal table.
      */
-    private class TraversalTable extends ElementsTable<Traversal>
+    private static class TraversalTable extends ElementsTable<Traversal>
     {
 
         /**
