@@ -16,8 +16,8 @@ technology.
 
 The GFA 1.0 format is a tab-delimited text format for describing a set of sequences and
 their overlap. The first field of the line identifies the type of the line: Header lines
-start with H. Segment lines start with S. Link lines start with L. A containment line starts
-with C. A path line starts with P. A path traversal line starts with T.
+start with `H`. Segment lines start with `S`. Link lines start with `L`. A containment line starts
+with `C`. A path line starts with `P`. A path traversal line starts with `T`.
 
 Terminology
  * **Segment** a continuous sequence or subsequence.
@@ -39,18 +39,18 @@ The full GFA 1.0 specification can be found at https://github.com/GFA-spec/GFA-s
 
 ### Importing GFA 1.0 Format
 
-To import a sequence graph in GFA 1.0 Format into Cytoscape, use File &rarr; Import &rarr;
-Network from Graphical Fragment Assembly (GFA) 1.0... and select a file.  Compressed files
+To import a sequence graph in GFA 1.0 Format into Cytoscape, use **File** &rarr; **Import** &rarr;
+**Network from Graphical Fragment Assembly (GFA) 1.0...** and select a file.  Compressed files
 (.bgz, .bzip2, .gz) are supported.
 
 By default sequences from GFA 1.0 segment records are loaded into Cytoscape as node attributes.
-To skip loading sequences, uncheck the Load sequences checkbox.
+To skip loading sequences, uncheck the **Load sequences** checkbox.
 
 To truncate long sequences from GFA 1.0 segment records before mapping to the node label
 attribute, provide a limit in base pairs (bp). The default display sequence limit is 20 bp.
 
 By default GFA 1.0 path records are loaded into Cytoscape and displayed in a path and traversal
-view. To skip loading paths, uncheck the Load paths checkbox.
+view. To skip loading paths, uncheck the **Load paths** checkbox.
 
 
 ## Graphical Fragment Assembly (GFA) 2.0 Format
@@ -81,14 +81,14 @@ The full GFA 2.0 specification can be found at https://github.com/GFA-spec/GFA-s
 
 ### Importing GFA 2.0 Format
 
-To import a sequence graph in GFA 2.0 Format into Cytoscape, use File &rarr; Import &rarr;
-Network from Graphical Fragment Assembly (GFA) 2.0... and select a file.  Compressed files
+To import a sequence graph in GFA 2.0 Format into Cytoscape, use **File** &rarr; **Import** &rarr;
+**Network from Graphical Fragment Assembly (GFA) 2.0...** and select a file.  Compressed files
 (.bgz, .bzip2, .gz) are supported.
 
 
 ## Feedback, Issues, and Feature Requests
 
-Assembly Cytoscape3 App is developed on GitHub at https://github.com/heuermh/dishevelled.
+**Assembly Cytoscape3 App** is developed on GitHub at https://github.com/heuermh/dishevelled.
 
 To provide feedback, report issues, or request new features, please
 [create a new issue](https://github.com/heuermh/dishevelled/issues/new) or
