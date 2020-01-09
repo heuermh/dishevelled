@@ -53,7 +53,8 @@ final class ImportGfa2TaskFactory extends AbstractTaskFactory
      *
      * @param applicationManager application manager, must not be null
      */
-    ImportGfa2TaskFactory(final CyApplicationManager applicationManager)    {
+    ImportGfa2TaskFactory(final CyApplicationManager applicationManager)
+    {
         checkNotNull(applicationManager);
         this.applicationManager = applicationManager;
     }

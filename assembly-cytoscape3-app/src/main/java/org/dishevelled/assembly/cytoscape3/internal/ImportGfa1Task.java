@@ -198,7 +198,8 @@ public final class ImportGfa1Task extends AbstractTask
         final CyNetwork network = applicationManager.getCurrentNetwork();
         final Map<String, CyNode> nodes = new HashMap<String, CyNode>(segmentsByOrientation.size());
 
-        for (Table.Cell<String, Orientation, Segment> c : segmentsByOrientation.cellSet()) {
+        for (Table.Cell<String, Orientation, Segment> c : segmentsByOrientation.cellSet())
+        {
             String id = c.getRowKey();
             Orientation orientation = c.getColumnKey();
             Segment segment = c.getValue();

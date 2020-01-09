@@ -179,9 +179,11 @@ final class TraversalView extends LabelFieldPanel
 
 
         @Override
-        protected final void copy(final List<Traversal> toCopy) {
+        protected final void copy(final List<Traversal> toCopy)
+        {
             StringBuilder sb = new StringBuilder(toCopy.size() * 1024);
-            for (Traversal traversal : toCopy) {
+            for (Traversal traversal : toCopy)
+            {
                 sb.append(traversal.toString());
                 sb.append("\n");
             }

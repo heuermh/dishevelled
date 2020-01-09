@@ -264,12 +264,15 @@ final class AssemblyModel
         Reference target = null;
         String overlap = null;
         Map<String, Tag> emptyTags = Collections.emptyMap();
-        for (int i = 0; i < size; i++) {
+        for (int i = 0; i < size; i++)
+        {
             target = path.getSegments().get(i);
-            if (i > 0) {
+            if (i > 0)
+            {
                 overlap = (path.getOverlaps() != null && path.getOverlaps().size() > i) ? path.getOverlaps().get(i - 1) : null;
             }
-            if (source != null) {
+            if (source != null)
+            {
                 Traversal traversal = new Traversal(path.getName(), i - 1, source, target, overlap, emptyTags);
                 traversals.add(traversal);
             }

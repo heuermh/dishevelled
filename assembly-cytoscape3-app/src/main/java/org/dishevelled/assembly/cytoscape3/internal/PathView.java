@@ -199,9 +199,11 @@ final class PathView extends LabelFieldPanel
         }
 
         @Override
-        protected final void copy(final List<Path> toCopy) {
+        protected final void copy(final List<Path> toCopy)
+        {
             StringBuilder sb = new StringBuilder(toCopy.size() * 1024);
-            for (Path path : toCopy) {
+            for (Path path : toCopy)
+            {
                 sb.append(path.toString());
                 sb.append("\n");
             }
