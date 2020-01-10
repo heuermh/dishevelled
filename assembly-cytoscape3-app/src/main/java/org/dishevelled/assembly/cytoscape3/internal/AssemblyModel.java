@@ -93,7 +93,7 @@ final class AssemblyModel
     AssemblyModel(final Iterable<Path> paths)
     {
         this();
-        setPaths(paths);
+        setPaths(paths, ArrayListMultimap.<String, Traversal>create());
     }
 
 
@@ -101,10 +101,12 @@ final class AssemblyModel
      * Set the paths for this assembly model to the specified GFA 1.0 paths.
      *
      * @param paths zero or more GFA 1.0 paths, must not be null
+     * @param traversalsByPathName traversals keyed by path name, must not be null
      */
-    void setPaths(final Iterable<Path> paths)
+    void setPaths(final Iterable<Path> paths, final ListMultimap<String, Traversal> traversalsByPathName)
     {
         checkNotNull(paths);
+        checkNotNull(traversalsByPathName);
 
         // reset if necessary
         if (!this.paths.isEmpty())
@@ -115,10 +117,11 @@ final class AssemblyModel
             traversalsByPath.clear();
         }
 
-        // create traversals from paths
+        // create traversals from paths if necessary
         for (Path path : paths)
         {
-            traversalsByPath.putAll(path, traversalsFor(path));
+            List<Traversal> traversals = traversalsByPathName.get(path.getName());
+            traversalsByPath.putAll(path, traversals.isEmpty() ? traversalsFor(path) : traversals);
         }
         if (!traversalsByPath.isEmpty())
         {

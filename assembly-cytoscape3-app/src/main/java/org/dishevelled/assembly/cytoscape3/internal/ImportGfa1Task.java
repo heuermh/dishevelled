@@ -36,7 +36,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.HashBasedTable;
+import com.google.common.collect.ListMultimap;
 import com.google.common.collect.Table;
 
 import org.cytoscape.application.CyApplicationManager;
@@ -58,6 +60,7 @@ import org.dishevelled.bio.assembly.gfa1.Gfa1Adapter;
 import org.dishevelled.bio.assembly.gfa1.Link;
 import org.dishevelled.bio.assembly.gfa1.Path;
 import org.dishevelled.bio.assembly.gfa1.Segment;
+import org.dishevelled.bio.assembly.gfa1.Traversal;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -127,6 +130,7 @@ public final class ImportGfa1Task extends AbstractTask
 
         final Map<String, Segment> segmentsById = new HashMap<String, Segment>();
         final Table<String, Orientation, Segment> segmentsByOrientation = HashBasedTable.create();
+        final ListMultimap<String, Traversal> traversalsByPathName = ArrayListMultimap.create();
 
         taskMonitor.setStatusMessage("Reading segments from file ...");
 
@@ -188,9 +192,17 @@ public final class ImportGfa1Task extends AbstractTask
                         links.add(link);
                         return true;
                     }
+
+                    @Override
+                    protected boolean traversal(final Traversal traversal)
+                    {
+                        traversalsByPathName.put(traversal.getPathName(), traversal);
+                        return true;
+                    }
                 });
         }
-        logger.info("read " + segmentsById.size() + " segments, " + links.size() + " links, and " + paths.size() + " paths from " + inputFile);
+        logger.info("read {} segments, {} links, {} paths, and {} traversals from {}",
+                    new Object[] { segmentsById.size(), links.size(), paths.size(), traversalsByPathName.size(), inputFile });
         segmentsById.clear();
 
         taskMonitor.setStatusMessage("Building Cytoscape nodes from segments ...");
@@ -328,7 +340,7 @@ public final class ImportGfa1Task extends AbstractTask
             taskMonitor.setStatusMessage("Loading paths in path view ...");
 
             assemblyModel.setInputFileName(inputFile.toString());
-            assemblyModel.setPaths(paths);
+            assemblyModel.setPaths(paths, traversalsByPathName);
         }
     }
 
