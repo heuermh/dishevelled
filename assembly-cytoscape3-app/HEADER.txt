@@ -1,7 +1,7 @@
 /*
 
     dsh-assembly-cytoscape3-app  Assembly Cytoscape3 app.
-    Copyright (c) 2019 held jointly by the individual authors.
+    Copyright (c) 2019-2020 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
