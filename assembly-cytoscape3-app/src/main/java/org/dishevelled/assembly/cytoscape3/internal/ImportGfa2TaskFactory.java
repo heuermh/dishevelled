@@ -27,6 +27,19 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import org.cytoscape.application.CyApplicationManager;
 
+import org.cytoscape.model.CyNetworkFactory;
+import org.cytoscape.model.CyNetworkManager;
+
+import org.cytoscape.session.CyNetworkNaming;
+
+import org.cytoscape.view.layout.CyLayoutAlgorithmManager;
+
+import org.cytoscape.view.model.CyNetworkViewFactory;
+import org.cytoscape.view.model.CyNetworkViewManager;
+
+import org.cytoscape.view.vizmap.VisualMappingFunctionFactory;
+import org.cytoscape.view.vizmap.VisualMappingManager;
+
 import org.cytoscape.work.AbstractTaskFactory;
 import org.cytoscape.work.TaskIterator;
 
@@ -40,8 +53,43 @@ import org.slf4j.LoggerFactory;
  */
 final class ImportGfa2TaskFactory extends AbstractTaskFactory
 {
+    // todo: create superclass with shared fields
+
+    /** Assembly model. */
+    private final AssemblyModel assemblyModel;
+
     /** Application manager. */
     private final CyApplicationManager applicationManager;
+
+    /** Layout algorithm manager. */
+    private final CyLayoutAlgorithmManager layoutAlgorithmManager;
+
+    /** Network factory. */
+    private final CyNetworkFactory networkFactory;
+
+    /** Network naming. */
+    private final CyNetworkNaming networkNaming;
+
+    /** Network manager. */
+    private final CyNetworkManager networkManager;
+
+    /** Network view factory. */
+    private final CyNetworkViewFactory networkViewFactory;
+
+    /** Network view manager. */
+    private final CyNetworkViewManager networkViewManager;
+
+    /** Visual mapping manager. */
+    private final VisualMappingManager visualMappingManager;
+
+    /** Continuous mapping factory. */
+    private final VisualMappingFunctionFactory continuousMappingFactory;
+
+    /** Discrete mapping factory. */
+    private final VisualMappingFunctionFactory discreteMappingFactory;
+
+    /** Passthrough mapping factory. */
+    private final VisualMappingFunctionFactory passthroughMappingFactory;
 
     /** Logger. */
     private final Logger logger = LoggerFactory.getLogger(getClass());
@@ -51,25 +99,74 @@ final class ImportGfa2TaskFactory extends AbstractTaskFactory
      * Create a new import Graphical Fragment Assembly (GFA) 2.0 task factory
      * with the specified application manager.
      *
+     * @param assemblyModel assembly model, must not be null
      * @param applicationManager application manager, must not be null
+     * @param layoutAlgorithmManager layout algorithm manager, must not be null
+     * @param networkFactory network factory, must not be null
+     * @param networkNaming network naming, must not be null
+     * @param networkManager network manager, must not be null
+     * @param networkViewFactory network view factory, must not be null
+     * @param networkViewManager network view manager, must not be null
+     * @param visualMappingManager visual mapping manager, must not be null
+     * @param continuousMappingFactory continuous mapping factory, must not be null
+     * @param discreteMappingFactory discreteMappingFactory, must not be null
+     * @param passthroughMappingFactory passthrough mapping factory, must not be null
      */
-    ImportGfa2TaskFactory(final CyApplicationManager applicationManager)
+    ImportGfa2TaskFactory(final AssemblyModel assemblyModel,
+                          final CyApplicationManager applicationManager,
+                          final CyLayoutAlgorithmManager layoutAlgorithmManager,
+                          final CyNetworkFactory networkFactory,
+                          final CyNetworkNaming networkNaming,
+                          final CyNetworkManager networkManager,
+                          final CyNetworkViewFactory networkViewFactory,
+                          final CyNetworkViewManager networkViewManager,
+                          final VisualMappingManager visualMappingManager,
+                          final VisualMappingFunctionFactory continuousMappingFactory,
+                          final VisualMappingFunctionFactory discreteMappingFactory,
+                          final VisualMappingFunctionFactory passthroughMappingFactory)
     {
+        checkNotNull(assemblyModel);
         checkNotNull(applicationManager);
+        checkNotNull(layoutAlgorithmManager);
+        checkNotNull(networkFactory);
+        checkNotNull(networkNaming);
+        checkNotNull(networkManager);
+        checkNotNull(networkViewFactory);
+        checkNotNull(networkViewManager);
+        checkNotNull(visualMappingManager);
+        checkNotNull(continuousMappingFactory);
+        checkNotNull(discreteMappingFactory);
+        checkNotNull(passthroughMappingFactory);
+        this.assemblyModel = assemblyModel;
         this.applicationManager = applicationManager;
+        this.layoutAlgorithmManager = layoutAlgorithmManager;
+        this.networkFactory = networkFactory;
+        this.networkNaming = networkNaming;
+        this.networkManager = networkManager;
+        this.networkViewFactory = networkViewFactory;
+        this.networkViewManager = networkViewManager;
+        this.visualMappingManager = visualMappingManager;
+        this.continuousMappingFactory = continuousMappingFactory;
+        this.discreteMappingFactory = discreteMappingFactory;
+        this.passthroughMappingFactory = passthroughMappingFactory;
     }
 
 
     @Override
     public boolean isReady()
     {
-        return false;
+        return true;
         //return applicationManager.getCurrentNetwork() != null && applicationManager.getCurrentNetworkView() != null;
     }
 
     @Override
     public TaskIterator createTaskIterator()
     {
-        return new TaskIterator(new ImportGfa2Task());
+        CreateNetworkTask createNetworkTask = new CreateNetworkTask(assemblyModel, networkFactory, networkNaming, networkManager, networkViewFactory, networkViewManager);
+        ImportGfa2Task importTask = new ImportGfa2Task(assemblyModel, applicationManager);
+        LayoutNetworkTask layoutNetworkTask = new LayoutNetworkTask(applicationManager, layoutAlgorithmManager);
+        VisualMappingTask visualMappingTask = new VisualMappingTask(applicationManager, visualMappingManager, continuousMappingFactory, discreteMappingFactory, passthroughMappingFactory);
+        AssemblyAppTask assemblyAppTask = new AssemblyAppTask(assemblyModel);
+        return new TaskIterator(createNetworkTask, importTask, layoutNetworkTask, visualMappingTask, assemblyAppTask);
     }
 }

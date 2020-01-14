@@ -29,6 +29,7 @@ import static org.cytoscape.view.presentation.property.ArrowShapeVisualProperty.
 import static org.cytoscape.view.presentation.property.ArrowShapeVisualProperty.T;
 
 import static org.cytoscape.view.presentation.property.BasicVisualLexicon.EDGE_LABEL;
+import static org.cytoscape.view.presentation.property.BasicVisualLexicon.EDGE_LINE_TYPE;
 import static org.cytoscape.view.presentation.property.BasicVisualLexicon.EDGE_TARGET_ARROW_SHAPE;
 import static org.cytoscape.view.presentation.property.BasicVisualLexicon.EDGE_TRANSPARENCY;
 import static org.cytoscape.view.presentation.property.BasicVisualLexicon.EDGE_TOOLTIP;
@@ -41,6 +42,9 @@ import static org.cytoscape.view.presentation.property.BasicVisualLexicon.NODE_L
 import static org.cytoscape.view.presentation.property.BasicVisualLexicon.NODE_LABEL_COLOR;
 import static org.cytoscape.view.presentation.property.BasicVisualLexicon.NODE_TOOLTIP;
 import static org.cytoscape.view.presentation.property.BasicVisualLexicon.NODE_WIDTH;
+
+import static org.cytoscape.view.presentation.property.LineTypeVisualProperty.SOLID;
+import static org.cytoscape.view.presentation.property.LineTypeVisualProperty.EQUAL_DASH;
 
 import java.awt.Color;
 import java.awt.Paint;
@@ -58,6 +62,7 @@ import org.cytoscape.model.CyTable;
 import org.cytoscape.view.model.CyNetworkView;
 
 import org.cytoscape.view.presentation.property.values.ArrowShape;
+import org.cytoscape.view.presentation.property.values.LineType;
 
 import org.cytoscape.view.vizmap.VisualMappingFunctionFactory;
 import org.cytoscape.view.vizmap.VisualMappingManager;
@@ -189,6 +194,13 @@ final class VisualMappingTask extends AbstractTask
             nodeWidthMapping.addPoint(r.upperEndpoint(), maximumNodeWidth);
             visualStyle.addVisualMappingFunction(nodeWidthMapping);
         }
+
+        // discrete mapping edge type --> edge stroke
+        DiscreteMapping<String, LineType> edgeLineTypeMapping = (DiscreteMapping<String, LineType>) discreteMappingFactory.createVisualMappingFunction("type", String.class, EDGE_LINE_TYPE);
+        edgeLineTypeMapping.putMapValue("edge", SOLID);
+        edgeLineTypeMapping.putMapValue("gap", EQUAL_DASH);
+
+        // todo: display columns for edges, to capture gfa2 gap attributes
 
         // passthrough mapping, id --> edge label
         PassthroughMapping edgeLabelMapping = (PassthroughMapping) passthroughMappingFactory.createVisualMappingFunction("id", String.class, EDGE_LABEL);

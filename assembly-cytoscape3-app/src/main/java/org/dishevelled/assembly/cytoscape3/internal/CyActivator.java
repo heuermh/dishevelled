@@ -125,9 +125,20 @@ public final class CyActivator extends AbstractCyActivator
         importGfa2Properties.setProperty(IN_MENU_BAR, "true");
         importGfa2Properties.setProperty(IN_CONTEXT_MENU, "false");
         importGfa1Properties.setProperty(INSERT_SEPARATOR_BEFORE, "false");
-        importGfa1Properties.setProperty(MENU_GRAVITY, "4.0");
+        importGfa1Properties.setProperty(MENU_GRAVITY, "4.1");
 
-        TaskFactory importGfa2TaskFactory = new ImportGfa2TaskFactory(applicationManager);
-        //registerAllServices(bundleContext, importGfa2TaskFactory, importGfa2Properties);
+        TaskFactory importGfa2TaskFactory = new ImportGfa2TaskFactory(assemblyModel,
+                                                                      applicationManager,
+                                                                      layoutAlgorithmManager,
+                                                                      networkFactory,
+                                                                      networkNaming,
+                                                                      networkManager,
+                                                                      networkViewFactory,
+                                                                      networkViewManager,
+                                                                      visualMappingManager,
+                                                                      continuousMappingFactory,
+                                                                      discreteMappingFactory,
+                                                                      passthroughMappingFactory);
+        registerAllServices(bundleContext, importGfa2TaskFactory, importGfa2Properties);
     }
 }

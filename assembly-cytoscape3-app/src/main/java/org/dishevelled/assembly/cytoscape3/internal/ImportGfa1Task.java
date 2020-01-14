@@ -180,7 +180,10 @@ public final class ImportGfa1Task extends AbstractTask
                         {
                             putIfAbsent(reference);
                         }
-                        paths.add(path);
+                        if (loadPaths)
+                        {
+                            paths.add(path);
+                        }
                         return true;
                     }
 
@@ -319,6 +322,7 @@ public final class ImportGfa1Task extends AbstractTask
             CyRow edgeRow = edgeTable.getRow(edge.getSUID());
 
             setValue(edgeTable, edgeRow, "id", String.class, link.getIdOpt().orElse(null));
+            setValue(edgeTable, edgeRow, "type", String.class, "edge");
             setValue(edgeTable, edgeRow, "sourceId", String.class, sourceId);
             setValue(edgeTable, edgeRow, "sourceOrientation", String.class, sourceOrientation);
             setValue(edgeTable, edgeRow, "targetId", String.class, targetId);
