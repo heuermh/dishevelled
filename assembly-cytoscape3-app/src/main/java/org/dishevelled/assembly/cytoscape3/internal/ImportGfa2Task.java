@@ -228,10 +228,19 @@ public final class ImportGfa2Task extends AbstractTask
                 CyRow nodeRow = nodeTable.getRow(node.getSUID());
 
                 Integer length = segment.getLength();
+                Integer readCount = segment.getReadCountOpt().orElse(null);
+                Integer fragmentCount = segment.getFragmentCountOpt().orElse(null);
+                Integer kmerCount = segment.getKmerCountOpt().orElse(null);
+                String sequenceChecksum = segment.containsSequenceChecksum() ? String.valueOf(segment.getSequenceChecksum()) : null;
+                String sequenceUri = segment.getSequenceUriOpt().orElse(null);
 
                 setValue(nodeTable, nodeRow, "name", String.class, name);
                 setValue(nodeTable, nodeRow, "length", Integer.class, length);
-                // todo: any reserved tags?
+                setValue(nodeTable, nodeRow, "readCount", Integer.class, readCount);
+                setValue(nodeTable, nodeRow, "fragmentCount", Integer.class, fragmentCount);
+                setValue(nodeTable, nodeRow, "kmerCount", Integer.class, kmerCount);
+                setValue(nodeTable, nodeRow, "sequenceChecksum", String.class, sequenceChecksum);
+                setValue(nodeTable, nodeRow, "sequenceUri", String.class, sequenceUri);
 
                 // default display length to length
                 Integer displayLength = length;
@@ -267,7 +276,24 @@ public final class ImportGfa2Task extends AbstractTask
                 }
                 String displayName = sb.toString();
 
-                // todo: any reserved tags?
+                if (readCount != null)
+                {
+                    sb.append(" ");
+                    sb.append(readCount);
+                    sb.append(" reads");
+                }
+                if (fragmentCount != null)
+                {
+                    sb.append(" ");
+                    sb.append(fragmentCount);
+                    sb.append(" fragments");
+                }
+                if (kmerCount != null)
+                {
+                    sb.append(" ");
+                    sb.append(kmerCount);
+                    sb.append(" kmers");
+                }
                 String displayLabel = sb.toString();
 
                 setValue(nodeTable, nodeRow, "displayName", String.class, displayName);
@@ -294,8 +320,7 @@ public final class ImportGfa2Task extends AbstractTask
             CyTable edgeTable = network.getDefaultEdgeTable();
             CyRow edgeRow = edgeTable.getRow(cyEdge.getSUID());
 
-            // todo: edge.getIdOpt() is missing
-            //setValue(edgeTable, edgeRow, "id", String.class, edge.getIdOpt().orElse(null));
+            setValue(edgeTable, edgeRow, "id", String.class, edge.getIdOpt().orElse(null));
             setValue(edgeTable, edgeRow, "type", String.class, "edge");
             setValue(edgeTable, edgeRow, "sourceId", String.class, sourceId);
             setValue(edgeTable, edgeRow, "sourceOrientation", String.class, sourceOrientation);
@@ -306,7 +331,11 @@ public final class ImportGfa2Task extends AbstractTask
             setValue(edgeTable, edgeRow, "targetStart", String.class, edge.getTargetStart().toString());
             setValue(edgeTable, edgeRow, "targetEnd", String.class, edge.getTargetEnd().toString());
             setValue(edgeTable, edgeRow, "alignment", String.class, edge.getAlignmentOpt().orElse(null));
-            // todo: any reserved tags?
+            setValue(edgeTable, edgeRow, "readCount", Integer.class, edge.getReadCountOpt().orElse(null));
+            setValue(edgeTable, edgeRow, "fragmentCount", Integer.class, edge.getFragmentCountOpt().orElse(null));
+            setValue(edgeTable, edgeRow, "kmerCount", Integer.class, edge.getKmerCountOpt().orElse(null));
+            setValue(edgeTable, edgeRow, "mappingQuality", Integer.class, edge.getMappingQualityOpt().orElse(null));
+            setValue(edgeTable, edgeRow, "mismatchCount", Integer.class, edge.getMismatchCountOpt().orElse(null));
         }
         logger.info("converted edges to " + edges.size() + " edges");
 
@@ -330,7 +359,6 @@ public final class ImportGfa2Task extends AbstractTask
             setValue(edgeTable, edgeRow, "targetOrientation", String.class, targetOrientation);
             setValue(edgeTable, edgeRow, "distance", Integer.class, gap.getDistance());
             setValue(edgeTable, edgeRow, "variance", Integer.class, gap.getVarianceOpt().orElse(null));
-            // todo: any reserved tags?
         }
         logger.info("converted gaps to " + gaps.size() + " edges");
         nodes.clear();
@@ -345,6 +373,7 @@ public final class ImportGfa2Task extends AbstractTask
             assemblyModel.setInputFileName(inputFile.toString());
 
             // todo: convert to gfa1 paths?
+            //   note paths in gfa2 can have references to segments, edges, or other groups
             //assemblyModel.setPaths(paths, traversalsByPathName);
         }
     }
