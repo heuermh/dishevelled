@@ -178,6 +178,7 @@ public final class ImportGfa2Task extends AbstractTask
                     {
                         putIfAbsent(edge.getSource());
                         putIfAbsent(edge.getTarget());
+                        edges.add(edge);
                         return true;
                     }
 
@@ -186,6 +187,7 @@ public final class ImportGfa2Task extends AbstractTask
                     {
                         putIfAbsent(gap.getSource());
                         putIfAbsent(gap.getTarget());
+                        gaps.add(gap);
                         return true;
                     }
 
@@ -273,6 +275,7 @@ public final class ImportGfa2Task extends AbstractTask
                 {
                     sb.append("  ");
                     sb.append(displayLength);
+                    sb.append(" bp");
                 }
                 String displayName = sb.toString();
 
@@ -330,7 +333,7 @@ public final class ImportGfa2Task extends AbstractTask
             setValue(edgeTable, edgeRow, "sourceEnd", String.class, edge.getSourceEnd().toString());
             setValue(edgeTable, edgeRow, "targetStart", String.class, edge.getTargetStart().toString());
             setValue(edgeTable, edgeRow, "targetEnd", String.class, edge.getTargetEnd().toString());
-            setValue(edgeTable, edgeRow, "alignment", String.class, edge.getAlignmentOpt().orElse(null));
+            setValue(edgeTable, edgeRow, "alignment", String.class, edge.hasAlignment() ? edge.getAlignment().toString() : null);
             setValue(edgeTable, edgeRow, "readCount", Integer.class, edge.getReadCountOpt().orElse(null));
             setValue(edgeTable, edgeRow, "fragmentCount", Integer.class, edge.getFragmentCountOpt().orElse(null));
             setValue(edgeTable, edgeRow, "kmerCount", Integer.class, edge.getKmerCountOpt().orElse(null));
