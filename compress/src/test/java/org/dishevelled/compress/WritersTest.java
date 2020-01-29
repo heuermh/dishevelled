@@ -1,7 +1,7 @@
 /*
 
     dsh-compress  Compression utility classes.
-    Copyright (c) 2014-2019 held jointly by the individual authors.
+    Copyright (c) 2014-2020 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
@@ -25,6 +25,7 @@ package org.dishevelled.compress;
 
 import static org.dishevelled.compress.Writers.bzip2OutputStreamWriter;
 import static org.dishevelled.compress.Writers.gzipOutputStreamWriter;
+import static org.dishevelled.compress.Writers.zstdOutputStreamWriter;
 import static org.dishevelled.compress.Writers.writer;
 
 import static org.junit.Assert.assertNotNull;
@@ -110,6 +111,17 @@ public final class WritersTest
     }
 
     @Test
+    public void testWriterZstdFile() throws IOException
+    {
+        File file = File.createTempFile("writersTest", ".zst");
+        try (PrintWriter writer = writer(file))
+        {
+            assertNotNull(writer);
+        }
+        file.delete();
+    }
+
+    @Test
     public void testWriterNullFileAppend() throws IOException
     {
         try (PrintWriter writer = writer(null, true))
@@ -162,6 +174,17 @@ public final class WritersTest
         file.delete();
     }
 
+    @Test
+    public void testWriterZstdFileAppend() throws IOException
+    {
+        File file = File.createTempFile("writersTest", ".zst");
+        try (PrintWriter writer = writer(file, true))
+        {
+            assertNotNull(writer);
+        }
+        file.delete();
+    }
+
     @Test(expected=NullPointerException.class)
     public void testGzipOutputStreamWriterNullOutputStream() throws IOException
     {
@@ -187,6 +210,15 @@ public final class WritersTest
     public void testBzip2OutputStreamWriter() throws IOException
     {
         try (OutputStream outputStream = new ByteArrayOutputStream(); PrintWriter writer = bzip2OutputStreamWriter(outputStream))
+        {
+            assertNotNull(writer);
+        }
+    }
+
+    @Test
+    public void testZstdOutputStreamWriter() throws IOException
+    {
+        try (OutputStream outputStream = new ByteArrayOutputStream(); PrintWriter writer = zstdOutputStreamWriter(outputStream))
         {
             assertNotNull(writer);
         }

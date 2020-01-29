@@ -1,7 +1,7 @@
 /*
 
     dsh-compress  Compression utility classes.
-    Copyright (c) 2014-2019 held jointly by the individual authors.
+    Copyright (c) 2014-2020 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
@@ -38,6 +38,8 @@ import htsjdk.samtools.util.BlockCompressedInputStream;
 import org.apache.commons.compress.compressors.bzip2.BZip2Utils;
 
 import org.apache.commons.compress.compressors.gzip.GzipUtils;
+
+import org.apache.commons.compress.utils.IOUtils;
 
 /**
  * Compression utility methods.
@@ -222,6 +224,70 @@ public final class Compress
         {
             in.mark(3);
             return in.read() == 'B' && in.read() == 'Z' && in.read() == 'h';
+        }
+        catch (IOException e)
+        {
+            return false;
+        }
+        finally
+        {
+            try
+            {
+                in.reset();
+            }
+            catch (IOException e)
+            {
+                // ignore
+            }
+        }
+    }
+
+    /**
+     * Return true if the specified file is a Zstandard (zstd) file name.
+     *
+     * @since 1.4
+     * @param fileName file name, must not be null
+     * @return true if the specified file is a Zstandard (zstd) file name
+     */
+    public static boolean isZstdFilename(final String fileName)
+    {
+        checkNotNull(fileName);
+        return ZstdUtils.isCompressedFilename(fileName);
+    }
+
+    /**
+     * Return true if the specified file is a Zstandard (zstd) file.
+     *
+     * @since 1.4
+     * @param file file, if any
+     * @return true if the specified file is a Zstandard (zstd) file
+     */
+    public static boolean isZstdFile(@Nullable final File file)
+    {
+        if (file == null)
+        {
+            return false;
+        }
+        return isZstdFilename(file.getName());
+    }
+
+    /**
+     * Return true if the specified file is a Zstandard (zstd) input stream.
+     *
+     * @since 1.4
+     * @param inputStream input stream, must not be null
+     * @return true if the specified file is a Zstandard (zstd) input stream
+     */
+    public static boolean isZstdInputStream(final InputStream inputStream)
+    {
+        checkNotNull(inputStream);
+        InputStream in = inputStream.markSupported() ? inputStream : new BufferedInputStream(inputStream);
+        try
+        {
+            final byte[] signature = new byte[12];
+            inputStream.mark(signature.length);
+            int signatureLength = IOUtils.readFully(inputStream, signature);
+            return org.apache.commons.compress.compressors.zstandard.ZstdUtils.matches(signature, signatureLength);
         }
         catch (IOException e)
         {

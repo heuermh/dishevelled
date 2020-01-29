@@ -1,7 +1,7 @@
 /*
 
     dsh-compress  Compression utility classes.
-    Copyright (c) 2014-2019 held jointly by the individual authors.
+    Copyright (c) 2014-2020 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
@@ -33,6 +33,8 @@ import static org.dishevelled.compress.Readers.gzipFileReader;
 import static org.dishevelled.compress.Readers.gzipInputStreamReader;
 import static org.dishevelled.compress.Readers.inputStreamReader;
 import static org.dishevelled.compress.Readers.reader;
+import static org.dishevelled.compress.Readers.zstdFileReader;
+import static org.dishevelled.compress.Readers.zstdInputStreamReader;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -209,6 +211,42 @@ public final class ReadersTest
     public void testBzip2InputStreamReader() throws IOException
     {
         try (InputStream inputStream = ReadersTest.class.getResourceAsStream("example.txt.bz2"); BufferedReader reader = bzip2InputStreamReader(inputStream))
+        {
+            assertValidReader(reader);
+        }
+    }
+
+    @Test(expected=NullPointerException.class)
+    public void testZstdFileReaderNullFile() throws IOException
+    {
+        zstdFileReader(null);
+    }
+
+    @Test
+    public void testZstdFileReader() throws IOException
+    {
+        File file = File.createTempFile("readersTest", ".zst");
+        try (FileOutputStream outputStream = new FileOutputStream(file))
+        {
+            Resources.copy(ReadersTest.class.getResource("example.txt.zst"), outputStream);
+        }
+        try (BufferedReader reader = zstdFileReader(file))
+        {
+            assertValidReader(reader);
+        }
+        file.delete();
+    }
+
+    @Test(expected=NullPointerException.class)
+    public void testZstdInputStreamReaderNullInputStream() throws IOException
+    {
+        zstdInputStreamReader(null);
+    }
+
+    @Test
+    public void testZstdInputStreamReader() throws IOException
+    {
+        try (InputStream inputStream = ReadersTest.class.getResourceAsStream("example.txt.zst"); BufferedReader reader = zstdInputStreamReader(inputStream))
         {
             assertValidReader(reader);
         }

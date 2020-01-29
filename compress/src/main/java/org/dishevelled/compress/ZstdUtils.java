@@ -29,12 +29,12 @@ import java.util.Map;
 import org.apache.commons.compress.compressors.FileNameUtil;
 
 /**
- * Utility code for the block compressed gzip (BGZF) compression format.
+ * Utility code for the Zstandard (zstd) compression format.
  *
- * @since 1.3
+ * @since 1.4
  * @author  Michael Heuer
  */
-public abstract class BgzfUtils
+public abstract class ZstdUtils
 {
     /** Static FileNameUtil instance. */
     private static final FileNameUtil FILE_NAME_UTIL;
@@ -42,26 +42,26 @@ public abstract class BgzfUtils
     static
     {
         final Map<String, String> uncompressSuffix = new LinkedHashMap<String, String>();
-        uncompressSuffix.put(".bgz", "");
-        uncompressSuffix.put(".bgzf", "");
-        FILE_NAME_UTIL = new FileNameUtil(uncompressSuffix, ".bgz");
+        uncompressSuffix.put(".zst", "");
+        uncompressSuffix.put(".zstd", "");
+        FILE_NAME_UTIL = new FileNameUtil(uncompressSuffix, ".zst");
     }
 
 
     /**
      * Private constructor to prevent instantiation of this utility class.
      */
-    private BgzfUtils()
+    private ZstdUtils()
     {
         // empty
     }
 
 
     /**
-     * Detects common block compressed gzip (BGZF) suffixes in the given filename.
+     * Detects common Zstandard (zst) suffixes in the given filename.
      *
      * @param filename name of a file
-     * @return {@code true} if the filename has a common block compressed gzip (BGZF) suffix,
+     * @return {@code true} if the filename has a common Zstandard (zstd) suffix,
      *    {@code false} otherwise
      */
     public static boolean isCompressedFilename(final String filename)
@@ -70,12 +70,12 @@ public abstract class BgzfUtils
     }
 
     /**
-     * Maps the given name of a block compressed gzip (BGZF) file to the name that the
+     * Maps the given name of a Zstandard (zstd) file to the name that the
      * file should have after uncompression. Commonly used file type specific
-     * suffixes like ".bgz" or ".bgzf" are automatically detected and
-     * correctly mapped. Any filenames with the generic ".bgz" suffix
-     * (or any other generic bgzf suffix) is mapped to a name without that
-     * suffix. If no bgzf suffix is detected, then the filename is returned
+     * suffixes like ".zst" or ".zstd" are automatically detected and
+     * correctly mapped. Any filenames with the generic ".zst" suffix
+     * (or any other generic zstd suffix) is mapped to a name without that
+     * suffix. If no zstd suffix is detected, then the filename is returned
      * unmapped.
      *
      * @param filename name of a file
@@ -88,8 +88,8 @@ public abstract class BgzfUtils
 
     /**
      * Maps the given filename to the name that the file should have after
-     * compression with block compressed gzip (BGZF). Currently this method simply appends the suffix
-     * ".bgz" to the filename, but a future version may implement a more complex
+     * compression with Zstandard (zstd). Currently this method simply appends the suffix
+     * ".zst" to the filename, but a future version may implement a more complex
      * mapping if a new widely used naming pattern emerges.
      *
      * @param filename name of a file

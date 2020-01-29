@@ -1,7 +1,7 @@
 /*
 
     dsh-compress  Compression utility classes.
-    Copyright (c) 2014-2019 held jointly by the individual authors.
+    Copyright (c) 2014-2020 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
@@ -29,6 +29,7 @@ import static org.dishevelled.compress.Compress.isBgzfFile;
 import static org.dishevelled.compress.Compress.isBgzfInputStream;
 import static org.dishevelled.compress.Compress.isBzip2File;
 import static org.dishevelled.compress.Compress.isGzipFile;
+import static org.dishevelled.compress.Compress.isZstdFile;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -50,8 +51,10 @@ import org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream;
 
 import org.apache.commons.compress.compressors.gzip.GzipCompressorInputStream;
 
+import org.apache.commons.compress.compressors.zstandard.ZstdCompressorInputStream;
+
 /**
- * File and input stream readers with support for bgzf, gzip, and bzip2 compression.
+ * File and input stream readers with support for bgzf, gzip, bzip2, and zstd compression.
  *
  * @author  Michael Heuer
  */
@@ -207,12 +210,40 @@ public final class Readers
     }
 
     /**
-     * Create and return a new buffered reader with support for bgzf, gzip, or bzip2 compression for the specified file
-     * or <code>stdin</code> if the file is null.
+     * Create and return a new buffered reader for the specified Zstandard (zstd) compressed file.
+     *
+     * @since 1.4
+     * @param file zstd compressed file, must not be null
+     * @return a new buffered reader for the specified Zstandard (zstd) compressed file
+     * @throws IOException if an I/O error occurs
+     */
+    public static BufferedReader zstdFileReader(final File file) throws IOException
+    {
+        checkNotNull(file);
+        return zstdInputStreamReader(new FileInputStream(file));
+    }
+
+    /**
+     * Create and return a new buffered reader for the specified Zstandard (zstd) compressed input stream.
+     *
+     * @since 1.4
+     * @param inputStream zstd compressed input stream, must not be null
+     * @return a new buffered reader for the specified Zstandard (zstd) compressed input stream
+     * @throws IOException if an I/O error occurs
+     */
+    public static BufferedReader zstdInputStreamReader(final InputStream inputStream) throws IOException
+    {
+        checkNotNull(inputStream);
+        return new BufferedReader(new InputStreamReader(new ZstdCompressorInputStream(inputStream)));
+    }
+
+    /**
+     * Create and return a new buffered reader with support for bgzf, gzip, bzip2, or zstd compression
+     * for the specified file or <code>stdin</code> if the file is null.
      *
      * @param file file, if any
-     * @return a new buffered reader with support for bgzf, gzip, or bzip2 compression for the specified file
-     *    or <code>stdin</code> if the file is null
+     * @return a new buffered reader with support for bgzf, gzip, bzip2, or zstd compression for the
+     *    specified file or <code>stdin</code> if the file is null
      * @throws IOException if an I/O error occurs
      */
     public static BufferedReader reader(@Nullable final File file) throws IOException
@@ -220,6 +251,10 @@ public final class Readers
         if (file == null)
         {
             return compressedInputStreamReader(System.in);
+        }
+        else if (isZstdFile(file))
+        {
+            return zstdFileReader(file);
         }
         else if (isBgzfFile(file))
         {

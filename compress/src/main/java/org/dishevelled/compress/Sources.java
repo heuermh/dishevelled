@@ -1,7 +1,7 @@
 /*
 
     dsh-compress  Compression utility classes.
-    Copyright (c) 2014-2019 held jointly by the individual authors.
+    Copyright (c) 2014-2020 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
@@ -28,6 +28,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import static org.dishevelled.compress.Compress.isBgzfFile;
 import static org.dishevelled.compress.Compress.isBzip2File;
 import static org.dishevelled.compress.Compress.isGzipFile;
+import static org.dishevelled.compress.Compress.isZstdFile;
 
 import java.io.File;
 import java.io.InputStream;
@@ -42,7 +43,7 @@ import com.google.common.io.CharSource;
 import com.google.common.io.Files;
 
 /**
- * File and input stream sources with support for bgzf, gzip, and bzip2 compression.
+ * File and input stream sources with support for bgzf, gzip, bzip2, and zstd compression.
  *
  * @author  Michael Heuer
  */
@@ -220,12 +221,52 @@ public final class Sources
     }
 
     /**
-     * Create and return a new char source with support for bgzf, gzip, or bzip2 compression for the specified file
-     * or <code>stdin</code> if the file is null.  Defaults to <code>UTF-8</code> charset.
+     * Create and return a new Zstandard (zstd) compressed char source for the specified input stream.
+     *
+     * @since 1.4
+     * @param inputStream input stream, must not be null
+     * @return a new Zstandard (zstd) compressed char source for the specified input stream
+     */
+    public static CharSource zstdInputStreamCharSource(final InputStream inputStream)
+    {
+        checkNotNull(inputStream);
+        return new CharSource()
+            {
+                @Override
+                public Reader openStream() throws IOException
+                {
+                    return Readers.zstdInputStreamReader(inputStream);
+                }
+            };
+    }
+
+    /**
+     * Create and return a new Zstandard (zstd) compressed char source for the specified file.
+     *
+     * @since 1.4
+     * @param file file, must not be null
+     * @return a new Zstandard (zstd) compressed char source for the specified file
+     */
+    public static CharSource zstdFileCharSource(final File file)
+    {
+        checkNotNull(file);
+        return new CharSource()
+            {
+                @Override
+                public Reader openStream() throws IOException
+                {
+                    return Readers.zstdFileReader(file);
+                }
+            };
+    }
+
+    /**
+     * Create and return a new char source with support for bgzf, gzip, bzip2, or zstd compression for
+     * the specified file or <code>stdin</code> if the file is null.  Defaults to <code>UTF-8</code> charset.
      *
      * @param file file, if any
-     * @return a new char source with support for bgzf, gzip, or bzip2 compression for the specified file
-     *    or <code>stdin</code> if the file is null
+     * @return a new char source with support for bgzf, gzip, bzip2, or zstd compression for
+     *    the specified file or <code>stdin</code> if the file is null
      * @throws IOException if an I/O error occurs
      */
     public static CharSource charSource(@Nullable final File file) throws IOException
@@ -234,13 +275,13 @@ public final class Sources
     }
 
     /**
-     * Create and return a new char source with support for bgzf, gzip, or bzip2 compression for the specified file
-     * or <code>stdin</code> if the file is null.
+     * Create and return a new char source with support for bgzf, gzip, bzip2, or zstd compression for
+     * the specified file or <code>stdin</code> if the file is null.
      *
      * @param file file, if any
      * @param charset charset, must not be null
-     * @return a new char source with support for bgzf, gzip, or bzip2 compression for the specified file
-     *    or <code>stdin</code> if the file is null
+     * @return a new char source with support for bgzf, gzip, bzip2, or zstd compression for
+     *    the specified file or <code>stdin</code> if the file is null
      * @throws IOException if an I/O error occurs
      */
     public static CharSource charSource(@Nullable final File file, final Charset charset) throws IOException
@@ -249,6 +290,10 @@ public final class Sources
         if (file == null)
         {
             return compressedInputStreamCharSource(System.in);
+        }
+        else if (isZstdFile(file))
+        {
+            return zstdFileCharSource(file);
         }
         else if (isBgzfFile(file))
         {

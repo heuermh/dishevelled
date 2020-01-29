@@ -1,7 +1,7 @@
 /*
 
     dsh-compress  Compression utility classes.
-    Copyright (c) 2014-2019 held jointly by the individual authors.
+    Copyright (c) 2014-2020 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
@@ -28,6 +28,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import static org.dishevelled.compress.Compress.isBgzfFile;
 import static org.dishevelled.compress.Compress.isBzip2File;
 import static org.dishevelled.compress.Compress.isGzipFile;
+import static org.dishevelled.compress.Compress.isZstdFile;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -45,6 +46,8 @@ import htsjdk.samtools.util.BlockCompressedOutputStream;
 import org.apache.commons.compress.compressors.bzip2.BZip2CompressorOutputStream;
 
 import org.apache.commons.compress.compressors.gzip.GzipCompressorOutputStream;
+
+import org.apache.commons.compress.compressors.zstandard.ZstdCompressorOutputStream;
 
 /**
  * File and output stream writers with support for bgzf, gzip, and bzip2 compression.
@@ -104,12 +107,26 @@ public final class Writers
     }
 
     /**
-     * Create and return a new buffered print writer with support for bgzf, gzip, or bzip2 compression for the specified file
-     * or <code>stdout</code> if the file is null.
+     * Create and return a new buffered print writer with Zstandard (zstd) compression for the specified output stream.
+     *
+     * @since 1.4
+     * @param outputStream output stream, must not be null
+     * @return a new buffered print writer with Zstandard (zstd) compression for the specified output stream
+     * @throws IOException if an I/O error occurs
+     */
+    public static PrintWriter zstdOutputStreamWriter(final OutputStream outputStream) throws IOException
+    {
+        checkNotNull(outputStream);
+        return new PrintWriter(new BufferedWriter(new OutputStreamWriter(new ZstdCompressorOutputStream(outputStream))), true);
+    }
+
+    /**
+     * Create and return a new buffered print writer with support for bgzf, gzip, bzip2, or zstd compression for
+     * the specified file or <code>stdout</code> if the file is null.
      *
      * @param file file, if any
-     * @return a new buffered print writer with support for bgzf, gzip, or bzip2 compression for the specified file
-     *    or <code>stdout</code> if the file is null
+     * @return a new buffered print writer with support for bgzf, gzip, bzip2, or zstd compression for
+     *    the specified file or <code>stdout</code> if the file is null
      * @throws IOException if an I/O error occurs
      */
     public static PrintWriter writer(@Nullable final File file) throws IOException
@@ -118,13 +135,13 @@ public final class Writers
     }
 
     /**
-     * Create and return a new buffered print writer with support for bgzf, gzip, or bzip2 compression for the specified file
-     * or <code>stdout</code> if the file is null.
+     * Create and return a new buffered print writer with support for bgzf, gzip, bzip2, or zstd compression for
+     * the specified file or <code>stdout</code> if the file is null.
      *
      * @param file file, if any
      * @param append true to append to the specified file
-     * @return a new buffered print writer with support for bgzf, gzip, or bzip2 compression for the specified file
-     *    or <code>stdout</code> if the file is null
+     * @return a new buffered print writer with support for bgzf, gzip, bzip2, or zstd compression for
+     *    the specified file or <code>stdout</code> if the file is null
      * @throws IOException if an I/O error occurs
      */
     public static PrintWriter writer(@Nullable final File file, final boolean append) throws IOException
@@ -132,6 +149,10 @@ public final class Writers
         if (file == null)
         {
             return new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)), true);
+        }
+        else if (isZstdFile(file))
+        {
+            return new PrintWriter(new BufferedWriter(new OutputStreamWriter(new ZstdCompressorOutputStream(new FileOutputStream(file, append)))), true);
         }
         else if (isBgzfFile(file))
         {

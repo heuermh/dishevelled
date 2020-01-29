@@ -1,7 +1,7 @@
 /*
 
     dsh-compress  Compression utility classes.
-    Copyright (c) 2014-2019 held jointly by the individual authors.
+    Copyright (c) 2014-2020 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
@@ -28,6 +28,7 @@ import static org.dishevelled.compress.Sources.charSource;
 import static org.dishevelled.compress.Sources.compressedInputStreamCharSource;
 import static org.dishevelled.compress.Sources.inputStreamCharSource;
 import static org.dishevelled.compress.Sources.gzipInputStreamCharSource;
+import static org.dishevelled.compress.Sources.zstdInputStreamCharSource;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -102,6 +103,21 @@ public final class SourcesTest
         try (FileOutputStream outputStream = new FileOutputStream(file))
         {
             Resources.copy(SourcesTest.class.getResource("example.txt.bz2"), outputStream);
+        }
+        try (Reader reader = charSource(file).openStream())
+        {
+            assertValidReader(reader);
+        }
+        file.delete();
+    }
+
+    @Test
+    public void testCharSourceZstdFile() throws IOException
+    {
+        File file = File.createTempFile("charSourcesTest", ".zst");
+        try (FileOutputStream outputStream = new FileOutputStream(file))
+        {
+            Resources.copy(SourcesTest.class.getResource("example.txt.zst"), outputStream);
         }
         try (Reader reader = charSource(file).openStream())
         {
@@ -234,6 +250,57 @@ public final class SourcesTest
     }
 
     @Test(expected=NullPointerException.class)
+    public void testZstdInputStreamCharSourceNullInputStream() throws IOException
+    {
+        bzip2InputStreamCharSource(null);
+    }
+
+    @Test
+    public void testZstdInputStreamCharSource() throws IOException
+    {
+        File file = File.createTempFile("charSourcesTest", ".zst");
+        try (FileOutputStream outputStream = new FileOutputStream(file))
+        {
+            Resources.copy(SourcesTest.class.getResource("example.txt.zst"), outputStream);
+        }
+        try (Reader reader = zstdInputStreamCharSource(new FileInputStream(file)).openStream())
+        {
+            assertValidReader(reader);
+        }
+        file.delete();
+    }
+
+    @Test(expected=IOException.class)
+    public void testZstdInputStreamCharSourceNoCompression() throws IOException
+    {
+        File file = File.createTempFile("charSourcesTest", ".txt");
+        try (FileOutputStream outputStream = new FileOutputStream(file))
+        {
+            Resources.copy(SourcesTest.class.getResource("example.txt"), outputStream);
+        }
+        try (Reader reader = zstdInputStreamCharSource(new FileInputStream(file)).openStream())
+        {
+            assertValidReader(reader);
+        }
+        file.delete();
+    }
+
+    @Test(expected=IOException.class)
+    public void testZstdInputStreamCharSourceWrongCompression() throws IOException
+    {
+        File file = File.createTempFile("charSourcesTest", ".bz2");
+        try (FileOutputStream outputStream = new FileOutputStream(file))
+        {
+            Resources.copy(SourcesTest.class.getResource("example.txt.bz2"), outputStream);
+        }
+        try (Reader reader = zstdInputStreamCharSource(new FileInputStream(file)).openStream())
+        {
+            assertValidReader(reader);
+        }
+        file.delete();
+    }
+
+    @Test(expected=NullPointerException.class)
     public void testInputStreamCharSourceNullInputStream() throws IOException
     {
         inputStreamCharSource(null);
@@ -297,6 +364,21 @@ public final class SourcesTest
         try (FileOutputStream outputStream = new FileOutputStream(file))
         {
             Resources.copy(SourcesTest.class.getResource("example.txt.bz2"), outputStream);
+        }
+        try (Reader reader = compressedInputStreamCharSource(new FileInputStream(file)).openStream())
+        {
+            assertValidReader(reader);
+        }
+        file.delete();
+    }
+
+    @Test
+    public void testCompressedInputStreamCharSourceZstd() throws IOException
+    {
+        File file = File.createTempFile("charSourcesTest", ".txt.zst");
+        try (FileOutputStream outputStream = new FileOutputStream(file))
+        {
+            Resources.copy(SourcesTest.class.getResource("example.txt.zst"), outputStream);
         }
         try (Reader reader = compressedInputStreamCharSource(new FileInputStream(file)).openStream())
         {

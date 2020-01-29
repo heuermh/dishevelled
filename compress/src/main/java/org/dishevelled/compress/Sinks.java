@@ -1,7 +1,7 @@
 /*
 
     dsh-compress  Compression utility classes.
-    Copyright (c) 2014-2019 held jointly by the individual authors.
+    Copyright (c) 2014-2020 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
@@ -28,6 +28,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import static org.dishevelled.compress.Compress.isBgzfFile;
 import static org.dishevelled.compress.Compress.isBzip2File;
 import static org.dishevelled.compress.Compress.isGzipFile;
+import static org.dishevelled.compress.Compress.isZstdFile;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -51,8 +52,10 @@ import org.apache.commons.compress.compressors.bzip2.BZip2CompressorOutputStream
 
 import org.apache.commons.compress.compressors.gzip.GzipCompressorOutputStream;
 
+import org.apache.commons.compress.compressors.zstandard.ZstdCompressorOutputStream;
+
 /**
- * File and output stream sinks with support for bgzf, gzip, and bzip2 compression.
+ * File and output stream sinks with support for bgzf, gzip, bzip2, and zstd compression.
  *
  * @author  Michael Heuer
  */
@@ -209,11 +212,52 @@ public final class Sinks
     }
 
     /**
-     * Create and return a new char sink with support for bgzf, gzip, or bzip2 compression for the specified file
-     * or <code>stdout</code> if the file is null.  Defaults to <code>UTF-8</code> charset.
+     * Create and return a new Zstandard (zstd) compressed char sink for the specified output stream.
+     *
+     * @since 1.4
+     * @param outputStream output stream, must not be null
+     * @return a new Zstandard (zstd) compressed char sink for the specified output stream
+     */
+    public static CharSink zstdOutputStreamCharSink(final OutputStream outputStream)
+    {
+        checkNotNull(outputStream);
+        return new CharSink()
+            {
+                @Override
+                public Writer openStream() throws IOException
+                {
+                    return new BufferedWriter(new OutputStreamWriter(new ZstdCompressorOutputStream(outputStream)));
+                }
+            };
+    }
+
+    /**
+     * Create and return a new Zstandard (zstd) compressed char sink for the specified file.
+     *
+     * @since 1.4
+     * @param file file, must not be null
+     * @param append true to append to the specified file
+     * @return a new Zstandard (zstd) compressed char sink for the specified file
+     */
+    public static CharSink zstdFileCharSink(final File file, final boolean append)
+    {
+        checkNotNull(file);
+        return new CharSink()
+            {
+                @Override
+                public Writer openStream() throws IOException
+                {
+                    return new BufferedWriter(new OutputStreamWriter(new ZstdCompressorOutputStream(new FileOutputStream(file, append))));
+                }
+            };
+    }
+
+    /**
+     * Create and return a new char sink with support for bgzf, gzip, bzip2, or zstd compression for
+     * the specified file or <code>stdout</code> if the file is null.  Defaults to <code>UTF-8</code> charset.
      *
      * @param file file, if any
-     * @return a new char sink with support for bgzf, gzip, or bzip2 compression for the specified file
+     * @return a new char sink with support for bgzf, gzip, bzip2, or zstd compression for the specified file
      *    or <code>stdout</code> if the file is null
      * @throws IOException if an I/O error occurs
      */
@@ -223,12 +267,12 @@ public final class Sinks
     }
 
     /**
-     * Create and return a new char sink with support for bgzf, gzip, or bzip2 compression for the specified file
-     * or <code>stdout</code> if the file is null.  Defaults to <code>UTF-8</code> charset.
+     * Create and return a new char sink with support for bgzf, gzip, bzip2, or zstd compression for
+     * the specified file or <code>stdout</code> if the file is null.  Defaults to <code>UTF-8</code> charset.
      *
      * @param file file, if any
      * @param append true to append to the specified file
-     * @return a new char sink with support for bgzf, gzip, or bzip2 compression for the specified file
+     * @return a new char sink with support for bgzf, gzip, bzip2, or zstd compression for the specified file
      *    or <code>stdout</code> if the file is null
      * @throws IOException if an I/O error occurs
      */
@@ -238,14 +282,14 @@ public final class Sinks
     }
 
     /**
-     * Create and return a new char sink with support for bgzf, gzip, or bzip2 compression for the specified file
-     * or <code>stdout</code> if the file is null.
+     * Create and return a new char sink with support for bgzf, gzip, bzip2, or zstd compression for
+     * the specified file or <code>stdout</code> if the file is null.
      *
      * @param file file, if any
      * @param charset charset, must not be null
      * @param append true to append to the specified file
-     * @return a new char sink with support for bgzf, gzip, or bzip2 compression for the specified file
-     *    or <code>stdout</code> if the file is null
+     * @return a new char sink with support for bgzf, gzip, bzip2, or zstd compression for
+     *    the specified file or <code>stdout</code> if the file is null
      * @throws IOException if an I/O error occurs
      */
     public static CharSink charSink(@Nullable final File file, final Charset charset, final boolean append) throws IOException
@@ -254,6 +298,10 @@ public final class Sinks
         if (file == null)
         {
             return outputStreamCharSink(System.out);
+        }
+        else if (isZstdFile(file))
+        {
+            return zstdFileCharSink(file, append);
         }
         else if (isBgzfFile(file))
         {
