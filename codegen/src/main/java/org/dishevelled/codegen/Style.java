@@ -1,7 +1,7 @@
 /*
 
     dsh-codegen  Source code generation suite.
-    Copyright (c) 2004-2013 held jointly by the individual authors.
+    Copyright (c) 2004-2020 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
@@ -26,9 +26,9 @@ package org.dishevelled.codegen;
 /**
  * Source code generation style.
  *
- * <p>Feature summary:
- * <style type="text/css">.header th { text-decoration: underline; }</style>
+ * <p>Feature summary:</p>
  * <table width="90%">
+ *   <caption>Style feature summaries.</caption>
  *   <tr class="header">
  *     <th>Consideration</th><th>Immutable</th><th>ImmutableWithCopyMutators</th><th>Mutable</th>
  *     <th>RichlyMutable</th><th>ExtendedRichlyMutable</th><th>Unsafe</th>
@@ -81,7 +81,7 @@ package org.dishevelled.codegen;
  *       <td>X</td><td>X</td><td>X</td><td>X</td><td>X</td><td>X</td></tr>
  *   <tr><td>override toString and hashCode</td>
  *       <td>&nbsp;</td><td>&nbsp;</td><td>X</td><td>X</td><td>X</td><td>X</td></tr>
- * </table></p>
+ * </table>
  *
  * @author  Michael Heuer
  */

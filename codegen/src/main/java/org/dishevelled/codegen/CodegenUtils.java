@@ -1,7 +1,7 @@
 /*
 
     dsh-codegen  Source code generation suite.
-    Copyright (c) 2004-2013 held jointly by the individual authors.
+    Copyright (c) 2004-2020 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
@@ -40,6 +40,7 @@ public final class CodegenUtils
     /**
      * Return true if the specified name is a Java primitive name.
      *
+     * @param name name
      * @return true if the specified name is a primitive name
      */
     public static boolean isPrimitive(final String name)
@@ -68,6 +69,18 @@ public final class CodegenUtils
     {
         // names should already be in uppercase form
         return name;
+    }
+
+    /**
+     * Make a mixedCase (camelCase) name from the specified name.
+     *
+     * @since 2.0
+     * @param name name
+     * @return a mixedCase name
+     */
+    public static String makeCamelCase(final String name)
+    {
+        return makeMixedCase(name);
     }
 
     /**
@@ -148,6 +161,18 @@ public final class CodegenUtils
     }
 
     /**
+     * Make a lowercase-with-dashes (kebab-case) name from the specified name.
+     *
+     * @since 2.0
+     * @param name name
+     * @return a lowercase-with-dashes name
+     */
+    public static String makeKebabCase(final String name)
+    {
+        return makeLowercaseWithDashes(name);
+    }
+
+    /**
      * Make a lowercase-with-dashes name from the specified name.
      *
      * @param name name
@@ -173,6 +198,18 @@ public final class CodegenUtils
             }
         }
         return sb.toString();
+    }
+
+    /**
+     * Make an UPPERCASE_WITH_UNDERSCORES (SCREAMING_SNAKE_CASE) name from the specified name.
+     *
+     * @since 2.0
+     * @param name name
+     * @return an UPPERCASE_WITH_UNDERSCORES name
+     */
+    public static String makeScreamingSnakeCase(final String name)
+    {
+        return makeUppercaseWithUnderscores(name);
     }
 
     /**

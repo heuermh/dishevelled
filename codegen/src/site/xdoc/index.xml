@@ -2,7 +2,7 @@
 <!--
 
     dsh-codegen  Source code generation suite.
-    Copyright (c) 2004-2013 held jointly by the individual authors.
+    Copyright (c) 2004-2020 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
@@ -33,7 +33,7 @@
 <p>
 dishevelled.org <b>codegen</b> is a java source code generation suite based on Velocity
 [<a href="#1">1</a>] templates that generates source code in several different styles.
-The codegen project requires java version 1.5 or later.
+The codegen project requires java version 1.8 or later.
 </p>
 
 </section>

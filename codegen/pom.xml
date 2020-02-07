@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.dishevelled</groupId>
     <artifactId>dsh-parent</artifactId>
-    <version>16-SNAPSHOT</version>
+    <version>21-SNAPSHOT</version>
     <relativePath>../parent/pom.xml</relativePath>
   </parent>
   <artifactId>dsh-codegen</artifactId>
@@ -22,7 +22,7 @@
   <dependencies>
     <dependency>
       <groupId>org.apache.velocity</groupId>
-      <artifactId>velocity</artifactId>
+      <artifactId>velocity-engine-core</artifactId>
       <scope>compile</scope>
     </dependency>
     <dependency>
@@ -42,7 +42,7 @@
     </dependency>
   </dependencies>
   <properties>
-    <jdk.version>1.5</jdk.version>
+    <jdk.version>1.8</jdk.version>
   </properties>
   <reporting>
     <plugins>
@@ -53,7 +53,7 @@
         <artifactId>maven-javadoc-plugin</artifactId>
         <configuration>
           <!-- todo:  must manually update the copyright dates here -->
-          <bottom>Copyright (c) 2004-2013 held jointly by the individual authors. Licensed under the &lt;a href="http://www.fsf.org/licensing/licenses/lgpl.html"&gt;GNU Lesser General Public License&lt;a&gt; (LGPL).</bottom>
+          <bottom>Copyright (c) 2004-2020 held jointly by the individual authors. Licensed under the &lt;a href="http://www.fsf.org/licensing/licenses/lgpl.html"&gt;GNU Lesser General Public License&lt;a&gt; (LGPL).</bottom>
         </configuration>
       </plugin>
       <plugin>
