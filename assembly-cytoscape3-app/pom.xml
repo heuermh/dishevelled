@@ -143,7 +143,7 @@
     <cytoscape.api.version>3.7.0</cytoscape.api.version>
     <osgi.version>4.2.0</osgi.version>
     <pax.version>1.5.3</pax.version>
-    <slf4j.version>1.7.25</slf4j.version>
+    <slf4j.version>1.7.30</slf4j.version>
   </properties>
   <reporting>
     <plugins>
