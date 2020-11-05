@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.dishevelled</groupId>
     <artifactId>dsh-parent</artifactId>
-    <version>23-SNAPSHOT</version>
+    <version>23</version>
     <relativePath>../parent/pom.xml</relativePath>
   </parent>
   <artifactId>dsh-compress</artifactId>
