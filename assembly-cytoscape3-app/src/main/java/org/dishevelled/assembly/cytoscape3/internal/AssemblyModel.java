@@ -40,10 +40,10 @@ import ca.odell.glazedlists.GlazedLists;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.ListMultimap;
 
-import org.dishevelled.bio.assembly.gfa.Reference;
-import org.dishevelled.bio.assembly.gfa.Tag;
+import org.dishevelled.bio.annotation.Annotation;
 
 import org.dishevelled.bio.assembly.gfa1.Path;
+import org.dishevelled.bio.assembly.gfa1.Reference;
 import org.dishevelled.bio.assembly.gfa1.Traversal;
 
 /**
@@ -266,7 +266,7 @@ final class AssemblyModel
         Reference source = null;
         Reference target = null;
         String overlap = null;
-        Map<String, Tag> emptyTags = Collections.emptyMap();
+        Map<String, Annotation> emptyAnnotations = Collections.emptyMap();
         for (int i = 0; i < size; i++)
         {
             target = path.getSegments().get(i);
@@ -276,7 +276,7 @@ final class AssemblyModel
             }
             if (source != null)
             {
-                Traversal traversal = new Traversal(path.getName(), i - 1, source, target, overlap, emptyTags);
+                Traversal traversal = new Traversal(path.getName(), i - 1, source, target, overlap, emptyAnnotations);
                 traversals.add(traversal);
             }
             source = target;

@@ -53,13 +53,12 @@ import org.cytoscape.work.AbstractTask;
 import org.cytoscape.work.TaskMonitor;
 import org.cytoscape.work.Tunable;
 
-import org.dishevelled.bio.assembly.gfa.Orientation;
-import org.dishevelled.bio.assembly.gfa.Reference;
-
 import org.dishevelled.bio.assembly.gfa2.Gfa2Adapter;
 import org.dishevelled.bio.assembly.gfa2.Edge;
 import org.dishevelled.bio.assembly.gfa2.Gap;
+import org.dishevelled.bio.assembly.gfa2.Orientation;
 import org.dishevelled.bio.assembly.gfa2.Path;
+import org.dishevelled.bio.assembly.gfa2.Reference;
 import org.dishevelled.bio.assembly.gfa2.Segment;
 
 import org.slf4j.Logger;

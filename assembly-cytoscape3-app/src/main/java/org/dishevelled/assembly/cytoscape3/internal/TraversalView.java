@@ -41,8 +41,7 @@ import ca.odell.glazedlists.GlazedLists;
 
 import ca.odell.glazedlists.gui.TableFormat;
 
-import org.dishevelled.bio.assembly.gfa.Orientation;
-
+import org.dishevelled.bio.assembly.gfa1.Orientation;
 import org.dishevelled.bio.assembly.gfa1.Path;
 import org.dishevelled.bio.assembly.gfa1.Traversal;
 
