@@ -77,7 +77,7 @@ public final class Writers
     public static PrintWriter bgzfOutputStreamWriter(final OutputStream outputStream) throws IOException
     {
         checkNotNull(outputStream);
-        return new PrintWriter(new BufferedWriter(new OutputStreamWriter(new BlockCompressedOutputStream(outputStream, (File) null))), true);
+        return new PrintWriter(new BufferedWriter(new OutputStreamWriter(new BlockCompressedOutputStream(outputStream, (File) null))), false);
     }
 
     /**
@@ -156,7 +156,7 @@ public final class Writers
         }
         else if (isBgzfFile(file))
         {
-            return new PrintWriter(new BufferedWriter(new OutputStreamWriter(new BlockCompressedOutputStream(file))), true);
+            return new PrintWriter(new BufferedWriter(new OutputStreamWriter(new BlockCompressedOutputStream(file))), false);
         }
         else if (isGzipFile(file))
         {
