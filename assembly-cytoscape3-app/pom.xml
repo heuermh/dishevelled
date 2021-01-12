@@ -2,7 +2,7 @@
 <!--
 
     dsh-assembly-cytoscape3-app  Assembly Cytoscape3 app.
-    Copyright (c) 2019-2020 held jointly by the individual authors.
+    Copyright (c) 2019-2021 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
@@ -140,9 +140,9 @@
     <jdk.version>1.8</jdk.version>
     <bundle.symbolicName>assembly-cytoscape3-app</bundle.symbolicName>
     <bundle.namespace>org.dishevelled.assembly.cytoscape3.internal</bundle.namespace>
-    <cytoscape.api.version>3.7.0</cytoscape.api.version>
-    <osgi.version>4.2.0</osgi.version>
-    <pax.version>1.5.3</pax.version>
+    <cytoscape.api.version>3.8.2</cytoscape.api.version>
+    <osgi.version>6.0.0</osgi.version>
+    <pax.version>1.11.2</pax.version>
     <slf4j.version>1.7.30</slf4j.version>
   </properties>
   <reporting>
@@ -154,7 +154,7 @@
         <artifactId>maven-javadoc-plugin</artifactId>
         <configuration>
           <!-- todo:  must manually update the copyright dates here -->
-          <bottom>Copyright (c) 2019-2020 held jointly by the individual authors. Licensed under the &lt;a href="http://www.fsf.org/licensing/licenses/lgpl.html"&gt;GNU Lesser General Public License&lt;a&gt; (LGPL).</bottom>
+          <bottom>Copyright (c) 2019-2021 held jointly by the individual authors. Licensed under the &lt;a href="http://www.fsf.org/licensing/licenses/lgpl.html"&gt;GNU Lesser General Public License&lt;a&gt; (LGPL).</bottom>
         </configuration>
       </plugin>
       <plugin>
@@ -227,7 +227,7 @@
       <dependency>
         <groupId>org.dishevelled</groupId>
         <artifactId>dsh-bio-assembly</artifactId>
-        <version>1.5-SNAPSHOT</version>
+        <version>2.0</version>
       </dependency>
       <dependency>
         <groupId>org.dishevelled</groupId>
@@ -264,7 +264,7 @@
       <dependency>
         <groupId>xerces</groupId>
         <artifactId>xercesImpl</artifactId>
-        <version>2.10.0</version>
+        <version>2.12.1</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
