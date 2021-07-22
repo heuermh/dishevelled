@@ -11,7 +11,7 @@
   <artifactId>dsh-parent</artifactId>
   <packaging>pom</packaging>
   <name>dishevelled.org parent</name>
-  <version>26-SNAPSHOT</version>
+  <version>26</version>
   <description>dishevelled.org parent</description>
   <url>http://www.dishevelled.org/parent</url>
   <inceptionYear>2009</inceptionYear>
@@ -43,7 +43,7 @@
     <connection>scm:git:git@github.com:heuermh/dishevelled.git</connection>
     <developerConnection>scm:git:git@github.com:heuermh/dishevelled.git</developerConnection>
     <url>git@github.com:heuermh/dishevelled.git</url>
-    <tag>dsh-parent-23</tag>
+    <tag>dsh-parent-26</tag>
   </scm>
   <organization>
     <name>dishevelled.org</name>
