@@ -239,7 +239,7 @@ public final class Readers
 
     /**
      * Create and return a new buffered reader with support for bgzf, gzip, bzip2, or zstd compression
-     * for the specified file or <code>stdin</code> if the file is null.
+     * for the specified file or <code>stdin</code> if the file is null or <code>-</code>.
      *
      * @param file file, if any
      * @return a new buffered reader with support for bgzf, gzip, bzip2, or zstd compression for the
@@ -248,7 +248,7 @@ public final class Readers
      */
     public static BufferedReader reader(@Nullable final File file) throws IOException
     {
-        if (file == null)
+        if (file == null || "-".equals(file.getName()))
         {
             return compressedInputStreamReader(System.in);
         }
