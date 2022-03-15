@@ -25,8 +25,9 @@ package org.dishevelled.compress;
 
 import static org.dishevelled.compress.Writers.bzip2OutputStreamWriter;
 import static org.dishevelled.compress.Writers.gzipOutputStreamWriter;
-import static org.dishevelled.compress.Writers.zstdOutputStreamWriter;
 import static org.dishevelled.compress.Writers.writer;
+import static org.dishevelled.compress.Writers.xzOutputStreamWriter;
+import static org.dishevelled.compress.Writers.zstdOutputStreamWriter;
 
 import static org.junit.Assert.assertNotNull;
 
@@ -111,6 +112,17 @@ public final class WritersTest
     }
 
     @Test
+    public void testWriterXzFile() throws IOException
+    {
+        File file = File.createTempFile("writersTest", ".xz");
+        try (PrintWriter writer = writer(file))
+        {
+            assertNotNull(writer);
+        }
+        file.delete();
+    }
+
+    @Test
     public void testWriterZstdFile() throws IOException
     {
         File file = File.createTempFile("writersTest", ".zst");
@@ -175,6 +187,17 @@ public final class WritersTest
     }
 
     @Test
+    public void testWriterXzFileAppend() throws IOException
+    {
+        File file = File.createTempFile("writersTest", ".xz");
+        try (PrintWriter writer = writer(file, true))
+        {
+            assertNotNull(writer);
+        }
+        file.delete();
+    }
+
+    @Test
     public void testWriterZstdFileAppend() throws IOException
     {
         File file = File.createTempFile("writersTest", ".zst");
@@ -210,6 +233,15 @@ public final class WritersTest
     public void testBzip2OutputStreamWriter() throws IOException
     {
         try (OutputStream outputStream = new ByteArrayOutputStream(); PrintWriter writer = bzip2OutputStreamWriter(outputStream))
+        {
+            assertNotNull(writer);
+        }
+    }
+
+    @Test
+    public void testXzOutputStreamWriter() throws IOException
+    {
+        try (OutputStream outputStream = new ByteArrayOutputStream(); PrintWriter writer = xzOutputStreamWriter(outputStream))
         {
             assertNotNull(writer);
         }

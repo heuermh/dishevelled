@@ -26,6 +26,7 @@ package org.dishevelled.compress;
 import static org.dishevelled.compress.Sinks.bzip2OutputStreamCharSink;
 import static org.dishevelled.compress.Sinks.charSink;
 import static org.dishevelled.compress.Sinks.gzipOutputStreamCharSink;
+import static org.dishevelled.compress.Sinks.xzOutputStreamCharSink;
 import static org.dishevelled.compress.Sinks.zstdOutputStreamCharSink;
 
 import static org.junit.Assert.assertNotNull;
@@ -90,6 +91,17 @@ public final class SinksTest
     }
 
     @Test
+    public void testCharSinkXzFile() throws IOException
+    {
+        File file = File.createTempFile("charSinksTest", ".xz");
+        try (Writer writer = charSink(file).openStream())
+        {
+            assertNotNull(writer);
+        }
+        file.delete();
+    }
+
+    @Test
     public void testCharSinkZstdFile() throws IOException
     {
         File file = File.createTempFile("charSinksTest", ".zst");
@@ -135,6 +147,17 @@ public final class SinksTest
     public void testCharSinkBzip2FileAppend() throws IOException
     {
         File file = File.createTempFile("charSinksTest", ".bz2");
+        try (Writer writer = charSink(file, true).openStream())
+        {
+            assertNotNull(writer);
+        }
+        file.delete();
+    }
+
+    @Test
+    public void testCharSinkXzFileAppend() throws IOException
+    {
+        File file = File.createTempFile("charSinksTest", ".xz");
         try (Writer writer = charSink(file, true).openStream())
         {
             assertNotNull(writer);
@@ -205,9 +228,26 @@ public final class SinksTest
     }
 
     @Test(expected=NullPointerException.class)
+    public void testXzOutputStreamCharSinkNullOutputStream() throws IOException
+    {
+        xzOutputStreamCharSink(null);
+    }
+
+    @Test(expected=NullPointerException.class)
     public void testZstdOutputStreamCharSinkNullOutputStream() throws IOException
     {
         zstdOutputStreamCharSink(null);
+    }
+
+    @Test
+    public void testXzOutputStreamCharSink() throws IOException
+    {
+        File file = File.createTempFile("charSinksTest", ".xz");
+        try (Writer writer = xzOutputStreamCharSink(new FileOutputStream(file)).openStream())
+        {
+            assertNotNull(writer);
+        }
+        file.delete();
     }
 
     @Test

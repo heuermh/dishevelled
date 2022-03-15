@@ -32,6 +32,9 @@ import static org.dishevelled.compress.Compress.isBzip2InputStream;
 import static org.dishevelled.compress.Compress.isGzipFilename;
 import static org.dishevelled.compress.Compress.isGzipFile;
 import static org.dishevelled.compress.Compress.isGzipInputStream;
+import static org.dishevelled.compress.Compress.isXzFilename;
+import static org.dishevelled.compress.Compress.isXzFile;
+import static org.dishevelled.compress.Compress.isXzInputStream;
 import static org.dishevelled.compress.Compress.isZstdFilename;
 import static org.dishevelled.compress.Compress.isZstdFile;
 import static org.dishevelled.compress.Compress.isZstdInputStream;
@@ -283,6 +286,57 @@ public final class CompressTest
         file.delete();
     }
 
+    @Test(expected=NullPointerException.class)
+    public void testIsXzInputStreamNullInputStream()
+    {
+        isXzInputStream(null);
+    }
+
+    @Test
+    public void testIsXzInputStream() throws IOException
+    {
+        File file = File.createTempFile("readersTest", ".txt.xz");
+        try (FileOutputStream outputStream = new FileOutputStream(file))
+        {
+            Resources.copy(ReadersTest.class.getResource("example.txt.xz"), outputStream);
+        }
+        try (FileInputStream inputStream = new FileInputStream(file))
+        {
+            assertTrue(isXzInputStream(inputStream));
+        }
+        file.delete();
+    }
+
+    @Test
+    public void testIsXzInputStreamNoCompression() throws IOException
+    {
+        File file = File.createTempFile("readersTest", ".txt");
+        try (FileOutputStream outputStream = new FileOutputStream(file))
+        {
+            Resources.copy(ReadersTest.class.getResource("example.txt"), outputStream);
+        }
+        try (FileInputStream inputStream = new FileInputStream(file))
+        {
+            assertFalse(isXzInputStream(inputStream));
+        }
+        file.delete();
+    }
+
+    @Test
+    public void testIsXzInputStreamWrongCompression() throws IOException
+    {
+        File file = File.createTempFile("readersTest", ".txt.bz2");
+        try (FileOutputStream outputStream = new FileOutputStream(file))
+        {
+            Resources.copy(ReadersTest.class.getResource("example.txt.bz2"), outputStream);
+        }
+        try (FileInputStream inputStream = new FileInputStream(file))
+        {
+            assertFalse(isXzInputStream(inputStream));
+        }
+        file.delete();
+    }
+
     @Test
     public void testIsGzipFilename()
     {
@@ -311,6 +365,21 @@ public final class CompressTest
         assertFalse(isBzip2File(null));
         assertTrue(isBzip2File(new File("example.txt.bz2")));
         assertFalse(isBzip2File(new File("example.txt")));
+    }
+
+    @Test
+    public void testIsXzFilename()
+    {
+        assertTrue(isXzFilename("example.txt.xz"));
+        assertFalse(isXzFilename("example.txt"));
+    }
+
+    @Test
+    public void testIsXzFile()
+    {
+        assertFalse(isXzFile(null));
+        assertTrue(isXzFile(new File("example.txt.xz")));
+        assertFalse(isXzFile(new File("example.txt")));
     }
 
     @Test

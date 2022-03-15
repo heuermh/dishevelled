@@ -29,6 +29,7 @@ import static org.dishevelled.compress.Compress.isBgzfFile;
 import static org.dishevelled.compress.Compress.isBgzfInputStream;
 import static org.dishevelled.compress.Compress.isBzip2File;
 import static org.dishevelled.compress.Compress.isGzipFile;
+import static org.dishevelled.compress.Compress.isXzFile;
 import static org.dishevelled.compress.Compress.isZstdFile;
 
 import java.io.BufferedInputStream;
@@ -51,10 +52,12 @@ import org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream;
 
 import org.apache.commons.compress.compressors.gzip.GzipCompressorInputStream;
 
+import org.apache.commons.compress.compressors.xz.XZCompressorInputStream;
+
 import org.apache.commons.compress.compressors.zstandard.ZstdCompressorInputStream;
 
 /**
- * File and input stream readers with support for bgzf, gzip, bzip2, and zstd compression.
+ * File and input stream readers with support for bgzf, gzip, bzip2, xz, and zstd compression.
  *
  * @author  Michael Heuer
  */
@@ -210,6 +213,34 @@ public final class Readers
     }
 
     /**
+     * Create and return a new buffered reader for the specified XZ compressed file.
+     *
+     * @since 1.5
+     * @param file XZ compressed file, must not be null
+     * @return a new buffered reader for the specified XZ compressed file
+     * @throws IOException if an I/O error occurs
+     */
+    public static BufferedReader xzFileReader(final File file) throws IOException
+    {
+        checkNotNull(file);
+        return xzInputStreamReader(new FileInputStream(file));
+    }
+
+    /**
+     * Create and return a new buffered reader for the specified XZ compressed input stream.
+     *
+     * @since 1.5
+     * @param inputStream XZ compressed input stream, must not be null
+     * @return a new buffered reader for the specified XZ compressed input stream
+     * @throws IOException if an I/O error occurs
+     */
+    public static BufferedReader xzInputStreamReader(final InputStream inputStream) throws IOException
+    {
+        checkNotNull(inputStream);
+        return new BufferedReader(new InputStreamReader(new XZCompressorInputStream(inputStream)));
+    }
+
+    /**
      * Create and return a new buffered reader for the specified Zstandard (zstd) compressed file.
      *
      * @since 1.4
@@ -238,12 +269,12 @@ public final class Readers
     }
 
     /**
-     * Create and return a new buffered reader with support for bgzf, gzip, bzip2, or zstd compression
+     * Create and return a new buffered reader with support for bgzf, gzip, bzip2, xz, or zstd compression
      * for the specified file or <code>stdin</code> if the file is null or <code>-</code>.
      *
      * @param file file, if any
-     * @return a new buffered reader with support for bgzf, gzip, bzip2, or zstd compression for the
-     *    specified file or <code>stdin</code> if the file is null
+     * @return a new buffered reader with support for bgzf, gzip, bzip2, xz, or zstd compression for the
+     *    specified file or <code>stdin</code> if the file is null or <code>-</code>
      * @throws IOException if an I/O error occurs
      */
     public static BufferedReader reader(@Nullable final File file) throws IOException
@@ -267,6 +298,10 @@ public final class Readers
         else if (isBzip2File(file))
         {
             return bzip2FileReader(file);
+        }
+        else if (isXzFile(file))
+        {
+            return xzFileReader(file);
         }
         return new BufferedReader(new FileReader(file));
     }

@@ -28,6 +28,7 @@ import static org.dishevelled.compress.Sources.charSource;
 import static org.dishevelled.compress.Sources.compressedInputStreamCharSource;
 import static org.dishevelled.compress.Sources.inputStreamCharSource;
 import static org.dishevelled.compress.Sources.gzipInputStreamCharSource;
+import static org.dishevelled.compress.Sources.xzInputStreamCharSource;
 import static org.dishevelled.compress.Sources.zstdInputStreamCharSource;
 
 import static org.junit.Assert.assertEquals;
@@ -103,6 +104,21 @@ public final class SourcesTest
         try (FileOutputStream outputStream = new FileOutputStream(file))
         {
             Resources.copy(SourcesTest.class.getResource("example.txt.bz2"), outputStream);
+        }
+        try (Reader reader = charSource(file).openStream())
+        {
+            assertValidReader(reader);
+        }
+        file.delete();
+    }
+
+    @Test
+    public void testCharSourceXzFile() throws IOException
+    {
+        File file = File.createTempFile("charSourcesTest", ".xz");
+        try (FileOutputStream outputStream = new FileOutputStream(file))
+        {
+            Resources.copy(SourcesTest.class.getResource("example.txt.xz"), outputStream);
         }
         try (Reader reader = charSource(file).openStream())
         {
@@ -250,9 +266,60 @@ public final class SourcesTest
     }
 
     @Test(expected=NullPointerException.class)
+    public void testXzInputStreamCharSourceNullInputStream() throws IOException
+    {
+        xzInputStreamCharSource(null);
+    }
+
+    @Test
+    public void testXzInputStreamCharSource() throws IOException
+    {
+        File file = File.createTempFile("charSourcesTest", ".xz");
+        try (FileOutputStream outputStream = new FileOutputStream(file))
+        {
+            Resources.copy(SourcesTest.class.getResource("example.txt.xz"), outputStream);
+        }
+        try (Reader reader = xzInputStreamCharSource(new FileInputStream(file)).openStream())
+        {
+            assertValidReader(reader);
+        }
+        file.delete();
+    }
+
+    @Test(expected=IOException.class)
+    public void testXzInputStreamCharSourceNoCompression() throws IOException
+    {
+        File file = File.createTempFile("charSourcesTest", ".txt");
+        try (FileOutputStream outputStream = new FileOutputStream(file))
+        {
+            Resources.copy(SourcesTest.class.getResource("example.txt"), outputStream);
+        }
+        try (Reader reader = xzInputStreamCharSource(new FileInputStream(file)).openStream())
+        {
+            assertValidReader(reader);
+        }
+        file.delete();
+    }
+
+    @Test(expected=IOException.class)
+    public void testXzInputStreamCharSourceWrongCompression() throws IOException
+    {
+        File file = File.createTempFile("charSourcesTest", ".bz2");
+        try (FileOutputStream outputStream = new FileOutputStream(file))
+        {
+            Resources.copy(SourcesTest.class.getResource("example.txt.bz2"), outputStream);
+        }
+        try (Reader reader = xzInputStreamCharSource(new FileInputStream(file)).openStream())
+        {
+            assertValidReader(reader);
+        }
+        file.delete();
+    }
+
+    @Test(expected=NullPointerException.class)
     public void testZstdInputStreamCharSourceNullInputStream() throws IOException
     {
-        bzip2InputStreamCharSource(null);
+        zstdInputStreamCharSource(null);
     }
 
     @Test
@@ -364,6 +431,21 @@ public final class SourcesTest
         try (FileOutputStream outputStream = new FileOutputStream(file))
         {
             Resources.copy(SourcesTest.class.getResource("example.txt.bz2"), outputStream);
+        }
+        try (Reader reader = compressedInputStreamCharSource(new FileInputStream(file)).openStream())
+        {
+            assertValidReader(reader);
+        }
+        file.delete();
+    }
+
+    @Test
+    public void testCompressedInputStreamCharSourceXz() throws IOException
+    {
+        File file = File.createTempFile("charSourcesTest", ".txt.xz");
+        try (FileOutputStream outputStream = new FileOutputStream(file))
+        {
+            Resources.copy(SourcesTest.class.getResource("example.txt.xz"), outputStream);
         }
         try (Reader reader = compressedInputStreamCharSource(new FileInputStream(file)).openStream())
         {

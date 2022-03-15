@@ -28,6 +28,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import static org.dishevelled.compress.Compress.isBgzfFile;
 import static org.dishevelled.compress.Compress.isBzip2File;
 import static org.dishevelled.compress.Compress.isGzipFile;
+import static org.dishevelled.compress.Compress.isXzFile;
 import static org.dishevelled.compress.Compress.isZstdFile;
 
 import java.io.File;
@@ -43,7 +44,7 @@ import com.google.common.io.CharSource;
 import com.google.common.io.Files;
 
 /**
- * File and input stream sources with support for bgzf, gzip, bzip2, and zstd compression.
+ * File and input stream sources with support for bgzf, gzip, bzip2, xz, and zstd compression.
  *
  * @author  Michael Heuer
  */
@@ -221,6 +222,46 @@ public final class Sources
     }
 
     /**
+     * Create and return a new XZ compressed char source for the specified input stream.
+     *
+     * @since 1.5
+     * @param inputStream input stream, must not be null
+     * @return a new XZ compressed char source for the specified input stream
+     */
+    public static CharSource xzInputStreamCharSource(final InputStream inputStream)
+    {
+        checkNotNull(inputStream);
+        return new CharSource()
+            {
+                @Override
+                public Reader openStream() throws IOException
+                {
+                    return Readers.xzInputStreamReader(inputStream);
+                }
+            };
+    }
+
+    /**
+     * Create and return a new XZ compressed char source for the specified file.
+     *
+     * @since 1.5
+     * @param file file, must not be null
+     * @return a new XZ compressed char source for the specified file
+     */
+    public static CharSource xzFileCharSource(final File file)
+    {
+        checkNotNull(file);
+        return new CharSource()
+            {
+                @Override
+                public Reader openStream() throws IOException
+                {
+                    return Readers.xzFileReader(file);
+                }
+            };
+    }
+
+    /**
      * Create and return a new Zstandard (zstd) compressed char source for the specified input stream.
      *
      * @since 1.4
@@ -261,12 +302,13 @@ public final class Sources
     }
 
     /**
-     * Create and return a new char source with support for bgzf, gzip, bzip2, or zstd compression for
-     * the specified file or <code>stdin</code> if the file is null.  Defaults to <code>UTF-8</code> charset.
+     * Create and return a new char source with support for bgzf, gzip, bzip2, xz, or zstd compression for
+     * the specified file or <code>stdin</code> if the file is null or <code>-</code>.  Defaults to
+     * <code>UTF-8</code> charset.
      *
      * @param file file, if any
-     * @return a new char source with support for bgzf, gzip, bzip2, or zstd compression for
-     *    the specified file or <code>stdin</code> if the file is null
+     * @return a new char source with support for bgzf, gzip, bzip2, xz, or zstd compression for
+     *    the specified file or <code>stdin</code> if the file is null or <code>-</code>
      * @throws IOException if an I/O error occurs
      */
     public static CharSource charSource(@Nullable final File file) throws IOException
@@ -275,19 +317,19 @@ public final class Sources
     }
 
     /**
-     * Create and return a new char source with support for bgzf, gzip, bzip2, or zstd compression for
-     * the specified file or <code>stdin</code> if the file is null.
+     * Create and return a new char source with support for bgzf, gzip, bzip2, xz, or zstd compression for
+     * the specified file or <code>stdin</code> if the file is null or <code>-</code>.
      *
      * @param file file, if any
      * @param charset charset, must not be null
-     * @return a new char source with support for bgzf, gzip, bzip2, or zstd compression for
-     *    the specified file or <code>stdin</code> if the file is null
+     * @return a new char source with support for bgzf, gzip, bzip2, xz, or zstd compression for
+     *    the specified file or <code>stdin</code> if the file is null or <code>-</code>
      * @throws IOException if an I/O error occurs
      */
     public static CharSource charSource(@Nullable final File file, final Charset charset) throws IOException
     {
         checkNotNull(charset);
-        if (file == null)
+        if (file == null || "-".equals(file.getName()))
         {
             return compressedInputStreamCharSource(System.in);
         }
@@ -306,6 +348,10 @@ public final class Sources
         else if (isBzip2File(file))
         {
             return bzip2FileCharSource(file);
+        }
+        else if (isXzFile(file))
+        {
+            return xzFileCharSource(file);
         }
         return Files.asCharSource(file, charset);
     }

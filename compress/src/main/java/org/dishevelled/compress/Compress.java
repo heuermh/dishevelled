@@ -39,6 +39,8 @@ import org.apache.commons.compress.compressors.bzip2.BZip2Utils;
 
 import org.apache.commons.compress.compressors.gzip.GzipUtils;
 
+import org.apache.commons.compress.compressors.xz.XZUtils;
+
 import org.apache.commons.compress.utils.IOUtils;
 
 /**
@@ -224,6 +226,70 @@ public final class Compress
         {
             in.mark(3);
             return in.read() == 'B' && in.read() == 'Z' && in.read() == 'h';
+        }
+        catch (IOException e)
+        {
+            return false;
+        }
+        finally
+        {
+            try
+            {
+                in.reset();
+            }
+            catch (IOException e)
+            {
+                // ignore
+            }
+        }
+    }
+
+    /**
+     * Return true if the specified file is an XZ file name.
+     *
+     * @since 1.5
+     * @param fileName file name, must not be null
+     * @return true if the specified file is an XZ file name
+     */
+    public static boolean isXzFilename(final String fileName)
+    {
+        checkNotNull(fileName);
+        return XZUtils.isCompressedFilename(fileName);
+    }
+
+    /**
+     * Return true if the specified file is an XZ file.
+     *
+     * @since 1.5
+     * @param file file, if any
+     * @return true if the specified file is a XZ file
+     */
+    public static boolean isXzFile(@Nullable final File file)
+    {
+        if (file == null)
+        {
+            return false;
+        }
+        return isXzFilename(file.getName());
+    }
+
+    /**
+     * Return true if the specified file is an XZ input stream.
+     *
+     * @since 1.5
+     * @param inputStream input stream, must not be null
+     * @return true if the specified file is an XZ input stream
+     */
+    public static boolean isXzInputStream(final InputStream inputStream)
+    {
+        checkNotNull(inputStream);
+        InputStream in = inputStream.markSupported() ? inputStream : new BufferedInputStream(inputStream);
+        try
+        {
+            final byte[] signature = new byte[6];
+            inputStream.mark(signature.length);
+            int signatureLength = IOUtils.readFully(inputStream, signature);
+            return XZUtils.matches(signature, signatureLength);
         }
         catch (IOException e)
         {

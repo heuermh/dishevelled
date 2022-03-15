@@ -28,6 +28,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import static org.dishevelled.compress.Compress.isBgzfFile;
 import static org.dishevelled.compress.Compress.isBzip2File;
 import static org.dishevelled.compress.Compress.isGzipFile;
+import static org.dishevelled.compress.Compress.isXzFile;
 import static org.dishevelled.compress.Compress.isZstdFile;
 
 import java.io.BufferedWriter;
@@ -47,10 +48,12 @@ import org.apache.commons.compress.compressors.bzip2.BZip2CompressorOutputStream
 
 import org.apache.commons.compress.compressors.gzip.GzipCompressorOutputStream;
 
+import org.apache.commons.compress.compressors.xz.XZCompressorOutputStream;
+
 import org.apache.commons.compress.compressors.zstandard.ZstdCompressorOutputStream;
 
 /**
- * File and output stream writers with support for bgzf, gzip, and bzip2 compression.
+ * File and output stream writers with support for bgzf, gzip, bzip2, xz, or zstd compression.
  *
  * @author  Michael Heuer
  */
@@ -107,6 +110,20 @@ public final class Writers
     }
 
     /**
+     * Create and return a new buffered print writer with XZ compression for the specified output stream.
+     *
+     * @since 1.5
+     * @param outputStream output stream, must not be null
+     * @return a new buffered print writer with XZ compression for the specified output stream
+     * @throws IOException if an I/O error occurs
+     */
+    public static PrintWriter xzOutputStreamWriter(final OutputStream outputStream) throws IOException
+    {
+        checkNotNull(outputStream);
+        return new PrintWriter(new BufferedWriter(new OutputStreamWriter(new XZCompressorOutputStream(outputStream))), true);
+    }
+
+    /**
      * Create and return a new buffered print writer with Zstandard (zstd) compression for the specified output stream.
      *
      * @since 1.4
@@ -121,12 +138,12 @@ public final class Writers
     }
 
     /**
-     * Create and return a new buffered print writer with support for bgzf, gzip, bzip2, or zstd compression for
-     * the specified file or <code>stdout</code> if the file is null.
+     * Create and return a new buffered print writer with support for bgzf, gzip, bzip2, xz, or zstd compression for
+     * the specified file or <code>stdout</code> if the file is null or <code>-</code>.
      *
      * @param file file, if any
-     * @return a new buffered print writer with support for bgzf, gzip, bzip2, or zstd compression for
-     *    the specified file or <code>stdout</code> if the file is null
+     * @return a new buffered print writer with support for bgzf, gzip, bzip2, xz, or zstd compression for
+     *    the specified file or <code>stdout</code> if the file is null or <code>-</code>
      * @throws IOException if an I/O error occurs
      */
     public static PrintWriter writer(@Nullable final File file) throws IOException
@@ -135,18 +152,18 @@ public final class Writers
     }
 
     /**
-     * Create and return a new buffered print writer with support for bgzf, gzip, bzip2, or zstd compression for
-     * the specified file or <code>stdout</code> if the file is null.
+     * Create and return a new buffered print writer with support for bgzf, gzip, bzip2, xz, or zstd compression for
+     * the specified file or <code>stdout</code> if the file is null or <code>-</code>.
      *
      * @param file file, if any
      * @param append true to append to the specified file
-     * @return a new buffered print writer with support for bgzf, gzip, bzip2, or zstd compression for
-     *    the specified file or <code>stdout</code> if the file is null
+     * @return a new buffered print writer with support for bgzf, gzip, bzip2, xz, or zstd compression for
+     *    the specified file or <code>stdout</code> if the file is null or <code>-</code>
      * @throws IOException if an I/O error occurs
      */
     public static PrintWriter writer(@Nullable final File file, final boolean append) throws IOException
     {
-        if (file == null)
+        if (file == null || "-".equals(file.getName()))
         {
             return new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)), true);
         }
@@ -165,6 +182,10 @@ public final class Writers
         else if (isBzip2File(file))
         {
             return new PrintWriter(new BufferedWriter(new OutputStreamWriter(new BZip2CompressorOutputStream(new FileOutputStream(file, append)))), true);
+        }
+        else if (isXzFile(file))
+        {
+            return new PrintWriter(new BufferedWriter(new OutputStreamWriter(new XZCompressorOutputStream(new FileOutputStream(file, append)))), true);
         }
         return new PrintWriter(new BufferedWriter(new FileWriter(file, append)), true);
     }
