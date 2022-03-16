@@ -147,6 +147,42 @@ public final class ReadersTest
     }
 
     @Test(expected=NullPointerException.class)
+    public void testBgzfFileReaderNullFile() throws IOException
+    {
+        bgzfFileReader(null);
+    }
+
+    @Test
+    public void testBgzfFileReader() throws IOException
+    {
+        File file = File.createTempFile("readersTest", ".bgz");
+        try (FileOutputStream outputStream = new FileOutputStream(file))
+        {
+            Resources.copy(ReadersTest.class.getResource("example.txt.bgz"), outputStream);
+        }
+        try (BufferedReader reader = bgzfFileReader(file))
+        {
+            assertValidReader(reader);
+        }
+        file.delete();
+    }
+
+    @Test(expected=NullPointerException.class)
+    public void testBgzfInputStreamReaderNullInputStream() throws IOException
+    {
+        bgzfInputStreamReader(null);
+    }
+
+    @Test
+    public void testBgzfInputStreamReader() throws IOException
+    {
+        try (InputStream inputStream = ReadersTest.class.getResourceAsStream("example.txt.bgzf"); BufferedReader reader = bgzfInputStreamReader(inputStream))
+        {
+            assertValidReader(reader);
+        }
+    }
+
+    @Test(expected=NullPointerException.class)
     public void testGzipFileReaderNullFile() throws IOException
     {
         gzipFileReader(null);

@@ -39,16 +39,12 @@ import static org.dishevelled.compress.Compress.isZstdFilename;
 import static org.dishevelled.compress.Compress.isZstdFile;
 import static org.dishevelled.compress.Compress.isZstdInputStream;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.InputStream;
 import java.io.IOException;
 
 import com.google.common.io.Resources;

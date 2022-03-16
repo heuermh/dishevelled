@@ -40,6 +40,7 @@ import java.io.IOException;
 import java.io.Writer;
 
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 import javax.annotation.Nullable;
 
@@ -322,7 +323,7 @@ public final class Sinks
      */
     public static CharSink charSink(@Nullable final File file, final boolean append) throws IOException
     {
-        return charSink(file, Charset.forName("UTF-8"), append);
+        return charSink(file, StandardCharsets.UTF_8, append);
     }
 
     /**

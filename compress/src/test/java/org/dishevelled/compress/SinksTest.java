@@ -37,6 +37,7 @@ import java.io.IOException;
 import java.io.Writer;
 
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 import org.junit.Test;
 
@@ -186,7 +187,7 @@ public final class SinksTest
     public void testCharSinkCharsetFileAppend() throws IOException
     {
         File file = File.createTempFile("charSinksTest", ".txt");
-        try (Writer writer = charSink(file, Charset.forName("UTF-8"), true).openStream())
+        try (Writer writer = charSink(file, StandardCharsets.UTF_8, true).openStream())
         {
             assertNotNull(writer);
         }

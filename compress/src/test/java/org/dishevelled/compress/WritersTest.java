@@ -23,6 +23,7 @@
 */
 package org.dishevelled.compress;
 
+import static org.dishevelled.compress.Writers.bgzfOutputStreamWriter;
 import static org.dishevelled.compress.Writers.bzip2OutputStreamWriter;
 import static org.dishevelled.compress.Writers.gzipOutputStreamWriter;
 import static org.dishevelled.compress.Writers.writer;
@@ -206,6 +207,21 @@ public final class WritersTest
             assertNotNull(writer);
         }
         file.delete();
+    }
+
+    @Test(expected=NullPointerException.class)
+    public void testBgzfOutputStreamWriterNullOutputStream() throws IOException
+    {
+        bgzfOutputStreamWriter(null);
+    }
+
+    @Test
+    public void testBgzfOutputStreamWriter() throws IOException
+    {
+        try (OutputStream outputStream = new ByteArrayOutputStream(); PrintWriter writer = bgzfOutputStreamWriter(outputStream))
+        {
+            assertNotNull(writer);
+        }
     }
 
     @Test(expected=NullPointerException.class)

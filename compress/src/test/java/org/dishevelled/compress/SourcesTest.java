@@ -23,6 +23,7 @@
 */
 package org.dishevelled.compress;
 
+import static org.dishevelled.compress.Sources.bgzfInputStreamCharSource;
 import static org.dishevelled.compress.Sources.bzip2InputStreamCharSource;
 import static org.dishevelled.compress.Sources.charSource;
 import static org.dishevelled.compress.Sources.compressedInputStreamCharSource;
@@ -43,6 +44,7 @@ import java.io.IOException;
 import java.io.Reader;
 
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 import com.google.common.io.Resources;
 
@@ -74,6 +76,21 @@ public final class SourcesTest
         try (FileOutputStream outputStream = new FileOutputStream(file))
         {
             Resources.copy(SourcesTest.class.getResource("example.txt"), outputStream);
+        }
+        try (Reader reader = charSource(file).openStream())
+        {
+            assertValidReader(reader);
+        }
+        file.delete();
+    }
+
+    @Test
+    public void testCharSourceBgzfFile() throws IOException
+    {
+        File file = File.createTempFile("charSourcesTest", ".bgz");
+        try (FileOutputStream outputStream = new FileOutputStream(file))
+        {
+            Resources.copy(SourcesTest.class.getResource("example.txt.bgz"), outputStream);
         }
         try (Reader reader = charSource(file).openStream())
         {
@@ -156,7 +173,60 @@ public final class SourcesTest
         {
             Resources.copy(SourcesTest.class.getResource("example.txt"), outputStream);
         }
-        try (Reader reader = charSource(file, Charset.forName("UTF-8")).openStream())
+        try (Reader reader = charSource(file, StandardCharsets.UTF_8).openStream())
+        {
+            assertValidReader(reader);
+        }
+        file.delete();
+    }
+
+    @Test(expected=NullPointerException.class)
+    public void testBgzfInputStreamCharSourceNullInputStream() throws IOException
+    {
+        bgzfInputStreamCharSource(null);
+    }
+
+    @Test
+    public void testBgzfInputStreamCharSource() throws IOException
+    {
+        File file = File.createTempFile("charSourcesTest", ".bgz");
+        try (FileOutputStream outputStream = new FileOutputStream(file))
+        {
+            Resources.copy(SourcesTest.class.getResource("example.txt.bgz"), outputStream);
+        }
+        try (Reader reader = bgzfInputStreamCharSource(new FileInputStream(file)).openStream())
+        {
+            assertValidReader(reader);
+        }
+        file.delete();
+    }
+
+    //@Test(expected=IOException.class)  late thrown exception, unfortunately
+    @Test(expected=htsjdk.samtools.FileTruncatedException.class)
+    public void testBgzfInputStreamCharSourceNoCompression() throws IOException
+    {
+        File file = File.createTempFile("charSourcesTest", ".txt");
+        try (FileOutputStream outputStream = new FileOutputStream(file))
+        {
+            Resources.copy(SourcesTest.class.getResource("example.txt"), outputStream);
+        }
+        try (Reader reader = bgzfInputStreamCharSource(new FileInputStream(file)).openStream())
+        {
+            assertValidReader(reader);
+        }
+        file.delete();
+    }
+
+    //@Test(expected=IOException.class)  late thrown exception, unfortunately
+    @Test(expected=htsjdk.samtools.FileTruncatedException.class)
+    public void testBgzfInputStreamCharSourceWrongCompression() throws IOException
+    {
+        File file = File.createTempFile("charSourcesTest", ".bz2");
+        try (FileOutputStream outputStream = new FileOutputStream(file))
+        {
+            Resources.copy(SourcesTest.class.getResource("example.txt.bz2"), outputStream);
+        }
+        try (Reader reader = bgzfInputStreamCharSource(new FileInputStream(file)).openStream())
         {
             assertValidReader(reader);
         }
@@ -401,6 +471,21 @@ public final class SourcesTest
         try (FileOutputStream outputStream = new FileOutputStream(file))
         {
             Resources.copy(SourcesTest.class.getResource("example.txt"), outputStream);
+        }
+        try (Reader reader = compressedInputStreamCharSource(new FileInputStream(file)).openStream())
+        {
+            assertValidReader(reader);
+        }
+        file.delete();
+    }
+
+    @Test
+    public void testCompressedInputStreamCharSourceBgzf() throws IOException
+    {
+        File file = File.createTempFile("charSourcesTest", ".txt.bgz");
+        try (FileOutputStream outputStream = new FileOutputStream(file))
+        {
+            Resources.copy(SourcesTest.class.getResource("example.txt.bgz"), outputStream);
         }
         try (Reader reader = compressedInputStreamCharSource(new FileInputStream(file)).openStream())
         {

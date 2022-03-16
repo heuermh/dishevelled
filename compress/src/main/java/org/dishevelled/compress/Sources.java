@@ -37,6 +37,7 @@ import java.io.IOException;
 import java.io.Reader;
 
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 import javax.annotation.Nullable;
 
@@ -313,7 +314,7 @@ public final class Sources
      */
     public static CharSource charSource(@Nullable final File file) throws IOException
     {
-        return charSource(file, Charset.forName("UTF-8"));
+        return charSource(file, StandardCharsets.UTF_8);
     }
 
     /**
