@@ -36,8 +36,14 @@ import java.io.InputStream;
 import java.io.IOException;
 import java.io.Reader;
 
+import java.net.URI;
+
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+
+import java.nio.file.OpenOption;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import javax.annotation.Nullable;
 
@@ -45,7 +51,7 @@ import com.google.common.io.CharSource;
 import com.google.common.io.Files;
 
 /**
- * File and input stream sources with support for bgzf, gzip, bzip2, xz, and zstd compression.
+ * File, path, and input stream sources with support for bgzf, gzip, bzip2, xz, and zstd compression.
  *
  * @author  Michael Heuer
  */
@@ -300,6 +306,60 @@ public final class Sources
                     return Readers.zstdFileReader(file);
                 }
             };
+    }
+
+    /**
+     * Create and return a new char source with support for bgzf, gzip, bzip2, xz, or zstd compression
+     * for the specified path name or <code>stdin</code> if the path name is null or <code>-</code>.
+     *
+     * @since 1.6
+     * @param pathName path name, if any
+     * @param options options specifying how the path is opened, if any
+     * @return a new char source with support for bgzf, gzip, bzip2, xz, or zstd compression for the
+     *    specified path name or <code>stdin</code> if the path name is null or <code>-</code>
+     * @throws IOException if an I/O error occurs
+     */
+    public static CharSource charSource(@Nullable final String pathName, @Nullable final OpenOption... options) throws IOException {
+        if (pathName == null || "-".equals(pathName))
+        {
+            return charSource((File) null);
+        }
+        URI uri = URI.create(pathName);
+
+        // default to file: if scheme is missing
+        String scheme = uri.getScheme();
+        if (scheme == null || "".equals(scheme))
+        {
+            return charSource(new File(pathName).toPath());
+        }
+
+        // create path from URI, allowing custom providers, e.g. hdfs, s3, etc.
+        return charSource(Paths.get(uri), options);
+    }
+
+    /**
+     * Create and return a new char source with support for bgzf, gzip, bzip2, xz, or zstd compression
+     * for the specified path or <code>stdin</code> if the path is null or <code>-</code>.
+     *
+     * @since 1.6
+     * @param path path, if any
+     * @param options options specifying how the path is opened, if any
+     * @return a new char source with support for bgzf, gzip, bzip2, xz, or zstd compression for the
+     *    specified path or <code>stdin</code> if the path is null or <code>-</code>
+     * @throws IOException if an I/O error occurs
+     */
+    public static CharSource charSource(@Nullable final Path path, @Nullable final OpenOption... options) throws IOException
+    {
+        try
+        {
+            // try file API first
+            return charSource(path == null ? (File) null : path.toFile());
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // expected from some providers, e.g. s3 on path.toFile()
+        }
+        return compressedInputStreamCharSource(java.nio.file.Files.newInputStream(path, options));
     }
 
     /**

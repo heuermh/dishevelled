@@ -39,8 +39,13 @@ import java.io.OutputStreamWriter;
 import java.io.IOException;
 import java.io.Writer;
 
+import java.net.URI;
+
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import javax.annotation.Nullable;
 
@@ -59,7 +64,7 @@ import org.apache.commons.compress.compressors.xz.XZCompressorOutputStream;
 import org.apache.commons.compress.compressors.zstandard.ZstdCompressorOutputStream;
 
 /**
- * File and output stream sinks with support for bgzf, gzip, bzip2, xz, and zstd compression.
+ * File, path, and output stream sinks with support for bgzf, gzip, bzip2, xz, and zstd compression.
  *
  * @author  Michael Heuer
  */
@@ -295,6 +300,120 @@ public final class Sinks
                     return new BufferedWriter(new OutputStreamWriter(new ZstdCompressorOutputStream(new FileOutputStream(file, append))));
                 }
             };
+    }
+
+    /**
+     * Create and return a new char sink with support for bgzf, gzip, bzip2, xz, or zstd compression for
+     * the specified path name or <code>stdout</code> if the path name is null or <code>-</code>.
+     * Defaults to <code>UTF-8</code> charset.
+     *
+     * @since 1.6
+     * @param pathName path name, if any
+     * @return a new char sink with support for bgzf, gzip, bzip2, xz, or zstd compression for
+     *    the specified path name or <code>stdout</code> if the path name is null or <code>-</code>
+     * @throws IOException if an I/O error occurs
+     */
+    public static CharSink charSink(@Nullable final String pathName) throws IOException
+    {
+        return charSink(pathName, false);
+    }
+
+    /**
+     * Create and return a new char sink with support for bgzf, gzip, bzip2, xz, or zstd compression for
+     * the specified path name or <code>stdout</code> if the path name is null or <code>-</code>.
+     * Defaults to <code>UTF-8</code> charset.
+     *
+     * @since 1.6
+     * @param pathName path name, if any
+     * @param append true to append to the specified path name
+     * @return a new char sink with support for bgzf, gzip, bzip2, xz, or zstd compression for
+     *    the specified path name or <code>stdout</code> if the path name is null or <code>-</code>
+     * @throws IOException if an I/O error occurs
+     */
+    public static CharSink charSink(@Nullable final String pathName, final boolean append) throws IOException
+    {
+        return charSink(pathName, StandardCharsets.UTF_8, append);
+    }
+
+    /**
+     * Create and return a new char sink with support for bgzf, gzip, bzip2, xz, or zstd compression for
+     * the specified path name or <code>stdout</code> if the path name is null or <code>-</code>.
+     *
+     * @since 1.6
+     * @param pathName path name, if any
+     * @param charset charset, must not be null
+     * @param append true to append to the specified path name
+     * @return a new char sink with support for bgzf, gzip, bzip2, xz, or zstd compression for
+     *    the specified path name or <code>stdout</code> if the path name is null or <code>-</code>
+     * @throws IOException if an I/O error occurs
+     */
+    public static CharSink charSink(@Nullable final String pathName, final Charset charset, final boolean append) throws IOException
+    {
+        if (pathName == null || "-".equals(pathName))
+        {
+            return charSink((File) null, append);
+        }
+        URI uri = URI.create(pathName);
+
+        // default to file: if scheme is missing
+        String scheme = uri.getScheme();
+        if (scheme == null || "".equals(scheme))
+        {
+            return charSink(new File(pathName).toPath(), append);
+        }
+
+        // create path from URI, allowing custom providers, e.g. hdfs, s3, etc.
+        return charSink(Paths.get(uri), append);
+    }
+
+    /**
+     * Create and return a new char sink with support for bgzf, gzip, bzip2, xz, or zstd compression for
+     * the specified path or <code>stdout</code> if the path is null or <code>-</code>. Defaults to
+     * <code>UTF-8</code> charset.
+     *
+     * @since 1.6
+     * @param path path, if any
+     * @return a new char sink with support for bgzf, gzip, bzip2, xz, or zstd compression for
+     *    the specified path or <code>stdout</code> if the path is null or <code>-</code>
+     * @throws IOException if an I/O error occurs
+     */
+    public static CharSink charSink(@Nullable final Path path) throws IOException
+    {
+        return charSink(path, false);
+    }
+
+    /**
+     * Create and return a new char sink with support for bgzf, gzip, bzip2, xz, or zstd compression for
+     * the specified path or <code>stdout</code> if the path is null or <code>-</code>. Defaults to
+     * <code>UTF-8</code> charset.
+     *
+     * @since 1.6
+     * @param path path, if any
+     * @param append true to append to the specified path
+     * @return a new char sink with support for bgzf, gzip, bzip2, xz, or zstd compression for
+     *    the specified path or <code>stdout</code> if the path is null or <code>-</code>
+     * @throws IOException if an I/O error occurs
+     */
+    public static CharSink charSink(@Nullable final Path path, final boolean append) throws IOException
+    {
+        return charSink(path, StandardCharsets.UTF_8, append);
+    }
+
+    /**
+     * Create and return a new char sink with support for bgzf, gzip, bzip2, xz, or zstd compression for
+     * the specified path or <code>stdout</code> if the path is null or <code>-</code>.
+     *
+     * @since 1.6
+     * @param path path, if any
+     * @param charset charset, must not be null
+     * @param append true to append to the specified path
+     * @return a new char sink with support for bgzf, gzip, bzip2, xz, or zstd compression for
+     *    the specified path or <code>stdout</code> if the path is null or <code>-</code>
+     * @throws IOException if an I/O error occurs
+     */
+    public static CharSink charSink(@Nullable final Path path, final Charset charset, final boolean append) throws IOException
+    {
+        return path == null ? charSink((File) null, charset, append) : charSink(path.toFile(), charset, append);
     }
 
     /**

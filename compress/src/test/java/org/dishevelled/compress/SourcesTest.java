@@ -43,7 +43,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.Reader;
 
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
 import com.google.common.io.Resources;
@@ -160,9 +159,9 @@ public final class SourcesTest
     }
 
     @Test(expected=NullPointerException.class)
-    public void testCharSourceNullCharset() throws IOException
+    public void testCharSourceNullFileNullCharset() throws IOException
     {
-        charSource(null, null);
+        charSource((File) null, null);
     }
 
     @Test

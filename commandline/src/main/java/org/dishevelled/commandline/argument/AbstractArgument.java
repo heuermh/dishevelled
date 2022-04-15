@@ -1,7 +1,7 @@
 /*
 
     dsh-commandline  Command line parser based on typed arguments.
-    Copyright (c) 2004-2014 held jointly by the individual authors.
+    Copyright (c) 2004-2022 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
@@ -124,8 +124,13 @@ public abstract class AbstractArgument<E>
      */
     protected boolean isValueString(final String s)
     {
-        if (s.startsWith("-"))
+        if ("-".equals(s))
         {
+            // allow single dash for e.g. stdin
+            return true;
+        }
+        if (s.startsWith("-"))
+        {            
             char next = s.charAt(1);
             if (Character.isDigit(next))
             {

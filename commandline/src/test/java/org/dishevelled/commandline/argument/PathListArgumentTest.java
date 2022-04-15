@@ -23,7 +23,7 @@
 */
 package org.dishevelled.commandline.argument;
 
-import java.io.File;
+import java.nio.file.Path;
 
 import java.util.List;
 import java.util.Arrays;
@@ -37,21 +37,21 @@ import org.dishevelled.commandline.CommandLineParser;
 import org.dishevelled.commandline.CommandLineParseException;
 
 /**
- * Unit test for FileListArgument.
+ * Unit test for PathListArgument.
  *
  * @author  Michael Heuer
  */
-public class FileListArgumentTest
+public class PathListArgumentTest
     extends TestCase
 {
 
-    public void testFileListArgument()
+    public void testPathListArgument()
     {
-        FileListArgument fla = new FileListArgument("f", "file-list", "File list argument", true);
+        PathListArgument fla = new PathListArgument("f", "path-list", "Path list argument", true);
         assertNotNull("fla not null", fla);
         assertEquals("fla shortName == f", "f", fla.getShortName());
-        assertEquals("fla longName == file-list", "file-list", fla.getLongName());
-        assertEquals("fla description == File list argument", "File list argument", fla.getDescription());
+        assertEquals("fla longName == path-list", "path-list", fla.getLongName());
+        assertEquals("fla description == Path list argument", "Path list argument", fla.getDescription());
         assertTrue("fla isRequired", fla.isRequired());
         assertFalse("fla wasFound == false", fla.wasFound());
         assertEquals("fla value == null", null, fla.getValue());
@@ -60,8 +60,8 @@ public class FileListArgumentTest
     public void testValidArgumentShort()
         throws CommandLineParseException
     {
-        Argument<List<File>> fileListArgument = new FileListArgument("f", "file-list", "File list argument", true);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { fileListArgument }));
+        Argument<List<Path>> pathListArgument = new PathListArgument("f", "path-list", "Path list argument", true);
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { pathListArgument }));
         List<String> values = Arrays.asList(new String[] { "foo", "foo,bar", "foo, bar", " foo , bar " });
 
         for (String value : values)
@@ -70,7 +70,7 @@ public class FileListArgumentTest
             CommandLine commandLine = new CommandLine(args);
             CommandLineParser.parse(commandLine, arguments);
 
-            List<File> list = fileListArgument.getValue();
+            List<Path> list = pathListArgument.getValue();
             assertNotNull("-f list not null", list);
             assertFalse("-f list not empty", list.isEmpty());
         }
@@ -79,19 +79,19 @@ public class FileListArgumentTest
     public void testValidArgumentLong()
         throws CommandLineParseException
     {
-        Argument<List<File>> fileListArgument = new FileListArgument("f", "file-list", "File list argument", true);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { fileListArgument }));
+        Argument<List<Path>> pathListArgument = new PathListArgument("f", "path-list", "Path list argument", true);
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { pathListArgument }));
         List<String> values = Arrays.asList(new String[] { "foo", "foo,bar", "foo, bar", " foo , bar " });
 
         for (String value : values)
         {
-            String[] args = new String[] { "--file-list", value };
+            String[] args = new String[] { "--path-list", value };
             CommandLine commandLine = new CommandLine(args);
             CommandLineParser.parse(commandLine, arguments);
 
-            List<File> list = fileListArgument.getValue();
-            assertNotNull("--file-list list not null", list);
-            assertFalse("--file-list list not empty", list.isEmpty());
+            List<Path> list = pathListArgument.getValue();
+            assertNotNull("--path-list list not null", list);
+            assertFalse("--path-list list not empty", list.isEmpty());
         }
     }
 
@@ -99,10 +99,10 @@ public class FileListArgumentTest
     {
         try
         {
-            Argument<List<File>> fileListArgument = new FileListArgument("f", "file-list", "File list argument", true);
-            ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { fileListArgument }));
+            Argument<List<Path>> pathListArgument = new PathListArgument("f", "path-list", "Path list argument", true);
+            ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { pathListArgument }));
 
-            String[] args = new String[] { "not-an-argument", "not-a-file" };
+            String[] args = new String[] { "not-an-argument", "not-a-path" };
             CommandLine commandLine = new CommandLine(args);
             CommandLineParser.parse(commandLine, arguments);
 
@@ -117,15 +117,15 @@ public class FileListArgumentTest
     public void testNotRequiredArgument()
         throws CommandLineParseException
     {
-        Argument<List<File>> fileListArgument = new FileListArgument("f", "file-list", "File list argument", false);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { fileListArgument }));
+        Argument<List<Path>> pathListArgument = new PathListArgument("f", "path-list", "Path list argument", false);
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { pathListArgument }));
 
-        String[] args = new String[] { "not-an-argument", "not-a-file" };
+        String[] args = new String[] { "not-an-argument", "not-a-path" };
         CommandLine commandLine = new CommandLine(args);
         CommandLineParser.parse(commandLine, arguments);
 
-        assertFalse("fileListArgument isRequired == false", fileListArgument.isRequired());
-        assertFalse("fileListArgument wasFound == false", fileListArgument.wasFound());
-        assertEquals("fileListArgument value == null", null, fileListArgument.getValue());
+        assertFalse("pathListArgument isRequired == false", pathListArgument.isRequired());
+        assertFalse("pathListArgument wasFound == false", pathListArgument.wasFound());
+        assertEquals("pathListArgument value == null", null, pathListArgument.getValue());
     }
 }

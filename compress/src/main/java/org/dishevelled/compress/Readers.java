@@ -41,6 +41,13 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.IOException;
 
+import java.net.URI;
+
+import java.nio.file.Files;
+import java.nio.file.OpenOption;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 import javax.annotation.Nullable;
 
 import htsjdk.samtools.util.BlockCompressedInputStream;
@@ -57,7 +64,7 @@ import org.apache.commons.compress.compressors.xz.XZCompressorInputStream;
 import org.apache.commons.compress.compressors.zstandard.ZstdCompressorInputStream;
 
 /**
- * File and input stream readers with support for bgzf, gzip, bzip2, xz, and zstd compression.
+ * File, path, and input stream readers with support for bgzf, gzip, bzip2, xz, and zstd compression.
  *
  * @author  Michael Heuer
  */
@@ -266,6 +273,60 @@ public final class Readers
     {
         checkNotNull(inputStream);
         return new BufferedReader(new InputStreamReader(new ZstdCompressorInputStream(inputStream)));
+    }
+
+    /**
+     * Create and return a new buffered reader with support for bgzf, gzip, bzip2, xz, or zstd compression
+     * for the specified path name or <code>stdin</code> if the path name is null or <code>-</code>.
+     *
+     * @since 1.6
+     * @param pathName path name, if any
+     * @param options options specifying how the path is opened, if any
+     * @return a new buffered reader with support for bgzf, gzip, bzip2, xz, or zstd compression for the
+     *    specified path name or <code>stdin</code> if the path name is null or <code>-</code>
+     * @throws IOException if an I/O error occurs
+     */
+    public static BufferedReader reader(@Nullable final String pathName, @Nullable final OpenOption... options) throws IOException {
+        if (pathName == null || "-".equals(pathName))
+        {
+            return reader((File) null);
+        }
+        URI uri = URI.create(pathName);
+
+        // default to file: if scheme is missing
+        String scheme = uri.getScheme();
+        if (scheme == null || "".equals(scheme))
+        {
+            return reader(new File(pathName).toPath());
+        }
+
+        // create path from URI, allowing custom providers, e.g. hdfs, s3, etc.
+        return reader(Paths.get(uri), options);
+    }
+
+    /**
+     * Create and return a new buffered reader with support for bgzf, gzip, bzip2, xz, or zstd compression
+     * for the specified path or <code>stdin</code> if the path is null or <code>-</code>.
+     *
+     * @since 1.6
+     * @param path path, if any
+     * @param options options specifying how the path is opened, if any
+     * @return a new buffered reader with support for bgzf, gzip, bzip2, xz, or zstd compression for the
+     *    specified path or <code>stdin</code> if the path is null or <code>-</code>
+     * @throws IOException if an I/O error occurs
+     */
+    public static BufferedReader reader(@Nullable final Path path, @Nullable final OpenOption... options) throws IOException
+    {
+        try
+        {
+            // try file API first
+            return reader(path == null ? (File) null : path.toFile());
+        }
+        catch (UnsupportedOperationException e)
+        {
+            // expected from some providers, e.g. s3 on path.toFile()
+        }
+        return compressedInputStreamReader(Files.newInputStream(path, options));
     }
 
     /**

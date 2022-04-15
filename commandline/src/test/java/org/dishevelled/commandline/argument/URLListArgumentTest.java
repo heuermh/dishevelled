@@ -1,7 +1,7 @@
 /*
 
     dsh-commandline  Command line parser based on typed arguments.
-    Copyright (c) 2004-2014 held jointly by the individual authors.
+    Copyright (c) 2004-2022 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
@@ -40,7 +40,6 @@ import org.dishevelled.commandline.CommandLineParseException;
  * Unit test for URLListArgument.
  *
  * @author  Michael Heuer
- * @version $Revision: 1.2 $ $Date: 2006/01/02 23:16:28 $
  */
 public class URLListArgumentTest
     extends TestCase
