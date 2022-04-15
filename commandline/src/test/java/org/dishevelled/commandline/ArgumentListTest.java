@@ -1,7 +1,7 @@
 /*
 
     dsh-commandline  Command line parser based on typed arguments.
-    Copyright (c) 2004-2014 held jointly by the individual authors.
+    Copyright (c) 2004-2022 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
@@ -35,7 +35,6 @@ import org.dishevelled.commandline.argument.StringArgument;
  * Unit test for ArgumentList.
  *
  * @author  Michael Heuer
- * @version $Revision$ $Date$
  */
 public final class ArgumentListTest
     extends TestCase

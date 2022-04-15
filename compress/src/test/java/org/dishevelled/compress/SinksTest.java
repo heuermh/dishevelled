@@ -36,7 +36,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.Writer;
 
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
 import org.junit.Test;
@@ -52,7 +51,7 @@ public final class SinksTest
     @Test
     public void testCharSinkNullFile() throws IOException
     {
-        try (Writer writer = charSink(null).openStream())
+        try (Writer writer = charSink((File) null).openStream())
         {
             assertNotNull(writer);
         }
@@ -116,7 +115,7 @@ public final class SinksTest
     @Test
     public void testCharSinkNullFileAppend() throws IOException
     {
-        try (Writer writer = charSink(null, true).openStream())
+        try (Writer writer = charSink((File) null, true).openStream())
         {
             assertNotNull(writer);
         }
@@ -178,9 +177,9 @@ public final class SinksTest
     }
 
     @Test(expected=NullPointerException.class)
-    public void testCharSinkNullCharset() throws IOException
+    public void testCharSinkNullFileNullCharset() throws IOException
     {
-        charSink(null, null, true);
+        charSink((File) null, null, true);
     }
 
     @Test

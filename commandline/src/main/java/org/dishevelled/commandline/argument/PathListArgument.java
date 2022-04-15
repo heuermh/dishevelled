@@ -23,50 +23,53 @@
 */
 package org.dishevelled.commandline.argument;
 
-import java.util.Set;
-import java.util.HashSet;
+import java.nio.file.Path;
+
+import java.util.List;
+import java.util.ArrayList;
 import java.util.StringTokenizer;
 
 import org.apache.commons.lang.StringUtils;
 
 /**
- * A long set argument.
+ * A path list argument.
  *
+ * @since 1.2
  * @author  Michael Heuer
  */
-public final class LongSetArgument
-    extends AbstractArgument<Set<Long>>
+public final class PathListArgument
+    extends AbstractArgument<List<Path>>
 {
 
     /**
-     * Create a new long set argument.
+     * Create a new path list argument.
      *
      * @param shortName short argument name
      * @param longName long argument name
      * @param description argument description
      * @param required <code>true</code> if this argument is required
      */
-    public LongSetArgument(final String shortName,
-                           final String longName,
-                           final String description,
-                           final boolean required)
+    public PathListArgument(final String shortName,
+                            final String longName,
+                            final String description,
+                            final boolean required)
     {
         super(shortName, longName, description, required);
     }
 
 
-    /** {@inheritDoc} */
-    protected Set<Long> convert(final String s)
+    @Override
+    protected List<Path> convert(final String s)
         throws Exception
     {
-        Set<Long> set = new HashSet<Long>();
+        List<Path> list = new ArrayList<Path>();
         StringTokenizer st = new StringTokenizer(s, ",");
         while (st.hasMoreTokens())
         {
             String token = StringUtils.stripToEmpty(st.nextToken());
-            Long l = Long.valueOf(token);
-            set.add(l);
+            Path f = PathArgument.convertPath(token);
+            list.add(f);
         }
-        return set;
+        return list;
     }
 }

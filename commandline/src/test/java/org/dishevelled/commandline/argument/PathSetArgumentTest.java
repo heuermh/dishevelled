@@ -23,8 +23,9 @@
 */
 package org.dishevelled.commandline.argument;
 
-import java.io.File;
+import java.nio.file.Path;
 
+import java.util.Set;
 import java.util.List;
 import java.util.Arrays;
 
@@ -37,31 +38,31 @@ import org.dishevelled.commandline.CommandLineParser;
 import org.dishevelled.commandline.CommandLineParseException;
 
 /**
- * Unit test for FileListArgument.
+ * Unit test for PathSetArgument.
  *
  * @author  Michael Heuer
  */
-public class FileListArgumentTest
+public class PathSetArgumentTest
     extends TestCase
 {
 
-    public void testFileListArgument()
+    public void testPathSetArgument()
     {
-        FileListArgument fla = new FileListArgument("f", "file-list", "File list argument", true);
-        assertNotNull("fla not null", fla);
-        assertEquals("fla shortName == f", "f", fla.getShortName());
-        assertEquals("fla longName == file-list", "file-list", fla.getLongName());
-        assertEquals("fla description == File list argument", "File list argument", fla.getDescription());
-        assertTrue("fla isRequired", fla.isRequired());
-        assertFalse("fla wasFound == false", fla.wasFound());
-        assertEquals("fla value == null", null, fla.getValue());
+        PathSetArgument fsa = new PathSetArgument("f", "path-set", "Path set argument", true);
+        assertNotNull("fsa not null", fsa);
+        assertEquals("fsa shortName == f", "f", fsa.getShortName());
+        assertEquals("fsa longName == path-set", "path-set", fsa.getLongName());
+        assertEquals("fsa description == Path set argument", "Path set argument", fsa.getDescription());
+        assertTrue("fsa isRequired", fsa.isRequired());
+        assertFalse("fsa wasFound == false", fsa.wasFound());
+        assertEquals("fsa value == null", null, fsa.getValue());
     }
 
     public void testValidArgumentShort()
         throws CommandLineParseException
     {
-        Argument<List<File>> fileListArgument = new FileListArgument("f", "file-list", "File list argument", true);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { fileListArgument }));
+        Argument<Set<Path>> pathSetArgument = new PathSetArgument("f", "path-set", "Path set argument", true);
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { pathSetArgument }));
         List<String> values = Arrays.asList(new String[] { "foo", "foo,bar", "foo, bar", " foo , bar " });
 
         for (String value : values)
@@ -70,28 +71,28 @@ public class FileListArgumentTest
             CommandLine commandLine = new CommandLine(args);
             CommandLineParser.parse(commandLine, arguments);
 
-            List<File> list = fileListArgument.getValue();
-            assertNotNull("-f list not null", list);
-            assertFalse("-f list not empty", list.isEmpty());
+            Set<Path> set = pathSetArgument.getValue();
+            assertNotNull("-f set not null", set);
+            assertFalse("-f set not empty", set.isEmpty());
         }
     }
 
     public void testValidArgumentLong()
         throws CommandLineParseException
     {
-        Argument<List<File>> fileListArgument = new FileListArgument("f", "file-list", "File list argument", true);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { fileListArgument }));
+        Argument<Set<Path>> pathSetArgument = new PathSetArgument("f", "path-set", "Path set argument", true);
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { pathSetArgument }));
         List<String> values = Arrays.asList(new String[] { "foo", "foo,bar", "foo, bar", " foo , bar " });
 
         for (String value : values)
         {
-            String[] args = new String[] { "--file-list", value };
+            String[] args = new String[] { "--path-set", value };
             CommandLine commandLine = new CommandLine(args);
             CommandLineParser.parse(commandLine, arguments);
 
-            List<File> list = fileListArgument.getValue();
-            assertNotNull("--file-list list not null", list);
-            assertFalse("--file-list list not empty", list.isEmpty());
+            Set<Path> set = pathSetArgument.getValue();
+            assertNotNull("--path-set set not null", set);
+            assertFalse("--path-set set not empty", set.isEmpty());
         }
     }
 
@@ -99,10 +100,10 @@ public class FileListArgumentTest
     {
         try
         {
-            Argument<List<File>> fileListArgument = new FileListArgument("f", "file-list", "File list argument", true);
-            ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { fileListArgument }));
+            Argument<Set<Path>> pathSetArgument = new PathSetArgument("f", "path-set", "Path set argument", true);
+            ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { pathSetArgument }));
 
-            String[] args = new String[] { "not-an-argument", "not-a-file" };
+            String[] args = new String[] { "not-an-argument", "not-a-path" };
             CommandLine commandLine = new CommandLine(args);
             CommandLineParser.parse(commandLine, arguments);
 
@@ -117,15 +118,15 @@ public class FileListArgumentTest
     public void testNotRequiredArgument()
         throws CommandLineParseException
     {
-        Argument<List<File>> fileListArgument = new FileListArgument("f", "file-list", "File list argument", false);
-        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { fileListArgument }));
+        Argument<Set<Path>> pathSetArgument = new PathSetArgument("f", "path-set", "Path set argument", false);
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { pathSetArgument }));
 
-        String[] args = new String[] { "not-an-argument", "not-a-file" };
+        String[] args = new String[] { "not-an-argument", "not-a-path" };
         CommandLine commandLine = new CommandLine(args);
         CommandLineParser.parse(commandLine, arguments);
 
-        assertFalse("fileListArgument isRequired == false", fileListArgument.isRequired());
-        assertFalse("fileListArgument wasFound == false", fileListArgument.wasFound());
-        assertEquals("fileListArgument value == null", null, fileListArgument.getValue());
+        assertFalse("pathSetArgument isRequired == false", pathSetArgument.isRequired());
+        assertFalse("pathSetArgument wasFound == false", pathSetArgument.wasFound());
+        assertEquals("pathSetArgument value == null", null, pathSetArgument.getValue());
     }
 }

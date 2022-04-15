@@ -48,6 +48,8 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.IOException;
 
+import java.nio.file.Path;
+
 import com.google.common.io.Resources;
 
 import org.junit.Test;
@@ -64,9 +66,9 @@ public final class ReadersTest
     @Test
     public void testReaderNullFile() throws IOException
     {
-        try (BufferedReader reader = reader(null))
+        try (BufferedReader reader = reader((File) null))
         {
-            assertNotNull(reader);
+            assertValidReader(reader);
         }
     }
     */
@@ -497,11 +499,74 @@ public final class ReadersTest
         }
     }
 
+    /* hangs waiting on System.in
+    @Test
+    public void testReaderNullPathName() throws IOException {
+        try (BufferedReader reader = reader((String) null)) {
+            assertValidReader(reader);
+        }
+    }
+
+    @Test
+    public void testReaderDashPathName() throws IOException {
+        try (BufferedReader reader = reader("-") {
+            assertValidReader(reader);
+        }
+    }
+    */
+
+    @Test
+    public void testReaderPathName() throws IOException {
+        File file = File.createTempFile("readersTest", ".txt");
+        try (FileOutputStream outputStream = new FileOutputStream(file))
+        {
+            Resources.copy(ReadersTest.class.getResource("example.txt"), outputStream);
+        }
+        String pathName = file.toPath().toString();
+        try (BufferedReader reader = reader(pathName))
+        {
+            assertValidReader(reader);
+        }
+        file.delete();
+    }
+
+    /* hangs waiting on System.in
+    @Test
+    public void testReaderNullPath() throws IOException {
+        try (BufferedReader reader = reader((Path) null)) {
+            assertValidReader(reader);
+        }
+    }
+
+    @Test
+    public void testReaderDashPath() throws IOException {
+        try (BufferedReader reader = reader(Paths.get("-"))) {
+            assertValidReader(reader);
+        }
+    }
+    */
+
+    @Test
+    public void testReaderPath() throws IOException {
+        File file = File.createTempFile("readersTest", ".txt");
+        try (FileOutputStream outputStream = new FileOutputStream(file))
+        {
+            Resources.copy(ReadersTest.class.getResource("example.txt"), outputStream);
+        }
+        Path path = file.toPath();
+        try (BufferedReader reader = reader(path))
+        {
+            assertValidReader(reader);
+        }
+        file.delete();
+    }
+
     static void assertValidReader(final BufferedReader reader) throws IOException {
         assertNotNull(reader);
 
         int lineNumber = 0;
-        for (String line = null; (line = reader.readLine()) != null; ) {
+        for (String line = null; (line = reader.readLine()) != null; )
+        {
             assertTrue(line.startsWith("example"));
             lineNumber++;
         }

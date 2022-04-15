@@ -23,6 +23,8 @@
 */
 package org.dishevelled.commandline.argument;
 
+import java.nio.file.Path;
+
 import java.util.Set;
 import java.util.HashSet;
 import java.util.StringTokenizer;
@@ -30,23 +32,24 @@ import java.util.StringTokenizer;
 import org.apache.commons.lang.StringUtils;
 
 /**
- * A long set argument.
+ * A path set argument.
  *
+ * @since 1.2
  * @author  Michael Heuer
  */
-public final class LongSetArgument
-    extends AbstractArgument<Set<Long>>
+public final class PathSetArgument
+    extends AbstractArgument<Set<Path>>
 {
 
     /**
-     * Create a new long set argument.
+     * Create a new path set argument.
      *
      * @param shortName short argument name
      * @param longName long argument name
      * @param description argument description
      * @param required <code>true</code> if this argument is required
      */
-    public LongSetArgument(final String shortName,
+    public PathSetArgument(final String shortName,
                            final String longName,
                            final String description,
                            final boolean required)
@@ -55,17 +58,17 @@ public final class LongSetArgument
     }
 
 
-    /** {@inheritDoc} */
-    protected Set<Long> convert(final String s)
+    @Override
+    protected Set<Path> convert(final String s)
         throws Exception
     {
-        Set<Long> set = new HashSet<Long>();
+        Set<Path> set = new HashSet<Path>();
         StringTokenizer st = new StringTokenizer(s, ",");
         while (st.hasMoreTokens())
         {
             String token = StringUtils.stripToEmpty(st.nextToken());
-            Long l = Long.valueOf(token);
-            set.add(l);
+            Path f = PathArgument.convertPath(token);
+            set.add(f);
         }
         return set;
     }

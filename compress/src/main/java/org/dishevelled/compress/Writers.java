@@ -40,6 +40,11 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.io.IOException;
 
+import java.net.URI;
+
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 import javax.annotation.Nullable;
 
 import htsjdk.samtools.util.BlockCompressedOutputStream;
@@ -53,7 +58,7 @@ import org.apache.commons.compress.compressors.xz.XZCompressorOutputStream;
 import org.apache.commons.compress.compressors.zstandard.ZstdCompressorOutputStream;
 
 /**
- * File and output stream writers with support for bgzf, gzip, bzip2, xz, or zstd compression.
+ * File, path, and output stream writers with support for bgzf, gzip, bzip2, xz, or zstd compression.
  *
  * @author  Michael Heuer
  */
@@ -135,6 +140,82 @@ public final class Writers
     {
         checkNotNull(outputStream);
         return new PrintWriter(new BufferedWriter(new OutputStreamWriter(new ZstdCompressorOutputStream(outputStream))), true);
+    }
+
+    /**
+     * Create and return a new buffered print writer with support for bgzf, gzip, bzip2, xz, or zstd compression for
+     * the specified path name or <code>stdout</code> if the path name is null or <code>-</code>.
+     *
+     * @since 1.6
+     * @param pathName path name, if any
+     * @return a new buffered print writer with support for bgzf, gzip, bzip2, xz, or zstd compression for
+     *    the specified path name or <code>stdout</code> if the path name is null or <code>-</code>
+     * @throws IOException if an I/O error occurs
+     */
+    public static PrintWriter writer(@Nullable final String pathName) throws IOException
+    {
+        return writer(pathName, false);
+    }
+
+    /**
+     * Create and return a new buffered print writer with support for bgzf, gzip, bzip2, xz, or zstd compression for
+     * the specified path name or <code>stdout</code> if the path name is null or <code>-</code>.
+     *
+     * @since 1.6
+     * @param pathName path name, if any
+     * @param append true to append to the specified path name
+     * @return a new buffered print writer with support for bgzf, gzip, bzip2, xz, or zstd compression for
+     *    the specified path name or <code>stdout</code> if the path name is null or <code>-</code>
+     * @throws IOException if an I/O error occurs
+     */
+    public static PrintWriter writer(@Nullable final String pathName, final boolean append) throws IOException
+    {
+        if (pathName == null || "-".equals(pathName))
+        {
+            return writer((File) null, append);
+        }
+        URI uri = URI.create(pathName);
+
+        // default to file: if scheme is missing
+        String scheme = uri.getScheme();
+        if (scheme == null || "".equals(scheme))
+        {
+            return writer(new File(pathName).toPath(), append);
+        }
+
+        // create path from URI, allowing custom providers, e.g. hdfs, s3, etc.
+        return writer(Paths.get(uri), append);
+    }
+
+    /**
+     * Create and return a new buffered print writer with support for bgzf, gzip, bzip2, xz, or zstd compression for
+     * the specified path or <code>stdout</code> if the path is null or <code>-</code>.
+     *
+     * @since 1.6
+     * @param path path, if any
+     * @return a new buffered print writer with support for bgzf, gzip, bzip2, xz, or zstd compression for
+     *    the specified path or <code>stdout</code> if the path is null or <code>-</code>
+     * @throws IOException if an I/O error occurs
+     */
+    public static PrintWriter writer(@Nullable final Path path) throws IOException
+    {
+        return writer(path, false);
+    }
+
+    /**
+     * Create and return a new buffered print writer with support for bgzf, gzip, bzip2, xz, or zstd compression for
+     * the specified path or <code>stdout</code> if the path is null or <code>-</code>.
+     *
+     * @since 1.6
+     * @param path path, if any
+     * @param append true to append to the specified path
+     * @return a new buffered print writer with support for bgzf, gzip, bzip2, xz, or zstd compression for
+     *    the specified path or <code>stdout</code> if the path is null or <code>-</code>
+     * @throws IOException if an I/O error occurs
+     */
+    public static PrintWriter writer(@Nullable final Path path, final boolean append) throws IOException
+    {
+        return path == null ? writer((File) null, append) : writer(path.toFile(), append);
     }
 
     /**

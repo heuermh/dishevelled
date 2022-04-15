@@ -1,7 +1,7 @@
 /*
 
     dsh-commandline  Command line parser based on typed arguments.
-    Copyright (c) 2004-2014 held jointly by the individual authors.
+    Copyright (c) 2004-2022 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
@@ -285,5 +285,65 @@ public class FileArgumentTest
 
         assertTrue(fileArgument.wasFound());
         assertEquals(null, fileArgument.getValue());
+    }
+
+    public void testStdinDashLastArgumentShort()
+        throws CommandLineParseException
+    {
+        Argument<File> fileArgument = new FileArgument("f", "file-argument", "File argument", true);
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { fileArgument }));
+
+        String value = "-";
+        String[] args = new String[] { "-f", value };
+        CommandLine commandLine = new CommandLine(args);
+        CommandLineParser.parse(commandLine, arguments);
+
+        assertTrue("fileArgument wasFound == true", fileArgument.wasFound());
+        assertNotNull("--file-argument " + value + " not null", fileArgument.getValue());
+    }
+
+    public void testStdinDashMultipleArgumentsShort()
+        throws CommandLineParseException
+    {
+        Argument<File> fileArgument = new FileArgument("f", "file-argument", "File argument", true);
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { fileArgument }));
+
+        String value = "-";
+        String[] args = new String[] { "-f", value, "-a", "some-other-value" };
+        CommandLine commandLine = new CommandLine(args);
+        CommandLineParser.parse(commandLine, arguments);
+
+        assertTrue("fileArgument wasFound == true", fileArgument.wasFound());
+        assertNotNull("--file-argument " + value + " not null", fileArgument.getValue());
+    }
+
+    public void testStdinDashLastArgumentLong()
+        throws CommandLineParseException
+    {
+        Argument<File> fileArgument = new FileArgument("f", "file-argument", "File argument", true);
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { fileArgument }));
+
+        String value = "-";
+        String[] args = new String[] { "--file-argument", value };
+        CommandLine commandLine = new CommandLine(args);
+        CommandLineParser.parse(commandLine, arguments);
+
+        assertTrue("fileArgument wasFound == true", fileArgument.wasFound());
+        assertNotNull("--file-argument " + value + " not null", fileArgument.getValue());
+    }
+
+    public void testStdinDashMultipleArgumentsLong()
+        throws CommandLineParseException
+    {
+        Argument<File> fileArgument = new FileArgument("f", "file-argument", "File argument", true);
+        ArgumentList arguments = new ArgumentList(Arrays.asList(new Argument<?>[] { fileArgument }));
+
+        String value = "-";
+        String[] args = new String[] { "--file-argument", value, "--some-other-argument", "some-other-value" };
+        CommandLine commandLine = new CommandLine(args);
+        CommandLineParser.parse(commandLine, arguments);
+
+        assertTrue("fileArgument wasFound == true", fileArgument.wasFound());
+        assertNotNull("--file-argument " + value + " not null", fileArgument.getValue());
     }
 }

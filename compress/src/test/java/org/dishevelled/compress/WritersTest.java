@@ -38,6 +38,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 
+import java.nio.file.Path;
+
 import org.junit.Test;
 
 /**
@@ -49,9 +51,27 @@ public final class WritersTest
 {
 
     @Test
+    public void testWriterNullPathName() throws IOException
+    {
+        try (PrintWriter writer = writer((String) null))
+        {
+            assertNotNull(writer);
+        }
+    }
+
+    @Test
+    public void testWriterNullPath() throws IOException
+    {
+        try (PrintWriter writer = writer((Path) null))
+        {
+            assertNotNull(writer);
+        }
+    }
+
+    @Test
     public void testWriterNullFile() throws IOException
     {
-        try (PrintWriter writer = writer(null))
+        try (PrintWriter writer = writer((File) null))
         {
             assertNotNull(writer);
         }
@@ -135,9 +155,27 @@ public final class WritersTest
     }
 
     @Test
+    public void testWriterNullPathNameAppend() throws IOException
+    {
+        try (PrintWriter writer = writer((String) null, true))
+        {
+            assertNotNull(writer);
+        }
+    }
+
+    @Test
+    public void testWriterNullPathAppend() throws IOException
+    {
+        try (PrintWriter writer = writer((Path) null, true))
+        {
+            assertNotNull(writer);
+        }
+    }
+
+    @Test
     public void testWriterNullFileAppend() throws IOException
     {
-        try (PrintWriter writer = writer(null, true))
+        try (PrintWriter writer = writer((File) null, true))
         {
             assertNotNull(writer);
         }
