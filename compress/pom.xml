@@ -33,7 +33,7 @@
   <artifactId>dsh-compress</artifactId>
   <packaging>jar</packaging>
   <name>dishevelled.org compress</name>
-  <version>1.6-SNAPSHOT</version>
+  <version>1.6</version>
   <description>Compression utility classes.</description>
   <url>http://www.dishevelled.org/compress</url>
   <inceptionYear>2014</inceptionYear>
@@ -41,7 +41,7 @@
     <connection>scm:git:git@github.com:heuermh/dishevelled.git</connection>
     <developerConnection>scm:git:git@github.com:heuermh/dishevelled.git</developerConnection>
     <url>git@github.com:heuermh/dishevelled.git</url>
-    <tag>HEAD</tag>
+    <tag>dsh-compress-1.6</tag>
   </scm>
   <dependencyManagement>
     <dependencies>
