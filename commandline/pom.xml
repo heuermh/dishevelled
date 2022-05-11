@@ -33,7 +33,7 @@
   <artifactId>dsh-commandline</artifactId>
   <packaging>jar</packaging>
   <name>dishevelled.org commandline</name>
-  <version>1.2</version>
+  <version>1.3-SNAPSHOT</version>
   <description>Command line parser based on typed arguments.</description>
   <url>http://www.dishevelled.org/commandline</url>
   <inceptionYear>2004</inceptionYear>
@@ -41,7 +41,7 @@
     <connection>scm:git:git@github.com:heuermh/dishevelled.git</connection>
     <developerConnection>scm:git:git@github.com:heuermh/dishevelled.git</developerConnection>
     <url>git@github.com:heuermh/dishevelled.git</url>
-    <tag>dsh-commandline-1.2</tag>
+    <tag>HEAD</tag>
   </scm>
   <dependencies>
     <dependency>
