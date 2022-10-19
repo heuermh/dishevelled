@@ -192,7 +192,7 @@
       <dependency>
         <groupId>com.github.luben</groupId>
         <artifactId>zstd-jni</artifactId>
-        <version>1.5.2-2</version>
+        <version>1.5.2-5</version>
       </dependency>
       <dependency>
         <groupId>com.google.code.findbugs</groupId>
@@ -267,22 +267,22 @@
       <dependency>
         <groupId>org.apache.xmlgraphics</groupId>
         <artifactId>batik-awt-util</artifactId>
-        <version>1.14</version>
+        <version>1.15</version>
       </dependency>
       <dependency>
         <groupId>org.apache.xmlgraphics</groupId>
         <artifactId>batik-svg-dom</artifactId>
-        <version>1.14</version>
+        <version>1.15</version>
       </dependency>
       <dependency>
         <groupId>org.apache.xmlgraphics</groupId>
         <artifactId>batik-svggen</artifactId>
-        <version>1.14</version>
+        <version>1.15</version>
       </dependency>
       <dependency>
         <groupId>org.apache.xmlgraphics</groupId>
         <artifactId>batik-transcoder</artifactId>
-        <version>1.14</version>
+        <version>1.15</version>
       </dependency>
       <dependency>
         <groupId>org.freedesktop.tango</groupId>
@@ -292,7 +292,7 @@
       <dependency>
         <groupId>org.mockito</groupId>
         <artifactId>mockito-core</artifactId>
-        <version>4.4.0</version>
+        <version>4.8.0</version>
       </dependency>
       <dependency>
         <groupId>com.github.stephenc.high-scale-lib</groupId>
