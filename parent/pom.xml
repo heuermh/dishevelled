@@ -51,6 +51,7 @@
   </organization>
   <properties>
     <jdk.version>1.8</jdk.version>
+    <maven.version>[3.5.4,)</maven.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.build.targetEncoding>UTF-8</project.build.targetEncoding>
   </properties>
@@ -92,6 +93,21 @@
         <plugin>
           <artifactId>maven-enforcer-plugin</artifactId>
           <version>3.2.1</version>
+          <executions>
+            <execution>
+              <id>enforce-versions</id>
+              <goals>
+                <goal>enforce</goal>
+              </goals>
+              <configuration>
+                <rules>
+                  <requireMavenVersion>
+                    <version>${maven.version}</version>
+                  </requireMavenVersion>
+                </rules>
+              </configuration>
+            </execution>
+          </executions>
         </plugin>
         <plugin>
           <artifactId>maven-gpg-plugin</artifactId>
