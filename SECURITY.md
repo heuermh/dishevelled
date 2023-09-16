@@ -4,7 +4,7 @@
 
 | Version | Supported          |
 | ------- | ------------------ |
-| dsh-parent >= 34   | :white_check_mark: |
+| dsh-parent >= 38   | :white_check_mark: |
 
 ## Reporting a vulnerability
 
