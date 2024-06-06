@@ -179,6 +179,13 @@
         </plugin>
       </plugins>
     </pluginManagement>
+    <plugins>
+      <!-- without mention here defaults to version 1.2 -->
+      <plugin>
+        <artifactId>maven-enforcer-plugin</artifactId>
+        <version>3.4.1</version>
+      </plugin>
+    </plugins>
     <resources>
       <resource>
         <directory>${basedir}/src/main/resources</directory>
