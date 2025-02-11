@@ -1,7 +1,7 @@
 /*
 
     dsh-compress  Compression utility classes.
-    Copyright (c) 2014-2024 held jointly by the individual authors.
+    Copyright (c) 2014-2025 held jointly by the individual authors.
 
     This library is free software; you can redistribute it and/or modify it
     under the terms of the GNU Lesser General Public License as published
@@ -73,9 +73,42 @@ public final class CompressTest
         assertFalse(isBgzfFile(null));
         assertTrue(isBgzfFile(new File("example.txt.bgz")));
         assertTrue(isBgzfFile(new File("example.txt.bgzf")));
+    }
 
-        // todo, stream is checked
-        //assertFalse(isBgzfFile(new File("example.txt")));
+    @Test
+    public void testIsBgzfFileTextFile() throws IOException
+    {
+        File file = File.createTempFile("readersTest", ".txt");
+        try (FileOutputStream outputStream = new FileOutputStream(file))
+        {
+            Resources.copy(ReadersTest.class.getResource("example.txt"), outputStream);
+        }
+        assertFalse(isBgzfFile(file));
+        file.delete();
+    }
+
+    @Test
+    public void testIsBgzfFileGzipFile() throws IOException
+    {
+        File file = File.createTempFile("readersTest", ".txt.gz");
+        try (FileOutputStream outputStream = new FileOutputStream(file))
+        {
+            Resources.copy(ReadersTest.class.getResource("example.txt.gz"), outputStream);
+        }
+        assertFalse(isBgzfFile(file));
+        file.delete();
+    }
+
+    @Test
+    public void testIsBgzfFileBgzfFile() throws IOException
+    {
+        File file = File.createTempFile("readersTest", ".txt.bgz");
+        try (FileOutputStream outputStream = new FileOutputStream(file))
+        {
+            Resources.copy(ReadersTest.class.getResource("example.txt.bgz"), outputStream);
+        }
+        assertTrue(isBgzfFile(file));
+        file.delete();
     }
 
     @Test(expected=NullPointerException.class)
