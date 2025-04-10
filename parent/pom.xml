@@ -222,7 +222,7 @@
       <dependency>
         <groupId>com.google.guava</groupId>
         <artifactId>guava</artifactId>
-        <version>33.4.6-jre</version>
+        <version>33.4.7-jre</version>
       </dependency>
       <dependency>
         <groupId>com.google.inject</groupId>
@@ -312,7 +312,7 @@
       <dependency>
         <groupId>org.mockito</groupId>
         <artifactId>mockito-core</artifactId>
-        <version>5.16.1</version>
+        <version>5.17.0</version>
       </dependency>
       <dependency>
         <groupId>com.github.stephenc.high-scale-lib</groupId>
