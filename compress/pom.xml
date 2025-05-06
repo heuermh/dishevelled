@@ -27,7 +27,7 @@
   <parent>
     <groupId>org.dishevelled</groupId>
     <artifactId>dsh-parent</artifactId>
-    <version>51</version>
+    <version>52-SNAPSHOT</version>
     <relativePath>../parent/pom.xml</relativePath>
   </parent>
   <artifactId>dsh-compress</artifactId>
@@ -48,7 +48,7 @@
       <dependency>
         <groupId>com.github.samtools</groupId>
         <artifactId>htsjdk</artifactId>
-        <version>4.1.3</version>
+        <version>4.2.0</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
