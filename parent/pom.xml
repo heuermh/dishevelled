@@ -72,7 +72,7 @@
         </plugin>
         <plugin>
           <artifactId>maven-clean-plugin</artifactId>
-          <version>3.4.1</version>
+          <version>3.5.0</version>
         </plugin>
         <plugin>
           <artifactId>maven-compiler-plugin</artifactId>
@@ -92,7 +92,7 @@
         </plugin>
         <plugin>
           <artifactId>maven-enforcer-plugin</artifactId>
-          <version>3.5.0</version>
+          <version>3.6.0</version>
           <executions>
             <execution>
               <id>enforce-versions</id>
@@ -111,7 +111,7 @@
         </plugin>
         <plugin>
           <artifactId>maven-gpg-plugin</artifactId>
-          <version>3.2.7</version>
+          <version>3.2.8</version>
         </plugin>
         <plugin>
           <artifactId>maven-install-plugin</artifactId>
@@ -157,7 +157,7 @@
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>build-helper-maven-plugin</artifactId>
-          <version>3.6.0</version>
+          <version>3.6.1</version>
         </plugin>
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
@@ -183,7 +183,7 @@
       <!-- without mention here defaults to version 1.2 -->
       <plugin>
         <artifactId>maven-enforcer-plugin</artifactId>
-        <version>3.5.0</version>
+        <version>3.6.0</version>
       </plugin>
     </plugins>
     <resources>
@@ -212,7 +212,7 @@
       <dependency>
         <groupId>com.github.luben</groupId>
         <artifactId>zstd-jni</artifactId>
-        <version>1.5.7-3</version>
+        <version>1.5.7-4</version>
       </dependency>
       <dependency>
         <groupId>com.google.code.findbugs</groupId>
@@ -410,11 +410,11 @@
         <plugins>
           <plugin>
             <artifactId>maven-enforcer-plugin</artifactId>
-            <version>3.5.0</version>
+            <version>3.6.0</version>
           </plugin>
           <plugin>
             <artifactId>maven-gpg-plugin</artifactId>
-            <version>3.2.5</version>
+            <version>3.2.8</version>
           </plugin>
           <plugin>
             <artifactId>maven-jar-plugin</artifactId>
