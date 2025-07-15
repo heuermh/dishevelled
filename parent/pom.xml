@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <groupId>org.sonatype.oss</groupId>
-    <artifactId>oss-parent</artifactId>
-    <version>9</version>
-    <relativePath />
-  </parent>
   <groupId>org.dishevelled</groupId>
   <artifactId>dsh-parent</artifactId>
   <packaging>pom</packaging>
@@ -50,8 +44,9 @@
     <url>http://www.dishevelled.org</url>
   </organization>
   <properties>
-    <jdk.version>1.8</jdk.version>
+    <jdk.version>17</jdk.version>
     <maven.version>[3.6.3,)</maven.version>
+    <maven.enforcer.jdk-version>[17,)</maven.enforcer.jdk-version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.build.targetEncoding>UTF-8</project.build.targetEncoding>
   </properties>
@@ -78,8 +73,7 @@
           <artifactId>maven-compiler-plugin</artifactId>
           <version>3.14.0</version>
           <configuration>
-            <source>${jdk.version}</source>
-            <target>${jdk.version}</target>
+            <release>${jdk.version}</release>
           </configuration>
         </plugin>
         <plugin>
@@ -101,6 +95,9 @@
               </goals>
               <configuration>
                 <rules>
+                  <requireJavaVersion>
+                    <version>${maven.enforcer.jdk-version}</version>
+                  </requireJavaVersion>
                   <requireMavenVersion>
                     <version>${maven.version}</version>
                   </requireMavenVersion>
@@ -124,6 +121,13 @@
         <plugin>
           <artifactId>maven-javadoc-plugin</artifactId>
           <version>3.11.2</version>
+          <configuration>
+            <detectLinks>true</detectLinks>
+            <quiet>true</quiet>
+            <verbose>false</verbose>
+            <show>package</show>
+            <source>${jdk.version}</source>
+          </configuration>
         </plugin>
         <plugin>
           <artifactId>maven-release-plugin</artifactId>
@@ -170,6 +174,11 @@
           <version>3.0.0</version>
         </plugin>
         <plugin>
+          <groupId>org.sonatype.central</groupId>
+          <artifactId>central-publishing-maven-plugin</artifactId>
+          <version>0.8.0</version>
+        </plugin>
+        <plugin>
           <groupId>pl.project13.maven</groupId>
           <artifactId>git-commit-id-plugin</artifactId>
           <version>4.9.10</version>
@@ -180,10 +189,16 @@
       </plugins>
     </pluginManagement>
     <plugins>
-      <!-- without mention here defaults to version 1.2 -->
       <plugin>
         <artifactId>maven-enforcer-plugin</artifactId>
-        <version>3.6.0</version>
+      </plugin>
+      <plugin>
+        <groupId>org.sonatype.central</groupId>
+        <artifactId>central-publishing-maven-plugin</artifactId>
+        <extensions>true</extensions>
+        <configuration>
+          <publishingServerId>central</publishingServerId>
+        </configuration>
       </plugin>
     </plugins>
     <resources>
@@ -198,6 +213,7 @@
         <includes>
           <include>COPYING</include>
           <include>COPYING.LESSER</include>
+          <include>LICENSE</include>
         </includes>
       </resource>
     </resources>
@@ -346,66 +362,11 @@
       </dependency> 
     </dependencies>
   </dependencyManagement>
-  <reporting>
-    <plugins>
-      <plugin>
-        <artifactId>maven-checkstyle-plugin</artifactId>
-        <version>3.6.0</version>
-        <configuration>
-          <configLocation>${basedir}/src/build/conf/checkstyle.xml</configLocation>
-          <enableRulesSummary>false</enableRulesSummary>
-          <propertyExpansion>header.file=${basedir}/HEADER.txt</propertyExpansion>
-        </configuration>
-      </plugin>
-      <plugin>
-        <artifactId>maven-javadoc-plugin</artifactId>
-        <version>3.8.0</version>
-        <configuration>
-          <detectLinks>true</detectLinks>
-          <quiet>true</quiet>
-          <verbose>false</verbose>
-          <show>package</show>
-        </configuration>
-        <reportSets>
-          <reportSet>
-            <reports>
-              <report>javadoc</report>
-            </reports>
-          </reportSet>
-        </reportSets>
-      </plugin>
-      <plugin>
-        <artifactId>maven-jxr-plugin</artifactId>
-        <version>3.6.0</version>
-      </plugin>
-      <plugin>
-        <artifactId>maven-project-info-reports-plugin</artifactId>
-        <version>3.9.0</version>
-        <reportSets>
-          <reportSet>
-            <reports>
-              <report>index</report>
-              <report>scm</report>
-            </reports>
-          </reportSet>
-        </reportSets>
-      </plugin>
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>build-helper-maven-plugin</artifactId>
-        <version>3.6.0</version>
-      </plugin>
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>cobertura-maven-plugin</artifactId>
-        <version>2.7</version>
-      </plugin>
-    </plugins>
-  </reporting>
   <profiles>
     <profile>
+      <!-- todo: still necessary? -->
       <!-- Override maven plugin versions in release profile -->
-      <id>sonatype-oss-release</id>
+      <id>release</id>
       <build>
         <plugins>
           <plugin>
@@ -422,7 +383,7 @@
           </plugin>
           <plugin>
             <artifactId>maven-javadoc-plugin</artifactId>
-            <version>3.8.0</version>
+            <version>3.11.2</version>
           </plugin>
           <plugin>
             <artifactId>maven-source-plugin</artifactId>
@@ -432,4 +393,17 @@
       </build>
     </profile>
   </profiles>
+  <repositories>
+    <repository>
+      <name>Central Portal Snapshots</name>
+      <id>central-portal-snapshots</id>
+      <url>https://central.sonatype.com/repository/maven-snapshots/</url>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </repository>
+  </repositories>
 </project>
