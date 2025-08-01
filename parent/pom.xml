@@ -130,6 +130,13 @@
           </configuration>
         </plugin>
         <plugin>
+          <artifactId>maven-release-plugin</artifactId>
+          <version>3.1.1</version>
+          <configuration>
+            <releaseProfiles>release</releaseProfiles>
+          </configuration>
+        </plugin>
+        <plugin>
           <artifactId>maven-resources-plugin</artifactId>
           <version>3.3.1</version>
         </plugin>
@@ -246,7 +253,7 @@
         <artifactId>commons-io</artifactId>
         <version>2.20.0</version>
       </dependency>
-       <dependency>
+      <dependency>
         <groupId>commons-jexl</groupId>
         <artifactId>commons-jexl</artifactId>
         <version>1.1</version>
@@ -360,30 +367,27 @@
   </dependencyManagement>
   <profiles>
     <profile>
-      <!-- todo: still necessary? -->
-      <!-- Override maven plugin versions in release profile -->
       <id>release</id>
       <build>
         <plugins>
           <plugin>
             <artifactId>maven-enforcer-plugin</artifactId>
-            <version>3.6.0</version>
           </plugin>
           <plugin>
             <artifactId>maven-gpg-plugin</artifactId>
-            <version>3.2.8</version>
           </plugin>
           <plugin>
             <artifactId>maven-jar-plugin</artifactId>
-            <version>3.4.2</version>
           </plugin>
           <plugin>
             <artifactId>maven-javadoc-plugin</artifactId>
-            <version>3.11.2</version>
           </plugin>
           <plugin>
             <artifactId>maven-source-plugin</artifactId>
-            <version>3.3.1</version>
+          </plugin>
+          <plugin>
+            <groupId>org.sonatype.central</groupId>
+            <artifactId>central-publishing-maven-plugin</artifactId>
           </plugin>
         </plugins>
       </build>
