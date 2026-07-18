@@ -133,6 +133,20 @@ public final class InputStreams
     }
 
     /**
+     * Create and return a new buffered input stream for the specified block compressed gzip (BGZF) compressed path.
+     *
+     * @since 1.9
+     * @param path bgzf compressed path, must not be null
+     * @return a new buffered input stream for the specified block compressed gzip (BGZF) compressed path
+     * @throws IOException if an I/O error occurs
+     */
+    public static InputStream bgzfPathInputStream(final Path path) throws IOException
+    {
+        checkNotNull(path);
+        return new BufferedInputStream(new BlockCompressedInputStream(path));
+    }
+
+    /**
      * Create and return a new buffered input stream for the specified block compressed gzip (BGZF) compressed input stream.
      *
      * @param inputStream bgzf compressed input stream, must not be null

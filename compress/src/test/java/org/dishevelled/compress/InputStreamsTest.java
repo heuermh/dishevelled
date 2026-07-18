@@ -26,6 +26,7 @@ package org.dishevelled.compress;
 import static org.dishevelled.compress.InputStreams.compressedFileInputStream;
 import static org.dishevelled.compress.InputStreams.compressedInputStream;
 import static org.dishevelled.compress.InputStreams.bgzfFileInputStream;
+import static org.dishevelled.compress.InputStreams.bgzfPathInputStream;
 import static org.dishevelled.compress.InputStreams.bgzfInputStream;
 import static org.dishevelled.compress.InputStreams.gzipFileInputStream;
 import static org.dishevelled.compress.InputStreams.gzipInputStream;
@@ -63,6 +64,12 @@ public final class InputStreamsTest
     public void testBgzfFileInputStreamNullFile() throws Exception
     {
         bgzfFileInputStream(null);
+    }
+
+    @Test(expected=NullPointerException.class)
+    public void testBgzfPathInputStreamNullPath() throws Exception
+    {
+        bgzfPathInputStream(null);
     }
 
     @Test(expected=NullPointerException.class)
