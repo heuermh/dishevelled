@@ -234,7 +234,7 @@
       <dependency>
         <groupId>com.github.luben</groupId>
         <artifactId>zstd-jni</artifactId>
-        <version>1.5.7-11</version>
+        <version>1.5.7-15</version>
       </dependency>
       <dependency>
         <groupId>com.google.code.findbugs</groupId>
@@ -244,7 +244,7 @@
       <dependency>
         <groupId>com.google.guava</groupId>
         <artifactId>guava</artifactId>
-        <version>33.6.0-jre</version>
+        <version>33.7.1-jre</version>
       </dependency>
       <dependency>
         <groupId>com.google.inject</groupId>
